@@ -874,7 +874,7 @@ void DiabloDeath(Monster &diablo, bool sendmsg)
 	if (sendmsg)
 		NetSendCmdQuest(true, quest);
 	sgbSaveSoundOn = gbSoundOn;
-	gbProcessPlayers = false;
+	// gbProcessPlayers = false; // Comentado para permitir continuar el juego después de matar a Diablo
 	for (size_t i = 0; i < ActiveMonsterCount; i++) {
 		const int monsterId = ActiveMonsters[i];
 		Monster &monster = Monsters[monsterId];

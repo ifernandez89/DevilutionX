@@ -1,0 +1,5 @@
+if(EXISTS "C:/Diablo/DevilutionX Repo/DevilutionX/build_final_working/automap_test[1]_tests.cmake")
+  include("C:/Diablo/DevilutionX Repo/DevilutionX/build_final_working/automap_test[1]_tests.cmake")
+else()
+  add_test(automap_test_NOT_BUILT automap_test_NOT_BUILT)
+endif()

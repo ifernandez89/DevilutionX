@@ -239,6 +239,16 @@ void InitQuests()
 		}
 	}
 
+	// FEATURE 1: Garantizar que todas las quests estén disponibles
+	// Solo hacer disponibles, NO activar automáticamente
+	if (!gbIsSpawn) {
+		for (auto &quest : Quests) {
+			if (quest._qactive == QUEST_NOTAVAIL) {
+				quest._qactive = QUEST_INIT;
+			}
+		}
+	}
+
 	if (Quests[Q_SKELKING]._qactive == QUEST_NOTAVAIL)
 		Quests[Q_SKELKING]._qvar2 = 2;
 	if (Quests[Q_ROCK]._qactive == QUEST_NOTAVAIL)

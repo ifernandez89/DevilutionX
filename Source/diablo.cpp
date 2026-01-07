@@ -3483,7 +3483,8 @@ bool IsDiabloAlive(bool playSFX)
 	if (Quests[Q_DIABLO]._qactive == QUEST_DONE && !gbIsMultiplayer) {
 		if (playSFX)
 			PlaySFX(SfxID::DiabloDeath);
-		return false;
+		// Return true to allow continued gameplay after Diablo's death in single player
+		return true;
 	}
 
 	return true;

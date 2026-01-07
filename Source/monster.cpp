@@ -874,7 +874,8 @@ void DiabloDeath(Monster &diablo, bool sendmsg)
 	if (sendmsg)
 		NetSendCmdQuest(true, quest);
 	sgbSaveSoundOn = gbSoundOn;
-	gbProcessPlayers = false;
+	if (gbIsMultiplayer)
+		gbProcessPlayers = false;
 	for (size_t i = 0; i < ActiveMonsterCount; i++) {
 		const int monsterId = ActiveMonsters[i];
 		Monster &monster = Monsters[monsterId];
@@ -1512,7 +1513,7 @@ void MonsterDeath(Monster &monster)
 			ViewPosition.y++;
 		}
 
-		if (monster.var1 == 140)
+		if (monster.var1 == 140 && gbIsMultiplayer)
 			PrepDoEnding();
 	} else if (monster.animInfo.isLastFrame()) {
 		if (monster.isUnique())

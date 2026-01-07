@@ -22,14 +22,14 @@ function(check_file_hash has_hash hash_is_good)
   set("${has_hash}" TRUE PARENT_SCOPE)
 
   message(VERBOSE "verifying file...
-       file='C:/c - c++/DevilutionX/build2/_deps/sol2-subbuild/sol2-populate-prefix/src/832ac772c2cd3d9620d447e9e77897f7b5e806e3.tar.gz'")
+       file='C:/Diablo/DevilutionX Repo/DevilutionX/build2/_deps/sol2-subbuild/sol2-populate-prefix/src/832ac772c2cd3d9620d447e9e77897f7b5e806e3.tar.gz'")
 
-  file("MD5" "C:/c - c++/DevilutionX/build2/_deps/sol2-subbuild/sol2-populate-prefix/src/832ac772c2cd3d9620d447e9e77897f7b5e806e3.tar.gz" actual_value)
+  file("MD5" "C:/Diablo/DevilutionX Repo/DevilutionX/build2/_deps/sol2-subbuild/sol2-populate-prefix/src/832ac772c2cd3d9620d447e9e77897f7b5e806e3.tar.gz" actual_value)
 
   if(NOT "${actual_value}" STREQUAL "06c9c0f3242ee803f50e8fd210fdfe4e")
     set("${hash_is_good}" FALSE PARENT_SCOPE)
     message(VERBOSE "MD5 hash of
-    C:/c - c++/DevilutionX/build2/_deps/sol2-subbuild/sol2-populate-prefix/src/832ac772c2cd3d9620d447e9e77897f7b5e806e3.tar.gz
+    C:/Diablo/DevilutionX Repo/DevilutionX/build2/_deps/sol2-subbuild/sol2-populate-prefix/src/832ac772c2cd3d9620d447e9e77897f7b5e806e3.tar.gz
   does not match expected value
     expected: '06c9c0f3242ee803f50e8fd210fdfe4e'
       actual: '${actual_value}'")
@@ -71,32 +71,32 @@ function(sleep_before_download attempt)
   execute_process(COMMAND "${CMAKE_COMMAND}" -E sleep "${sleep_seconds}")
 endfunction()
 
-if(EXISTS "C:/c - c++/DevilutionX/build2/_deps/sol2-subbuild/sol2-populate-prefix/src/832ac772c2cd3d9620d447e9e77897f7b5e806e3.tar.gz")
+if(EXISTS "C:/Diablo/DevilutionX Repo/DevilutionX/build2/_deps/sol2-subbuild/sol2-populate-prefix/src/832ac772c2cd3d9620d447e9e77897f7b5e806e3.tar.gz")
   check_file_hash(has_hash hash_is_good)
   if(has_hash)
     if(hash_is_good)
       message(VERBOSE "File already exists and hash match (skip download):
-  file='C:/c - c++/DevilutionX/build2/_deps/sol2-subbuild/sol2-populate-prefix/src/832ac772c2cd3d9620d447e9e77897f7b5e806e3.tar.gz'
+  file='C:/Diablo/DevilutionX Repo/DevilutionX/build2/_deps/sol2-subbuild/sol2-populate-prefix/src/832ac772c2cd3d9620d447e9e77897f7b5e806e3.tar.gz'
   MD5='06c9c0f3242ee803f50e8fd210fdfe4e'"
       )
       return()
     else()
       message(VERBOSE "File already exists but hash mismatch. Removing...")
-      file(REMOVE "C:/c - c++/DevilutionX/build2/_deps/sol2-subbuild/sol2-populate-prefix/src/832ac772c2cd3d9620d447e9e77897f7b5e806e3.tar.gz")
+      file(REMOVE "C:/Diablo/DevilutionX Repo/DevilutionX/build2/_deps/sol2-subbuild/sol2-populate-prefix/src/832ac772c2cd3d9620d447e9e77897f7b5e806e3.tar.gz")
     endif()
   else()
     message(VERBOSE "File already exists but no hash specified (use URL_HASH):
-  file='C:/c - c++/DevilutionX/build2/_deps/sol2-subbuild/sol2-populate-prefix/src/832ac772c2cd3d9620d447e9e77897f7b5e806e3.tar.gz'
+  file='C:/Diablo/DevilutionX Repo/DevilutionX/build2/_deps/sol2-subbuild/sol2-populate-prefix/src/832ac772c2cd3d9620d447e9e77897f7b5e806e3.tar.gz'
 Old file will be removed and new file downloaded from URL."
     )
-    file(REMOVE "C:/c - c++/DevilutionX/build2/_deps/sol2-subbuild/sol2-populate-prefix/src/832ac772c2cd3d9620d447e9e77897f7b5e806e3.tar.gz")
+    file(REMOVE "C:/Diablo/DevilutionX Repo/DevilutionX/build2/_deps/sol2-subbuild/sol2-populate-prefix/src/832ac772c2cd3d9620d447e9e77897f7b5e806e3.tar.gz")
   endif()
 endif()
 
 set(retry_number 5)
 
 message(VERBOSE "Downloading...
-   dst='C:/c - c++/DevilutionX/build2/_deps/sol2-subbuild/sol2-populate-prefix/src/832ac772c2cd3d9620d447e9e77897f7b5e806e3.tar.gz'
+   dst='C:/Diablo/DevilutionX Repo/DevilutionX/build2/_deps/sol2-subbuild/sol2-populate-prefix/src/832ac772c2cd3d9620d447e9e77897f7b5e806e3.tar.gz'
    timeout='none'
    inactivity timeout='none'"
 )
@@ -119,7 +119,7 @@ foreach(i RANGE ${retry_number})
 
       file(
         DOWNLOAD
-        "${url}" "C:/c - c++/DevilutionX/build2/_deps/sol2-subbuild/sol2-populate-prefix/src/832ac772c2cd3d9620d447e9e77897f7b5e806e3.tar.gz"
+        "${url}" "C:/Diablo/DevilutionX Repo/DevilutionX/build2/_deps/sol2-subbuild/sol2-populate-prefix/src/832ac772c2cd3d9620d447e9e77897f7b5e806e3.tar.gz"
         SHOW_PROGRESS
         # no TIMEOUT
         # no INACTIVITY_TIMEOUT
@@ -136,7 +136,7 @@ foreach(i RANGE ${retry_number})
         check_file_hash(has_hash hash_is_good)
         if(has_hash AND NOT hash_is_good)
           message(VERBOSE "Hash mismatch, removing...")
-          file(REMOVE "C:/c - c++/DevilutionX/build2/_deps/sol2-subbuild/sol2-populate-prefix/src/832ac772c2cd3d9620d447e9e77897f7b5e806e3.tar.gz")
+          file(REMOVE "C:/Diablo/DevilutionX Repo/DevilutionX/build2/_deps/sol2-subbuild/sol2-populate-prefix/src/832ac772c2cd3d9620d447e9e77897f7b5e806e3.tar.gz")
         else()
           message(VERBOSE "Downloading... done")
           return()

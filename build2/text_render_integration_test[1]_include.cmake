@@ -1,0 +1,5 @@
+if(EXISTS "C:/Diablo/DevilutionX Repo/DevilutionX/build2/text_render_integration_test[1]_tests.cmake")
+  include("C:/Diablo/DevilutionX Repo/DevilutionX/build2/text_render_integration_test[1]_tests.cmake")
+else()
+  add_test(text_render_integration_test_NOT_BUILT text_render_integration_test_NOT_BUILT)
+endif()

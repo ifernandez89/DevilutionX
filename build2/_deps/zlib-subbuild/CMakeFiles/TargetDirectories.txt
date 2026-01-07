@@ -1,0 +1,3 @@
+C:/Diablo/DevilutionX Repo/DevilutionX/build2/_deps/zlib-subbuild/CMakeFiles/zlib-populate.dir
+C:/Diablo/DevilutionX Repo/DevilutionX/build2/_deps/zlib-subbuild/CMakeFiles/edit_cache.dir
+C:/Diablo/DevilutionX Repo/DevilutionX/build2/_deps/zlib-subbuild/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,3 @@
+C:/Diablo/DevilutionX Repo/DevilutionX/build2/_deps/find_steam_game-subbuild/CMakeFiles/find_steam_game-populate.dir
+C:/Diablo/DevilutionX Repo/DevilutionX/build2/_deps/find_steam_game-subbuild/CMakeFiles/edit_cache.dir
+C:/Diablo/DevilutionX Repo/DevilutionX/build2/_deps/find_steam_game-subbuild/CMakeFiles/rebuild_cache.dir

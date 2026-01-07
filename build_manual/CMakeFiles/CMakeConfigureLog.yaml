@@ -6610,3 +6610,450 @@ events:
         - "C:/c - c++/DevilutionX/CMake"
         - "C:/c - c++/DevilutionX/CMake/finders"
 ...
+
+---
+events:
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CheckIPOSupported.cmake:197 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CheckIPOSupported.cmake:320 (_ipo_run_language_check)"
+      - "CMakeLists.txt:307 (check_ipo_supported)"
+    directories:
+      source: "C:/c - c++/DevilutionX/build_manual/CMakeFiles/_CMakeLTOTest-CXX/src"
+      binary: "C:/c - c++/DevilutionX/build_manual/CMakeFiles/_CMakeLTOTest-CXX/bin"
+    buildResult:
+      variable: "_IPO_LANGUAGE_CHECK_RESULT"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/c - c++/DevilutionX/build_manual/CMakeFiles/_CMakeLTOTest-CXX/bin'
+        
+        Run Build Command(s): "C:/Program Files/CMake/bin/cmake.exe" -E env VERBOSE=1 C:/mingw64/bin/mingw32-make.exe -f Makefile
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -S"C:\\c - c++\\DevilutionX\\build_manual\\CMakeFiles\\_CMakeLTOTest-CXX\\src" -B"C:\\c - c++\\DevilutionX\\build_manual\\CMakeFiles\\_CMakeLTOTest-CXX\\bin" --check-build-system CMakeFiles\\Makefile.cmake 0
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -E cmake_progress_start "C:\\c - c++\\DevilutionX\\build_manual\\CMakeFiles\\_CMakeLTOTest-CXX\\bin\\CMakeFiles" "C:\\c - c++\\DevilutionX\\build_manual\\CMakeFiles\\_CMakeLTOTest-CXX\\bin\\\\CMakeFiles\\progress.marks"
+        C:/mingw64/bin/mingw32-make.exe  -f CMakeFiles\\Makefile2 all
+        mingw32-make[1]: Entering directory 'C:/c - c++/DevilutionX/build_manual/CMakeFiles/_CMakeLTOTest-CXX/bin'
+        C:/mingw64/bin/mingw32-make.exe  -f CMakeFiles\\foo.dir\\build.make CMakeFiles/foo.dir/depend
+        mingw32-make[2]: Entering directory 'C:/c - c++/DevilutionX/build_manual/CMakeFiles/_CMakeLTOTest-CXX/bin'
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -E cmake_depends "MinGW Makefiles" "C:\\c - c++\\DevilutionX\\build_manual\\CMakeFiles\\_CMakeLTOTest-CXX\\src" "C:\\c - c++\\DevilutionX\\build_manual\\CMakeFiles\\_CMakeLTOTest-CXX\\src" "C:\\c - c++\\DevilutionX\\build_manual\\CMakeFiles\\_CMakeLTOTest-CXX\\bin" "C:\\c - c++\\DevilutionX\\build_manual\\CMakeFiles\\_CMakeLTOTest-CXX\\bin" "C:\\c - c++\\DevilutionX\\build_manual\\CMakeFiles\\_CMakeLTOTest-CXX\\bin\\CMakeFiles\\foo.dir\\DependInfo.cmake" foo
+        Dependee "C:\\c - c++\\DevilutionX\\build_manual\\CMakeFiles\\_CMakeLTOTest-CXX\\bin\\CMakeFiles\\foo.dir\\DependInfo.cmake" is newer than depender "C:/c - c++/DevilutionX/build_manual/CMakeFiles/_CMakeLTOTest-CXX/bin/CMakeFiles/foo.dir/depend.internal".
+        Dependee "C:/c - c++/DevilutionX/build_manual/CMakeFiles/_CMakeLTOTest-CXX/bin/CMakeFiles/CMakeDirectoryInformation.cmake" is newer than depender "C:/c - c++/DevilutionX/build_manual/CMakeFiles/_CMakeLTOTest-CXX/bin/CMakeFiles/foo.dir/depend.internal".
+        Scanning dependencies of target foo
+        mingw32-make[2]: Leaving directory 'C:/c - c++/DevilutionX/build_manual/CMakeFiles/_CMakeLTOTest-CXX/bin'
+        C:/mingw64/bin/mingw32-make.exe  -f CMakeFiles\\foo.dir\\build.make CMakeFiles/foo.dir/build
+        mingw32-make[2]: Entering directory 'C:/c - c++/DevilutionX/build_manual/CMakeFiles/_CMakeLTOTest-CXX/bin'
+        [ 25%] Building CXX object CMakeFiles/foo.dir/foo.cpp.obj
+        C:\\mingw64\\bin\\c++.exe   -flto=auto -fno-fat-lto-objects -o CMakeFiles\\foo.dir\\foo.cpp.obj -c "C:\\c - c++\\DevilutionX\\build_manual\\CMakeFiles\\_CMakeLTOTest-CXX\\src\\foo.cpp"
+        [ 50%] Linking CXX static library libfoo.a
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -P CMakeFiles\\foo.dir\\cmake_clean_target.cmake
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -E cmake_link_script CMakeFiles\\foo.dir\\link.txt --verbose=1
+        "C:/mingw64/bin/gcc-ar.exe" qc libfoo.a CMakeFiles/foo.dir/foo.cpp.obj
+        "C:/mingw64/bin/gcc-ranlib.exe" libfoo.a
+        mingw32-make[2]: Leaving directory 'C:/c - c++/DevilutionX/build_manual/CMakeFiles/_CMakeLTOTest-CXX/bin'
+        [ 50%] Built target foo
+        C:/mingw64/bin/mingw32-make.exe  -f CMakeFiles\\boo.dir\\build.make CMakeFiles/boo.dir/depend
+        mingw32-make[2]: Entering directory 'C:/c - c++/DevilutionX/build_manual/CMakeFiles/_CMakeLTOTest-CXX/bin'
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -E cmake_depends "MinGW Makefiles" "C:\\c - c++\\DevilutionX\\build_manual\\CMakeFiles\\_CMakeLTOTest-CXX\\src" "C:\\c - c++\\DevilutionX\\build_manual\\CMakeFiles\\_CMakeLTOTest-CXX\\src" "C:\\c - c++\\DevilutionX\\build_manual\\CMakeFiles\\_CMakeLTOTest-CXX\\bin" "C:\\c - c++\\DevilutionX\\build_manual\\CMakeFiles\\_CMakeLTOTest-CXX\\bin" "C:\\c - c++\\DevilutionX\\build_manual\\CMakeFiles\\_CMakeLTOTest-CXX\\bin\\CMakeFiles\\boo.dir\\DependInfo.cmake" boo
+        Dependee "C:\\c - c++\\DevilutionX\\build_manual\\CMakeFiles\\_CMakeLTOTest-CXX\\bin\\CMakeFiles\\boo.dir\\DependInfo.cmake" is newer than depender "C:/c - c++/DevilutionX/build_manual/CMakeFiles/_CMakeLTOTest-CXX/bin/CMakeFiles/boo.dir/depend.internal".
+        Dependee "C:/c - c++/DevilutionX/build_manual/CMakeFiles/_CMakeLTOTest-CXX/bin/CMakeFiles/CMakeDirectoryInformation.cmake" is newer than depender "C:/c - c++/DevilutionX/build_manual/CMakeFiles/_CMakeLTOTest-CXX/bin/CMakeFiles/boo.dir/depend.internal".
+        Scanning dependencies of target boo
+        mingw32-make[2]: Leaving directory 'C:/c - c++/DevilutionX/build_manual/CMakeFiles/_CMakeLTOTest-CXX/bin'
+        C:/mingw64/bin/mingw32-make.exe  -f CMakeFiles\\boo.dir\\build.make CMakeFiles/boo.dir/build
+        mingw32-make[2]: Entering directory 'C:/c - c++/DevilutionX/build_manual/CMakeFiles/_CMakeLTOTest-CXX/bin'
+        [ 75%] Building CXX object CMakeFiles/boo.dir/main.cpp.obj
+        C:\\mingw64\\bin\\c++.exe   -flto=auto -fno-fat-lto-objects -o CMakeFiles\\boo.dir\\main.cpp.obj -c "C:\\c - c++\\DevilutionX\\build_manual\\CMakeFiles\\_CMakeLTOTest-CXX\\src\\main.cpp"
+        [100%] Linking CXX executable boo.exe
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -E cmake_link_script CMakeFiles\\boo.dir\\link.txt --verbose=1
+        BFD: CMakeFiles/boo.dir/main.cpp.obj: plugin needed to handle lto object
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -E rm -f CMakeFiles\\boo.dir/objects.a
+        C:\\mingw64\\bin\\ar.exe qc CMakeFiles\\boo.dir/objects.a @CMakeFiles\\boo.dir\\objects1.rsp
+        C:\\mingw64\\bin\\c++.exe -flto=auto -fno-fat-lto-objects -Wl,--whole-archive CMakeFiles\\boo.dir/objects.a -Wl,--no-whole-archive -o boo.exe -Wl,--out-implib,libboo.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\\boo.dir\\linkLibs.rsp
+        mingw32-make[2]: Leaving directory 'C:/c - c++/DevilutionX/build_manual/CMakeFiles/_CMakeLTOTest-CXX/bin'
+        [100%] Built target boo
+        mingw32-make[1]: Leaving directory 'C:/c - c++/DevilutionX/build_manual/CMakeFiles/_CMakeLTOTest-CXX/bin'
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -E cmake_progress_start "C:\\c - c++\\DevilutionX\\build_manual\\CMakeFiles\\_CMakeLTOTest-CXX\\bin\\CMakeFiles" 0
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CheckIPOSupported.cmake:197 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CheckIPOSupported.cmake:320 (_ipo_run_language_check)"
+      - "CMakeLists.txt:307 (check_ipo_supported)"
+    directories:
+      source: "C:/c - c++/DevilutionX/build_manual/CMakeFiles/_CMakeLTOTest-C/src"
+      binary: "C:/c - c++/DevilutionX/build_manual/CMakeFiles/_CMakeLTOTest-C/bin"
+    buildResult:
+      variable: "_IPO_LANGUAGE_CHECK_RESULT"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/c - c++/DevilutionX/build_manual/CMakeFiles/_CMakeLTOTest-C/bin'
+        
+        Run Build Command(s): "C:/Program Files/CMake/bin/cmake.exe" -E env VERBOSE=1 C:/mingw64/bin/mingw32-make.exe -f Makefile
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -S"C:\\c - c++\\DevilutionX\\build_manual\\CMakeFiles\\_CMakeLTOTest-C\\src" -B"C:\\c - c++\\DevilutionX\\build_manual\\CMakeFiles\\_CMakeLTOTest-C\\bin" --check-build-system CMakeFiles\\Makefile.cmake 0
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -E cmake_progress_start "C:\\c - c++\\DevilutionX\\build_manual\\CMakeFiles\\_CMakeLTOTest-C\\bin\\CMakeFiles" "C:\\c - c++\\DevilutionX\\build_manual\\CMakeFiles\\_CMakeLTOTest-C\\bin\\\\CMakeFiles\\progress.marks"
+        C:/mingw64/bin/mingw32-make.exe  -f CMakeFiles\\Makefile2 all
+        mingw32-make[1]: Entering directory 'C:/c - c++/DevilutionX/build_manual/CMakeFiles/_CMakeLTOTest-C/bin'
+        C:/mingw64/bin/mingw32-make.exe  -f CMakeFiles\\foo.dir\\build.make CMakeFiles/foo.dir/depend
+        mingw32-make[2]: Entering directory 'C:/c - c++/DevilutionX/build_manual/CMakeFiles/_CMakeLTOTest-C/bin'
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -E cmake_depends "MinGW Makefiles" "C:\\c - c++\\DevilutionX\\build_manual\\CMakeFiles\\_CMakeLTOTest-C\\src" "C:\\c - c++\\DevilutionX\\build_manual\\CMakeFiles\\_CMakeLTOTest-C\\src" "C:\\c - c++\\DevilutionX\\build_manual\\CMakeFiles\\_CMakeLTOTest-C\\bin" "C:\\c - c++\\DevilutionX\\build_manual\\CMakeFiles\\_CMakeLTOTest-C\\bin" "C:\\c - c++\\DevilutionX\\build_manual\\CMakeFiles\\_CMakeLTOTest-C\\bin\\CMakeFiles\\foo.dir\\DependInfo.cmake" foo
+        Dependee "C:\\c - c++\\DevilutionX\\build_manual\\CMakeFiles\\_CMakeLTOTest-C\\bin\\CMakeFiles\\foo.dir\\DependInfo.cmake" is newer than depender "C:/c - c++/DevilutionX/build_manual/CMakeFiles/_CMakeLTOTest-C/bin/CMakeFiles/foo.dir/depend.internal".
+        Dependee "C:/c - c++/DevilutionX/build_manual/CMakeFiles/_CMakeLTOTest-C/bin/CMakeFiles/CMakeDirectoryInformation.cmake" is newer than depender "C:/c - c++/DevilutionX/build_manual/CMakeFiles/_CMakeLTOTest-C/bin/CMakeFiles/foo.dir/depend.internal".
+        Scanning dependencies of target foo
+        mingw32-make[2]: Leaving directory 'C:/c - c++/DevilutionX/build_manual/CMakeFiles/_CMakeLTOTest-C/bin'
+        C:/mingw64/bin/mingw32-make.exe  -f CMakeFiles\\foo.dir\\build.make CMakeFiles/foo.dir/build
+        mingw32-make[2]: Entering directory 'C:/c - c++/DevilutionX/build_manual/CMakeFiles/_CMakeLTOTest-C/bin'
+        [ 25%] Building C object CMakeFiles/foo.dir/foo.c.obj
+        C:\\mingw64\\bin\\gcc.exe   -flto=auto -fno-fat-lto-objects -o CMakeFiles\\foo.dir\\foo.c.obj -c "C:\\c - c++\\DevilutionX\\build_manual\\CMakeFiles\\_CMakeLTOTest-C\\src\\foo.c"
+        [ 50%] Linking C static library libfoo.a
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -P CMakeFiles\\foo.dir\\cmake_clean_target.cmake
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -E cmake_link_script CMakeFiles\\foo.dir\\link.txt --verbose=1
+        "C:/mingw64/bin/gcc-ar.exe" qc libfoo.a CMakeFiles/foo.dir/foo.c.obj
+        "C:/mingw64/bin/gcc-ranlib.exe" libfoo.a
+        mingw32-make[2]: Leaving directory 'C:/c - c++/DevilutionX/build_manual/CMakeFiles/_CMakeLTOTest-C/bin'
+        [ 50%] Built target foo
+        C:/mingw64/bin/mingw32-make.exe  -f CMakeFiles\\boo.dir\\build.make CMakeFiles/boo.dir/depend
+        mingw32-make[2]: Entering directory 'C:/c - c++/DevilutionX/build_manual/CMakeFiles/_CMakeLTOTest-C/bin'
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -E cmake_depends "MinGW Makefiles" "C:\\c - c++\\DevilutionX\\build_manual\\CMakeFiles\\_CMakeLTOTest-C\\src" "C:\\c - c++\\DevilutionX\\build_manual\\CMakeFiles\\_CMakeLTOTest-C\\src" "C:\\c - c++\\DevilutionX\\build_manual\\CMakeFiles\\_CMakeLTOTest-C\\bin" "C:\\c - c++\\DevilutionX\\build_manual\\CMakeFiles\\_CMakeLTOTest-C\\bin" "C:\\c - c++\\DevilutionX\\build_manual\\CMakeFiles\\_CMakeLTOTest-C\\bin\\CMakeFiles\\boo.dir\\DependInfo.cmake" boo
+        Dependee "C:\\c - c++\\DevilutionX\\build_manual\\CMakeFiles\\_CMakeLTOTest-C\\bin\\CMakeFiles\\boo.dir\\DependInfo.cmake" is newer than depender "C:/c - c++/DevilutionX/build_manual/CMakeFiles/_CMakeLTOTest-C/bin/CMakeFiles/boo.dir/depend.internal".
+        Dependee "C:/c - c++/DevilutionX/build_manual/CMakeFiles/_CMakeLTOTest-C/bin/CMakeFiles/CMakeDirectoryInformation.cmake" is newer than depender "C:/c - c++/DevilutionX/build_manual/CMakeFiles/_CMakeLTOTest-C/bin/CMakeFiles/boo.dir/depend.internal".
+        Scanning dependencies of target boo
+        mingw32-make[2]: Leaving directory 'C:/c - c++/DevilutionX/build_manual/CMakeFiles/_CMakeLTOTest-C/bin'
+        C:/mingw64/bin/mingw32-make.exe  -f CMakeFiles\\boo.dir\\build.make CMakeFiles/boo.dir/build
+        mingw32-make[2]: Entering directory 'C:/c - c++/DevilutionX/build_manual/CMakeFiles/_CMakeLTOTest-C/bin'
+        [ 75%] Building C object CMakeFiles/boo.dir/main.c.obj
+        C:\\mingw64\\bin\\gcc.exe   -flto=auto -fno-fat-lto-objects -o CMakeFiles\\boo.dir\\main.c.obj -c "C:\\c - c++\\DevilutionX\\build_manual\\CMakeFiles\\_CMakeLTOTest-C\\src\\main.c"
+        [100%] Linking C executable boo.exe
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -E cmake_link_script CMakeFiles\\boo.dir\\link.txt --verbose=1
+        BFD: CMakeFiles/boo.dir/main.c.obj: plugin needed to handle lto object
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -E rm -f CMakeFiles\\boo.dir/objects.a
+        C:\\mingw64\\bin\\ar.exe qc CMakeFiles\\boo.dir/objects.a @CMakeFiles\\boo.dir\\objects1.rsp
+        C:\\mingw64\\bin\\gcc.exe -flto=auto -fno-fat-lto-objects -Wl,--whole-archive CMakeFiles\\boo.dir/objects.a -Wl,--no-whole-archive -o boo.exe -Wl,--out-implib,libboo.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\\boo.dir\\linkLibs.rsp
+        mingw32-make[2]: Leaving directory 'C:/c - c++/DevilutionX/build_manual/CMakeFiles/_CMakeLTOTest-C/bin'
+        [100%] Built target boo
+        mingw32-make[1]: Leaving directory 'C:/c - c++/DevilutionX/build_manual/CMakeFiles/_CMakeLTOTest-C/bin'
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -E cmake_progress_start "C:\\c - c++\\DevilutionX\\build_manual\\CMakeFiles\\_CMakeLTOTest-C\\bin\\CMakeFiles" 0
+        
+      exitCode: 0
+  -
+    kind: "find_package-v1"
+    backtrace:
+      - "CMake/Dependencies.cmake:76 (find_package)"
+      - "CMakeLists.txt:348 (include)"
+    name: "SDL2"
+    configs:
+      -
+        filename: "SDL2Config.cmake"
+        kind: "cmake"
+      -
+        filename: "sdl2-config.cmake"
+        kind: "cmake"
+    version_request:
+      exact: false
+    settings:
+      required: "required_explicit"
+      quiet: false
+      global: false
+      policy_scope: true
+      bypass_provider: false
+      names:
+        - "SDL2"
+      path_suffixes:
+        - ""
+      paths:
+        CMAKE_FIND_USE_CMAKE_PATH: true
+        CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+        CMAKE_FIND_USE_INSTALL_PREFIX: true
+        CMAKE_FIND_USE_PACKAGE_ROOT_PATH: true
+        CMAKE_FIND_USE_CMAKE_PACKAGE_REGISTRY: true
+        CMAKE_FIND_USE_SYSTEM_PACKAGE_REGISTRY: true
+        CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
+    candidates:
+      -
+        path: "C:/c - c++/DevilutionX/../deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/lib/cmake/SDL2/SDL2Config.cmake"
+        mode: "none?"
+        reason: "no_exist"
+      -
+        path: "C:/c - c++/DevilutionX/../deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/lib/cmake/SDL2/sdl2-config.cmake"
+        mode: "none?"
+        reason: "no_exist"
+      -
+        path: "C:/c - c++/DevilutionX/build_manual/CMakeFiles/pkgRedirects/SDL2Config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/c - c++/DevilutionX/build_manual/CMakeFiles/pkgRedirects/sdl2-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/SDL2Config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/sdl2-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/Python311/Scripts/SDL2Config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/Python311/Scripts/sdl2-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/Python311/SDL2Config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/Python311/sdl2-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/Windows/System32/SDL2Config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/Windows/System32/sdl2-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/Windows/SDL2Config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/Windows/sdl2-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/Windows/System32/wbem/SDL2Config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/Windows/System32/wbem/sdl2-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/Windows/System32/WindowsPowerShell/v1.0/SDL2Config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/Windows/System32/WindowsPowerShell/v1.0/sdl2-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/Windows/System32/OpenSSH/SDL2Config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/Windows/System32/OpenSSH/sdl2-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/Program Files/dotnet/SDL2Config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/Program Files/dotnet/sdl2-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/ProgramData/chocolatey/SDL2Config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/ProgramData/chocolatey/sdl2-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/Program Files/nodejs/SDL2Config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/Program Files/nodejs/sdl2-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/Program Files/CMake/SDL2Config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/Program Files/CMake/sdl2-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/Program Files/Git/cmd/SDL2Config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/Program Files/Git/cmd/sdl2-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/Program Files/Git/mingw64/SDL2Config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/Program Files/Git/mingw64/sdl2-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/Program Files/Git/usr/SDL2Config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/Program Files/Git/usr/sdl2-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/mingw64/SDL2Config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/mingw64/sdl2-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/Users/xiphos-pc1/AppData/Local/Programs/Python/Python313/Scripts/SDL2Config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/Users/xiphos-pc1/AppData/Local/Programs/Python/Python313/Scripts/sdl2-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/Users/xiphos-pc1/AppData/Local/Programs/Python/Python313/SDL2Config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/Users/xiphos-pc1/AppData/Local/Programs/Python/Python313/sdl2-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/Users/xiphos-pc1/AppData/Local/Microsoft/WindowsApps/SDL2Config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/Users/xiphos-pc1/AppData/Local/Microsoft/WindowsApps/sdl2-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/Users/xiphos-pc1/AppData/Local/Programs/Microsoft VS Code/SDL2Config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/Users/xiphos-pc1/AppData/Local/Programs/Microsoft VS Code/sdl2-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/Users/xiphos-pc1/AppData/Roaming/npm/SDL2Config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/Users/xiphos-pc1/AppData/Roaming/npm/sdl2-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/Users/xiphos-pc1/AppData/Local/Programs/Ollama/SDL2Config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/Users/xiphos-pc1/AppData/Local/Programs/Ollama/sdl2-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/Users/xiphos-pc1/AppData/Local/Programs/Kiro/SDL2Config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/Users/xiphos-pc1/AppData/Local/Programs/Kiro/sdl2-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/vcpkg/SDL2Config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/vcpkg/sdl2-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/Program Files/SDL2Config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/Program Files/sdl2-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/Program Files/CMake/SDL2Config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/Program Files/CMake/sdl2-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/Program Files (x86)/SDL2Config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "C:/Program Files (x86)/sdl2-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+    found: null
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "../deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32"
+        - "../deps/SDL2_image-dev/SDL2_image-2.8.8/x86_64-w64-mingw32"
+      ENV{PATH}:
+        - "C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath"
+        - "C:\\Python311\\Scripts\\"
+        - "C:\\Python311\\"
+        - "C:\\Windows\\system32"
+        - "C:\\Windows"
+        - "C:\\Windows\\System32\\Wbem"
+        - "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\Windows\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\dotnet\\"
+        - "C:\\ProgramData\\chocolatey\\bin"
+        - "C:\\Program Files\\nodejs\\"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Program Files\\Git\\mingw64\\bin"
+        - "C:\\Program Files\\Git\\usr\\bin"
+        - "C:\\mingw64\\bin"
+        - "C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath"
+        - "C:\\Python311\\Scripts\\"
+        - "C:\\Python311\\"
+        - "C:\\Windows\\system32"
+        - "C:\\Windows"
+        - "C:\\Windows\\System32\\Wbem"
+        - "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\Windows\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\dotnet\\"
+        - "C:\\ProgramData\\chocolatey\\bin"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Program Files\\Git\\mingw64\\bin"
+        - "C:\\Program Files\\Git\\usr\\bin"
+        - "C:\\Program Files\\nodejs\\"
+        - "C:\\Users\\xiphos-pc1\\AppData\\Local\\Programs\\Python\\Python313\\Scripts\\"
+        - "C:\\Users\\xiphos-pc1\\AppData\\Local\\Programs\\Python\\Python313\\"
+        - "C:\\Users\\xiphos-pc1\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\xiphos-pc1\\AppData\\Local\\Programs\\Microsoft VS Code\\bin"
+        - "C:\\Users\\xiphos-pc1\\AppData\\Roaming\\npm"
+        - "C:\\Users\\xiphos-pc1\\AppData\\Local\\Programs\\Ollama"
+        - "C:\\Users\\xiphos-pc1\\AppData\\Local\\Programs\\Kiro\\bin"
+        - "C:\\vcpkg"
+      CMAKE_INSTALL_PREFIX: "C:/Program Files (x86)/DevilutionX"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "C:/Program Files"
+        - "C:/Program Files (x86)"
+        - "C:/Program Files/CMake"
+        - "C:/Program Files (x86)/DevilutionX"
+      CMAKE_MODULE_PATH:
+        - "C:/c - c++/DevilutionX/CMake"
+        - "C:/c - c++/DevilutionX/CMake/finders"
+...

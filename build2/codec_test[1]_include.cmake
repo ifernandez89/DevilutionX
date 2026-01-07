@@ -1,0 +1,5 @@
+if(EXISTS "C:/Diablo/DevilutionX Repo/DevilutionX/build2/codec_test[1]_tests.cmake")
+  include("C:/Diablo/DevilutionX Repo/DevilutionX/build2/codec_test[1]_tests.cmake")
+else()
+  add_test(codec_test_NOT_BUILT codec_test_NOT_BUILT)
+endif()

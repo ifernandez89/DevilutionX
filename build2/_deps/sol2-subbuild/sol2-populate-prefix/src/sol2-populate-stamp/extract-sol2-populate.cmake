@@ -5,8 +5,8 @@ cmake_minimum_required(VERSION ${CMAKE_VERSION}) # this file comes with cmake
 
 # Make file names absolute:
 #
-get_filename_component(filename "C:/c - c++/DevilutionX/build2/_deps/sol2-subbuild/sol2-populate-prefix/src/832ac772c2cd3d9620d447e9e77897f7b5e806e3.tar.gz" ABSOLUTE)
-get_filename_component(directory "C:/c - c++/DevilutionX/build2/_deps/sol2-src" ABSOLUTE)
+get_filename_component(filename "C:/Diablo/DevilutionX Repo/DevilutionX/build2/_deps/sol2-subbuild/sol2-populate-prefix/src/832ac772c2cd3d9620d447e9e77897f7b5e806e3.tar.gz" ABSOLUTE)
+get_filename_component(directory "C:/Diablo/DevilutionX Repo/DevilutionX/build2/_deps/sol2-src" ABSOLUTE)
 
 message(VERBOSE "extracting...
      src='${filename}'

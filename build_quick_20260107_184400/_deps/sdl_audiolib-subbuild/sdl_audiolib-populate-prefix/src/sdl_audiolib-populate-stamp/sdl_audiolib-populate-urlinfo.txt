@@ -1,0 +1,12 @@
+# This is a generated file and its contents are an internal implementation detail.
+# The download step will be re-executed if anything in this file changes.
+# No other meaning or use of this file is supported.
+
+method=url
+command=C:/Program Files/CMake/bin/cmake.exe;-DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE;-P;C:/c - c++/DevilutionX/build_quick_20260107_184400/_deps/sdl_audiolib-subbuild/sdl_audiolib-populate-prefix/src/sdl_audiolib-populate-stamp/download-sdl_audiolib-populate.cmake;COMMAND;C:/Program Files/CMake/bin/cmake.exe;-DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE;-P;C:/c - c++/DevilutionX/build_quick_20260107_184400/_deps/sdl_audiolib-subbuild/sdl_audiolib-populate-prefix/src/sdl_audiolib-populate-stamp/verify-sdl_audiolib-populate.cmake;COMMAND;C:/Program Files/CMake/bin/cmake.exe;-DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE;-P;C:/c - c++/DevilutionX/build_quick_20260107_184400/_deps/sdl_audiolib-subbuild/sdl_audiolib-populate-prefix/src/sdl_audiolib-populate-stamp/extract-sdl_audiolib-populate.cmake
+source_dir=C:/c - c++/DevilutionX/build_quick_20260107_184400/_deps/sdl_audiolib-src
+work_dir=C:/c - c++/DevilutionX/build_quick_20260107_184400/_deps
+url(s)=https://github.com/realnc/SDL_audiolib/archive/cc1bb6af8d4cf5e200259072bde1edd1c8c5137e.tar.gz
+hash=MD5=0e8174264ac9c6b314c6b2d9a5f72efd
+      no_extract=
+

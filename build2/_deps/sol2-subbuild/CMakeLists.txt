@@ -20,8 +20,8 @@ project(sol2-populate NONE)
 include(ExternalProject)
 ExternalProject_Add(sol2-populate
                      "UPDATE_DISCONNECTED" "False" "DOWNLOAD_EXTRACT_TIMESTAMP" "FALSE" "EXTERNALPROJECT_INTERNAL_ARGUMENT_SEPARATOR" "URL" "https://github.com/diasurgical/sol2/archive/832ac772c2cd3d9620d447e9e77897f7b5e806e3.tar.gz" "URL_HASH" "MD5=06c9c0f3242ee803f50e8fd210fdfe4e"
-                    SOURCE_DIR          "C:/c - c++/DevilutionX/build2/_deps/sol2-src"
-                    BINARY_DIR          "C:/c - c++/DevilutionX/build2/_deps/sol2-build"
+                    SOURCE_DIR          "C:/Diablo/DevilutionX Repo/DevilutionX/build2/_deps/sol2-src"
+                    BINARY_DIR          "C:/Diablo/DevilutionX Repo/DevilutionX/build2/_deps/sol2-build"
                     CONFIGURE_COMMAND   ""
                     BUILD_COMMAND       ""
                     INSTALL_COMMAND     ""

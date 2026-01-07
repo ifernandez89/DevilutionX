@@ -1,0 +1,5 @@
+if(EXISTS "C:/Diablo/DevilutionX Repo/DevilutionX/build2/drlg_l2_test[1]_tests.cmake")
+  include("C:/Diablo/DevilutionX Repo/DevilutionX/build2/drlg_l2_test[1]_tests.cmake")
+else()
+  add_test(drlg_l2_test_NOT_BUILT drlg_l2_test_NOT_BUILT)
+endif()

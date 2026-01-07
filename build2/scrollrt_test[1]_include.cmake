@@ -1,0 +1,5 @@
+if(EXISTS "C:/Diablo/DevilutionX Repo/DevilutionX/build2/scrollrt_test[1]_tests.cmake")
+  include("C:/Diablo/DevilutionX Repo/DevilutionX/build2/scrollrt_test[1]_tests.cmake")
+else()
+  add_test(scrollrt_test_NOT_BUILT scrollrt_test_NOT_BUILT)
+endif()

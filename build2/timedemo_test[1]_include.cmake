@@ -1,0 +1,5 @@
+if(EXISTS "C:/Diablo/DevilutionX Repo/DevilutionX/build2/timedemo_test[1]_tests.cmake")
+  include("C:/Diablo/DevilutionX Repo/DevilutionX/build2/timedemo_test[1]_tests.cmake")
+else()
+  add_test(timedemo_test_NOT_BUILT timedemo_test_NOT_BUILT)
+endif()

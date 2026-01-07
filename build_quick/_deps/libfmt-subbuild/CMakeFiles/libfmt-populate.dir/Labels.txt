@@ -1,0 +1,14 @@
+# Target labels
+ libfmt-populate
+# Source files and their labels
+C:/c - c++/DevilutionX/build_quick/_deps/libfmt-subbuild/CMakeFiles/libfmt-populate
+C:/c - c++/DevilutionX/build_quick/_deps/libfmt-subbuild/CMakeFiles/libfmt-populate.rule
+C:/c - c++/DevilutionX/build_quick/_deps/libfmt-subbuild/CMakeFiles/libfmt-populate-complete.rule
+C:/c - c++/DevilutionX/build_quick/_deps/libfmt-subbuild/libfmt-populate-prefix/src/libfmt-populate-stamp/libfmt-populate-build.rule
+C:/c - c++/DevilutionX/build_quick/_deps/libfmt-subbuild/libfmt-populate-prefix/src/libfmt-populate-stamp/libfmt-populate-configure.rule
+C:/c - c++/DevilutionX/build_quick/_deps/libfmt-subbuild/libfmt-populate-prefix/src/libfmt-populate-stamp/libfmt-populate-download.rule
+C:/c - c++/DevilutionX/build_quick/_deps/libfmt-subbuild/libfmt-populate-prefix/src/libfmt-populate-stamp/libfmt-populate-install.rule
+C:/c - c++/DevilutionX/build_quick/_deps/libfmt-subbuild/libfmt-populate-prefix/src/libfmt-populate-stamp/libfmt-populate-mkdir.rule
+C:/c - c++/DevilutionX/build_quick/_deps/libfmt-subbuild/libfmt-populate-prefix/src/libfmt-populate-stamp/libfmt-populate-patch.rule
+C:/c - c++/DevilutionX/build_quick/_deps/libfmt-subbuild/libfmt-populate-prefix/src/libfmt-populate-stamp/libfmt-populate-test.rule
+C:/c - c++/DevilutionX/build_quick/_deps/libfmt-subbuild/libfmt-populate-prefix/src/libfmt-populate-stamp/libfmt-populate-update.rule

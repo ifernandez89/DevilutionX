@@ -7,25 +7,27 @@ set(CMAKE_DEPENDS_GENERATOR "MinGW Makefiles")
 # The top level Makefile was generated from the following files:
 set(CMAKE_MAKEFILE_DEPENDS
   "CMakeCache.txt"
-  "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeGenericSystem.cmake"
-  "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeInitializeConfigs.cmake"
-  "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeSystemSpecificInformation.cmake"
-  "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeSystemSpecificInitialize.cmake"
-  "C:/Program Files/CMake/share/cmake-4.2/Modules/ExternalProject.cmake"
-  "C:/Program Files/CMake/share/cmake-4.2/Modules/ExternalProject/PatchInfo.txt.in"
-  "C:/Program Files/CMake/share/cmake-4.2/Modules/ExternalProject/RepositoryInfo.txt.in"
-  "C:/Program Files/CMake/share/cmake-4.2/Modules/ExternalProject/UpdateInfo.txt.in"
-  "C:/Program Files/CMake/share/cmake-4.2/Modules/ExternalProject/cfgcmd.txt.in"
-  "C:/Program Files/CMake/share/cmake-4.2/Modules/ExternalProject/download.cmake.in"
-  "C:/Program Files/CMake/share/cmake-4.2/Modules/ExternalProject/extractfile.cmake.in"
-  "C:/Program Files/CMake/share/cmake-4.2/Modules/ExternalProject/mkdirs.cmake.in"
-  "C:/Program Files/CMake/share/cmake-4.2/Modules/ExternalProject/shared_internal_commands.cmake"
-  "C:/Program Files/CMake/share/cmake-4.2/Modules/Platform/Windows-Initialize.cmake"
-  "C:/Program Files/CMake/share/cmake-4.2/Modules/Platform/Windows.cmake"
-  "C:/Program Files/CMake/share/cmake-4.2/Modules/Platform/WindowsPaths.cmake"
   "CMakeFiles/4.2.1/CMakeSystem.cmake"
   "CMakeLists.txt"
   "lua-populate-prefix/tmp/lua-populate-mkdirs.cmake"
+  "C:/msys64/mingw64/share/cmake/Modules/CMakeDetermineSystem.cmake"
+  "C:/msys64/mingw64/share/cmake/Modules/CMakeGenericSystem.cmake"
+  "C:/msys64/mingw64/share/cmake/Modules/CMakeInitializeConfigs.cmake"
+  "C:/msys64/mingw64/share/cmake/Modules/CMakeSystem.cmake.in"
+  "C:/msys64/mingw64/share/cmake/Modules/CMakeSystemSpecificInformation.cmake"
+  "C:/msys64/mingw64/share/cmake/Modules/CMakeSystemSpecificInitialize.cmake"
+  "C:/msys64/mingw64/share/cmake/Modules/ExternalProject.cmake"
+  "C:/msys64/mingw64/share/cmake/Modules/ExternalProject/PatchInfo.txt.in"
+  "C:/msys64/mingw64/share/cmake/Modules/ExternalProject/RepositoryInfo.txt.in"
+  "C:/msys64/mingw64/share/cmake/Modules/ExternalProject/UpdateInfo.txt.in"
+  "C:/msys64/mingw64/share/cmake/Modules/ExternalProject/cfgcmd.txt.in"
+  "C:/msys64/mingw64/share/cmake/Modules/ExternalProject/download.cmake.in"
+  "C:/msys64/mingw64/share/cmake/Modules/ExternalProject/extractfile.cmake.in"
+  "C:/msys64/mingw64/share/cmake/Modules/ExternalProject/mkdirs.cmake.in"
+  "C:/msys64/mingw64/share/cmake/Modules/ExternalProject/shared_internal_commands.cmake"
+  "C:/msys64/mingw64/share/cmake/Modules/Platform/Windows-Initialize.cmake"
+  "C:/msys64/mingw64/share/cmake/Modules/Platform/Windows.cmake"
+  "C:/msys64/mingw64/share/cmake/Modules/Platform/WindowsPaths.cmake"
   )
 
 # The corresponding makefile is:
@@ -36,6 +38,7 @@ set(CMAKE_MAKEFILE_OUTPUTS
 
 # Byproducts of CMake generate step:
 set(CMAKE_MAKEFILE_PRODUCTS
+  "CMakeFiles/4.2.1/CMakeSystem.cmake"
   "lua-populate-prefix/tmp/lua-populate-mkdirs.cmake"
   "lua-populate-prefix/src/lua-populate-stamp/download-lua-populate.cmake"
   "lua-populate-prefix/src/lua-populate-stamp/verify-lua-populate.cmake"

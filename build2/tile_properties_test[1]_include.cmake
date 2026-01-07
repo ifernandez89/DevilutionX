@@ -1,0 +1,5 @@
+if(EXISTS "C:/Diablo/DevilutionX Repo/DevilutionX/build2/tile_properties_test[1]_tests.cmake")
+  include("C:/Diablo/DevilutionX Repo/DevilutionX/build2/tile_properties_test[1]_tests.cmake")
+else()
+  add_test(tile_properties_test_NOT_BUILT tile_properties_test_NOT_BUILT)
+endif()

@@ -1,0 +1,3 @@
+C:/c - c++/DevilutionX/build_NOW/_deps/sol2-subbuild/CMakeFiles/sol2-populate.dir
+C:/c - c++/DevilutionX/build_NOW/_deps/sol2-subbuild/CMakeFiles/edit_cache.dir
+C:/c - c++/DevilutionX/build_NOW/_deps/sol2-subbuild/CMakeFiles/rebuild_cache.dir

@@ -26,6 +26,8 @@
 #include <find_steam_game.h>
 #endif
 
+#include <optional>
+
 #ifndef UNPACKED_MPQS
 #include "mpq/mpq_sdl_rwops.hpp"
 #endif

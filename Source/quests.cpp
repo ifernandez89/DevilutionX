@@ -233,6 +233,17 @@ void InitQuests()
 		InitialiseQuestPools(DungeonSeeds[15], Quests);
 	}
 
+	// FEATURE 1.1: Guarantee all quests are available in vanilla single player
+	// This ensures all quests are accessible by reverting any QUEST_NOTAVAIL back to QUEST_INIT
+	// Only affects vanilla single player - preserves Hellfire and multiplayer behavior
+	if (!gbIsHellfire && !UseMultiplayerQuests()) {
+		for (auto &quest : Quests) {
+			if (quest._qactive == QUEST_NOTAVAIL) {
+				quest._qactive = QUEST_INIT;
+			}
+		}
+	}
+
 	if (gbIsSpawn) {
 		for (auto &quest : Quests) {
 			quest._qactive = QUEST_NOTAVAIL;

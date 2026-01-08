@@ -477,6 +477,8 @@ void AddL2Torches()
 
 void AddObjTraps()
 {
+	// FEATURE: Intelligent Difficulty System - Increased Trap Frequency
+	// Enhanced trap placement for environmental danger and tension
 	int rndv;
 	if (currlevel == 1)
 		rndv = 10;
@@ -486,6 +488,13 @@ void AddObjTraps()
 		rndv = 20;
 	if (currlevel >= 7)
 		rndv = 25;
+	
+	// Significantly increase trap frequency for Hell difficulty pressure
+	if (currlevel >= 13)
+		rndv = 45; // Hell: 45% trap chance (was 25%)
+	else if (currlevel >= 9)
+		rndv = 35; // Deep caves: 35% trap chance (was 25%)
+	
 	for (int j = 0; j < MAXDUNY; j++) {
 		for (int i = 0; i < MAXDUNX; i++) {
 			Object *triggerObject = FindObjectAtPosition({ i, j }, false);
@@ -528,10 +537,22 @@ void AddObjTraps()
 
 void AddChestTraps()
 {
+	// FEATURE: Intelligent Difficulty System - Enhanced Chest Trap Frequency
+	// Increase chest trap frequency for environmental danger
+	int baseTrapChance = 10; // Original: 10%
+	
+	// Scale trap chance with level depth
+	if (currlevel >= 13)
+		baseTrapChance = 25; // Hell: 25% chest trap chance
+	else if (currlevel >= 9)
+		baseTrapChance = 20; // Deep caves: 20% chest trap chance
+	else if (currlevel >= 5)
+		baseTrapChance = 15; // Mid-levels: 15% chest trap chance
+	
 	for (int j = 0; j < MAXDUNY; j++) {
 		for (int i = 0; i < MAXDUNX; i++) { // NOLINT(modernize-loop-convert)
 			Object *chestObject = FindObjectAtPosition({ i, j }, false);
-			if (chestObject != nullptr && chestObject->IsUntrappedChest() && GenerateRnd(100) < 10) {
+			if (chestObject != nullptr && chestObject->IsUntrappedChest() && GenerateRnd(100) < baseTrapChance) {
 				switch (chestObject->_otype) {
 				case OBJ_CHEST1:
 					chestObject->_otype = OBJ_TCHEST1;

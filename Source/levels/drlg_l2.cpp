@@ -1772,13 +1772,34 @@ void CreateRoom(WorldTilePosition topLeft, WorldTilePosition bottomRight, int nR
 	const WorldTileDisplacement areaDisplacement = bottomRight - topLeft;
 	const WorldTileSize area(areaDisplacement.deltaX, areaDisplacement.deltaY);
 
+	// FEATURE: Intelligent Difficulty System - More Hostile Dungeon Layouts
+	// Create smaller, more cramped rooms for tactical pressure in deeper levels
 	constexpr WorldTileCoord RoomMax = 10;
 	constexpr WorldTileCoord RoomMin = 4;
+	
+	// Adjust room sizes based on level depth for more hostile layouts
+	WorldTileCoord adjustedRoomMax = RoomMax;
+	WorldTileCoord adjustedRoomMin = RoomMin;
+	
+	if (currlevel >= 13) {
+		// Hell: Smaller, more cramped rooms (3-7 instead of 4-10)
+		adjustedRoomMax = 7;
+		adjustedRoomMin = 3;
+	} else if (currlevel >= 9) {
+		// Deep caves: Medium-small rooms (3-8 instead of 4-10)
+		adjustedRoomMax = 8;
+		adjustedRoomMin = 3;
+	} else if (currlevel >= 5) {
+		// Mid-levels: Slightly smaller rooms (4-9 instead of 4-10)
+		adjustedRoomMax = 9;
+		adjustedRoomMin = 4;
+	}
+	
 	WorldTileSize roomSize = area;
-	if (area.width > RoomMin)
-		roomSize.width = GenerateRnd(std::min(area.width, RoomMax) - RoomMin) + RoomMin;
-	if (area.height > RoomMin)
-		roomSize.height = GenerateRnd(std::min(area.height, RoomMax) - RoomMin) + RoomMin;
+	if (area.width > adjustedRoomMin)
+		roomSize.width = GenerateRnd(std::min(area.width, adjustedRoomMax) - adjustedRoomMin) + adjustedRoomMin;
+	if (area.height > adjustedRoomMin)
+		roomSize.height = GenerateRnd(std::min(area.height, adjustedRoomMax) - adjustedRoomMin) + adjustedRoomMin;
 
 	if (size)
 		roomSize = *size;

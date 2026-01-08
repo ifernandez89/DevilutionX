@@ -3751,7 +3751,23 @@ tl::expected<void, std::string> InitMonsters()
 					na++;
 			}
 		}
-		size_t numplacemonsters = na / 30;
+		// FEATURE: Intelligent Difficulty System - Increased Monster Density
+		// Original formula: na / 30, Enhanced for Hell difficulty pressure
+		size_t baseDensityDivisor = 30;
+		
+		// Increase density based on level depth for late-game pressure
+		if (currlevel >= 13) {
+			// Hell difficulty: 50% more monsters (na / 20 instead of na / 30)
+			baseDensityDivisor = 20;
+		} else if (currlevel >= 9) {
+			// Deep caves: 25% more monsters (na / 24 instead of na / 30)
+			baseDensityDivisor = 24;
+		} else if (currlevel >= 5) {
+			// Mid-levels: 15% more monsters (na / 26 instead of na / 30)
+			baseDensityDivisor = 26;
+		}
+		
+		size_t numplacemonsters = na / baseDensityDivisor;
 		if (gbIsMultiplayer)
 			numplacemonsters += numplacemonsters / 2;
 		if (ActiveMonsterCount + numplacemonsters > MaxMonsters - 10)
@@ -3768,12 +3784,23 @@ tl::expected<void, std::string> InitMonsters()
 		if (numscattypes > 0) {
 			while (ActiveMonsterCount < totalmonsters) {
 				const size_t typeIndex = scattertypes[GenerateRnd(numscattypes)];
+				
+				// FEATURE: Intelligent Difficulty System - Tighter Monster Packs
+				// Create more compact, dangerous groups in deeper levels
 				if (currlevel == 1 || FlipCoin())
 					na = 1;
 				else if (currlevel == 2 || leveltype == DTYPE_CRYPT)
 					na = GenerateRnd(2) + 2;
-				else
+				else if (currlevel >= 13) {
+					// Hell difficulty: Larger, more dangerous packs (4-7 monsters)
+					na = GenerateRnd(4) + 4;
+				} else if (currlevel >= 9) {
+					// Deep caves: Medium-large packs (3-6 monsters)
+					na = GenerateRnd(4) + 3;
+				} else {
+					// Standard deeper levels: Slightly larger packs (3-5 monsters)
 					na = GenerateRnd(3) + 3;
+				}
 				PlaceGroup(typeIndex, na);
 			}
 		}

@@ -892,11 +892,14 @@ void DiabloDeath(Monster &diablo, bool sendmsg)
 	}
 	AddLight(diablo.position.tile, 8);
 	DoVision(diablo.position.tile, 8, MAP_EXP_NONE, true);
-	int dist = diablo.position.tile.WalkingDistance(ViewPosition);
-	dist = std::min(dist, 20);
-	diablo.var3 = ViewPosition.x << 16;
-	diablo.position.temp.x = ViewPosition.y << 16;
-	diablo.position.temp.y = (int)((diablo.var3 - (diablo.position.tile.x << 16)) / (float)dist);
+	// Only configure camera tracking variables in single player
+	if (!gbIsMultiplayer) {
+		int dist = diablo.position.tile.WalkingDistance(ViewPosition);
+		dist = std::min(dist, 20);
+		diablo.var3 = ViewPosition.x << 16;
+		diablo.position.temp.x = ViewPosition.y << 16;
+		diablo.position.temp.y = (int)((diablo.var3 - (diablo.position.tile.x << 16)) / (float)dist);
+	}
 	if (!gbIsMultiplayer) {
 		Player &myPlayer = *MyPlayer;
 		myPlayer.pDiabloKillLevel = std::max(myPlayer.pDiabloKillLevel, static_cast<uint8_t>(sgGameInitInfo.nDifficulty + 1));

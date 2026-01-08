@@ -20,7 +20,7 @@ set(PNG_PREFIX "")
 set(PNGLIB_MAJOR "1")
 set(PNGLIB_MINOR "6")
 set(PNGLIB_VERSION "1.6.38")
-set(ZLIBINCDIR "C:/c - c++/DevilutionX/deps/zlib-build")
+set(ZLIBINCDIR "C:/c - c++/DevilutionX/deps/zlib-src/zlib-1.3.1")
 
 set(PLATFORM_C_FLAGS)
 if(APPLE)

@@ -58,6 +58,7 @@
 3rdParty/libmpq/CMakeFiles/libmpq.dir/__/__/_deps/libmpq-src/libmpq/extract.c.obj
  C:/c - c++/DevilutionX/build_NOW/_deps/libmpq-src/libmpq/extract.c
  C:/c - c++/DevilutionX/build_NOW/_deps/bzip2-src/bzlib.h
+ C:/c - c++/DevilutionX/deps/zlib-src/zlib-1.3.1/zlib.h
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/adxintrin.h
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/ammintrin.h
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/amxbf16intrin.h
@@ -340,7 +341,6 @@
  C:/mingw64/x86_64-w64-mingw32/include/wtypes.h
  C:/mingw64/x86_64-w64-mingw32/include/wtypesbase.h
  C:/mingw64/x86_64-w64-mingw32/include/zconf.h
- C:/mingw64/x86_64-w64-mingw32/include/zlib.h
  C:/c - c++/DevilutionX/build_NOW/_deps/libmpq-src/libmpq/explode.h
  C:/c - c++/DevilutionX/build_NOW/_deps/libmpq-src/libmpq/extract.h
  C:/c - c++/DevilutionX/build_NOW/_deps/libmpq-src/libmpq/huffman.h

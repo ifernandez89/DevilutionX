@@ -535,6 +535,12 @@
 },
 {
   "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
+  "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DNONET -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_cl2_to_clx.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -O2 --param=max-vartrack-size=900000000 -o CMakeFiles\\libdevilutionx_cl2_to_clx.dir\\utils\\cl2_to_clx.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\utils\\cl2_to_clx.cpp\"",
+  "file": "C:/c - c++/DevilutionX/Source/utils/cl2_to_clx.cpp",
+  "output": "Source/CMakeFiles/libdevilutionx_cl2_to_clx.dir/utils/cl2_to_clx.cpp.obj"
+},
+{
+  "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
   "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DFMT_USE_LOCALE=0 -DNONET -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_strings.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -o CMakeFiles\\libdevilutionx_strings.dir\\utils\\str_cat.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\utils\\str_cat.cpp\"",
   "file": "C:/c - c++/DevilutionX/Source/utils/str_cat.cpp",
   "output": "Source/CMakeFiles/libdevilutionx_strings.dir/utils/str_cat.cpp.obj"
@@ -547,27 +553,15 @@
 },
 {
   "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
-  "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DNONET -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_palette_kd_tree.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -o CMakeFiles\\libdevilutionx_palette_kd_tree.dir\\utils\\palette_kd_tree.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\utils\\palette_kd_tree.cpp\"",
-  "file": "C:/c - c++/DevilutionX/Source/utils/palette_kd_tree.cpp",
-  "output": "Source/CMakeFiles/libdevilutionx_palette_kd_tree.dir/utils/palette_kd_tree.cpp.obj"
+  "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DFMT_USE_LOCALE=0 -DNONET -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_file_util.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -o CMakeFiles\\libdevilutionx_file_util.dir\\utils\\file_util.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\utils\\file_util.cpp\"",
+  "file": "C:/c - c++/DevilutionX/Source/utils/file_util.cpp",
+  "output": "Source/CMakeFiles/libdevilutionx_file_util.dir/utils/file_util.cpp.obj"
 },
 {
   "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
-  "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DNONET -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_palette_blending.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -o CMakeFiles\\libdevilutionx_palette_blending.dir\\utils\\palette_blending.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\utils\\palette_blending.cpp\"",
-  "file": "C:/c - c++/DevilutionX/Source/utils/palette_blending.cpp",
-  "output": "Source/CMakeFiles/libdevilutionx_palette_blending.dir/utils/palette_blending.cpp.obj"
-},
-{
-  "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
-  "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DNONET -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_light_render.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -o CMakeFiles\\libdevilutionx_light_render.dir\\engine\\render\\light_render.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\engine\\render\\light_render.cpp\"",
-  "file": "C:/c - c++/DevilutionX/Source/engine/render/light_render.cpp",
-  "output": "Source/CMakeFiles/libdevilutionx_light_render.dir/engine/render/light_render.cpp.obj"
-},
-{
-  "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
-  "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DFMT_USE_LOCALE=0 -DNONET -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_clx_render.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -O2 --param=max-vartrack-size=900000000 -o CMakeFiles\\libdevilutionx_clx_render.dir\\engine\\render\\clx_render.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\engine\\render\\clx_render.cpp\"",
-  "file": "C:/c - c++/DevilutionX/Source/engine/render/clx_render.cpp",
-  "output": "Source/CMakeFiles/libdevilutionx_clx_render.dir/engine/render/clx_render.cpp.obj"
+  "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DFMT_USE_LOCALE=0 -DNONET -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_paths.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -o CMakeFiles\\libdevilutionx_paths.dir\\utils\\paths.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\utils\\paths.cpp\"",
+  "file": "C:/c - c++/DevilutionX/Source/utils/paths.cpp",
+  "output": "Source/CMakeFiles/libdevilutionx_paths.dir/utils/paths.cpp.obj"
 },
 {
   "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
@@ -580,24 +574,6 @@
   "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DNONET -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_control_mode.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -o CMakeFiles\\libdevilutionx_control_mode.dir\\controls\\control_mode.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\controls\\control_mode.cpp\"",
   "file": "C:/c - c++/DevilutionX/Source/controls/control_mode.cpp",
   "output": "Source/CMakeFiles/libdevilutionx_control_mode.dir/controls/control_mode.cpp.obj"
-},
-{
-  "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
-  "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DNONET -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_cel_to_clx.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -O2 --param=max-vartrack-size=900000000 -o CMakeFiles\\libdevilutionx_cel_to_clx.dir\\utils\\cel_to_clx.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\utils\\cel_to_clx.cpp\"",
-  "file": "C:/c - c++/DevilutionX/Source/utils/cel_to_clx.cpp",
-  "output": "Source/CMakeFiles/libdevilutionx_cel_to_clx.dir/utils/cel_to_clx.cpp.obj"
-},
-{
-  "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
-  "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DFMT_USE_LOCALE=0 -DNONET -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_file_util.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -o CMakeFiles\\libdevilutionx_file_util.dir\\utils\\file_util.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\utils\\file_util.cpp\"",
-  "file": "C:/c - c++/DevilutionX/Source/utils/file_util.cpp",
-  "output": "Source/CMakeFiles/libdevilutionx_file_util.dir/utils/file_util.cpp.obj"
-},
-{
-  "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
-  "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DFMT_USE_LOCALE=0 -DNONET -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_logged_fstream.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -o CMakeFiles\\libdevilutionx_logged_fstream.dir\\utils\\logged_fstream.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\utils\\logged_fstream.cpp\"",
-  "file": "C:/c - c++/DevilutionX/Source/utils/logged_fstream.cpp",
-  "output": "Source/CMakeFiles/libdevilutionx_logged_fstream.dir/utils/logged_fstream.cpp.obj"
 },
 {
   "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
@@ -619,6 +595,12 @@
 },
 {
   "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
+  "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DFMT_USE_LOCALE=0 -DNONET -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_logged_fstream.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -o CMakeFiles\\libdevilutionx_logged_fstream.dir\\utils\\logged_fstream.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\utils\\logged_fstream.cpp\"",
+  "file": "C:/c - c++/DevilutionX/Source/utils/logged_fstream.cpp",
+  "output": "Source/CMakeFiles/libdevilutionx_logged_fstream.dir/utils/logged_fstream.cpp.obj"
+},
+{
+  "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
   "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DFMT_USE_LOCALE=0 -DNONET -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_options.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -o CMakeFiles\\libdevilutionx_options.dir\\options.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\options.cpp\"",
   "file": "C:/c - c++/DevilutionX/Source/options.cpp",
   "output": "Source/CMakeFiles/libdevilutionx_options.dir/options.cpp.obj"
@@ -628,12 +610,6 @@
   "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DFMT_USE_LOCALE=0 -DNONET -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_game_mode.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -o CMakeFiles\\libdevilutionx_game_mode.dir\\game_mode.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\game_mode.cpp\"",
   "file": "C:/c - c++/DevilutionX/Source/game_mode.cpp",
   "output": "Source/CMakeFiles/libdevilutionx_game_mode.dir/game_mode.cpp.obj"
-},
-{
-  "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
-  "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DFMT_USE_LOCALE=0 -DNONET -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_paths.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -o CMakeFiles\\libdevilutionx_paths.dir\\utils\\paths.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\utils\\paths.cpp\"",
-  "file": "C:/c - c++/DevilutionX/Source/utils/paths.cpp",
-  "output": "Source/CMakeFiles/libdevilutionx_paths.dir/utils/paths.cpp.obj"
 },
 {
   "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
@@ -679,33 +655,45 @@
 },
 {
   "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
-  "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DNONET -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_cl2_to_clx.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -O2 --param=max-vartrack-size=900000000 -o CMakeFiles\\libdevilutionx_cl2_to_clx.dir\\utils\\cl2_to_clx.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\utils\\cl2_to_clx.cpp\"",
-  "file": "C:/c - c++/DevilutionX/Source/utils/cl2_to_clx.cpp",
-  "output": "Source/CMakeFiles/libdevilutionx_cl2_to_clx.dir/utils/cl2_to_clx.cpp.obj"
+  "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DNONET -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_cel_to_clx.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -O2 --param=max-vartrack-size=900000000 -o CMakeFiles\\libdevilutionx_cel_to_clx.dir\\utils\\cel_to_clx.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\utils\\cel_to_clx.cpp\"",
+  "file": "C:/c - c++/DevilutionX/Source/utils/cel_to_clx.cpp",
+  "output": "Source/CMakeFiles/libdevilutionx_cel_to_clx.dir/utils/cel_to_clx.cpp.obj"
 },
 {
   "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
-  "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DFMT_USE_LOCALE=0 -DNONET -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_codec.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -o CMakeFiles\\libdevilutionx_codec.dir\\codec.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\codec.cpp\"",
-  "file": "C:/c - c++/DevilutionX/Source/codec.cpp",
-  "output": "Source/CMakeFiles/libdevilutionx_codec.dir/codec.cpp.obj"
+  "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DNONET -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_palette_kd_tree.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -o CMakeFiles\\libdevilutionx_palette_kd_tree.dir\\utils\\palette_kd_tree.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\utils\\palette_kd_tree.cpp\"",
+  "file": "C:/c - c++/DevilutionX/Source/utils/palette_kd_tree.cpp",
+  "output": "Source/CMakeFiles/libdevilutionx_palette_kd_tree.dir/utils/palette_kd_tree.cpp.obj"
 },
 {
   "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
-  "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DFMT_USE_LOCALE=0 -DNONET -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_codec.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -o CMakeFiles\\libdevilutionx_codec.dir\\sha.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\sha.cpp\"",
-  "file": "C:/c - c++/DevilutionX/Source/sha.cpp",
-  "output": "Source/CMakeFiles/libdevilutionx_codec.dir/sha.cpp.obj"
+  "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DNONET -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_palette_blending.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -o CMakeFiles\\libdevilutionx_palette_blending.dir\\utils\\palette_blending.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\utils\\palette_blending.cpp\"",
+  "file": "C:/c - c++/DevilutionX/Source/utils/palette_blending.cpp",
+  "output": "Source/CMakeFiles/libdevilutionx_palette_blending.dir/utils/palette_blending.cpp.obj"
 },
 {
   "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
-  "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DNONET -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_crawl.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -o CMakeFiles\\libdevilutionx_crawl.dir\\crawl.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\crawl.cpp\"",
-  "file": "C:/c - c++/DevilutionX/Source/crawl.cpp",
-  "output": "Source/CMakeFiles/libdevilutionx_crawl.dir/crawl.cpp.obj"
+  "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DNONET -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_light_render.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -o CMakeFiles\\libdevilutionx_light_render.dir\\engine\\render\\light_render.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\engine\\render\\light_render.cpp\"",
+  "file": "C:/c - c++/DevilutionX/Source/engine/render/light_render.cpp",
+  "output": "Source/CMakeFiles/libdevilutionx_light_render.dir/engine/render/light_render.cpp.obj"
+},
+{
+  "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
+  "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DFMT_USE_LOCALE=0 -DNONET -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_clx_render.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -O2 --param=max-vartrack-size=900000000 -o CMakeFiles\\libdevilutionx_clx_render.dir\\engine\\render\\clx_render.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\engine\\render\\clx_render.cpp\"",
+  "file": "C:/c - c++/DevilutionX/Source/engine/render/clx_render.cpp",
+  "output": "Source/CMakeFiles/libdevilutionx_clx_render.dir/engine/render/clx_render.cpp.obj"
 },
 {
   "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
   "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DNONET -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_surface.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -o CMakeFiles\\libdevilutionx_surface.dir\\engine\\surface.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\engine\\surface.cpp\"",
   "file": "C:/c - c++/DevilutionX/Source/engine/surface.cpp",
   "output": "Source/CMakeFiles/libdevilutionx_surface.dir/engine/surface.cpp.obj"
+},
+{
+  "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
+  "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DFMT_USE_LOCALE=0 -DNONET -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_pcx_to_clx.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -O2 --param=max-vartrack-size=900000000 -o CMakeFiles\\libdevilutionx_pcx_to_clx.dir\\utils\\pcx_to_clx.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\utils\\pcx_to_clx.cpp\"",
+  "file": "C:/c - c++/DevilutionX/Source/utils/pcx_to_clx.cpp",
+  "output": "Source/CMakeFiles/libdevilutionx_pcx_to_clx.dir/utils/pcx_to_clx.cpp.obj"
 },
 {
   "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
@@ -718,30 +706,6 @@
   "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DNONET -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_format_int.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -o CMakeFiles\\libdevilutionx_format_int.dir\\utils\\format_int.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\utils\\format_int.cpp\"",
   "file": "C:/c - c++/DevilutionX/Source/utils/format_int.cpp",
   "output": "Source/CMakeFiles/libdevilutionx_format_int.dir/utils/format_int.cpp.obj"
-},
-{
-  "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
-  "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DFMT_USE_LOCALE=0 -DNONET -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_padmapper.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -o CMakeFiles\\libdevilutionx_padmapper.dir\\controls\\padmapper.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\controls\\padmapper.cpp\"",
-  "file": "C:/c - c++/DevilutionX/Source/controls/padmapper.cpp",
-  "output": "Source/CMakeFiles/libdevilutionx_padmapper.dir/controls/padmapper.cpp.obj"
-},
-{
-  "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
-  "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DNONET -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_primitive_render.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -o CMakeFiles\\libdevilutionx_primitive_render.dir\\engine\\render\\primitive_render.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\engine\\render\\primitive_render.cpp\"",
-  "file": "C:/c - c++/DevilutionX/Source/engine/render/primitive_render.cpp",
-  "output": "Source/CMakeFiles/libdevilutionx_primitive_render.dir/engine/render/primitive_render.cpp.obj"
-},
-{
-  "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
-  "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DFMT_USE_LOCALE=0 -DNONET -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_pcx_to_clx.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -O2 --param=max-vartrack-size=900000000 -o CMakeFiles\\libdevilutionx_pcx_to_clx.dir\\utils\\pcx_to_clx.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\utils\\pcx_to_clx.cpp\"",
-  "file": "C:/c - c++/DevilutionX/Source/utils/pcx_to_clx.cpp",
-  "output": "Source/CMakeFiles/libdevilutionx_pcx_to_clx.dir/utils/pcx_to_clx.cpp.obj"
-},
-{
-  "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
-  "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DNONET -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_direction.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -o CMakeFiles\\libdevilutionx_direction.dir\\engine\\direction.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\engine\\direction.cpp\"",
-  "file": "C:/c - c++/DevilutionX/Source/engine/direction.cpp",
-  "output": "Source/CMakeFiles/libdevilutionx_direction.dir/engine/direction.cpp.obj"
 },
 {
   "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
@@ -811,9 +775,15 @@
 },
 {
   "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
-  "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DFMT_USE_LOCALE=0 -DNONET -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_stores.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -o CMakeFiles\\libdevilutionx_stores.dir\\stores.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\stores.cpp\"",
-  "file": "C:/c - c++/DevilutionX/Source/stores.cpp",
-  "output": "Source/CMakeFiles/libdevilutionx_stores.dir/stores.cpp.obj"
+  "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DFMT_USE_LOCALE=0 -DNONET -DSOL_NO_EXCEPTIONS=1 -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_monster.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -o CMakeFiles\\libdevilutionx_monster.dir\\tables\\monstdat.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\tables\\monstdat.cpp\"",
+  "file": "C:/c - c++/DevilutionX/Source/tables/monstdat.cpp",
+  "output": "Source/CMakeFiles/libdevilutionx_monster.dir/tables/monstdat.cpp.obj"
+},
+{
+  "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
+  "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DFMT_USE_LOCALE=0 -DNONET -DSOL_NO_EXCEPTIONS=1 -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_monster.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -o CMakeFiles\\libdevilutionx_monster.dir\\monster.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\monster.cpp\"",
+  "file": "C:/c - c++/DevilutionX/Source/monster.cpp",
+  "output": "Source/CMakeFiles/libdevilutionx_monster.dir/monster.cpp.obj"
 },
 {
   "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
@@ -841,6 +811,12 @@
 },
 {
   "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
+  "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DFMT_USE_LOCALE=0 -DNONET -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_stores.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -o CMakeFiles\\libdevilutionx_stores.dir\\stores.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\stores.cpp\"",
+  "file": "C:/c - c++/DevilutionX/Source/stores.cpp",
+  "output": "Source/CMakeFiles/libdevilutionx_stores.dir/stores.cpp.obj"
+},
+{
+  "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
   "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DFMT_USE_LOCALE=0 -DNONET -DSOL_NO_EXCEPTIONS=1 -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_items.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -o CMakeFiles\\libdevilutionx_items.dir\\tables\\itemdat.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\tables\\itemdat.cpp\"",
   "file": "C:/c - c++/DevilutionX/Source/tables/itemdat.cpp",
   "output": "Source/CMakeFiles/libdevilutionx_items.dir/tables/itemdat.cpp.obj"
@@ -850,18 +826,6 @@
   "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DFMT_USE_LOCALE=0 -DNONET -DSOL_NO_EXCEPTIONS=1 -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_items.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -o CMakeFiles\\libdevilutionx_items.dir\\items.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\items.cpp\"",
   "file": "C:/c - c++/DevilutionX/Source/items.cpp",
   "output": "Source/CMakeFiles/libdevilutionx_items.dir/items.cpp.obj"
-},
-{
-  "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
-  "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DFMT_USE_LOCALE=0 -DNONET -DSOL_NO_EXCEPTIONS=1 -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_monster.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -o CMakeFiles\\libdevilutionx_monster.dir\\tables\\monstdat.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\tables\\monstdat.cpp\"",
-  "file": "C:/c - c++/DevilutionX/Source/tables/monstdat.cpp",
-  "output": "Source/CMakeFiles/libdevilutionx_monster.dir/tables/monstdat.cpp.obj"
-},
-{
-  "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
-  "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DFMT_USE_LOCALE=0 -DNONET -DSOL_NO_EXCEPTIONS=1 -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_monster.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -o CMakeFiles\\libdevilutionx_monster.dir\\monster.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\monster.cpp\"",
-  "file": "C:/c - c++/DevilutionX/Source/monster.cpp",
-  "output": "Source/CMakeFiles/libdevilutionx_monster.dir/monster.cpp.obj"
 },
 {
   "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
@@ -901,9 +865,39 @@
 },
 {
   "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
-  "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DNONET -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_pathfinding.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -o CMakeFiles\\libdevilutionx_pathfinding.dir\\engine\\path.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\engine\\path.cpp\"",
-  "file": "C:/c - c++/DevilutionX/Source/engine/path.cpp",
-  "output": "Source/CMakeFiles/libdevilutionx_pathfinding.dir/engine/path.cpp.obj"
+  "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DNONET -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_crawl.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -o CMakeFiles\\libdevilutionx_crawl.dir\\crawl.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\crawl.cpp\"",
+  "file": "C:/c - c++/DevilutionX/Source/crawl.cpp",
+  "output": "Source/CMakeFiles/libdevilutionx_crawl.dir/crawl.cpp.obj"
+},
+{
+  "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
+  "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DFMT_USE_LOCALE=0 -DNONET -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_codec.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -o CMakeFiles\\libdevilutionx_codec.dir\\codec.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\codec.cpp\"",
+  "file": "C:/c - c++/DevilutionX/Source/codec.cpp",
+  "output": "Source/CMakeFiles/libdevilutionx_codec.dir/codec.cpp.obj"
+},
+{
+  "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
+  "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DFMT_USE_LOCALE=0 -DNONET -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_codec.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -o CMakeFiles\\libdevilutionx_codec.dir\\sha.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\sha.cpp\"",
+  "file": "C:/c - c++/DevilutionX/Source/sha.cpp",
+  "output": "Source/CMakeFiles/libdevilutionx_codec.dir/sha.cpp.obj"
+},
+{
+  "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
+  "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DFMT_USE_LOCALE=0 -DNONET -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_padmapper.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -o CMakeFiles\\libdevilutionx_padmapper.dir\\controls\\padmapper.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\controls\\padmapper.cpp\"",
+  "file": "C:/c - c++/DevilutionX/Source/controls/padmapper.cpp",
+  "output": "Source/CMakeFiles/libdevilutionx_padmapper.dir/controls/padmapper.cpp.obj"
+},
+{
+  "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
+  "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DNONET -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_direction.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -o CMakeFiles\\libdevilutionx_direction.dir\\engine\\direction.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\engine\\direction.cpp\"",
+  "file": "C:/c - c++/DevilutionX/Source/engine/direction.cpp",
+  "output": "Source/CMakeFiles/libdevilutionx_direction.dir/engine/direction.cpp.obj"
+},
+{
+  "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
+  "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DNONET -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_primitive_render.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -o CMakeFiles\\libdevilutionx_primitive_render.dir\\engine\\render\\primitive_render.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\engine\\render\\primitive_render.cpp\"",
+  "file": "C:/c - c++/DevilutionX/Source/engine/render/primitive_render.cpp",
+  "output": "Source/CMakeFiles/libdevilutionx_primitive_render.dir/engine/render/primitive_render.cpp.obj"
 },
 {
   "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
@@ -913,21 +907,15 @@
 },
 {
   "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
+  "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DFMT_USE_LOCALE=0 -DNONET -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_load_pcx.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -o CMakeFiles\\libdevilutionx_load_pcx.dir\\engine\\load_pcx.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\engine\\load_pcx.cpp\"",
+  "file": "C:/c - c++/DevilutionX/Source/engine/load_pcx.cpp",
+  "output": "Source/CMakeFiles/libdevilutionx_load_pcx.dir/engine/load_pcx.cpp.obj"
+},
+{
+  "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
   "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DFMT_USE_LOCALE=0 -DNONET -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_init.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -o CMakeFiles\\libdevilutionx_init.dir\\init.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\init.cpp\"",
   "file": "C:/c - c++/DevilutionX/Source/init.cpp",
   "output": "Source/CMakeFiles/libdevilutionx_init.dir/init.cpp.obj"
-},
-{
-  "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
-  "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DFMT_USE_LOCALE=0 -DNONET -DSOL_NO_EXCEPTIONS=1 -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_level_objects.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -o CMakeFiles\\libdevilutionx_level_objects.dir\\tables\\objdat.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\tables\\objdat.cpp\"",
-  "file": "C:/c - c++/DevilutionX/Source/tables/objdat.cpp",
-  "output": "Source/CMakeFiles/libdevilutionx_level_objects.dir/tables/objdat.cpp.obj"
-},
-{
-  "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
-  "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DFMT_USE_LOCALE=0 -DNONET -DSOL_NO_EXCEPTIONS=1 -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_level_objects.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -o CMakeFiles\\libdevilutionx_level_objects.dir\\objects.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\objects.cpp\"",
-  "file": "C:/c - c++/DevilutionX/Source/objects.cpp",
-  "output": "Source/CMakeFiles/libdevilutionx_level_objects.dir/objects.cpp.obj"
 },
 {
   "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
@@ -949,9 +937,15 @@
 },
 {
   "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
-  "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DFMT_USE_LOCALE=0 -DNONET -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_load_pcx.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -o CMakeFiles\\libdevilutionx_load_pcx.dir\\engine\\load_pcx.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\engine\\load_pcx.cpp\"",
-  "file": "C:/c - c++/DevilutionX/Source/engine/load_pcx.cpp",
-  "output": "Source/CMakeFiles/libdevilutionx_load_pcx.dir/engine/load_pcx.cpp.obj"
+  "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DFMT_USE_LOCALE=0 -DNONET -DSOL_NO_EXCEPTIONS=1 -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_level_objects.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -o CMakeFiles\\libdevilutionx_level_objects.dir\\tables\\objdat.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\tables\\objdat.cpp\"",
+  "file": "C:/c - c++/DevilutionX/Source/tables/objdat.cpp",
+  "output": "Source/CMakeFiles/libdevilutionx_level_objects.dir/tables/objdat.cpp.obj"
+},
+{
+  "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
+  "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DFMT_USE_LOCALE=0 -DNONET -DSOL_NO_EXCEPTIONS=1 -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_level_objects.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -o CMakeFiles\\libdevilutionx_level_objects.dir\\objects.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\objects.cpp\"",
+  "file": "C:/c - c++/DevilutionX/Source/objects.cpp",
+  "output": "Source/CMakeFiles/libdevilutionx_level_objects.dir/objects.cpp.obj"
 },
 {
   "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
@@ -967,9 +961,15 @@
 },
 {
   "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
-  "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DNONET -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_utils_console.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -o CMakeFiles\\libdevilutionx_utils_console.dir\\utils\\console.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\utils\\console.cpp\"",
-  "file": "C:/c - c++/DevilutionX/Source/utils/console.cpp",
-  "output": "Source/CMakeFiles/libdevilutionx_utils_console.dir/utils/console.cpp.obj"
+  "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DNONET -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_pathfinding.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -o CMakeFiles\\libdevilutionx_pathfinding.dir\\engine\\path.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\engine\\path.cpp\"",
+  "file": "C:/c - c++/DevilutionX/Source/engine/path.cpp",
+  "output": "Source/CMakeFiles/libdevilutionx_pathfinding.dir/engine/path.cpp.obj"
+},
+{
+  "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
+  "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DFMT_USE_LOCALE=0 -DNONET -DSOL_NO_EXCEPTIONS=1 -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_quests.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -o CMakeFiles\\libdevilutionx_quests.dir\\quests.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\quests.cpp\"",
+  "file": "C:/c - c++/DevilutionX/Source/quests.cpp",
+  "output": "Source/CMakeFiles/libdevilutionx_quests.dir/quests.cpp.obj"
 },
 {
   "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
@@ -985,15 +985,15 @@
 },
 {
   "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
-  "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DNONET -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_surface_to_png.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -o CMakeFiles\\libdevilutionx_surface_to_png.dir\\utils\\surface_to_png.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\utils\\surface_to_png.cpp\"",
-  "file": "C:/c - c++/DevilutionX/Source/utils/surface_to_png.cpp",
-  "output": "Source/CMakeFiles/libdevilutionx_surface_to_png.dir/utils/surface_to_png.cpp.obj"
+  "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DNONET -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_utils_console.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -o CMakeFiles\\libdevilutionx_utils_console.dir\\utils\\console.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\utils\\console.cpp\"",
+  "file": "C:/c - c++/DevilutionX/Source/utils/console.cpp",
+  "output": "Source/CMakeFiles/libdevilutionx_utils_console.dir/utils/console.cpp.obj"
 },
 {
   "directory": "C:/c - c++/DevilutionX/build_NOW/Source",
-  "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DFMT_USE_LOCALE=0 -DNONET -DSOL_NO_EXCEPTIONS=1 -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_quests.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -o CMakeFiles\\libdevilutionx_quests.dir\\quests.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\quests.cpp\"",
-  "file": "C:/c - c++/DevilutionX/Source/quests.cpp",
-  "output": "Source/CMakeFiles/libdevilutionx_quests.dir/quests.cpp.obj"
+  "command": "C:\\mingw64\\bin\\c++.exe -DDEVILUTIONX_DEFAULT_RESAMPLER=Speex -DDEVILUTIONX_DISPLAY_TEXTURE_FORMAT=SDL_PIXELFORMAT_RGB888 -DDEVILUTIONX_PALETTE_TRANSPARENCY_BLACK_16_LUT -DDEVILUTIONX_RESAMPLER_SDL -DDEVILUTIONX_RESAMPLER_SPEEX -DDEVILUTIONX_SCREENSHOT_FORMAT=DEVILUTIONX_SCREENSHOT_FORMAT_PNG -DDISABLE_TCP -DDISABLE_ZERO_TIER -DNONET -DWINVER=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_WINNT=0x0601 @CMakeFiles/libdevilutionx_surface_to_png.dir/includes_CXX.rsp  -fno-rtti -fno-exceptions -O3 -DNDEBUG -std=gnu++20 -flto=auto -fno-fat-lto-objects -ffunction-sections -fdata-sections -fipa-pta -fdevirtualize-at-ltrans -Wall -Wextra -Wno-unused-parameter \"-fmacro-prefix-map=C:/c - c++/DevilutionX/=\" -o CMakeFiles\\libdevilutionx_surface_to_png.dir\\utils\\surface_to_png.cpp.obj -c \"C:\\c - c++\\DevilutionX\\Source\\utils\\surface_to_png.cpp\"",
+  "file": "C:/c - c++/DevilutionX/Source/utils/surface_to_png.cpp",
+  "output": "Source/CMakeFiles/libdevilutionx_surface_to_png.dir/utils/surface_to_png.cpp.obj"
 },
 {
   "directory": "C:/c - c++/DevilutionX/build_NOW/Source",

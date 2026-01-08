@@ -32,15 +32,6 @@ BUILD_GENERATOR:BOOL=OFF
 //Build the testing tree.
 BUILD_TESTING:BOOL=OFF
 
-//Path to a file.
-BZIP2_INCLUDE_DIR:PATH=BZIP2_INCLUDE_DIR-NOTFOUND
-
-//Path to a library.
-BZIP2_LIBRARY_DEBUG:FILEPATH=BZIP2_LIBRARY_DEBUG-NOTFOUND
-
-//Path to a library.
-BZIP2_LIBRARY_RELEASE:FILEPATH=BZIP2_LIBRARY_RELEASE-NOTFOUND
-
 //Path to a program.
 CCACHE_PROGRAM:FILEPATH=CCACHE_PROGRAM-NOTFOUND
 
@@ -252,7 +243,7 @@ CMAKE_OBJCOPY:FILEPATH=C:/mingw64/bin/objcopy.exe
 CMAKE_OBJDUMP:FILEPATH=C:/mingw64/bin/objdump.exe
 
 //No help, variable specified on the command line.
-CMAKE_PREFIX_PATH:UNINITIALIZED=deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32
+CMAKE_PREFIX_PATH:UNINITIALIZED=C:/c - c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32
 
 //Value Computed by CMake
 CMAKE_PROJECT_COMPAT_VERSION:STATIC=
@@ -860,19 +851,10 @@ USE_SDL3:BOOL=OFF
 WIN_NSIS:BOOL=OFF
 
 //Path to a file.
-ZLIB_INCLUDE_DIR:PATH=C:/c - c++/DevilutionX/deps/zlib-build
+ZLIB_INCLUDE_DIR:PATH=C:/c - c++/DevilutionX/deps/zlib-src/zlib-1.3.1
 
 //No help, variable specified on the command line.
 ZLIB_LIBRARY:UNINITIALIZED=C:/c - c++/DevilutionX/deps/zlib-build/libzlibstatic.a
-
-//Path to a library.
-ZLIB_LIBRARY_DEBUG:FILEPATH=ZLIB_LIBRARY_DEBUG-NOTFOUND
-
-//Path to a library.
-ZLIB_LIBRARY_RELEASE:FILEPATH=ZLIB_LIBRARY_RELEASE-NOTFOUND
-
-//No help, variable specified on the command line.
-ZLIB_ROOT:UNINITIALIZED=deps/zlib-build
 
 //The directory containing a CMake configuration file for fmt.
 fmt_DIR:PATH=fmt_DIR-NOTFOUND
@@ -941,10 +923,6 @@ unordered_dense_SOURCE_DIR:STATIC=C:/c - c++/DevilutionX/build_NOW/_deps/unorder
 
 //STRINGS property for variable: ASAN
 ASAN-STRINGS:INTERNAL=FOR_DEBUG;FOR_RELEASE;ON;OFF
-//ADVANCED property for variable: BZIP2_LIBRARY_DEBUG
-BZIP2_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: BZIP2_LIBRARY_RELEASE
-BZIP2_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_ADDR2LINE
 CMAKE_ADDR2LINE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_AR
@@ -1185,7 +1163,7 @@ DISABLE_ZERO_TIER:INTERNAL=ON
 //Details about finding Threads
 FIND_PACKAGE_MESSAGE_DETAILS_Threads:INTERNAL=[TRUE][v()]
 //Details about finding ZLIB
-FIND_PACKAGE_MESSAGE_DETAILS_ZLIB:INTERNAL=[C:/c - c++/DevilutionX/deps/zlib-build/libzlibstatic.a][C:/c - c++/DevilutionX/deps/zlib-build][ ][v()]
+FIND_PACKAGE_MESSAGE_DETAILS_ZLIB:INTERNAL=[C:/c - c++/DevilutionX/deps/zlib-build/libzlibstatic.a][C:/c - c++/DevilutionX/deps/zlib-src/zlib-1.3.1][ ][v1.3.1()]
 //ADVANCED property for variable: GIT_EXECUTABLE
 GIT_EXECUTABLE-ADVANCED:INTERNAL=1
 //Test HAVE_LD_VERSION_SCRIPT
@@ -1260,10 +1238,6 @@ TARGET_PLATFORM-STRINGS:INTERNAL=host;retrofw;rg99;rg350;gkd350h;cpigamesh;miyoo
 UBSAN-STRINGS:INTERNAL=FOR_DEBUG;FOR_RELEASE;ON;OFF
 //ADVANCED property for variable: ZLIB_INCLUDE_DIR
 ZLIB_INCLUDE_DIR-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: ZLIB_LIBRARY_DEBUG
-ZLIB_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: ZLIB_LIBRARY_RELEASE
-ZLIB_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
 //CMAKE_INSTALL_PREFIX during last run
 _GNUInstallDirs_LAST_CMAKE_INSTALL_PREFIX:INTERNAL=C:/Program Files (x86)/DevilutionX
 __pkg_config_checked_PC_SDL2_image:INTERNAL=1

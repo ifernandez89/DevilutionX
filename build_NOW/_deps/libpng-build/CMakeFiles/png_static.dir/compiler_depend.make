@@ -3,6 +3,7 @@
 
 _deps/libpng-build/CMakeFiles/png_static.dir/png.c.obj: _deps/libpng-src/png.c \
   _deps/libpng-build/pnglibconf.h \
+  C:/c\ -\ c++/DevilutionX/deps/zlib-src/zlib-1.3.1/zlib.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/adxintrin.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/ammintrin.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/amxbf16intrin.h \
@@ -291,7 +292,6 @@ _deps/libpng-build/CMakeFiles/png_static.dir/png.c.obj: _deps/libpng-src/png.c \
   C:/mingw64/x86_64-w64-mingw32/include/wtypes.h \
   C:/mingw64/x86_64-w64-mingw32/include/wtypesbase.h \
   C:/mingw64/x86_64-w64-mingw32/include/zconf.h \
-  C:/mingw64/x86_64-w64-mingw32/include/zlib.h \
   _deps/libpng-src/png.h \
   _deps/libpng-src/pngconf.h \
   _deps/libpng-src/pngdebug.h \
@@ -301,6 +301,7 @@ _deps/libpng-build/CMakeFiles/png_static.dir/png.c.obj: _deps/libpng-src/png.c \
 
 _deps/libpng-build/CMakeFiles/png_static.dir/pngerror.c.obj: _deps/libpng-src/pngerror.c \
   _deps/libpng-build/pnglibconf.h \
+  C:/c\ -\ c++/DevilutionX/deps/zlib-src/zlib-1.3.1/zlib.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/adxintrin.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/ammintrin.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/amxbf16intrin.h \
@@ -589,7 +590,6 @@ _deps/libpng-build/CMakeFiles/png_static.dir/pngerror.c.obj: _deps/libpng-src/pn
   C:/mingw64/x86_64-w64-mingw32/include/wtypes.h \
   C:/mingw64/x86_64-w64-mingw32/include/wtypesbase.h \
   C:/mingw64/x86_64-w64-mingw32/include/zconf.h \
-  C:/mingw64/x86_64-w64-mingw32/include/zlib.h \
   _deps/libpng-src/png.h \
   _deps/libpng-src/pngconf.h \
   _deps/libpng-src/pngdebug.h \
@@ -599,6 +599,7 @@ _deps/libpng-build/CMakeFiles/png_static.dir/pngerror.c.obj: _deps/libpng-src/pn
 
 _deps/libpng-build/CMakeFiles/png_static.dir/pngget.c.obj: _deps/libpng-src/pngget.c \
   _deps/libpng-build/pnglibconf.h \
+  C:/c\ -\ c++/DevilutionX/deps/zlib-src/zlib-1.3.1/zlib.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/adxintrin.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/ammintrin.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/amxbf16intrin.h \
@@ -887,7 +888,6 @@ _deps/libpng-build/CMakeFiles/png_static.dir/pngget.c.obj: _deps/libpng-src/pngg
   C:/mingw64/x86_64-w64-mingw32/include/wtypes.h \
   C:/mingw64/x86_64-w64-mingw32/include/wtypesbase.h \
   C:/mingw64/x86_64-w64-mingw32/include/zconf.h \
-  C:/mingw64/x86_64-w64-mingw32/include/zlib.h \
   _deps/libpng-src/png.h \
   _deps/libpng-src/pngconf.h \
   _deps/libpng-src/pngdebug.h \
@@ -897,6 +897,7 @@ _deps/libpng-build/CMakeFiles/png_static.dir/pngget.c.obj: _deps/libpng-src/pngg
 
 _deps/libpng-build/CMakeFiles/png_static.dir/pngmem.c.obj: _deps/libpng-src/pngmem.c \
   _deps/libpng-build/pnglibconf.h \
+  C:/c\ -\ c++/DevilutionX/deps/zlib-src/zlib-1.3.1/zlib.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/adxintrin.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/ammintrin.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/amxbf16intrin.h \
@@ -1185,7 +1186,6 @@ _deps/libpng-build/CMakeFiles/png_static.dir/pngmem.c.obj: _deps/libpng-src/pngm
   C:/mingw64/x86_64-w64-mingw32/include/wtypes.h \
   C:/mingw64/x86_64-w64-mingw32/include/wtypesbase.h \
   C:/mingw64/x86_64-w64-mingw32/include/zconf.h \
-  C:/mingw64/x86_64-w64-mingw32/include/zlib.h \
   _deps/libpng-src/png.h \
   _deps/libpng-src/pngconf.h \
   _deps/libpng-src/pngdebug.h \
@@ -1195,6 +1195,7 @@ _deps/libpng-build/CMakeFiles/png_static.dir/pngmem.c.obj: _deps/libpng-src/pngm
 
 _deps/libpng-build/CMakeFiles/png_static.dir/pngpread.c.obj: _deps/libpng-src/pngpread.c \
   _deps/libpng-build/pnglibconf.h \
+  C:/c\ -\ c++/DevilutionX/deps/zlib-src/zlib-1.3.1/zlib.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/adxintrin.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/ammintrin.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/amxbf16intrin.h \
@@ -1483,7 +1484,6 @@ _deps/libpng-build/CMakeFiles/png_static.dir/pngpread.c.obj: _deps/libpng-src/pn
   C:/mingw64/x86_64-w64-mingw32/include/wtypes.h \
   C:/mingw64/x86_64-w64-mingw32/include/wtypesbase.h \
   C:/mingw64/x86_64-w64-mingw32/include/zconf.h \
-  C:/mingw64/x86_64-w64-mingw32/include/zlib.h \
   _deps/libpng-src/png.h \
   _deps/libpng-src/pngconf.h \
   _deps/libpng-src/pngdebug.h \
@@ -1493,6 +1493,7 @@ _deps/libpng-build/CMakeFiles/png_static.dir/pngpread.c.obj: _deps/libpng-src/pn
 
 _deps/libpng-build/CMakeFiles/png_static.dir/pngread.c.obj: _deps/libpng-src/pngread.c \
   _deps/libpng-build/pnglibconf.h \
+  C:/c\ -\ c++/DevilutionX/deps/zlib-src/zlib-1.3.1/zlib.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/adxintrin.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/ammintrin.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/amxbf16intrin.h \
@@ -1781,7 +1782,6 @@ _deps/libpng-build/CMakeFiles/png_static.dir/pngread.c.obj: _deps/libpng-src/png
   C:/mingw64/x86_64-w64-mingw32/include/wtypes.h \
   C:/mingw64/x86_64-w64-mingw32/include/wtypesbase.h \
   C:/mingw64/x86_64-w64-mingw32/include/zconf.h \
-  C:/mingw64/x86_64-w64-mingw32/include/zlib.h \
   _deps/libpng-src/png.h \
   _deps/libpng-src/pngconf.h \
   _deps/libpng-src/pngdebug.h \
@@ -1791,6 +1791,7 @@ _deps/libpng-build/CMakeFiles/png_static.dir/pngread.c.obj: _deps/libpng-src/png
 
 _deps/libpng-build/CMakeFiles/png_static.dir/pngrio.c.obj: _deps/libpng-src/pngrio.c \
   _deps/libpng-build/pnglibconf.h \
+  C:/c\ -\ c++/DevilutionX/deps/zlib-src/zlib-1.3.1/zlib.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/adxintrin.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/ammintrin.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/amxbf16intrin.h \
@@ -2079,7 +2080,6 @@ _deps/libpng-build/CMakeFiles/png_static.dir/pngrio.c.obj: _deps/libpng-src/pngr
   C:/mingw64/x86_64-w64-mingw32/include/wtypes.h \
   C:/mingw64/x86_64-w64-mingw32/include/wtypesbase.h \
   C:/mingw64/x86_64-w64-mingw32/include/zconf.h \
-  C:/mingw64/x86_64-w64-mingw32/include/zlib.h \
   _deps/libpng-src/png.h \
   _deps/libpng-src/pngconf.h \
   _deps/libpng-src/pngdebug.h \
@@ -2089,6 +2089,7 @@ _deps/libpng-build/CMakeFiles/png_static.dir/pngrio.c.obj: _deps/libpng-src/pngr
 
 _deps/libpng-build/CMakeFiles/png_static.dir/pngrtran.c.obj: _deps/libpng-src/pngrtran.c \
   _deps/libpng-build/pnglibconf.h \
+  C:/c\ -\ c++/DevilutionX/deps/zlib-src/zlib-1.3.1/zlib.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/adxintrin.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/ammintrin.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/amxbf16intrin.h \
@@ -2377,7 +2378,6 @@ _deps/libpng-build/CMakeFiles/png_static.dir/pngrtran.c.obj: _deps/libpng-src/pn
   C:/mingw64/x86_64-w64-mingw32/include/wtypes.h \
   C:/mingw64/x86_64-w64-mingw32/include/wtypesbase.h \
   C:/mingw64/x86_64-w64-mingw32/include/zconf.h \
-  C:/mingw64/x86_64-w64-mingw32/include/zlib.h \
   _deps/libpng-src/png.h \
   _deps/libpng-src/pngconf.h \
   _deps/libpng-src/pngdebug.h \
@@ -2387,6 +2387,7 @@ _deps/libpng-build/CMakeFiles/png_static.dir/pngrtran.c.obj: _deps/libpng-src/pn
 
 _deps/libpng-build/CMakeFiles/png_static.dir/pngrutil.c.obj: _deps/libpng-src/pngrutil.c \
   _deps/libpng-build/pnglibconf.h \
+  C:/c\ -\ c++/DevilutionX/deps/zlib-src/zlib-1.3.1/zlib.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/adxintrin.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/ammintrin.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/amxbf16intrin.h \
@@ -2675,7 +2676,6 @@ _deps/libpng-build/CMakeFiles/png_static.dir/pngrutil.c.obj: _deps/libpng-src/pn
   C:/mingw64/x86_64-w64-mingw32/include/wtypes.h \
   C:/mingw64/x86_64-w64-mingw32/include/wtypesbase.h \
   C:/mingw64/x86_64-w64-mingw32/include/zconf.h \
-  C:/mingw64/x86_64-w64-mingw32/include/zlib.h \
   _deps/libpng-src/png.h \
   _deps/libpng-src/pngconf.h \
   _deps/libpng-src/pngdebug.h \
@@ -2685,6 +2685,7 @@ _deps/libpng-build/CMakeFiles/png_static.dir/pngrutil.c.obj: _deps/libpng-src/pn
 
 _deps/libpng-build/CMakeFiles/png_static.dir/pngset.c.obj: _deps/libpng-src/pngset.c \
   _deps/libpng-build/pnglibconf.h \
+  C:/c\ -\ c++/DevilutionX/deps/zlib-src/zlib-1.3.1/zlib.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/adxintrin.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/ammintrin.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/amxbf16intrin.h \
@@ -2973,7 +2974,6 @@ _deps/libpng-build/CMakeFiles/png_static.dir/pngset.c.obj: _deps/libpng-src/pngs
   C:/mingw64/x86_64-w64-mingw32/include/wtypes.h \
   C:/mingw64/x86_64-w64-mingw32/include/wtypesbase.h \
   C:/mingw64/x86_64-w64-mingw32/include/zconf.h \
-  C:/mingw64/x86_64-w64-mingw32/include/zlib.h \
   _deps/libpng-src/png.h \
   _deps/libpng-src/pngconf.h \
   _deps/libpng-src/pngdebug.h \
@@ -2983,6 +2983,7 @@ _deps/libpng-build/CMakeFiles/png_static.dir/pngset.c.obj: _deps/libpng-src/pngs
 
 _deps/libpng-build/CMakeFiles/png_static.dir/pngtrans.c.obj: _deps/libpng-src/pngtrans.c \
   _deps/libpng-build/pnglibconf.h \
+  C:/c\ -\ c++/DevilutionX/deps/zlib-src/zlib-1.3.1/zlib.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/adxintrin.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/ammintrin.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/amxbf16intrin.h \
@@ -3271,7 +3272,6 @@ _deps/libpng-build/CMakeFiles/png_static.dir/pngtrans.c.obj: _deps/libpng-src/pn
   C:/mingw64/x86_64-w64-mingw32/include/wtypes.h \
   C:/mingw64/x86_64-w64-mingw32/include/wtypesbase.h \
   C:/mingw64/x86_64-w64-mingw32/include/zconf.h \
-  C:/mingw64/x86_64-w64-mingw32/include/zlib.h \
   _deps/libpng-src/png.h \
   _deps/libpng-src/pngconf.h \
   _deps/libpng-src/pngdebug.h \
@@ -3281,6 +3281,7 @@ _deps/libpng-build/CMakeFiles/png_static.dir/pngtrans.c.obj: _deps/libpng-src/pn
 
 _deps/libpng-build/CMakeFiles/png_static.dir/pngwio.c.obj: _deps/libpng-src/pngwio.c \
   _deps/libpng-build/pnglibconf.h \
+  C:/c\ -\ c++/DevilutionX/deps/zlib-src/zlib-1.3.1/zlib.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/adxintrin.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/ammintrin.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/amxbf16intrin.h \
@@ -3569,7 +3570,6 @@ _deps/libpng-build/CMakeFiles/png_static.dir/pngwio.c.obj: _deps/libpng-src/pngw
   C:/mingw64/x86_64-w64-mingw32/include/wtypes.h \
   C:/mingw64/x86_64-w64-mingw32/include/wtypesbase.h \
   C:/mingw64/x86_64-w64-mingw32/include/zconf.h \
-  C:/mingw64/x86_64-w64-mingw32/include/zlib.h \
   _deps/libpng-src/png.h \
   _deps/libpng-src/pngconf.h \
   _deps/libpng-src/pngdebug.h \
@@ -3579,6 +3579,7 @@ _deps/libpng-build/CMakeFiles/png_static.dir/pngwio.c.obj: _deps/libpng-src/pngw
 
 _deps/libpng-build/CMakeFiles/png_static.dir/pngwrite.c.obj: _deps/libpng-src/pngwrite.c \
   _deps/libpng-build/pnglibconf.h \
+  C:/c\ -\ c++/DevilutionX/deps/zlib-src/zlib-1.3.1/zlib.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/adxintrin.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/ammintrin.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/amxbf16intrin.h \
@@ -3867,7 +3868,6 @@ _deps/libpng-build/CMakeFiles/png_static.dir/pngwrite.c.obj: _deps/libpng-src/pn
   C:/mingw64/x86_64-w64-mingw32/include/wtypes.h \
   C:/mingw64/x86_64-w64-mingw32/include/wtypesbase.h \
   C:/mingw64/x86_64-w64-mingw32/include/zconf.h \
-  C:/mingw64/x86_64-w64-mingw32/include/zlib.h \
   _deps/libpng-src/png.h \
   _deps/libpng-src/pngconf.h \
   _deps/libpng-src/pngdebug.h \
@@ -3877,6 +3877,7 @@ _deps/libpng-build/CMakeFiles/png_static.dir/pngwrite.c.obj: _deps/libpng-src/pn
 
 _deps/libpng-build/CMakeFiles/png_static.dir/pngwtran.c.obj: _deps/libpng-src/pngwtran.c \
   _deps/libpng-build/pnglibconf.h \
+  C:/c\ -\ c++/DevilutionX/deps/zlib-src/zlib-1.3.1/zlib.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/adxintrin.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/ammintrin.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/amxbf16intrin.h \
@@ -4165,7 +4166,6 @@ _deps/libpng-build/CMakeFiles/png_static.dir/pngwtran.c.obj: _deps/libpng-src/pn
   C:/mingw64/x86_64-w64-mingw32/include/wtypes.h \
   C:/mingw64/x86_64-w64-mingw32/include/wtypesbase.h \
   C:/mingw64/x86_64-w64-mingw32/include/zconf.h \
-  C:/mingw64/x86_64-w64-mingw32/include/zlib.h \
   _deps/libpng-src/png.h \
   _deps/libpng-src/pngconf.h \
   _deps/libpng-src/pngdebug.h \
@@ -4175,6 +4175,7 @@ _deps/libpng-build/CMakeFiles/png_static.dir/pngwtran.c.obj: _deps/libpng-src/pn
 
 _deps/libpng-build/CMakeFiles/png_static.dir/pngwutil.c.obj: _deps/libpng-src/pngwutil.c \
   _deps/libpng-build/pnglibconf.h \
+  C:/c\ -\ c++/DevilutionX/deps/zlib-src/zlib-1.3.1/zlib.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/adxintrin.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/ammintrin.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/amxbf16intrin.h \
@@ -4463,7 +4464,6 @@ _deps/libpng-build/CMakeFiles/png_static.dir/pngwutil.c.obj: _deps/libpng-src/pn
   C:/mingw64/x86_64-w64-mingw32/include/wtypes.h \
   C:/mingw64/x86_64-w64-mingw32/include/wtypesbase.h \
   C:/mingw64/x86_64-w64-mingw32/include/zconf.h \
-  C:/mingw64/x86_64-w64-mingw32/include/zlib.h \
   _deps/libpng-src/png.h \
   _deps/libpng-src/pngconf.h \
   _deps/libpng-src/pngdebug.h \
@@ -4486,11 +4486,21 @@ C:/mingw64/x86_64-w64-mingw32/include/processenv.h:
 
 _deps/libpng-build/pnglibconf.h:
 
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/amxfp16intrin.h:
+
+C:/c\ -\ c++/DevilutionX/deps/zlib-src/zlib-1.3.1/zlib.h:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/clzerointrin.h:
+
 C:/mingw64/x86_64-w64-mingw32/include/minwindef.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/avx512vbmiintrin.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/adxintrin.h:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/amxbf16intrin.h:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/ammintrin.h:
 
 _deps/libpng-src/pngwrite.c:
 
@@ -4499,12 +4509,6 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/hresetintrin.h:
 C:/mingw64/x86_64-w64-mingw32/include/winscard.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/amxint8intrin.h:
-
-C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/amxbf16intrin.h:
-
-C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/ammintrin.h:
-
-C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/amxfp16intrin.h:
 
 C:/mingw64/x86_64-w64-mingw32/include/winnt.h:
 
@@ -4641,8 +4645,6 @@ _deps/libpng-src/pngset.c:
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/clflushoptintrin.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/clwbintrin.h:
-
-C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/clzerointrin.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/fxsrintrin.h:
 
@@ -5067,8 +5069,6 @@ C:/mingw64/x86_64-w64-mingw32/include/wnnc.h:
 C:/mingw64/x86_64-w64-mingw32/include/wow64apiset.h:
 
 C:/mingw64/x86_64-w64-mingw32/include/wtypes.h:
-
-C:/mingw64/x86_64-w64-mingw32/include/zlib.h:
 
 _deps/libpng-src/png.h:
 

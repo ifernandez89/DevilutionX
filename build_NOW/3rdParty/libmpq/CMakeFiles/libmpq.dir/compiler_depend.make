@@ -55,6 +55,7 @@
 
 3rdParty/libmpq/CMakeFiles/libmpq.dir/__/__/_deps/libmpq-src/libmpq/extract.c.obj: _deps/libmpq-src/libmpq/extract.c \
   _deps/bzip2-src/bzlib.h \
+  C:/c\ -\ c++/DevilutionX/deps/zlib-src/zlib-1.3.1/zlib.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/adxintrin.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/ammintrin.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/amxbf16intrin.h \
@@ -337,7 +338,6 @@
   C:/mingw64/x86_64-w64-mingw32/include/wtypes.h \
   C:/mingw64/x86_64-w64-mingw32/include/wtypesbase.h \
   C:/mingw64/x86_64-w64-mingw32/include/zconf.h \
-  C:/mingw64/x86_64-w64-mingw32/include/zlib.h \
   _deps/libmpq-src/libmpq/explode.h \
   _deps/libmpq-src/libmpq/extract.h \
   _deps/libmpq-src/libmpq/huffman.h \
@@ -654,10 +654,6 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/limits.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/stdint.h:
 
-C:/mingw64/x86_64-w64-mingw32/include/namedpipeapi.h:
-
-C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/avx512vbmi2vlintrin.h:
-
 C:/mingw64/x86_64-w64-mingw32/include/ktmtypes.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/wmmintrin.h:
@@ -782,6 +778,10 @@ _deps/libmpq-src/libmpq/platform.h:
 
 _deps/bzip2-src/bzlib.h:
 
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/clzerointrin.h:
+
+C:/c\ -\ c++/DevilutionX/deps/zlib-src/zlib-1.3.1/zlib.h:
+
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/amxfp16intrin.h:
 
 C:/mingw64/x86_64-w64-mingw32/include/winscard.h:
@@ -819,6 +819,10 @@ C:/mingw64/x86_64-w64-mingw32/include/specstrings.h:
 C:/mingw64/x86_64-w64-mingw32/include/oaidl.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/avx512vbmi2intrin.h:
+
+C:/mingw64/x86_64-w64-mingw32/include/namedpipeapi.h:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/avx512vbmi2vlintrin.h:
 
 C:/mingw64/x86_64-w64-mingw32/include/minwindef.h:
 
@@ -893,8 +897,6 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/cldemoteintrin.h:
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/clflushoptintrin.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/clwbintrin.h:
-
-C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/clzerointrin.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/cmpccxaddintrin.h:
 
@@ -1235,8 +1237,6 @@ C:/mingw64/x86_64-w64-mingw32/include/wnnc.h:
 C:/mingw64/x86_64-w64-mingw32/include/wow64apiset.h:
 
 C:/mingw64/x86_64-w64-mingw32/include/wtypes.h:
-
-C:/mingw64/x86_64-w64-mingw32/include/zlib.h:
 
 _deps/libmpq-src/libmpq/huffman.h:
 

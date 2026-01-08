@@ -30,6 +30,8 @@
 #include <SDL.h>
 #endif
 
+#include "engine/trn.hpp"
+
 #include <expected.hpp>
 #include <fmt/core.h>
 
@@ -302,6 +304,17 @@ void InitMonster(Monster &monster, Direction rd, size_t typeIndex, Point positio
 		// Mutación simple: HP doble (sin efectos visuales)
 		monster.maxHitPoints *= 2;
 		monster.hitPoints = monster.maxHitPoints;
+		
+		// FEATURE 1: Visual Elite Monsters - Add visual feedback to mutations
+		// Apply stone TRN transformation to make mutated monsters visually distinct
+		if (monster.uniqueMonsterTRN == nullptr) {
+			// Allocate TRN data and copy stone transformation
+			monster.uniqueMonsterTRN = std::make_unique<uint8_t[]>(256);
+			uint8_t *stoneTRN = GetStoneTRN();
+			if (stoneTRN != nullptr) {
+				std::copy(stoneTRN, stoneTRN + 256, monster.uniqueMonsterTRN.get());
+			}
+		}
 		
 		// Usar flag existente para indicar que es "especial" (sin nuevos sistemas)
 		monster.flags |= MFLAG_BERSERK;  // Reutilizar flag existente
@@ -3458,9 +3471,56 @@ tl::expected<void, std::string> GetLevelMTypes()
 			}
 
 			if (nt != 0) {
-				const int i = GenerateRnd(nt);
-				RETURN_IF_ERROR(AddMonsterType(typelist[i], PLACE_SCATTER));
-				typelist[i] = typelist[--nt];
+				// FEATURE 2: Thematic Monster Packs per Level
+				// Apply level-based monster type preferences to create stronger dungeon identity
+				_monster_id preferredTypes[3] = { MT_INVALID, MT_INVALID, MT_INVALID };
+				int preferredCount = 0;
+				
+				// Define thematic preferences based on level ranges
+				if (currlevel >= 1 && currlevel <= 4) {
+					// Early levels: Undead theme (Skeletons, Zombies)
+					preferredTypes[0] = MT_WSKELAX;  // Skeleton
+					preferredTypes[1] = MT_NZOMBIE;  // Zombie
+					preferredCount = 2;
+				} else if (currlevel >= 5 && currlevel <= 8) {
+					// Mid levels: Demonic theme (Fallen, Scavengers)
+					preferredTypes[0] = MT_RFALLSP; // Fallen One
+					preferredTypes[1] = MT_NSCAV;   // Scavenger
+					preferredCount = 2;
+				} else if (currlevel >= 9 && currlevel <= 12) {
+					// Deep levels: Beast theme (Goats, Acid Beasts)
+					preferredTypes[0] = MT_NGOATMC; // Flesh Clan
+					preferredTypes[1] = MT_NACID;   // Acid Beast
+					preferredCount = 2;
+				} else if (currlevel >= 13 && currlevel <= 15) {
+					// Hell levels: Demon theme (Knights, Succubi)
+					preferredTypes[0] = MT_RBLACK;  // Black Knight
+					preferredTypes[1] = MT_SUCCUBUS; // Succubus
+					preferredCount = 2;
+				}
+				
+				// Try to add preferred monsters first (with higher probability)
+				bool addedPreferred = false;
+				if (preferredCount > 0 && GenerateRnd(100) < 60) { // 60% chance to favor thematic monsters
+					for (int p = 0; p < preferredCount; p++) {
+						for (int i = 0; i < nt; i++) {
+							if (typelist[i] == preferredTypes[p]) {
+								RETURN_IF_ERROR(AddMonsterType(typelist[i], PLACE_SCATTER));
+								typelist[i] = typelist[--nt];
+								addedPreferred = true;
+								break;
+							}
+						}
+						if (addedPreferred) break;
+					}
+				}
+				
+				// If no preferred monster was added, use normal random selection
+				if (!addedPreferred) {
+					const int i = GenerateRnd(nt);
+					RETURN_IF_ERROR(AddMonsterType(typelist[i], PLACE_SCATTER));
+					typelist[i] = typelist[--nt];
+				}
 			}
 		}
 	} else {

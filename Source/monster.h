@@ -329,6 +329,26 @@ struct Monster { // note: missing field _mAFNum
 	}
 
 	/**
+	 * @brief Returns monster's name with elite prefix if mutated
+	 * @return Monster's name, potentially with "Corrupted" prefix for mutated monsters
+	 */
+	std::string getDisplayName() const
+	{
+		std::string baseName;
+		if (uniqueType != UniqueMonsterType::None)
+			baseName = pgettext("monster", UniqueMonstersData[static_cast<size_t>(uniqueType)].mName);
+		else
+			baseName = pgettext("monster", data().name);
+
+		// Add elite prefix for mutated monsters (identified by MFLAG_BERSERK flag)
+		if ((flags & MFLAG_BERSERK) != 0 && uniqueType == UniqueMonsterType::None) {
+			return "Corrupted " + baseName;
+		}
+
+		return baseName;
+	}
+
+	/**
 	 * @brief Returns monster's name
 	 * Internally it returns a name stored in global array of monsters' data.
 	 * @return Monster's name

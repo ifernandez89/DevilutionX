@@ -506,6 +506,7 @@ Source/CMakeFiles/libdevilutionx_monster.dir/monster.cpp.obj: C:/c\ -\ c++/Devil
   C:/c\ -\ c++/DevilutionX/Source/engine/render/clx_render.hpp \
   C:/c\ -\ c++/DevilutionX/Source/engine/sound.h \
   C:/c\ -\ c++/DevilutionX/Source/engine/sound_position.hpp \
+  C:/c\ -\ c++/DevilutionX/Source/engine/trn.hpp \
   C:/c\ -\ c++/DevilutionX/Source/game_mode.hpp \
   C:/c\ -\ c++/DevilutionX/Source/inv.h \
   C:/c\ -\ c++/DevilutionX/Source/inv_iterators.hpp \
@@ -1193,9 +1194,11 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/backward/auto_ptr.h:
 
 C:/c\ -\ c++/DevilutionX/Source/levels/gendung.h:
 
-C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/stl_function.h:
-
 C:/c\ -\ c++/DevilutionX/Source/levels/gendung_defs.hpp:
+
+C:/c\ -\ c++/DevilutionX/Source/engine/trn.hpp:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/stl_function.h:
 
 C:/c\ -\ c++/DevilutionX/Source/mpq/mpq_common.hpp:
 
@@ -1801,9 +1804,9 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/cstdlib:
 
 C:/c\ -\ c++/DevilutionX/Source/options.h:
 
-C:/c\ -\ c++/DevilutionX/Source/levels/crypt.h:
-
 C:/c\ -\ c++/DevilutionX/Source/levels/tile_properties.hpp:
+
+C:/c\ -\ c++/DevilutionX/Source/levels/crypt.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/cstring:
 

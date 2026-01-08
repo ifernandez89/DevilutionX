@@ -160,10 +160,10 @@ deps/
 ### ✅ FUNCIONALIDADES CONFIRMADAS:
 1. **Juego inicia correctamente** ✅
 2. **Reconoce DIABDAT.MPQ** ✅
-3. **Audio funciona** ✅
+3. **Focus tracking corregido** ✅ (cámara sigue al jugador después de matar Diablo)
 4. **Todas las quests disponibles** ✅
-5. **Diablo muere sin cinemática** ✅
-6. **Focus tracking** ⏳ (necesita mejoras)
+5. **Mejora de iluminación** ✅ (radio aumentado de 10 a 12)
+6. **Audio deshabilitado** ⚠️ (temporal, juego funciona sin problemas)
 
 ---
 
@@ -176,6 +176,7 @@ deps/
 5. **zlib linking error**: Usar ruta absoluta para ZLIB_LIBRARY
 6. **effects_cleanup_sfx undefined**: Arreglar signature en effects_stubs.cpp
 7. **DIABDAT.MPQ no reconocido**: NUNCA usar `UNPACKED_MPQS=ON`
+8. **Audio deshabilitado**: SDL_audiolib no encuentra SDL2, usar `NOSOUND=ON` temporalmente
 
 ---
 

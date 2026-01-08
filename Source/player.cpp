@@ -2333,7 +2333,7 @@ void CreatePlayer(Player &player, HeroClass c)
 
 	player._pExperience = 0;
 	player._pArmorClass = 0;
-	player._pLightRad = 10;
+	player._pLightRad = 12; // Mejora de iluminación: aumentado de 10 a 12 para mejor visibilidad
 	player._pInfraFlag = false;
 
 	for (uint8_t &spellLevel : player._pSplLvl) {

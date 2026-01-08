@@ -12,7 +12,11 @@ Source/CMakeFiles/libdevilutionx_assets.dir/engine/assets.cpp.obj: C:/c\ -\ c++/
   C:/c\ -\ c++/DevilutionX/Source/engine/assets.hpp \
   C:/c\ -\ c++/DevilutionX/Source/game_mode.hpp \
   C:/c\ -\ c++/DevilutionX/Source/headless_mode.hpp \
+  C:/c\ -\ c++/DevilutionX/Source/mpq/mpq_common.hpp \
+  C:/c\ -\ c++/DevilutionX/Source/mpq/mpq_reader.hpp \
+  C:/c\ -\ c++/DevilutionX/Source/mpq/mpq_sdl_rwops.hpp \
   C:/c\ -\ c++/DevilutionX/Source/utils/attributes.h \
+  C:/c\ -\ c++/DevilutionX/Source/utils/endian_read.hpp \
   C:/c\ -\ c++/DevilutionX/Source/utils/file_util.h \
   C:/c\ -\ c++/DevilutionX/Source/utils/language.h \
   C:/c\ -\ c++/DevilutionX/Source/utils/log.hpp \
@@ -527,12 +531,6 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/basic_string.h:
 
 _deps/libfmt-src/include/fmt/ranges.h:
 
-C:/mingw64/x86_64-w64-mingw32/include/math.h:
-
-C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/stl_tempbuf.h:
-
-C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_surface.h:
-
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_mutex.h:
 
 C:/mingw64/x86_64-w64-mingw32/include/errno.h:
@@ -541,15 +539,33 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/locale_classes.h:
 
 C:/c\ -\ c++/DevilutionX/Source/appfat.h:
 
-C:/c\ -\ c++/DevilutionX/Source/engine/assets.hpp:
-
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_shape.h:
+
+C:/c\ -\ c++/DevilutionX/Source/engine/assets.hpp:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/typeinfo:
 
 C:/c\ -\ c++/DevilutionX/Source/game_mode.hpp:
 
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/basic_ios.tcc:
+
+C:/c\ -\ c++/DevilutionX/Source/mpq/mpq_sdl_rwops.hpp:
+
 C:/c\ -\ c++/DevilutionX/Source/headless_mode.hpp:
+
+C:/c\ -\ c++/DevilutionX/Source/mpq/mpq_common.hpp:
+
+C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_log.h:
+
+C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_assert.h:
+
+C:/c\ -\ c++/DevilutionX/Source/utils/file_util.h:
+
+C:/mingw64/x86_64-w64-mingw32/include/fibersapi.h:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/cstdint:
+
+C:/c\ -\ c++/DevilutionX/Source/mpq/mpq_reader.hpp:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/avxvnniint8intrin.h:
 
@@ -561,11 +577,11 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/stl_algobase.h:
 
 C:/c\ -\ c++/DevilutionX/Source/utils/attributes.h:
 
-C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_log.h:
+C:/mingw64/x86_64-w64-mingw32/include/stddef.h:
 
-C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_assert.h:
+C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_power.h:
 
-C:/c\ -\ c++/DevilutionX/Source/utils/file_util.h:
+C:/c\ -\ c++/DevilutionX/Source/utils/endian_read.hpp:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/ctype_inline.h:
 
@@ -707,10 +723,6 @@ C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/S
 
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_pixels.h:
 
-C:/mingw64/x86_64-w64-mingw32/include/stddef.h:
-
-C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_power.h:
-
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_rect.h:
 
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_render.h:
@@ -726,6 +738,12 @@ C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/S
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/clflushoptintrin.h:
 
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_stdinc.h:
+
+C:/mingw64/x86_64-w64-mingw32/include/math.h:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/stl_tempbuf.h:
+
+C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_surface.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/atomic_base.h:
 
@@ -931,8 +949,6 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/atomic_wait.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/basic_ios.h:
 
-C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/basic_ios.tcc:
-
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/compare:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/char_traits.h:
@@ -1130,10 +1146,6 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/clocale:
 C:/mingw64/x86_64-w64-mingw32/include/_timeval.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/concepts:
-
-C:/mingw64/x86_64-w64-mingw32/include/fibersapi.h:
-
-C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/cstdint:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/cstdio:
 

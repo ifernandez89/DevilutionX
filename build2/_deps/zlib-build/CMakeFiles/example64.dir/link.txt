@@ -1,3 +1,0 @@
-C:\msys64\mingw64\bin\cmake.exe -E rm -f CMakeFiles\example64.dir/objects.a
-C:\msys64\mingw64\bin\ar.exe qc CMakeFiles\example64.dir/objects.a @CMakeFiles\example64.dir\objects1.rsp
-C:\msys64\mingw64\bin\cc.exe -O3 -DNDEBUG -flto=auto -fno-fat-lto-objects -Wl,--gc-sections,--as-needed -Wl,--whole-archive CMakeFiles\example64.dir/objects.a -Wl,--no-whole-archive -o example64.exe -Wl,--out-implib,libexample64.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\example64.dir\linkLibs.rsp

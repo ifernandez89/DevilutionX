@@ -1,0 +1,12 @@
+# This is a generated file and its contents are an internal implementation detail.
+# The download step will be re-executed if anything in this file changes.
+# No other meaning or use of this file is supported.
+
+method=url
+command=C:/Program Files/CMake/bin/cmake.exe;-DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE;-P;C:/c - c++/DevilutionX/build_NOW/_deps/libmpq-subbuild/libmpq-populate-prefix/src/libmpq-populate-stamp/download-libmpq-populate.cmake;COMMAND;C:/Program Files/CMake/bin/cmake.exe;-DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE;-P;C:/c - c++/DevilutionX/build_NOW/_deps/libmpq-subbuild/libmpq-populate-prefix/src/libmpq-populate-stamp/verify-libmpq-populate.cmake;COMMAND;C:/Program Files/CMake/bin/cmake.exe;-DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE;-P;C:/c - c++/DevilutionX/build_NOW/_deps/libmpq-subbuild/libmpq-populate-prefix/src/libmpq-populate-stamp/extract-libmpq-populate.cmake
+source_dir=C:/c - c++/DevilutionX/build_NOW/_deps/libmpq-src
+work_dir=C:/c - c++/DevilutionX/build_NOW/_deps
+url(s)=https://github.com/diasurgical/libmpq/archive/7c2924d4553513eba1a70bbdb558198dd8c2726a.tar.gz
+hash=MD5=315c88c02b45851cdfee8460322de044
+      no_extract=
+

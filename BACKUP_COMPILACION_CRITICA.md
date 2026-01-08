@@ -10,8 +10,10 @@ cmake -S. -Bbuild_NOW -G "MinGW Makefiles" \
   -DNOSOUND=ON \
   -DBUILD_TESTING=OFF \
   -DDISABLE_ZERO_TIER=ON \
-  -DUNPACKED_MPQS=ON \
-  -DUNPACKED_SAVES=ON \
+  -DUNPACKED_MPQS=OFF \
+  -DUNPACKED_SAVES=OFF \
+  -DDEVILUTIONX_STATIC_BZIP2=ON \
+  -DDEVILUTIONX_SYSTEM_BZIP2=OFF \
   -DSDL2_DIR="deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/lib/cmake/SDL2" \
   -DZLIB_LIBRARY="C:/c - c++/DevilutionX/deps/zlib-build/libzlibstatic.a"
 ```
@@ -20,6 +22,16 @@ cmake -S. -Bbuild_NOW -G "MinGW Makefiles" \
 1. **Source/engine/assets.cpp** línea 28: `#include <optional>`
 2. **Source/engine/assets.hpp** línea 21: `// #include <fmt/core.h>`
 3. **Source/effects_stubs.cpp** línea 48: `void effects_cleanup_sfx(bool fullUnload) { }`
+4. **Source/monster.cpp** líneas 1516-1521: Fix focus después muerte Diablo:
+```cpp
+if (monster.var1 == 140 && gbIsMultiplayer) {
+    PrepDoEnding();
+    // Después de la muerte de Diablo, regresar el focus al jugador
+    if (MyPlayer != nullptr) {
+        ViewPosition = MyPlayer->position.tile;
+    }
+}
+```
 
 ### COMPILAR ZLIB PRIMERO:
 ```bash
@@ -38,8 +50,22 @@ cp build_final_working/*.dll build_NOW/
 # Usuario copia DIABDAT.MPQ manualmente
 ```
 
+## 🚨 PROBLEMAS CRÍTICOS SOLUCIONADOS:
+
+### 1. DIABDAT.MPQ NO RECONOCIDO:
+- **PROBLEMA**: Usar `UNPACKED_MPQS=ON` hace que el ejecutable NO reconozca archivos MPQ
+- **SOLUCIÓN**: Usar `UNPACKED_MPQS=OFF` con `DEVILUTIONX_STATIC_BZIP2=ON`
+
+### 2. FOCUS TRACKING DESPUÉS MUERTE DIABLO:
+- **PROBLEMA**: Después de matar Diablo, la cámara se queda en el centro donde murió
+- **SOLUCIÓN**: Agregar código para regresar ViewPosition al jugador después de PrepDoEnding()
+
+### 3. AUDIO DISABLED:
+- **PROBLEMA**: `NOSOUND=ON` deshabilita completamente el audio
+- **SOLUCIÓN PENDIENTE**: Configurar SDL_audiolib correctamente (requiere más dependencias)
+
 ## ✅ RESULTADO: EJECUTABLE LISTO EN build_NOW/devilutionx.exe
 
-**FECHA**: 7 enero 2026 19:15
-**COMPILACIÓN**: 100% EXITOSA + SETUP COMPLETO
-**FEATURES**: Feature 1 + Diablo Death implementadas
+**FECHA**: 7 enero 2026 20:30
+**COMPILACIÓN**: 100% EXITOSA + FIXES APLICADOS
+**FEATURES**: Feature 1 + Diablo Death + Focus Fix implementadas

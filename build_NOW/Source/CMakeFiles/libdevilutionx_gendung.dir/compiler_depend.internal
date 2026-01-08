@@ -25,6 +25,7 @@ Source/CMakeFiles/libdevilutionx_gendung.dir/levels/crypt.cpp.obj
  C:/c - c++/DevilutionX/Source/engine/render/scrollrt.h
  C:/c - c++/DevilutionX/Source/engine/size.hpp
  C:/c - c++/DevilutionX/Source/engine/sound.h
+ C:/c - c++/DevilutionX/Source/engine/sound_defs.hpp
  C:/c - c++/DevilutionX/Source/engine/surface.hpp
  C:/c - c++/DevilutionX/Source/engine/world_tile.hpp
  C:/c - c++/DevilutionX/Source/game_mode.hpp
@@ -38,6 +39,7 @@ Source/CMakeFiles/libdevilutionx_gendung.dir/levels/crypt.cpp.obj
  C:/c - c++/DevilutionX/Source/lighting.h
  C:/c - c++/DevilutionX/Source/monster.h
  C:/c - c++/DevilutionX/Source/mpq/mpq_common.hpp
+ C:/c - c++/DevilutionX/Source/mpq/mpq_reader.hpp
  C:/c - c++/DevilutionX/Source/sound_effect_enums.h
  C:/c - c++/DevilutionX/Source/tables/itemdat.h
  C:/c - c++/DevilutionX/Source/tables/misdat.h
@@ -58,7 +60,9 @@ Source/CMakeFiles/libdevilutionx_gendung.dir/levels/crypt.cpp.obj
  C:/c - c++/DevilutionX/Source/utils/sdl_geometry.h
  C:/c - c++/DevilutionX/Source/utils/sdl_ptrs.h
  C:/c - c++/DevilutionX/Source/utils/sdl_wrap.h
+ C:/c - c++/DevilutionX/Source/utils/soundsample.h
  C:/c - c++/DevilutionX/Source/utils/static_vector.hpp
+ C:/c - c++/DevilutionX/Source/utils/stdcompat/shared_ptr_array.hpp
  C:/c - c++/DevilutionX/Source/utils/str_cat.hpp
  C:/c - c++/DevilutionX/Source/utils/string_or_view.hpp
  C:/c - c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL.h
@@ -485,6 +489,7 @@ Source/CMakeFiles/libdevilutionx_gendung.dir/levels/drlg_l1.cpp.obj
  C:/c - c++/DevilutionX/Source/engine/render/scrollrt.h
  C:/c - c++/DevilutionX/Source/engine/size.hpp
  C:/c - c++/DevilutionX/Source/engine/sound.h
+ C:/c - c++/DevilutionX/Source/engine/sound_defs.hpp
  C:/c - c++/DevilutionX/Source/engine/surface.hpp
  C:/c - c++/DevilutionX/Source/engine/world_tile.hpp
  C:/c - c++/DevilutionX/Source/game_mode.hpp
@@ -499,6 +504,7 @@ Source/CMakeFiles/libdevilutionx_gendung.dir/levels/drlg_l1.cpp.obj
  C:/c - c++/DevilutionX/Source/levels/gendung_defs.hpp
  C:/c - c++/DevilutionX/Source/monster.h
  C:/c - c++/DevilutionX/Source/mpq/mpq_common.hpp
+ C:/c - c++/DevilutionX/Source/mpq/mpq_reader.hpp
  C:/c - c++/DevilutionX/Source/msg.h
  C:/c - c++/DevilutionX/Source/multi.h
  C:/c - c++/DevilutionX/Source/objects.h
@@ -527,7 +533,9 @@ Source/CMakeFiles/libdevilutionx_gendung.dir/levels/drlg_l1.cpp.obj
  C:/c - c++/DevilutionX/Source/utils/sdl_geometry.h
  C:/c - c++/DevilutionX/Source/utils/sdl_ptrs.h
  C:/c - c++/DevilutionX/Source/utils/sdl_wrap.h
+ C:/c - c++/DevilutionX/Source/utils/soundsample.h
  C:/c - c++/DevilutionX/Source/utils/static_vector.hpp
+ C:/c - c++/DevilutionX/Source/utils/stdcompat/shared_ptr_array.hpp
  C:/c - c++/DevilutionX/Source/utils/str_cat.hpp
  C:/c - c++/DevilutionX/Source/utils/string_or_view.hpp
  C:/c - c++/DevilutionX/Source/utils/ui_fwd.h
@@ -962,6 +970,7 @@ Source/CMakeFiles/libdevilutionx_gendung.dir/levels/drlg_l2.cpp.obj
  C:/c - c++/DevilutionX/Source/engine/render/scrollrt.h
  C:/c - c++/DevilutionX/Source/engine/size.hpp
  C:/c - c++/DevilutionX/Source/engine/sound.h
+ C:/c - c++/DevilutionX/Source/engine/sound_defs.hpp
  C:/c - c++/DevilutionX/Source/engine/surface.hpp
  C:/c - c++/DevilutionX/Source/engine/world_tile.hpp
  C:/c - c++/DevilutionX/Source/game_mode.hpp
@@ -976,6 +985,7 @@ Source/CMakeFiles/libdevilutionx_gendung.dir/levels/drlg_l2.cpp.obj
  C:/c - c++/DevilutionX/Source/levels/setmaps.h
  C:/c - c++/DevilutionX/Source/monster.h
  C:/c - c++/DevilutionX/Source/mpq/mpq_common.hpp
+ C:/c - c++/DevilutionX/Source/mpq/mpq_reader.hpp
  C:/c - c++/DevilutionX/Source/msg.h
  C:/c - c++/DevilutionX/Source/multi.h
  C:/c - c++/DevilutionX/Source/objects.h
@@ -1004,7 +1014,9 @@ Source/CMakeFiles/libdevilutionx_gendung.dir/levels/drlg_l2.cpp.obj
  C:/c - c++/DevilutionX/Source/utils/sdl_geometry.h
  C:/c - c++/DevilutionX/Source/utils/sdl_ptrs.h
  C:/c - c++/DevilutionX/Source/utils/sdl_wrap.h
+ C:/c - c++/DevilutionX/Source/utils/soundsample.h
  C:/c - c++/DevilutionX/Source/utils/static_vector.hpp
+ C:/c - c++/DevilutionX/Source/utils/stdcompat/shared_ptr_array.hpp
  C:/c - c++/DevilutionX/Source/utils/str_cat.hpp
  C:/c - c++/DevilutionX/Source/utils/string_or_view.hpp
  C:/c - c++/DevilutionX/Source/utils/ui_fwd.h
@@ -1445,6 +1457,7 @@ Source/CMakeFiles/libdevilutionx_gendung.dir/levels/drlg_l3.cpp.obj
  C:/c - c++/DevilutionX/Source/engine/render/scrollrt.h
  C:/c - c++/DevilutionX/Source/engine/size.hpp
  C:/c - c++/DevilutionX/Source/engine/sound.h
+ C:/c - c++/DevilutionX/Source/engine/sound_defs.hpp
  C:/c - c++/DevilutionX/Source/engine/surface.hpp
  C:/c - c++/DevilutionX/Source/engine/world_tile.hpp
  C:/c - c++/DevilutionX/Source/game_mode.hpp
@@ -1460,6 +1473,7 @@ Source/CMakeFiles/libdevilutionx_gendung.dir/levels/drlg_l3.cpp.obj
  C:/c - c++/DevilutionX/Source/lighting.h
  C:/c - c++/DevilutionX/Source/monster.h
  C:/c - c++/DevilutionX/Source/mpq/mpq_common.hpp
+ C:/c - c++/DevilutionX/Source/mpq/mpq_reader.hpp
  C:/c - c++/DevilutionX/Source/msg.h
  C:/c - c++/DevilutionX/Source/multi.h
  C:/c - c++/DevilutionX/Source/objects.h
@@ -1488,7 +1502,9 @@ Source/CMakeFiles/libdevilutionx_gendung.dir/levels/drlg_l3.cpp.obj
  C:/c - c++/DevilutionX/Source/utils/sdl_geometry.h
  C:/c - c++/DevilutionX/Source/utils/sdl_ptrs.h
  C:/c - c++/DevilutionX/Source/utils/sdl_wrap.h
+ C:/c - c++/DevilutionX/Source/utils/soundsample.h
  C:/c - c++/DevilutionX/Source/utils/static_vector.hpp
+ C:/c - c++/DevilutionX/Source/utils/stdcompat/shared_ptr_array.hpp
  C:/c - c++/DevilutionX/Source/utils/str_cat.hpp
  C:/c - c++/DevilutionX/Source/utils/string_or_view.hpp
  C:/c - c++/DevilutionX/Source/utils/ui_fwd.h
@@ -1923,6 +1939,7 @@ Source/CMakeFiles/libdevilutionx_gendung.dir/levels/drlg_l4.cpp.obj
  C:/c - c++/DevilutionX/Source/engine/render/scrollrt.h
  C:/c - c++/DevilutionX/Source/engine/size.hpp
  C:/c - c++/DevilutionX/Source/engine/sound.h
+ C:/c - c++/DevilutionX/Source/engine/sound_defs.hpp
  C:/c - c++/DevilutionX/Source/engine/surface.hpp
  C:/c - c++/DevilutionX/Source/engine/world_tile.hpp
  C:/c - c++/DevilutionX/Source/game_mode.hpp
@@ -1936,6 +1953,7 @@ Source/CMakeFiles/libdevilutionx_gendung.dir/levels/drlg_l4.cpp.obj
  C:/c - c++/DevilutionX/Source/levels/gendung_defs.hpp
  C:/c - c++/DevilutionX/Source/monster.h
  C:/c - c++/DevilutionX/Source/mpq/mpq_common.hpp
+ C:/c - c++/DevilutionX/Source/mpq/mpq_reader.hpp
  C:/c - c++/DevilutionX/Source/msg.h
  C:/c - c++/DevilutionX/Source/multi.h
  C:/c - c++/DevilutionX/Source/objects.h
@@ -1964,7 +1982,9 @@ Source/CMakeFiles/libdevilutionx_gendung.dir/levels/drlg_l4.cpp.obj
  C:/c - c++/DevilutionX/Source/utils/sdl_geometry.h
  C:/c - c++/DevilutionX/Source/utils/sdl_ptrs.h
  C:/c - c++/DevilutionX/Source/utils/sdl_wrap.h
+ C:/c - c++/DevilutionX/Source/utils/soundsample.h
  C:/c - c++/DevilutionX/Source/utils/static_vector.hpp
+ C:/c - c++/DevilutionX/Source/utils/stdcompat/shared_ptr_array.hpp
  C:/c - c++/DevilutionX/Source/utils/str_cat.hpp
  C:/c - c++/DevilutionX/Source/utils/string_or_view.hpp
  C:/c - c++/DevilutionX/Source/utils/ui_fwd.h
@@ -2402,6 +2422,7 @@ Source/CMakeFiles/libdevilutionx_gendung.dir/levels/gendung.cpp.obj
  C:/c - c++/DevilutionX/Source/engine/render/scrollrt.h
  C:/c - c++/DevilutionX/Source/engine/size.hpp
  C:/c - c++/DevilutionX/Source/engine/sound.h
+ C:/c - c++/DevilutionX/Source/engine/sound_defs.hpp
  C:/c - c++/DevilutionX/Source/engine/surface.hpp
  C:/c - c++/DevilutionX/Source/engine/world_tile.hpp
  C:/c - c++/DevilutionX/Source/game_mode.hpp
@@ -2420,6 +2441,7 @@ Source/CMakeFiles/libdevilutionx_gendung.dir/levels/gendung.cpp.obj
  C:/c - c++/DevilutionX/Source/lighting.h
  C:/c - c++/DevilutionX/Source/monster.h
  C:/c - c++/DevilutionX/Source/mpq/mpq_common.hpp
+ C:/c - c++/DevilutionX/Source/mpq/mpq_reader.hpp
  C:/c - c++/DevilutionX/Source/objects.h
  C:/c - c++/DevilutionX/Source/sound_effect_enums.h
  C:/c - c++/DevilutionX/Source/tables/itemdat.h
@@ -2444,8 +2466,10 @@ Source/CMakeFiles/libdevilutionx_gendung.dir/levels/gendung.cpp.obj
  C:/c - c++/DevilutionX/Source/utils/sdl_geometry.h
  C:/c - c++/DevilutionX/Source/utils/sdl_ptrs.h
  C:/c - c++/DevilutionX/Source/utils/sdl_wrap.h
+ C:/c - c++/DevilutionX/Source/utils/soundsample.h
  C:/c - c++/DevilutionX/Source/utils/static_vector.hpp
  C:/c - c++/DevilutionX/Source/utils/status_macros.hpp
+ C:/c - c++/DevilutionX/Source/utils/stdcompat/shared_ptr_array.hpp
  C:/c - c++/DevilutionX/Source/utils/str_cat.hpp
  C:/c - c++/DevilutionX/Source/utils/string_or_view.hpp
  C:/c - c++/DevilutionX/Source/utils/ui_fwd.h

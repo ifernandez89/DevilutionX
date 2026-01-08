@@ -1,3 +1,0 @@
-C:/Diablo/DevilutionX Repo/DevilutionX/build2/_deps/libsmackerdec-subbuild/CMakeFiles/libsmackerdec-populate.dir
-C:/Diablo/DevilutionX Repo/DevilutionX/build2/_deps/libsmackerdec-subbuild/CMakeFiles/edit_cache.dir
-C:/Diablo/DevilutionX Repo/DevilutionX/build2/_deps/libsmackerdec-subbuild/CMakeFiles/rebuild_cache.dir

@@ -19,6 +19,7 @@ Source/CMakeFiles/libdevilutionx_spells.dir/spells.cpp.obj: C:/c\ -\ c++/Devilut
   C:/c\ -\ c++/DevilutionX/Source/engine/render/scrollrt.h \
   C:/c\ -\ c++/DevilutionX/Source/engine/render/text_render.hpp \
   C:/c\ -\ c++/DevilutionX/Source/engine/size.hpp \
+  C:/c\ -\ c++/DevilutionX/Source/engine/sound_defs.hpp \
   C:/c\ -\ c++/DevilutionX/Source/engine/surface.hpp \
   C:/c\ -\ c++/DevilutionX/Source/levels/dun_tile.hpp \
   C:/c\ -\ c++/DevilutionX/Source/levels/gendung_defs.hpp \
@@ -36,6 +37,8 @@ Source/CMakeFiles/libdevilutionx_spells.dir/spells.cpp.obj: C:/c\ -\ c++/Devilut
   C:/c\ -\ c++/DevilutionX/Source/utils/sdl_geometry.h \
   C:/c\ -\ c++/DevilutionX/Source/utils/sdl_ptrs.h \
   C:/c\ -\ c++/DevilutionX/Source/utils/sdl_wrap.h \
+  C:/c\ -\ c++/DevilutionX/Source/utils/soundsample.h \
+  C:/c\ -\ c++/DevilutionX/Source/utils/stdcompat/shared_ptr_array.hpp \
   C:/c\ -\ c++/DevilutionX/Source/utils/utf8.hpp \
   C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL.h \
   C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_assert.h \
@@ -724,6 +727,10 @@ C:/c\ -\ c++/DevilutionX/Source/engine/animationinfo.h:
 
 C:/c\ -\ c++/DevilutionX/3rdParty/tl/expected.hpp:
 
+C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_render.h:
+
+C:/c\ -\ c++/DevilutionX/Source/engine/sound_defs.hpp:
+
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/cxxabi_init_exception.h:
 
 _deps/unordered_dense-src/include/ankerl/unordered_dense.h:
@@ -750,15 +757,9 @@ C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/S
 
 C:/c\ -\ c++/DevilutionX/Source/DiabloUI/text_input.hpp:
 
-C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/ctype_inline.h:
-
-C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_main.h:
-
 C:/c\ -\ c++/DevilutionX/Source/utils/language.h:
 
 C:/c\ -\ c++/DevilutionX/Source/effects.h:
-
-C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_metal.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/locale_facets.tcc:
 
@@ -818,6 +819,8 @@ C:/c\ -\ c++/DevilutionX/Source/tables/spelldat.h:
 
 C:/c\ -\ c++/DevilutionX/Source/utils/attributes.h:
 
+C:/c\ -\ c++/DevilutionX/Source/utils/stdcompat/shared_ptr_array.hpp:
+
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/clwbintrin.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/tr1/poly_laguerre.tcc:
@@ -848,16 +851,6 @@ C:/c\ -\ c++/DevilutionX/Source/utils/ui_fwd.h:
 
 C:/c\ -\ c++/DevilutionX/Source/tables/textdat.h:
 
-C:/mingw64/x86_64-w64-mingw32/include/sys/types.h:
-
-C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/rtmintrin.h:
-
-C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/cldemoteintrin.h:
-
-C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/tr1/riemann_zeta.tcc:
-
-C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_messagebox.h:
-
 C:/c\ -\ c++/DevilutionX/Source/utils/bitset2d.hpp:
 
 C:/c\ -\ c++/DevilutionX/Source/utils/endian_read.hpp:
@@ -885,6 +878,10 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/shared_mutex:
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_assert.h:
 
 C:/c\ -\ c++/DevilutionX/Source/utils/sdl_ptrs.h:
+
+C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_version.h:
+
+C:/c\ -\ c++/DevilutionX/Source/utils/soundsample.h:
 
 C:/c\ -\ c++/DevilutionX/Source/utils/utf8.hpp:
 
@@ -950,6 +947,22 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/erase_if.h:
 
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_keycode.h:
 
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/ctype_inline.h:
+
+C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_main.h:
+
+C:/mingw64/x86_64-w64-mingw32/include/sys/types.h:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/rtmintrin.h:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/cldemoteintrin.h:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/tr1/riemann_zeta.tcc:
+
+C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_messagebox.h:
+
+C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_metal.h:
+
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/raointintrin.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/ios:
@@ -973,8 +986,6 @@ C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/S
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_quit.h:
 
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_rect.h:
-
-C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_render.h:
 
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_rwops.h:
 
@@ -1009,8 +1020,6 @@ C:/mingw64/x86_64-w64-mingw32/include/sys/timeb.h:
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_thread.h:
 
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_timer.h:
-
-C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_version.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/adxintrin.h:
 

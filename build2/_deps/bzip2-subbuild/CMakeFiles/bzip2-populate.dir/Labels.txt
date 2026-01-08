@@ -1,14 +1,14 @@
 # Target labels
  bzip2-populate
 # Source files and their labels
-C:/Diablo/DevilutionX Repo/DevilutionX/build2/_deps/bzip2-subbuild/CMakeFiles/bzip2-populate
-C:/Diablo/DevilutionX Repo/DevilutionX/build2/_deps/bzip2-subbuild/CMakeFiles/bzip2-populate.rule
-C:/Diablo/DevilutionX Repo/DevilutionX/build2/_deps/bzip2-subbuild/CMakeFiles/bzip2-populate-complete.rule
-C:/Diablo/DevilutionX Repo/DevilutionX/build2/_deps/bzip2-subbuild/bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-build.rule
-C:/Diablo/DevilutionX Repo/DevilutionX/build2/_deps/bzip2-subbuild/bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-configure.rule
-C:/Diablo/DevilutionX Repo/DevilutionX/build2/_deps/bzip2-subbuild/bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-download.rule
-C:/Diablo/DevilutionX Repo/DevilutionX/build2/_deps/bzip2-subbuild/bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-install.rule
-C:/Diablo/DevilutionX Repo/DevilutionX/build2/_deps/bzip2-subbuild/bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-mkdir.rule
-C:/Diablo/DevilutionX Repo/DevilutionX/build2/_deps/bzip2-subbuild/bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-patch.rule
-C:/Diablo/DevilutionX Repo/DevilutionX/build2/_deps/bzip2-subbuild/bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-test.rule
-C:/Diablo/DevilutionX Repo/DevilutionX/build2/_deps/bzip2-subbuild/bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-update.rule
+C:/c - c++/DevilutionX/build2/_deps/bzip2-subbuild/CMakeFiles/bzip2-populate
+C:/c - c++/DevilutionX/build2/_deps/bzip2-subbuild/CMakeFiles/bzip2-populate.rule
+C:/c - c++/DevilutionX/build2/_deps/bzip2-subbuild/CMakeFiles/bzip2-populate-complete.rule
+C:/c - c++/DevilutionX/build2/_deps/bzip2-subbuild/bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-build.rule
+C:/c - c++/DevilutionX/build2/_deps/bzip2-subbuild/bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-configure.rule
+C:/c - c++/DevilutionX/build2/_deps/bzip2-subbuild/bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-download.rule
+C:/c - c++/DevilutionX/build2/_deps/bzip2-subbuild/bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-install.rule
+C:/c - c++/DevilutionX/build2/_deps/bzip2-subbuild/bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-mkdir.rule
+C:/c - c++/DevilutionX/build2/_deps/bzip2-subbuild/bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-patch.rule
+C:/c - c++/DevilutionX/build2/_deps/bzip2-subbuild/bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-test.rule
+C:/c - c++/DevilutionX/build2/_deps/bzip2-subbuild/bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-update.rule

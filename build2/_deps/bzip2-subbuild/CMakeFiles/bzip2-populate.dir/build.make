@@ -43,19 +43,19 @@ cmake_force:
 SHELL = cmd.exe
 
 # The CMake executable.
-CMAKE_COMMAND = C:\msys64\mingw64\bin\cmake.exe
+CMAKE_COMMAND = "C:\Program Files\CMake\bin\cmake.exe"
 
 # The command to remove a file.
-RM = C:\msys64\mingw64\bin\cmake.exe -E rm -f
+RM = "C:\Program Files\CMake\bin\cmake.exe" -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "C:\Diablo\DevilutionX Repo\DevilutionX\build2\_deps\bzip2-subbuild"
+CMAKE_SOURCE_DIR = "C:\c - c++\DevilutionX\build2\_deps\bzip2-subbuild"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "C:\Diablo\DevilutionX Repo\DevilutionX\build2\_deps\bzip2-subbuild"
+CMAKE_BINARY_DIR = "C:\c - c++\DevilutionX\build2\_deps\bzip2-subbuild"
 
 # Utility rule file for bzip2-populate.
 
@@ -76,60 +76,60 @@ CMakeFiles/bzip2-populate-complete: bzip2-populate-prefix/src/bzip2-populate-sta
 CMakeFiles/bzip2-populate-complete: bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-build
 CMakeFiles/bzip2-populate-complete: bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-install
 CMakeFiles/bzip2-populate-complete: bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-test
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\Diablo\DevilutionX Repo\DevilutionX\build2\_deps\bzip2-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Completed 'bzip2-populate'"
-	C:\msys64\mingw64\bin\cmake.exe -E make_directory "C:/Diablo/DevilutionX Repo/DevilutionX/build2/_deps/bzip2-subbuild/CMakeFiles"
-	C:\msys64\mingw64\bin\cmake.exe -E touch "C:/Diablo/DevilutionX Repo/DevilutionX/build2/_deps/bzip2-subbuild/CMakeFiles/bzip2-populate-complete"
-	C:\msys64\mingw64\bin\cmake.exe -E touch "C:/Diablo/DevilutionX Repo/DevilutionX/build2/_deps/bzip2-subbuild/bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-done"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build2\_deps\bzip2-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Completed 'bzip2-populate'"
+	"C:\Program Files\CMake\bin\cmake.exe" -E make_directory "C:/c - c++/DevilutionX/build2/_deps/bzip2-subbuild/CMakeFiles"
+	"C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build2/_deps/bzip2-subbuild/CMakeFiles/bzip2-populate-complete"
+	"C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build2/_deps/bzip2-subbuild/bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-done"
 
 bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-update:
 .PHONY : bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-update
 
 bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-build: bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-configure
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\Diablo\DevilutionX Repo\DevilutionX\build2\_deps\bzip2-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "No build step for 'bzip2-populate'"
-	cd /d C:\Diablo\DEVILU~1\DEVILU~1\build2\_deps\BZIP2-~3 && C:\msys64\mingw64\bin\cmake.exe -E echo_append
-	cd /d C:\Diablo\DEVILU~1\DEVILU~1\build2\_deps\BZIP2-~3 && C:\msys64\mingw64\bin\cmake.exe -E touch "C:/Diablo/DevilutionX Repo/DevilutionX/build2/_deps/bzip2-subbuild/bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-build"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build2\_deps\bzip2-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "No build step for 'bzip2-populate'"
+	cd /d C:\C-C__~1\DEVILU~1\build2\_deps\BZIP2-~3 && "C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+	cd /d C:\C-C__~1\DEVILU~1\build2\_deps\BZIP2-~3 && "C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build2/_deps/bzip2-subbuild/bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-build"
 
 bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-configure: bzip2-populate-prefix/tmp/bzip2-populate-cfgcmd.txt
 bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-configure: bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-patch
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\Diablo\DevilutionX Repo\DevilutionX\build2\_deps\bzip2-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "No configure step for 'bzip2-populate'"
-	cd /d C:\Diablo\DEVILU~1\DEVILU~1\build2\_deps\BZIP2-~3 && C:\msys64\mingw64\bin\cmake.exe -E echo_append
-	cd /d C:\Diablo\DEVILU~1\DEVILU~1\build2\_deps\BZIP2-~3 && C:\msys64\mingw64\bin\cmake.exe -E touch "C:/Diablo/DevilutionX Repo/DevilutionX/build2/_deps/bzip2-subbuild/bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-configure"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build2\_deps\bzip2-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "No configure step for 'bzip2-populate'"
+	cd /d C:\C-C__~1\DEVILU~1\build2\_deps\BZIP2-~3 && "C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+	cd /d C:\C-C__~1\DEVILU~1\build2\_deps\BZIP2-~3 && "C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build2/_deps/bzip2-subbuild/bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-configure"
 
 bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-download: bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-gitinfo.txt
 bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-download: bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-mkdir
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\Diablo\DevilutionX Repo\DevilutionX\build2\_deps\bzip2-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_4) "Performing download step (git clone) for 'bzip2-populate'"
-	cd /d C:\Diablo\DEVILU~1\DEVILU~1\build2\_deps && C:\msys64\mingw64\bin\cmake.exe -DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE -P "C:/Diablo/DevilutionX Repo/DevilutionX/build2/_deps/bzip2-subbuild/bzip2-populate-prefix/tmp/bzip2-populate-gitclone.cmake"
-	cd /d C:\Diablo\DEVILU~1\DEVILU~1\build2\_deps && C:\msys64\mingw64\bin\cmake.exe -E touch "C:/Diablo/DevilutionX Repo/DevilutionX/build2/_deps/bzip2-subbuild/bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-download"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build2\_deps\bzip2-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_4) "Performing download step (git clone) for 'bzip2-populate'"
+	cd /d C:\C-C__~1\DEVILU~1\build2\_deps && "C:\Program Files\CMake\bin\cmake.exe" -DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE -P "C:/c - c++/DevilutionX/build2/_deps/bzip2-subbuild/bzip2-populate-prefix/tmp/bzip2-populate-gitclone.cmake"
+	cd /d C:\C-C__~1\DEVILU~1\build2\_deps && "C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build2/_deps/bzip2-subbuild/bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-download"
 
 bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-install: bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\Diablo\DevilutionX Repo\DevilutionX\build2\_deps\bzip2-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_5) "No install step for 'bzip2-populate'"
-	cd /d C:\Diablo\DEVILU~1\DEVILU~1\build2\_deps\BZIP2-~3 && C:\msys64\mingw64\bin\cmake.exe -E echo_append
-	cd /d C:\Diablo\DEVILU~1\DEVILU~1\build2\_deps\BZIP2-~3 && C:\msys64\mingw64\bin\cmake.exe -E touch "C:/Diablo/DevilutionX Repo/DevilutionX/build2/_deps/bzip2-subbuild/bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-install"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build2\_deps\bzip2-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_5) "No install step for 'bzip2-populate'"
+	cd /d C:\C-C__~1\DEVILU~1\build2\_deps\BZIP2-~3 && "C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+	cd /d C:\C-C__~1\DEVILU~1\build2\_deps\BZIP2-~3 && "C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build2/_deps/bzip2-subbuild/bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-install"
 
 bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-mkdir:
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\Diablo\DevilutionX Repo\DevilutionX\build2\_deps\bzip2-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_6) "Creating directories for 'bzip2-populate'"
-	C:\msys64\mingw64\bin\cmake.exe -Dcfgdir= -P "C:/Diablo/DevilutionX Repo/DevilutionX/build2/_deps/bzip2-subbuild/bzip2-populate-prefix/tmp/bzip2-populate-mkdirs.cmake"
-	C:\msys64\mingw64\bin\cmake.exe -E touch "C:/Diablo/DevilutionX Repo/DevilutionX/build2/_deps/bzip2-subbuild/bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-mkdir"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build2\_deps\bzip2-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_6) "Creating directories for 'bzip2-populate'"
+	"C:\Program Files\CMake\bin\cmake.exe" -Dcfgdir= -P "C:/c - c++/DevilutionX/build2/_deps/bzip2-subbuild/bzip2-populate-prefix/tmp/bzip2-populate-mkdirs.cmake"
+	"C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build2/_deps/bzip2-subbuild/bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-mkdir"
 
 bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-patch: bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-patch-info.txt
 bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-patch: bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-update
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\Diablo\DevilutionX Repo\DevilutionX\build2\_deps\bzip2-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_7) "No patch step for 'bzip2-populate'"
-	C:\msys64\mingw64\bin\cmake.exe -E echo_append
-	C:\msys64\mingw64\bin\cmake.exe -E touch "C:/Diablo/DevilutionX Repo/DevilutionX/build2/_deps/bzip2-subbuild/bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-patch"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build2\_deps\bzip2-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_7) "No patch step for 'bzip2-populate'"
+	"C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+	"C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build2/_deps/bzip2-subbuild/bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-patch"
 
 bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-update:
 .PHONY : bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-update
 
 bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-test: bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-install
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\Diablo\DevilutionX Repo\DevilutionX\build2\_deps\bzip2-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_8) "No test step for 'bzip2-populate'"
-	cd /d C:\Diablo\DEVILU~1\DEVILU~1\build2\_deps\BZIP2-~3 && C:\msys64\mingw64\bin\cmake.exe -E echo_append
-	cd /d C:\Diablo\DEVILU~1\DEVILU~1\build2\_deps\BZIP2-~3 && C:\msys64\mingw64\bin\cmake.exe -E touch "C:/Diablo/DevilutionX Repo/DevilutionX/build2/_deps/bzip2-subbuild/bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-test"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build2\_deps\bzip2-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_8) "No test step for 'bzip2-populate'"
+	cd /d C:\C-C__~1\DEVILU~1\build2\_deps\BZIP2-~3 && "C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+	cd /d C:\C-C__~1\DEVILU~1\build2\_deps\BZIP2-~3 && "C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build2/_deps/bzip2-subbuild/bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-test"
 
 bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-update: bzip2-populate-prefix/tmp/bzip2-populate-gitupdate.cmake
 bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-update: bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-update-info.txt
 bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-update: bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-download
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\Diablo\DevilutionX Repo\DevilutionX\build2\_deps\bzip2-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_9) "Performing update step for 'bzip2-populate'"
-	cd /d C:\Diablo\DEVILU~1\DEVILU~1\build2\_deps\BZIP2-~2 && C:\msys64\mingw64\bin\cmake.exe -Dcan_fetch=YES -DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE -P "C:/Diablo/DevilutionX Repo/DevilutionX/build2/_deps/bzip2-subbuild/bzip2-populate-prefix/tmp/bzip2-populate-gitupdate.cmake"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build2\_deps\bzip2-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_9) "Performing update step for 'bzip2-populate'"
+	cd /d C:\C-C__~1\DEVILU~1\build2\_deps\BZIP2-~2 && "C:\Program Files\CMake\bin\cmake.exe" -Dcan_fetch=YES -DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE -P "C:/c - c++/DevilutionX/build2/_deps/bzip2-subbuild/bzip2-populate-prefix/tmp/bzip2-populate-gitupdate.cmake"
 
 CMakeFiles/bzip2-populate.dir/codegen:
 .PHONY : CMakeFiles/bzip2-populate.dir/codegen
@@ -156,6 +156,6 @@ CMakeFiles/bzip2-populate.dir/clean:
 .PHONY : CMakeFiles/bzip2-populate.dir/clean
 
 CMakeFiles/bzip2-populate.dir/depend:
-	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" "C:\Diablo\DevilutionX Repo\DevilutionX\build2\_deps\bzip2-subbuild" "C:\Diablo\DevilutionX Repo\DevilutionX\build2\_deps\bzip2-subbuild" "C:\Diablo\DevilutionX Repo\DevilutionX\build2\_deps\bzip2-subbuild" "C:\Diablo\DevilutionX Repo\DevilutionX\build2\_deps\bzip2-subbuild" "C:\Diablo\DevilutionX Repo\DevilutionX\build2\_deps\bzip2-subbuild\CMakeFiles\bzip2-populate.dir\DependInfo.cmake" "--color=$(COLOR)" bzip2-populate
+	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" "C:\c - c++\DevilutionX\build2\_deps\bzip2-subbuild" "C:\c - c++\DevilutionX\build2\_deps\bzip2-subbuild" "C:\c - c++\DevilutionX\build2\_deps\bzip2-subbuild" "C:\c - c++\DevilutionX\build2\_deps\bzip2-subbuild" "C:\c - c++\DevilutionX\build2\_deps\bzip2-subbuild\CMakeFiles\bzip2-populate.dir\DependInfo.cmake" "--color=$(COLOR)" bzip2-populate
 .PHONY : CMakeFiles/bzip2-populate.dir/depend
 

@@ -12,6 +12,7 @@ Source/CMakeFiles/libdevilutionx_load_clx.dir/engine/load_clx.cpp.obj
  C:/c - c++/DevilutionX/Source/game_mode.hpp
  C:/c - c++/DevilutionX/Source/headless_mode.hpp
  C:/c - c++/DevilutionX/Source/mpq/mpq_common.hpp
+ C:/c - c++/DevilutionX/Source/mpq/mpq_reader.hpp
  C:/c - c++/DevilutionX/Source/utils/attributes.h
  C:/c - c++/DevilutionX/Source/utils/endian_read.hpp
  C:/c - c++/DevilutionX/Source/utils/file_util.h

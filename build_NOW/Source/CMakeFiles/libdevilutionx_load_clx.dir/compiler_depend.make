@@ -11,6 +11,7 @@ Source/CMakeFiles/libdevilutionx_load_clx.dir/engine/load_clx.cpp.obj: C:/c\ -\ 
   C:/c\ -\ c++/DevilutionX/Source/game_mode.hpp \
   C:/c\ -\ c++/DevilutionX/Source/headless_mode.hpp \
   C:/c\ -\ c++/DevilutionX/Source/mpq/mpq_common.hpp \
+  C:/c\ -\ c++/DevilutionX/Source/mpq/mpq_reader.hpp \
   C:/c\ -\ c++/DevilutionX/Source/utils/attributes.h \
   C:/c\ -\ c++/DevilutionX/Source/utils/endian_read.hpp \
   C:/c\ -\ c++/DevilutionX/Source/utils/file_util.h \
@@ -408,10 +409,6 @@ C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/S
 
 C:/c\ -\ c++/DevilutionX/3rdParty/tl/expected.hpp:
 
-C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/stl_tempbuf.h:
-
-C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_surface.h:
-
 C:/c\ -\ c++/DevilutionX/Source/engine/load_file.hpp:
 
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_mutex.h:
@@ -444,6 +441,16 @@ C:/c\ -\ c++/DevilutionX/Source/headless_mode.hpp:
 
 C:/c\ -\ c++/DevilutionX/Source/mpq/mpq_common.hpp:
 
+C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_log.h:
+
+C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_assert.h:
+
+C:/c\ -\ c++/DevilutionX/Source/utils/file_util.h:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/cstdint:
+
+C:/c\ -\ c++/DevilutionX/Source/mpq/mpq_reader.hpp:
+
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/avxvnniint8intrin.h:
 
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_error.h:
@@ -457,12 +464,6 @@ C:/mingw64/x86_64-w64-mingw32/include/stddef.h:
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_power.h:
 
 C:/c\ -\ c++/DevilutionX/Source/utils/endian_read.hpp:
-
-C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_log.h:
-
-C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_assert.h:
-
-C:/c\ -\ c++/DevilutionX/Source/utils/file_util.h:
 
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_guid.h:
 
@@ -601,6 +602,10 @@ C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/S
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/clflushoptintrin.h:
 
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_stdinc.h:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/stl_tempbuf.h:
+
+C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_surface.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/atomic_base.h:
 
@@ -949,8 +954,6 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/clocale:
 C:/mingw64/x86_64-w64-mingw32/include/_timeval.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/concepts:
-
-C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/cstdint:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/cstdio:
 

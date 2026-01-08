@@ -8,8 +8,10 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "C:/c - c++/DevilutionX/Source/effects_stubs.cpp" "Source/CMakeFiles/libdevilutionx_sound.dir/effects_stubs.cpp.obj" "gcc" "Source/CMakeFiles/libdevilutionx_sound.dir/effects_stubs.cpp.obj.d"
-  "C:/c - c++/DevilutionX/Source/engine/sound_stubs.cpp" "Source/CMakeFiles/libdevilutionx_sound.dir/engine/sound_stubs.cpp.obj" "gcc" "Source/CMakeFiles/libdevilutionx_sound.dir/engine/sound_stubs.cpp.obj.d"
+  "C:/c - c++/DevilutionX/Source/effects.cpp" "Source/CMakeFiles/libdevilutionx_sound.dir/effects.cpp.obj" "gcc" "Source/CMakeFiles/libdevilutionx_sound.dir/effects.cpp.obj.d"
+  "C:/c - c++/DevilutionX/Source/engine/sound.cpp" "Source/CMakeFiles/libdevilutionx_sound.dir/engine/sound.cpp.obj" "gcc" "Source/CMakeFiles/libdevilutionx_sound.dir/engine/sound.cpp.obj.d"
+  "C:/c - c++/DevilutionX/Source/utils/push_aulib_decoder.cpp" "Source/CMakeFiles/libdevilutionx_sound.dir/utils/push_aulib_decoder.cpp.obj" "gcc" "Source/CMakeFiles/libdevilutionx_sound.dir/utils/push_aulib_decoder.cpp.obj.d"
+  "C:/c - c++/DevilutionX/Source/utils/soundsample.cpp" "Source/CMakeFiles/libdevilutionx_sound.dir/utils/soundsample.cpp.obj" "gcc" "Source/CMakeFiles/libdevilutionx_sound.dir/utils/soundsample.cpp.obj.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

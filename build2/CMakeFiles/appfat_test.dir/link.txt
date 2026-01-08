@@ -1,3 +1,0 @@
-C:\msys64\mingw64\bin\cmake.exe -E rm -f CMakeFiles\appfat_test.dir/objects.a
-C:\msys64\mingw64\bin\ar.exe qc CMakeFiles\appfat_test.dir/objects.a @CMakeFiles\appfat_test.dir\objects1.rsp
-C:\msys64\mingw64\bin\c++.exe  -fno-rtti -fno-exceptions -O3 -DNDEBUG -flto=auto -fno-fat-lto-objects -Wl,--gc-sections,--as-needed -Wl,--whole-archive CMakeFiles\appfat_test.dir/objects.a -Wl,--no-whole-archive -o appfat_test.exe -Wl,--out-implib,libappfat_test.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\appfat_test.dir\linkLibs.rsp

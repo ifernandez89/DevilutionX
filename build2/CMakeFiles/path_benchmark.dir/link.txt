@@ -1,3 +1,0 @@
-C:\msys64\mingw64\bin\cmake.exe -E rm -f CMakeFiles\path_benchmark.dir/objects.a
-C:\msys64\mingw64\bin\ar.exe qc CMakeFiles\path_benchmark.dir/objects.a @CMakeFiles\path_benchmark.dir\objects1.rsp
-C:\msys64\mingw64\bin\c++.exe  -fno-rtti -fno-exceptions -O3 -DNDEBUG -flto=auto -fno-fat-lto-objects -Wl,--gc-sections,--as-needed -Wl,--whole-archive CMakeFiles\path_benchmark.dir/objects.a -Wl,--no-whole-archive -o path_benchmark.exe -Wl,--out-implib,libpath_benchmark.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\path_benchmark.dir\linkLibs.rsp

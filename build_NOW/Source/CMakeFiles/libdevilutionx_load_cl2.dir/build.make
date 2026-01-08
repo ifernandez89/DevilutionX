@@ -87,6 +87,8 @@ Source/CMakeFiles/libdevilutionx_load_cl2.dir/engine/load_cl2.cpp.s: cmake_force
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\c - c++\DevilutionX\Source\engine\load_cl2.cpp" -o CMakeFiles\libdevilutionx_load_cl2.dir\engine\load_cl2.cpp.s
 
 libdevilutionx_load_cl2: Source/CMakeFiles/libdevilutionx_load_cl2.dir/engine/load_cl2.cpp.obj
+libdevilutionx_load_cl2: Source/CMakeFiles/libdevilutionx_strings.dir/utils/str_cat.cpp.obj
+libdevilutionx_load_cl2: Source/CMakeFiles/libdevilutionx_strings.dir/utils/str_case.cpp.obj
 libdevilutionx_load_cl2: Source/CMakeFiles/libdevilutionx_load_cl2.dir/build.make
 .PHONY : libdevilutionx_load_cl2
 

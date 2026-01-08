@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/hellfire_copied_mod_file"
+  "mods/Hellfire/data/inv/objcurs2-widths.txt"
   "mods/Hellfire/lua/mods/Hellfire/init.lua"
   "mods/Hellfire/nlevels/cutl5w.clx"
   "mods/Hellfire/nlevels/cutl6w.clx"

@@ -35,6 +35,7 @@ Source/CMakeFiles/libdevilutionx_stores.dir/stores.cpp.obj
  C:/c - c++/DevilutionX/Source/engine/render/text_render.hpp
  C:/c - c++/DevilutionX/Source/engine/size.hpp
  C:/c - c++/DevilutionX/Source/engine/sound.h
+ C:/c - c++/DevilutionX/Source/engine/sound_defs.hpp
  C:/c - c++/DevilutionX/Source/engine/surface.hpp
  C:/c - c++/DevilutionX/Source/engine/world_tile.hpp
  C:/c - c++/DevilutionX/Source/game_mode.hpp
@@ -74,6 +75,8 @@ Source/CMakeFiles/libdevilutionx_stores.dir/stores.cpp.obj
  C:/c - c++/DevilutionX/Source/utils/sdl_geometry.h
  C:/c - c++/DevilutionX/Source/utils/sdl_ptrs.h
  C:/c - c++/DevilutionX/Source/utils/sdl_wrap.h
+ C:/c - c++/DevilutionX/Source/utils/soundsample.h
+ C:/c - c++/DevilutionX/Source/utils/stdcompat/shared_ptr_array.hpp
  C:/c - c++/DevilutionX/Source/utils/string_or_view.hpp
  C:/c - c++/DevilutionX/Source/utils/ui_fwd.h
  C:/c - c++/DevilutionX/Source/utils/utf8.hpp
@@ -488,7 +491,6 @@ Source/CMakeFiles/libdevilutionx_stores.dir/stores.cpp.obj
  C:/c - c++/DevilutionX/Source/engine/random.hpp
  C:/c - c++/DevilutionX/Source/engine/render/clx_render.hpp
  C:/c - c++/DevilutionX/Source/engine/render/primitive_render.hpp
- C:/c - c++/DevilutionX/Source/engine/sound_defs.hpp
  C:/c - c++/DevilutionX/Source/engine/trn.hpp
  C:/c - c++/DevilutionX/Source/inv.h
  C:/c - c++/DevilutionX/Source/inv_iterators.hpp

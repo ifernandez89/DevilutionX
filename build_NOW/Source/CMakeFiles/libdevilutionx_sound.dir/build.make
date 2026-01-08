@@ -71,38 +71,70 @@ include Source/CMakeFiles/libdevilutionx_sound.dir/flags.make
 Source/CMakeFiles/libdevilutionx_sound.dir/codegen:
 .PHONY : Source/CMakeFiles/libdevilutionx_sound.dir/codegen
 
-Source/CMakeFiles/libdevilutionx_sound.dir/effects_stubs.cpp.obj: Source/CMakeFiles/libdevilutionx_sound.dir/flags.make
-Source/CMakeFiles/libdevilutionx_sound.dir/effects_stubs.cpp.obj: Source/CMakeFiles/libdevilutionx_sound.dir/includes_CXX.rsp
-Source/CMakeFiles/libdevilutionx_sound.dir/effects_stubs.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/effects_stubs.cpp
-Source/CMakeFiles/libdevilutionx_sound.dir/effects_stubs.cpp.obj: Source/CMakeFiles/libdevilutionx_sound.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object Source/CMakeFiles/libdevilutionx_sound.dir/effects_stubs.cpp.obj"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx_sound.dir/effects_stubs.cpp.obj -MF CMakeFiles\libdevilutionx_sound.dir\effects_stubs.cpp.obj.d -o CMakeFiles\libdevilutionx_sound.dir\effects_stubs.cpp.obj -c "C:\c - c++\DevilutionX\Source\effects_stubs.cpp"
+Source/CMakeFiles/libdevilutionx_sound.dir/effects.cpp.obj: Source/CMakeFiles/libdevilutionx_sound.dir/flags.make
+Source/CMakeFiles/libdevilutionx_sound.dir/effects.cpp.obj: Source/CMakeFiles/libdevilutionx_sound.dir/includes_CXX.rsp
+Source/CMakeFiles/libdevilutionx_sound.dir/effects.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/effects.cpp
+Source/CMakeFiles/libdevilutionx_sound.dir/effects.cpp.obj: Source/CMakeFiles/libdevilutionx_sound.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object Source/CMakeFiles/libdevilutionx_sound.dir/effects.cpp.obj"
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx_sound.dir/effects.cpp.obj -MF CMakeFiles\libdevilutionx_sound.dir\effects.cpp.obj.d -o CMakeFiles\libdevilutionx_sound.dir\effects.cpp.obj -c "C:\c - c++\DevilutionX\Source\effects.cpp"
 
-Source/CMakeFiles/libdevilutionx_sound.dir/effects_stubs.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/libdevilutionx_sound.dir/effects_stubs.cpp.i"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\c - c++\DevilutionX\Source\effects_stubs.cpp" > CMakeFiles\libdevilutionx_sound.dir\effects_stubs.cpp.i
+Source/CMakeFiles/libdevilutionx_sound.dir/effects.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/libdevilutionx_sound.dir/effects.cpp.i"
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\c - c++\DevilutionX\Source\effects.cpp" > CMakeFiles\libdevilutionx_sound.dir\effects.cpp.i
 
-Source/CMakeFiles/libdevilutionx_sound.dir/effects_stubs.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/libdevilutionx_sound.dir/effects_stubs.cpp.s"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\c - c++\DevilutionX\Source\effects_stubs.cpp" -o CMakeFiles\libdevilutionx_sound.dir\effects_stubs.cpp.s
+Source/CMakeFiles/libdevilutionx_sound.dir/effects.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/libdevilutionx_sound.dir/effects.cpp.s"
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\c - c++\DevilutionX\Source\effects.cpp" -o CMakeFiles\libdevilutionx_sound.dir\effects.cpp.s
 
-Source/CMakeFiles/libdevilutionx_sound.dir/engine/sound_stubs.cpp.obj: Source/CMakeFiles/libdevilutionx_sound.dir/flags.make
-Source/CMakeFiles/libdevilutionx_sound.dir/engine/sound_stubs.cpp.obj: Source/CMakeFiles/libdevilutionx_sound.dir/includes_CXX.rsp
-Source/CMakeFiles/libdevilutionx_sound.dir/engine/sound_stubs.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/engine/sound_stubs.cpp
-Source/CMakeFiles/libdevilutionx_sound.dir/engine/sound_stubs.cpp.obj: Source/CMakeFiles/libdevilutionx_sound.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object Source/CMakeFiles/libdevilutionx_sound.dir/engine/sound_stubs.cpp.obj"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx_sound.dir/engine/sound_stubs.cpp.obj -MF CMakeFiles\libdevilutionx_sound.dir\engine\sound_stubs.cpp.obj.d -o CMakeFiles\libdevilutionx_sound.dir\engine\sound_stubs.cpp.obj -c "C:\c - c++\DevilutionX\Source\engine\sound_stubs.cpp"
+Source/CMakeFiles/libdevilutionx_sound.dir/engine/sound.cpp.obj: Source/CMakeFiles/libdevilutionx_sound.dir/flags.make
+Source/CMakeFiles/libdevilutionx_sound.dir/engine/sound.cpp.obj: Source/CMakeFiles/libdevilutionx_sound.dir/includes_CXX.rsp
+Source/CMakeFiles/libdevilutionx_sound.dir/engine/sound.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/engine/sound.cpp
+Source/CMakeFiles/libdevilutionx_sound.dir/engine/sound.cpp.obj: Source/CMakeFiles/libdevilutionx_sound.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object Source/CMakeFiles/libdevilutionx_sound.dir/engine/sound.cpp.obj"
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx_sound.dir/engine/sound.cpp.obj -MF CMakeFiles\libdevilutionx_sound.dir\engine\sound.cpp.obj.d -o CMakeFiles\libdevilutionx_sound.dir\engine\sound.cpp.obj -c "C:\c - c++\DevilutionX\Source\engine\sound.cpp"
 
-Source/CMakeFiles/libdevilutionx_sound.dir/engine/sound_stubs.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/libdevilutionx_sound.dir/engine/sound_stubs.cpp.i"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\c - c++\DevilutionX\Source\engine\sound_stubs.cpp" > CMakeFiles\libdevilutionx_sound.dir\engine\sound_stubs.cpp.i
+Source/CMakeFiles/libdevilutionx_sound.dir/engine/sound.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/libdevilutionx_sound.dir/engine/sound.cpp.i"
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\c - c++\DevilutionX\Source\engine\sound.cpp" > CMakeFiles\libdevilutionx_sound.dir\engine\sound.cpp.i
 
-Source/CMakeFiles/libdevilutionx_sound.dir/engine/sound_stubs.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/libdevilutionx_sound.dir/engine/sound_stubs.cpp.s"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\c - c++\DevilutionX\Source\engine\sound_stubs.cpp" -o CMakeFiles\libdevilutionx_sound.dir\engine\sound_stubs.cpp.s
+Source/CMakeFiles/libdevilutionx_sound.dir/engine/sound.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/libdevilutionx_sound.dir/engine/sound.cpp.s"
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\c - c++\DevilutionX\Source\engine\sound.cpp" -o CMakeFiles\libdevilutionx_sound.dir\engine\sound.cpp.s
 
-libdevilutionx_sound: Source/CMakeFiles/libdevilutionx_sound.dir/effects_stubs.cpp.obj
-libdevilutionx_sound: Source/CMakeFiles/libdevilutionx_sound.dir/engine/sound_stubs.cpp.obj
+Source/CMakeFiles/libdevilutionx_sound.dir/utils/soundsample.cpp.obj: Source/CMakeFiles/libdevilutionx_sound.dir/flags.make
+Source/CMakeFiles/libdevilutionx_sound.dir/utils/soundsample.cpp.obj: Source/CMakeFiles/libdevilutionx_sound.dir/includes_CXX.rsp
+Source/CMakeFiles/libdevilutionx_sound.dir/utils/soundsample.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/utils/soundsample.cpp
+Source/CMakeFiles/libdevilutionx_sound.dir/utils/soundsample.cpp.obj: Source/CMakeFiles/libdevilutionx_sound.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object Source/CMakeFiles/libdevilutionx_sound.dir/utils/soundsample.cpp.obj"
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx_sound.dir/utils/soundsample.cpp.obj -MF CMakeFiles\libdevilutionx_sound.dir\utils\soundsample.cpp.obj.d -o CMakeFiles\libdevilutionx_sound.dir\utils\soundsample.cpp.obj -c "C:\c - c++\DevilutionX\Source\utils\soundsample.cpp"
+
+Source/CMakeFiles/libdevilutionx_sound.dir/utils/soundsample.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/libdevilutionx_sound.dir/utils/soundsample.cpp.i"
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\c - c++\DevilutionX\Source\utils\soundsample.cpp" > CMakeFiles\libdevilutionx_sound.dir\utils\soundsample.cpp.i
+
+Source/CMakeFiles/libdevilutionx_sound.dir/utils/soundsample.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/libdevilutionx_sound.dir/utils/soundsample.cpp.s"
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\c - c++\DevilutionX\Source\utils\soundsample.cpp" -o CMakeFiles\libdevilutionx_sound.dir\utils\soundsample.cpp.s
+
+Source/CMakeFiles/libdevilutionx_sound.dir/utils/push_aulib_decoder.cpp.obj: Source/CMakeFiles/libdevilutionx_sound.dir/flags.make
+Source/CMakeFiles/libdevilutionx_sound.dir/utils/push_aulib_decoder.cpp.obj: Source/CMakeFiles/libdevilutionx_sound.dir/includes_CXX.rsp
+Source/CMakeFiles/libdevilutionx_sound.dir/utils/push_aulib_decoder.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/utils/push_aulib_decoder.cpp
+Source/CMakeFiles/libdevilutionx_sound.dir/utils/push_aulib_decoder.cpp.obj: Source/CMakeFiles/libdevilutionx_sound.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object Source/CMakeFiles/libdevilutionx_sound.dir/utils/push_aulib_decoder.cpp.obj"
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx_sound.dir/utils/push_aulib_decoder.cpp.obj -MF CMakeFiles\libdevilutionx_sound.dir\utils\push_aulib_decoder.cpp.obj.d -o CMakeFiles\libdevilutionx_sound.dir\utils\push_aulib_decoder.cpp.obj -c "C:\c - c++\DevilutionX\Source\utils\push_aulib_decoder.cpp"
+
+Source/CMakeFiles/libdevilutionx_sound.dir/utils/push_aulib_decoder.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/libdevilutionx_sound.dir/utils/push_aulib_decoder.cpp.i"
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\c - c++\DevilutionX\Source\utils\push_aulib_decoder.cpp" > CMakeFiles\libdevilutionx_sound.dir\utils\push_aulib_decoder.cpp.i
+
+Source/CMakeFiles/libdevilutionx_sound.dir/utils/push_aulib_decoder.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/libdevilutionx_sound.dir/utils/push_aulib_decoder.cpp.s"
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\c - c++\DevilutionX\Source\utils\push_aulib_decoder.cpp" -o CMakeFiles\libdevilutionx_sound.dir\utils\push_aulib_decoder.cpp.s
+
+libdevilutionx_sound: Source/CMakeFiles/libdevilutionx_sound.dir/effects.cpp.obj
+libdevilutionx_sound: Source/CMakeFiles/libdevilutionx_sound.dir/engine/sound.cpp.obj
+libdevilutionx_sound: Source/CMakeFiles/libdevilutionx_sound.dir/utils/soundsample.cpp.obj
+libdevilutionx_sound: Source/CMakeFiles/libdevilutionx_sound.dir/utils/push_aulib_decoder.cpp.obj
 libdevilutionx_sound: Source/CMakeFiles/libdevilutionx_strings.dir/utils/str_cat.cpp.obj
 libdevilutionx_sound: Source/CMakeFiles/libdevilutionx_strings.dir/utils/str_case.cpp.obj
 libdevilutionx_sound: Source/CMakeFiles/libdevilutionx_sound.dir/build.make

@@ -1,5 +1,0 @@
-if(EXISTS "C:/Diablo/DevilutionX Repo/DevilutionX/build2/palette_blending_test[1]_tests.cmake")
-  include("C:/Diablo/DevilutionX Repo/DevilutionX/build2/palette_blending_test[1]_tests.cmake")
-else()
-  add_test(palette_blending_test_NOT_BUILT palette_blending_test_NOT_BUILT)
-endif()

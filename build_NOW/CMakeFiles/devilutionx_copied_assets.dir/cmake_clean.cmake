@@ -15,6 +15,7 @@ file(REMOVE_RECURSE
   "assets/data/hintbox.clx"
   "assets/data/hintboxbackground.clx"
   "assets/data/hinticons.clx"
+  "assets/data/inv/objcurs-widths.txt"
   "assets/data/monstertags.clx"
   "assets/data/panel8buc.clx"
   "assets/data/panel8bucp.clx"

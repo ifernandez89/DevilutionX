@@ -23,6 +23,9 @@ AWK:FILEPATH=C:/Program Files/Git/usr/bin/gawk.exe
 //If true, assets are packaged into devilutionx.mpq.
 BUILD_ASSETS_MPQ:BOOL=OFF
 
+//Build the example sound player.
+BUILD_EXAMPLE:BOOL=OFF
+
 //Build the Unicode data generator tool
 BUILD_GENERATOR:BOOL=OFF
 
@@ -248,6 +251,9 @@ CMAKE_OBJCOPY:FILEPATH=C:/mingw64/bin/objcopy.exe
 //Path to a program.
 CMAKE_OBJDUMP:FILEPATH=C:/mingw64/bin/objdump.exe
 
+//No help, variable specified on the command line.
+CMAKE_PREFIX_PATH:UNINITIALIZED=deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32
+
 //Value Computed by CMake
 CMAKE_PROJECT_COMPAT_VERSION:STATIC=
 
@@ -404,7 +410,7 @@ DEVILUTIONX_RESAMPLER_SPEEX:BOOL=ON
 DEVILUTIONX_SCREENSHOT_FORMAT:STRING=DEVILUTIONX_SCREENSHOT_FORMAT_PNG
 
 //Link bzip2 statically
-DEVILUTIONX_STATIC_BZIP2:BOOL=OFF
+DEVILUTIONX_STATIC_BZIP2:BOOL=ON
 
 //Link C++ standard library statically (if available)
 DEVILUTIONX_STATIC_CXX_STDLIB:STRING=FOR_RELEASE
@@ -424,6 +430,9 @@ DEVILUTIONX_STATIC_MAGIC_ENUM:BOOL=ON
 //Link SDL2 statically
 DEVILUTIONX_STATIC_SDL2:BOOL=OFF
 
+//Link SDL_audiolib statically
+DEVILUTIONX_STATIC_SDL_AUDIOLIB:BOOL=ON
+
 //Link SDL_image statically
 DEVILUTIONX_STATIC_SDL_IMAGE:BOOL=ON
 
@@ -437,7 +446,7 @@ DEVILUTIONX_STATIC_UNORDERED_DENSE:BOOL=ON
 DEVILUTIONX_STATIC_ZLIB:BOOL=OFF
 
 //Use system-provided bzip2
-DEVILUTIONX_SYSTEM_BZIP2:BOOL=ON
+DEVILUTIONX_SYSTEM_BZIP2:BOOL=OFF
 
 //Use system-provided SDL2
 DEVILUTIONX_SYSTEM_SDL2:BOOL=ON
@@ -482,6 +491,9 @@ ENABLE_CODECOVERAGE:BOOL=OFF
 //Enable code coverage instrumentation (only enabled with BUILD_TESTING)
 ENABLE_COVERAGE:BOOL=OFF
 
+//Build the SDL_mixer emulation library (doesn't really work yet.)
+ENABLE_SDLMIXER_EMU:BOOL=OFF
+
 //Enable undefined behavior sanitizer
 ENABLE_UBSAN:BOOL=OFF
 
@@ -496,12 +508,20 @@ FETCHCONTENT_FULLY_DISCONNECTED:BOOL=OFF
 FETCHCONTENT_QUIET:BOOL=ON
 
 //When not empty, overrides where to find pre-populated content
+// for bzip2
+FETCHCONTENT_SOURCE_DIR_BZIP2:PATH=
+
+//When not empty, overrides where to find pre-populated content
 // for find_steam_game
 FETCHCONTENT_SOURCE_DIR_FIND_STEAM_GAME:PATH=
 
 //When not empty, overrides where to find pre-populated content
 // for libfmt
 FETCHCONTENT_SOURCE_DIR_LIBFMT:PATH=
+
+//When not empty, overrides where to find pre-populated content
+// for libmpq
+FETCHCONTENT_SOURCE_DIR_LIBMPQ:PATH=
 
 //When not empty, overrides where to find pre-populated content
 // for libpng
@@ -518,6 +538,10 @@ FETCHCONTENT_SOURCE_DIR_LUA:PATH=
 //When not empty, overrides where to find pre-populated content
 // for magic_enum
 FETCHCONTENT_SOURCE_DIR_MAGIC_ENUM:PATH=
+
+//When not empty, overrides where to find pre-populated content
+// for SDL_audiolib
+FETCHCONTENT_SOURCE_DIR_SDL_AUDIOLIB:PATH=
 
 //When not empty, overrides where to find pre-populated content
 // for SDL_image
@@ -538,11 +562,17 @@ FETCHCONTENT_SOURCE_DIR_UNORDERED_DENSE:PATH=
 //Enables UPDATE_DISCONNECTED behavior for all content population
 FETCHCONTENT_UPDATES_DISCONNECTED:BOOL=OFF
 
+//Enables UPDATE_DISCONNECTED behavior just for population of bzip2
+FETCHCONTENT_UPDATES_DISCONNECTED_BZIP2:BOOL=OFF
+
 //Enables UPDATE_DISCONNECTED behavior just for population of find_steam_game
 FETCHCONTENT_UPDATES_DISCONNECTED_FIND_STEAM_GAME:BOOL=OFF
 
 //Enables UPDATE_DISCONNECTED behavior just for population of libfmt
 FETCHCONTENT_UPDATES_DISCONNECTED_LIBFMT:BOOL=OFF
+
+//Enables UPDATE_DISCONNECTED behavior just for population of libmpq
+FETCHCONTENT_UPDATES_DISCONNECTED_LIBMPQ:BOOL=OFF
 
 //Enables UPDATE_DISCONNECTED behavior just for population of libpng
 FETCHCONTENT_UPDATES_DISCONNECTED_LIBPNG:BOOL=OFF
@@ -555,6 +585,9 @@ FETCHCONTENT_UPDATES_DISCONNECTED_LUA:BOOL=OFF
 
 //Enables UPDATE_DISCONNECTED behavior just for population of magic_enum
 FETCHCONTENT_UPDATES_DISCONNECTED_MAGIC_ENUM:BOOL=OFF
+
+//Enables UPDATE_DISCONNECTED behavior just for population of SDL_audiolib
+FETCHCONTENT_UPDATES_DISCONNECTED_SDL_AUDIOLIB:BOOL=OFF
 
 //Enables UPDATE_DISCONNECTED behavior just for population of SDL_image
 FETCHCONTENT_UPDATES_DISCONNECTED_SDL_IMAGE:BOOL=OFF
@@ -621,6 +654,9 @@ GETTEXT_MSGFMT_EXECUTABLE:FILEPATH=GETTEXT_MSGFMT_EXECUTABLE-NOTFOUND
 //Path to a program.
 GETTEXT_MSGMERGE_EXECUTABLE:FILEPATH=GETTEXT_MSGMERGE_EXECUTABLE-NOTFOUND
 
+//Git command line client
+GIT_EXECUTABLE:FILEPATH=C:/Program Files/Git/cmd/git.exe
+
 //Build with GPerfTools profiler
 GPERF:BOOL=OFF
 
@@ -670,7 +706,7 @@ MAGIC_ENUM_OPT_TEST_INSTALLED_VERSION_PKGCONFIG:BOOL=OFF
 NONET:BOOL=ON
 
 //Disable sound support
-NOSOUND:BOOL=ON
+NOSOUND:BOOL=OFF
 
 //Generate position-independent code
 PIE:BOOL=OFF
@@ -711,8 +747,8 @@ SB_CONFIG_UNITY:BOOL=ON
 //Build with screen reader support
 SCREEN_READER_INTEGRATION:BOOL=OFF
 
-//No help, variable specified on the command line.
-SDL2_DIR:UNINITIALIZED=deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/lib/cmake/SDL2
+//The directory containing a CMake configuration file for SDL2.
+SDL2_DIR:PATH=C:/c - c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/lib/cmake/SDL2
 
 //The directory containing a CMake configuration file for SDL2_image.
 SDL2_image_DIR:PATH=SDL2_image_DIR-NOTFOUND
@@ -722,6 +758,24 @@ SDL2_image_INCLUDE_DIR:PATH=SDL2_image_INCLUDE_DIR-NOTFOUND
 
 //Path to a library.
 SDL2_image_LIBRARY:FILEPATH=SDL2_image_LIBRARY-NOTFOUND
+
+//Value Computed by CMake
+SDL_audiolib_BINARY_DIR:STATIC=C:/c - c++/DevilutionX/build_NOW/_deps/sdl_audiolib-build
+
+//Path to a file.
+SDL_audiolib_INCLUDE_DIR:PATH=SDL_audiolib_INCLUDE_DIR-NOTFOUND
+
+//Value Computed by CMake
+SDL_audiolib_IS_TOP_LEVEL:STATIC=OFF
+
+//Path to a library.
+SDL_audiolib_LIBRARY:FILEPATH=SDL_audiolib_LIBRARY-NOTFOUND
+
+//Dependencies for the target
+SDL_audiolib_LIB_DEPENDS:STATIC=general;SDL2::SDL2;general;fmt::fmt;
+
+//Value Computed by CMake
+SDL_audiolib_SOURCE_DIR:STATIC=C:/c - c++/DevilutionX/build_NOW/_deps/sdl_audiolib-src
 
 //Path to a program.
 SMPQ:FILEPATH=SMPQ-NOTFOUND
@@ -788,15 +842,15 @@ TSAN:BOOL=OFF
 UBSAN:STRING=FOR_DEBUG
 
 //Expect MPQs to be unpacked and the data converted with devilutionx-mpq-tools
-UNPACKED_MPQS:BOOL=ON
+UNPACKED_MPQS:BOOL=OFF
 
 //Uses unpacked save files instead of MPQ .sv/.hsv files
-UNPACKED_SAVES:BOOL=ON
+UNPACKED_SAVES:BOOL=OFF
 
 //Use mold linker
 USE_LD_MOLD:BOOL=OFF
 
-//Use SDL1.2 instead of SDL2
+//Use SDL1 instead of SDL2.
 USE_SDL1:BOOL=OFF
 
 //Use SDL3 instead of SDL2
@@ -1046,7 +1100,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=21
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=26
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP
@@ -1102,6 +1156,10 @@ CMAKE_STRIP-ADVANCED:INTERNAL=1
 CMAKE_TAPI-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_VERBOSE_MAKEFILE
 CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
+//Compiler support for a deprecated attribute
+COMPILER_HAS_DEPRECATED:INTERNAL=1
+//Test COMPILER_HAS_DEPRECATED_ATTR
+COMPILER_HAS_DEPRECATED_ATTR:INTERNAL=1
 //STRINGS property for variable: CPACK
 CPACK-STRINGS:INTERNAL=FOR_DEBUG;FOR_RELEASE;ON;OFF
 //STRINGS property for variable: DEBUG
@@ -1128,10 +1186,14 @@ DISABLE_ZERO_TIER:INTERNAL=ON
 FIND_PACKAGE_MESSAGE_DETAILS_Threads:INTERNAL=[TRUE][v()]
 //Details about finding ZLIB
 FIND_PACKAGE_MESSAGE_DETAILS_ZLIB:INTERNAL=[C:/c - c++/DevilutionX/deps/zlib-build/libzlibstatic.a][C:/c - c++/DevilutionX/deps/zlib-build][ ][v()]
+//ADVANCED property for variable: GIT_EXECUTABLE
+GIT_EXECUTABLE-ADVANCED:INTERNAL=1
 //Test HAVE_LD_VERSION_SCRIPT
 HAVE_LD_VERSION_SCRIPT:INTERNAL=
 //Test HAVE_SOLARIS_LD_VERSION_SCRIPT
 HAVE_SOLARIS_LD_VERSION_SCRIPT:INTERNAL=
+//Test HAVE_STD_CLAMP
+HAVE_STD_CLAMP:INTERNAL=1
 //ADVANCED property for variable: LUA_INCLUDE_DIR
 LUA_INCLUDE_DIR-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: LUA_LIBRARY
@@ -1157,6 +1219,27 @@ PC_SDL2_image_STATIC_LIBS_L:INTERNAL=
 PC_SDL2_image_STATIC_LIBS_OTHER:INTERNAL=
 PC_SDL2_image_STATIC_LIBS_PATHS:INTERNAL=
 PC_SDL2_image_VERSION:INTERNAL=
+PC_SDL_audiolib_CFLAGS:INTERNAL=
+PC_SDL_audiolib_CFLAGS_I:INTERNAL=
+PC_SDL_audiolib_CFLAGS_OTHER:INTERNAL=
+PC_SDL_audiolib_FOUND:INTERNAL=
+PC_SDL_audiolib_INCLUDEDIR:INTERNAL=
+PC_SDL_audiolib_LIBDIR:INTERNAL=
+PC_SDL_audiolib_LIBS:INTERNAL=
+PC_SDL_audiolib_LIBS_L:INTERNAL=
+PC_SDL_audiolib_LIBS_OTHER:INTERNAL=
+PC_SDL_audiolib_LIBS_PATHS:INTERNAL=
+PC_SDL_audiolib_MODULE_NAME:INTERNAL=
+PC_SDL_audiolib_PREFIX:INTERNAL=
+PC_SDL_audiolib_STATIC_CFLAGS:INTERNAL=
+PC_SDL_audiolib_STATIC_CFLAGS_I:INTERNAL=
+PC_SDL_audiolib_STATIC_CFLAGS_OTHER:INTERNAL=
+PC_SDL_audiolib_STATIC_LIBDIR:INTERNAL=
+PC_SDL_audiolib_STATIC_LIBS:INTERNAL=
+PC_SDL_audiolib_STATIC_LIBS_L:INTERNAL=
+PC_SDL_audiolib_STATIC_LIBS_OTHER:INTERNAL=
+PC_SDL_audiolib_STATIC_LIBS_PATHS:INTERNAL=
+PC_SDL_audiolib_VERSION:INTERNAL=
 //ADVANCED property for variable: PKG_CONFIG_ARGN
 PKG_CONFIG_ARGN-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: PKG_CONFIG_EXECUTABLE
@@ -1184,4 +1267,5 @@ ZLIB_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
 //CMAKE_INSTALL_PREFIX during last run
 _GNUInstallDirs_LAST_CMAKE_INSTALL_PREFIX:INTERNAL=C:/Program Files (x86)/DevilutionX
 __pkg_config_checked_PC_SDL2_image:INTERNAL=1
+__pkg_config_checked_PC_SDL_audiolib:INTERNAL=1
 

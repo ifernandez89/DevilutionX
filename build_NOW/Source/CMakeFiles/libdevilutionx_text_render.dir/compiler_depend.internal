@@ -33,6 +33,7 @@ Source/CMakeFiles/libdevilutionx_text_render.dir/engine/render/text_render.cpp.o
  C:/c - c++/DevilutionX/Source/headless_mode.hpp
  C:/c - c++/DevilutionX/Source/levels/gendung_defs.hpp
  C:/c - c++/DevilutionX/Source/mpq/mpq_common.hpp
+ C:/c - c++/DevilutionX/Source/mpq/mpq_reader.hpp
  C:/c - c++/DevilutionX/Source/utils/algorithm/container.hpp
  C:/c - c++/DevilutionX/Source/utils/attributes.h
  C:/c - c++/DevilutionX/Source/utils/endian_read.hpp

@@ -9,6 +9,8 @@ Source/CMakeFiles/libdevilutionx_pcx_to_clx.dir/utils/pcx_to_clx.cpp.obj
  C:/c - c++/DevilutionX/Source/engine/clx_sprite.hpp
  C:/c - c++/DevilutionX/Source/game_mode.hpp
  C:/c - c++/DevilutionX/Source/headless_mode.hpp
+ C:/c - c++/DevilutionX/Source/mpq/mpq_common.hpp
+ C:/c - c++/DevilutionX/Source/mpq/mpq_reader.hpp
  C:/c - c++/DevilutionX/Source/utils/attributes.h
  C:/c - c++/DevilutionX/Source/utils/clx_encode.hpp
  C:/c - c++/DevilutionX/Source/utils/endian_read.hpp

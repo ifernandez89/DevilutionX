@@ -1501,16 +1501,19 @@ void MonsterDeath(Monster &monster)
 {
 	monster.var1++;
 	if (monster.type().type == MT_DIABLO) {
-		if (monster.position.tile.x < ViewPosition.x) {
-			ViewPosition.x--;
-		} else if (monster.position.tile.x > ViewPosition.x) {
-			ViewPosition.x++;
-		}
+		// En multijugador, no seguir a Diablo mientras muere para evitar problemas de focus
+		if (!gbIsMultiplayer) {
+			if (monster.position.tile.x < ViewPosition.x) {
+				ViewPosition.x--;
+			} else if (monster.position.tile.x > ViewPosition.x) {
+				ViewPosition.x++;
+			}
 
-		if (monster.position.tile.y < ViewPosition.y) {
-			ViewPosition.y--;
-		} else if (monster.position.tile.y > ViewPosition.y) {
-			ViewPosition.y++;
+			if (monster.position.tile.y < ViewPosition.y) {
+				ViewPosition.y--;
+			} else if (monster.position.tile.y > ViewPosition.y) {
+				ViewPosition.y++;
+			}
 		}
 
 		if (monster.var1 == 140 && gbIsMultiplayer)

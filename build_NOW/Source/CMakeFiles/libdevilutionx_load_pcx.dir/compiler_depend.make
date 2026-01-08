@@ -10,22 +10,21 @@ Source/CMakeFiles/libdevilutionx_load_pcx.dir/engine/load_pcx.cpp.obj: C:/c\ -\ 
   C:/c\ -\ c++/DevilutionX/Source/appfat.h \
   C:/c\ -\ c++/DevilutionX/Source/engine/assets.hpp \
   C:/c\ -\ c++/DevilutionX/Source/engine/clx_sprite.hpp \
-  C:/c\ -\ c++/DevilutionX/Source/engine/load_clx.hpp \
-  C:/c\ -\ c++/DevilutionX/Source/engine/load_file.hpp \
   C:/c\ -\ c++/DevilutionX/Source/engine/load_pcx.hpp \
   C:/c\ -\ c++/DevilutionX/Source/game_mode.hpp \
   C:/c\ -\ c++/DevilutionX/Source/headless_mode.hpp \
   C:/c\ -\ c++/DevilutionX/Source/mpq/mpq_common.hpp \
+  C:/c\ -\ c++/DevilutionX/Source/mpq/mpq_reader.hpp \
   C:/c\ -\ c++/DevilutionX/Source/utils/attributes.h \
   C:/c\ -\ c++/DevilutionX/Source/utils/endian_read.hpp \
   C:/c\ -\ c++/DevilutionX/Source/utils/file_util.h \
   C:/c\ -\ c++/DevilutionX/Source/utils/intrusive_optional.hpp \
   C:/c\ -\ c++/DevilutionX/Source/utils/language.h \
   C:/c\ -\ c++/DevilutionX/Source/utils/log.hpp \
+  C:/c\ -\ c++/DevilutionX/Source/utils/pcx.hpp \
+  C:/c\ -\ c++/DevilutionX/Source/utils/pcx_to_clx.hpp \
   C:/c\ -\ c++/DevilutionX/Source/utils/sdl2_backports.h \
   C:/c\ -\ c++/DevilutionX/Source/utils/sdl_compat.h \
-  C:/c\ -\ c++/DevilutionX/Source/utils/static_vector.hpp \
-  C:/c\ -\ c++/DevilutionX/Source/utils/status_macros.hpp \
   C:/c\ -\ c++/DevilutionX/Source/utils/str_cat.hpp \
   C:/c\ -\ c++/DevilutionX/Source/utils/string_or_view.hpp \
   C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL.h \
@@ -426,13 +425,13 @@ C:/c\ -\ c++/DevilutionX/Source/engine/load_pcx.cpp:
 
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_locale.h:
 
+C:/c\ -\ c++/DevilutionX/Source/utils/pcx.hpp:
+
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_joystick.h:
 
 C:/c\ -\ c++/DevilutionX/3rdParty/tl/expected.hpp:
 
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_filesystem.h:
-
-C:/c\ -\ c++/DevilutionX/Source/utils/status_macros.hpp:
 
 _deps/libfmt-src/include/fmt/base.h:
 
@@ -449,8 +448,6 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/unordered_map:
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/basic_string.h:
 
 _deps/libfmt-src/include/fmt/ranges.h:
-
-C:/c\ -\ c++/DevilutionX/Source/engine/load_file.hpp:
 
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_mutex.h:
 
@@ -470,12 +467,6 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/uintrintrin.h:
 
 C:/c\ -\ c++/DevilutionX/Source/engine/clx_sprite.hpp:
 
-C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/cwctype:
-
-C:/c\ -\ c++/DevilutionX/Source/engine/load_clx.hpp:
-
-C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_gamecontroller.h:
-
 C:/c\ -\ c++/DevilutionX/Source/engine/load_pcx.hpp:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/typeinfo:
@@ -485,6 +476,16 @@ C:/c\ -\ c++/DevilutionX/Source/game_mode.hpp:
 C:/c\ -\ c++/DevilutionX/Source/headless_mode.hpp:
 
 C:/c\ -\ c++/DevilutionX/Source/mpq/mpq_common.hpp:
+
+C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_log.h:
+
+C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_assert.h:
+
+C:/c\ -\ c++/DevilutionX/Source/utils/file_util.h:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/cstdint:
+
+C:/c\ -\ c++/DevilutionX/Source/mpq/mpq_reader.hpp:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/avxvnniint8intrin.h:
 
@@ -502,12 +503,6 @@ C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/S
 
 C:/c\ -\ c++/DevilutionX/Source/utils/endian_read.hpp:
 
-C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_log.h:
-
-C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_assert.h:
-
-C:/c\ -\ c++/DevilutionX/Source/utils/file_util.h:
-
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_guid.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/iosfwd:
@@ -522,11 +517,13 @@ C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/S
 
 C:/c\ -\ c++/DevilutionX/Source/utils/language.h:
 
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/mm3dnow.h:
+
+C:/c\ -\ c++/DevilutionX/Source/utils/pcx_to_clx.hpp:
+
+C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_config_windows.h:
+
 C:/c\ -\ c++/DevilutionX/Source/utils/sdl2_backports.h:
-
-C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_atomic.h:
-
-C:/c\ -\ c++/DevilutionX/Source/utils/static_vector.hpp:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/tsxldtrkintrin.h:
 
@@ -545,6 +542,8 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_video.h:
 
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL.h:
+
+C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_atomic.h:
 
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_loadso.h:
 
@@ -574,10 +573,6 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/ext/string_conversions.
 
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_config.h:
 
-C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/mm3dnow.h:
-
-C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_config_windows.h:
-
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/amxfp16intrin.h:
 
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_cpuinfo.h:
@@ -591,6 +586,10 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/avx512vlbwintrin.h:
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_keyboard.h:
 
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_events.h:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/cwctype:
+
+C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_gamecontroller.h:
 
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_touch.h:
 
@@ -999,8 +998,6 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/clocale:
 C:/mingw64/x86_64-w64-mingw32/include/_timeval.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/concepts:
-
-C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/cstdint:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/cstdio:
 

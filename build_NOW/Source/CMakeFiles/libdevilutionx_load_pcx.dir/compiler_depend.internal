@@ -11,22 +11,21 @@ Source/CMakeFiles/libdevilutionx_load_pcx.dir/engine/load_pcx.cpp.obj
  C:/c - c++/DevilutionX/Source/appfat.h
  C:/c - c++/DevilutionX/Source/engine/assets.hpp
  C:/c - c++/DevilutionX/Source/engine/clx_sprite.hpp
- C:/c - c++/DevilutionX/Source/engine/load_clx.hpp
- C:/c - c++/DevilutionX/Source/engine/load_file.hpp
  C:/c - c++/DevilutionX/Source/engine/load_pcx.hpp
  C:/c - c++/DevilutionX/Source/game_mode.hpp
  C:/c - c++/DevilutionX/Source/headless_mode.hpp
  C:/c - c++/DevilutionX/Source/mpq/mpq_common.hpp
+ C:/c - c++/DevilutionX/Source/mpq/mpq_reader.hpp
  C:/c - c++/DevilutionX/Source/utils/attributes.h
  C:/c - c++/DevilutionX/Source/utils/endian_read.hpp
  C:/c - c++/DevilutionX/Source/utils/file_util.h
  C:/c - c++/DevilutionX/Source/utils/intrusive_optional.hpp
  C:/c - c++/DevilutionX/Source/utils/language.h
  C:/c - c++/DevilutionX/Source/utils/log.hpp
+ C:/c - c++/DevilutionX/Source/utils/pcx.hpp
+ C:/c - c++/DevilutionX/Source/utils/pcx_to_clx.hpp
  C:/c - c++/DevilutionX/Source/utils/sdl2_backports.h
  C:/c - c++/DevilutionX/Source/utils/sdl_compat.h
- C:/c - c++/DevilutionX/Source/utils/static_vector.hpp
- C:/c - c++/DevilutionX/Source/utils/status_macros.hpp
  C:/c - c++/DevilutionX/Source/utils/str_cat.hpp
  C:/c - c++/DevilutionX/Source/utils/string_or_view.hpp
  C:/c - c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL.h

@@ -32,6 +32,7 @@ Source/CMakeFiles/libdevilutionx_text_render.dir/engine/render/text_render.cpp.o
   C:/c\ -\ c++/DevilutionX/Source/headless_mode.hpp \
   C:/c\ -\ c++/DevilutionX/Source/levels/gendung_defs.hpp \
   C:/c\ -\ c++/DevilutionX/Source/mpq/mpq_common.hpp \
+  C:/c\ -\ c++/DevilutionX/Source/mpq/mpq_reader.hpp \
   C:/c\ -\ c++/DevilutionX/Source/utils/algorithm/container.hpp \
   C:/c\ -\ c++/DevilutionX/Source/utils/attributes.h \
   C:/c\ -\ c++/DevilutionX/Source/utils/endian_read.hpp \
@@ -455,8 +456,6 @@ C:/c\ -\ c++/DevilutionX/Source/engine/render/text_render.cpp:
 
 C:/c\ -\ c++/DevilutionX/3rdParty/tl/expected.hpp:
 
-C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_filesystem.h:
-
 C:/c\ -\ c++/DevilutionX/Source/utils/status_macros.hpp:
 
 _deps/libfmt-src/include/fmt/base.h:
@@ -605,6 +604,20 @@ C:/c\ -\ c++/DevilutionX/Source/levels/gendung_defs.hpp:
 
 C:/c\ -\ c++/DevilutionX/Source/mpq/mpq_common.hpp:
 
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/shared_mutex:
+
+C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_assert.h:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/stl_map.h:
+
+C:/c\ -\ c++/DevilutionX/Source/utils/sdl_ptrs.h:
+
+C:/c\ -\ c++/DevilutionX/Source/utils/file_util.h:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/cstdint:
+
+C:/c\ -\ c++/DevilutionX/Source/mpq/mpq_reader.hpp:
+
 C:/c\ -\ c++/DevilutionX/Source/utils/sdl2_backports.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/vector:
@@ -618,16 +631,6 @@ C:/mingw64/x86_64-w64-mingw32/include/_mingw_stdarg.h:
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/close_code.h:
 
 C:/c\ -\ c++/DevilutionX/Source/utils/enum_traits.h:
-
-C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/shared_mutex:
-
-C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_assert.h:
-
-C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/stl_map.h:
-
-C:/c\ -\ c++/DevilutionX/Source/utils/sdl_ptrs.h:
-
-C:/c\ -\ c++/DevilutionX/Source/utils/file_util.h:
 
 C:/c\ -\ c++/DevilutionX/Source/utils/language.h:
 
@@ -690,6 +693,8 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/pstl/glue_memory_defs.h
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_endian.h:
 
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_events.h:
+
+C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_filesystem.h:
 
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_touch.h:
 
@@ -1122,8 +1127,6 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/clocale:
 C:/mingw64/x86_64-w64-mingw32/include/_timeval.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/concepts:
-
-C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/cstdint:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/cstdio:
 

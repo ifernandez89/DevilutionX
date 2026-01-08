@@ -28,8 +28,8 @@ set_property(GLOBAL PROPERTY _CMAKE_FindGit_GIT_EXECUTABLE_VERSION
 include(ExternalProject)
 ExternalProject_Add(bzip2-populate
                      "UPDATE_DISCONNECTED" "False" "GIT_REPOSITORY" "https://gitlab.com/bzip2/bzip2" "EXTERNALPROJECT_INTERNAL_ARGUMENT_SEPARATOR" "GIT_TAG" "bzip2-1.0.8"
-                    SOURCE_DIR          "C:/Diablo/DevilutionX Repo/DevilutionX/build2/_deps/bzip2-src"
-                    BINARY_DIR          "C:/Diablo/DevilutionX Repo/DevilutionX/build2/_deps/bzip2-build"
+                    SOURCE_DIR          "C:/c - c++/DevilutionX/build2/_deps/bzip2-src"
+                    BINARY_DIR          "C:/c - c++/DevilutionX/build2/_deps/bzip2-build"
                     CONFIGURE_COMMAND   ""
                     BUILD_COMMAND       ""
                     INSTALL_COMMAND     ""

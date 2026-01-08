@@ -214,6 +214,19 @@ hellfire_copied_mod_file/fast:
 .PHONY : hellfire_copied_mod_file/fast
 
 #=============================================================================
+# Target rules for targets named BZip2
+
+# Build rule for target.
+BZip2: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 BZip2
+.PHONY : BZip2
+
+# fast build rule for target.
+BZip2/fast:
+	$(MAKE) $(MAKESILENT) -f 3rdParty\bzip2\CMakeFiles\BZip2.dir\build.make 3rdParty/bzip2/CMakeFiles/BZip2.dir/build
+.PHONY : BZip2/fast
+
+#=============================================================================
 # Target rules for targets named lua_static
 
 # Build rule for target.
@@ -461,6 +474,19 @@ fmt/fast:
 .PHONY : fmt/fast
 
 #=============================================================================
+# Target rules for targets named SDL_audiolib
+
+# Build rule for target.
+SDL_audiolib: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 SDL_audiolib
+.PHONY : SDL_audiolib
+
+# fast build rule for target.
+SDL_audiolib/fast:
+	$(MAKE) $(MAKESILENT) -f _deps\sdl_audiolib-build\CMakeFiles\SDL_audiolib.dir\build.make _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/build
+.PHONY : SDL_audiolib/fast
+
+#=============================================================================
 # Target rules for targets named libsmackerdec
 
 # Build rule for target.
@@ -474,6 +500,19 @@ libsmackerdec/fast:
 .PHONY : libsmackerdec/fast
 
 #=============================================================================
+# Target rules for targets named libmpq
+
+# Build rule for target.
+libmpq: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 libmpq
+.PHONY : libmpq
+
+# fast build rule for target.
+libmpq/fast:
+	$(MAKE) $(MAKESILENT) -f 3rdParty\libmpq\CMakeFiles\libmpq.dir\build.make 3rdParty/libmpq/CMakeFiles/libmpq.dir/build
+.PHONY : libmpq/fast
+
+#=============================================================================
 # Target rules for targets named SheenBidi
 
 # Build rule for target.
@@ -485,6 +524,19 @@ SheenBidi: cmake_check_build_system
 SheenBidi/fast:
 	$(MAKE) $(MAKESILENT) -f _deps\sheenbidi-build\CMakeFiles\SheenBidi.dir\build.make _deps/sheenbidi-build/CMakeFiles/SheenBidi.dir/build
 .PHONY : SheenBidi/fast
+
+#=============================================================================
+# Target rules for targets named PKWare
+
+# Build rule for target.
+PKWare: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 PKWare
+.PHONY : PKWare
+
+# fast build rule for target.
+PKWare/fast:
+	$(MAKE) $(MAKESILENT) -f 3rdParty\PKWare\CMakeFiles\PKWare.dir\build.make 3rdParty/PKWare/CMakeFiles/PKWare.dir/build
+.PHONY : PKWare/fast
 
 #=============================================================================
 # Target rules for targets named libdevilutionx_assets
@@ -942,6 +994,19 @@ libdevilutionx_parse_int/fast:
 .PHONY : libdevilutionx_parse_int/fast
 
 #=============================================================================
+# Target rules for targets named libdevilutionx_mpq
+
+# Build rule for target.
+libdevilutionx_mpq: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 libdevilutionx_mpq
+.PHONY : libdevilutionx_mpq
+
+# fast build rule for target.
+libdevilutionx_mpq/fast:
+	$(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_mpq.dir\build.make Source/CMakeFiles/libdevilutionx_mpq.dir/build
+.PHONY : libdevilutionx_mpq/fast
+
+#=============================================================================
 # Target rules for targets named libdevilutionx_multiplayer
 
 # Build rule for target.
@@ -979,6 +1044,19 @@ libdevilutionx_pathfinding: cmake_check_build_system
 libdevilutionx_pathfinding/fast:
 	$(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_pathfinding.dir\build.make Source/CMakeFiles/libdevilutionx_pathfinding.dir/build
 .PHONY : libdevilutionx_pathfinding/fast
+
+#=============================================================================
+# Target rules for targets named libdevilutionx_pkware_encrypt
+
+# Build rule for target.
+libdevilutionx_pkware_encrypt: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 libdevilutionx_pkware_encrypt
+.PHONY : libdevilutionx_pkware_encrypt
+
+# fast build rule for target.
+libdevilutionx_pkware_encrypt/fast:
+	$(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_pkware_encrypt.dir\build.make Source/CMakeFiles/libdevilutionx_pkware_encrypt.dir/build
+.PHONY : libdevilutionx_pkware_encrypt/fast
 
 #=============================================================================
 # Target rules for targets named libdevilutionx_player
@@ -1250,6 +1328,9 @@ help:
 	@echo ... scripts_symbols_chk
 	@echo ... scripts_symbols_out
 	@echo ... scripts_vers_out
+	@echo ... BZip2
+	@echo ... PKWare
+	@echo ... SDL_audiolib
 	@echo ... SDL_image
 	@echo ... SheenBidi
 	@echo ... devilutionx
@@ -1282,6 +1363,7 @@ help:
 	@echo ... libdevilutionx_load_pcx
 	@echo ... libdevilutionx_logged_fstream
 	@echo ... libdevilutionx_monster
+	@echo ... libdevilutionx_mpq
 	@echo ... libdevilutionx_multiplayer
 	@echo ... libdevilutionx_options
 	@echo ... libdevilutionx_padmapper
@@ -1291,6 +1373,7 @@ help:
 	@echo ... libdevilutionx_pathfinding
 	@echo ... libdevilutionx_paths
 	@echo ... libdevilutionx_pcx_to_clx
+	@echo ... libdevilutionx_pkware_encrypt
 	@echo ... libdevilutionx_player
 	@echo ... libdevilutionx_primitive_render
 	@echo ... libdevilutionx_quests
@@ -1308,6 +1391,7 @@ help:
 	@echo ... libdevilutionx_utf8
 	@echo ... libdevilutionx_utils_console
 	@echo ... libdevilutionx_vision
+	@echo ... libmpq
 	@echo ... libsmackerdec
 	@echo ... lua_static
 	@echo ... png_static

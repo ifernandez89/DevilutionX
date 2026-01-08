@@ -71,7 +71,9 @@ Source/CMakeFiles/libdevilutionx_padmapper.dir/controls/padmapper.cpp.obj
  C:/c - c++/DevilutionX/Source/utils/sdl_geometry.h
  C:/c - c++/DevilutionX/Source/utils/sdl_ptrs.h
  C:/c - c++/DevilutionX/Source/utils/sdl_wrap.h
+ C:/c - c++/DevilutionX/Source/utils/soundsample.h
  C:/c - c++/DevilutionX/Source/utils/static_vector.hpp
+ C:/c - c++/DevilutionX/Source/utils/stdcompat/shared_ptr_array.hpp
  C:/c - c++/DevilutionX/Source/utils/string_or_view.hpp
  C:/c - c++/DevilutionX/Source/utils/string_view_hash.hpp
  C:/c - c++/DevilutionX/Source/utils/ui_fwd.h

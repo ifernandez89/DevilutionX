@@ -1,0 +1,14 @@
+# Target labels
+ sdl_audiolib-populate
+# Source files and their labels
+C:/c - c++/DevilutionX/build_NOW/_deps/sdl_audiolib-subbuild/CMakeFiles/sdl_audiolib-populate
+C:/c - c++/DevilutionX/build_NOW/_deps/sdl_audiolib-subbuild/CMakeFiles/sdl_audiolib-populate.rule
+C:/c - c++/DevilutionX/build_NOW/_deps/sdl_audiolib-subbuild/CMakeFiles/sdl_audiolib-populate-complete.rule
+C:/c - c++/DevilutionX/build_NOW/_deps/sdl_audiolib-subbuild/sdl_audiolib-populate-prefix/src/sdl_audiolib-populate-stamp/sdl_audiolib-populate-build.rule
+C:/c - c++/DevilutionX/build_NOW/_deps/sdl_audiolib-subbuild/sdl_audiolib-populate-prefix/src/sdl_audiolib-populate-stamp/sdl_audiolib-populate-configure.rule
+C:/c - c++/DevilutionX/build_NOW/_deps/sdl_audiolib-subbuild/sdl_audiolib-populate-prefix/src/sdl_audiolib-populate-stamp/sdl_audiolib-populate-download.rule
+C:/c - c++/DevilutionX/build_NOW/_deps/sdl_audiolib-subbuild/sdl_audiolib-populate-prefix/src/sdl_audiolib-populate-stamp/sdl_audiolib-populate-install.rule
+C:/c - c++/DevilutionX/build_NOW/_deps/sdl_audiolib-subbuild/sdl_audiolib-populate-prefix/src/sdl_audiolib-populate-stamp/sdl_audiolib-populate-mkdir.rule
+C:/c - c++/DevilutionX/build_NOW/_deps/sdl_audiolib-subbuild/sdl_audiolib-populate-prefix/src/sdl_audiolib-populate-stamp/sdl_audiolib-populate-patch.rule
+C:/c - c++/DevilutionX/build_NOW/_deps/sdl_audiolib-subbuild/sdl_audiolib-populate-prefix/src/sdl_audiolib-populate-stamp/sdl_audiolib-populate-test.rule
+C:/c - c++/DevilutionX/build_NOW/_deps/sdl_audiolib-subbuild/sdl_audiolib-populate-prefix/src/sdl_audiolib-populate-stamp/sdl_audiolib-populate-update.rule

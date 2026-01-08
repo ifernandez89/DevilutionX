@@ -652,6 +652,20 @@ libdevilutionx_parse_int/fast:
 .PHONY : libdevilutionx_parse_int/fast
 
 # Convenience name for target.
+Source/CMakeFiles/libdevilutionx_mpq.dir/rule:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 Source/CMakeFiles/libdevilutionx_mpq.dir/rule
+.PHONY : Source/CMakeFiles/libdevilutionx_mpq.dir/rule
+
+# Convenience name for target.
+libdevilutionx_mpq: Source/CMakeFiles/libdevilutionx_mpq.dir/rule
+.PHONY : libdevilutionx_mpq
+
+# fast build rule for target.
+libdevilutionx_mpq/fast:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_mpq.dir\build.make Source/CMakeFiles/libdevilutionx_mpq.dir/build
+.PHONY : libdevilutionx_mpq/fast
+
+# Convenience name for target.
 Source/CMakeFiles/libdevilutionx_multiplayer.dir/rule:
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 Source/CMakeFiles/libdevilutionx_multiplayer.dir/rule
 .PHONY : Source/CMakeFiles/libdevilutionx_multiplayer.dir/rule
@@ -692,6 +706,20 @@ libdevilutionx_pathfinding: Source/CMakeFiles/libdevilutionx_pathfinding.dir/rul
 libdevilutionx_pathfinding/fast:
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_pathfinding.dir\build.make Source/CMakeFiles/libdevilutionx_pathfinding.dir/build
 .PHONY : libdevilutionx_pathfinding/fast
+
+# Convenience name for target.
+Source/CMakeFiles/libdevilutionx_pkware_encrypt.dir/rule:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 Source/CMakeFiles/libdevilutionx_pkware_encrypt.dir/rule
+.PHONY : Source/CMakeFiles/libdevilutionx_pkware_encrypt.dir/rule
+
+# Convenience name for target.
+libdevilutionx_pkware_encrypt: Source/CMakeFiles/libdevilutionx_pkware_encrypt.dir/rule
+.PHONY : libdevilutionx_pkware_encrypt
+
+# fast build rule for target.
+libdevilutionx_pkware_encrypt/fast:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_pkware_encrypt.dir\build.make Source/CMakeFiles/libdevilutionx_pkware_encrypt.dir/build
+.PHONY : libdevilutionx_pkware_encrypt/fast
 
 # Convenience name for target.
 Source/CMakeFiles/libdevilutionx_player.dir/rule:
@@ -2405,29 +2433,53 @@ dvlnet/packet.cpp.s:
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/dvlnet/packet.cpp.s
 .PHONY : dvlnet/packet.cpp.s
 
-effects_stubs.obj: effects_stubs.cpp.obj
-.PHONY : effects_stubs.obj
+effects.obj: effects.cpp.obj
+.PHONY : effects.obj
 
 # target to build an object file
-effects_stubs.cpp.obj:
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_sound.dir\build.make Source/CMakeFiles/libdevilutionx_sound.dir/effects_stubs.cpp.obj
-.PHONY : effects_stubs.cpp.obj
+effects.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_sound.dir\build.make Source/CMakeFiles/libdevilutionx_sound.dir/effects.cpp.obj
+.PHONY : effects.cpp.obj
 
-effects_stubs.i: effects_stubs.cpp.i
-.PHONY : effects_stubs.i
+effects.i: effects.cpp.i
+.PHONY : effects.i
 
 # target to preprocess a source file
-effects_stubs.cpp.i:
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_sound.dir\build.make Source/CMakeFiles/libdevilutionx_sound.dir/effects_stubs.cpp.i
-.PHONY : effects_stubs.cpp.i
+effects.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_sound.dir\build.make Source/CMakeFiles/libdevilutionx_sound.dir/effects.cpp.i
+.PHONY : effects.cpp.i
 
-effects_stubs.s: effects_stubs.cpp.s
-.PHONY : effects_stubs.s
+effects.s: effects.cpp.s
+.PHONY : effects.s
 
 # target to generate assembly for a file
-effects_stubs.cpp.s:
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_sound.dir\build.make Source/CMakeFiles/libdevilutionx_sound.dir/effects_stubs.cpp.s
-.PHONY : effects_stubs.cpp.s
+effects.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_sound.dir\build.make Source/CMakeFiles/libdevilutionx_sound.dir/effects.cpp.s
+.PHONY : effects.cpp.s
+
+encrypt.obj: encrypt.cpp.obj
+.PHONY : encrypt.obj
+
+# target to build an object file
+encrypt.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_pkware_encrypt.dir\build.make Source/CMakeFiles/libdevilutionx_pkware_encrypt.dir/encrypt.cpp.obj
+.PHONY : encrypt.cpp.obj
+
+encrypt.i: encrypt.cpp.i
+.PHONY : encrypt.i
+
+# target to preprocess a source file
+encrypt.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_pkware_encrypt.dir\build.make Source/CMakeFiles/libdevilutionx_pkware_encrypt.dir/encrypt.cpp.i
+.PHONY : encrypt.cpp.i
+
+encrypt.s: encrypt.cpp.s
+.PHONY : encrypt.s
+
+# target to generate assembly for a file
+encrypt.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_pkware_encrypt.dir\build.make Source/CMakeFiles/libdevilutionx_pkware_encrypt.dir/encrypt.cpp.s
+.PHONY : encrypt.cpp.s
 
 engine/actor_position.obj: engine/actor_position.cpp.obj
 .PHONY : engine/actor_position.obj
@@ -2957,6 +3009,30 @@ engine/render/text_render.cpp.s:
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_text_render.dir\build.make Source/CMakeFiles/libdevilutionx_text_render.dir/engine/render/text_render.cpp.s
 .PHONY : engine/render/text_render.cpp.s
 
+engine/sound.obj: engine/sound.cpp.obj
+.PHONY : engine/sound.obj
+
+# target to build an object file
+engine/sound.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_sound.dir\build.make Source/CMakeFiles/libdevilutionx_sound.dir/engine/sound.cpp.obj
+.PHONY : engine/sound.cpp.obj
+
+engine/sound.i: engine/sound.cpp.i
+.PHONY : engine/sound.i
+
+# target to preprocess a source file
+engine/sound.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_sound.dir\build.make Source/CMakeFiles/libdevilutionx_sound.dir/engine/sound.cpp.i
+.PHONY : engine/sound.cpp.i
+
+engine/sound.s: engine/sound.cpp.s
+.PHONY : engine/sound.s
+
+# target to generate assembly for a file
+engine/sound.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_sound.dir\build.make Source/CMakeFiles/libdevilutionx_sound.dir/engine/sound.cpp.s
+.PHONY : engine/sound.cpp.s
+
 engine/sound_position.obj: engine/sound_position.cpp.obj
 .PHONY : engine/sound_position.obj
 
@@ -2980,30 +3056,6 @@ engine/sound_position.s: engine/sound_position.cpp.s
 engine/sound_position.cpp.s:
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/engine/sound_position.cpp.s
 .PHONY : engine/sound_position.cpp.s
-
-engine/sound_stubs.obj: engine/sound_stubs.cpp.obj
-.PHONY : engine/sound_stubs.obj
-
-# target to build an object file
-engine/sound_stubs.cpp.obj:
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_sound.dir\build.make Source/CMakeFiles/libdevilutionx_sound.dir/engine/sound_stubs.cpp.obj
-.PHONY : engine/sound_stubs.cpp.obj
-
-engine/sound_stubs.i: engine/sound_stubs.cpp.i
-.PHONY : engine/sound_stubs.i
-
-# target to preprocess a source file
-engine/sound_stubs.cpp.i:
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_sound.dir\build.make Source/CMakeFiles/libdevilutionx_sound.dir/engine/sound_stubs.cpp.i
-.PHONY : engine/sound_stubs.cpp.i
-
-engine/sound_stubs.s: engine/sound_stubs.cpp.s
-.PHONY : engine/sound_stubs.s
-
-# target to generate assembly for a file
-engine/sound_stubs.cpp.s:
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_sound.dir\build.make Source/CMakeFiles/libdevilutionx_sound.dir/engine/sound_stubs.cpp.s
-.PHONY : engine/sound_stubs.cpp.s
 
 engine/surface.obj: engine/surface.cpp.obj
 .PHONY : engine/surface.obj
@@ -4444,6 +4496,102 @@ movie.s: movie.cpp.s
 movie.cpp.s:
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/movie.cpp.s
 .PHONY : movie.cpp.s
+
+mpq/mpq_common.obj: mpq/mpq_common.cpp.obj
+.PHONY : mpq/mpq_common.obj
+
+# target to build an object file
+mpq/mpq_common.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_mpq.dir\build.make Source/CMakeFiles/libdevilutionx_mpq.dir/mpq/mpq_common.cpp.obj
+.PHONY : mpq/mpq_common.cpp.obj
+
+mpq/mpq_common.i: mpq/mpq_common.cpp.i
+.PHONY : mpq/mpq_common.i
+
+# target to preprocess a source file
+mpq/mpq_common.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_mpq.dir\build.make Source/CMakeFiles/libdevilutionx_mpq.dir/mpq/mpq_common.cpp.i
+.PHONY : mpq/mpq_common.cpp.i
+
+mpq/mpq_common.s: mpq/mpq_common.cpp.s
+.PHONY : mpq/mpq_common.s
+
+# target to generate assembly for a file
+mpq/mpq_common.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_mpq.dir\build.make Source/CMakeFiles/libdevilutionx_mpq.dir/mpq/mpq_common.cpp.s
+.PHONY : mpq/mpq_common.cpp.s
+
+mpq/mpq_reader.obj: mpq/mpq_reader.cpp.obj
+.PHONY : mpq/mpq_reader.obj
+
+# target to build an object file
+mpq/mpq_reader.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_mpq.dir\build.make Source/CMakeFiles/libdevilutionx_mpq.dir/mpq/mpq_reader.cpp.obj
+.PHONY : mpq/mpq_reader.cpp.obj
+
+mpq/mpq_reader.i: mpq/mpq_reader.cpp.i
+.PHONY : mpq/mpq_reader.i
+
+# target to preprocess a source file
+mpq/mpq_reader.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_mpq.dir\build.make Source/CMakeFiles/libdevilutionx_mpq.dir/mpq/mpq_reader.cpp.i
+.PHONY : mpq/mpq_reader.cpp.i
+
+mpq/mpq_reader.s: mpq/mpq_reader.cpp.s
+.PHONY : mpq/mpq_reader.s
+
+# target to generate assembly for a file
+mpq/mpq_reader.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_mpq.dir\build.make Source/CMakeFiles/libdevilutionx_mpq.dir/mpq/mpq_reader.cpp.s
+.PHONY : mpq/mpq_reader.cpp.s
+
+mpq/mpq_sdl_rwops.obj: mpq/mpq_sdl_rwops.cpp.obj
+.PHONY : mpq/mpq_sdl_rwops.obj
+
+# target to build an object file
+mpq/mpq_sdl_rwops.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_mpq.dir\build.make Source/CMakeFiles/libdevilutionx_mpq.dir/mpq/mpq_sdl_rwops.cpp.obj
+.PHONY : mpq/mpq_sdl_rwops.cpp.obj
+
+mpq/mpq_sdl_rwops.i: mpq/mpq_sdl_rwops.cpp.i
+.PHONY : mpq/mpq_sdl_rwops.i
+
+# target to preprocess a source file
+mpq/mpq_sdl_rwops.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_mpq.dir\build.make Source/CMakeFiles/libdevilutionx_mpq.dir/mpq/mpq_sdl_rwops.cpp.i
+.PHONY : mpq/mpq_sdl_rwops.cpp.i
+
+mpq/mpq_sdl_rwops.s: mpq/mpq_sdl_rwops.cpp.s
+.PHONY : mpq/mpq_sdl_rwops.s
+
+# target to generate assembly for a file
+mpq/mpq_sdl_rwops.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_mpq.dir\build.make Source/CMakeFiles/libdevilutionx_mpq.dir/mpq/mpq_sdl_rwops.cpp.s
+.PHONY : mpq/mpq_sdl_rwops.cpp.s
+
+mpq/mpq_writer.obj: mpq/mpq_writer.cpp.obj
+.PHONY : mpq/mpq_writer.obj
+
+# target to build an object file
+mpq/mpq_writer.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_mpq.dir\build.make Source/CMakeFiles/libdevilutionx_mpq.dir/mpq/mpq_writer.cpp.obj
+.PHONY : mpq/mpq_writer.cpp.obj
+
+mpq/mpq_writer.i: mpq/mpq_writer.cpp.i
+.PHONY : mpq/mpq_writer.i
+
+# target to preprocess a source file
+mpq/mpq_writer.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_mpq.dir\build.make Source/CMakeFiles/libdevilutionx_mpq.dir/mpq/mpq_writer.cpp.i
+.PHONY : mpq/mpq_writer.cpp.i
+
+mpq/mpq_writer.s: mpq/mpq_writer.cpp.s
+.PHONY : mpq/mpq_writer.s
+
+# target to generate assembly for a file
+mpq/mpq_writer.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_mpq.dir\build.make Source/CMakeFiles/libdevilutionx_mpq.dir/mpq/mpq_writer.cpp.s
+.PHONY : mpq/mpq_writer.cpp.s
 
 msg.obj: msg.cpp.obj
 .PHONY : msg.obj
@@ -5933,6 +6081,30 @@ utils/pcx_to_clx.cpp.s:
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_pcx_to_clx.dir\build.make Source/CMakeFiles/libdevilutionx_pcx_to_clx.dir/utils/pcx_to_clx.cpp.s
 .PHONY : utils/pcx_to_clx.cpp.s
 
+utils/push_aulib_decoder.obj: utils/push_aulib_decoder.cpp.obj
+.PHONY : utils/push_aulib_decoder.obj
+
+# target to build an object file
+utils/push_aulib_decoder.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_sound.dir\build.make Source/CMakeFiles/libdevilutionx_sound.dir/utils/push_aulib_decoder.cpp.obj
+.PHONY : utils/push_aulib_decoder.cpp.obj
+
+utils/push_aulib_decoder.i: utils/push_aulib_decoder.cpp.i
+.PHONY : utils/push_aulib_decoder.i
+
+# target to preprocess a source file
+utils/push_aulib_decoder.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_sound.dir\build.make Source/CMakeFiles/libdevilutionx_sound.dir/utils/push_aulib_decoder.cpp.i
+.PHONY : utils/push_aulib_decoder.cpp.i
+
+utils/push_aulib_decoder.s: utils/push_aulib_decoder.cpp.s
+.PHONY : utils/push_aulib_decoder.s
+
+# target to generate assembly for a file
+utils/push_aulib_decoder.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_sound.dir\build.make Source/CMakeFiles/libdevilutionx_sound.dir/utils/push_aulib_decoder.cpp.s
+.PHONY : utils/push_aulib_decoder.cpp.s
+
 utils/sdl_bilinear_scale.obj: utils/sdl_bilinear_scale.cpp.obj
 .PHONY : utils/sdl_bilinear_scale.obj
 
@@ -5980,6 +6152,30 @@ utils/sdl_thread.s: utils/sdl_thread.cpp.s
 utils/sdl_thread.cpp.s:
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/utils/sdl_thread.cpp.s
 .PHONY : utils/sdl_thread.cpp.s
+
+utils/soundsample.obj: utils/soundsample.cpp.obj
+.PHONY : utils/soundsample.obj
+
+# target to build an object file
+utils/soundsample.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_sound.dir\build.make Source/CMakeFiles/libdevilutionx_sound.dir/utils/soundsample.cpp.obj
+.PHONY : utils/soundsample.cpp.obj
+
+utils/soundsample.i: utils/soundsample.cpp.i
+.PHONY : utils/soundsample.i
+
+# target to preprocess a source file
+utils/soundsample.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_sound.dir\build.make Source/CMakeFiles/libdevilutionx_sound.dir/utils/soundsample.cpp.i
+.PHONY : utils/soundsample.cpp.i
+
+utils/soundsample.s: utils/soundsample.cpp.s
+.PHONY : utils/soundsample.s
+
+# target to generate assembly for a file
+utils/soundsample.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_sound.dir\build.make Source/CMakeFiles/libdevilutionx_sound.dir/utils/soundsample.cpp.s
+.PHONY : utils/soundsample.cpp.s
 
 utils/str_case.obj: utils/str_case.cpp.obj
 .PHONY : utils/str_case.obj
@@ -6189,6 +6385,7 @@ help:
 	@echo ... libdevilutionx_load_pcx
 	@echo ... libdevilutionx_logged_fstream
 	@echo ... libdevilutionx_monster
+	@echo ... libdevilutionx_mpq
 	@echo ... libdevilutionx_multiplayer
 	@echo ... libdevilutionx_options
 	@echo ... libdevilutionx_padmapper
@@ -6198,6 +6395,7 @@ help:
 	@echo ... libdevilutionx_pathfinding
 	@echo ... libdevilutionx_paths
 	@echo ... libdevilutionx_pcx_to_clx
+	@echo ... libdevilutionx_pkware_encrypt
 	@echo ... libdevilutionx_player
 	@echo ... libdevilutionx_primitive_render
 	@echo ... libdevilutionx_quests
@@ -6401,9 +6599,12 @@ help:
 	@echo ... dvlnet/packet.obj
 	@echo ... dvlnet/packet.i
 	@echo ... dvlnet/packet.s
-	@echo ... effects_stubs.obj
-	@echo ... effects_stubs.i
-	@echo ... effects_stubs.s
+	@echo ... effects.obj
+	@echo ... effects.i
+	@echo ... effects.s
+	@echo ... encrypt.obj
+	@echo ... encrypt.i
+	@echo ... encrypt.s
 	@echo ... engine/actor_position.obj
 	@echo ... engine/actor_position.i
 	@echo ... engine/actor_position.s
@@ -6470,12 +6671,12 @@ help:
 	@echo ... engine/render/text_render.obj
 	@echo ... engine/render/text_render.i
 	@echo ... engine/render/text_render.s
+	@echo ... engine/sound.obj
+	@echo ... engine/sound.i
+	@echo ... engine/sound.s
 	@echo ... engine/sound_position.obj
 	@echo ... engine/sound_position.i
 	@echo ... engine/sound_position.s
-	@echo ... engine/sound_stubs.obj
-	@echo ... engine/sound_stubs.i
-	@echo ... engine/sound_stubs.s
 	@echo ... engine/surface.obj
 	@echo ... engine/surface.i
 	@echo ... engine/surface.s
@@ -6656,6 +6857,18 @@ help:
 	@echo ... movie.obj
 	@echo ... movie.i
 	@echo ... movie.s
+	@echo ... mpq/mpq_common.obj
+	@echo ... mpq/mpq_common.i
+	@echo ... mpq/mpq_common.s
+	@echo ... mpq/mpq_reader.obj
+	@echo ... mpq/mpq_reader.i
+	@echo ... mpq/mpq_reader.s
+	@echo ... mpq/mpq_sdl_rwops.obj
+	@echo ... mpq/mpq_sdl_rwops.i
+	@echo ... mpq/mpq_sdl_rwops.s
+	@echo ... mpq/mpq_writer.obj
+	@echo ... mpq/mpq_writer.i
+	@echo ... mpq/mpq_writer.s
 	@echo ... msg.obj
 	@echo ... msg.i
 	@echo ... msg.s
@@ -6842,12 +7055,18 @@ help:
 	@echo ... utils/pcx_to_clx.obj
 	@echo ... utils/pcx_to_clx.i
 	@echo ... utils/pcx_to_clx.s
+	@echo ... utils/push_aulib_decoder.obj
+	@echo ... utils/push_aulib_decoder.i
+	@echo ... utils/push_aulib_decoder.s
 	@echo ... utils/sdl_bilinear_scale.obj
 	@echo ... utils/sdl_bilinear_scale.i
 	@echo ... utils/sdl_bilinear_scale.s
 	@echo ... utils/sdl_thread.obj
 	@echo ... utils/sdl_thread.i
 	@echo ... utils/sdl_thread.s
+	@echo ... utils/soundsample.obj
+	@echo ... utils/soundsample.i
+	@echo ... utils/soundsample.s
 	@echo ... utils/str_case.obj
 	@echo ... utils/str_case.i
 	@echo ... utils/str_case.s

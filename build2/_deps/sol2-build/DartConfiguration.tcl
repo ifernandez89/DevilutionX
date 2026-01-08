@@ -4,8 +4,8 @@
 
 
 # Configuration directories and files
-SourceDirectory: C:/Diablo/DevilutionX Repo/DevilutionX/build2/_deps/sol2-src
-BuildDirectory: C:/Diablo/DevilutionX Repo/DevilutionX/build2/_deps/sol2-build
+SourceDirectory: C:/c - c++/DevilutionX/build2/_deps/sol2-src
+BuildDirectory: C:/c - c++/DevilutionX/build2/_deps/sol2-build
 
 # Where to place the cost data store
 CostDataFile: 
@@ -27,8 +27,8 @@ SubmitInactivityTimeout:
 NightlyStartTime: 00:00:00 EDT
 
 # Commands for the build/test/submit cycle
-ConfigureCommand: "C:/msys64/mingw64/bin/cmake.exe" "C:/Diablo/DevilutionX Repo/DevilutionX/build2/_deps/sol2-src"
-MakeCommand: C:/msys64/mingw64/bin/cmake.exe --build . --config "${CTEST_CONFIGURATION_TYPE}"
+ConfigureCommand: "C:/Program Files/CMake/bin/cmake.exe" "C:/c - c++/DevilutionX/build2/_deps/sol2-src"
+MakeCommand: C:/Program\ Files/CMake/bin/cmake.exe --build . --config "${CTEST_CONFIGURATION_TYPE}"
 DefaultCTestConfigurationType: Release
 
 # version control
@@ -63,8 +63,8 @@ UpdateOptions:
 UpdateType: git
 
 # Compiler info
-Compiler: C:/msys64/mingw64/bin/c++.exe
-CompilerVersion: 15.2.0
+Compiler: C:/mingw64/bin/c++.exe
+CompilerVersion: 14.2.0
 
 # Dynamic analysis (MemCheck)
 PurifyCommand: 
@@ -81,7 +81,7 @@ MemoryCheckCommandOptions:
 MemoryCheckSuppressionFile: 
 
 # Coverage
-CoverageCommand: C:/msys64/mingw64/bin/gcov.exe
+CoverageCommand: C:/mingw64/bin/gcov.exe
 CoverageExtraFlags: -l
 
 # Testing options

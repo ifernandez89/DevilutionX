@@ -41,6 +41,7 @@ Source/CMakeFiles/libdevilutionx_player.dir/player.cpp.obj
  C:/c - c++/DevilutionX/Source/engine/render/text_render.hpp
  C:/c - c++/DevilutionX/Source/engine/size.hpp
  C:/c - c++/DevilutionX/Source/engine/sound.h
+ C:/c - c++/DevilutionX/Source/engine/sound_defs.hpp
  C:/c - c++/DevilutionX/Source/engine/surface.hpp
  C:/c - c++/DevilutionX/Source/engine/world_tile.hpp
  C:/c - c++/DevilutionX/Source/game_mode.hpp
@@ -53,6 +54,7 @@ Source/CMakeFiles/libdevilutionx_player.dir/player.cpp.obj
  C:/c - c++/DevilutionX/Source/levels/gendung_defs.hpp
  C:/c - c++/DevilutionX/Source/monster.h
  C:/c - c++/DevilutionX/Source/mpq/mpq_common.hpp
+ C:/c - c++/DevilutionX/Source/mpq/mpq_reader.hpp
  C:/c - c++/DevilutionX/Source/msg.h
  C:/c - c++/DevilutionX/Source/multi.h
  C:/c - c++/DevilutionX/Source/objects.h
@@ -72,6 +74,7 @@ Source/CMakeFiles/libdevilutionx_player.dir/player.cpp.obj
  C:/c - c++/DevilutionX/Source/tables/textdat.h
  C:/c - c++/DevilutionX/Source/utils/attributes.h
  C:/c - c++/DevilutionX/Source/utils/bitset2d.hpp
+ C:/c - c++/DevilutionX/Source/utils/cl2_to_clx.hpp
  C:/c - c++/DevilutionX/Source/utils/display.h
  C:/c - c++/DevilutionX/Source/utils/endian_read.hpp
  C:/c - c++/DevilutionX/Source/utils/endian_swap.hpp
@@ -82,14 +85,17 @@ Source/CMakeFiles/libdevilutionx_player.dir/player.cpp.obj
  C:/c - c++/DevilutionX/Source/utils/is_of.hpp
  C:/c - c++/DevilutionX/Source/utils/language.h
  C:/c - c++/DevilutionX/Source/utils/log.hpp
+ C:/c - c++/DevilutionX/Source/utils/logged_fstream.hpp
  C:/c - c++/DevilutionX/Source/utils/pointer_value_union.hpp
  C:/c - c++/DevilutionX/Source/utils/sdl2_backports.h
  C:/c - c++/DevilutionX/Source/utils/sdl_compat.h
  C:/c - c++/DevilutionX/Source/utils/sdl_geometry.h
  C:/c - c++/DevilutionX/Source/utils/sdl_ptrs.h
  C:/c - c++/DevilutionX/Source/utils/sdl_wrap.h
+ C:/c - c++/DevilutionX/Source/utils/soundsample.h
  C:/c - c++/DevilutionX/Source/utils/static_vector.hpp
  C:/c - c++/DevilutionX/Source/utils/status_macros.hpp
+ C:/c - c++/DevilutionX/Source/utils/stdcompat/shared_ptr_array.hpp
  C:/c - c++/DevilutionX/Source/utils/str_cat.hpp
  C:/c - c++/DevilutionX/Source/utils/string_or_view.hpp
  C:/c - c++/DevilutionX/Source/utils/stubs.h
@@ -516,7 +522,6 @@ Source/CMakeFiles/libdevilutionx_player.dir/player.cpp.obj
  C:/c - c++/DevilutionX/Source/engine/points_in_rectangle_range.hpp
  C:/c - c++/DevilutionX/Source/engine/random.hpp
  C:/c - c++/DevilutionX/Source/engine/render/clx_render.hpp
- C:/c - c++/DevilutionX/Source/engine/sound_defs.hpp
  C:/c - c++/DevilutionX/Source/engine/trn.hpp
  C:/c - c++/DevilutionX/Source/gamemenu.h
  C:/c - c++/DevilutionX/Source/help.h
@@ -528,6 +533,7 @@ Source/CMakeFiles/libdevilutionx_player.dir/player.cpp.obj
  C:/c - c++/DevilutionX/Source/loadsave.h
  C:/c - c++/DevilutionX/Source/minitext.h
  C:/c - c++/DevilutionX/Source/missiles.h
+ C:/c - c++/DevilutionX/Source/mpq/mpq_writer.hpp
  C:/c - c++/DevilutionX/Source/nthread.h
  C:/c - c++/DevilutionX/Source/options.h
  C:/c - c++/DevilutionX/Source/pack.h
@@ -572,6 +578,7 @@ Source/CMakeFiles/libdevilutionx_player.dir/tables/playerdat.cpp.obj
  C:/c - c++/DevilutionX/Source/engine/render/scrollrt.h
  C:/c - c++/DevilutionX/Source/engine/size.hpp
  C:/c - c++/DevilutionX/Source/engine/sound.h
+ C:/c - c++/DevilutionX/Source/engine/sound_defs.hpp
  C:/c - c++/DevilutionX/Source/engine/surface.hpp
  C:/c - c++/DevilutionX/Source/engine/world_tile.hpp
  C:/c - c++/DevilutionX/Source/game_mode.hpp
@@ -609,7 +616,9 @@ Source/CMakeFiles/libdevilutionx_player.dir/tables/playerdat.cpp.obj
  C:/c - c++/DevilutionX/Source/utils/sdl_geometry.h
  C:/c - c++/DevilutionX/Source/utils/sdl_ptrs.h
  C:/c - c++/DevilutionX/Source/utils/sdl_wrap.h
+ C:/c - c++/DevilutionX/Source/utils/soundsample.h
  C:/c - c++/DevilutionX/Source/utils/static_vector.hpp
+ C:/c - c++/DevilutionX/Source/utils/stdcompat/shared_ptr_array.hpp
  C:/c - c++/DevilutionX/Source/utils/str_cat.hpp
  C:/c - c++/DevilutionX/Source/utils/str_split.hpp
  C:/c - c++/DevilutionX/Source/utils/string_or_view.hpp

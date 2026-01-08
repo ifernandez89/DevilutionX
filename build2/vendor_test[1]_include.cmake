@@ -1,5 +1,0 @@
-if(EXISTS "C:/Diablo/DevilutionX Repo/DevilutionX/build2/vendor_test[1]_tests.cmake")
-  include("C:/Diablo/DevilutionX Repo/DevilutionX/build2/vendor_test[1]_tests.cmake")
-else()
-  add_test(vendor_test_NOT_BUILT vendor_test_NOT_BUILT)
-endif()

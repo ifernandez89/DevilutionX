@@ -236,6 +236,7 @@ CMakeFiles/devilutionx_copied_assets: assets/ui_art/creditsw.clx
 CMakeFiles/devilutionx_copied_assets: assets/ui_art/dvl_but_sml.clx
 CMakeFiles/devilutionx_copied_assets: assets/ui_art/dvl_lrpopup.clx
 CMakeFiles/devilutionx_copied_assets: assets/ui_art/mainmenuw.clx
+CMakeFiles/devilutionx_copied_assets: assets/data/inv/objcurs-widths.txt
 CMakeFiles/devilutionx_copied_assets: assets/ui_art/button.png
 CMakeFiles/devilutionx_copied_assets: assets/ui_art/directions2.png
 CMakeFiles/devilutionx_copied_assets: assets/ui_art/directions.png
@@ -302,648 +303,652 @@ assets/data/hinticons.clx: C:/c\ -\ c++/DevilutionX/assets/data/hinticons.clx
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_15) "Copying assets/data/hinticons.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/data/hinticons.clx" "C:/c - c++/DevilutionX/build_NOW/assets/data/hinticons.clx"
 
+assets/data/inv/objcurs-widths.txt: C:/c\ -\ c++/DevilutionX/assets/data/inv/objcurs-widths.txt
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_16) "Copying assets/data/inv/objcurs-widths.txt"
+	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/data/inv/objcurs-widths.txt" "C:/c - c++/DevilutionX/build_NOW/assets/data/inv/objcurs-widths.txt"
+
 assets/data/monstertags.clx: C:/c\ -\ c++/DevilutionX/assets/data/monstertags.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_16) "Copying assets/data/monstertags.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_17) "Copying assets/data/monstertags.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/data/monstertags.clx" "C:/c - c++/DevilutionX/build_NOW/assets/data/monstertags.clx"
 
 assets/data/panel8buc.clx: C:/c\ -\ c++/DevilutionX/assets/data/panel8buc.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_17) "Copying assets/data/panel8buc.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_18) "Copying assets/data/panel8buc.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/data/panel8buc.clx" "C:/c - c++/DevilutionX/build_NOW/assets/data/panel8buc.clx"
 
 assets/data/panel8bucp.clx: C:/c\ -\ c++/DevilutionX/assets/data/panel8bucp.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_18) "Copying assets/data/panel8bucp.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_19) "Copying assets/data/panel8bucp.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/data/panel8bucp.clx" "C:/c - c++/DevilutionX/build_NOW/assets/data/panel8bucp.clx"
 
 assets/data/resistance.clx: C:/c\ -\ c++/DevilutionX/assets/data/resistance.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_19) "Copying assets/data/resistance.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_20) "Copying assets/data/resistance.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/data/resistance.clx" "C:/c - c++/DevilutionX/build_NOW/assets/data/resistance.clx"
 
 assets/data/stash.clx: C:/c\ -\ c++/DevilutionX/assets/data/stash.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_20) "Copying assets/data/stash.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_21) "Copying assets/data/stash.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/data/stash.clx" "C:/c - c++/DevilutionX/build_NOW/assets/data/stash.clx"
 
 assets/data/stashnavbtns.clx: C:/c\ -\ c++/DevilutionX/assets/data/stashnavbtns.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_21) "Copying assets/data/stashnavbtns.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_22) "Copying assets/data/stashnavbtns.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/data/stashnavbtns.clx" "C:/c - c++/DevilutionX/build_NOW/assets/data/stashnavbtns.clx"
 
 assets/data/talkbutton.clx: C:/c\ -\ c++/DevilutionX/assets/data/talkbutton.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_22) "Copying assets/data/talkbutton.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_23) "Copying assets/data/talkbutton.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/data/talkbutton.clx" "C:/c - c++/DevilutionX/build_NOW/assets/data/talkbutton.clx"
 
 assets/data/xpbar.clx: C:/c\ -\ c++/DevilutionX/assets/data/xpbar.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_23) "Copying assets/data/xpbar.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_24) "Copying assets/data/xpbar.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/data/xpbar.clx" "C:/c - c++/DevilutionX/build_NOW/assets/data/xpbar.clx"
 
 assets/fonts/12-00.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/12-00.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_24) "Copying assets/fonts/12-00.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_25) "Copying assets/fonts/12-00.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/12-00.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/12-00.clx"
 
 assets/fonts/12-01.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/12-01.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_25) "Copying assets/fonts/12-01.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_26) "Copying assets/fonts/12-01.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/12-01.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/12-01.clx"
 
 assets/fonts/12-02.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/12-02.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_26) "Copying assets/fonts/12-02.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_27) "Copying assets/fonts/12-02.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/12-02.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/12-02.clx"
 
 assets/fonts/12-03.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/12-03.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_27) "Copying assets/fonts/12-03.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_28) "Copying assets/fonts/12-03.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/12-03.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/12-03.clx"
 
 assets/fonts/12-04.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/12-04.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_28) "Copying assets/fonts/12-04.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_29) "Copying assets/fonts/12-04.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/12-04.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/12-04.clx"
 
 assets/fonts/12-05.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/12-05.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_29) "Copying assets/fonts/12-05.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_30) "Copying assets/fonts/12-05.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/12-05.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/12-05.clx"
 
 assets/fonts/12-1f4.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/12-1f4.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_30) "Copying assets/fonts/12-1f4.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_31) "Copying assets/fonts/12-1f4.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/12-1f4.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/12-1f4.clx"
 
 assets/fonts/12-1f6.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/12-1f6.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_31) "Copying assets/fonts/12-1f6.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_32) "Copying assets/fonts/12-1f6.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/12-1f6.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/12-1f6.clx"
 
 assets/fonts/12-1f9.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/12-1f9.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_32) "Copying assets/fonts/12-1f9.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_33) "Copying assets/fonts/12-1f9.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/12-1f9.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/12-1f9.clx"
 
 assets/fonts/12-20.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/12-20.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_33) "Copying assets/fonts/12-20.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_34) "Copying assets/fonts/12-20.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/12-20.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/12-20.clx"
 
 assets/fonts/12-26.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/12-26.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_34) "Copying assets/fonts/12-26.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_35) "Copying assets/fonts/12-26.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/12-26.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/12-26.clx"
 
 assets/fonts/12-e0.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/12-e0.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_35) "Copying assets/fonts/12-e0.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_36) "Copying assets/fonts/12-e0.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/12-e0.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/12-e0.clx"
 
 assets/fonts/22-00.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/22-00.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_36) "Copying assets/fonts/22-00.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_37) "Copying assets/fonts/22-00.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/22-00.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/22-00.clx"
 
 assets/fonts/22-01.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/22-01.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_37) "Copying assets/fonts/22-01.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_38) "Copying assets/fonts/22-01.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/22-01.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/22-01.clx"
 
 assets/fonts/22-02.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/22-02.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_38) "Copying assets/fonts/22-02.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_39) "Copying assets/fonts/22-02.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/22-02.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/22-02.clx"
 
 assets/fonts/22-03.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/22-03.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_39) "Copying assets/fonts/22-03.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_40) "Copying assets/fonts/22-03.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/22-03.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/22-03.clx"
 
 assets/fonts/22-04.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/22-04.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_40) "Copying assets/fonts/22-04.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_41) "Copying assets/fonts/22-04.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/22-04.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/22-04.clx"
 
 assets/fonts/22-05.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/22-05.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_41) "Copying assets/fonts/22-05.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_42) "Copying assets/fonts/22-05.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/22-05.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/22-05.clx"
 
 assets/fonts/22-20.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/22-20.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_42) "Copying assets/fonts/22-20.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_43) "Copying assets/fonts/22-20.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/22-20.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/22-20.clx"
 
 assets/fonts/24-00.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/24-00.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_43) "Copying assets/fonts/24-00.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_44) "Copying assets/fonts/24-00.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/24-00.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/24-00.clx"
 
 assets/fonts/24-01.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/24-01.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_44) "Copying assets/fonts/24-01.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_45) "Copying assets/fonts/24-01.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/24-01.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/24-01.clx"
 
 assets/fonts/24-02.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/24-02.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_45) "Copying assets/fonts/24-02.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_46) "Copying assets/fonts/24-02.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/24-02.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/24-02.clx"
 
 assets/fonts/24-03.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/24-03.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_46) "Copying assets/fonts/24-03.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_47) "Copying assets/fonts/24-03.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/24-03.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/24-03.clx"
 
 assets/fonts/24-04.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/24-04.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_47) "Copying assets/fonts/24-04.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_48) "Copying assets/fonts/24-04.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/24-04.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/24-04.clx"
 
 assets/fonts/24-05.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/24-05.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_48) "Copying assets/fonts/24-05.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_49) "Copying assets/fonts/24-05.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/24-05.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/24-05.clx"
 
 assets/fonts/24-1f4.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/24-1f4.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_49) "Copying assets/fonts/24-1f4.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_50) "Copying assets/fonts/24-1f4.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/24-1f4.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/24-1f4.clx"
 
 assets/fonts/24-1f6.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/24-1f6.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_50) "Copying assets/fonts/24-1f6.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_51) "Copying assets/fonts/24-1f6.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/24-1f6.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/24-1f6.clx"
 
 assets/fonts/24-1f9.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/24-1f9.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_51) "Copying assets/fonts/24-1f9.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_52) "Copying assets/fonts/24-1f9.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/24-1f9.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/24-1f9.clx"
 
 assets/fonts/24-20.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/24-20.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_52) "Copying assets/fonts/24-20.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_53) "Copying assets/fonts/24-20.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/24-20.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/24-20.clx"
 
 assets/fonts/24-26.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/24-26.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_53) "Copying assets/fonts/24-26.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_54) "Copying assets/fonts/24-26.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/24-26.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/24-26.clx"
 
 assets/fonts/24-e0.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/24-e0.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_54) "Copying assets/fonts/24-e0.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_55) "Copying assets/fonts/24-e0.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/24-e0.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/24-e0.clx"
 
 assets/fonts/30-00.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/30-00.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_55) "Copying assets/fonts/30-00.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_56) "Copying assets/fonts/30-00.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/30-00.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/30-00.clx"
 
 assets/fonts/30-01.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/30-01.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_56) "Copying assets/fonts/30-01.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_57) "Copying assets/fonts/30-01.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/30-01.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/30-01.clx"
 
 assets/fonts/30-02.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/30-02.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_57) "Copying assets/fonts/30-02.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_58) "Copying assets/fonts/30-02.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/30-02.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/30-02.clx"
 
 assets/fonts/30-03.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/30-03.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_58) "Copying assets/fonts/30-03.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_59) "Copying assets/fonts/30-03.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/30-03.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/30-03.clx"
 
 assets/fonts/30-04.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/30-04.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_59) "Copying assets/fonts/30-04.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_60) "Copying assets/fonts/30-04.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/30-04.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/30-04.clx"
 
 assets/fonts/30-05.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/30-05.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_60) "Copying assets/fonts/30-05.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_61) "Copying assets/fonts/30-05.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/30-05.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/30-05.clx"
 
 assets/fonts/30-20.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/30-20.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_61) "Copying assets/fonts/30-20.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_62) "Copying assets/fonts/30-20.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/30-20.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/30-20.clx"
 
 assets/fonts/30-e0.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/30-e0.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_62) "Copying assets/fonts/30-e0.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_63) "Copying assets/fonts/30-e0.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/30-e0.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/30-e0.clx"
 
 assets/fonts/42-00.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/42-00.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_63) "Copying assets/fonts/42-00.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_64) "Copying assets/fonts/42-00.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/42-00.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/42-00.clx"
 
 assets/fonts/42-01.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/42-01.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_64) "Copying assets/fonts/42-01.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_65) "Copying assets/fonts/42-01.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/42-01.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/42-01.clx"
 
 assets/fonts/42-02.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/42-02.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_65) "Copying assets/fonts/42-02.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_66) "Copying assets/fonts/42-02.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/42-02.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/42-02.clx"
 
 assets/fonts/42-03.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/42-03.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_66) "Copying assets/fonts/42-03.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_67) "Copying assets/fonts/42-03.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/42-03.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/42-03.clx"
 
 assets/fonts/42-04.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/42-04.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_67) "Copying assets/fonts/42-04.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_68) "Copying assets/fonts/42-04.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/42-04.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/42-04.clx"
 
 assets/fonts/42-05.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/42-05.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_68) "Copying assets/fonts/42-05.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_69) "Copying assets/fonts/42-05.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/42-05.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/42-05.clx"
 
 assets/fonts/42-20.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/42-20.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_69) "Copying assets/fonts/42-20.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_70) "Copying assets/fonts/42-20.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/42-20.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/42-20.clx"
 
 assets/fonts/46-00.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/46-00.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_70) "Copying assets/fonts/46-00.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_71) "Copying assets/fonts/46-00.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/46-00.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/46-00.clx"
 
 assets/fonts/46-01.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/46-01.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_71) "Copying assets/fonts/46-01.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_72) "Copying assets/fonts/46-01.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/46-01.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/46-01.clx"
 
 assets/fonts/46-02.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/46-02.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_72) "Copying assets/fonts/46-02.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_73) "Copying assets/fonts/46-02.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/46-02.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/46-02.clx"
 
 assets/fonts/46-03.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/46-03.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_73) "Copying assets/fonts/46-03.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_74) "Copying assets/fonts/46-03.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/46-03.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/46-03.clx"
 
 assets/fonts/46-04.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/46-04.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_74) "Copying assets/fonts/46-04.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_75) "Copying assets/fonts/46-04.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/46-04.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/46-04.clx"
 
 assets/fonts/46-05.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/46-05.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_75) "Copying assets/fonts/46-05.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_76) "Copying assets/fonts/46-05.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/46-05.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/46-05.clx"
 
 assets/fonts/46-20.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/46-20.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_76) "Copying assets/fonts/46-20.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_77) "Copying assets/fonts/46-20.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/46-20.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/46-20.clx"
 
 assets/fonts/black.trn: C:/c\ -\ c++/DevilutionX/assets/fonts/black.trn
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_77) "Copying assets/fonts/black.trn"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_78) "Copying assets/fonts/black.trn"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/black.trn" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/black.trn"
 
 assets/fonts/blue.trn: C:/c\ -\ c++/DevilutionX/assets/fonts/blue.trn
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_78) "Copying assets/fonts/blue.trn"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_79) "Copying assets/fonts/blue.trn"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/blue.trn" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/blue.trn"
 
 assets/fonts/buttonface.trn: C:/c\ -\ c++/DevilutionX/assets/fonts/buttonface.trn
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_79) "Copying assets/fonts/buttonface.trn"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_80) "Copying assets/fonts/buttonface.trn"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/buttonface.trn" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/buttonface.trn"
 
 assets/fonts/buttonpushed.trn: C:/c\ -\ c++/DevilutionX/assets/fonts/buttonpushed.trn
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_80) "Copying assets/fonts/buttonpushed.trn"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_81) "Copying assets/fonts/buttonpushed.trn"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/buttonpushed.trn" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/buttonpushed.trn"
 
 assets/fonts/gamedialogred.trn: C:/c\ -\ c++/DevilutionX/assets/fonts/gamedialogred.trn
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_81) "Copying assets/fonts/gamedialogred.trn"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_82) "Copying assets/fonts/gamedialogred.trn"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/gamedialogred.trn" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/gamedialogred.trn"
 
 assets/fonts/gamedialogwhite.trn: C:/c\ -\ c++/DevilutionX/assets/fonts/gamedialogwhite.trn
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_82) "Copying assets/fonts/gamedialogwhite.trn"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_83) "Copying assets/fonts/gamedialogwhite.trn"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/gamedialogwhite.trn" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/gamedialogwhite.trn"
 
 assets/fonts/gamedialogyellow.trn: C:/c\ -\ c++/DevilutionX/assets/fonts/gamedialogyellow.trn
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_83) "Copying assets/fonts/gamedialogyellow.trn"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_84) "Copying assets/fonts/gamedialogyellow.trn"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/gamedialogyellow.trn" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/gamedialogyellow.trn"
 
 assets/fonts/goldui.trn: C:/c\ -\ c++/DevilutionX/assets/fonts/goldui.trn
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_84) "Copying assets/fonts/goldui.trn"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_85) "Copying assets/fonts/goldui.trn"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/goldui.trn" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/goldui.trn"
 
 assets/fonts/golduis.trn: C:/c\ -\ c++/DevilutionX/assets/fonts/golduis.trn
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_85) "Copying assets/fonts/golduis.trn"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_86) "Copying assets/fonts/golduis.trn"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/golduis.trn" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/golduis.trn"
 
 assets/fonts/grayui.trn: C:/c\ -\ c++/DevilutionX/assets/fonts/grayui.trn
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_86) "Copying assets/fonts/grayui.trn"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_87) "Copying assets/fonts/grayui.trn"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/grayui.trn" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/grayui.trn"
 
 assets/fonts/grayuis.trn: C:/c\ -\ c++/DevilutionX/assets/fonts/grayuis.trn
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_87) "Copying assets/fonts/grayuis.trn"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_88) "Copying assets/fonts/grayuis.trn"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/grayuis.trn" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/grayuis.trn"
 
 assets/fonts/orange.trn: C:/c\ -\ c++/DevilutionX/assets/fonts/orange.trn
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_88) "Copying assets/fonts/orange.trn"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_89) "Copying assets/fonts/orange.trn"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/orange.trn" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/orange.trn"
 
 assets/fonts/red.trn: C:/c\ -\ c++/DevilutionX/assets/fonts/red.trn
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_89) "Copying assets/fonts/red.trn"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_90) "Copying assets/fonts/red.trn"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/red.trn" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/red.trn"
 
 assets/fonts/tr/12-00.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/tr/12-00.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_90) "Copying assets/fonts/tr/12-00.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_91) "Copying assets/fonts/tr/12-00.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/tr/12-00.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/tr/12-00.clx"
 
 assets/fonts/tr/24-00.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/tr/24-00.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_91) "Copying assets/fonts/tr/24-00.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_92) "Copying assets/fonts/tr/24-00.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/tr/24-00.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/tr/24-00.clx"
 
 assets/fonts/tr/30-00.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/tr/30-00.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_92) "Copying assets/fonts/tr/30-00.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_93) "Copying assets/fonts/tr/30-00.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/tr/30-00.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/tr/30-00.clx"
 
 assets/fonts/tr/42-00.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/tr/42-00.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_93) "Copying assets/fonts/tr/42-00.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_94) "Copying assets/fonts/tr/42-00.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/tr/42-00.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/tr/42-00.clx"
 
 assets/fonts/tr/46-00.clx: C:/c\ -\ c++/DevilutionX/assets/fonts/tr/46-00.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_94) "Copying assets/fonts/tr/46-00.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_95) "Copying assets/fonts/tr/46-00.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/tr/46-00.clx" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/tr/46-00.clx"
 
 assets/fonts/white.trn: C:/c\ -\ c++/DevilutionX/assets/fonts/white.trn
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_95) "Copying assets/fonts/white.trn"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_96) "Copying assets/fonts/white.trn"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/white.trn" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/white.trn"
 
 assets/fonts/whitegold.trn: C:/c\ -\ c++/DevilutionX/assets/fonts/whitegold.trn
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_96) "Copying assets/fonts/whitegold.trn"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_97) "Copying assets/fonts/whitegold.trn"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/whitegold.trn" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/whitegold.trn"
 
 assets/fonts/yellow.trn: C:/c\ -\ c++/DevilutionX/assets/fonts/yellow.trn
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_97) "Copying assets/fonts/yellow.trn"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_98) "Copying assets/fonts/yellow.trn"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/fonts/yellow.trn" "C:/c - c++/DevilutionX/build_NOW/assets/fonts/yellow.trn"
 
 assets/gendata/cut2w.clx: C:/c\ -\ c++/DevilutionX/assets/gendata/cut2w.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_98) "Copying assets/gendata/cut2w.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_99) "Copying assets/gendata/cut2w.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/gendata/cut2w.clx" "C:/c - c++/DevilutionX/build_NOW/assets/gendata/cut2w.clx"
 
 assets/gendata/cut3w.clx: C:/c\ -\ c++/DevilutionX/assets/gendata/cut3w.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_99) "Copying assets/gendata/cut3w.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_100) "Copying assets/gendata/cut3w.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/gendata/cut3w.clx" "C:/c - c++/DevilutionX/build_NOW/assets/gendata/cut3w.clx"
 
 assets/gendata/cut4w.clx: C:/c\ -\ c++/DevilutionX/assets/gendata/cut4w.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_100) "Copying assets/gendata/cut4w.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_101) "Copying assets/gendata/cut4w.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/gendata/cut4w.clx" "C:/c - c++/DevilutionX/build_NOW/assets/gendata/cut4w.clx"
 
 assets/gendata/cutgatew.clx: C:/c\ -\ c++/DevilutionX/assets/gendata/cutgatew.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_101) "Copying assets/gendata/cutgatew.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_102) "Copying assets/gendata/cutgatew.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/gendata/cutgatew.clx" "C:/c - c++/DevilutionX/build_NOW/assets/gendata/cutgatew.clx"
 
 assets/gendata/cutl1dw.clx: C:/c\ -\ c++/DevilutionX/assets/gendata/cutl1dw.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_102) "Copying assets/gendata/cutl1dw.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_103) "Copying assets/gendata/cutl1dw.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/gendata/cutl1dw.clx" "C:/c - c++/DevilutionX/build_NOW/assets/gendata/cutl1dw.clx"
 
 assets/gendata/cutportlw.clx: C:/c\ -\ c++/DevilutionX/assets/gendata/cutportlw.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_103) "Copying assets/gendata/cutportlw.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_104) "Copying assets/gendata/cutportlw.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/gendata/cutportlw.clx" "C:/c - c++/DevilutionX/build_NOW/assets/gendata/cutportlw.clx"
 
 assets/gendata/cutportrw.clx: C:/c\ -\ c++/DevilutionX/assets/gendata/cutportrw.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_104) "Copying assets/gendata/cutportrw.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_105) "Copying assets/gendata/cutportrw.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/gendata/cutportrw.clx" "C:/c - c++/DevilutionX/build_NOW/assets/gendata/cutportrw.clx"
 
 assets/gendata/cutstartw.clx: C:/c\ -\ c++/DevilutionX/assets/gendata/cutstartw.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_105) "Copying assets/gendata/cutstartw.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_106) "Copying assets/gendata/cutstartw.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/gendata/cutstartw.clx" "C:/c - c++/DevilutionX/build_NOW/assets/gendata/cutstartw.clx"
 
 assets/gendata/cutttw.clx: C:/c\ -\ c++/DevilutionX/assets/gendata/cutttw.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_106) "Copying assets/gendata/cutttw.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_107) "Copying assets/gendata/cutttw.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/gendata/cutttw.clx" "C:/c - c++/DevilutionX/build_NOW/assets/gendata/cutttw.clx"
 
 assets/gendata/pause.trn: C:/c\ -\ c++/DevilutionX/assets/gendata/pause.trn
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_107) "Copying assets/gendata/pause.trn"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_108) "Copying assets/gendata/pause.trn"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/gendata/pause.trn" "C:/c - c++/DevilutionX/build_NOW/assets/gendata/pause.trn"
 
 assets/levels/l1data/sklkngt.dun: C:/c\ -\ c++/DevilutionX/assets/levels/l1data/sklkngt.dun
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_108) "Copying assets/levels/l1data/sklkngt.dun"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_109) "Copying assets/levels/l1data/sklkngt.dun"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/levels/l1data/sklkngt.dun" "C:/c - c++/DevilutionX/build_NOW/assets/levels/l1data/sklkngt.dun"
 
 assets/levels/l2data/bonechat.dun: C:/c\ -\ c++/DevilutionX/assets/levels/l2data/bonechat.dun
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_109) "Copying assets/levels/l2data/bonechat.dun"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_110) "Copying assets/levels/l2data/bonechat.dun"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/levels/l2data/bonechat.dun" "C:/c - c++/DevilutionX/build_NOW/assets/levels/l2data/bonechat.dun"
 
 assets/levels/towndata/automap.amp: C:/c\ -\ c++/DevilutionX/assets/levels/towndata/automap.amp
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_110) "Copying assets/levels/towndata/automap.amp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_111) "Copying assets/levels/towndata/automap.amp"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/levels/towndata/automap.amp" "C:/c - c++/DevilutionX/build_NOW/assets/levels/towndata/automap.amp"
 
 assets/levels/towndata/automap.dun: C:/c\ -\ c++/DevilutionX/assets/levels/towndata/automap.dun
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_111) "Copying assets/levels/towndata/automap.dun"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_112) "Copying assets/levels/towndata/automap.dun"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/levels/towndata/automap.dun" "C:/c - c++/DevilutionX/build_NOW/assets/levels/towndata/automap.dun"
 
 assets/lua/devilutionx/events.lua: C:/c\ -\ c++/DevilutionX/assets/lua/devilutionx/events.lua
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_112) "Copying assets/lua/devilutionx/events.lua"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_113) "Copying assets/lua/devilutionx/events.lua"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/lua/devilutionx/events.lua" "C:/c - c++/DevilutionX/build_NOW/assets/lua/devilutionx/events.lua"
 
 assets/lua/inspect.lua: C:/c\ -\ c++/DevilutionX/assets/lua/inspect.lua
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_113) "Copying assets/lua/inspect.lua"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_114) "Copying assets/lua/inspect.lua"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/lua/inspect.lua" "C:/c - c++/DevilutionX/build_NOW/assets/lua/inspect.lua"
 
 assets/lua/mods/clock/init.lua: C:/c\ -\ c++/DevilutionX/assets/lua/mods/clock/init.lua
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_114) "Copying assets/lua/mods/clock/init.lua"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_115) "Copying assets/lua/mods/clock/init.lua"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/lua/mods/clock/init.lua" "C:/c - c++/DevilutionX/build_NOW/assets/lua/mods/clock/init.lua"
 
 assets/lua/repl_prelude.lua: C:/c\ -\ c++/DevilutionX/assets/lua/repl_prelude.lua
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_115) "Copying assets/lua/repl_prelude.lua"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_116) "Copying assets/lua/repl_prelude.lua"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/lua/repl_prelude.lua" "C:/c - c++/DevilutionX/build_NOW/assets/lua/repl_prelude.lua"
 
 assets/lua_internal/get_lua_function_signature.lua: C:/c\ -\ c++/DevilutionX/assets/lua_internal/get_lua_function_signature.lua
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_116) "Copying assets/lua_internal/get_lua_function_signature.lua"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_117) "Copying assets/lua_internal/get_lua_function_signature.lua"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/lua_internal/get_lua_function_signature.lua" "C:/c - c++/DevilutionX/build_NOW/assets/lua_internal/get_lua_function_signature.lua"
 
 assets/plrgfx/warrior/whu/whufm.trn: C:/c\ -\ c++/DevilutionX/assets/plrgfx/warrior/whu/whufm.trn
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_117) "Copying assets/plrgfx/warrior/whu/whufm.trn"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_118) "Copying assets/plrgfx/warrior/whu/whufm.trn"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/plrgfx/warrior/whu/whufm.trn" "C:/c - c++/DevilutionX/build_NOW/assets/plrgfx/warrior/whu/whufm.trn"
 
 assets/plrgfx/warrior/whu/whulm.trn: C:/c\ -\ c++/DevilutionX/assets/plrgfx/warrior/whu/whulm.trn
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_118) "Copying assets/plrgfx/warrior/whu/whulm.trn"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_119) "Copying assets/plrgfx/warrior/whu/whulm.trn"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/plrgfx/warrior/whu/whulm.trn" "C:/c - c++/DevilutionX/build_NOW/assets/plrgfx/warrior/whu/whulm.trn"
 
 assets/plrgfx/warrior/whu/whuqm.trn: C:/c\ -\ c++/DevilutionX/assets/plrgfx/warrior/whu/whuqm.trn
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_119) "Copying assets/plrgfx/warrior/whu/whuqm.trn"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_120) "Copying assets/plrgfx/warrior/whu/whuqm.trn"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/plrgfx/warrior/whu/whuqm.trn" "C:/c - c++/DevilutionX/build_NOW/assets/plrgfx/warrior/whu/whuqm.trn"
 
 assets/txtdata/Experience.tsv: C:/c\ -\ c++/DevilutionX/assets/txtdata/Experience.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_120) "Copying assets/txtdata/Experience.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_121) "Copying assets/txtdata/Experience.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/txtdata/Experience.tsv" "C:/c - c++/DevilutionX/build_NOW/assets/txtdata/Experience.tsv"
 
 assets/txtdata/classes/barbarian/animations.tsv: C:/c\ -\ c++/DevilutionX/assets/txtdata/classes/barbarian/animations.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_121) "Copying assets/txtdata/classes/barbarian/animations.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_122) "Copying assets/txtdata/classes/barbarian/animations.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/txtdata/classes/barbarian/animations.tsv" "C:/c - c++/DevilutionX/build_NOW/assets/txtdata/classes/barbarian/animations.tsv"
 
 assets/txtdata/classes/barbarian/attributes.tsv: C:/c\ -\ c++/DevilutionX/assets/txtdata/classes/barbarian/attributes.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_122) "Copying assets/txtdata/classes/barbarian/attributes.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_123) "Copying assets/txtdata/classes/barbarian/attributes.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/txtdata/classes/barbarian/attributes.tsv" "C:/c - c++/DevilutionX/build_NOW/assets/txtdata/classes/barbarian/attributes.tsv"
 
 assets/txtdata/classes/barbarian/sounds.tsv: C:/c\ -\ c++/DevilutionX/assets/txtdata/classes/barbarian/sounds.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_123) "Copying assets/txtdata/classes/barbarian/sounds.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_124) "Copying assets/txtdata/classes/barbarian/sounds.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/txtdata/classes/barbarian/sounds.tsv" "C:/c - c++/DevilutionX/build_NOW/assets/txtdata/classes/barbarian/sounds.tsv"
 
 assets/txtdata/classes/barbarian/sprites.tsv: C:/c\ -\ c++/DevilutionX/assets/txtdata/classes/barbarian/sprites.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_124) "Copying assets/txtdata/classes/barbarian/sprites.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_125) "Copying assets/txtdata/classes/barbarian/sprites.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/txtdata/classes/barbarian/sprites.tsv" "C:/c - c++/DevilutionX/build_NOW/assets/txtdata/classes/barbarian/sprites.tsv"
 
 assets/txtdata/classes/barbarian/starting_loadout.tsv: C:/c\ -\ c++/DevilutionX/assets/txtdata/classes/barbarian/starting_loadout.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_125) "Copying assets/txtdata/classes/barbarian/starting_loadout.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_126) "Copying assets/txtdata/classes/barbarian/starting_loadout.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/txtdata/classes/barbarian/starting_loadout.tsv" "C:/c - c++/DevilutionX/build_NOW/assets/txtdata/classes/barbarian/starting_loadout.tsv"
 
 assets/txtdata/classes/bard/animations.tsv: C:/c\ -\ c++/DevilutionX/assets/txtdata/classes/bard/animations.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_126) "Copying assets/txtdata/classes/bard/animations.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_127) "Copying assets/txtdata/classes/bard/animations.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/txtdata/classes/bard/animations.tsv" "C:/c - c++/DevilutionX/build_NOW/assets/txtdata/classes/bard/animations.tsv"
 
 assets/txtdata/classes/bard/attributes.tsv: C:/c\ -\ c++/DevilutionX/assets/txtdata/classes/bard/attributes.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_127) "Copying assets/txtdata/classes/bard/attributes.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_128) "Copying assets/txtdata/classes/bard/attributes.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/txtdata/classes/bard/attributes.tsv" "C:/c - c++/DevilutionX/build_NOW/assets/txtdata/classes/bard/attributes.tsv"
 
 assets/txtdata/classes/bard/sounds.tsv: C:/c\ -\ c++/DevilutionX/assets/txtdata/classes/bard/sounds.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_128) "Copying assets/txtdata/classes/bard/sounds.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_129) "Copying assets/txtdata/classes/bard/sounds.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/txtdata/classes/bard/sounds.tsv" "C:/c - c++/DevilutionX/build_NOW/assets/txtdata/classes/bard/sounds.tsv"
 
 assets/txtdata/classes/bard/sprites.tsv: C:/c\ -\ c++/DevilutionX/assets/txtdata/classes/bard/sprites.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_129) "Copying assets/txtdata/classes/bard/sprites.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_130) "Copying assets/txtdata/classes/bard/sprites.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/txtdata/classes/bard/sprites.tsv" "C:/c - c++/DevilutionX/build_NOW/assets/txtdata/classes/bard/sprites.tsv"
 
 assets/txtdata/classes/bard/starting_loadout.tsv: C:/c\ -\ c++/DevilutionX/assets/txtdata/classes/bard/starting_loadout.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_130) "Copying assets/txtdata/classes/bard/starting_loadout.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_131) "Copying assets/txtdata/classes/bard/starting_loadout.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/txtdata/classes/bard/starting_loadout.tsv" "C:/c - c++/DevilutionX/build_NOW/assets/txtdata/classes/bard/starting_loadout.tsv"
 
 assets/txtdata/classes/classdat.tsv: C:/c\ -\ c++/DevilutionX/assets/txtdata/classes/classdat.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_131) "Copying assets/txtdata/classes/classdat.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_132) "Copying assets/txtdata/classes/classdat.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/txtdata/classes/classdat.tsv" "C:/c - c++/DevilutionX/build_NOW/assets/txtdata/classes/classdat.tsv"
 
 assets/txtdata/classes/monk/animations.tsv: C:/c\ -\ c++/DevilutionX/assets/txtdata/classes/monk/animations.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_132) "Copying assets/txtdata/classes/monk/animations.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_133) "Copying assets/txtdata/classes/monk/animations.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/txtdata/classes/monk/animations.tsv" "C:/c - c++/DevilutionX/build_NOW/assets/txtdata/classes/monk/animations.tsv"
 
 assets/txtdata/classes/monk/attributes.tsv: C:/c\ -\ c++/DevilutionX/assets/txtdata/classes/monk/attributes.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_133) "Copying assets/txtdata/classes/monk/attributes.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_134) "Copying assets/txtdata/classes/monk/attributes.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/txtdata/classes/monk/attributes.tsv" "C:/c - c++/DevilutionX/build_NOW/assets/txtdata/classes/monk/attributes.tsv"
 
 assets/txtdata/classes/monk/sounds.tsv: C:/c\ -\ c++/DevilutionX/assets/txtdata/classes/monk/sounds.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_134) "Copying assets/txtdata/classes/monk/sounds.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_135) "Copying assets/txtdata/classes/monk/sounds.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/txtdata/classes/monk/sounds.tsv" "C:/c - c++/DevilutionX/build_NOW/assets/txtdata/classes/monk/sounds.tsv"
 
 assets/txtdata/classes/monk/sprites.tsv: C:/c\ -\ c++/DevilutionX/assets/txtdata/classes/monk/sprites.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_135) "Copying assets/txtdata/classes/monk/sprites.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_136) "Copying assets/txtdata/classes/monk/sprites.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/txtdata/classes/monk/sprites.tsv" "C:/c - c++/DevilutionX/build_NOW/assets/txtdata/classes/monk/sprites.tsv"
 
 assets/txtdata/classes/monk/starting_loadout.tsv: C:/c\ -\ c++/DevilutionX/assets/txtdata/classes/monk/starting_loadout.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_136) "Copying assets/txtdata/classes/monk/starting_loadout.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_137) "Copying assets/txtdata/classes/monk/starting_loadout.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/txtdata/classes/monk/starting_loadout.tsv" "C:/c - c++/DevilutionX/build_NOW/assets/txtdata/classes/monk/starting_loadout.tsv"
 
 assets/txtdata/classes/rogue/animations.tsv: C:/c\ -\ c++/DevilutionX/assets/txtdata/classes/rogue/animations.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_137) "Copying assets/txtdata/classes/rogue/animations.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_138) "Copying assets/txtdata/classes/rogue/animations.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/txtdata/classes/rogue/animations.tsv" "C:/c - c++/DevilutionX/build_NOW/assets/txtdata/classes/rogue/animations.tsv"
 
 assets/txtdata/classes/rogue/attributes.tsv: C:/c\ -\ c++/DevilutionX/assets/txtdata/classes/rogue/attributes.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_138) "Copying assets/txtdata/classes/rogue/attributes.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_139) "Copying assets/txtdata/classes/rogue/attributes.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/txtdata/classes/rogue/attributes.tsv" "C:/c - c++/DevilutionX/build_NOW/assets/txtdata/classes/rogue/attributes.tsv"
 
 assets/txtdata/classes/rogue/sounds.tsv: C:/c\ -\ c++/DevilutionX/assets/txtdata/classes/rogue/sounds.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_139) "Copying assets/txtdata/classes/rogue/sounds.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_140) "Copying assets/txtdata/classes/rogue/sounds.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/txtdata/classes/rogue/sounds.tsv" "C:/c - c++/DevilutionX/build_NOW/assets/txtdata/classes/rogue/sounds.tsv"
 
 assets/txtdata/classes/rogue/sprites.tsv: C:/c\ -\ c++/DevilutionX/assets/txtdata/classes/rogue/sprites.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_140) "Copying assets/txtdata/classes/rogue/sprites.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_141) "Copying assets/txtdata/classes/rogue/sprites.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/txtdata/classes/rogue/sprites.tsv" "C:/c - c++/DevilutionX/build_NOW/assets/txtdata/classes/rogue/sprites.tsv"
 
 assets/txtdata/classes/rogue/starting_loadout.tsv: C:/c\ -\ c++/DevilutionX/assets/txtdata/classes/rogue/starting_loadout.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_141) "Copying assets/txtdata/classes/rogue/starting_loadout.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_142) "Copying assets/txtdata/classes/rogue/starting_loadout.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/txtdata/classes/rogue/starting_loadout.tsv" "C:/c - c++/DevilutionX/build_NOW/assets/txtdata/classes/rogue/starting_loadout.tsv"
 
 assets/txtdata/classes/sorcerer/animations.tsv: C:/c\ -\ c++/DevilutionX/assets/txtdata/classes/sorcerer/animations.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_142) "Copying assets/txtdata/classes/sorcerer/animations.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_143) "Copying assets/txtdata/classes/sorcerer/animations.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/txtdata/classes/sorcerer/animations.tsv" "C:/c - c++/DevilutionX/build_NOW/assets/txtdata/classes/sorcerer/animations.tsv"
 
 assets/txtdata/classes/sorcerer/attributes.tsv: C:/c\ -\ c++/DevilutionX/assets/txtdata/classes/sorcerer/attributes.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_143) "Copying assets/txtdata/classes/sorcerer/attributes.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_144) "Copying assets/txtdata/classes/sorcerer/attributes.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/txtdata/classes/sorcerer/attributes.tsv" "C:/c - c++/DevilutionX/build_NOW/assets/txtdata/classes/sorcerer/attributes.tsv"
 
 assets/txtdata/classes/sorcerer/sounds.tsv: C:/c\ -\ c++/DevilutionX/assets/txtdata/classes/sorcerer/sounds.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_144) "Copying assets/txtdata/classes/sorcerer/sounds.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_145) "Copying assets/txtdata/classes/sorcerer/sounds.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/txtdata/classes/sorcerer/sounds.tsv" "C:/c - c++/DevilutionX/build_NOW/assets/txtdata/classes/sorcerer/sounds.tsv"
 
 assets/txtdata/classes/sorcerer/sprites.tsv: C:/c\ -\ c++/DevilutionX/assets/txtdata/classes/sorcerer/sprites.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_145) "Copying assets/txtdata/classes/sorcerer/sprites.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_146) "Copying assets/txtdata/classes/sorcerer/sprites.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/txtdata/classes/sorcerer/sprites.tsv" "C:/c - c++/DevilutionX/build_NOW/assets/txtdata/classes/sorcerer/sprites.tsv"
 
 assets/txtdata/classes/sorcerer/starting_loadout.tsv: C:/c\ -\ c++/DevilutionX/assets/txtdata/classes/sorcerer/starting_loadout.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_146) "Copying assets/txtdata/classes/sorcerer/starting_loadout.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_147) "Copying assets/txtdata/classes/sorcerer/starting_loadout.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/txtdata/classes/sorcerer/starting_loadout.tsv" "C:/c - c++/DevilutionX/build_NOW/assets/txtdata/classes/sorcerer/starting_loadout.tsv"
 
 assets/txtdata/classes/warrior/animations.tsv: C:/c\ -\ c++/DevilutionX/assets/txtdata/classes/warrior/animations.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_147) "Copying assets/txtdata/classes/warrior/animations.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_148) "Copying assets/txtdata/classes/warrior/animations.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/txtdata/classes/warrior/animations.tsv" "C:/c - c++/DevilutionX/build_NOW/assets/txtdata/classes/warrior/animations.tsv"
 
 assets/txtdata/classes/warrior/attributes.tsv: C:/c\ -\ c++/DevilutionX/assets/txtdata/classes/warrior/attributes.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_148) "Copying assets/txtdata/classes/warrior/attributes.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_149) "Copying assets/txtdata/classes/warrior/attributes.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/txtdata/classes/warrior/attributes.tsv" "C:/c - c++/DevilutionX/build_NOW/assets/txtdata/classes/warrior/attributes.tsv"
 
 assets/txtdata/classes/warrior/sounds.tsv: C:/c\ -\ c++/DevilutionX/assets/txtdata/classes/warrior/sounds.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_149) "Copying assets/txtdata/classes/warrior/sounds.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_150) "Copying assets/txtdata/classes/warrior/sounds.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/txtdata/classes/warrior/sounds.tsv" "C:/c - c++/DevilutionX/build_NOW/assets/txtdata/classes/warrior/sounds.tsv"
 
 assets/txtdata/classes/warrior/sprites.tsv: C:/c\ -\ c++/DevilutionX/assets/txtdata/classes/warrior/sprites.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_150) "Copying assets/txtdata/classes/warrior/sprites.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_151) "Copying assets/txtdata/classes/warrior/sprites.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/txtdata/classes/warrior/sprites.tsv" "C:/c - c++/DevilutionX/build_NOW/assets/txtdata/classes/warrior/sprites.tsv"
 
 assets/txtdata/classes/warrior/starting_loadout.tsv: C:/c\ -\ c++/DevilutionX/assets/txtdata/classes/warrior/starting_loadout.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_151) "Copying assets/txtdata/classes/warrior/starting_loadout.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_152) "Copying assets/txtdata/classes/warrior/starting_loadout.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/txtdata/classes/warrior/starting_loadout.tsv" "C:/c - c++/DevilutionX/build_NOW/assets/txtdata/classes/warrior/starting_loadout.tsv"
 
 assets/txtdata/items/item_prefixes.tsv: C:/c\ -\ c++/DevilutionX/assets/txtdata/items/item_prefixes.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_152) "Copying assets/txtdata/items/item_prefixes.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_153) "Copying assets/txtdata/items/item_prefixes.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/txtdata/items/item_prefixes.tsv" "C:/c - c++/DevilutionX/build_NOW/assets/txtdata/items/item_prefixes.tsv"
 
 assets/txtdata/items/item_suffixes.tsv: C:/c\ -\ c++/DevilutionX/assets/txtdata/items/item_suffixes.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_153) "Copying assets/txtdata/items/item_suffixes.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_154) "Copying assets/txtdata/items/item_suffixes.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/txtdata/items/item_suffixes.tsv" "C:/c - c++/DevilutionX/build_NOW/assets/txtdata/items/item_suffixes.tsv"
 
 assets/txtdata/items/itemdat.tsv: C:/c\ -\ c++/DevilutionX/assets/txtdata/items/itemdat.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_154) "Copying assets/txtdata/items/itemdat.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_155) "Copying assets/txtdata/items/itemdat.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/txtdata/items/itemdat.tsv" "C:/c - c++/DevilutionX/build_NOW/assets/txtdata/items/itemdat.tsv"
 
 assets/txtdata/items/unique_itemdat.tsv: C:/c\ -\ c++/DevilutionX/assets/txtdata/items/unique_itemdat.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_155) "Copying assets/txtdata/items/unique_itemdat.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_156) "Copying assets/txtdata/items/unique_itemdat.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/txtdata/items/unique_itemdat.tsv" "C:/c - c++/DevilutionX/build_NOW/assets/txtdata/items/unique_itemdat.tsv"
 
 assets/txtdata/missiles/misdat.tsv: C:/c\ -\ c++/DevilutionX/assets/txtdata/missiles/misdat.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_156) "Copying assets/txtdata/missiles/misdat.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_157) "Copying assets/txtdata/missiles/misdat.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/txtdata/missiles/misdat.tsv" "C:/c - c++/DevilutionX/build_NOW/assets/txtdata/missiles/misdat.tsv"
 
 assets/txtdata/missiles/missile_sprites.tsv: C:/c\ -\ c++/DevilutionX/assets/txtdata/missiles/missile_sprites.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_157) "Copying assets/txtdata/missiles/missile_sprites.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_158) "Copying assets/txtdata/missiles/missile_sprites.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/txtdata/missiles/missile_sprites.tsv" "C:/c - c++/DevilutionX/build_NOW/assets/txtdata/missiles/missile_sprites.tsv"
 
 assets/txtdata/monsters/monstdat.tsv: C:/c\ -\ c++/DevilutionX/assets/txtdata/monsters/monstdat.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_158) "Copying assets/txtdata/monsters/monstdat.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_159) "Copying assets/txtdata/monsters/monstdat.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/txtdata/monsters/monstdat.tsv" "C:/c - c++/DevilutionX/build_NOW/assets/txtdata/monsters/monstdat.tsv"
 
 assets/txtdata/monsters/unique_monstdat.tsv: C:/c\ -\ c++/DevilutionX/assets/txtdata/monsters/unique_monstdat.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_159) "Copying assets/txtdata/monsters/unique_monstdat.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_160) "Copying assets/txtdata/monsters/unique_monstdat.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/txtdata/monsters/unique_monstdat.tsv" "C:/c - c++/DevilutionX/build_NOW/assets/txtdata/monsters/unique_monstdat.tsv"
 
 assets/txtdata/objects/objdat.tsv: C:/c\ -\ c++/DevilutionX/assets/txtdata/objects/objdat.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_160) "Copying assets/txtdata/objects/objdat.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_161) "Copying assets/txtdata/objects/objdat.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/txtdata/objects/objdat.tsv" "C:/c - c++/DevilutionX/build_NOW/assets/txtdata/objects/objdat.tsv"
 
 assets/txtdata/quests/questdat.tsv: C:/c\ -\ c++/DevilutionX/assets/txtdata/quests/questdat.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_161) "Copying assets/txtdata/quests/questdat.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_162) "Copying assets/txtdata/quests/questdat.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/txtdata/quests/questdat.tsv" "C:/c - c++/DevilutionX/build_NOW/assets/txtdata/quests/questdat.tsv"
 
 assets/txtdata/sound/effects.tsv: C:/c\ -\ c++/DevilutionX/assets/txtdata/sound/effects.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_162) "Copying assets/txtdata/sound/effects.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_163) "Copying assets/txtdata/sound/effects.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/txtdata/sound/effects.tsv" "C:/c - c++/DevilutionX/build_NOW/assets/txtdata/sound/effects.tsv"
 
 assets/txtdata/spells/spelldat.tsv: C:/c\ -\ c++/DevilutionX/assets/txtdata/spells/spelldat.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_163) "Copying assets/txtdata/spells/spelldat.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_164) "Copying assets/txtdata/spells/spelldat.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/txtdata/spells/spelldat.tsv" "C:/c - c++/DevilutionX/build_NOW/assets/txtdata/spells/spelldat.tsv"
 
 assets/txtdata/text/textdat.tsv: C:/c\ -\ c++/DevilutionX/assets/txtdata/text/textdat.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_164) "Copying assets/txtdata/text/textdat.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_165) "Copying assets/txtdata/text/textdat.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/txtdata/text/textdat.tsv" "C:/c - c++/DevilutionX/build_NOW/assets/txtdata/text/textdat.tsv"
 
 assets/txtdata/towners/quest_dialog.tsv: C:/c\ -\ c++/DevilutionX/assets/txtdata/towners/quest_dialog.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_165) "Copying assets/txtdata/towners/quest_dialog.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_166) "Copying assets/txtdata/towners/quest_dialog.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/txtdata/towners/quest_dialog.tsv" "C:/c - c++/DevilutionX/build_NOW/assets/txtdata/towners/quest_dialog.tsv"
 
 assets/txtdata/towners/towners.tsv: C:/c\ -\ c++/DevilutionX/assets/txtdata/towners/towners.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_166) "Copying assets/txtdata/towners/towners.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_167) "Copying assets/txtdata/towners/towners.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/txtdata/towners/towners.tsv" "C:/c - c++/DevilutionX/build_NOW/assets/txtdata/towners/towners.tsv"
 
 assets/ui_art/button.png: C:/c\ -\ c++/DevilutionX/assets/ui_art/button.png
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_167) "Copying assets/ui_art/button.png"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_168) "Copying assets/ui_art/button.png"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/ui_art/button.png" "C:/c - c++/DevilutionX/build_NOW/assets/ui_art/button.png"
 
 assets/ui_art/creditsw.clx: C:/c\ -\ c++/DevilutionX/assets/ui_art/creditsw.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_168) "Copying assets/ui_art/creditsw.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_169) "Copying assets/ui_art/creditsw.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/ui_art/creditsw.clx" "C:/c - c++/DevilutionX/build_NOW/assets/ui_art/creditsw.clx"
 
 assets/ui_art/diablo.pal: C:/c\ -\ c++/DevilutionX/assets/ui_art/diablo.pal
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_169) "Copying assets/ui_art/diablo.pal"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_170) "Copying assets/ui_art/diablo.pal"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/ui_art/diablo.pal" "C:/c - c++/DevilutionX/build_NOW/assets/ui_art/diablo.pal"
 
 assets/ui_art/directions.png: C:/c\ -\ c++/DevilutionX/assets/ui_art/directions.png
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_170) "Copying assets/ui_art/directions.png"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_171) "Copying assets/ui_art/directions.png"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/ui_art/directions.png" "C:/c - c++/DevilutionX/build_NOW/assets/ui_art/directions.png"
 
 assets/ui_art/directions2.png: C:/c\ -\ c++/DevilutionX/assets/ui_art/directions2.png
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_171) "Copying assets/ui_art/directions2.png"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_172) "Copying assets/ui_art/directions2.png"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/ui_art/directions2.png" "C:/c - c++/DevilutionX/build_NOW/assets/ui_art/directions2.png"
 
 assets/ui_art/dvl_but_sml.clx: C:/c\ -\ c++/DevilutionX/assets/ui_art/dvl_but_sml.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_172) "Copying assets/ui_art/dvl_but_sml.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_173) "Copying assets/ui_art/dvl_but_sml.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/ui_art/dvl_but_sml.clx" "C:/c - c++/DevilutionX/build_NOW/assets/ui_art/dvl_but_sml.clx"
 
 assets/ui_art/dvl_lrpopup.clx: C:/c\ -\ c++/DevilutionX/assets/ui_art/dvl_lrpopup.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_173) "Copying assets/ui_art/dvl_lrpopup.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_174) "Copying assets/ui_art/dvl_lrpopup.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/ui_art/dvl_lrpopup.clx" "C:/c - c++/DevilutionX/build_NOW/assets/ui_art/dvl_lrpopup.clx"
 
 assets/ui_art/mainmenuw.clx: C:/c\ -\ c++/DevilutionX/assets/ui_art/mainmenuw.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_174) "Copying assets/ui_art/mainmenuw.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_175) "Copying assets/ui_art/mainmenuw.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/ui_art/mainmenuw.clx" "C:/c - c++/DevilutionX/build_NOW/assets/ui_art/mainmenuw.clx"
 
 assets/ui_art/menu-levelup.png: C:/c\ -\ c++/DevilutionX/assets/ui_art/menu-levelup.png
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_175) "Copying assets/ui_art/menu-levelup.png"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_176) "Copying assets/ui_art/menu-levelup.png"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/ui_art/menu-levelup.png" "C:/c - c++/DevilutionX/build_NOW/assets/ui_art/menu-levelup.png"
 
 assets/ui_art/menu.png: C:/c\ -\ c++/DevilutionX/assets/ui_art/menu.png
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_176) "Copying assets/ui_art/menu.png"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_177) "Copying assets/ui_art/menu.png"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/assets/ui_art/menu.png" "C:/c - c++/DevilutionX/build_NOW/assets/ui_art/menu.png"
 
 CMakeFiles/devilutionx_copied_assets.dir/codegen:
@@ -965,6 +970,7 @@ devilutionx_copied_assets: assets/data/healthbox.clx
 devilutionx_copied_assets: assets/data/hintbox.clx
 devilutionx_copied_assets: assets/data/hintboxbackground.clx
 devilutionx_copied_assets: assets/data/hinticons.clx
+devilutionx_copied_assets: assets/data/inv/objcurs-widths.txt
 devilutionx_copied_assets: assets/data/monstertags.clx
 devilutionx_copied_assets: assets/data/panel8buc.clx
 devilutionx_copied_assets: assets/data/panel8bucp.clx

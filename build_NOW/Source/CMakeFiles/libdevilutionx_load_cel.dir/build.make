@@ -87,6 +87,8 @@ Source/CMakeFiles/libdevilutionx_load_cel.dir/engine/load_cel.cpp.s: cmake_force
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\c - c++\DevilutionX\Source\engine\load_cel.cpp" -o CMakeFiles\libdevilutionx_load_cel.dir\engine\load_cel.cpp.s
 
 libdevilutionx_load_cel: Source/CMakeFiles/libdevilutionx_load_cel.dir/engine/load_cel.cpp.obj
+libdevilutionx_load_cel: Source/CMakeFiles/libdevilutionx_strings.dir/utils/str_cat.cpp.obj
+libdevilutionx_load_cel: Source/CMakeFiles/libdevilutionx_strings.dir/utils/str_case.cpp.obj
 libdevilutionx_load_cel: Source/CMakeFiles/libdevilutionx_load_cel.dir/build.make
 .PHONY : libdevilutionx_load_cel
 

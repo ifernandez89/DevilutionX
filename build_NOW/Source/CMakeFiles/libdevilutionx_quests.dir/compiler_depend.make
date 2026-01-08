@@ -26,6 +26,7 @@ Source/CMakeFiles/libdevilutionx_quests.dir/quests.cpp.obj: C:/c\ -\ c++/Devilut
   C:/c\ -\ c++/DevilutionX/Source/engine/render/scrollrt.h \
   C:/c\ -\ c++/DevilutionX/Source/engine/render/text_render.hpp \
   C:/c\ -\ c++/DevilutionX/Source/engine/size.hpp \
+  C:/c\ -\ c++/DevilutionX/Source/engine/sound_defs.hpp \
   C:/c\ -\ c++/DevilutionX/Source/engine/world_tile.hpp \
   C:/c\ -\ c++/DevilutionX/Source/headless_mode.hpp \
   C:/c\ -\ c++/DevilutionX/Source/interfac.h \
@@ -34,6 +35,7 @@ Source/CMakeFiles/libdevilutionx_quests.dir/quests.cpp.obj: C:/c\ -\ c++/Devilut
   C:/c\ -\ c++/DevilutionX/Source/levels/dun_tile.hpp \
   C:/c\ -\ c++/DevilutionX/Source/levels/gendung_defs.hpp \
   C:/c\ -\ c++/DevilutionX/Source/mpq/mpq_common.hpp \
+  C:/c\ -\ c++/DevilutionX/Source/mpq/mpq_reader.hpp \
   C:/c\ -\ c++/DevilutionX/Source/msg.h \
   C:/c\ -\ c++/DevilutionX/Source/multi.h \
   C:/c\ -\ c++/DevilutionX/Source/objects.h \
@@ -60,7 +62,9 @@ Source/CMakeFiles/libdevilutionx_quests.dir/quests.cpp.obj: C:/c\ -\ c++/Devilut
   C:/c\ -\ c++/DevilutionX/Source/utils/sdl_geometry.h \
   C:/c\ -\ c++/DevilutionX/Source/utils/sdl_ptrs.h \
   C:/c\ -\ c++/DevilutionX/Source/utils/sdl_wrap.h \
+  C:/c\ -\ c++/DevilutionX/Source/utils/soundsample.h \
   C:/c\ -\ c++/DevilutionX/Source/utils/static_vector.hpp \
+  C:/c\ -\ c++/DevilutionX/Source/utils/stdcompat/shared_ptr_array.hpp \
   C:/c\ -\ c++/DevilutionX/Source/utils/str_cat.hpp \
   C:/c\ -\ c++/DevilutionX/Source/utils/str_split.hpp \
   C:/c\ -\ c++/DevilutionX/Source/utils/string_or_view.hpp \
@@ -491,7 +495,6 @@ Source/CMakeFiles/libdevilutionx_quests.dir/quests.cpp.obj: C:/c\ -\ c++/Devilut
   C:/c\ -\ c++/DevilutionX/Source/engine/random.hpp \
   C:/c\ -\ c++/DevilutionX/Source/engine/render/clx_render.hpp \
   C:/c\ -\ c++/DevilutionX/Source/engine/sound.h \
-  C:/c\ -\ c++/DevilutionX/Source/engine/sound_defs.hpp \
   C:/c\ -\ c++/DevilutionX/Source/engine/surface.hpp \
   C:/c\ -\ c++/DevilutionX/Source/game_mode.hpp \
   C:/c\ -\ c++/DevilutionX/Source/inv.h \
@@ -544,6 +547,10 @@ C:/c\ -\ c++/DevilutionX/Source/engine/animationinfo.h:
 
 C:/c\ -\ c++/DevilutionX/3rdParty/tl/expected.hpp:
 
+C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_render.h:
+
+C:/c\ -\ c++/DevilutionX/Source/engine/sound_defs.hpp:
+
 _deps/unordered_dense-src/include/ankerl/unordered_dense.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/cxxabi_init_exception.h:
@@ -558,6 +565,10 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/emmintrin.h:
 
 _deps/libfmt-src/include/fmt/base.h:
 
+C:/c\ -\ c++/DevilutionX/Source/utils/stdcompat/shared_ptr_array.hpp:
+
+_deps/libfmt-src/include/fmt/format.h:
+
 C:/c\ -\ c++/DevilutionX/Source/sound_effect_enums.h:
 
 C:/c\ -\ c++/DevilutionX/Source/engine/size.hpp:
@@ -567,8 +578,6 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/clwbintrin.h:
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/begin_code.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/tr1/poly_laguerre.tcc:
-
-_deps/libfmt-src/include/fmt/format.h:
 
 C:/c\ -\ c++/DevilutionX/Source/items.h:
 
@@ -591,6 +600,10 @@ C:/c\ -\ c++/DevilutionX/Source/tables/itemdat.h:
 C:/c\ -\ c++/DevilutionX/Source/objects.h:
 
 C:/c\ -\ c++/DevilutionX/Source/cursor.h:
+
+C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_version.h:
+
+C:/c\ -\ c++/DevilutionX/Source/utils/soundsample.h:
 
 C:/c\ -\ c++/DevilutionX/Source/diablo.h:
 
@@ -664,14 +677,6 @@ C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/S
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/avxvnniint8intrin.h:
 
-C:/c\ -\ c++/DevilutionX/Source/utils/str_cat.hpp:
-
-C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/avxifmaintrin.h:
-
-C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/tsxldtrkintrin.h:
-
-C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/mmintrin.h:
-
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/chrono.h:
 
 C:/c\ -\ c++/DevilutionX/Source/data/parser.hpp:
@@ -706,6 +711,10 @@ C:/c\ -\ c++/DevilutionX/Source/msg.h:
 
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_log.h:
 
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/cstdint:
+
+C:/c\ -\ c++/DevilutionX/Source/mpq/mpq_reader.hpp:
+
 C:/c\ -\ c++/DevilutionX/Source/multi.h:
 
 C:/c\ -\ c++/DevilutionX/Source/player.h:
@@ -724,9 +733,9 @@ C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/S
 
 C:/c\ -\ c++/DevilutionX/Source/tables/playerdat.hpp:
 
-C:/c\ -\ c++/DevilutionX/Source/tables/textdat.h:
-
 C:/c\ -\ c++/DevilutionX/Source/utils/ui_fwd.h:
+
+C:/c\ -\ c++/DevilutionX/Source/tables/textdat.h:
 
 C:/c\ -\ c++/DevilutionX/Source/utils/bitset2d.hpp:
 
@@ -747,6 +756,14 @@ C:/c\ -\ c++/DevilutionX/Source/utils/parse_int.hpp:
 C:/c\ -\ c++/DevilutionX/Source/utils/sdl_compat.h:
 
 C:/c\ -\ c++/DevilutionX/Source/utils/static_vector.hpp:
+
+C:/c\ -\ c++/DevilutionX/Source/utils/str_cat.hpp:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/avxifmaintrin.h:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/tsxldtrkintrin.h:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/mmintrin.h:
 
 C:/c\ -\ c++/DevilutionX/Source/utils/str_split.hpp:
 
@@ -882,10 +899,6 @@ C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/S
 
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_rect.h:
 
-C:/c\ -\ c++/DevilutionX/Source/engine/sound_defs.hpp:
-
-C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_render.h:
-
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_rwops.h:
 
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_scancode.h:
@@ -915,8 +928,6 @@ C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/S
 C:/mingw64/x86_64-w64-mingw32/include/sys/timeb.h:
 
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_timer.h:
-
-C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_version.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/adxintrin.h:
 
@@ -956,13 +967,13 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/avx512bitalgintrin.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/avx512bitalgvlintrin.h:
 
+C:/c\ -\ c++/DevilutionX/Source/tables/townerdat.hpp:
+
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/avx512cdintrin.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/stl_uninitialized.h:
 
 C:/mingw64/x86_64-w64-mingw32/include/stdint.h:
-
-C:/c\ -\ c++/DevilutionX/Source/tables/townerdat.hpp:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/avx512dqintrin.h:
 
@@ -1142,9 +1153,9 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/xtestintrin.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/locale_facets.h:
 
-C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/locale_facets.tcc:
-
 C:/c\ -\ c++/DevilutionX/Source/tables/objdat.h:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/locale_facets.tcc:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/ostream_insert.h:
 
@@ -1276,8 +1287,6 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/concepts:
 
 C:/mingw64/x86_64-w64-mingw32/include/_timeval.h:
 
-C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/cstdint:
-
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/cstdio:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/cstdlib:
@@ -1377,8 +1386,6 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/type_traits:
 C:/c\ -\ c++/DevilutionX/Source/game_mode.hpp:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/typeinfo:
-
-C:/c\ -\ c++/DevilutionX/Source/utils/algorithm/container.hpp:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/vector:
 
@@ -1545,5 +1552,7 @@ C:/c\ -\ c++/DevilutionX/Source/panels/info_box.hpp:
 C:/c\ -\ c++/DevilutionX/Source/stores.h:
 
 C:/c\ -\ c++/DevilutionX/Source/tables/monstdat.h:
+
+C:/c\ -\ c++/DevilutionX/Source/utils/algorithm/container.hpp:
 
 C:/c\ -\ c++/DevilutionX/Source/utils/endian_swap.hpp:

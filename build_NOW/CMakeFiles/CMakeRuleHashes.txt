@@ -1,6 +1,6 @@
 # Hashes of file build rules.
 a505446b549184969225988a0f466e43 CMakeFiles/devilutionx_copied_assets
-987f2389341c2fd0bd549def6da1282a CMakeFiles/devilutionx_trim_assets
+76c03ff049e93516ae6ea8567e066909 CMakeFiles/devilutionx_trim_assets
 a505446b549184969225988a0f466e43 CMakeFiles/hellfire_copied_mod_file
 622305b4e23b9ed9c3021c2e255cd2b5 _deps/libpng-build/CMakeFiles/genfiles
 cdecc5bb05f205cf10d246c90fd7e666 _deps/libpng-build/CMakeFiles/genprebuilt
@@ -45,6 +45,7 @@ b6caf74ec3cd7ea92cdf41bc1f75c6c0 assets/data/healthbox.clx
 17b05759b6675d167cefff86bf1ee86e assets/data/hintbox.clx
 492230fc2a3d7a6c6e9aa716de5b82a0 assets/data/hintboxbackground.clx
 104cb5dd4cae62442bfd3160b5680f68 assets/data/hinticons.clx
+04f99d74e841cda695b680ddf34dd563 assets/data/inv/objcurs-widths.txt
 fe5b9434792193b4292216861c8725cb assets/data/monstertags.clx
 3a8ac0b69b88285857c76fcaf8fbb40d assets/data/panel8buc.clx
 1baa66bfbecace4a697f2300e138b216 assets/data/panel8bucp.clx
@@ -206,6 +207,7 @@ cb4a5b5e039e1e1eddbc2afedf036f22 assets/ui_art/directions2.png
 76a763071aad7b71ff97f1c458d95bca assets/ui_art/mainmenuw.clx
 24e81491f4080fcae580b8e743242fed assets/ui_art/menu-levelup.png
 cd3e6609820296ca71ba94d7bc72879b assets/ui_art/menu.png
+c22695499a124151f5e6d4677bac6e06 mods/Hellfire/data/inv/objcurs2-widths.txt
 45c9f4033e06de2948483377684d2f98 mods/Hellfire/lua/mods/Hellfire/init.lua
 c378a9489af6c5bb6ca43e746da8e3d3 mods/Hellfire/nlevels/cutl5w.clx
 6ca9fc5f200c4fdb82e03f2cc527b994 mods/Hellfire/nlevels/cutl6w.clx

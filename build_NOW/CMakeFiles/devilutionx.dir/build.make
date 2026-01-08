@@ -110,6 +110,11 @@ devilutionx_EXTERNAL_OBJECTS = \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_ini.dir/utils/ini.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_options.dir/options.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_game_mode.dir/game_mode.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_pkware_encrypt.dir/encrypt.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_mpq.dir/mpq/mpq_common.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_mpq.dir/mpq/mpq_reader.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_mpq.dir/mpq/mpq_sdl_rwops.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_mpq.dir/mpq/mpq_writer.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_paths.dir/utils/paths.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_assets.dir/engine/assets.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_light_render.dir/engine/render/light_render.cpp.obj" \
@@ -124,9 +129,11 @@ devilutionx_EXTERNAL_OBJECTS = \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_surface.dir/engine/surface.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_format_int.dir/utils/format_int.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_random.dir/engine/random.cpp.obj" \
-"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_sound.dir/effects_stubs.cpp.obj" \
-"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_sound.dir/engine/sound_stubs.cpp.obj" \
-"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_load_clx.dir/engine/load_clx.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_sound.dir/effects.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_sound.dir/engine/sound.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_sound.dir/utils/soundsample.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_sound.dir/utils/push_aulib_decoder.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_cl2_to_clx.dir/utils/cl2_to_clx.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_load_cl2.dir/engine/load_cl2.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_player.dir/player.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_player.dir/tables/playerdat.cpp.obj" \
@@ -140,7 +147,6 @@ devilutionx_EXTERNAL_OBJECTS = \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_stores.dir/stores.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_items.dir/tables/itemdat.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_items.dir/items.cpp.obj" \
-"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_cl2_to_clx.dir/utils/cl2_to_clx.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_monster.dir/tables/monstdat.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_monster.dir/monster.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_gendung.dir/levels/crypt.cpp.obj" \
@@ -160,7 +166,10 @@ devilutionx_EXTERNAL_OBJECTS = \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_pathfinding.dir/engine/path.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_primitive_render.dir/engine/render/primitive_render.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_quests.dir/quests.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_cel_to_clx.dir/utils/cel_to_clx.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_load_cel.dir/engine/load_cel.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_load_clx.dir/engine/load_clx.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_pcx_to_clx.dir/utils/pcx_to_clx.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_load_pcx.dir/engine/load_pcx.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_ticks.dir/engine/ticks.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_text_render.dir/engine/render/text_render.cpp.obj" \
@@ -329,6 +338,11 @@ devilutionx.exe: Source/CMakeFiles/libdevilutionx_utf8.dir/utils/utf8.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_ini.dir/utils/ini.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_options.dir/options.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_game_mode.dir/game_mode.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx_pkware_encrypt.dir/encrypt.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx_mpq.dir/mpq/mpq_common.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx_mpq.dir/mpq/mpq_reader.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx_mpq.dir/mpq/mpq_sdl_rwops.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx_mpq.dir/mpq/mpq_writer.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_paths.dir/utils/paths.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_assets.dir/engine/assets.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_light_render.dir/engine/render/light_render.cpp.obj
@@ -343,9 +357,11 @@ devilutionx.exe: Source/CMakeFiles/libdevilutionx_dun_render.dir/engine/render/d
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_surface.dir/engine/surface.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_format_int.dir/utils/format_int.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_random.dir/engine/random.cpp.obj
-devilutionx.exe: Source/CMakeFiles/libdevilutionx_sound.dir/effects_stubs.cpp.obj
-devilutionx.exe: Source/CMakeFiles/libdevilutionx_sound.dir/engine/sound_stubs.cpp.obj
-devilutionx.exe: Source/CMakeFiles/libdevilutionx_load_clx.dir/engine/load_clx.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx_sound.dir/effects.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx_sound.dir/engine/sound.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx_sound.dir/utils/soundsample.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx_sound.dir/utils/push_aulib_decoder.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx_cl2_to_clx.dir/utils/cl2_to_clx.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_load_cl2.dir/engine/load_cl2.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_player.dir/player.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_player.dir/tables/playerdat.cpp.obj
@@ -359,7 +375,6 @@ devilutionx.exe: Source/CMakeFiles/libdevilutionx_spells.dir/spells.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_stores.dir/stores.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_items.dir/tables/itemdat.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_items.dir/items.cpp.obj
-devilutionx.exe: Source/CMakeFiles/libdevilutionx_cl2_to_clx.dir/utils/cl2_to_clx.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_monster.dir/tables/monstdat.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_monster.dir/monster.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_gendung.dir/levels/crypt.cpp.obj
@@ -379,7 +394,10 @@ devilutionx.exe: Source/CMakeFiles/libdevilutionx_padmapper.dir/controls/padmapp
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_pathfinding.dir/engine/path.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_primitive_render.dir/engine/render/primitive_render.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_quests.dir/quests.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx_cel_to_clx.dir/utils/cel_to_clx.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_load_cel.dir/engine/load_cel.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx_load_clx.dir/engine/load_clx.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx_pcx_to_clx.dir/utils/pcx_to_clx.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_load_pcx.dir/engine/load_pcx.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_ticks.dir/engine/ticks.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_text_render.dir/engine/render/text_render.cpp.obj
@@ -537,6 +555,11 @@ devilutionx.exe: CMakeFiles/devilutionx.dir/build.make
 devilutionx.exe: C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/lib/libSDL2main.a
 devilutionx.exe: 3rdParty/libsmackerdec/liblibsmackerdec.a
 devilutionx.exe: _deps/lua-build/lua-5.4.7/liblua_static.a
+devilutionx.exe: _deps/sdl_audiolib-build/libSDL_audiolib.a
+devilutionx.exe: 3rdParty/PKWare/libPKWare.a
+devilutionx.exe: 3rdParty/libmpq/liblibmpq.a
+devilutionx.exe: C:/c\ -\ c++/DevilutionX/deps/zlib-build/libzlibstatic.a
+devilutionx.exe: 3rdParty/bzip2/libBZip2.a
 devilutionx.exe: _deps/libfmt-build/libfmt.a
 devilutionx.exe: _deps/sheenbidi-build/libSheenBidi.a
 devilutionx.exe: 3rdParty/SDL_image/libSDL_image.a

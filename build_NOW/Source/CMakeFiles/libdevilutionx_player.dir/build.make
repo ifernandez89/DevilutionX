@@ -103,6 +103,8 @@ Source/CMakeFiles/libdevilutionx_player.dir/tables/playerdat.cpp.s: cmake_force
 
 libdevilutionx_player: Source/CMakeFiles/libdevilutionx_player.dir/player.cpp.obj
 libdevilutionx_player: Source/CMakeFiles/libdevilutionx_player.dir/tables/playerdat.cpp.obj
+libdevilutionx_player: Source/CMakeFiles/libdevilutionx_strings.dir/utils/str_cat.cpp.obj
+libdevilutionx_player: Source/CMakeFiles/libdevilutionx_strings.dir/utils/str_case.cpp.obj
 libdevilutionx_player: Source/CMakeFiles/libdevilutionx_player.dir/build.make
 .PHONY : libdevilutionx_player
 

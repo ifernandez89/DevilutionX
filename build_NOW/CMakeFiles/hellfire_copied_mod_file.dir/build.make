@@ -86,95 +86,101 @@ CMakeFiles/hellfire_copied_mod_file: mods/Hellfire/ui_art/diablo.pal
 CMakeFiles/hellfire_copied_mod_file: mods/Hellfire/ui_art/hf_titlew.clx
 CMakeFiles/hellfire_copied_mod_file: mods/Hellfire/ui_art/supportw.clx
 CMakeFiles/hellfire_copied_mod_file: mods/Hellfire/ui_art/mainmenuw.clx
+CMakeFiles/hellfire_copied_mod_file: mods/Hellfire/data/inv/objcurs2-widths.txt
+
+mods/Hellfire/data/inv/objcurs2-widths.txt: C:/c\ -\ c++/DevilutionX/mods/Hellfire/data/inv/objcurs2-widths.txt
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Copying data/inv/objcurs2-widths.txt"
+	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/mods/Hellfire/data/inv/objcurs2-widths.txt" "C:/c - c++/DevilutionX/build_NOW/mods/Hellfire/data/inv/objcurs2-widths.txt"
 
 mods/Hellfire/lua/mods/Hellfire/init.lua: C:/c\ -\ c++/DevilutionX/mods/Hellfire/lua/mods/Hellfire/init.lua
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Copying lua/mods/Hellfire/init.lua"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Copying lua/mods/Hellfire/init.lua"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/mods/Hellfire/lua/mods/Hellfire/init.lua" "C:/c - c++/DevilutionX/build_NOW/mods/Hellfire/lua/mods/Hellfire/init.lua"
 
 mods/Hellfire/nlevels/cutl5w.clx: C:/c\ -\ c++/DevilutionX/mods/Hellfire/nlevels/cutl5w.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Copying nlevels/cutl5w.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Copying nlevels/cutl5w.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/mods/Hellfire/nlevels/cutl5w.clx" "C:/c - c++/DevilutionX/build_NOW/mods/Hellfire/nlevels/cutl5w.clx"
 
 mods/Hellfire/nlevels/cutl6w.clx: C:/c\ -\ c++/DevilutionX/mods/Hellfire/nlevels/cutl6w.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Copying nlevels/cutl6w.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_4) "Copying nlevels/cutl6w.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/mods/Hellfire/nlevels/cutl6w.clx" "C:/c - c++/DevilutionX/build_NOW/mods/Hellfire/nlevels/cutl6w.clx"
 
 mods/Hellfire/nlevels/l5data/cornerstone.dun: C:/c\ -\ c++/DevilutionX/mods/Hellfire/nlevels/l5data/cornerstone.dun
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_4) "Copying nlevels/l5data/cornerstone.dun"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_5) "Copying nlevels/l5data/cornerstone.dun"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/mods/Hellfire/nlevels/l5data/cornerstone.dun" "C:/c - c++/DevilutionX/build_NOW/mods/Hellfire/nlevels/l5data/cornerstone.dun"
 
 mods/Hellfire/nlevels/l5data/uberroom.dun: C:/c\ -\ c++/DevilutionX/mods/Hellfire/nlevels/l5data/uberroom.dun
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_5) "Copying nlevels/l5data/uberroom.dun"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_6) "Copying nlevels/l5data/uberroom.dun"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/mods/Hellfire/nlevels/l5data/uberroom.dun" "C:/c - c++/DevilutionX/build_NOW/mods/Hellfire/nlevels/l5data/uberroom.dun"
 
 mods/Hellfire/txtdata/classes/classdat.tsv: C:/c\ -\ c++/DevilutionX/mods/Hellfire/txtdata/classes/classdat.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_6) "Copying txtdata/classes/classdat.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_7) "Copying txtdata/classes/classdat.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/mods/Hellfire/txtdata/classes/classdat.tsv" "C:/c - c++/DevilutionX/build_NOW/mods/Hellfire/txtdata/classes/classdat.tsv"
 
 mods/Hellfire/txtdata/classes/sorcerer/starting_loadout.tsv: C:/c\ -\ c++/DevilutionX/mods/Hellfire/txtdata/classes/sorcerer/starting_loadout.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_7) "Copying txtdata/classes/sorcerer/starting_loadout.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_8) "Copying txtdata/classes/sorcerer/starting_loadout.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/mods/Hellfire/txtdata/classes/sorcerer/starting_loadout.tsv" "C:/c - c++/DevilutionX/build_NOW/mods/Hellfire/txtdata/classes/sorcerer/starting_loadout.tsv"
 
 mods/Hellfire/txtdata/items/item_prefixes.tsv: C:/c\ -\ c++/DevilutionX/mods/Hellfire/txtdata/items/item_prefixes.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_8) "Copying txtdata/items/item_prefixes.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_9) "Copying txtdata/items/item_prefixes.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/mods/Hellfire/txtdata/items/item_prefixes.tsv" "C:/c - c++/DevilutionX/build_NOW/mods/Hellfire/txtdata/items/item_prefixes.tsv"
 
 mods/Hellfire/txtdata/items/item_suffixes.tsv: C:/c\ -\ c++/DevilutionX/mods/Hellfire/txtdata/items/item_suffixes.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_9) "Copying txtdata/items/item_suffixes.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_10) "Copying txtdata/items/item_suffixes.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/mods/Hellfire/txtdata/items/item_suffixes.tsv" "C:/c - c++/DevilutionX/build_NOW/mods/Hellfire/txtdata/items/item_suffixes.tsv"
 
 mods/Hellfire/txtdata/items/unique_itemdat.tsv: C:/c\ -\ c++/DevilutionX/mods/Hellfire/txtdata/items/unique_itemdat.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_10) "Copying txtdata/items/unique_itemdat.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_11) "Copying txtdata/items/unique_itemdat.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/mods/Hellfire/txtdata/items/unique_itemdat.tsv" "C:/c - c++/DevilutionX/build_NOW/mods/Hellfire/txtdata/items/unique_itemdat.tsv"
 
 mods/Hellfire/txtdata/missiles/misdat.tsv: C:/c\ -\ c++/DevilutionX/mods/Hellfire/txtdata/missiles/misdat.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_11) "Copying txtdata/missiles/misdat.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_12) "Copying txtdata/missiles/misdat.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/mods/Hellfire/txtdata/missiles/misdat.tsv" "C:/c - c++/DevilutionX/build_NOW/mods/Hellfire/txtdata/missiles/misdat.tsv"
 
 mods/Hellfire/txtdata/missiles/missile_sprites.tsv: C:/c\ -\ c++/DevilutionX/mods/Hellfire/txtdata/missiles/missile_sprites.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_12) "Copying txtdata/missiles/missile_sprites.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_13) "Copying txtdata/missiles/missile_sprites.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/mods/Hellfire/txtdata/missiles/missile_sprites.tsv" "C:/c - c++/DevilutionX/build_NOW/mods/Hellfire/txtdata/missiles/missile_sprites.tsv"
 
 mods/Hellfire/txtdata/monsters/monstdat.tsv: C:/c\ -\ c++/DevilutionX/mods/Hellfire/txtdata/monsters/monstdat.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_13) "Copying txtdata/monsters/monstdat.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_14) "Copying txtdata/monsters/monstdat.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/mods/Hellfire/txtdata/monsters/monstdat.tsv" "C:/c - c++/DevilutionX/build_NOW/mods/Hellfire/txtdata/monsters/monstdat.tsv"
 
 mods/Hellfire/txtdata/sound/effects.tsv: C:/c\ -\ c++/DevilutionX/mods/Hellfire/txtdata/sound/effects.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_14) "Copying txtdata/sound/effects.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_15) "Copying txtdata/sound/effects.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/mods/Hellfire/txtdata/sound/effects.tsv" "C:/c - c++/DevilutionX/build_NOW/mods/Hellfire/txtdata/sound/effects.tsv"
 
 mods/Hellfire/txtdata/spells/spelldat.tsv: C:/c\ -\ c++/DevilutionX/mods/Hellfire/txtdata/spells/spelldat.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_15) "Copying txtdata/spells/spelldat.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_16) "Copying txtdata/spells/spelldat.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/mods/Hellfire/txtdata/spells/spelldat.tsv" "C:/c - c++/DevilutionX/build_NOW/mods/Hellfire/txtdata/spells/spelldat.tsv"
 
 mods/Hellfire/txtdata/towners/quest_dialog.tsv: C:/c\ -\ c++/DevilutionX/mods/Hellfire/txtdata/towners/quest_dialog.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_16) "Copying txtdata/towners/quest_dialog.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_17) "Copying txtdata/towners/quest_dialog.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/mods/Hellfire/txtdata/towners/quest_dialog.tsv" "C:/c - c++/DevilutionX/build_NOW/mods/Hellfire/txtdata/towners/quest_dialog.tsv"
 
 mods/Hellfire/txtdata/towners/towners.tsv: C:/c\ -\ c++/DevilutionX/mods/Hellfire/txtdata/towners/towners.tsv
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_17) "Copying txtdata/towners/towners.tsv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_18) "Copying txtdata/towners/towners.tsv"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/mods/Hellfire/txtdata/towners/towners.tsv" "C:/c - c++/DevilutionX/build_NOW/mods/Hellfire/txtdata/towners/towners.tsv"
 
 mods/Hellfire/ui_art/diablo.pal: C:/c\ -\ c++/DevilutionX/mods/Hellfire/ui_art/diablo.pal
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_18) "Copying ui_art/diablo.pal"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_19) "Copying ui_art/diablo.pal"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/mods/Hellfire/ui_art/diablo.pal" "C:/c - c++/DevilutionX/build_NOW/mods/Hellfire/ui_art/diablo.pal"
 
 mods/Hellfire/ui_art/hf_titlew.clx: C:/c\ -\ c++/DevilutionX/mods/Hellfire/ui_art/hf_titlew.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_19) "Copying ui_art/hf_titlew.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_20) "Copying ui_art/hf_titlew.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/mods/Hellfire/ui_art/hf_titlew.clx" "C:/c - c++/DevilutionX/build_NOW/mods/Hellfire/ui_art/hf_titlew.clx"
 
 mods/Hellfire/ui_art/mainmenuw.clx: C:/c\ -\ c++/DevilutionX/mods/Hellfire/ui_art/mainmenuw.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_20) "Copying ui_art/mainmenuw.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_21) "Copying ui_art/mainmenuw.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/mods/Hellfire/ui_art/mainmenuw.clx" "C:/c - c++/DevilutionX/build_NOW/mods/Hellfire/ui_art/mainmenuw.clx"
 
 mods/Hellfire/ui_art/supportw.clx: C:/c\ -\ c++/DevilutionX/mods/Hellfire/ui_art/supportw.clx
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_21) "Copying ui_art/supportw.clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_22) "Copying ui_art/supportw.clx"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/mods/Hellfire/ui_art/supportw.clx" "C:/c - c++/DevilutionX/build_NOW/mods/Hellfire/ui_art/supportw.clx"
 
 CMakeFiles/hellfire_copied_mod_file.dir/codegen:
 .PHONY : CMakeFiles/hellfire_copied_mod_file.dir/codegen
 
 hellfire_copied_mod_file: CMakeFiles/hellfire_copied_mod_file
+hellfire_copied_mod_file: mods/Hellfire/data/inv/objcurs2-widths.txt
 hellfire_copied_mod_file: mods/Hellfire/lua/mods/Hellfire/init.lua
 hellfire_copied_mod_file: mods/Hellfire/nlevels/cutl5w.clx
 hellfire_copied_mod_file: mods/Hellfire/nlevels/cutl6w.clx

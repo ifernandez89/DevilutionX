@@ -34,6 +34,7 @@ Source/CMakeFiles/libdevilutionx_init.dir/init.cpp.obj
  C:/c - c++/DevilutionX/Source/engine/render/text_render.hpp
  C:/c - c++/DevilutionX/Source/engine/size.hpp
  C:/c - c++/DevilutionX/Source/engine/sound.h
+ C:/c - c++/DevilutionX/Source/engine/sound_defs.hpp
  C:/c - c++/DevilutionX/Source/engine/surface.hpp
  C:/c - c++/DevilutionX/Source/engine/world_tile.hpp
  C:/c - c++/DevilutionX/Source/game_mode.hpp
@@ -45,6 +46,7 @@ Source/CMakeFiles/libdevilutionx_init.dir/init.cpp.obj
  C:/c - c++/DevilutionX/Source/levels/gendung.h
  C:/c - c++/DevilutionX/Source/levels/gendung_defs.hpp
  C:/c - c++/DevilutionX/Source/monster.h
+ C:/c - c++/DevilutionX/Source/mpq/mpq_common.hpp
  C:/c - c++/DevilutionX/Source/msg.h
  C:/c - c++/DevilutionX/Source/multi.h
  C:/c - c++/DevilutionX/Source/objects.h
@@ -70,11 +72,14 @@ Source/CMakeFiles/libdevilutionx_init.dir/init.cpp.obj
  C:/c - c++/DevilutionX/Source/utils/is_of.hpp
  C:/c - c++/DevilutionX/Source/utils/language.h
  C:/c - c++/DevilutionX/Source/utils/log.hpp
+ C:/c - c++/DevilutionX/Source/utils/logged_fstream.hpp
  C:/c - c++/DevilutionX/Source/utils/sdl2_backports.h
  C:/c - c++/DevilutionX/Source/utils/sdl_compat.h
  C:/c - c++/DevilutionX/Source/utils/sdl_geometry.h
  C:/c - c++/DevilutionX/Source/utils/sdl_ptrs.h
  C:/c - c++/DevilutionX/Source/utils/sdl_wrap.h
+ C:/c - c++/DevilutionX/Source/utils/soundsample.h
+ C:/c - c++/DevilutionX/Source/utils/stdcompat/shared_ptr_array.hpp
  C:/c - c++/DevilutionX/Source/utils/str_cat.hpp
  C:/c - c++/DevilutionX/Source/utils/string_or_view.hpp
  C:/c - c++/DevilutionX/Source/utils/stubs.h
@@ -486,11 +491,12 @@ Source/CMakeFiles/libdevilutionx_init.dir/init.cpp.obj
  C:/c - c++/DevilutionX/Source/engine/backbuffer_state.hpp
  C:/c - c++/DevilutionX/Source/engine/dx.h
  C:/c - c++/DevilutionX/Source/engine/events.hpp
- C:/c - c++/DevilutionX/Source/engine/sound_defs.hpp
  C:/c - c++/DevilutionX/Source/hwcursor.hpp
  C:/c - c++/DevilutionX/Source/init.hpp
  C:/c - c++/DevilutionX/Source/inv.h
  C:/c - c++/DevilutionX/Source/inv_iterators.hpp
+ C:/c - c++/DevilutionX/Source/mpq/mpq_reader.hpp
+ C:/c - c++/DevilutionX/Source/mpq/mpq_writer.hpp
  C:/c - c++/DevilutionX/Source/options.h
  C:/c - c++/DevilutionX/Source/pack.h
  C:/c - c++/DevilutionX/Source/pfile.h

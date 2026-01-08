@@ -385,7 +385,7 @@ void DrawInfoBox(const Surface &out)
 				InfoString = monster.getDisplayName();
 				if (monster.isUnique()) {
 					InfoColor = UiFlags::ColorWhitegold;
-				} else if ((monster.flags & MFLAG_BERSERK) != 0) {
+				} else if ((monster.flags & MFLAG_ELITE) != 0) {
 					InfoColor = UiFlags::ColorRed;  // Show elite monsters in red
 				}
 				if (monster.isUnique()) {

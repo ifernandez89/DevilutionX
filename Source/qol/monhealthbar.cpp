@@ -151,7 +151,7 @@ void DrawMonsterHealthBar(const Surface &out)
 		style |= UiFlags::ColorWhitegold;
 	else if (monster.leader != Monster::NoLeader)
 		style |= UiFlags::ColorBlue;
-	else if ((monster.flags & MFLAG_BERSERK) != 0)
+	else if ((monster.flags & MFLAG_ELITE) != 0)
 		style |= UiFlags::ColorRed;  // Show elite monsters in red
 	else
 		style |= UiFlags::ColorWhite;

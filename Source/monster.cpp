@@ -194,6 +194,51 @@ void InitMonsterTRN(CMonster &monst)
 	}
 }
 
+/**
+ * @brief Tries to apply elite modifier to a monster with low probability
+ * 
+ * Elite monsters have enhanced stats and visual distinction:
+ * - 0.5% chance (1 in 200) for balanced rarity
+ * - Progressive HP boost: +25% to +40% based on level
+ * - Progressive damage boost: +20% to +35% based on level  
+ * - Stone TRN visual transformation
+ * - "Corrupted" name prefix
+ * - Red color in UI
+ */
+void TryApplyEliteModifier(Monster &monster)
+{
+	if (GenerateRnd(200) != 0) // 0.5% chance - rare but not too rare
+		return;
+
+	// Progressive multipliers based on monster level for better scaling
+	const int monsterLevel = monster.data().level;
+	const int hpBoostPercent = 25 + (monsterLevel / 4); // 25% to 40% HP boost
+	const int damageBoostPercent = 20 + (monsterLevel / 5); // 20% to 35% damage boost
+	
+	// Apply HP boost (progressive)
+	const int hpBoost = (monster.maxHitPoints * hpBoostPercent) / 100;
+	monster.maxHitPoints += hpBoost;
+	monster.hitPoints = monster.maxHitPoints;
+	
+	// Apply damage boost (progressive)
+	const int minDamageBoost = (monster.minDamage * damageBoostPercent) / 100;
+	const int maxDamageBoost = (monster.maxDamage * damageBoostPercent) / 100;
+	monster.minDamage += minDamageBoost;
+	monster.maxDamage += maxDamageBoost;
+	
+	// Apply visual transformation using stone TRN
+	if (monster.uniqueMonsterTRN == nullptr) {
+		monster.uniqueMonsterTRN = std::make_unique<uint8_t[]>(256);
+		uint8_t *stoneTRN = GetStoneTRN();
+		if (stoneTRN != nullptr) {
+			std::copy(stoneTRN, stoneTRN + 256, monster.uniqueMonsterTRN.get());
+		}
+	}
+	
+	// Mark as elite using dedicated flag
+	monster.flags |= MFLAG_ELITE;
+}
+
 void InitMonster(Monster &monster, Direction rd, size_t typeIndex, Point position)
 {
 	monster.direction = rd;
@@ -298,27 +343,8 @@ void InitMonster(Monster &monster, Direction rd, size_t typeIndex, Point positio
 		}
 	}
 
-	// FEATURE 7: Mutaciones leves (solo stats) - IMPLEMENTACIÓN CONSERVADORA
-	// Muy baja probabilidad para mantener balance del juego
-	if (GenerateRnd(100) < 3) {  // Solo 3% de probabilidad (muy conservador)
-		// Mutación simple: HP doble (sin efectos visuales)
-		monster.maxHitPoints *= 2;
-		monster.hitPoints = monster.maxHitPoints;
-		
-		// FEATURE 1: Visual Elite Monsters - Add visual feedback to mutations
-		// Apply stone TRN transformation to make mutated monsters visually distinct
-		if (monster.uniqueMonsterTRN == nullptr) {
-			// Allocate TRN data and copy stone transformation
-			monster.uniqueMonsterTRN = std::make_unique<uint8_t[]>(256);
-			uint8_t *stoneTRN = GetStoneTRN();
-			if (stoneTRN != nullptr) {
-				std::copy(stoneTRN, stoneTRN + 256, monster.uniqueMonsterTRN.get());
-			}
-		}
-		
-		// Usar flag existente para indicar que es "especial" (sin nuevos sistemas)
-		monster.flags |= MFLAG_BERSERK;  // Reutilizar flag existente
-	}
+	// FEATURE: Enhanced Elite Monster System - Improved implementation
+	TryApplyEliteModifier(monster);
 }
 
 bool CanPlaceMonster(Point position)

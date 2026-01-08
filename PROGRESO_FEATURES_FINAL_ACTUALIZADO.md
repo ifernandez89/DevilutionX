@@ -92,17 +92,33 @@
 - **Compilación**: ✅ Exitosa
 - **Testing**: ⏳ Pendiente
 
-### 10. ✅ Complete NPC Facing Polish - COMPLETADO
+### 10. ✅ Enhanced Elite Monster System - COMPLETADO
 - **Estado**: ✅ IMPLEMENTADO Y COMPILADO
-- **Descripción**: Todos los NPCs de pueblo miran al jugador durante interacciones
+- **Descripción**: Sistema mejorado de monstruos élite con balance progresivo
 - **Implementación**:
-  - Sistema de facing para todos los NPCs de pueblo
-  - Mapeo direccional de frames de animación para NPCs principales
-  - Lógica genérica de facing para otros NPCs
-  - Cambios discretos y estables sin jitter
-- **Archivo**: `Source/towners.cpp`
-- **NPCs Soportados**: Adria, Cain, Griswold, Pepin, Ogden, Farnham, Gillian, Wirt
-- **Resultado**: NPCs más responsivos y "vivos" durante interacciones
+  - Nueva flag MFLAG_ELITE (bit 13) para identificación correcta
+  - Probabilidad 0.5% (1 en 200) para rareza balanceada
+  - Bonificación progresiva de HP: 25% a 40% basada en nivel de monstruo
+  - Bonificación progresiva de damage: 20% a 35% basada en nivel de monstruo
+  - Transformación visual TRN de piedra
+  - Prefijo "Corrupted" en nombres via getDisplayName()
+  - Color rojo en UI para monstruos élite
+- **Archivos**: `Source/monster.h`, `Source/monster.cpp`, `Source/qol/monhealthbar.cpp`, `Source/control/control_infobox.cpp`
+- **Resultado**: Sistema élite balanceado sin usar MFLAG_BERSERK
+- **Compilación**: ✅ Exitosa
+- **Testing**: ⏳ Pendiente
+
+### 11. ✅ Complete NPC Facing System - COMPLETADO
+- **Estado**: ✅ IMPLEMENTADO Y COMPILADO
+- **Descripción**: Sistema completo de facing para NPCs con frames estables
+- **Implementación**:
+  - Función helper `UpdateTownerFacing` para lógica modular
+  - Frames únicos estables por dirección (evita loops de animación)
+  - Mapeo específico para NPCs principales (Adria, Cain, Griswold, Pepin, Ogden)
+  - Sistema genérico de fallback para otros NPCs
+  - Previene bugs de animación continua (como el de brazos de Griswold)
+- **Archivos**: `Source/towners.cpp`, `Source/towners.h`
+- **Resultado**: NPCs miran al jugador durante interacción sin glitches visuales
 - **Compilación**: ✅ Exitosa
 - **Testing**: ⏳ Pendiente
 
@@ -120,10 +136,10 @@
 
 ## 📊 RESUMEN ESTADÍSTICO
 
-### ✅ Features Exitosas: 10/11 (90.9%)
-### ❌ Features Abortadas: 1/11 (9.1%)
-### 🏗️ Total de Archivos Modificados: 8
-### 📚 Documentos Creados: 6
+### ✅ Features Exitosas: 11/12 (91.7%)
+### ❌ Features Abortadas: 1/12 (8.3%)
+### 🏗️ Total de Archivos Modificados: 9
+### 📚 Documentos Creados: 7
 
 ---
 
@@ -142,7 +158,7 @@
 
 ### Testing Status
 - **Features 1-7**: ✅ Confirmadas funcionando por el usuario
-- **Features 8-10**: ⏳ Pendientes de testing por el usuario
+- **Features 8-11**: ⏳ Pendientes de testing por el usuario
 
 ---
 
@@ -178,7 +194,7 @@
 
 1. **Sistema de Audio Completamente Funcional** - Resuelto problema crítico
 2. **Focus Tracking Fix** - Bug crítico de gameplay resuelto
-3. **10 Features Implementadas** - 90.9% de tasa de éxito
+3. **11 Features Implementadas** - 91.7% de tasa de éxito
 4. **Arquitectura Limpia** - Todas las features siguen las mejores prácticas
 5. **Documentación Exhaustiva** - Cada feature completamente documentada
 6. **Compilación Perfecta** - Sin errores, solo warnings de librerías externas
@@ -186,4 +202,4 @@
 ---
 
 **Fecha de Actualización**: 8 de Enero, 2026
-**Estado General**: ✅ EXCELENTE - Listo para testing de nuevas features
+**Estado General**: ✅ EXCELENTE - Sistema completo de NPC facing implementado exitosamente

@@ -15,6 +15,7 @@
 #include <vector>
 
 #include "engine/clx_sprite.hpp"
+#include "engine/direction.hpp"
 #include "items.h"
 #include "levels/dun_tile.hpp"
 #include "player.h"
@@ -104,6 +105,7 @@ Towner *GetTowner(_talker_id type);
 void InitTowners();
 void FreeTownerGFX();
 void ProcessTowners();
+void UpdateTownerFacing(Towner &towner, Direction targetDirection);
 void TalkToTowner(Player &player, int t);
 
 void UpdateGirlAnimAfterQuestComplete();

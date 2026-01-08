@@ -122,6 +122,32 @@
 - **Compilación**: ✅ Exitosa
 - **Testing**: ⏳ Pendiente
 
+### 12. ✅ Enhanced UI Feedback System - COMPLETADO
+- **Estado**: ✅ IMPLEMENTADO Y COMPILADO
+- **Descripción**: Sistema de feedback visual mejorado para UI
+- **Implementación**:
+  - HUD mejorado con información adicional (nivel, monstruos, tiempo de sesión, coordenadas, oro)
+  - Sistema de highlighting para quest items (glow dorado)
+  - Sistema de highlighting para unique items (glow azul)
+  - Posicionamiento optimizado para evitar overlaps
+- **Archivo**: `Source/engine/render/scrollrt.cpp`
+- **Resultado**: UI más informativa y útil para el jugador
+- **Compilación**: ✅ Exitosa
+- **Testing**: ✅ Confirmado funcionando por el usuario
+
+### 13. ✅ Global Dark Atmosphere Enhancement - COMPLETADO
+- **Estado**: ✅ IMPLEMENTADO Y COMPILADO
+- **Descripción**: Atmósfera visual más oscura y corrupta usando sistemas existentes
+- **Implementación**:
+  - **Decoraciones aumentadas**: Cathedral 20%, Catacombs 33%, Town 17%
+  - **Tinting de paleta sutil**: Tintes específicos por nivel (rojo/marrón para corrupción)
+  - **Iluminación mejorada**: Town más oscuro (nivel 2 vs 0), falloff aumentado por nivel
+  - **Contraste aumentado**: Mejor diferenciación entre áreas iluminadas y oscuras
+- **Archivos**: `Source/levels/drlg_l1.cpp`, `Source/levels/drlg_l2.cpp`, `Source/engine/palette.cpp`, `Source/lighting.cpp`, `Source/levels/gendung.cpp`
+- **Resultado**: Atmósfera más inmersiva y corrupta sin afectar gameplay
+- **Compilación**: ✅ Exitosa
+- **Testing**: ⏳ Pendiente
+
 ---
 
 ## ❌ FEATURES ABORTADAS
@@ -136,10 +162,10 @@
 
 ## 📊 RESUMEN ESTADÍSTICO
 
-### ✅ Features Exitosas: 11/12 (91.7%)
-### ❌ Features Abortadas: 1/12 (8.3%)
-### 🏗️ Total de Archivos Modificados: 9
-### 📚 Documentos Creados: 7
+### ✅ Features Exitosas: 13/14 (92.9%)
+### ❌ Features Abortadas: 1/14 (7.1%)
+### 🏗️ Total de Archivos Modificados: 14
+### 📚 Documentos Creados: 9
 
 ---
 
@@ -158,13 +184,14 @@
 
 ### Testing Status
 - **Features 1-7**: ✅ Confirmadas funcionando por el usuario
-- **Features 8-11**: ⏳ Pendientes de testing por el usuario
+- **Feature 12**: ✅ Confirmada funcionando por el usuario
+- **Features 8-11, 13**: ⏳ Pendientes de testing por el usuario
 
 ---
 
 ## 🎯 PRÓXIMOS PASOS
 
-1. **Testing de Nuevas Features**: El usuario debe probar las 3 nuevas features implementadas
+1. **Testing de Nuevas Features**: El usuario debe probar las 5 nuevas features implementadas
 2. **Feedback y Ajustes**: Posibles refinamientos basados en testing
 3. **Nuevas Features**: Evaluación de próximas características a implementar
 
@@ -194,12 +221,13 @@
 
 1. **Sistema de Audio Completamente Funcional** - Resuelto problema crítico
 2. **Focus Tracking Fix** - Bug crítico de gameplay resuelto
-3. **11 Features Implementadas** - 91.7% de tasa de éxito
+3. **13 Features Implementadas** - 92.9% de tasa de éxito
 4. **Arquitectura Limpia** - Todas las features siguen las mejores prácticas
 5. **Documentación Exhaustiva** - Cada feature completamente documentada
 6. **Compilación Perfecta** - Sin errores, solo warnings de librerías externas
+7. **Atmósfera Visual Mejorada** - Sistema completo de mejora atmosférica implementado
 
 ---
 
 **Fecha de Actualización**: 8 de Enero, 2026
-**Estado General**: ✅ EXCELENTE - Sistema completo de NPC facing implementado exitosamente
+**Estado General**: ✅ EXCELENTE - Sistema completo de atmósfera oscura implementado exitosamente

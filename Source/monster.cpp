@@ -295,6 +295,17 @@ void InitMonster(Monster &monster, Direction rd, size_t typeIndex, Point positio
 			monster.armorClass += (currlevel - 1) / 4;
 		}
 	}
+
+	// FEATURE 7: Mutaciones leves (solo stats) - IMPLEMENTACIÓN CONSERVADORA
+	// Muy baja probabilidad para mantener balance del juego
+	if (GenerateRnd(100) < 3) {  // Solo 3% de probabilidad (muy conservador)
+		// Mutación simple: HP doble (sin efectos visuales)
+		monster.maxHitPoints *= 2;
+		monster.hitPoints = monster.maxHitPoints;
+		
+		// Usar flag existente para indicar que es "especial" (sin nuevos sistemas)
+		monster.flags |= MFLAG_BERSERK;  // Reutilizar flag existente
+	}
 }
 
 bool CanPlaceMonster(Point position)

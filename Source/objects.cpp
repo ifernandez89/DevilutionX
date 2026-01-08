@@ -3961,6 +3961,19 @@ void InitObjects()
 		InitRndLocObj(5, 10, OBJ_CHEST1);
 		InitRndLocObj(3, 6, OBJ_CHEST2);
 		InitRndLocObj(1, 5, OBJ_CHEST3);
+		
+		// FEATURE 6: Densidad decorativa leve - más objetos decorativos
+		// Agregar más barriles/urnas/pods según el tipo de nivel
+		if (leveltype == DTYPE_CATACOMBS) {
+			InitRndLocObj(3, 7, OBJ_BARREL);  // Más barriles en catacumbas
+		} else if (leveltype == DTYPE_CAVES) {
+			InitRndLocObj(2, 5, OBJ_BARREL);  // Algunos barriles en cuevas
+		} else if (leveltype == DTYPE_CRYPT) {
+			InitRndLocObj(3, 6, OBJ_URN);     // Más urnas en criptas
+		} else if (leveltype == DTYPE_NEST) {
+			InitRndLocObj(2, 4, OBJ_POD);     // Más pods en nests
+		}
+		
 		if (leveltype != DTYPE_HELL)
 			AddObjTraps();
 		if (IsAnyOf(leveltype, DTYPE_CATACOMBS, DTYPE_CAVES, DTYPE_HELL, DTYPE_NEST))

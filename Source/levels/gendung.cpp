@@ -366,7 +366,13 @@ void InitGlobals()
 	memset(dItem, 0, sizeof(dItem));
 	memset(dObject, 0, sizeof(dObject));
 	memset(dSpecial, 0, sizeof(dSpecial));
-	uint8_t defaultLight = leveltype == DTYPE_TOWN ? 0 : 15;
+	// FEATURE: Global Dark Atmosphere Enhancement - Darker town ambient lighting
+	uint8_t defaultLight;
+	if (leveltype == DTYPE_TOWN) {
+		defaultLight = 2; // Town: Slightly darker ambient (was 0, now 2 for decay atmosphere)
+	} else {
+		defaultLight = 15; // Dungeons remain fully dark initially
+	}
 #ifdef _DEBUG
 	if (DisableLighting)
 		defaultLight = 0;

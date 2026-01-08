@@ -134,6 +134,30 @@ void ApplyGlobalBrightness(SDL_Color *dst, const SDL_Color *src)
 		dst[i].r = toneMap[src[i].r];
 		dst[i].g = toneMap[src[i].g];
 		dst[i].b = toneMap[src[i].b];
+		
+		// FEATURE: Global Dark Atmosphere Enhancement - Subtle red/brown color tinting
+		// Apply subtle corruption tint based on level type
+		if (leveltype == DTYPE_TOWN) {
+			// Town: Subtle brown/decay tint (reduce green/blue slightly, slight red boost)
+			dst[i].g = static_cast<uint8_t>(dst[i].g * 0.95f);
+			dst[i].b = static_cast<uint8_t>(dst[i].b * 0.92f);
+			dst[i].r = std::min(255, static_cast<int>(dst[i].r * 1.02f));
+		} else if (leveltype == DTYPE_CATACOMBS) {
+			// Catacombs: More pronounced blood/red tint
+			dst[i].g = static_cast<uint8_t>(dst[i].g * 0.90f);
+			dst[i].b = static_cast<uint8_t>(dst[i].b * 0.85f);
+			dst[i].r = std::min(255, static_cast<int>(dst[i].r * 1.08f));
+		} else if (leveltype == DTYPE_CAVES) {
+			// Caves: Darker, more muted tones
+			dst[i].r = static_cast<uint8_t>(dst[i].r * 0.95f);
+			dst[i].g = static_cast<uint8_t>(dst[i].g * 0.93f);
+			dst[i].b = static_cast<uint8_t>(dst[i].b * 0.90f);
+		} else if (leveltype == DTYPE_HELL) {
+			// Hell: Enhanced red/orange corruption
+			dst[i].g = static_cast<uint8_t>(dst[i].g * 0.88f);
+			dst[i].b = static_cast<uint8_t>(dst[i].b * 0.80f);
+			dst[i].r = std::min(255, static_cast<int>(dst[i].r * 1.12f));
+		}
 	}
 }
 

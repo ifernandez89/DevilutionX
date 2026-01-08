@@ -69,6 +69,12 @@ struct Towner {
 	uint8_t _tAnimFrame;
 	uint8_t _tAnimFrameCnt;
 	_talker_id _ttype;
+	
+	// FEATURE: Improved Town NPC Visual Liveliness - Idle facing system
+	/** Timer for idle facing changes (in game ticks) */
+	int16_t _tIdleFacingTimer;
+	/** Current idle facing direction */
+	Direction _tIdleFacingDirection;
 
 	[[nodiscard]] ClxSprite currentSprite() const
 	{
@@ -105,6 +111,8 @@ Towner *GetTowner(_talker_id type);
 void InitTowners();
 void FreeTownerGFX();
 void ProcessTowners();
+void UpdateFarnhamPosture(Towner &towner);
+void UpdateIdleFacing(Towner &towner);
 void UpdateTownerFacing(Towner &towner, Direction targetDirection);
 void TalkToTowner(Player &player, int t);
 

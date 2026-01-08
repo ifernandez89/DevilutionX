@@ -2073,11 +2073,15 @@ void FixTilesPatterns()
 
 void Substitution()
 {
+	// FEATURE: Global Dark Atmosphere Enhancement - Increased decoration spawn rate for catacombs
+	// Original: 25% chance (FlipCoin(4)), Enhanced: ~30% chance for more blood and corruption
+	int decorationChance = 3; // ~33% chance for more bloody atmosphere
+	
 	for (WorldTileCoord y = 0; y < DMAXY; y++) {
 		for (WorldTileCoord x = 0; x < DMAXX; x++) {
 			if (SetPieceRoom.contains(x, y))
 				continue;
-			if (!FlipCoin(4))
+			if (!FlipCoin(decorationChance))
 				continue;
 
 			const uint8_t c = BTYPESL2[dungeon[x][y]];

@@ -290,6 +290,19 @@ void MakeLightTable()
 	// Generate light falloffs ranges
 	const float maxDarkness = 15;
 	const float maxBrightness = 0;
+	
+	// FEATURE: Global Dark Atmosphere Enhancement - Darker ambient lighting
+	float atmosphereMultiplier = 1.0f;
+	if (leveltype == DTYPE_TOWN) {
+		atmosphereMultiplier = 1.15f; // Town: 15% darker ambient
+	} else if (leveltype == DTYPE_CATACOMBS) {
+		atmosphereMultiplier = 1.25f; // Catacombs: 25% darker for blood atmosphere
+	} else if (leveltype == DTYPE_CAVES) {
+		atmosphereMultiplier = 1.20f; // Caves: 20% darker
+	} else if (leveltype == DTYPE_HELL) {
+		atmosphereMultiplier = 1.10f; // Hell: 10% darker (already quite dark)
+	}
+	
 	for (unsigned radius = 0; radius < NumLightRadiuses; radius++) {
 		const unsigned maxDistance = (radius + 1) * 8;
 		for (unsigned distance = 0; distance < 128; distance++) {
@@ -304,10 +317,12 @@ void MakeLightTable()
 					scaled = factor * factor * brightness + (maxDarkness - brightness);
 					scaled = std::max(maxBrightness, scaled);
 				} else {
-					// Leaner falloff
-					scaled = factor * maxDarkness;
+					// Leaner falloff with enhanced darkness
+					scaled = factor * maxDarkness * atmosphereMultiplier;
 				}
 				scaled += 0.5F; // Round up
+				// Clamp to valid light table range
+				scaled = std::min(scaled, maxDarkness);
 				LightFalloffs[radius][distance] = static_cast<uint8_t>(scaled);
 			}
 		}

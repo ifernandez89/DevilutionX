@@ -950,9 +950,13 @@ void FixTilesPatterns()
 
 void Substitution()
 {
+	// FEATURE: Global Dark Atmosphere Enhancement - Increased decoration spawn rate
+	// Original: 25% chance (FlipCoin(4)), Enhanced: 40% chance for more corruption
+	int decorationChance = (leveltype == DTYPE_TOWN) ? 6 : 5; // Town: ~17%, Dungeon: ~20%
+	
 	for (int y = 0; y < DMAXY; y++) {
 		for (int x = 0; x < DMAXX; x++) {
-			if (FlipCoin(4)) {
+			if (FlipCoin(decorationChance)) {
 				const uint8_t c = TileDecorations[dungeon[x][y]];
 				if (c != 0 && !Protected.test(x, y)) {
 					int rv = GenerateRnd(16);

@@ -688,9 +688,29 @@ void DrawItem(const Surface &out, int8_t itemIndex, Point targetBufferPosition, 
 	const Item &item = Items[itemIndex];
 	const ClxSprite sprite = item.AnimInfo.currentSprite();
 	const Point position = targetBufferPosition + item.getRenderingOffset(sprite);
+	
+	// FEATURE: Subtle Visual UI Feedback - Quest Item Golden Glow
+	bool isQuestItem = IsAnyOf(item._iMiscId, IMISC_BOOK, IMISC_SCROLL, IMISC_NOTE) ||
+	                   IsAnyOf(item._itype, ItemType::Misc) ||
+	                   item._iName == "Mushroom" || item._iName == "Brain" || 
+	                   item._iName == "Fungal Tome" || item._iName == "Spectral Elixir";
+	
 	if (!IsPlayerInStore() && (itemIndex == pcursitem || AutoMapShowItems)) {
 		ClxDrawOutlineSkipColorZero(out, GetOutlineColor(item, false), position, sprite);
 	}
+	
+	// Add golden glow for quest items
+	if (isQuestItem && !IsPlayerInStore()) {
+		// Draw a subtle golden outline for quest items
+		ClxDrawOutlineSkipColorZero(out, PAL16_YELLOW + 2, position, sprite);
+	}
+	
+	// Add special glow for unique items
+	if (item._iMagical == ITEM_QUALITY_UNIQUE && !IsPlayerInStore()) {
+		// Draw a subtle blue outline for unique items
+		ClxDrawOutlineSkipColorZero(out, PAL16_BLUE + 3, position, sprite);
+	}
+	
 	ClxDrawLight(out, position, sprite, lightTableIndex);
 	if (item.AnimInfo.isLastFrame() || item._iCurs == ICURS_MAGIC_ROCK)
 		AddItemToLabelQueue(itemIndex, position);
@@ -1453,6 +1473,83 @@ void DrawFPS(const Surface &out)
 }
 
 /**
+ * @brief Draws enhanced HUD information including FPS, level, monsters, etc.
+ * 
+ * FEATURE: Subtle Visual UI Feedback - Enhanced HUD Display
+ * Shows additional useful information in the upper corners of the screen.
+ */
+void DrawEnhancedHUD(const Surface &out)
+{
+	if (!gbActive || !gbRunGame) {
+		return;
+	}
+	
+	// Only show enhanced HUD in game (not in menus)
+	if (gbIsMultiplayer && !MyPlayer->plractive) {
+		return;
+	}
+	
+	int yOffset = 8;
+	const int lineHeight = 16;
+	
+	// Left side information (below FPS if enabled)
+	if (*GetOptions().Graphics.showFPS) {
+		yOffset += lineHeight;
+	}
+	
+	// Current dungeon level
+	if (currlevel > 0) {
+		std::string levelText = StrCat("Nivel: ", currlevel);
+		DrawString(out, levelText, Point { 8, yOffset }, { .flags = UiFlags::ColorGold });
+		yOffset += lineHeight;
+	}
+	
+	// Monster count (only in dungeon)
+	if (currlevel > 0 && leveltype != DTYPE_TOWN) {
+		int aliveMonsters = 0;
+		for (size_t i = 0; i < ActiveMonsterCount; i++) {
+			const Monster &monster = Monsters[ActiveMonsters[i]];
+			if (!monster.hasNoLife()) {
+				aliveMonsters++;
+			}
+		}
+		std::string monsterText = StrCat("Monstruos: ", aliveMonsters);
+		DrawString(out, monsterText, Point { 8, yOffset }, { .flags = UiFlags::ColorWhite });
+		yOffset += lineHeight;
+	}
+	
+	// Right side information
+	int rightX = out.w() - 250; // More space from right edge to avoid overlap
+	int rightY = 8;
+	
+	// Session time (simple implementation)
+	static uint32_t sessionStartTime = SDL_GetTicks();
+	uint32_t sessionTimeMs = SDL_GetTicks() - sessionStartTime;
+	uint32_t sessionTimeSec = sessionTimeMs / 1000;
+	uint32_t hours = sessionTimeSec / 3600;
+	uint32_t minutes = (sessionTimeSec % 3600) / 60;
+	uint32_t seconds = sessionTimeSec % 60;
+	
+	std::string timeText = StrCat("Sesion: ", hours, ":", (minutes < 10 ? "0" : ""), minutes, ":", (seconds < 10 ? "0" : ""), seconds);
+	DrawString(out, timeText, Point { rightX, rightY }, { .flags = UiFlags::ColorWhite });
+	rightY += lineHeight;
+	
+	// Player coordinates (useful for debugging/exploration)
+	if (MyPlayer != nullptr) {
+		std::string coordText = StrCat("Pos: (", MyPlayer->position.tile.x, ",", MyPlayer->position.tile.y, ")");
+		DrawString(out, coordText, Point { rightX, rightY }, { .flags = UiFlags::ColorUiSilver });
+		rightY += lineHeight;
+	}
+	
+	// Gold count (always visible)
+	if (MyPlayer != nullptr) {
+		std::string goldText = StrCat("Oro: ", MyPlayer->_pGold);
+		DrawString(out, goldText, Point { rightX, rightY }, { .flags = UiFlags::ColorGold });
+		rightY += lineHeight;
+	}
+}
+
+/**
  * @brief Update part of the screen from the back buffer
  */
 void DoBlitScreen(Rectangle area)
@@ -1872,6 +1969,9 @@ void DrawAndBlit()
 	DrawCursor(out);
 
 	DrawFPS(out);
+	
+	// FEATURE: Subtle Visual UI Feedback - Enhanced HUD Display
+	DrawEnhancedHUD(out);
 
 	LuaEvent("GameDrawComplete");
 

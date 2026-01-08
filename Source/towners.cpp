@@ -134,6 +134,10 @@ void InitTownerFromData(Towner &towner, const TownerDataEntry &entry)
 		const auto index = std::max<int32_t>(GenerateRnd(static_cast<int32_t>(entry.gossipTexts.size())), 0);
 		towner.gossip = entry.gossipTexts[index];
 	}
+	
+	// FEATURE: Improved Town NPC Visual Liveliness - Initialize idle facing system
+	towner._tIdleFacingTimer = GenerateRnd(180) + 120; // Random initial delay (2-5 seconds at 60fps)
+	towner._tIdleFacingDirection = static_cast<Direction>(GenerateRnd(8)); // Random initial direction
 }
 
 /**
@@ -798,6 +802,12 @@ void ProcessTowners()
 			TownDead(towner);
 		}
 
+		// FEATURE: Improved Town NPC Visual Liveliness - Update idle facing
+		UpdateIdleFacing(towner);
+		
+		// FEATURE: Improved Town NPC Visual Liveliness - Update Farnham's posture
+		UpdateFarnhamPosture(towner);
+
 		towner._tAnimCnt++;
 		if (towner._tAnimCnt < towner._tAnimDelay) {
 			continue;
@@ -817,6 +827,117 @@ void ProcessTowners()
 		towner._tAnimFrame++;
 		if (towner._tAnimFrame >= towner._tAnimLen)
 			towner._tAnimFrame = 0;
+	}
+}
+
+/**
+ * @brief Updates Farnham's posture to make him appear more upright when not talking
+ * 
+ * This function attempts to make Farnham use more upright frames when idle,
+ * giving him a less slumped appearance when not actively in conversation.
+ * 
+ * @param towner The Farnham towner to update
+ */
+void UpdateFarnhamPosture(Towner &towner)
+{
+	// Only apply to Farnham
+	if (towner._ttype != TOWN_DRUNK) {
+		return;
+	}
+	
+	// Don't change posture during dialog
+	if (qtextflag) {
+		return;
+	}
+	
+	// Try to use more upright frames from his animation set
+	// Farnham typically has frames that show him in different postures
+	if (!towner.animOrder.empty() && towner.animOrder.size() > 4) {
+		// Create a modified animation order that favors more upright frames
+		// Use the middle portion of his animation frames which tend to be more upright
+		std::vector<uint8_t> uprightAnimOrder;
+		
+		// Use frames from the middle range of his animation (typically more upright)
+		const size_t midStart = towner._tAnimLen / 3;
+		const size_t midEnd = (towner._tAnimLen * 2) / 3;
+		
+		// Create a sequence that uses more upright frames
+		for (size_t i = midStart; i < midEnd && i < towner._tAnimLen; ++i) {
+			uprightAnimOrder.push_back(static_cast<uint8_t>(i));
+		}
+		
+		// Add some variety but still favor upright frames
+		if (uprightAnimOrder.size() >= 2) {
+			// Repeat the sequence to make it longer and more stable
+			std::vector<uint8_t> extendedOrder = uprightAnimOrder;
+			extendedOrder.insert(extendedOrder.end(), uprightAnimOrder.begin(), uprightAnimOrder.end());
+			
+			// Update animation order storage and span
+			TownerAnimOrderStorage.push_back(extendedOrder);
+			towner.animOrder = { TownerAnimOrderStorage.back() };
+			towner._tAnimFrameCnt = 0;
+		}
+	}
+}
+
+/**
+ * @brief Updates idle facing behavior for NPCs to make them more lively
+ * 
+ * This function makes NPCs occasionally change their facing direction when idle,
+ * creating a more dynamic and alive feeling in the town.
+ * 
+ * @param towner The towner to update idle behavior for
+ */
+void UpdateIdleFacing(Towner &towner)
+{
+	// Apply idle facing to main NPCs (full dynamic facing) and others (subtle variation)
+	bool isMainNPC = IsAnyOf(towner._ttype, TOWN_WITCH, TOWN_STORY, TOWN_SMITH, TOWN_HEALER, TOWN_TAVERN);
+	bool isSecondaryNPC = IsAnyOf(towner._ttype, TOWN_DRUNK, TOWN_BMAID, TOWN_PEGBOY);
+	
+	if (!isMainNPC && !isSecondaryNPC) {
+		return;
+	}
+	
+	// Don't update idle facing if currently in dialog
+	if (qtextflag) {
+		return;
+	}
+	
+	// Decrement idle facing timer
+	towner._tIdleFacingTimer--;
+	
+	// Time to change facing direction?
+	if (towner._tIdleFacingTimer <= 0) {
+		if (isMainNPC) {
+			// Main NPCs: More frequent facing changes (3-6 seconds)
+			towner._tIdleFacingTimer = GenerateRnd(180) + 180;
+		} else {
+			// Secondary NPCs: Less frequent, subtle changes (8-15 seconds)
+			towner._tIdleFacingTimer = GenerateRnd(420) + 480;
+		}
+		
+		// Choose a new direction
+		Direction newDirection;
+		if (isMainNPC) {
+			// Main NPCs: Full range of directions
+			do {
+				newDirection = static_cast<Direction>(GenerateRnd(8));
+			} while (newDirection == towner._tIdleFacingDirection);
+		} else {
+			// Secondary NPCs: Only subtle variations (adjacent directions)
+			const Direction currentDir = towner._tIdleFacingDirection;
+			const int currentDirInt = static_cast<int>(currentDir);
+			
+			// Choose adjacent direction (±1 or ±2 from current)
+			const int variation = (GenerateRnd(2) == 0) ? -1 : 1;
+			const int newDirInt = (currentDirInt + variation + 8) % 8;
+			newDirection = static_cast<Direction>(newDirInt);
+		}
+		
+		towner._tIdleFacingDirection = newDirection;
+		
+		// Apply the new facing using our existing stable facing system
+		UpdateTownerFacing(towner, newDirection);
 	}
 }
 

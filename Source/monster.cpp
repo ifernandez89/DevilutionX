@@ -874,8 +874,7 @@ void DiabloDeath(Monster &diablo, bool sendmsg)
 	if (sendmsg)
 		NetSendCmdQuest(true, quest);
 	sgbSaveSoundOn = gbSoundOn;
-	if (gbIsMultiplayer)
-		gbProcessPlayers = false;
+	// gbProcessPlayers = false; // Comentado para permitir continuar el juego después de matar a Diablo
 	for (size_t i = 0; i < ActiveMonsterCount; i++) {
 		const int monsterId = ActiveMonsters[i];
 		Monster &monster = Monsters[monsterId];
@@ -1504,7 +1503,10 @@ void MonsterDeath(Monster &monster)
 {
 	monster.var1++;
 	if (monster.type().type == MT_DIABLO) {
-		// En multijugador, no seguir a Diablo mientras muere para evitar problemas de focus
+		// NO mover la cámara hacia Diablo mientras muere - mantener en el jugador
+		// Esto corrige el bug donde la cámara se queda fija en la posición de muerte de Diablo
+		// Comentado el código que movía la cámara hacia Diablo:
+		/*
 		if (!gbIsMultiplayer) {
 			if (monster.position.tile.x < ViewPosition.x) {
 				ViewPosition.x--;
@@ -1518,6 +1520,7 @@ void MonsterDeath(Monster &monster)
 				ViewPosition.y++;
 			}
 		}
+		*/
 
 		if (monster.var1 == 140 && gbIsMultiplayer)
 			PrepDoEnding();

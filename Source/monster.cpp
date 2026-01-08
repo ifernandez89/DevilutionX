@@ -271,6 +271,30 @@ void InitMonster(Monster &monster, Direction rd, size_t typeIndex, Point positio
 		monster.armorClass += HellAcBonus;
 		monster.resistance = monster.data().resistanceHell;
 	}
+
+	// FEATURE 5: Variantes de monstruos por profundidad
+	// Escalado adicional basado en el nivel actual del dungeon
+	if (currlevel > 1) {
+		// Escalado progresivo: cada 2 niveles aumenta stats
+		int depthBonus = (currlevel - 1) / 2;
+		
+		// Aumentar HP progresivamente (5% por cada 2 niveles)
+		int hpBonus = (monster.maxHitPoints * depthBonus * 5) / 100;
+		monster.maxHitPoints += hpBonus;
+		monster.hitPoints = monster.maxHitPoints;
+		
+		// Aumentar damage progresivamente (3% por cada 2 niveles)
+		int damageBonus = std::max(1, (depthBonus * 3) / 10);
+		monster.minDamage += damageBonus;
+		monster.maxDamage += damageBonus;
+		monster.minDamageSpecial += damageBonus;
+		monster.maxDamageSpecial += damageBonus;
+		
+		// Aumentar AC ligeramente (1 punto cada 4 niveles)
+		if (currlevel >= 4) {
+			monster.armorClass += (currlevel - 1) / 4;
+		}
+	}
 }
 
 bool CanPlaceMonster(Point position)

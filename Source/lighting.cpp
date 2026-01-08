@@ -293,14 +293,19 @@ void MakeLightTable()
 	
 	// FEATURE: Global Dark Atmosphere Enhancement - Darker ambient lighting
 	float atmosphereMultiplier = 1.0f;
+	
+	// FEATURE: Micro-variación ambiental contextual - Pulido Final
+	// Variaciones sutiles por tipo de nivel que el jugador siente pero no nota conscientemente
 	if (leveltype == DTYPE_TOWN) {
-		atmosphereMultiplier = 1.15f; // Town: 15% darker ambient
+		atmosphereMultiplier = 1.15f; // Town: 15% más oscuro, sensación deteriorada
 	} else if (leveltype == DTYPE_CATACOMBS) {
-		atmosphereMultiplier = 1.25f; // Catacombs: 25% darker for blood atmosphere
+		atmosphereMultiplier = 1.30f; // Catacombs: 30% más oscuro, atmósfera más fría y siniestra
 	} else if (leveltype == DTYPE_CAVES) {
-		atmosphereMultiplier = 1.20f; // Caves: 20% darker
+		atmosphereMultiplier = 1.25f; // Caves: 25% más oscuro, sensación opresiva
 	} else if (leveltype == DTYPE_HELL) {
-		atmosphereMultiplier = 1.10f; // Hell: 10% darker (already quite dark)
+		atmosphereMultiplier = 1.40f; // Hell: 40% más oscuro, contraste violento y dramático
+	} else {
+		atmosphereMultiplier = 1.20f; // Cathedral: 20% más oscuro, atmósfera gótica
 	}
 	
 	for (unsigned radius = 0; radius < NumLightRadiuses; radius++) {

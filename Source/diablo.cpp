@@ -3104,6 +3104,12 @@ tl::expected<void, std::string> LoadGameLevelDungeon(bool firstflag, lvl_entry l
 		InitItems();
 		CreateThemeRooms();
 
+		// FEATURE 1.3: Enhanced decorative density in vanilla single player
+		// Adds additional decorative objects after theme rooms are created
+		if (!gbIsHellfire && !setlevel && currlevel > 0) {
+			EnhanceDecorativeDensity();
+		}
+
 		IncProgress();
 
 		[[maybe_unused]] const uint32_t mid3Seed = GetLCGEngineState();
@@ -3483,7 +3489,8 @@ bool IsDiabloAlive(bool playSFX)
 	if (Quests[Q_DIABLO]._qactive == QUEST_DONE && !gbIsMultiplayer) {
 		if (playSFX)
 			PlaySFX(SfxID::DiabloDeath);
-		return false;
+		// Return true to allow continued gameplay after Diablo's death in single player
+		return true;
 	}
 
 	return true;
@@ -3492,6 +3499,82 @@ bool IsDiabloAlive(bool playSFX)
 void PrintScreen(SDL_Keycode vkey)
 {
 	ReleaseKey(vkey);
+}
+
+void EnhanceDecorativeDensity()
+{
+	// FEATURE 1.3: Enhanced decorative density in vanilla single player
+	// Adds additional decorative objects after theme rooms are created
+	// Only affects vanilla single player, preserves Hellfire and setlevels
+	
+	if (gbIsHellfire || setlevel || currlevel <= 0) {
+		return; // Safety guards
+	}
+	
+	int decorationsAdded = 0;
+	const int maxDecorations = 15; // Conservative limit
+	
+	// Available decorative objects (using existing objects from the game)
+	const _object_id decorativeObjects[] = {
+		OBJ_CANDLE2,    // Candle
+		OBJ_BOOKCANDLE, // Book candle  
+		OBJ_TORCHL,     // Torch left
+		OBJ_TORCHR2     // Torch right
+	};
+	const int numDecorations = sizeof(decorativeObjects) / sizeof(decorativeObjects[0]);
+	
+	for (int y = 2; y < MAXDUNY - 2 && decorationsAdded < maxDecorations; y++) {
+		for (int x = 2; x < MAXDUNX - 2 && decorationsAdded < maxDecorations; x++) {
+			
+			// Only place on empty floor tiles
+			if (dObject[x][y] != 0) continue;
+			
+			// Check if it's a floor tile (basic safety)
+			if (dungeon[x][y] < 3 || dungeon[x][y] > 7) continue; // Rough floor tile range
+			
+			// 12% chance (increased from typical ~8%)
+			if (GenerateRnd(100) >= 12) continue;
+			
+			// Safety check: ensure space around the decoration
+			bool safeToPlace = true;
+			for (int dy = -1; dy <= 1 && safeToPlace; dy++) {
+				for (int dx = -1; dx <= 1 && safeToPlace; dx++) {
+					int checkX = x + dx;
+					int checkY = y + dy;
+					
+					// Bounds check
+					if (checkX < 1 || checkX >= MAXDUNX - 1 || 
+					    checkY < 1 || checkY >= MAXDUNY - 1) {
+						safeToPlace = false;
+						break;
+					}
+					
+					// Don't place near existing objects
+					if (dObject[checkX][checkY] != 0) {
+						safeToPlace = false;
+						break;
+					}
+					
+					// Don't place near monsters
+					if (dMonster[checkX][checkY] != 0) {
+						safeToPlace = false;
+						break;
+					}
+				}
+			}
+			
+			if (safeToPlace) {
+				// Select random decorative object
+				_object_id objType = decorativeObjects[GenerateRnd(numDecorations)];
+				
+				// Place the decoration
+				Object *obj = AddObject(objType, { x, y });
+				if (obj != nullptr) {
+					decorationsAdded++;
+				}
+			}
+		}
+	}
 }
 
 } // namespace devilution

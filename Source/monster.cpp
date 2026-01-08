@@ -874,7 +874,8 @@ void DiabloDeath(Monster &diablo, bool sendmsg)
 	if (sendmsg)
 		NetSendCmdQuest(true, quest);
 	sgbSaveSoundOn = gbSoundOn;
-	// gbProcessPlayers = false; // Comentado para permitir continuar el juego después de matar a Diablo
+	if (gbIsMultiplayer)
+		gbProcessPlayers = false;
 	for (size_t i = 0; i < ActiveMonsterCount; i++) {
 		const int monsterId = ActiveMonsters[i];
 		Monster &monster = Monsters[monsterId];
@@ -1500,19 +1501,24 @@ void MonsterDeath(Monster &monster)
 {
 	monster.var1++;
 	if (monster.type().type == MT_DIABLO) {
-		if (monster.position.tile.x < ViewPosition.x) {
-			ViewPosition.x--;
-		} else if (monster.position.tile.x > ViewPosition.x) {
-			ViewPosition.x++;
+		// CAMERA FIX: Only move camera towards Diablo in multiplayer
+		// In single player, this causes an uncomfortable camera "jerk" effect
+		// since we're not triggering the cinematic ending
+		if (gbIsMultiplayer) {
+			if (monster.position.tile.x < ViewPosition.x) {
+				ViewPosition.x--;
+			} else if (monster.position.tile.x > ViewPosition.x) {
+				ViewPosition.x++;
+			}
+
+			if (monster.position.tile.y < ViewPosition.y) {
+				ViewPosition.y--;
+			} else if (monster.position.tile.y > ViewPosition.y) {
+				ViewPosition.y++;
+			}
 		}
 
-		if (monster.position.tile.y < ViewPosition.y) {
-			ViewPosition.y--;
-		} else if (monster.position.tile.y > ViewPosition.y) {
-			ViewPosition.y++;
-		}
-
-		if (monster.var1 == 140)
+		if (monster.var1 == 140 && gbIsMultiplayer)
 			PrepDoEnding();
 	} else if (monster.animInfo.isLastFrame()) {
 		if (monster.isUnique())

@@ -2538,6 +2538,13 @@ void CalcPlrPrimaryStats(Player &player, int strength, int &magic, int dexterity
 void CalcPlrLightRadius(Player &player, int lrad)
 
 {
+	// FEATURE 1.2: Enhanced player lighting in vanilla single player
+	// Adds +2 light radius bonus before applying clamp, only affects vanilla single player
+	if (!gbIsHellfire && player.plractive) {
+		constexpr int EXTRA_LIGHT = 2;
+		lrad += EXTRA_LIGHT;
+	}
+
 	lrad = std::clamp(lrad, 2, 15);
 
 	if (player._pLightRad != lrad) {

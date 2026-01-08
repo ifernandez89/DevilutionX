@@ -1,0 +1,244 @@
+📜 REPASO GENERAL — ESTADO DEL PROYECTO
+✅ YA IMPLEMENTADO (correcto y alineado)
+
+Muerte de Diablo sin cinemática
+
+Cancelación del trigger de cinematic.
+
+Permite continuar el flujo del juego.
+
+✔ Correcto, previsto por el engine.
+
+✔ Bajo riesgo estructural.
+
+Intercambio de posiciones de NPCs del pueblo
+
+Odgen restaurado a su lugar original.
+
+Adria / Farnham intercambiados.
+
+✔ Cambio puramente de datos / coordenadas.
+
+✔ Sin impacto en saves ni lógica.
+
+👉 Ambos cambios no rompen invariantes del engine. Muy bien elegidos.
+
+⚠️ PROBLEMA ACTUAL — “Focus / cámara rara” al morir Diablo
+🔍 Síntoma
+
+Al morir Diablo:
+
+La cámara hace un movimiento extraño / incómodo
+
+Sensación de “tirón” o tracking forzado
+
+Se intentó fixear, pero no quedó estable.
+
+🧠 Diagnóstico técnico (clave)
+
+En Diablo 1 / DevilutionX:
+
+La cámara NO es libre
+
+Siempre sigue:
+
+al player (ViewX, ViewY)
+
+o a un evento forzado (cinematics, boss deaths)
+
+Cuando se mata a Diablo, ocurren 3 cosas encadenadas:
+
+M_DiabloDeath() o equivalente
+
+Se setean flags:
+
+fin de juego
+
+triggers de cinematic
+
+Se fuerza un recentrado de vista (aunque canceles la cinemática)
+
+👉 Vos cancelaste la cinemática,
+❌ pero NO el “camera intent” previo.
+
+✅ SOLUCIÓN PROPUESTA (limpia, segura y realista)
+🎯 Objetivo
+
+Eliminar el movimiento raro SIN romper:
+
+lógica de muerte
+
+estados del boss
+
+transición de nivel
+
+🔧 Estrategia correcta (no hack)
+
+NO tocar rendering
+NO tocar interpolación
+NO tocar saves
+
+👉 Solo intervenir el momento exacto del focus
+
+🧩 Propuesta concreta
+
+En el handler de muerte de Diablo:
+
+Detectar muerte final
+
+Congelar la vista al player actual
+
+Evitar cualquier override posterior
+
+Pseudocódigo conceptual (arquitectura)
+if (monster._mType == MT_DIABLO && monster._mHitPoints <= 0) {
+    // Congelar cámara al player
+    SetView(player.position);
+    
+    // Cancelar cualquier intent de cinematic focus
+    DisableCinematicCamera();
+}
+
+📁 Dónde mirar (archivos típicos)
+
+monster.cpp
+
+diablo.cpp
+
+movie.cpp (aunque no se reproduzca)
+
+scrollrt.cpp / view.cpp
+
+🛡 Prevención de errores
+
+❌ NO tocar ScrollInfo global permanentemente
+
+❌ NO modificar lógica de input
+
+❌ NO “hardcodear” coordenadas
+
+✔ Solo ignorar el override de cámara cuando Diablo muere
+
+👉 Este fix es MEDIO, no trivial, pero 100% viable
+y mucho más sano que parchear rendering.
+
+🧩 FEATURES DISCUTIDAS Y SU ESTADO REAL
+
+Voy a listar solo las viables, coherentes y seguras.
+
+🟢 CATEGORÍA A — IMPLEMENTAR SIN MIEDO
+1. Garantizar todas las quests
+
+Activar QUEST_INIT en lugar de QUEST_NOTAVAIL
+
+No forzar ejecución
+
+✔ Ultra segura
+
+✔ Muy poco código
+
+2. Mejora de iluminación (soft)
+
+Ajuste leve de _pLightRad
+
+Clamp correcto
+
+✔ No afecta AI
+
+✔ No afecta mapas
+
+3. Densidad decorativa leve
+
+Uso de assets ya existentes
+
+Solo durante DRLG
+
+✔ Visualmente potente
+
+⚠️ Cuidar colisiones
+
+4. Variantes de monstruos por profundidad
+
+Stats-only
+
+Sin flags persistentes
+
+✔ Diablo 1-friendly
+
+✔ Fácil de testear
+
+🟡 CATEGORÍA B — IMPLEMENTAR CON LÍMITES
+5. Regeneración controlada de monstruos
+
+Solo niveles SIN quest activa
+
+Nunca uniques
+
+Nunca durante quest
+
+⚠️ Requiere cuidado con reentradas
+
+6. Mutaciones simples (stats)
+
+Uso de flags existentes
+
+Sin VFX ni estados nuevos
+
+⚠️ Balance fino
+
+7. Monstruos élite (muy light)
+
+Muy baja probabilidad
+
+Stats temporales
+
+Sin persistencia
+
+⚠️ Riesgo medio si se exagera
+
+🔴 DESCARTADAS (con fundamento técnico)
+
+Estas NO conviene implementarlas ahora:
+
+❌ Corrupción global del mundo
+❌ Estados persistentes post-quest
+❌ Cambios permanentes en niveles
+❌ Eventos encadenados entre partidas
+❌ Sistema de corrupción progresiva real
+
+👉 Requieren:
+
+saves nuevos
+
+flags persistentes
+
+reescritura de invariantes
+
+No encajan con tu enfoque actual (correcto).
+
+🧠 VISIÓN FINAL COMO ARQUITECTO
+Tu enfoque es el correcto porque:
+
+✔ No intentás “modernizar” Diablo
+✔ No agregás sistemas nuevos
+✔ Rescatás código incompleto
+✔ Usás lo que Blizzard dejó preparado
+
+👉 Eso preserva el alma del juego
+y minimiza bugs imposibles de depurar
+
+🏆 PRIORIDAD REALISTA (recomendada)
+
+Fix definitivo de cámara en muerte de Diablo
+
+Garantizar todas las quests
+
+Mejora de iluminación
+
+Densidad decorativa leve
+
+Variantes de monstruos por profundidad
+
+Eso ya da una sensación de versión “definitiva”
+sin traicionar el diseño original.
+

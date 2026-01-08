@@ -1,0 +1,131 @@
+✅ COMPLETADO:
+Muerte de Diablo sin cinemática
+Intercambio de posiciones NPCs
+🔄 PENDIENTE (7 features):
+Garantizar todas las quests ⭐ (Muy fácil)
+Mejora de iluminación ⭐ (Muy fácil)
+Densidad decorativa ⭐⭐ (Fácil)
+Regeneración monstruos ⭐⭐ (Fácil)
+Monstruos élite ⭐⭐⭐ (Medio)
+Hechizos restaurados ⭐⭐⭐⭐ (Difícil)
+Poisoned Water expansion ⭐⭐⭐⭐⭐ (Muy difícil)
+
+OTRAS:
+Eventos dinámicos simples (proto-random events)
+
+Implementables sin inventar nada:
+
+Cacerías demoníacas
+
+Oscurecimientos temporales
+
+Por qué es viable:
+
+Hooks ya existen
+
+Timers ya existen
+
+IA y spawn ya existen
+
+❌ No incluye UI, persistencia ni quests nuevas.
+
+⭐⭐ Reset + mutación leve de niveles al completarlos
+
+(lo hablamos cuando definiste “niveles que cambian al limpiarse”)
+
+Versión viable (sin romper):
+
+Al regenerarse un nivel:
+
+cambia layout
+
+cambia decoración
+
+cambia densidad
+
+NO cambia número de nivel
+
+NO cambia quests
+
+👉 Usa el DRLG como ya hace el juego, solo ajusta condiciones.
+
+IA avanzada “rescatada” (versión mínima)
+
+NO IA nueva, solo:
+
+flags que existen pero nunca se usan
+
+llamadas que hoy no se ejecutan
+
+Ejemplos viables:
+
+Huida cuando HP < X
+
+Protección de elites
+
+Cacería coordinada (2–3 monstruos)
+
+👉 Esto es extensión directa de código muerto, no diseño nuevo.
+
+Sistema de corrupción del mundo (versión conservadora)
+
+⚠️ Importante: solo lo previamente inacabado, como pediste.
+
+Versión viable:
+
+Más sangre
+
+Más grietas
+
+Oscurecimiento progresivo
+
+Tiles alternativos ya presentes
+
+NO:
+
+nuevos tiles
+
+nuevos assets
+
+nuevos estados globales complejos
+
+👉 Visual + atmosférico, bajo riesgo lógico.
+
+Dificultad Inferno real (fase 1)
+
+No la versión “épica”, sino la mínima viable:
+
+usar tablas ya existentes
+
+permitir dificultad > Hell
+
+escalar:
+
+vida
+
+resistencias
+
+IA agresiva
+
+👉 Hellfire ya hizo algo similar → evidencia fuerte.
+
+
+✔ Variantes internas de spawn por profundidad
+✔ Trampas ambientales reactivadas
+✔ Estados intermedios de NPCs
+✔ Mutaciones leves de monstruos existentes
+✔ Respawn parcial “sucio”
+✔ Corrupción cruzada entre niveles
+✔ IA reactiva mínima a magia
+✔ Consecuencias post-quest ambientales
+
+Todas:
+
+usan código existente
+
+no requieren assets nuevos
+
+no rompen el engine
+
+respetan Diablo 1
+

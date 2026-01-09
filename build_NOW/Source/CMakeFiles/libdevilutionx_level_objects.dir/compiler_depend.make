@@ -513,6 +513,11 @@ Source/CMakeFiles/libdevilutionx_level_objects.dir/objects.cpp.obj: C:/c\ -\ c++
   C:/c\ -\ c++/DevilutionX/Source/qol/stash.h \
   C:/c\ -\ c++/DevilutionX/Source/quests.h \
   C:/c\ -\ c++/DevilutionX/Source/quick_messages.hpp \
+  C:/c\ -\ c++/DevilutionX/Source/safety/safety.h \
+  C:/c\ -\ c++/DevilutionX/Source/safety/safety_iter.h \
+  C:/c\ -\ c++/DevilutionX/Source/safety/safety_limits.h \
+  C:/c\ -\ c++/DevilutionX/Source/safety/safety_math.h \
+  C:/c\ -\ c++/DevilutionX/Source/safety/safety_spawn.h \
   C:/c\ -\ c++/DevilutionX/Source/stores.h \
   C:/c\ -\ c++/DevilutionX/Source/tables/itemdat.h \
   C:/c\ -\ c++/DevilutionX/Source/tables/misdat.h \
@@ -1854,6 +1859,8 @@ C:/mingw64/x86_64-w64-mingw32/include/intrin.h:
 
 C:/c\ -\ c++/DevilutionX/Source/engine/path.h:
 
+C:/c\ -\ c++/DevilutionX/Source/safety/safety_math.h:
+
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/popcntintrin.h:
 
 C:/mingw64/x86_64-w64-mingw32/include/sec_api/wchar_s.h:
@@ -1873,6 +1880,8 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/tmmintrin.h:
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/waitpkgintrin.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/wbnoinvdintrin.h:
+
+C:/c\ -\ c++/DevilutionX/Source/safety/safety_spawn.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/xopintrin.h:
 
@@ -1989,6 +1998,12 @@ C:/c\ -\ c++/DevilutionX/Source/panels/info_box.hpp:
 C:/c\ -\ c++/DevilutionX/Source/qol/stash.h:
 
 C:/c\ -\ c++/DevilutionX/Source/player.h:
+
+C:/c\ -\ c++/DevilutionX/Source/safety/safety.h:
+
+C:/c\ -\ c++/DevilutionX/Source/safety/safety_iter.h:
+
+C:/c\ -\ c++/DevilutionX/Source/safety/safety_limits.h:
 
 C:/c\ -\ c++/DevilutionX/Source/stores.h:
 

@@ -528,6 +528,7 @@ Source/CMakeFiles/libdevilutionx_monster.dir/monster.cpp.obj: C:/c\ -\ c++/Devil
   C:/c\ -\ c++/DevilutionX/Source/safety/safety_iter.h \
   C:/c\ -\ c++/DevilutionX/Source/safety/safety_limits.h \
   C:/c\ -\ c++/DevilutionX/Source/safety/safety_math.h \
+  C:/c\ -\ c++/DevilutionX/Source/safety/safety_metrics.h \
   C:/c\ -\ c++/DevilutionX/Source/safety/safety_spawn.h \
   C:/c\ -\ c++/DevilutionX/Source/storm/storm_net.hpp \
   C:/c\ -\ c++/DevilutionX/Source/tables/misdat.h \
@@ -2072,6 +2073,8 @@ C:/c\ -\ c++/DevilutionX/Source/safety/safety.h:
 C:/c\ -\ c++/DevilutionX/Source/safety/safety_iter.h:
 
 C:/c\ -\ c++/DevilutionX/Source/safety/safety_limits.h:
+
+C:/c\ -\ c++/DevilutionX/Source/safety/safety_metrics.h:
 
 C:/c\ -\ c++/DevilutionX/Source/storm/storm_net.hpp:
 

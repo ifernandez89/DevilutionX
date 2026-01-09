@@ -33,6 +33,7 @@
 #include "safety_math.h"     // 1.2 Clamp matemático centralizado
 #include "safety_spawn.h"    // 1.3 Operaciones de spawn seguras
 #include "safety_iter.h"     // 1.4 Patrones de iteración segura
+#include "safety_metrics.h"  // 1.5 Sistema de métricas avanzado (Fase 5)
 
 namespace devilution {
 
@@ -83,7 +84,9 @@ inline SafetyStatus GetSafetyStatus() {
  */
 #define SAFETY_GUARD() \
     do { \
+        UpdateSafetyMetrics(); \
         if (IsInDangerZone()) { \
+            RecordGracefulDegradation(); \
             AutoCleanupIfNeeded(); \
         } \
     } while(0)

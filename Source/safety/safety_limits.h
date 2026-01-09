@@ -72,7 +72,9 @@ inline bool CanAddMissiles(size_t count) {
  */
 #define SAFETY_CHECK_SPAWN(type) \
     do { \
+        RecordSafetyCheck(); \
         if (!CanAdd##type()) { \
+            RecordSpawnBlocked(); \
             return; /* Falla silenciosamente para mantener gameplay fluido */ \
         } \
     } while(0)
@@ -83,7 +85,9 @@ inline bool CanAddMissiles(size_t count) {
  */
 #define SAFETY_CHECK_SPAWN_RET(type, retval) \
     do { \
+        RecordSafetyCheck(); \
         if (!CanAdd##type()) { \
+            RecordSpawnBlocked(); \
             return retval; \
         } \
     } while(0)
@@ -128,5 +132,10 @@ inline int GetMissileUsagePercent() {
 inline bool IsInDangerZone() {
     return GetMonsterUsagePercent() > 80 || GetMissileUsagePercent() > 80;
 }
+
+// Forward declarations para funciones de métricas
+void RecordSafetyCheck();
+void RecordSpawnBlocked();
+void RecordGracefulDegradation();
 
 } // namespace devilution

@@ -67,6 +67,7 @@
 #include "monster.h"
 #include "utils/is_of.hpp"
 #include "utils/str_cat.hpp"
+#include "safety/safety.h"
 
 namespace devilution {
 
@@ -3973,6 +3974,10 @@ void ProcessInfernoControl(Missile &missile)
 	UpdateMissilePos(missile);
 	if (missile.position.tile != Point { missile.var1, missile.var2 }) {
 		if (!TileHasAny(missile.position.tile, TileProperties::BlockMissile)) {
+			// SAFETY LAYER: Verificación específica para Inferno antes de spawn
+			// PRINCIPIO: Intensidad > cantidad (solo para Inferno, no global)
+			SAFETY_CHECK_SPAWN(Missile);
+			
 			AddMissile(
 			    missile.position.tile,
 			    missile.position.start,
@@ -4215,37 +4220,40 @@ void ProcessManaShield()
 
 void ProcessMissiles()
 {
-	for (auto &missile : Missiles) {
-		const auto &position = missile.position.tile;
-		if (InDungeonBounds(position)) {
-			dFlags[position.x][position.y] &= ~(DungeonFlag::Missile | DungeonFlag::MissileFireWall | DungeonFlag::MissileLightningWall);
-		} else {
-			missile._miDelFlag = true;
+	// SAFETY LAYER: Proteger iteración principal contra mutación
+	SAFE_GAME_OPERATION({
+		for (auto &missile : Missiles) {
+			const auto &position = missile.position.tile;
+			if (InDungeonBounds(position)) {
+				dFlags[position.x][position.y] &= ~(DungeonFlag::Missile | DungeonFlag::MissileFireWall | DungeonFlag::MissileLightningWall);
+			} else {
+				missile._miDelFlag = true;
+			}
 		}
-	}
 
-	DeleteMissiles();
+		DeleteMissiles();
 
-	MissilePreFlag = false;
+		MissilePreFlag = false;
 
-	for (auto &missile : Missiles) {
-		const MissileData &missileData = GetMissileData(missile._mitype);
-		if (missileData.processFn != nullptr)
-			missileData.processFn(missile);
-		if (missile._miAnimFlags == MissileGraphicsFlags::NotAnimated)
-			continue;
+		for (auto &missile : Missiles) {
+			const MissileData &missileData = GetMissileData(missile._mitype);
+			if (missileData.processFn != nullptr)
+				missileData.processFn(missile);
+			if (missile._miAnimFlags == MissileGraphicsFlags::NotAnimated)
+				continue;
 
-		missile._miAnimCnt++;
-		if (missile._miAnimCnt < missile._miAnimDelay)
-			continue;
+			missile._miAnimCnt++;
+			if (missile._miAnimCnt < missile._miAnimDelay)
+				continue;
 
-		missile._miAnimCnt = 0;
-		missile._miAnimFrame += missile._miAnimAdd;
-		if (missile._miAnimFrame > missile._miAnimLen)
-			missile._miAnimFrame = 1;
-		else if (missile._miAnimFrame < 1)
-			missile._miAnimFrame = missile._miAnimLen;
-	}
+			missile._miAnimCnt = 0;
+			missile._miAnimFrame += missile._miAnimAdd;
+			if (missile._miAnimFrame > missile._miAnimLen)
+				missile._miAnimFrame = 1;
+			else if (missile._miAnimFrame < 1)
+				missile._miAnimFrame = missile._miAnimLen;
+		}
+	});
 
 	ProcessManaShield();
 	DeleteMissiles();

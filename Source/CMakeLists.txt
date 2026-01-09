@@ -481,6 +481,9 @@ target_link_dependencies(libdevilutionx_lighting PUBLIC
   DevilutionX::SDL
   fmt::fmt
   magic_enum::magic_enum
+  tl
+  unordered_dense::unordered_dense
+  libdevilutionx_vision
 )
 
 # 🎮 FASE V3 - Visual Feedback System
@@ -491,6 +494,21 @@ target_link_dependencies(libdevilutionx_visual_feedback PUBLIC
   DevilutionX::SDL
   fmt::fmt
   magic_enum::magic_enum
+  tl
+  unordered_dense::unordered_dense
+  libdevilutionx_vision
+)
+
+# 🎨 FASE V2 - Contextual Palette System
+add_devilutionx_object_library(libdevilutionx_contextual_palette
+  contextual_palette.cpp
+)
+target_link_dependencies(libdevilutionx_contextual_palette PUBLIC
+  DevilutionX::SDL
+  fmt::fmt
+  magic_enum::magic_enum
+  tl
+  unordered_dense::unordered_dense
 )
 
 add_devilutionx_object_library(libdevilutionx_logged_fstream
@@ -945,6 +963,7 @@ target_link_dependencies(libdevilutionx PUBLIC
   libdevilutionx_light_render
   libdevilutionx_lighting
   libdevilutionx_visual_feedback
+  libdevilutionx_contextual_palette
   libdevilutionx_monster
   libdevilutionx_mpq
   libdevilutionx_multiplayer

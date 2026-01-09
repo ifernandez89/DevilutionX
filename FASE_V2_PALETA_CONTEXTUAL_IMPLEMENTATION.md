@@ -1,8 +1,8 @@
-# 🎨 FASE V2 - PALETA CONTEXTUAL AVANZADA ✅
+# 🎨 FASE V2 - PALETA CONTEXTUAL ⚠️
 
-## 🎯 IMPLEMENTACIÓN COMPLETADA
+## 🎯 ESTADO DE IMPLEMENTACIÓN
 
-**Estado**: ✅ **COMPLETADO Y COMPILADO EXITOSAMENTE**  
+**Estado**: ⚠️ **IMPLEMENTADO PERO EN COMPILACIÓN**  
 **Fecha**: Enero 9, 2026  
 **Arquitecto**: Senior C++ Engineer  
 
@@ -10,328 +10,381 @@
 
 ## 🔥 CARACTERÍSTICAS IMPLEMENTADAS
 
-### 🎯 V2.1 - OSCURECIMIENTO POR PROFUNDIDAD
-**Niveles más profundos progresivamente más oscuros**
+### 🎨 V2.1 - TINTE POR BIOMA ✅
+**Paletas específicas según el tipo de nivel**
 
 ```cpp
-// Oscurecimiento por profundidad contextual
-float depthDarkening = 1.0f;
-
-if (leveltype == DTYPE_TOWN) {
-    depthDarkening = 0.98f;        // Superficie - mínimo oscurecimiento
-} else if (leveltype == DTYPE_CATACOMBS) {
-    depthDarkening = 0.88f;        // Profundidad media - significativamente más oscuro
-} else if (leveltype == DTYPE_CAVES) {
-    depthDarkening = 0.91f;        // Subterráneo - más oscuro que cathedral
-} else if (leveltype == DTYPE_HELL) {
-    depthDarkening = 0.75f;        // Máxima profundidad - oscurecimiento extremo
-} else {
-    depthDarkening = 0.95f;        // Cathedral - oscurecimiento base
-}
-```
-
-**Progresión de Profundidad**:
-- ✅ **Town (Superficie)**: 98% - Ligeramente más oscuro, ambiente deteriorado
-- ✅ **Cathedral (Nivel 1-4)**: 95% - Oscurecimiento base gótico
-- ✅ **Catacombs (Nivel 5-8)**: 88% - Profundidad media, atmósfera densa
-- ✅ **Caves (Nivel 9-12)**: 91% - Subterráneo, sensación opresiva
-- ✅ **Hell (Nivel 13-16)**: 75% - Máxima profundidad, oscuridad extrema
-
-### 🎯 V2.2 - TINTE POR BIOMA MEJORADO
-**Cada tipo de nivel con su paleta característica única**
-
-```cpp
-// Sistema de tintes contextuales inteligentes
-float redMultiplier = 1.0f;
-float greenMultiplier = 1.0f;
-float blueMultiplier = 1.0f;
-
-if (leveltype == DTYPE_TOWN) {
-    redMultiplier = 1.02f;         // Sutil tinte oxidado post-apocalíptico
-    greenMultiplier = 0.96f;       // Menos verde (vegetación muerta)
-    blueMultiplier = 0.94f;        // Menos azul (cielo contaminado)
-} else if (leveltype == DTYPE_CATACOMBS) {
-    redMultiplier = 1.15f;         // Intensificar rojos de sangre
-    greenMultiplier = 0.82f;       // Desaturar verdes (muerte)
-    blueMultiplier = 0.85f;        // Reducir azules (frialdad mortal)
-} else if (leveltype == DTYPE_HELL) {
-    redMultiplier = 1.25f;         // Rojos de sangre intensos
-    greenMultiplier = 0.78f;       // Verde casi eliminado
-    blueMultiplier = 0.65f;        // Azul mínimo (atmósfera infernal)
-}
-```
-
-**Personalidad Visual por Bioma**:
-- ✅ **Town**: Tinte oxidado sutil, deterioro post-apocalíptico
-- ✅ **Cathedral**: Tinte gótico azulado, piedra fría
-- ✅ **Catacombs**: Intensificación de rojos sangre, desaturación mortal
-- ✅ **Caves**: Tonos tierra apagados, mineral opresivo
-- ✅ **Hell**: Rojos infernales intensos, atmósfera apocalíptica
-
-### 🎯 V2.3 - ATMÓSFERA SUTIL CONTEXTUAL
-**Cambios que el jugador siente pero no nota conscientemente**
-
-```cpp
-// Intensidad atmosférica contextual
-float atmosphericIntensity = 1.0f;
-
-if (leveltype == DTYPE_TOWN) {
-    atmosphericIntensity = 0.7f;   // Efecto sutil
-} else if (leveltype == DTYPE_CATACOMBS) {
-    atmosphericIntensity = 1.3f;   // Efecto intenso
-} else if (leveltype == DTYPE_HELL) {
-    atmosphericIntensity = 1.5f;   // Efecto máximo
-}
-
-// Aplicar efectos con intensidad atmosférica
-float finalRedMult = 1.0f + (redMultiplier - 1.0f) * atmosphericIntensity;
-```
-
-**Progresión Psicológica**:
-- ✅ **Intensidad Creciente**: Cada nivel se siente progresivamente más amenazante
-- ✅ **Inmersión Subconsciente**: Cambios sutiles que afectan emocionalmente
-- ✅ **Tensión Gradual**: Atmósfera que se intensifica con la profundidad
-
-### 🎯 V2.4 - APLICACIÓN INTELIGENTE DE EFECTOS
-**Efectos contextuales e inteligentes por rango de color**
-
-```cpp
-// Procesamiento inteligente por rango de color
-if (dst[i].r > 120 && leveltype == DTYPE_HELL) {
-    // Colores rojos intensos en Hell - probablemente sangre
-    dst[i].r = std::min(255, static_cast<int>(dst[i].r * finalRedMult * 1.1f));
-} else if (dst[i].r > 100 && leveltype == DTYPE_CATACOMBS) {
-    // Colores rojos en Catacombs - sangre más siniestra
-    dst[i].r = static_cast<uint8_t>(dst[i].r * finalRedMult * 0.95f);
-}
-```
-
-**Inteligencia Contextual**:
-- ✅ **Detección de Sangre**: Identificación automática de colores rojos intensos
-- ✅ **Procesamiento Específico**: Diferentes efectos para diferentes contextos
-- ✅ **Intensificación Selectiva**: Efectos más fuertes en colores relevantes
-
-### 🎯 V2.5 - DYNAMIC PALETTE ADJUSTMENT
-**Ajuste dinámico basado en el estado del juego**
-
-```cpp
-void ApplyDynamicPaletteAdjustment(SDL_Color *palette)
+ContextualTint GetBiomeTint(BiomeType biome)
 {
-    // Ajustes basados en el estado del jugador
-    if (MyPlayer != nullptr && MyPlayer->_pHitPoints < MyPlayer->_pMaxHP / 4) {
-        // Tinte rojo sutil cuando la vida está baja
-        palette[i].r = std::min(255, static_cast<int>(palette[i].r * 1.03f));
-        palette[i].g = static_cast<uint8_t>(palette[i].g * 0.98f);
-    }
-    
-    // Simulación de atardecer post-apocalíptico en Town
-    if (leveltype == DTYPE_TOWN) {
-        // Tinte anaranjado para luz de atardecer contaminado
-        palette[i].r = std::min(255, static_cast<int>(palette[i].r * 1.01f));
-        palette[i].b = static_cast<uint8_t>(palette[i].b * 0.99f);
+    switch (biome) {
+        case BiomeType::Town:
+            // Paleta cálida y acogedora
+            tint.redMultiplier = 1.1f;
+            tint.greenMultiplier = 1.05f;
+            tint.blueMultiplier = 0.9f;
+            
+        case BiomeType::Cathedral:
+            // Paleta fría con tintes rojos de corrupción
+            tint.redMultiplier = 1.2f;
+            tint.greenMultiplier = 0.8f;
+            tint.blueMultiplier = 0.7f;
+            
+        case BiomeType::Catacombs:
+            // Paleta azul-gris, húmeda y sombría
+            tint.redMultiplier = 0.7f;
+            tint.greenMultiplier = 0.8f;
+            tint.blueMultiplier = 1.3f;
+            
+        case BiomeType::Caves:
+            // Paleta verde-amarilla, natural pero corrupta
+            tint.redMultiplier = 0.9f;
+            tint.greenMultiplier = 1.2f;
+            tint.blueMultiplier = 0.6f;
+            
+        case BiomeType::Hell:
+            // Paleta roja intensa, fuego y azufre
+            tint.redMultiplier = 1.5f;
+            tint.greenMultiplier = 0.6f;
+            tint.blueMultiplier = 0.4f;
     }
 }
 ```
 
-**Características Dinámicas**:
-- ✅ **Estado del Jugador**: Tinte rojo cuando la vida está baja
-- ✅ **Atmósfera Temporal**: Simulación de atardecer en Town
-- ✅ **Respuesta Contextual**: Ajustes automáticos según el estado del juego
-
-### 🎯 V2.6 - CONTEXTUAL PALETTE ENHANCEMENT
-**Mejoras contextuales para situaciones específicas**
+### 🎨 V2.2 - OSCURECIMIENTO POR PROFUNDIDAD ✅
+**Niveles más profundos = más oscuros**
 
 ```cpp
-void ApplyContextualPaletteEnhancement(SDL_Color *palette)
+void ApplyDepthDarkening(int currentLevel)
 {
-    if (leveltype == DTYPE_CATACOMBS) {
-        // Enhanced Blood Atmosphere para Catacombs
-        if (palette[i].r > 80 && palette[i].r > palette[i].g * 1.5f) {
-            // Intensificar el aspecto perturbador de la sangre
-            palette[i].r = std::min(255, static_cast<int>(palette[i].r * 1.08f));
-            palette[i].g = static_cast<uint8_t>(palette[i].g * 0.85f);
-        }
-    } else if (leveltype == DTYPE_CAVES) {
-        // Atmósfera mineral opresiva con desaturación
-        uint8_t avg = (palette[i].r + palette[i].g + palette[i].b) / 3;
-        palette[i].r = static_cast<uint8_t>(palette[i].r * 0.7f + avg * 0.3f);
-    }
+    // Calcular factor de oscurecimiento basado en la profundidad
+    float darkeningFactor = currentLevel * g_paletteState.depthDarkeningFactor;
+    darkeningFactor = std::min(darkeningFactor, 0.5f); // Máximo 50% de oscurecimiento
+    
+    // Aplicar oscurecimiento al tinte actual
+    g_paletteState.currentTint.darknessLevel = darkeningFactor * g_paletteState.globalIntensity;
 }
 ```
 
-**Mejoras Específicas**:
-- ✅ **Catacombs**: Intensificación perturbadora de sangre
-- ✅ **Hell**: Intensificación de colores cálidos (fuego, lava)
-- ✅ **Caves**: Desaturación para sensación opresiva
+**Configuración por Preset**:
+- **Sutil**: 2% más oscuro por nivel
+- **Balanceado**: 4% más oscuro por nivel  
+- **Dramático**: 6% más oscuro por nivel
 
-### 🎯 V2.7 - ATMOSPHERIC DEPTH SIMULATION
-**Simulación de profundidad atmosférica para mayor inmersión**
+### 🎨 V2.3 - PALETA DE CORRUPCIÓN ✅
+**Efectos visuales de corrupción demoníaca**
 
 ```cpp
-void ApplyAtmosphericDepthSimulation(SDL_Color *palette)
+void ApplyCorruptionTint(float corruptionLevel)
 {
-    float depthFactor = 1.0f;
-    float hazeFactor = 0.0f;
+    float corruptionIntensity = corruptionLevel * g_paletteState.globalIntensity;
     
-    if (leveltype == DTYPE_HELL) {
-        depthFactor = 0.75f;   // Máxima profundidad
-        hazeFactor = 0.12f;    // Bruma infernal intensa
-    }
-    
-    // Aplicar oscurecimiento por profundidad
-    palette[i].r = static_cast<uint8_t>(palette[i].r * depthFactor);
-    
-    // Aplicar bruma atmosférica
-    uint8_t hazeColor = 32; // Gris oscuro para la bruma
-    palette[i].r = static_cast<uint8_t>(palette[i].r * (1.0f - hazeFactor) + hazeColor * hazeFactor);
+    // Aplicar tinte de corrupción (rojo-marrón)
+    g_paletteState.currentTint.redMultiplier += corruptionIntensity * 0.3f;
+    g_paletteState.currentTint.greenMultiplier -= corruptionIntensity * 0.1f;
+    g_paletteState.currentTint.blueMultiplier -= corruptionIntensity * 0.2f;
+    g_paletteState.currentTint.saturationBoost += corruptionIntensity * 0.2f;
 }
 ```
 
-**Simulación Atmosférica**:
-- ✅ **Profundidad Visual**: Oscurecimiento progresivo por nivel
-- ✅ **Bruma Atmosférica**: Efectos de bruma contextual por bioma
-- ✅ **Inmersión Realista**: Simulación de condiciones atmosféricas
-
-### 🎯 V2.8 - MICRO-VARIACIONES SUTILES
-**Variaciones imperceptibles que añaden riqueza visual**
+### 🎨 V2.4 - TRANSICIONES SUAVES ✅
+**Cambios graduales entre paletas**
 
 ```cpp
-// Micro-variaciones para romper uniformidad
-if (i % 3 == 0 && atmosphericIntensity > 1.0f) {
-    dst[i].r = std::min(255, dst[i].r + 1);
-}
-if (i % 5 == 0 && leveltype == DTYPE_HELL) {
-    // Micro-variaciones rojas adicionales para más caos visual
-    dst[i].r = std::min(255, dst[i].r + 2);
-    dst[i].g = std::max(0, dst[i].g - 1);
+void UpdatePaletteTransition()
+{
+    // Calcular progreso de la transición (0.0 a 1.0)
+    g_paletteState.transitionProgress = static_cast<float>(elapsed) / g_paletteState.transitionDuration;
+    
+    // Aplicar curva suave (ease-in-out)
+    float smoothProgress = g_paletteState.transitionProgress;
+    smoothProgress = smoothProgress * smoothProgress * (3.0f - 2.0f * smoothProgress);
+    
+    // Interpolar entre tinte actual y objetivo
+    g_paletteState.currentTint = BlendTints(g_paletteState.currentTint, g_paletteState.targetTint, smoothProgress);
 }
 ```
 
-**Riqueza Visual**:
-- ✅ **Ruptura de Uniformidad**: Micro-variaciones cada tercer color
-- ✅ **Caos Visual en Hell**: Variaciones rojas adicionales
-- ✅ **Sutileza Imperceptible**: Cambios que enriquecen sin notarse
+**Duraciones de Transición**:
+- **Sutil**: 3 segundos
+- **Balanceado**: 2 segundos
+- **Dramático**: 1.5 segundos
+- **Debug**: 0.5 segundos
 
 ---
 
-## 🏗️ ARQUITECTURA TÉCNICA AVANZADA
+## 🏗️ ARQUITECTURA TÉCNICA IMPLEMENTADA
 
-### **Pipeline de Procesamiento de Paleta**
+### **Sistema de Tintes Contextuales**
 
 ```cpp
+struct ContextualTint {
+    float redMultiplier = 1.0f;
+    float greenMultiplier = 1.0f;
+    float blueMultiplier = 1.0f;
+    float saturationBoost = 0.0f;
+    float contrastBoost = 0.0f;
+    float darknessLevel = 0.0f;
+};
+```
+
+### **Estado del Sistema de Paleta**
+
+```cpp
+struct ContextualPaletteState {
+    BiomeType currentBiome = BiomeType::Town;
+    ContextualTint currentTint;
+    ContextualTint targetTint;
+    
+    // Transiciones suaves
+    float transitionProgress = 1.0f;
+    uint32_t transitionStartTime = 0;
+    uint32_t transitionDuration = 2000; // 2 segundos por defecto
+    
+    // Configuración
+    bool enabled = true;
+    float globalIntensity = 0.8f;
+    bool smoothTransitions = true;
+    
+    // Oscurecimiento por profundidad
+    bool depthDarkening = true;
+    float depthDarkeningFactor = 0.05f; // 5% más oscuro por nivel
+};
+```
+
+### **Detección Automática de Biomas**
+
+```cpp
+BiomeType DetectCurrentBiome()
+{
+    if (currlevel == 0) {
+        return BiomeType::Town;
+    }
+    
+    switch (leveltype) {
+        case DTYPE_TOWN: return BiomeType::Town;
+        case DTYPE_CATHEDRAL: return BiomeType::Cathedral;
+        case DTYPE_CATACOMBS: return BiomeType::Catacombs;
+        case DTYPE_CAVES: return BiomeType::Caves;
+        case DTYPE_HELL: return BiomeType::Hell;
+        default:
+            // Fallback basado en nivel
+            if (currlevel <= 4) return BiomeType::Cathedral;
+            if (currlevel <= 8) return BiomeType::Catacombs;
+            if (currlevel <= 12) return BiomeType::Caves;
+            return BiomeType::Hell;
+    }
+}
+```
+
+---
+
+## 🔧 INTEGRACIÓN CON EL SISTEMA PRINCIPAL
+
+### **Integración en el Pipeline de Paletas**
+
+```cpp
+// En UpdateSystemPalette() - Source/engine/palette.cpp
 void UpdateSystemPalette(std::span<const SDL_Color, 256> src)
 {
     // Paso 1: Aplicar brillo global (sistema original)
     ApplyGlobalBrightness(system_palette.data(), src.data());
     
-    // Paso 2: Aplicar ajustes dinámicos basados en estado del juego
-    ApplyDynamicPaletteAdjustment(system_palette.data());
+    // Paso 2: 🎨 NUEVO - Aplicar paleta contextual por bioma
+    ApplyContextualPalette(system_palette.data());
     
-    // Paso 3: Aplicar mejoras contextuales específicas por nivel
-    ApplyContextualPaletteEnhancement(system_palette.data());
+    // Paso 3: 🎮 Aplicar efectos de feedback visual
+    ApplyVisualFeedbackToPalette(system_palette.data());
     
-    // Paso 4: Aplicar simulación de profundidad atmosférica
-    ApplyAtmosphericDepthSimulation(system_palette.data());
-    
-    // Actualizar sistema y redibujar
-    SystemPaletteUpdated();
-    RedrawEverything();
+    // Paso 4-6: Otros sistemas existentes...
 }
 ```
 
-### **Funciones Añadidas**
+### **Inicialización del Sistema**
 
 ```cpp
-// Nuevas funciones en palette.h y palette.cpp
-void ApplyDynamicPaletteAdjustment(SDL_Color *palette);
-void ApplyContextualPaletteEnhancement(SDL_Color *palette);
-void ApplyAtmosphericDepthSimulation(SDL_Color *palette);
+// En diablo.cpp
+#include "contextual_palette.h"
+
+// Inicialización
+InitContextualPalette();
+
+// Game loop
+UpdateContextualPalette();
+```
+
+### **Aplicación de Tintes**
+
+```cpp
+void ApplyContextualTint(SDL_Color *palette, const ContextualTint &tint)
+{
+    for (int i = 0; i < 256; i++) {
+        SDL_Color &color = palette[i];
+        
+        // Aplicar multiplicadores de color
+        float r = color.r * tint.redMultiplier;
+        float g = color.g * tint.greenMultiplier;
+        float b = color.b * tint.blueMultiplier;
+        
+        // Aplicar boost de saturación
+        if (tint.saturationBoost > 0.0f) {
+            float gray = (r + g + b) / 3.0f;
+            r = gray + (r - gray) * (1.0f + tint.saturationBoost);
+            g = gray + (g - gray) * (1.0f + tint.saturationBoost);
+            b = gray + (b - gray) * (1.0f + tint.saturationBoost);
+        }
+        
+        // Aplicar boost de contraste
+        if (tint.contrastBoost > 0.0f) {
+            r = 128.0f + (r - 128.0f) * (1.0f + tint.contrastBoost);
+            g = 128.0f + (g - 128.0f) * (1.0f + tint.contrastBoost);
+            b = 128.0f + (b - 128.0f) * (1.0f + tint.contrastBoost);
+        }
+        
+        // Aplicar oscurecimiento
+        if (tint.darknessLevel > 0.0f) {
+            float darkeningFactor = 1.0f - tint.darknessLevel;
+            r *= darkeningFactor;
+            g *= darkeningFactor;
+            b *= darkeningFactor;
+        }
+        
+        // Clamp y asignar valores finales
+        color.r = static_cast<uint8_t>(std::clamp(r, 0.0f, 255.0f));
+        color.g = static_cast<uint8_t>(std::clamp(g, 0.0f, 255.0f));
+        color.b = static_cast<uint8_t>(std::clamp(b, 0.0f, 255.0f));
+    }
+}
 ```
 
 ---
 
-## 📊 IMPACTO VISUAL COMPLETO
+## 🎨 EXPERIENCIA VISUAL POR BIOMA
 
-### **Matriz de Efectos por Nivel**
+### **Town (Pueblo)**
+- **Tinte**: Cálido y acogedor
+- **Colores**: Rojos y amarillos ligeramente intensificados, azules reducidos
+- **Sensación**: Hogar, seguridad, calidez
 
-| Nivel | Profundidad | Tinte R | Tinte G | Tinte B | Atmósfera | Bruma | Experiencia Visual |
-|-------|-------------|---------|---------|---------|-----------|-------|-------------------|
-| **Town** | 98% | +2% | -4% | -6% | 0.7x | 2% | Deterioro post-apocalíptico sutil |
-| **Cathedral** | 95% | -3% | -4% | +2% | 1.0x | 4% | Atmósfera gótica clásica |
-| **Catacombs** | 88% | +15% | -18% | -15% | 1.3x | 8% | Sangre intensa, muerte perturbadora |
-| **Caves** | 91% | -6% | -11% | -14% | 1.1x | 6% | Mineral opresivo, claustrofóbico |
-| **Hell** | 75% | +25% | -22% | -35% | 1.5x | 12% | Infernal apocalíptico, caos visual |
+### **Cathedral (Catedral)**
+- **Tinte**: Frío con corrupción roja
+- **Colores**: Rojos intensificados (corrupción), verdes y azules reducidos
+- **Sensación**: Corrupción religiosa, frialdad, peligro
 
-### **Progresión Emocional**
+### **Catacombs (Catacumbas)**
+- **Tinte**: Azul-gris húmedo
+- **Colores**: Azules intensificados, rojos y verdes reducidos, desaturación
+- **Sensación**: Humedad, muerte, frialdad subterránea
 
-- ✅ **Town → Cathedral**: Transición de deterioro a gótico
-- ✅ **Cathedral → Catacombs**: Escalada a atmósfera de muerte
-- ✅ **Catacombs → Caves**: Profundización claustrofóbica
-- ✅ **Caves → Hell**: Culminación apocalíptica
+### **Caves (Cuevas)**
+- **Tinte**: Verde-amarillo natural corrupto
+- **Colores**: Verdes intensificados, azules muy reducidos, saturación alta
+- **Sensación**: Naturaleza corrupta, toxicidad, peligro orgánico
 
----
-
-## 🎮 EXPERIENCIA DEL JUGADOR
-
-### **Lo que el Jugador Experimenta**
-
-1. **Progresión Visual Dramática**: Cada nivel se siente único y progresivamente más amenazante
-2. **Inmersión Emocional**: Los colores afectan el estado de ánimo subconsciente
-3. **Tensión Creciente**: La paleta intensifica la sensación de peligro
-4. **Personalidad de Bioma**: Cada área tiene su propia identidad visual distintiva
-5. **Respuesta Dinámica**: La paleta responde al estado del jugador (vida baja)
-
-### **Efectos Psicológicos Sutiles**
-
-- **Town**: Sensación de mundo deteriorado pero familiar
-- **Cathedral**: Atmósfera gótica que inspira respeto y cautela
-- **Catacombs**: Perturbación visceral por la intensificación de sangre
-- **Caves**: Claustrofobia y opresión por la desaturación mineral
-- **Hell**: Caos visual y tensión máxima por el contraste extremo
+### **Hell (Infierno)**
+- **Tinte**: Rojo intenso de fuego y azufre
+- **Colores**: Rojos muy intensificados, verdes y azules muy reducidos
+- **Sensación**: Fuego infernal, calor extremo, peligro máximo
 
 ---
 
-## 🔧 DETALLES DE IMPLEMENTACIÓN
+## 📊 PRESETS DE CONFIGURACIÓN
 
-### **Archivos Modificados**
+### **Preset Sutil**
+```cpp
+void ApplySubtlePalettePreset() {
+    g_paletteState.globalIntensity = 0.4f;        // 40% intensidad
+    g_paletteState.transitionDuration = 3000;     // 3 segundos
+    g_paletteState.depthDarkeningFactor = 0.02f;  // 2% por nivel
+}
+```
 
-- ✅ `Source/engine/palette.h` - Declaraciones de nuevas funciones
-- ✅ `Source/engine/palette.cpp` - Sistema completo de paleta contextual
-- ✅ `FASE_V2_PALETA_CONTEXTUAL_IMPLEMENTATION.md` - Documentación completa
+### **Preset Balanceado (Recomendado)**
+```cpp
+void ApplyBalancedPalettePreset() {
+    g_paletteState.globalIntensity = 0.7f;        // 70% intensidad
+    g_paletteState.transitionDuration = 2000;     // 2 segundos
+    g_paletteState.depthDarkeningFactor = 0.04f;  // 4% por nivel
+}
+```
 
-### **Integración con Sistema Existente**
+### **Preset Dramático**
+```cpp
+void ApplyDramaticPalettePreset() {
+    g_paletteState.globalIntensity = 1.2f;        // 120% intensidad
+    g_paletteState.transitionDuration = 1500;     // 1.5 segundos
+    g_paletteState.depthDarkeningFactor = 0.06f;  // 6% por nivel
+}
+```
 
-- ✅ **Compatibilidad Total**: Integración perfecta con sistema de paletas original
-- ✅ **Performance Optimizada**: Procesamiento eficiente sin impacto significativo
-- ✅ **Escalabilidad**: Sistema modular fácil de extender
-- ✅ **Robustez**: Manejo seguro de todos los casos edge
+---
+
+## ⚠️ ESTADO DE COMPILACIÓN
+
+### **Progreso de Compilación**
+- ✅ **libdevilutionx_contextual_palette**: Compilado exitosamente
+- ✅ **Integración en CMakeLists.txt**: Configurado correctamente
+- ✅ **Integración en diablo.cpp**: Headers y llamadas añadidas
+- ✅ **Integración en palette.cpp**: Pipeline de paletas actualizado
+- ⏳ **Linking Final**: En progreso (timeout en compilación)
+
+### **Archivos Implementados**
+- ✅ `Source/contextual_palette.h` (API completa)
+- ✅ `Source/contextual_palette.cpp` (Implementación completa - 400+ líneas)
+- ✅ `Source/CMakeLists.txt` (Configuración de build)
+- ✅ `Source/diablo.cpp` (Integración en game loop)
+- ✅ `Source/engine/palette.cpp` (Integración en pipeline)
 
 ---
 
 ## 🚀 PRÓXIMOS PASOS
 
-### **FASE V3 - Feedback Visual Reactivo** (Implementación final)
-- 🎮 Flash de daño al jugador
-- ⚡ Pulse en monstruos elite
-- 🎯 Feedback reactivo contextual
+### **Inmediatos**
+1. **Completar Compilación**: Esperar que termine el linking final
+2. **Testing Inicial**: Probar cambios de bioma en el juego
+3. **Ajuste de Parámetros**: Refinar intensidades según experiencia visual
+
+### **Optimizaciones**
+1. **Performance**: Verificar impacto en FPS durante transiciones
+2. **Configurabilidad**: Añadir opciones de usuario para intensidad
+3. **Integración V3**: Combinar con efectos de feedback visual
+
+---
+
+## 🎮 BENEFICIOS ESPERADOS
+
+### **Inmersión Visual**
+- **Identidad por Bioma**: Cada área tiene su propia personalidad visual
+- **Progresión de Profundidad**: Sensación de descender más profundo
+- **Transiciones Suaves**: Cambios graduales no jarring
+
+### **Experiencia de Juego**
+- **Orientación Espacial**: Fácil identificar en qué tipo de área estás
+- **Tensión Progresiva**: Niveles más profundos se sienten más peligrosos
+- **Coherencia Temática**: Colores refuerzan la narrativa del área
+
+### **Integración con Otros Sistemas**
+- **FASE V1 (Lighting)**: Combina con iluminación inteligente
+- **FASE V3 (Visual Feedback)**: Efectos visuales más ricos
+- **Safety Layer**: Estabilidad garantizada
 
 ---
 
 ## 🏆 CONCLUSIÓN
 
-**FASE V2 - PALETA CONTEXTUAL AVANZADA** ha sido implementado exitosamente con:
+**FASE V2 - PALETA CONTEXTUAL** está **completamente implementado** a nivel de código con:
 
-- ✅ **Compilación Exitosa**: Sin errores, funcionamiento perfecto
-- ✅ **Sistema Completo**: 8 subsistemas de mejora de paleta implementados
-- ✅ **Progresión Emocional**: Cada nivel tiene personalidad visual única
-- ✅ **Inmersión Máxima**: Efectos sutiles que intensifican la experiencia
-- ✅ **Performance Optimizada**: Procesamiento eficiente y escalable
+- ✅ **4 Características Principales**: Todas implementadas
+- ✅ **5 Biomas Diferentes**: Cada uno con personalidad única
+- ✅ **3 Presets de Configuración**: Sutil, Balanceado, Dramático
+- ✅ **Integración Completa**: Con pipeline de paletas existente
+- ✅ **Arquitectura Robusta**: Sistema escalable y configurable
+- ⏳ **Compilación**: En progreso, esperando linking final
 
-**El sistema de paleta contextual está completo y listo para FASE V3.**
+**El sistema está listo para funcionar una vez completada la compilación.**
 
 ---
 
 *Implementado por: Arquitecto Senior C++*  
 *Fecha: Enero 9, 2026*  
-*Estado: ✅ COMPLETADO*  
-*Próximo: 🎮 FASE V3 - Feedback Visual Reactivo*
+*Estado: ⚠️ IMPLEMENTADO - COMPILACIÓN EN PROGRESO*  
+*Próximo: 🎮 Testing y ajustes de parámetros*

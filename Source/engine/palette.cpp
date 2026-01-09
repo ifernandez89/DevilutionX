@@ -28,6 +28,8 @@
 #include "options.h"
 #include "utils/display.h"
 #include "utils/palette_blending.hpp"
+#include "visual_feedback.h"
+#include "contextual_palette.h"
 #include "utils/sdl_compat.h"
 #include "utils/str_cat.hpp"
 
@@ -254,13 +256,19 @@ void UpdateSystemPalette(std::span<const SDL_Color, 256> src)
 	// Paso 1: Aplicar brillo global (sistema original)
 	ApplyGlobalBrightness(system_palette.data(), src.data());
 	
-	// Paso 2: Aplicar ajustes dinámicos basados en estado del juego
+	// Paso 2: 🎨 NUEVO - Aplicar paleta contextual por bioma
+	ApplyContextualPalette(system_palette.data());
+	
+	// Paso 3: 🎮 Aplicar efectos de feedback visual
+	ApplyVisualFeedbackToPalette(system_palette.data());
+	
+	// Paso 4: Aplicar ajustes dinámicos basados en estado del juego
 	ApplyDynamicPaletteAdjustment(system_palette.data());
 	
-	// Paso 3: Aplicar mejoras contextuales específicas por nivel
+	// Paso 5: Aplicar mejoras contextuales específicas por nivel
 	ApplyContextualPaletteEnhancement(system_palette.data());
 	
-	// Paso 4: Aplicar simulación de profundidad atmosférica
+	// Paso 6: Aplicar simulación de profundidad atmosférica
 	ApplyAtmosphericDepthSimulation(system_palette.data());
 	
 	// Actualizar sistema y redibujar
@@ -557,7 +565,7 @@ void ApplyContextualPaletteEnhancement(SDL_Color *palette)
 {
 	// 🎯 Mejoras específicas por tipo de nivel
 	
-	if (leveltype == DTYPE_CATACOMBS) {
+	if (leveltype == dungeon_type::DTYPE_CATACOMBS) {
 		// 🩸 Enhanced Blood Atmosphere para Catacombs
 		for (int i = 0; i < 256; i++) {
 			// Detectar colores que probablemente sean sangre
@@ -568,7 +576,7 @@ void ApplyContextualPaletteEnhancement(SDL_Color *palette)
 				palette[i].b = static_cast<uint8_t>(palette[i].b * 0.80f);
 			}
 		}
-	} else if (leveltype == DTYPE_HELL) {
+	} else if (leveltype == dungeon_type::DTYPE_HELL) {
 		// 🔥 Atmósfera infernal intensificada
 		for (int i = 0; i < 256; i++) {
 			// Intensificar colores cálidos (fuego, lava, sangre)
@@ -578,7 +586,7 @@ void ApplyContextualPaletteEnhancement(SDL_Color *palette)
 				palette[i].b = static_cast<uint8_t>(palette[i].b * 0.75f);
 			}
 		}
-	} else if (leveltype == DTYPE_CAVES) {
+	} else if (leveltype == dungeon_type::DTYPE_CAVES) {
 		// 🪨 Atmósfera mineral opresiva
 		for (int i = 0; i < 256; i++) {
 			// Desaturar colores para crear sensación opresiva

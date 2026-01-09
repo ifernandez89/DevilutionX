@@ -72,6 +72,7 @@
 #include "levels/trigs.h"
 #include "lighting.h"
 #include "visual_feedback.h"
+#include "contextual_palette.h"
 #include "loadsave.h"
 #include "lua/lua_global.hpp"
 #include "menu.h"
@@ -1533,6 +1534,9 @@ void GameLogic()
 		
 		// 🎮 FASE V3 - Update Visual Feedback System
 		UpdateVisualFeedback();
+		
+		// 🎨 FASE V2 - Update Contextual Palette System
+		UpdateContextualPalette();
 		
 		ProcessVisionList();
 	} else {
@@ -3399,6 +3403,9 @@ tl::expected<void, std::string> LoadGameLevel(bool firstflag, lvl_entry lvldir)
 	
 	// 🎮 FASE V3 - Initialize Visual Feedback System
 	InitVisualFeedback();
+	
+	// 🎨 FASE V2 - Initialize Contextual Palette System
+	InitContextualPalette();
 
 	InitLevelMonsters();
 

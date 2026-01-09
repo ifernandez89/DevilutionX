@@ -405,7 +405,7 @@ void TriggerSpellCastGlow(const Player &player, SpellID spellId)
             spellColor = { 150, 150, 255, 255 }; // Azul para rayo
             break;
         case SpellID::HealOther:
-        case SpellID::Heal:
+        case SpellID::Healing:
             spellColor = { 100, 255, 100, 255 }; // Verde para curación
             break;
         default:

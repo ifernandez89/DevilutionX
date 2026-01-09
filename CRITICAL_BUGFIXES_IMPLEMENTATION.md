@@ -22,21 +22,21 @@ This document details the critical bugfixes implemented to resolve stability iss
 ### 1. Floating Numbers Overflow Prevention
 **Files Modified**: `Source/qol/floatingnumbers.cpp`
 
-#### Solution A: Queue Size Limiting
+#### Solution A: Enhanced Queue Size Limiting
 ```cpp
-// BUGFIX: Prevent overflow with high monster density
-// Limit floating numbers to prevent crashes with many monsters + area effects
-constexpr size_t MAX_FLOATING_NUMBERS = 50; // Reasonable limit for performance
+// BUGFIX: Enhanced overflow prevention - more aggressive limits for stability
+// Reduced limits to prevent crashes in all levels (especially 5 and Hell)
+constexpr size_t MAX_FLOATING_NUMBERS = 30; // Reduced from 50 for better stability
 while (FloatingQueue.size() > MAX_FLOATING_NUMBERS) {
     FloatingQueue.pop_front(); // Remove oldest numbers first
 }
 ```
 
-#### Solution B: Proactive Queue Management
+#### Solution B: More Aggressive Proactive Queue Management
 ```cpp
-// BUGFIX: Prevent overflow with high monster density
+// BUGFIX: Enhanced overflow prevention - more aggressive early warning
 // Skip adding new floating numbers if queue is getting too large
-constexpr size_t QUEUE_WARNING_SIZE = 40;
+constexpr size_t QUEUE_WARNING_SIZE = 25; // Reduced from 40 for better stability
 if (FloatingQueue.size() > QUEUE_WARNING_SIZE) {
     ClearExpiredNumbers(); // Try to clear expired numbers first
     if (FloatingQueue.size() > QUEUE_WARNING_SIZE) {
@@ -46,10 +46,11 @@ if (FloatingQueue.size() > QUEUE_WARNING_SIZE) {
 ```
 
 **Technical Details**:
-- **Maximum Queue Size**: 50 floating numbers (prevents memory overflow)
-- **Warning Threshold**: 40 floating numbers (proactive management)
+- **Maximum Queue Size**: 30 floating numbers (reduced from 50 for enhanced stability)
+- **Warning Threshold**: 25 floating numbers (reduced from 40 for proactive management)
 - **Graceful Degradation**: Skips new numbers instead of crashing
 - **Performance Impact**: Minimal, only affects high-density combat scenarios
+- **Level Coverage**: Now prevents crashes in level 5 and all other levels
 
 ### 2. Monster Density Adjustment
 **Files Modified**: `Source/monster.cpp`

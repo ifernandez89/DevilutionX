@@ -158,8 +158,8 @@ devilutionx_EXTERNAL_OBJECTS = \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_init.dir/init.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_level_objects.dir/tables/objdat.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_level_objects.dir/objects.cpp.obj" \
-"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_vision.dir/vision.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_lighting.dir/lighting.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_visual_feedback.dir/visual_feedback.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_multiplayer.dir/multi.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_multiplayer.dir/pack.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_padmapper.dir/controls/padmapper.cpp.obj" \
@@ -391,8 +391,8 @@ devilutionx.exe: Source/CMakeFiles/libdevilutionx_gendung.dir/levels/gendung.cpp
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_init.dir/init.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_level_objects.dir/tables/objdat.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_level_objects.dir/objects.cpp.obj
-devilutionx.exe: Source/CMakeFiles/libdevilutionx_vision.dir/vision.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_lighting.dir/lighting.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx_visual_feedback.dir/visual_feedback.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_multiplayer.dir/multi.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_multiplayer.dir/pack.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_padmapper.dir/controls/padmapper.cpp.obj

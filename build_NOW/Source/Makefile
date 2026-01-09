@@ -554,6 +554,20 @@ libdevilutionx_lighting/fast:
 .PHONY : libdevilutionx_lighting/fast
 
 # Convenience name for target.
+Source/CMakeFiles/libdevilutionx_visual_feedback.dir/rule:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 Source/CMakeFiles/libdevilutionx_visual_feedback.dir/rule
+.PHONY : Source/CMakeFiles/libdevilutionx_visual_feedback.dir/rule
+
+# Convenience name for target.
+libdevilutionx_visual_feedback: Source/CMakeFiles/libdevilutionx_visual_feedback.dir/rule
+.PHONY : libdevilutionx_visual_feedback
+
+# fast build rule for target.
+libdevilutionx_visual_feedback/fast:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_visual_feedback.dir\build.make Source/CMakeFiles/libdevilutionx_visual_feedback.dir/build
+.PHONY : libdevilutionx_visual_feedback/fast
+
+# Convenience name for target.
 Source/CMakeFiles/libdevilutionx_logged_fstream.dir/rule:
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 Source/CMakeFiles/libdevilutionx_logged_fstream.dir/rule
 .PHONY : Source/CMakeFiles/libdevilutionx_logged_fstream.dir/rule
@@ -6465,6 +6479,30 @@ vision.cpp.s:
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_vision.dir\build.make Source/CMakeFiles/libdevilutionx_vision.dir/vision.cpp.s
 .PHONY : vision.cpp.s
 
+visual_feedback.obj: visual_feedback.cpp.obj
+.PHONY : visual_feedback.obj
+
+# target to build an object file
+visual_feedback.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_visual_feedback.dir\build.make Source/CMakeFiles/libdevilutionx_visual_feedback.dir/visual_feedback.cpp.obj
+.PHONY : visual_feedback.cpp.obj
+
+visual_feedback.i: visual_feedback.cpp.i
+.PHONY : visual_feedback.i
+
+# target to preprocess a source file
+visual_feedback.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_visual_feedback.dir\build.make Source/CMakeFiles/libdevilutionx_visual_feedback.dir/visual_feedback.cpp.i
+.PHONY : visual_feedback.cpp.i
+
+visual_feedback.s: visual_feedback.cpp.s
+.PHONY : visual_feedback.s
+
+# target to generate assembly for a file
+visual_feedback.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_visual_feedback.dir\build.make Source/CMakeFiles/libdevilutionx_visual_feedback.dir/visual_feedback.cpp.s
+.PHONY : visual_feedback.cpp.s
+
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -6533,6 +6571,7 @@ help:
 	@echo ... libdevilutionx_utf8
 	@echo ... libdevilutionx_utils_console
 	@echo ... libdevilutionx_vision
+	@echo ... libdevilutionx_visual_feedback
 	@echo ... DiabloUI/button.obj
 	@echo ... DiabloUI/button.i
 	@echo ... DiabloUI/button.s
@@ -7223,6 +7262,9 @@ help:
 	@echo ... vision.obj
 	@echo ... vision.i
 	@echo ... vision.s
+	@echo ... visual_feedback.obj
+	@echo ... visual_feedback.i
+	@echo ... visual_feedback.s
 .PHONY : help
 
 

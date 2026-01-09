@@ -80,6 +80,7 @@
 #include "options.h"
 #include "player.h"
 #include "qol/floatingnumbers.h"
+#include "visual_feedback.h"
 #include "quests.h"
 #include "sound_effect_enums.h"
 #include "storm/storm_net.hpp"
@@ -4403,6 +4404,18 @@ void ProcessMonsters()
 
 		const bool isMonsterVisible = IsTileVisible(monster.position.tile);
 		if (isMonsterVisible && monster.activeForTicks == 0) {
+			// 🎮 FASE V3.2 - PULSE EN MONSTRUOS ELITE
+			// Activar pulse visual para monstruos elite cuando se vuelven visibles
+			if ((monster.flags & MFLAG_ELITE) != 0) {
+				TriggerEliteMonsterPulse(monster);
+			}
+			
+			// 🎮 FASE V3.8 - PULSE DE JEFE
+			// Activar pulse especial para jefes únicos
+			if (monster.isUnique()) {
+				TriggerBossEncounterPulse(monster);
+			}
+			
 			if (monster.type().type == MT_CLEAVER) {
 				PlaySFX(SfxID::ButcherGreeting);
 			}

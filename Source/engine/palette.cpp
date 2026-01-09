@@ -135,48 +135,101 @@ void ApplyGlobalBrightness(SDL_Color *dst, const SDL_Color *src)
 		dst[i].g = toneMap[src[i].g];
 		dst[i].b = toneMap[src[i].b];
 		
-		// FEATURE: Global Dark Atmosphere Enhancement - Subtle color palette tinting
-		// FEATURE: Micro-variación ambiental contextual - Tintes sutiles por contexto
-		// Apply subtle corruption tint based on level type
+		// 🎨 FASE V2 - PALETA CONTEXTUAL MEJORADA 🎨
+		// Sistema completo de tintes contextuales y oscurecimiento por profundidad
+		
+		// 🎯 V2.1 - OSCURECIMIENTO POR PROFUNDIDAD
+		// Niveles más profundos progresivamente más oscuros
+		float depthDarkening = 1.0f;
+		
+		// 🎯 V2.2 - TINTE POR BIOMA MEJORADO
+		// Cada tipo de nivel con su paleta característica única
+		float redMultiplier = 1.0f;
+		float greenMultiplier = 1.0f;
+		float blueMultiplier = 1.0f;
+		
+		// 🎯 V2.3 - ATMÓSFERA SUTIL CONTEXTUAL
+		// Cambios que el jugador siente pero no nota conscientemente
+		float atmosphericIntensity = 1.0f;
+		
 		if (leveltype == DTYPE_TOWN) {
-			// Town: Sutil tinte marrón/decay (deterioro post-apocalíptico)
-			dst[i].g = static_cast<uint8_t>(dst[i].g * 0.96f);
-			dst[i].b = static_cast<uint8_t>(dst[i].b * 0.94f);
-			dst[i].r = std::min(255, static_cast<int>(dst[i].r * 1.01f));
+			// Town: Deterioro post-apocalíptico sutil
+			depthDarkening = 0.98f;        // Ligeramente más oscuro
+			redMultiplier = 1.02f;         // Sutil tinte oxidado
+			greenMultiplier = 0.96f;       // Menos verde (vegetación muerta)
+			blueMultiplier = 0.94f;        // Menos azul (cielo contaminado)
+			atmosphericIntensity = 0.7f;   // Efecto sutil
 		} else if (leveltype == DTYPE_CATACOMBS) {
-			// Catacombs: Enhanced blood atmosphere - darker, more desaturated red tones
-			// Make blood colors more disturbing and less vibrant
-			dst[i].g = static_cast<uint8_t>(dst[i].g * 0.85f); // More desaturated
-			dst[i].b = static_cast<uint8_t>(dst[i].b * 0.88f); // Cooler, more sinister
-			
-			// Enhance red tones for blood but make them darker and more disturbing
-			if (dst[i].r > 100) { // Only affect reddish colors (likely blood)
-				dst[i].r = static_cast<uint8_t>(dst[i].r * 0.92f); // Darker red for heavier atmosphere
-			} else {
-				dst[i].r = std::min(255, static_cast<int>(dst[i].r * 1.06f)); // Slight red tint for other colors
-			}
+			// Catacombs: Atmósfera de sangre y muerte intensificada
+			depthDarkening = 0.88f;        // Significativamente más oscuro
+			redMultiplier = 1.15f;         // Intensificar rojos de sangre
+			greenMultiplier = 0.82f;       // Desaturar verdes (muerte)
+			blueMultiplier = 0.85f;        // Reducir azules (frialdad mortal)
+			atmosphericIntensity = 1.3f;   // Efecto intenso
 		} else if (leveltype == DTYPE_CAVES) {
-			// Caves: Tonos tierra más apagados y opresivos
-			dst[i].r = static_cast<uint8_t>(dst[i].r * 0.94f);
-			dst[i].g = static_cast<uint8_t>(dst[i].g * 0.91f);
-			dst[i].b = static_cast<uint8_t>(dst[i].b * 0.88f);
+			// Caves: Tonos tierra opresivos y claustrofóbicos
+			depthDarkening = 0.91f;        // Más oscuro que cathedral
+			redMultiplier = 0.94f;         // Tonos tierra apagados
+			greenMultiplier = 0.89f;       // Verde mineral opaco
+			blueMultiplier = 0.86f;        // Azul mineral frío
+			atmosphericIntensity = 1.1f;   // Efecto medio-alto
 		} else if (leveltype == DTYPE_HELL) {
-			// Hell: Enhanced blood atmosphere - violent contrast with deep blood reds
-			// Make blood colors more intense and disturbing in Hell
-			dst[i].g = static_cast<uint8_t>(dst[i].g * 0.82f); // More desaturated for disturbing effect
-			dst[i].b = static_cast<uint8_t>(dst[i].b * 0.70f); // Much less blue for blood-red atmosphere
-			
-			// Enhance blood reds specifically for more visceral combat aftermath
-			if (dst[i].r > 120) { // Strong red colors (likely blood)
-				dst[i].r = std::min(255, static_cast<int>(dst[i].r * 1.20f)); // Intensify blood reds
-			} else {
-				dst[i].r = std::min(255, static_cast<int>(dst[i].r * 1.15f)); // General red enhancement
-			}
+			// Hell: Atmósfera de sangre violenta y apocalíptica
+			depthDarkening = 0.75f;        // Máximo oscurecimiento
+			redMultiplier = 1.25f;         // Rojos de sangre intensos
+			greenMultiplier = 0.78f;       // Verde casi eliminado
+			blueMultiplier = 0.65f;        // Azul mínimo (atmósfera infernal)
+			atmosphericIntensity = 1.5f;   // Efecto máximo
 		} else {
-			// Cathedral: Tinte gótico sutil (piedra fría)
-			dst[i].r = static_cast<uint8_t>(dst[i].r * 0.97f);
-			dst[i].g = static_cast<uint8_t>(dst[i].g * 0.96f);
-			dst[i].b = static_cast<uint8_t>(dst[i].b * 0.98f); // Ligeramente más azul
+			// Cathedral: Atmósfera gótica clásica mejorada
+			depthDarkening = 0.95f;        // Oscurecimiento base
+			redMultiplier = 0.97f;         // Ligeramente menos rojo
+			greenMultiplier = 0.94f;       // Verde piedra fría
+			blueMultiplier = 1.02f;        // Tinte azul gótico sutil
+			atmosphericIntensity = 1.0f;   // Efecto base
+		}
+		
+		// 🎯 V2.4 - APLICACIÓN INTELIGENTE DE EFECTOS
+		// Aplicar efectos de forma contextual e inteligente
+		
+		// Aplicar oscurecimiento por profundidad primero
+		dst[i].r = static_cast<uint8_t>(dst[i].r * depthDarkening);
+		dst[i].g = static_cast<uint8_t>(dst[i].g * depthDarkening);
+		dst[i].b = static_cast<uint8_t>(dst[i].b * depthDarkening);
+		
+		// Aplicar tintes por bioma con intensidad atmosférica
+		float finalRedMult = 1.0f + (redMultiplier - 1.0f) * atmosphericIntensity;
+		float finalGreenMult = 1.0f + (greenMultiplier - 1.0f) * atmosphericIntensity;
+		float finalBlueMult = 1.0f + (blueMultiplier - 1.0f) * atmosphericIntensity;
+		
+		// 🎯 V2.5 - PROCESAMIENTO INTELIGENTE POR RANGO DE COLOR
+		// Diferentes efectos para diferentes rangos de colores
+		
+		if (dst[i].r > 120 && leveltype == DTYPE_HELL) {
+			// Colores rojos intensos en Hell - probablemente sangre
+			dst[i].r = std::min(255, static_cast<int>(dst[i].r * finalRedMult * 1.1f)); // Extra intensidad para sangre
+		} else if (dst[i].r > 100 && leveltype == DTYPE_CATACOMBS) {
+			// Colores rojos en Catacombs - sangre más siniestra
+			dst[i].r = static_cast<uint8_t>(dst[i].r * finalRedMult * 0.95f); // Sangre más oscura y perturbadora
+		} else {
+			// Aplicación normal de tinte rojo
+			dst[i].r = std::min(255, static_cast<int>(dst[i].r * finalRedMult));
+		}
+		
+		// Aplicar tintes verde y azul con lógica contextual
+		dst[i].g = static_cast<uint8_t>(dst[i].g * finalGreenMult);
+		dst[i].b = static_cast<uint8_t>(dst[i].b * finalBlueMult);
+		
+		// 🎯 V2.6 - MICRO-VARIACIONES SUTILES
+		// Variaciones casi imperceptibles que añaden riqueza visual
+		if (i % 3 == 0 && atmosphericIntensity > 1.0f) {
+			// Cada tercer color, aplicar micro-variación para romper uniformidad
+			dst[i].r = std::min(255, dst[i].r + 1);
+		}
+		if (i % 5 == 0 && leveltype == DTYPE_HELL) {
+			// En Hell, micro-variaciones rojas adicionales para más caos visual
+			dst[i].r = std::min(255, dst[i].r + 2);
+			dst[i].g = std::max(0, dst[i].g - 1);
 		}
 	}
 }
@@ -195,7 +248,22 @@ void ApplyFadeLevel(unsigned fadeval, SDL_Color *dst, const SDL_Color *src)
 // and 100 produces maximum brightening.
 void UpdateSystemPalette(std::span<const SDL_Color, 256> src)
 {
+	// 🎨 FASE V2 - PALETA CONTEXTUAL COMPLETA 🎨
+	// Aplicar todas las mejoras de paleta en el orden correcto
+	
+	// Paso 1: Aplicar brillo global (sistema original)
 	ApplyGlobalBrightness(system_palette.data(), src.data());
+	
+	// Paso 2: Aplicar ajustes dinámicos basados en estado del juego
+	ApplyDynamicPaletteAdjustment(system_palette.data());
+	
+	// Paso 3: Aplicar mejoras contextuales específicas por nivel
+	ApplyContextualPaletteEnhancement(system_palette.data());
+	
+	// Paso 4: Aplicar simulación de profundidad atmosférica
+	ApplyAtmosphericDepthSimulation(system_palette.data());
+	
+	// Actualizar sistema y redibujar
 	SystemPaletteUpdated();
 	RedrawEverything();
 }
@@ -445,6 +513,130 @@ void palette_update_hive()
 	CycleColorsReverse(9, 15);
 	SystemPaletteUpdated(1, 15);
 	delay = 0;
+}
+
+// 🎨 FASE V2 - PALETA CONTEXTUAL AVANZADA 🎨
+
+/**
+ * 🎯 V2.7 - DYNAMIC PALETTE ADJUSTMENT
+ * Ajuste dinámico de paleta basado en el estado del juego
+ */
+void ApplyDynamicPaletteAdjustment(SDL_Color *palette)
+{
+	// 🎯 Ajustes basados en el estado del jugador y el ambiente
+	
+	// Si el jugador está en peligro (vida baja), aplicar tinte rojo sutil
+	if (MyPlayer != nullptr && MyPlayer->_pHitPoints < MyPlayer->_pMaxHP / 4) {
+		for (int i = 0; i < 256; i++) {
+			// Tinte rojo muy sutil cuando la vida está baja
+			palette[i].r = std::min(255, static_cast<int>(palette[i].r * 1.03f));
+			palette[i].g = static_cast<uint8_t>(palette[i].g * 0.98f);
+		}
+	}
+	
+	// 🎯 Ajustes basados en la hora del día (si aplicable)
+	// En town, simular diferentes momentos del día
+	if (leveltype == DTYPE_TOWN) {
+		// Simular atardecer post-apocalíptico
+		for (int i = 0; i < 256; i++) {
+			// Tinte anaranjado muy sutil para simular luz de atardecer contaminado
+			if (palette[i].r > 50 && palette[i].g > 30) {
+				palette[i].r = std::min(255, static_cast<int>(palette[i].r * 1.01f));
+				palette[i].g = static_cast<uint8_t>(palette[i].g * 0.995f);
+				palette[i].b = static_cast<uint8_t>(palette[i].b * 0.99f);
+			}
+		}
+	}
+}
+
+/**
+ * 🎯 V2.8 - CONTEXTUAL PALETTE ENHANCEMENT
+ * Mejoras contextuales de paleta para situaciones específicas
+ */
+void ApplyContextualPaletteEnhancement(SDL_Color *palette)
+{
+	// 🎯 Mejoras específicas por tipo de nivel
+	
+	if (leveltype == DTYPE_CATACOMBS) {
+		// 🩸 Enhanced Blood Atmosphere para Catacombs
+		for (int i = 0; i < 256; i++) {
+			// Detectar colores que probablemente sean sangre
+			if (palette[i].r > 80 && palette[i].r > palette[i].g * 1.5f && palette[i].r > palette[i].b * 1.5f) {
+				// Intensificar el aspecto perturbador de la sangre
+				palette[i].r = std::min(255, static_cast<int>(palette[i].r * 1.08f));
+				palette[i].g = static_cast<uint8_t>(palette[i].g * 0.85f);
+				palette[i].b = static_cast<uint8_t>(palette[i].b * 0.80f);
+			}
+		}
+	} else if (leveltype == DTYPE_HELL) {
+		// 🔥 Atmósfera infernal intensificada
+		for (int i = 0; i < 256; i++) {
+			// Intensificar colores cálidos (fuego, lava, sangre)
+			if (palette[i].r > 100 || (palette[i].r > 60 && palette[i].g > 30 && palette[i].b < 30)) {
+				palette[i].r = std::min(255, static_cast<int>(palette[i].r * 1.12f));
+				palette[i].g = static_cast<uint8_t>(palette[i].g * 0.90f);
+				palette[i].b = static_cast<uint8_t>(palette[i].b * 0.75f);
+			}
+		}
+	} else if (leveltype == DTYPE_CAVES) {
+		// 🪨 Atmósfera mineral opresiva
+		for (int i = 0; i < 256; i++) {
+			// Desaturar colores para crear sensación opresiva
+			uint8_t avg = (palette[i].r + palette[i].g + palette[i].b) / 3;
+			palette[i].r = static_cast<uint8_t>(palette[i].r * 0.7f + avg * 0.3f);
+			palette[i].g = static_cast<uint8_t>(palette[i].g * 0.7f + avg * 0.3f);
+			palette[i].b = static_cast<uint8_t>(palette[i].b * 0.7f + avg * 0.3f);
+			
+			// Aplicar tinte mineral
+			palette[i].r = static_cast<uint8_t>(palette[i].r * 0.95f);
+			palette[i].g = static_cast<uint8_t>(palette[i].g * 0.92f);
+			palette[i].b = static_cast<uint8_t>(palette[i].b * 0.88f);
+		}
+	}
+}
+
+/**
+ * 🎯 V2.9 - ATMOSPHERIC DEPTH SIMULATION
+ * Simulación de profundidad atmosférica para mayor inmersión
+ */
+void ApplyAtmosphericDepthSimulation(SDL_Color *palette)
+{
+	// 🎯 Simular profundidad atmosférica basada en el tipo de nivel
+	
+	float depthFactor = 1.0f;
+	float hazeFactor = 0.0f;
+	
+	// Calcular factores de profundidad por tipo de nivel
+	if (leveltype == DTYPE_TOWN) {
+		depthFactor = 0.98f;   // Superficie, mínima profundidad
+		hazeFactor = 0.02f;    // Ligera bruma contaminada
+	} else if (leveltype == DTYPE_CATACOMBS) {
+		depthFactor = 0.85f;   // Profundidad media, atmósfera densa
+		hazeFactor = 0.08f;    // Bruma de muerte y descomposición
+	} else if (leveltype == DTYPE_CAVES) {
+		depthFactor = 0.88f;   // Profundidad subterránea
+		hazeFactor = 0.06f;    // Bruma mineral
+	} else if (leveltype == DTYPE_HELL) {
+		depthFactor = 0.75f;   // Máxima profundidad
+		hazeFactor = 0.12f;    // Bruma infernal intensa
+	} else {
+		depthFactor = 0.92f;   // Cathedral - profundidad moderada
+		hazeFactor = 0.04f;    // Bruma gótica sutil
+	}
+	
+	// Aplicar efectos de profundidad atmosférica
+	for (int i = 0; i < 256; i++) {
+		// Oscurecer por profundidad
+		palette[i].r = static_cast<uint8_t>(palette[i].r * depthFactor);
+		palette[i].g = static_cast<uint8_t>(palette[i].g * depthFactor);
+		palette[i].b = static_cast<uint8_t>(palette[i].b * depthFactor);
+		
+		// Aplicar bruma atmosférica (mezcla con gris)
+		uint8_t hazeColor = 32; // Gris oscuro para la bruma
+		palette[i].r = static_cast<uint8_t>(palette[i].r * (1.0f - hazeFactor) + hazeColor * hazeFactor);
+		palette[i].g = static_cast<uint8_t>(palette[i].g * (1.0f - hazeFactor) + hazeColor * hazeFactor);
+		palette[i].b = static_cast<uint8_t>(palette[i].b * (1.0f - hazeFactor) + hazeColor * hazeFactor);
+	}
 }
 
 void SetLogicalPaletteColor(unsigned i, const SDL_Color &color)

@@ -903,6 +903,19 @@ libdevilutionx_lighting/fast:
 .PHONY : libdevilutionx_lighting/fast
 
 #=============================================================================
+# Target rules for targets named libdevilutionx_visual_feedback
+
+# Build rule for target.
+libdevilutionx_visual_feedback: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 libdevilutionx_visual_feedback
+.PHONY : libdevilutionx_visual_feedback
+
+# fast build rule for target.
+libdevilutionx_visual_feedback/fast:
+	$(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_visual_feedback.dir\build.make Source/CMakeFiles/libdevilutionx_visual_feedback.dir/build
+.PHONY : libdevilutionx_visual_feedback/fast
+
+#=============================================================================
 # Target rules for targets named libdevilutionx_logged_fstream
 
 # Build rule for target.
@@ -1391,6 +1404,7 @@ help:
 	@echo ... libdevilutionx_utf8
 	@echo ... libdevilutionx_utils_console
 	@echo ... libdevilutionx_vision
+	@echo ... libdevilutionx_visual_feedback
 	@echo ... libmpq
 	@echo ... libsmackerdec
 	@echo ... lua_static

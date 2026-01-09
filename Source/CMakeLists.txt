@@ -481,9 +481,16 @@ target_link_dependencies(libdevilutionx_lighting PUBLIC
   DevilutionX::SDL
   fmt::fmt
   magic_enum::magic_enum
-  tl
-  unordered_dense::unordered_dense
-  libdevilutionx_vision
+)
+
+# 🎮 FASE V3 - Visual Feedback System
+add_devilutionx_object_library(libdevilutionx_visual_feedback
+  visual_feedback.cpp
+)
+target_link_dependencies(libdevilutionx_visual_feedback PUBLIC
+  DevilutionX::SDL
+  fmt::fmt
+  magic_enum::magic_enum
 )
 
 add_devilutionx_object_library(libdevilutionx_logged_fstream
@@ -937,6 +944,7 @@ target_link_dependencies(libdevilutionx PUBLIC
   libdevilutionx_level_objects
   libdevilutionx_light_render
   libdevilutionx_lighting
+  libdevilutionx_visual_feedback
   libdevilutionx_monster
   libdevilutionx_mpq
   libdevilutionx_multiplayer

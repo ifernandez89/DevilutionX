@@ -51,6 +51,7 @@
 #include "qol/autopickup.h"
 #include "qol/floatingnumbers.h"
 #include "qol/stash.h"
+#include "visual_feedback.h"
 #include "spells.h"
 #include "stores.h"
 #include "towners.h"
@@ -2823,6 +2824,12 @@ void ApplyPlrDamage(DamageType damageType, Player &player, int dam, int minHP /*
 	int totalDamage = (dam << 6) + frac;
 	if (&player == MyPlayer && !player.hasNoLife()) {
 		AddFloatingNumber(damageType, player, totalDamage);
+		
+		// 🎮 FASE V3.1 - FLASH DE DAÑO AL JUGADOR
+		// Activar flash visual cuando el jugador recibe daño
+		if (totalDamage > 0) {
+			TriggerPlayerDamageFlash(player, totalDamage >> 6, damageType);
+		}
 	}
 	if (totalDamage > 0 && player.pManaShield && HasNoneOf(player._pIFlags, ItemSpecialEffect::NoMana)) {
 		const uint8_t manaShieldLevel = player._pSplLvl[static_cast<int8_t>(SpellID::ManaShield)];
@@ -2862,7 +2869,15 @@ void ApplyPlrDamage(DamageType damageType, Player &player, int dam, int minHP /*
 		SetPlayerHitPoints(player, minHitPoints);
 	}
 	if (player.hasNoLife()) {
+		// 🎮 FASE V3.7 - FLASH DE MUERTE
+		if (&player == MyPlayer) {
+			TriggerDeathFlash(player);
+		}
 		SyncPlrKill(player, deathReason);
+	} else if (&player == MyPlayer) {
+		// 🎮 FASE V3.4 - PULSE DE VIDA BAJA
+		// Actualizar pulse de vida baja cuando el jugador está vivo
+		UpdateLowHealthPulse(player);
 	}
 }
 

@@ -18,6 +18,7 @@
 #include "gamemenu.h"
 #include "inv.h"
 #include "missiles.h"
+#include "visual_feedback.h"
 
 namespace devilution {
 
@@ -210,6 +211,12 @@ SpellCheckResult CheckSpell(const Player &player, SpellID sn, SpellType st, bool
 
 void CastSpell(Player &player, SpellID spl, WorldTilePosition src, WorldTilePosition dst, int spllvl)
 {
+	// 🎮 FASE V3.6 - BRILLO DE HECHIZO
+	// Activar brillo visual cuando se lanza un hechizo
+	if (&player == MyPlayer) {
+		TriggerSpellCastGlow(player, spl);
+	}
+	
 	Direction dir = player._pdir;
 	if (IsWallSpell(spl)) {
 		dir = player.tempDirection;

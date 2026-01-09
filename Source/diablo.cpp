@@ -71,6 +71,7 @@
 #include "levels/town.h"
 #include "levels/trigs.h"
 #include "lighting.h"
+#include "visual_feedback.h"
 #include "loadsave.h"
 #include "lua/lua_global.hpp"
 #include "menu.h"
@@ -1529,6 +1530,10 @@ void GameLogic()
 		gGameLogicStep = GameLogicStep::ProcessItems;
 		ProcessItems();
 		ProcessLightList();
+		
+		// 🎮 FASE V3 - Update Visual Feedback System
+		UpdateVisualFeedback();
+		
 		ProcessVisionList();
 	} else {
 		gGameLogicStep = GameLogicStep::ProcessTowners;
@@ -3391,6 +3396,9 @@ tl::expected<void, std::string> LoadGameLevel(bool firstflag, lvl_entry lvldir)
 	if (leveltype != DTYPE_TOWN && lvldir != ENTRY_LOAD) {
 		InitLighting();
 	}
+	
+	// 🎮 FASE V3 - Initialize Visual Feedback System
+	InitVisualFeedback();
 
 	InitLevelMonsters();
 

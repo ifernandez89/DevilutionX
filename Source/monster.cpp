@@ -3753,12 +3753,13 @@ tl::expected<void, std::string> InitMonsters()
 		}
 		// FEATURE: Intelligent Difficulty System - Increased Monster Density
 		// Original formula: na / 30, Enhanced for Hell difficulty pressure
+		// BUGFIX: Reduced Hell density slightly to prevent overflow with area effects
 		size_t baseDensityDivisor = 30;
 		
 		// Increase density based on level depth for late-game pressure
 		if (currlevel >= 13) {
-			// Hell difficulty: 50% more monsters (na / 20 instead of na / 30)
-			baseDensityDivisor = 20;
+			// Hell difficulty: 40% more monsters (na / 22 instead of na / 20) - reduced from 50% to prevent crashes
+			baseDensityDivisor = 22;
 		} else if (currlevel >= 9) {
 			// Deep caves: 25% more monsters (na / 24 instead of na / 30)
 			baseDensityDivisor = 24;

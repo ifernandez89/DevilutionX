@@ -1504,7 +1504,7 @@ void DrawEnhancedHUD(const Surface &out)
 		yOffset += lineHeight;
 	}
 	
-	// Monster count (only in dungeon)
+	// Monster count (only in dungeon) - BUGFIX: Moved to avoid overlap with map
 	if (currlevel > 0 && leveltype != DTYPE_TOWN) {
 		int aliveMonsters = 0;
 		for (size_t i = 0; i < ActiveMonsterCount; i++) {
@@ -1514,8 +1514,10 @@ void DrawEnhancedHUD(const Surface &out)
 			}
 		}
 		std::string monsterText = StrCat("Monstruos: ", aliveMonsters);
-		DrawString(out, monsterText, Point { 8, yOffset }, { .flags = UiFlags::ColorWhite });
-		yOffset += lineHeight;
+		// Move monster count to right side to avoid map overlap
+		int monsterTextWidth = GetLineWidth(monsterText, GameFont12);
+		DrawString(out, monsterText, Point { out.w() - monsterTextWidth - 8, yOffset }, { .flags = UiFlags::ColorWhite });
+		// Don't increment yOffset since this is now on the right side
 	}
 	
 	// Right side information

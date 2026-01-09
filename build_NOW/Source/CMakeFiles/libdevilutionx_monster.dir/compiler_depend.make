@@ -524,6 +524,11 @@ Source/CMakeFiles/libdevilutionx_monster.dir/monster.cpp.obj: C:/c\ -\ c++/Devil
   C:/c\ -\ c++/DevilutionX/Source/pack.h \
   C:/c\ -\ c++/DevilutionX/Source/qol/floatingnumbers.h \
   C:/c\ -\ c++/DevilutionX/Source/quick_messages.hpp \
+  C:/c\ -\ c++/DevilutionX/Source/safety/safety.h \
+  C:/c\ -\ c++/DevilutionX/Source/safety/safety_iter.h \
+  C:/c\ -\ c++/DevilutionX/Source/safety/safety_limits.h \
+  C:/c\ -\ c++/DevilutionX/Source/safety/safety_math.h \
+  C:/c\ -\ c++/DevilutionX/Source/safety/safety_spawn.h \
   C:/c\ -\ c++/DevilutionX/Source/storm/storm_net.hpp \
   C:/c\ -\ c++/DevilutionX/Source/tables/misdat.h \
   C:/c\ -\ c++/DevilutionX/Source/tables/monstdat.h \
@@ -1954,6 +1959,8 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/mwaitxintrin.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/pconfigintrin.h:
 
+C:/c\ -\ c++/DevilutionX/Source/safety/safety_math.h:
+
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/popcntintrin.h:
 
 C:/mingw64/x86_64-w64-mingw32/include/sec_api/wchar_s.h:
@@ -1973,6 +1980,8 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/tmmintrin.h:
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/waitpkgintrin.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/wbnoinvdintrin.h:
+
+C:/c\ -\ c++/DevilutionX/Source/safety/safety_spawn.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/xopintrin.h:
 
@@ -2057,6 +2066,12 @@ C:/c\ -\ c++/DevilutionX/Source/pack.h:
 C:/c\ -\ c++/DevilutionX/Source/data/file.hpp:
 
 C:/c\ -\ c++/DevilutionX/Source/qol/floatingnumbers.h:
+
+C:/c\ -\ c++/DevilutionX/Source/safety/safety.h:
+
+C:/c\ -\ c++/DevilutionX/Source/safety/safety_iter.h:
+
+C:/c\ -\ c++/DevilutionX/Source/safety/safety_limits.h:
 
 C:/c\ -\ c++/DevilutionX/Source/storm/storm_net.hpp:
 

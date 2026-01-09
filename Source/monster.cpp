@@ -103,6 +103,7 @@
 #include "utils/static_vector.hpp"
 #include "utils/status_macros.hpp"
 #include "utils/str_cat.hpp"
+#include "safety/safety.h"
 
 #ifdef _DEBUG
 #include "debug.h"
@@ -3846,6 +3847,9 @@ tl::expected<void, std::string> SetMapMonsters(const uint16_t *dunData, Point st
 
 Monster *AddMonster(Point position, Direction dir, size_t typeIndex, bool inMap)
 {
+	// SAFETY LAYER: Verificar límites antes de agregar monster
+	SAFETY_CHECK_SPAWN_RET(Monster, nullptr);
+	
 	if (ActiveMonsterCount < MaxMonsters) {
 		Monster &monster = Monsters[ActiveMonsters[ActiveMonsterCount++]];
 		if (inMap)
@@ -3859,6 +3863,10 @@ Monster *AddMonster(Point position, Direction dir, size_t typeIndex, bool inMap)
 
 void SpawnMonster(Point position, Direction dir, size_t typeIndex)
 {
+	// SAFETY LAYER: Verificar límites y aplicar guardas de seguridad
+	SAFETY_GUARD();
+	SAFETY_CHECK_SPAWN(Monster);
+	
 	if (ActiveMonsterCount >= MaxMonsters)
 		return;
 

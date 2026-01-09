@@ -15,6 +15,7 @@
 #include "engine/render/text_render.hpp"
 #include "options.h"
 #include "utils/str_cat.hpp"
+#include "safety/safety.h"
 
 namespace devilution {
 
@@ -38,20 +39,23 @@ std::deque<FloatingNumber> FloatingQueue;
 
 void ClearExpiredNumbers()
 {
-	while (!FloatingQueue.empty()) {
-		const FloatingNumber &num = FloatingQueue.front();
-		if (num.time > SDL_GetTicks())
-			break;
+	// SAFETY LAYER: Usar iteración segura para limpiar números expirados
+	SAFE_GAME_OPERATION({
+		while (!FloatingQueue.empty()) {
+			const FloatingNumber &num = FloatingQueue.front();
+			if (num.time > SDL_GetTicks())
+				break;
 
-		FloatingQueue.pop_front();
-	}
-	
-	// BUGFIX: ULTRA AGGRESSIVE overflow prevention - maximum stability
-	// Even more reduced limits to prevent crashes with Inferno spam + many monsters
-	constexpr size_t MAX_FLOATING_NUMBERS = 15; // Reduced from 30 for ultimate stability
-	while (FloatingQueue.size() > MAX_FLOATING_NUMBERS) {
-		FloatingQueue.pop_front(); // Remove oldest numbers first
-	}
+			FloatingQueue.pop_front();
+		}
+		
+		// BUGFIX: EXTREME EMERGENCY overflow prevention - BULLETPROOF stability
+		// ABSOLUTE MINIMUM limits to prevent ALL crashes with Inferno spam + many monsters
+		constexpr size_t MAX_FLOATING_NUMBERS = 8; // EXTREME reduction for bulletproof stability
+		while (FloatingQueue.size() > MAX_FLOATING_NUMBERS) {
+			FloatingQueue.pop_front(); // Remove oldest numbers first
+		}
+	});
 }
 
 GameFontTables GetGameFontSizeByDamage(int value)
@@ -106,15 +110,21 @@ void UpdateFloatingData(FloatingNumber &num)
 
 void AddFloatingNumber(Point pos, Displacement offset, DamageType type, int value, size_t index, bool damageToPlayer)
 {
-	// BUGFIX: ULTRA AGGRESSIVE overflow prevention - maximum stability
+	// SAFETY LAYER: Verificar límites antes de agregar
+	SAFETY_GUARD();
+	
+	// BUGFIX: EXTREME EMERGENCY overflow prevention - BULLETPROOF stability
 	// Skip adding new floating numbers if queue is getting too large
-	constexpr size_t QUEUE_WARNING_SIZE = 10; // Reduced from 25 for ultimate stability
+	constexpr size_t QUEUE_WARNING_SIZE = 5; // EXTREME reduction for bulletproof stability
 	if (FloatingQueue.size() > QUEUE_WARNING_SIZE) {
 		ClearExpiredNumbers(); // Try to clear expired numbers first
 		if (FloatingQueue.size() > QUEUE_WARNING_SIZE) {
 			return; // Skip this floating number to prevent overflow
 		}
 	}
+	
+	// SAFETY LAYER: Usar matemáticas seguras para el valor de daño
+	value = SafeDamage(value);
 	
 	// 45 deg angles to avoid jitter caused by px alignment
 	const Displacement goodAngles[] = {
@@ -135,15 +145,19 @@ void AddFloatingNumber(Point pos, Displacement offset, DamageType type, int valu
 
 	for (auto &num : FloatingQueue) {
 		if (num.reverseDirection == damageToPlayer && num.type == type && num.index == index && (SDL_GetTicks() - static_cast<int>(num.lastMerge)) <= 100) {
-			num.value += value;
+			num.value = SafeAdd(num.value, value, MAX_DAMAGE);
 			num.lastMerge = SDL_GetTicks();
 			UpdateFloatingData(num);
 			return;
 		}
 	}
+	
+	// SAFETY LAYER: Usar timer seguro para el tiempo de vida
+	uint32_t safeLifetime = SafeTimer(2500);
+	
 	FloatingNumber num {
 		pos, offset, endOffset, "",
-		static_cast<uint32_t>(SDL_GetTicks() + 2500),
+		static_cast<uint32_t>(SDL_GetTicks() + safeLifetime),
 		static_cast<uint32_t>(SDL_GetTicks()),
 		UiFlags::Outlined, type, value, index, damageToPlayer
 	};

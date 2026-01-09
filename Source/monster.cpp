@@ -1382,16 +1382,24 @@ bool MonsterRangedAttack(Monster &monster)
 			int multimissiles = 1;
 			if (missileType == MissileID::ChargedBolt)
 				multimissiles = 3;
-			for (int mi = 0; mi < multimissiles; mi++) {
-				AddMissile(
-				    monster.position.tile,
-				    monster.enemyPosition,
-				    monster.direction,
-				    missileType,
-				    TARGET_PLAYERS,
-				    monster,
-				    monster.var2,
-				    0);
+			
+			// SAFETY LAYER: Verificar antes de loop de multimissiles
+			// TECHO CUANTITATIVO: Solo en puntos de presión (múltiples spawns), no global
+			if (CanAddMissiles(multimissiles)) {
+				for (int mi = 0; mi < multimissiles; mi++) {
+					// Verificación adicional por cada missile en el loop
+					SAFETY_CHECK_SPAWN_RET(Missile, false);
+					
+					AddMissile(
+					    monster.position.tile,
+					    monster.enemyPosition,
+					    monster.direction,
+					    missileType,
+					    TARGET_PLAYERS,
+					    monster,
+					    monster.var2,
+					    0);
+				}
 			}
 		}
 		PlayEffect(monster, MonsterSound::Attack);

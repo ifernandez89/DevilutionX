@@ -50,6 +50,7 @@
 #include "utils/language.h"
 #include "utils/log.hpp"
 #include "utils/str_cat.hpp"
+#include "safety/safety.h"
 
 namespace devilution {
 
@@ -4211,6 +4212,19 @@ void OperateTrap(Object &trap)
 	if (!UpdateTrapState(trap))
 		return;
 
+	// SAFETY LAYER: Throttling para traps - evitar spam de activación
+	// TECHO CUANTITATIVO: Solo en puntos de presión (traps), no global
+	static SpawnThrottle trapThrottle;
+	trapThrottle.minInterval = 200; // 200ms mínimo entre activaciones de trap
+	
+	uint32_t currentTime = SDL_GetTicks();
+	if (!trapThrottle.CanSpawnNow(currentTime)) {
+		return; // Demasiado pronto para otra activación
+	}
+
+	// Verificar límites antes de spawn de missile
+	SAFETY_CHECK_SPAWN(Missile);
+
 	// default to firing at the trigger object
 	const Point triggerPosition = { trap._oVar1, trap._oVar2 };
 	Point target = triggerPosition;
@@ -4224,8 +4238,16 @@ void OperateTrap(Object &trap)
 	}
 
 	const Direction dir = GetDirection(trap.position, target);
+	
+	// SAFETY LAYER: Throttling para traps - evitar spam de activación
+	// TECHO CUANTITATIVO: Solo en puntos de presión (traps), no global
+	SAFETY_CHECK_SPAWN(Missile);
+	
 	AddMissile(trap.position, target, dir, static_cast<MissileID>(trap._oVar3), TARGET_PLAYERS, -1, 0, 0);
 	PlaySfxLoc(SfxID::TriggerTrap, triggerPosition);
+	
+	// Registrar el tiempo de activación
+	trapThrottle.RecordSpawn(currentTime);
 }
 
 void ProcessObjects()

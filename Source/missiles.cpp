@@ -827,6 +827,10 @@ void SpawnLightning(Missile &missile, int dam)
 	auto position = missile.position.tile;
 	if (!TileHasAny(position, TileProperties::BlockMissile)) {
 		if (position != Point { missile.var1, missile.var2 } && InDungeonBounds(position)) {
+			// SAFETY LAYER: Verificación antes de spawn de chain lightning
+			// TECHO CUANTITATIVO: Solo en puntos de presión (chains), no global
+			SAFETY_CHECK_SPAWN(Missile);
+			
 			MissileID type = MissileID::Lightning;
 			if (missile.sourceType() == MissileSource::Monster
 			    && IsAnyOf(missile.sourceMonster()->type().type, MT_STORM, MT_RSTORM, MT_STORML, MT_MAEL)) {

@@ -440,6 +440,8 @@ Source/CMakeFiles/libdevilutionx_sound.dir/effects.cpp.obj: C:/c\ -\ c++/Devilut
   C:/mingw64/x86_64-w64-mingw32/include/winapifamily.h \
   C:/mingw64/x86_64-w64-mingw32/include/winsdkver.h \
   C:/c\ -\ c++/DevilutionX/Source/DiabloUI/ui_flags.hpp \
+  C:/c\ -\ c++/DevilutionX/Source/audio/audio_throttling.h \
+  C:/c\ -\ c++/DevilutionX/Source/audio/enhanced_audio.h \
   C:/c\ -\ c++/DevilutionX/Source/cursor.h \
   C:/c\ -\ c++/DevilutionX/Source/data/file.hpp \
   C:/c\ -\ c++/DevilutionX/Source/data/iterators.hpp \
@@ -2820,6 +2822,8 @@ C:/mingw64/x86_64-w64-mingw32/include/corecrt.h:
 
 C:/mingw64/x86_64-w64-mingw32/include/corecrt_startup.h:
 
+C:/c\ -\ c++/DevilutionX/Source/audio/audio_throttling.h:
+
 C:/mingw64/x86_64-w64-mingw32/include/corecrt_stdio_config.h:
 
 C:/mingw64/x86_64-w64-mingw32/include/corecrt_wstdlib.h:
@@ -2844,11 +2848,11 @@ C:/mingw64/x86_64-w64-mingw32/include/psdk_inc/intrin-impl.h:
 
 C:/mingw64/x86_64-w64-mingw32/include/pthread_signal.h:
 
+C:/c\ -\ c++/DevilutionX/Source/audio/enhanced_audio.h:
+
 C:/mingw64/x86_64-w64-mingw32/include/sec_api/stdio_s.h:
 
 C:/mingw64/x86_64-w64-mingw32/include/sec_api/stdlib_s.h:
-
-C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/sstream.tcc:
 
 C:/mingw64/x86_64-w64-mingw32/include/sec_api/string_s.h:
 
@@ -2955,6 +2959,8 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/locale_conv.h:
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/locale_facets_nonio.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/quoted_string.h:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/sstream.tcc:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/stl_map.h:
 

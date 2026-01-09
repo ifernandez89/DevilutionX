@@ -22,6 +22,9 @@
 #include "player.h"
 #include "utils/is_of.hpp"
 
+// 🔊 AUDIO ENHANCEMENT - Integración del sistema mejorado
+#include "audio/enhanced_audio.h"
+
 namespace devilution {
 
 int sfxdelay;
@@ -201,6 +204,13 @@ void stream_stop()
 
 void PlaySFX(SfxID psfx)
 {
+	// 🔊 AUDIO ENHANCEMENT - Usar sistema mejorado si está disponible
+	if (IsEnhancedAudioEnabled()) {
+		EnhancedPlaySFX(psfx);
+		return;
+	}
+	
+	// Código original
 	psfx = RndSFX(psfx);
 
 	if (!gbSndInited) return;
@@ -210,6 +220,13 @@ void PlaySFX(SfxID psfx)
 
 void PlaySfxLoc(SfxID psfx, Point position, bool randomizeByCategory)
 {
+	// 🔊 AUDIO ENHANCEMENT - Usar sistema mejorado si está disponible
+	if (IsEnhancedAudioEnabled()) {
+		EnhancedPlaySfxLoc(psfx, position, randomizeByCategory);
+		return;
+	}
+	
+	// Código original
 	if (randomizeByCategory) {
 		psfx = RndSFX(psfx);
 	}
@@ -244,6 +261,9 @@ void sound_update()
 	}
 
 	StreamUpdate();
+	
+	// 🔊 AUDIO ENHANCEMENT - Actualizar sistema mejorado
+	UpdateEnhancedAudio();
 }
 
 void effects_cleanup_sfx(bool fullUnload)
@@ -295,6 +315,9 @@ void sound_init()
 	}
 
 	PrivSoundInit(mask);
+	
+	// 🔊 AUDIO ENHANCEMENT - Inicializar sistema mejorado
+	InitEnhancedAudio();
 }
 
 void ui_sound_init()

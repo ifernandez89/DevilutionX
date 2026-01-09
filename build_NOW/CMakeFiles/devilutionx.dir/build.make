@@ -309,6 +309,8 @@ devilutionx_EXTERNAL_OBJECTS = \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/safety/safety_metrics.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/safety/stress_testing.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/safety/stress_test_runner.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/audio/audio_throttling.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/audio/enhanced_audio.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/quests/validation.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/storm/storm_net.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/storm/storm_svid.cpp.obj" \
@@ -540,6 +542,8 @@ devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/qol/xpbar.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/safety/safety_metrics.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/safety/stress_testing.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/safety/stress_test_runner.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/audio/audio_throttling.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/audio/enhanced_audio.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/quests/validation.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/storm/storm_net.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/storm/storm_svid.cpp.obj

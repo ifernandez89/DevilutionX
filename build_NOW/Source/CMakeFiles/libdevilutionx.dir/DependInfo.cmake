@@ -27,6 +27,8 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "C:/c - c++/DevilutionX/Source/DiabloUI/text_input.cpp" "Source/CMakeFiles/libdevilutionx.dir/DiabloUI/text_input.cpp.obj" "gcc" "Source/CMakeFiles/libdevilutionx.dir/DiabloUI/text_input.cpp.obj.d"
   "C:/c - c++/DevilutionX/Source/DiabloUI/title.cpp" "Source/CMakeFiles/libdevilutionx.dir/DiabloUI/title.cpp.obj" "gcc" "Source/CMakeFiles/libdevilutionx.dir/DiabloUI/title.cpp.obj.d"
   "C:/c - c++/DevilutionX/Source/appfat.cpp" "Source/CMakeFiles/libdevilutionx.dir/appfat.cpp.obj" "gcc" "Source/CMakeFiles/libdevilutionx.dir/appfat.cpp.obj.d"
+  "C:/c - c++/DevilutionX/Source/audio/audio_throttling.cpp" "Source/CMakeFiles/libdevilutionx.dir/audio/audio_throttling.cpp.obj" "gcc" "Source/CMakeFiles/libdevilutionx.dir/audio/audio_throttling.cpp.obj.d"
+  "C:/c - c++/DevilutionX/Source/audio/enhanced_audio.cpp" "Source/CMakeFiles/libdevilutionx.dir/audio/enhanced_audio.cpp.obj" "gcc" "Source/CMakeFiles/libdevilutionx.dir/audio/enhanced_audio.cpp.obj.d"
   "C:/c - c++/DevilutionX/Source/automap.cpp" "Source/CMakeFiles/libdevilutionx.dir/automap.cpp.obj" "gcc" "Source/CMakeFiles/libdevilutionx.dir/automap.cpp.obj.d"
   "C:/c - c++/DevilutionX/Source/capture.cpp" "Source/CMakeFiles/libdevilutionx.dir/capture.cpp.obj" "gcc" "Source/CMakeFiles/libdevilutionx.dir/capture.cpp.obj.d"
   "C:/c - c++/DevilutionX/Source/control/control_chat.cpp" "Source/CMakeFiles/libdevilutionx.dir/control/control_chat.cpp.obj" "gcc" "Source/CMakeFiles/libdevilutionx.dir/control/control_chat.cpp.obj.d"

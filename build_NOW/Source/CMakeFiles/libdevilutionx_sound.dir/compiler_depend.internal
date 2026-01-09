@@ -441,6 +441,8 @@ Source/CMakeFiles/libdevilutionx_sound.dir/effects.cpp.obj
  C:/mingw64/x86_64-w64-mingw32/include/winapifamily.h
  C:/mingw64/x86_64-w64-mingw32/include/winsdkver.h
  C:/c - c++/DevilutionX/Source/DiabloUI/ui_flags.hpp
+ C:/c - c++/DevilutionX/Source/audio/audio_throttling.h
+ C:/c - c++/DevilutionX/Source/audio/enhanced_audio.h
  C:/c - c++/DevilutionX/Source/cursor.h
  C:/c - c++/DevilutionX/Source/data/file.hpp
  C:/c - c++/DevilutionX/Source/data/iterators.hpp

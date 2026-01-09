@@ -1401,6 +1401,54 @@ appfat.cpp.s:
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/appfat.cpp.s
 .PHONY : appfat.cpp.s
 
+audio/audio_throttling.obj: audio/audio_throttling.cpp.obj
+.PHONY : audio/audio_throttling.obj
+
+# target to build an object file
+audio/audio_throttling.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/audio/audio_throttling.cpp.obj
+.PHONY : audio/audio_throttling.cpp.obj
+
+audio/audio_throttling.i: audio/audio_throttling.cpp.i
+.PHONY : audio/audio_throttling.i
+
+# target to preprocess a source file
+audio/audio_throttling.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/audio/audio_throttling.cpp.i
+.PHONY : audio/audio_throttling.cpp.i
+
+audio/audio_throttling.s: audio/audio_throttling.cpp.s
+.PHONY : audio/audio_throttling.s
+
+# target to generate assembly for a file
+audio/audio_throttling.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/audio/audio_throttling.cpp.s
+.PHONY : audio/audio_throttling.cpp.s
+
+audio/enhanced_audio.obj: audio/enhanced_audio.cpp.obj
+.PHONY : audio/enhanced_audio.obj
+
+# target to build an object file
+audio/enhanced_audio.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/audio/enhanced_audio.cpp.obj
+.PHONY : audio/enhanced_audio.cpp.obj
+
+audio/enhanced_audio.i: audio/enhanced_audio.cpp.i
+.PHONY : audio/enhanced_audio.i
+
+# target to preprocess a source file
+audio/enhanced_audio.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/audio/enhanced_audio.cpp.i
+.PHONY : audio/enhanced_audio.cpp.i
+
+audio/enhanced_audio.s: audio/enhanced_audio.cpp.s
+.PHONY : audio/enhanced_audio.s
+
+# target to generate assembly for a file
+audio/enhanced_audio.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/audio/enhanced_audio.cpp.s
+.PHONY : audio/enhanced_audio.cpp.s
+
 automap.obj: automap.cpp.obj
 .PHONY : automap.obj
 
@@ -6542,6 +6590,12 @@ help:
 	@echo ... appfat.obj
 	@echo ... appfat.i
 	@echo ... appfat.s
+	@echo ... audio/audio_throttling.obj
+	@echo ... audio/audio_throttling.i
+	@echo ... audio/audio_throttling.s
+	@echo ... audio/enhanced_audio.obj
+	@echo ... audio/enhanced_audio.i
+	@echo ... audio/enhanced_audio.s
 	@echo ... automap.obj
 	@echo ... automap.i
 	@echo ... automap.s

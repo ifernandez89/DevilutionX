@@ -153,6 +153,9 @@ set(libdevilutionx_SRCS
   safety/stress_testing.cpp
   safety/stress_test_runner.cpp
 
+  audio/audio_throttling.cpp
+  audio/enhanced_audio.cpp
+
   quests/validation.cpp
 
   storm/storm_net.cpp

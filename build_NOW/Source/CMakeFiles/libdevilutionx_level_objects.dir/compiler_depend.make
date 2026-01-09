@@ -517,6 +517,7 @@ Source/CMakeFiles/libdevilutionx_level_objects.dir/objects.cpp.obj: C:/c\ -\ c++
   C:/c\ -\ c++/DevilutionX/Source/safety/safety_iter.h \
   C:/c\ -\ c++/DevilutionX/Source/safety/safety_limits.h \
   C:/c\ -\ c++/DevilutionX/Source/safety/safety_math.h \
+  C:/c\ -\ c++/DevilutionX/Source/safety/safety_metrics.h \
   C:/c\ -\ c++/DevilutionX/Source/safety/safety_spawn.h \
   C:/c\ -\ c++/DevilutionX/Source/stores.h \
   C:/c\ -\ c++/DevilutionX/Source/tables/itemdat.h \
@@ -2004,6 +2005,8 @@ C:/c\ -\ c++/DevilutionX/Source/safety/safety.h:
 C:/c\ -\ c++/DevilutionX/Source/safety/safety_iter.h:
 
 C:/c\ -\ c++/DevilutionX/Source/safety/safety_limits.h:
+
+C:/c\ -\ c++/DevilutionX/Source/safety/safety_metrics.h:
 
 C:/c\ -\ c++/DevilutionX/Source/stores.h:
 

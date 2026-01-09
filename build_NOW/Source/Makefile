@@ -5337,6 +5337,78 @@ restrict.cpp.s:
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/restrict.cpp.s
 .PHONY : restrict.cpp.s
 
+safety/safety_metrics.obj: safety/safety_metrics.cpp.obj
+.PHONY : safety/safety_metrics.obj
+
+# target to build an object file
+safety/safety_metrics.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/safety/safety_metrics.cpp.obj
+.PHONY : safety/safety_metrics.cpp.obj
+
+safety/safety_metrics.i: safety/safety_metrics.cpp.i
+.PHONY : safety/safety_metrics.i
+
+# target to preprocess a source file
+safety/safety_metrics.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/safety/safety_metrics.cpp.i
+.PHONY : safety/safety_metrics.cpp.i
+
+safety/safety_metrics.s: safety/safety_metrics.cpp.s
+.PHONY : safety/safety_metrics.s
+
+# target to generate assembly for a file
+safety/safety_metrics.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/safety/safety_metrics.cpp.s
+.PHONY : safety/safety_metrics.cpp.s
+
+safety/stress_test_runner.obj: safety/stress_test_runner.cpp.obj
+.PHONY : safety/stress_test_runner.obj
+
+# target to build an object file
+safety/stress_test_runner.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/safety/stress_test_runner.cpp.obj
+.PHONY : safety/stress_test_runner.cpp.obj
+
+safety/stress_test_runner.i: safety/stress_test_runner.cpp.i
+.PHONY : safety/stress_test_runner.i
+
+# target to preprocess a source file
+safety/stress_test_runner.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/safety/stress_test_runner.cpp.i
+.PHONY : safety/stress_test_runner.cpp.i
+
+safety/stress_test_runner.s: safety/stress_test_runner.cpp.s
+.PHONY : safety/stress_test_runner.s
+
+# target to generate assembly for a file
+safety/stress_test_runner.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/safety/stress_test_runner.cpp.s
+.PHONY : safety/stress_test_runner.cpp.s
+
+safety/stress_testing.obj: safety/stress_testing.cpp.obj
+.PHONY : safety/stress_testing.obj
+
+# target to build an object file
+safety/stress_testing.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/safety/stress_testing.cpp.obj
+.PHONY : safety/stress_testing.cpp.obj
+
+safety/stress_testing.i: safety/stress_testing.cpp.i
+.PHONY : safety/stress_testing.i
+
+# target to preprocess a source file
+safety/stress_testing.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/safety/stress_testing.cpp.i
+.PHONY : safety/stress_testing.cpp.i
+
+safety/stress_testing.s: safety/stress_testing.cpp.s
+.PHONY : safety/stress_testing.s
+
+# target to generate assembly for a file
+safety/stress_testing.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/safety/stress_testing.cpp.s
+.PHONY : safety/stress_testing.cpp.s
+
 sha.obj: sha.cpp.obj
 .PHONY : sha.obj
 
@@ -6962,6 +7034,15 @@ help:
 	@echo ... restrict.obj
 	@echo ... restrict.i
 	@echo ... restrict.s
+	@echo ... safety/safety_metrics.obj
+	@echo ... safety/safety_metrics.i
+	@echo ... safety/safety_metrics.s
+	@echo ... safety/stress_test_runner.obj
+	@echo ... safety/stress_test_runner.i
+	@echo ... safety/stress_test_runner.s
+	@echo ... safety/stress_testing.obj
+	@echo ... safety/stress_testing.i
+	@echo ... safety/stress_testing.s
 	@echo ... sha.obj
 	@echo ... sha.i
 	@echo ... sha.s

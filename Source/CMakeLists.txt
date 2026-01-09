@@ -149,6 +149,10 @@ set(libdevilutionx_SRCS
   qol/stash.cpp
   qol/xpbar.cpp
 
+  safety/safety_metrics.cpp
+  safety/stress_testing.cpp
+  safety/stress_test_runner.cpp
+
   quests/validation.cpp
 
   storm/storm_net.cpp

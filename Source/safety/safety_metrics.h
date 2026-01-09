@@ -220,6 +220,11 @@ EngineCertificationLevel GetEngineCertificationLevel();
 const char* GetCertificationLevelName(EngineCertificationLevel level);
 
 /**
+ * Actualiza el nivel de certificación basado en resultados de tests
+ */
+void UpdateCertificationLevel(const std::string& testName, bool passed);
+
+/**
  * Verifica si el engine está certificado para optimizaciones agresivas
  */
 inline bool IsReadyForAggressiveOptimizations() {

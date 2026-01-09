@@ -12,11 +12,11 @@
 #include <algorithm>
 #include <vector>
 #include <iostream>
+#include <sstream>
 
 #ifdef _DEBUG
 #include <fstream>
 #include <iomanip>
-#include <sstream>
 #endif
 
 namespace devilution {
@@ -50,6 +50,7 @@ void UpdateSafetyMetrics() {
     // Calcular si estamos en zona de peligro
     int missileUsage = GetMissileUsagePercent();
     int monsterUsage = GetMonsterUsagePercent();
+    constexpr int DANGER_ZONE_THRESHOLD = 80;
     metrics.isInDangerZone = (missileUsage > DANGER_ZONE_THRESHOLD) || 
                             (monsterUsage > DANGER_ZONE_THRESHOLD);
     

@@ -21,6 +21,78 @@
 namespace devilution {
 
 // ============================================================================
+// 🔒 SISTEMA DE VERIFICACIÓN DE ESTADO SEGURO
+// ============================================================================
+
+namespace {
+    // Estado interno del sistema para verificaciones seguras
+    struct SafeAudioState {
+        bool gameFullyInitialized = false;
+        bool playerValid = false;
+        bool inDialog = false;
+        bool inDialogTransition = false;  // NUEVO: Detectar transiciones de diálogo
+        uint32_t lastStateCheck = 0;
+        uint32_t dialogTransitionStart = 0;  // NUEVO: Timestamp de inicio de transición
+        
+        void UpdateState() {
+            uint32_t currentTime = SDL_GetTicks();
+            
+            // Solo verificar estado cada 50ms para mejor responsividad durante transiciones
+            if (currentTime - lastStateCheck < 50) {
+                return;
+            }
+            lastStateCheck = currentTime;
+            
+            // Verificar estado del juego de forma segura
+            gameFullyInitialized = (MyPlayer != nullptr);
+            
+            if (gameFullyInitialized) {
+                playerValid = MyPlayer->plractive && 
+                             MyPlayer->_pmode != PM_DEATH &&
+                             MyPlayer->_pLvlChanging == 0;
+            } else {
+                playerValid = false;
+            }
+            
+            // Detectar transiciones de diálogo de forma más inteligente
+            bool wasInDialog = inDialog;
+            inDialog = false; // Simplificado por ahora
+            
+            // Detectar si estamos en transición de diálogo
+            if (!wasInDialog && inDialog) {
+                // Iniciando diálogo
+                inDialogTransition = true;
+                dialogTransitionStart = currentTime;
+            } else if (wasInDialog && !inDialog) {
+                // Terminando diálogo
+                inDialogTransition = true;
+                dialogTransitionStart = currentTime;
+            } else if (inDialogTransition && (currentTime - dialogTransitionStart > 1000)) {
+                // Transición completada después de 1 segundo
+                inDialogTransition = false;
+            }
+        }
+        
+        bool IsSafeForEnhancedAudio() {
+            UpdateState();
+            // CAMBIO CRÍTICO: Permitir audio mejorado durante transiciones de diálogo
+            // porque InitQTextMsg necesita funcionar correctamente
+            return gameFullyInitialized && playerValid;
+        }
+        
+        bool IsInDialogTransition() {
+            UpdateState();
+            return inDialogTransition;
+        }
+    };
+    
+    SafeAudioState g_safeState;
+}
+
+// Exportar la variable para uso en minitext.cpp (sin thread_local para compatibilidad)
+bool g_calledFromInitQTextMsg = false;
+
+// ============================================================================
 // 🔊 ESTADO GLOBAL DEL SISTEMA DE AUDIO MEJORADO
 // ============================================================================
 
@@ -45,6 +117,14 @@ namespace {
 // ============================================================================
 
 void InitEnhancedAudio() {
+    // 🔒 INICIALIZACIÓN TARDÍA Y SEGURA
+    
+    // Verificar que el sistema básico de audio esté listo
+    if (!gbSndInited) {
+        g_initialized = false;
+        return; // Audio básico no está listo, postponer inicialización
+    }
+    
     // Inicializar throttling
     InitAudioThrottling();
     
@@ -54,14 +134,25 @@ void InitEnhancedAudio() {
     // Reset estadísticas
     g_stats = {};
     
+    // Reset estado seguro
+    g_safeState = {};
+    
     g_initialized = true;
     
 #ifdef _DEBUG
-    std::cout << "Enhanced Audio System initialized" << std::endl;
+    std::cout << "Enhanced Audio System initialized safely" << std::endl;
 #endif
 }
 
 void UpdateEnhancedAudio() {
+    // 🔒 INICIALIZACIÓN TARDÍA - Inicializar cuando sea seguro
+    if (!g_initialized && gbSndInited) {
+        InitEnhancedAudio();
+        if (!g_initialized) {
+            return; // Inicialización falló, intentar en el próximo frame
+        }
+    }
+    
     if (!g_initialized || !g_enhancedAudioEnabled) {
         return;
     }
@@ -90,10 +181,25 @@ void CleanupEnhancedAudio() {
 // ============================================================================
 
 bool EnhancedPlaySFX(SfxID soundId) {
-    if (!g_initialized || !g_enhancedAudioEnabled) {
-        // Fallback a función original
-        PlaySFX(soundId);
-        return true;
+    // 🔒 VERIFICACIÓN DE ESTADO SEGURA CON EXCEPCIÓN PARA DIÁLOGOS
+    
+    // EXCEPCIÓN CRÍTICA: Si la llamada viene de InitQTextMsg, usar verificación más permisiva
+    if (g_calledFromInitQTextMsg) {
+        // Durante InitQTextMsg, solo verificar que MyPlayer existe y el sistema esté inicializado
+        if (MyPlayer == nullptr || !g_initialized || !g_enhancedAudioEnabled) {
+            return false;
+        }
+        // Permitir procesamiento durante transiciones de diálogo
+    } else {
+        // Verificación normal para otras llamadas
+        if (!g_safeState.IsSafeForEnhancedAudio()) {
+            return false; // Estado no seguro, usar sistema original
+        }
+        
+        // Verificar inicialización del sistema
+        if (!g_initialized || !g_enhancedAudioEnabled) {
+            return false;
+        }
     }
     
     auto startTime = std::chrono::high_resolution_clock::now();
@@ -150,10 +256,14 @@ bool EnhancedPlaySFX(SfxID soundId) {
 }
 
 bool EnhancedPlaySfxLoc(SfxID soundId, Point position, bool randomizeByCategory) {
+    // 🔒 VERIFICACIÓN DE ESTADO SEGURA - Sin dependencias externas
+    if (!g_safeState.IsSafeForEnhancedAudio()) {
+        return false; // Estado no seguro, usar sistema original
+    }
+    
+    // Verificar inicialización del sistema
     if (!g_initialized || !g_enhancedAudioEnabled) {
-        // Fallback a función original
-        PlaySfxLoc(soundId, position, randomizeByCategory);
-        return true;
+        return false;
     }
     
     auto startTime = std::chrono::high_resolution_clock::now();
@@ -174,7 +284,8 @@ bool EnhancedPlaySfxLoc(SfxID soundId, Point position, bool randomizeByCategory)
     int volume = 0;  // Volumen base
     int pan = 0;     // Pan base
     
-    if (g_config.spatialAudioEnabled && MyPlayer != nullptr) {
+    // 🔒 SPATIAL AUDIO SEGURO - MyPlayer ya fue verificado en IsGameStateValidForEnhancedAudio()
+    if (g_config.spatialAudioEnabled) {
         Point playerPos = MyPlayer->position.tile;
         
         if (!CalculateSpatialAudio(position, playerPos, volume, &volume, &pan)) {
@@ -269,17 +380,28 @@ bool CalculateSpatialAudio(Point soundPosition, Point playerPosition, int baseVo
         return false;  // Fuera de rango
     }
     
-    // Calcular volumen basado en distancia
-    int volumeReduction = (distance * config.volumeFalloff) / config.maxDistance;
+    // Calcular volumen basado en distancia con falloff cuadrático
+    // MEJORA: Usar falloff cuadrático para más realismo
+    float distanceRatio = static_cast<float>(distance) / config.maxDistance;
+    float volumeMultiplier = 1.0f - (distanceRatio * distanceRatio); // Falloff cuadrático
+    
+    int volumeReduction = static_cast<int>((1.0f - volumeMultiplier) * config.volumeFalloff);
     *outVolume = std::max(baseVolume - volumeReduction, -10000);  // Límite mínimo de volumen
     
-    // Calcular paneo estéreo basado en posición horizontal
-    int panValue = (dx * config.panFactor) / config.maxDistance;
-    *outPan = std::clamp(panValue, -10000, 10000);  // Límites de paneo
+    // Calcular paneo estéreo basado en posición horizontal con curva suave
+    float panRatio = static_cast<float>(dx) / config.maxDistance;
+    panRatio = std::clamp(panRatio, -1.0f, 1.0f);
+    
+    // Aplicar curva suave al paneo para más naturalidad
+    float smoothPan = panRatio * std::abs(panRatio); // Curva cuadrática suave
+    *outPan = static_cast<int>(smoothPan * config.panFactor);
+    *outPan = std::clamp(*outPan, -10000, 10000);  // Límites de paneo
     
 #ifdef _DEBUG
     if (g_debugLogging) {
         std::cout << "Spatial audio: distance=" << distance 
+                  << ", distRatio=" << std::fixed << std::setprecision(2) << distanceRatio
+                  << ", volMult=" << volumeMultiplier
                   << ", volume=" << *outVolume 
                   << ", pan=" << *outPan << std::endl;
     }
@@ -322,18 +444,36 @@ void ApplyAudioVariation(int baseVolume, int basePitch, int* outVolume, int* out
         return;
     }
     
-    // Aplicar variación de volumen
-    int volumeVariation = GenerateRnd(config.volumeVariationRange * 2 + 1) - config.volumeVariationRange;
+    // 🎶 VARIACIÓN MEJORADA - Aplicar variación inteligente
+    
+    // Variación de volumen con curva suave
+    int volumeRange = config.volumeVariationRange;
+    int volumeVariation = GenerateRnd(volumeRange * 2 + 1) - volumeRange;
+    
+    // Aplicar curva suave para variaciones más naturales
+    float volumeRatio = static_cast<float>(volumeVariation) / volumeRange;
+    volumeRatio = volumeRatio * std::abs(volumeRatio); // Curva cuadrática suave
+    volumeVariation = static_cast<int>(volumeRatio * volumeRange);
+    
     *outVolume = baseVolume + volumeVariation;
     
-    // Aplicar variación de pitch (para futuro uso)
-    int pitchVariation = GenerateRnd(config.pitchVariationRange * 2 + 1) - config.pitchVariationRange;
+    // Variación de pitch con distribución más natural
+    int pitchRange = config.pitchVariationRange;
+    int pitchVariation = GenerateRnd(pitchRange * 2 + 1) - pitchRange;
+    
+    // Aplicar distribución gaussiana aproximada para pitch más natural
+    int pitch1 = GenerateRnd(pitchRange * 2 + 1) - pitchRange;
+    int pitch2 = GenerateRnd(pitchRange * 2 + 1) - pitchRange;
+    pitchVariation = (pitch1 + pitch2) / 2; // Promedio para distribución más centrada
+    
     *outPitch = basePitch + pitchVariation;
     
 #ifdef _DEBUG
     if (g_debugLogging) {
         std::cout << "Audio variation applied: volumeVar=" << volumeVariation 
-                  << ", pitchVar=" << pitchVariation << std::endl;
+                  << " (ratio=" << std::fixed << std::setprecision(2) << volumeRatio << ")"
+                  << ", pitchVar=" << pitchVariation 
+                  << " (gaussian approx)" << std::endl;
     }
 #endif
 }
@@ -431,17 +571,18 @@ void ApplyBalancedAudioPreset() {
     // Throttling balanceado
     config.throttlingEnabled = true;
     
-    // Spatial audio completo
+    // 🎵 SPATIAL AUDIO MEJORADO - Configuración optimizada
     config.spatialAudioEnabled = true;
-    config.spatialConfig.maxDistance = 25;
-    config.spatialConfig.volumeFalloff = 64;
-    config.spatialConfig.panFactor = 256;
+    config.spatialConfig.maxDistance = 20;      // Rango más cercano para más inmersión
+    config.spatialConfig.volumeFalloff = 128;   // Falloff más pronunciado
+    config.spatialConfig.panFactor = 512;       // Paneo más agresivo
+    config.spatialConfig.enabled = true;
     
-    // Variación moderada
+    // 🎶 VARIACIÓN INTELIGENTE - Configuración optimizada
     config.audioVariationEnabled = true;
-    config.variationConfig.pitchVariationRange = 4;
-    config.variationConfig.volumeVariationRange = 10;
-    config.variationConfig.probability = 0.7f;
+    config.variationConfig.pitchVariationRange = 3;    // Variación sutil de pitch
+    config.variationConfig.volumeVariationRange = 8;   // Variación moderada de volumen
+    config.variationConfig.probability = 0.6f;         // 60% probabilidad para naturalidad
     
     // Performance básica
     config.enablePerformanceMetrics = false;
@@ -452,7 +593,7 @@ void ApplyBalancedAudioPreset() {
     InitRecommendedAudioThrottling();
     
 #ifdef _DEBUG
-    std::cout << "Balanced audio preset applied" << std::endl;
+    std::cout << "Balanced audio preset applied with enhanced spatial audio" << std::endl;
 #endif
 }
 
@@ -462,17 +603,18 @@ void ApplyAggressiveAudioPreset() {
     // Throttling agresivo
     config.throttlingEnabled = true;
     
-    // Spatial audio optimizado
+    // 🎵 SPATIAL AUDIO ULTRA-INMERSIVO - Configuración máxima
     config.spatialAudioEnabled = true;
-    config.spatialConfig.maxDistance = 20;
-    config.spatialConfig.volumeFalloff = 96;
-    config.spatialConfig.panFactor = 384;
+    config.spatialConfig.maxDistance = 15;      // Rango muy cercano para máxima inmersión
+    config.spatialConfig.volumeFalloff = 192;   // Falloff muy pronunciado
+    config.spatialConfig.panFactor = 768;       // Paneo ultra-agresivo
+    config.spatialConfig.enabled = true;
     
-    // Variación máxima
+    // 🎶 VARIACIÓN ULTRA-NATURAL - Configuración máxima
     config.audioVariationEnabled = true;
-    config.variationConfig.pitchVariationRange = 6;
-    config.variationConfig.volumeVariationRange = 15;
-    config.variationConfig.probability = 0.9f;
+    config.variationConfig.pitchVariationRange = 5;    // Variación más pronunciada
+    config.variationConfig.volumeVariationRange = 12;  // Variación amplia de volumen
+    config.variationConfig.probability = 0.8f;         // 80% probabilidad para máxima naturalidad
     
     // Performance habilitada
     config.enablePerformanceMetrics = true;
@@ -486,7 +628,7 @@ void ApplyAggressiveAudioPreset() {
     SetSoundThrottling(SfxID::SpellFirebolt, 80, AudioPriority::MEDIUM, 1);
     
 #ifdef _DEBUG
-    std::cout << "Aggressive audio preset applied" << std::endl;
+    std::cout << "Aggressive audio preset applied with ultra-immersive spatial audio" << std::endl;
 #endif
 }
 

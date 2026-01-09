@@ -204,13 +204,17 @@ void stream_stop()
 
 void PlaySFX(SfxID psfx)
 {
-	// 🔊 AUDIO ENHANCEMENT - Usar sistema mejorado si está disponible
-	if (IsEnhancedAudioEnabled()) {
-		EnhancedPlaySFX(psfx);
-		return;
-	}
+	// 🔒 TEMPORARY DISABLE - Sistema de audio mejorado deshabilitado para debugging
+	// Razón: Crash durante conversaciones con NPCs debido a timing de inicialización
+	// TODO: Rediseñar con arquitectura context-aware en el futuro
+	// if (IsEnhancedAudioEnabled()) {
+	//     if (EnhancedPlaySFX(psfx)) {
+	//         return; // Sistema mejorado procesó el sonido de forma segura
+	//     }
+	//     // Si retorna false, continuar con sistema original (fallback automático)
+	// }
 	
-	// Código original
+	// Código original - FUNCIONA PERFECTAMENTE
 	psfx = RndSFX(psfx);
 
 	if (!gbSndInited) return;
@@ -220,13 +224,17 @@ void PlaySFX(SfxID psfx)
 
 void PlaySfxLoc(SfxID psfx, Point position, bool randomizeByCategory)
 {
-	// 🔊 AUDIO ENHANCEMENT - Usar sistema mejorado si está disponible
-	if (IsEnhancedAudioEnabled()) {
-		EnhancedPlaySfxLoc(psfx, position, randomizeByCategory);
-		return;
-	}
+	// 🔒 TEMPORARY DISABLE - Sistema de audio mejorado deshabilitado para debugging
+	// Razón: Crash durante conversaciones con NPCs debido a timing de inicialización
+	// TODO: Rediseñar con arquitectura context-aware en el futuro
+	// if (IsEnhancedAudioEnabled()) {
+	//     if (EnhancedPlaySfxLoc(psfx, position, randomizeByCategory)) {
+	//         return; // Sistema mejorado procesó el sonido de forma segura
+	//     }
+	//     // Si retorna false, continuar con sistema original (fallback automático)
+	// }
 	
-	// Código original
+	// Código original - FUNCIONA PERFECTAMENTE
 	if (randomizeByCategory) {
 		psfx = RndSFX(psfx);
 	}
@@ -262,8 +270,8 @@ void sound_update()
 
 	StreamUpdate();
 	
-	// 🔊 AUDIO ENHANCEMENT - Actualizar sistema mejorado
-	UpdateEnhancedAudio();
+	// 🔒 TEMPORARY DISABLE - Sistema de audio mejorado deshabilitado para debugging
+	// UpdateEnhancedAudio();
 }
 
 void effects_cleanup_sfx(bool fullUnload)
@@ -316,8 +324,8 @@ void sound_init()
 
 	PrivSoundInit(mask);
 	
-	// 🔊 AUDIO ENHANCEMENT - Inicializar sistema mejorado
-	InitEnhancedAudio();
+	// 🔒 TEMPORARY DISABLE - Sistema de audio mejorado deshabilitado para debugging
+	// InitEnhancedAudio();
 }
 
 void ui_sound_init()

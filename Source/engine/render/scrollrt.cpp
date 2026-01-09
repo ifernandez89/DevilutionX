@@ -98,6 +98,58 @@ namespace {
 
 constexpr auto RightFrameDisplacement = Displacement { DunFrameWidth, 0 };
 
+// ============================================================================
+// 🎯 FASE D1.3 - WRAPPER FUNCTIONS FOR DRAW PRIORITY
+// ============================================================================
+
+/**
+ * Prioridades de dibujado para simular profundidad 3D
+ */
+enum class DrawPriority : int {
+	Background = 0,      // Tiles de fondo
+	Items = 1,          // Items normales
+	Objects = 2,        // Objetos del mundo
+	Monsters = 3,       // Monstruos normales
+	EliteMonsters = 4,  // Monstruos elite (más visibles)
+	Player = 5,         // Jugador (máxima prioridad)
+	Effects = 6         // Efectos visuales
+};
+
+/**
+ * Determina la prioridad de dibujado para un monstruo
+ */
+DrawPriority GetMonsterDrawPriority(const Monster &monster) {
+	// Monstruos elite tienen prioridad más alta para mejor visibilidad
+	if (monster.isUnique() || (monster.flags & MFLAG_ELITE) != 0) {
+		return DrawPriority::EliteMonsters;
+	}
+	return DrawPriority::Monsters;
+}
+
+/**
+ * Ajusta el lightTableIndex basado en la prioridad de dibujado
+ */
+int AdjustLightForDrawPriority(int baseLightTableIndex, DrawPriority priority) {
+	if (!g_depthCues.enabled) {
+		return baseLightTableIndex;
+	}
+	
+	// Ajustar iluminación según prioridad (valores más bajos = más brillante)
+	switch (priority) {
+	case DrawPriority::Player:
+		return std::max(0, baseLightTableIndex - 2); // Jugador más brillante
+	case DrawPriority::EliteMonsters:
+		return std::max(0, baseLightTableIndex - 1); // Elites ligeramente más brillantes
+	case DrawPriority::Monsters:
+		return baseLightTableIndex; // Monstruos normales sin cambio
+	case DrawPriority::Objects:
+	case DrawPriority::Items:
+		return std::min(LightsMax - 1, baseLightTableIndex + 1); // Objetos/items ligeramente más oscuros
+	default:
+		return baseLightTableIndex;
+	}
+}
+
 [[nodiscard]] DVL_ALWAYS_INLINE bool IsFloor(Point tilePosition)
 {
 	return !TileHasAny(tilePosition, TileProperties::Solid | TileProperties::BlockMissile);
@@ -849,7 +901,9 @@ void DrawDungeon(const Surface &out, const Lightmap &lightmap, Point tilePositio
 				tempTargetBufferPosition += { -TILE_WIDTH, 0 };
 				tempTilePosition += Opposite(player->_pdir);
 			}
-			DrawPlayer(out, *player, tempTilePosition, tempTargetBufferPosition, lightTableIndex);
+			// 🎯 FASE D1.3 - Aplicar prioridad de dibujado para el jugador
+			int adjustedLightIndex = AdjustLightForDrawPriority(lightTableIndex, DrawPriority::Player);
+			DrawPlayer(out, *player, tempTilePosition, tempTargetBufferPosition, adjustedLightIndex);
 		}
 	}
 
@@ -886,7 +940,10 @@ void DrawDungeon(const Surface &out, const Lightmap &lightmap, Point tilePositio
 				tempTargetBufferPosition += { -TILE_WIDTH, 0 };
 				tempTilePosition += Opposite(monster->direction);
 			}
-			DrawMonsterHelper(out, tempTilePosition, tempTargetBufferPosition, lightTableIndex);
+			// 🎯 FASE D1.3 - Aplicar prioridad de dibujado según tipo de monstruo
+			DrawPriority priority = GetMonsterDrawPriority(*monster);
+			int adjustedLightIndex = AdjustLightForDrawPriority(lightTableIndex, priority);
+			DrawMonsterHelper(out, tempTilePosition, tempTargetBufferPosition, adjustedLightIndex);
 		}
 	}
 

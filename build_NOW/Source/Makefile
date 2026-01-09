@@ -568,6 +568,20 @@ libdevilutionx_visual_feedback/fast:
 .PHONY : libdevilutionx_visual_feedback/fast
 
 # Convenience name for target.
+Source/CMakeFiles/libdevilutionx_contextual_palette.dir/rule:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 Source/CMakeFiles/libdevilutionx_contextual_palette.dir/rule
+.PHONY : Source/CMakeFiles/libdevilutionx_contextual_palette.dir/rule
+
+# Convenience name for target.
+libdevilutionx_contextual_palette: Source/CMakeFiles/libdevilutionx_contextual_palette.dir/rule
+.PHONY : libdevilutionx_contextual_palette
+
+# fast build rule for target.
+libdevilutionx_contextual_palette/fast:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_contextual_palette.dir\build.make Source/CMakeFiles/libdevilutionx_contextual_palette.dir/build
+.PHONY : libdevilutionx_contextual_palette/fast
+
+# Convenience name for target.
 Source/CMakeFiles/libdevilutionx_logged_fstream.dir/rule:
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 Source/CMakeFiles/libdevilutionx_logged_fstream.dir/rule
 .PHONY : Source/CMakeFiles/libdevilutionx_logged_fstream.dir/rule
@@ -1534,6 +1548,30 @@ codec.s: codec.cpp.s
 codec.cpp.s:
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_codec.dir\build.make Source/CMakeFiles/libdevilutionx_codec.dir/codec.cpp.s
 .PHONY : codec.cpp.s
+
+contextual_palette.obj: contextual_palette.cpp.obj
+.PHONY : contextual_palette.obj
+
+# target to build an object file
+contextual_palette.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_contextual_palette.dir\build.make Source/CMakeFiles/libdevilutionx_contextual_palette.dir/contextual_palette.cpp.obj
+.PHONY : contextual_palette.cpp.obj
+
+contextual_palette.i: contextual_palette.cpp.i
+.PHONY : contextual_palette.i
+
+# target to preprocess a source file
+contextual_palette.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_contextual_palette.dir\build.make Source/CMakeFiles/libdevilutionx_contextual_palette.dir/contextual_palette.cpp.i
+.PHONY : contextual_palette.cpp.i
+
+contextual_palette.s: contextual_palette.cpp.s
+.PHONY : contextual_palette.s
+
+# target to generate assembly for a file
+contextual_palette.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_contextual_palette.dir\build.make Source/CMakeFiles/libdevilutionx_contextual_palette.dir/contextual_palette.cpp.s
+.PHONY : contextual_palette.cpp.s
 
 control/control_chat.obj: control/control_chat.cpp.obj
 .PHONY : control/control_chat.obj
@@ -6521,6 +6559,7 @@ help:
 	@echo ... libdevilutionx_cl2_to_clx
 	@echo ... libdevilutionx_clx_render
 	@echo ... libdevilutionx_codec
+	@echo ... libdevilutionx_contextual_palette
 	@echo ... libdevilutionx_control_mode
 	@echo ... libdevilutionx_controller_buttons
 	@echo ... libdevilutionx_crawl
@@ -6644,6 +6683,9 @@ help:
 	@echo ... codec.obj
 	@echo ... codec.i
 	@echo ... codec.s
+	@echo ... contextual_palette.obj
+	@echo ... contextual_palette.i
+	@echo ... contextual_palette.s
 	@echo ... control/control_chat.obj
 	@echo ... control/control_chat.i
 	@echo ... control/control_chat.s

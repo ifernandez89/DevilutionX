@@ -46,6 +46,9 @@ bool DisableLighting;
 #endif
 bool UpdateLighting;
 
+// 🎯 FASE D1 - 3D SIMULADO: Configuración global de depth cues
+DepthCuesConfig g_depthCues;
+
 namespace {
 
 /** @brief Number of supported light radiuses (first radius starts with 0) */
@@ -143,6 +146,112 @@ uint8_t ApplyFakeVignette(Point position, uint8_t lightValue) {
 	// Clamp al rango válido
 	return static_cast<uint8_t>(std::min(newLightValue, 15.0f));
 }
+
+// ============================================================================
+// 🎯 FASE D1 - 3D SIMULADO: DEPTH CUES IMPLEMENTATION
+// ============================================================================
+
+/**
+ * D1.1 + D1.2 - Calcula factor de profundidad basado en distancia y bias vertical
+ * 
+ * Implementa dos efectos clave:
+ * - D1.1: Oscurecimiento por distancia al jugador (depth cues)
+ * - D1.2: Bias vertical para reforzar perspectiva isométrica
+ * 
+ * @param x, y Coordenadas del tile a evaluar
+ * @param playerX, playerY Coordenadas del jugador
+ * @return Factor de profundidad (0.3-1.0, donde 1.0 = sin efecto, 0.3 = máximo oscurecimiento)
+ */
+float CalculateDepthCues(int x, int y, int playerX, int playerY) {
+	if (!g_depthCues.enabled) {
+		return 1.0f; // Sin efecto si está deshabilitado
+	}
+	
+	// D1.1 - Calcular distancia Manhattan al jugador (más eficiente que euclidiana)
+	const float dx = static_cast<float>(x - playerX);
+	const float dy = static_cast<float>(y - playerY);
+	const float distance = std::sqrt(dx * dx + dy * dy);
+	
+	// D1.2 - Bias vertical para reforzar perspectiva isométrica
+	// "Hacia arriba" del mapa (Y menor) se ve más lejano
+	const float verticalOffset = (y - playerY) * g_depthCues.verticalBias;
+	
+	// Combinar distancia real + bias vertical
+	const float totalDistance = distance + verticalOffset;
+	
+	// Calcular factor de profundidad (1.0 = cerca del jugador, 0.0 = muy lejos)
+	float depthFactor = 1.0f - (totalDistance / g_depthCues.maxDistance);
+	
+	// Clamp al rango válido (nunca completamente negro)
+	return std::max(g_depthCues.minIntensity, std::min(1.0f, depthFactor));
+}
+
+/**
+ * Aplica depth cues a un nivel de luz específico
+ * 
+ * @param lightLevel Nivel de luz original (0-15, donde 0=brillante, 15=oscuro)
+ * @param x, y Coordenadas del tile
+ * @param playerX, playerY Coordenadas del jugador
+ * @return Nivel de luz modificado con depth cues aplicados
+ */
+uint8_t ApplyDepthCuesToLight(uint8_t lightLevel, int x, int y, int playerX, int playerY) {
+	if (!g_depthCues.enabled) {
+		return lightLevel;
+	}
+	
+	// Calcular factor de profundidad
+	const float depthFactor = CalculateDepthCues(x, y, playerX, playerY);
+	
+	// Aplicar depth cues al nivel de luz
+	// depthFactor bajo = más lejos = más oscuro = lightLevel más alto
+	const float adjustedLight = lightLevel / depthFactor;
+	
+	// Clamp al rango válido de lighting (0-15)
+	return static_cast<uint8_t>(std::min(15.0f, adjustedLight));
+}
+
+} // namespace
+
+/**
+ * 🎯 FASE D1 - DEPTH CUES SYSTEM IMPLEMENTATION
+ * Inicializa el sistema de depth cues con valores por defecto
+ */
+void InitDepthCues() {
+	// Configuración por defecto ya está en la struct
+	// Ajustar parámetros según el tipo de nivel para mejor efecto
+	
+	if (leveltype == DTYPE_TOWN) {
+		g_depthCues.depthFactor = 12.0f;     // Efecto más sutil en town
+		g_depthCues.verticalBias = 0.2f;     // Menos bias vertical
+		g_depthCues.maxDistance = 25.0f;     // Mayor alcance
+	} else if (leveltype == DTYPE_CATACOMBS) {
+		g_depthCues.depthFactor = 6.0f;      // Efecto más intenso, claustrofóbico
+		g_depthCues.verticalBias = 0.4f;     // Más bias vertical
+		g_depthCues.maxDistance = 15.0f;     // Menor alcance, más dramático
+	} else if (leveltype == DTYPE_CAVES) {
+		g_depthCues.depthFactor = 7.0f;      // Efecto medio-alto
+		g_depthCues.verticalBias = 0.35f;    // Bias medio-alto
+		g_depthCues.maxDistance = 18.0f;     // Alcance medio
+	} else if (leveltype == DTYPE_HELL) {
+		g_depthCues.depthFactor = 5.0f;      // Efecto máximo, atmósfera opresiva
+		g_depthCues.verticalBias = 0.5f;     // Máximo bias vertical
+		g_depthCues.maxDistance = 12.0f;     // Menor alcance, máximo drama
+	} else {
+		// Cathedral - valores por defecto
+		g_depthCues.depthFactor = 8.0f;
+		g_depthCues.verticalBias = 0.3f;
+		g_depthCues.maxDistance = 20.0f;
+	}
+}
+
+/**
+ * Habilita/deshabilita el sistema de depth cues
+ */
+void SetDepthCuesEnabled(bool enabled) {
+	g_depthCues.enabled = enabled;
+}
+
+namespace {
 
 void RotateRadius(DisplacementOf<int8_t> &offset, DisplacementOf<int8_t> &dist, DisplacementOf<int8_t> &light, DisplacementOf<int8_t> &block)
 {
@@ -498,6 +607,9 @@ void InitLighting()
 	// 🎥 FASE V1.4 - Initialize Fake Vignette System
 	VignetteInitialized = false; // Force re-initialization for new level
 	InitializeFakeVignette();
+	
+	// 🎯 FASE D1 - Initialize Depth Cues System
+	InitDepthCues();
 }
 
 int AddLight(Point position, uint8_t radius)

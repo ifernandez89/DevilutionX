@@ -304,6 +304,7 @@ set(CMAKE_DEPEND_INFO_FILES
   "Source/CMakeFiles/libdevilutionx_light_render.dir/DependInfo.cmake"
   "Source/CMakeFiles/libdevilutionx_lighting.dir/DependInfo.cmake"
   "Source/CMakeFiles/libdevilutionx_visual_feedback.dir/DependInfo.cmake"
+  "Source/CMakeFiles/libdevilutionx_contextual_palette.dir/DependInfo.cmake"
   "Source/CMakeFiles/libdevilutionx_logged_fstream.dir/DependInfo.cmake"
   "Source/CMakeFiles/libdevilutionx_items.dir/DependInfo.cmake"
   "Source/CMakeFiles/libdevilutionx_ini.dir/DependInfo.cmake"

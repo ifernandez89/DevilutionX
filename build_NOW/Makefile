@@ -916,6 +916,19 @@ libdevilutionx_visual_feedback/fast:
 .PHONY : libdevilutionx_visual_feedback/fast
 
 #=============================================================================
+# Target rules for targets named libdevilutionx_contextual_palette
+
+# Build rule for target.
+libdevilutionx_contextual_palette: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 libdevilutionx_contextual_palette
+.PHONY : libdevilutionx_contextual_palette
+
+# fast build rule for target.
+libdevilutionx_contextual_palette/fast:
+	$(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_contextual_palette.dir\build.make Source/CMakeFiles/libdevilutionx_contextual_palette.dir/build
+.PHONY : libdevilutionx_contextual_palette/fast
+
+#=============================================================================
 # Target rules for targets named libdevilutionx_logged_fstream
 
 # Build rule for target.
@@ -1354,6 +1367,7 @@ help:
 	@echo ... libdevilutionx_cl2_to_clx
 	@echo ... libdevilutionx_clx_render
 	@echo ... libdevilutionx_codec
+	@echo ... libdevilutionx_contextual_palette
 	@echo ... libdevilutionx_control_mode
 	@echo ... libdevilutionx_controller_buttons
 	@echo ... libdevilutionx_crawl

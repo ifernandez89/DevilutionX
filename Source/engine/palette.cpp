@@ -144,20 +144,34 @@ void ApplyGlobalBrightness(SDL_Color *dst, const SDL_Color *src)
 			dst[i].b = static_cast<uint8_t>(dst[i].b * 0.94f);
 			dst[i].r = std::min(255, static_cast<int>(dst[i].r * 1.01f));
 		} else if (leveltype == DTYPE_CATACOMBS) {
-			// Catacombs: Tinte rojo/sangre más frío y siniestro
-			dst[i].g = static_cast<uint8_t>(dst[i].g * 0.88f);
-			dst[i].b = static_cast<uint8_t>(dst[i].b * 0.92f); // Menos reducción para sensación más fría
-			dst[i].r = std::min(255, static_cast<int>(dst[i].r * 1.06f));
+			// Catacombs: Enhanced blood atmosphere - darker, more desaturated red tones
+			// Make blood colors more disturbing and less vibrant
+			dst[i].g = static_cast<uint8_t>(dst[i].g * 0.85f); // More desaturated
+			dst[i].b = static_cast<uint8_t>(dst[i].b * 0.88f); // Cooler, more sinister
+			
+			// Enhance red tones for blood but make them darker and more disturbing
+			if (dst[i].r > 100) { // Only affect reddish colors (likely blood)
+				dst[i].r = static_cast<uint8_t>(dst[i].r * 0.92f); // Darker red for heavier atmosphere
+			} else {
+				dst[i].r = std::min(255, static_cast<int>(dst[i].r * 1.06f)); // Slight red tint for other colors
+			}
 		} else if (leveltype == DTYPE_CAVES) {
 			// Caves: Tonos tierra más apagados y opresivos
 			dst[i].r = static_cast<uint8_t>(dst[i].r * 0.94f);
 			dst[i].g = static_cast<uint8_t>(dst[i].g * 0.91f);
 			dst[i].b = static_cast<uint8_t>(dst[i].b * 0.88f);
 		} else if (leveltype == DTYPE_HELL) {
-			// Hell: Contraste violento - rojo/naranja intenso con sombras profundas
-			dst[i].g = static_cast<uint8_t>(dst[i].g * 0.85f);
-			dst[i].b = static_cast<uint8_t>(dst[i].b * 0.75f);
-			dst[i].r = std::min(255, static_cast<int>(dst[i].r * 1.15f));
+			// Hell: Enhanced blood atmosphere - violent contrast with deep blood reds
+			// Make blood colors more intense and disturbing in Hell
+			dst[i].g = static_cast<uint8_t>(dst[i].g * 0.82f); // More desaturated for disturbing effect
+			dst[i].b = static_cast<uint8_t>(dst[i].b * 0.70f); // Much less blue for blood-red atmosphere
+			
+			// Enhance blood reds specifically for more visceral combat aftermath
+			if (dst[i].r > 120) { // Strong red colors (likely blood)
+				dst[i].r = std::min(255, static_cast<int>(dst[i].r * 1.20f)); // Intensify blood reds
+			} else {
+				dst[i].r = std::min(255, static_cast<int>(dst[i].r * 1.15f)); // General red enhancement
+			}
 		} else {
 			// Cathedral: Tinte gótico sutil (piedra fría)
 			dst[i].r = static_cast<uint8_t>(dst[i].r * 0.97f);

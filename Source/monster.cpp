@@ -3993,7 +3993,38 @@ void M_GetKnockback(Monster &monster, WorldTilePosition attackerStartPos)
 
 void M_StartHit(Monster &monster, int dam)
 {
-	PlayEffect(monster, MonsterSound::Hit);
+	// FEATURE: Enhanced Monster Vocal Atmosphere System
+	// Increase probability of pain sounds for more disturbing combat
+	bool shouldPlayHitSound = true;
+	
+	// Check if monster is humanoid (cultists, fallen, goatmen) for prioritized vocal atmosphere
+	const bool isHumanoid = IsAnyOf(monster.type().type, 
+		MT_NGOATMC, MT_BGOATMC, MT_RGOATMC, MT_GGOATMC,
+		MT_NGOATBW, MT_BGOATBW, MT_RGOATBW, MT_GGOATBW,
+		MT_FELLTWIN, MT_DARKMAGE);
+	
+	// Slightly increase probability of pain sounds (preserve silence as core element)
+	if (isHumanoid) {
+		// Humanoid monsters: 85% chance for pain sounds (was ~50% due to random factors)
+		shouldPlayHitSound = GenerateRnd(100) < 85;
+	} else {
+		// Other monsters: 70% chance for pain sounds (slight increase)
+		shouldPlayHitSound = GenerateRnd(100) < 70;
+	}
+	
+	// Additional pain sound when monsters are low HP for more oppressive atmosphere
+	const bool isLowHP = monster.hitPoints < (monster.maxHitPoints / 3); // Below 33% HP
+	if (isLowHP && isHumanoid) {
+		// Low HP humanoids: Always play pain sound + chance for additional sound
+		shouldPlayHitSound = true;
+		if (GenerateRnd(100) < 30) { // 30% chance for additional pain sound
+			PlayEffect(monster, MonsterSound::Hit);
+		}
+	}
+	
+	if (shouldPlayHitSound) {
+		PlayEffect(monster, MonsterSound::Hit);
+	}
 
 	if (IsHardHit(monster, dam)) {
 		if (monster.type().type == MT_BLINK) {
@@ -4036,10 +4067,57 @@ void MonsterDeath(Monster &monster, Direction md, bool sendmsg)
 
 	SpawnLoot(monster, sendmsg);
 
+	// FEATURE: Enhanced Blood Atmosphere System
+	// Spawn additional blood objects on elite and boss deaths for heavier combat aftermath
+	if (monster.isUnique() || (monster.flags & MFLAG_ELITE) != 0) {
+		// Enhanced blood spawning for elite monsters and bosses
+		const Point deathPosition = monster.position.tile;
+		
+		// Try to spawn blood objects around the death location
+		for (int attempts = 0; attempts < 3; attempts++) {
+			const int offsetX = GenerateRnd(3) - 1; // -1, 0, or 1
+			const int offsetY = GenerateRnd(3) - 1; // -1, 0, or 1
+			const Point bloodPos = deathPosition + Displacement { offsetX, offsetY };
+			
+			// Check if position is valid and not occupied
+			if (InDungeonBounds(bloodPos) && dObject[bloodPos.x][bloodPos.y] == 0 && 
+			    !TileContainsSetPiece(bloodPos) && !IsTileOccupied(bloodPos)) {
+				
+				// Spawn blood fountain for more disturbing atmosphere
+				// Use existing blood fountain object for authentic feel
+				if (FlipCoin(2)) { // 50% chance for blood fountain
+					AddObject(OBJ_BLOODFTN, bloodPos);
+				}
+				break; // Only spawn one blood object per death
+			}
+		}
+	}
+
 	if (monster.type().type == MT_DIABLO)
 		DiabloDeath(monster, true);
-	else
-		PlayEffect(monster, MonsterSound::Death);
+	else {
+		// FEATURE: Enhanced Monster Vocal Atmosphere System
+		// Slightly increase probability of death sounds for more disturbing combat aftermath
+		bool shouldPlayDeathSound = true;
+		
+		// Check if monster is humanoid for prioritized vocal atmosphere
+		const bool isHumanoid = IsAnyOf(monster.type().type, 
+			MT_NGOATMC, MT_BGOATMC, MT_RGOATMC, MT_GGOATMC,
+			MT_NGOATBW, MT_BGOATBW, MT_RGOATBW, MT_GGOATBW,
+			MT_FELLTWIN, MT_DARKMAGE);
+		
+		if (isHumanoid) {
+			// Humanoid monsters: 90% chance for death sounds (more vocal death)
+			shouldPlayDeathSound = GenerateRnd(100) < 90;
+		} else {
+			// Other monsters: 75% chance for death sounds (slight increase)
+			shouldPlayDeathSound = GenerateRnd(100) < 75;
+		}
+		
+		if (shouldPlayDeathSound) {
+			PlayEffect(monster, MonsterSound::Death);
+		}
+	}
 
 	if (monster.mode != MonsterMode::Petrified) {
 		if (monster.type().type == MT_GOLEM)

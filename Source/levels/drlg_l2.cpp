@@ -2094,9 +2094,9 @@ void FixTilesPatterns()
 
 void Substitution()
 {
-	// FEATURE: Global Dark Atmosphere Enhancement - Increased decoration spawn rate for catacombs
-	// Original: 25% chance (FlipCoin(4)), Enhanced: ~30% chance for more blood and corruption
-	int decorationChance = 3; // ~33% chance for more bloody atmosphere
+	// FEATURE: Enhanced Blood Atmosphere System - Increased blood decoration persistence
+	// Original: 25% chance (FlipCoin(4)), Enhanced: More frequent blood spawning for heavier atmosphere
+	int decorationChance = 2; // ~50% chance for more persistent blood atmosphere
 	
 	for (WorldTileCoord y = 0; y < DMAXY; y++) {
 		for (WorldTileCoord x = 0; x < DMAXX; x++) {
@@ -2818,8 +2818,11 @@ void GenerateLevel(lvl_entry entry)
 	PlaceMiniSetRandom1x1(2, 85, 10);
 	PlaceMiniSetRandom1x1(2, 86, 10);
 	PlaceMiniSetRandom1x1(8, 87, 50);
-	PlaceMiniSetRandom(PANCREAS1, 1);
-	PlaceMiniSetRandom(PANCREAS2, 1);
+	
+	// FEATURE: Enhanced Blood Atmosphere System - Increased bloody gib persistence
+	// Original: 1% chance, Enhanced: 5% chance for more disturbing combat aftermath
+	PlaceMiniSetRandom(PANCREAS1, 5); // More frequent bloody gibs for heavier atmosphere
+	PlaceMiniSetRandom(PANCREAS2, 5); // More persistent blood evidence
 	PlaceMiniSetRandom(BIG1, 3);
 	PlaceMiniSetRandom(BIG2, 3);
 	PlaceMiniSetRandom(BIG3, 3);

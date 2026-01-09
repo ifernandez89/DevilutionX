@@ -134,6 +134,10 @@ void InitTownerFromData(Towner &towner, const TownerDataEntry &entry)
 		const auto index = std::max<int32_t>(GenerateRnd(static_cast<int32_t>(entry.gossipTexts.size())), 0);
 		towner.gossip = entry.gossipTexts[index];
 	}
+	
+	// FEATURE: Improved Town NPC Visual Liveliness - Initialize idle facing system
+	towner._tIdleFacingTimer = GenerateRnd(180) + 120; // Random initial delay (2-5 seconds at 60fps)
+	towner._tIdleFacingDirection = static_cast<Direction>(GenerateRnd(8)); // Random initial direction
 }
 
 /**
@@ -798,6 +802,12 @@ void ProcessTowners()
 			TownDead(towner);
 		}
 
+		// FEATURE: Improved Town NPC Visual Liveliness - Update idle facing
+		UpdateIdleFacing(towner);
+		
+		// FEATURE: Improved Town NPC Visual Liveliness - Update Farnham's posture
+		UpdateFarnhamPosture(towner);
+
 		towner._tAnimCnt++;
 		if (towner._tAnimCnt < towner._tAnimDelay) {
 			continue;
@@ -820,6 +830,279 @@ void ProcessTowners()
 	}
 }
 
+/**
+ * @brief Updates Farnham's posture to make him appear more upright when not talking
+ * 
+ * This function attempts to make Farnham use more upright frames when idle,
+ * giving him a less slumped appearance when not actively in conversation.
+ * 
+ * @param towner The Farnham towner to update
+ */
+void UpdateFarnhamPosture(Towner &towner)
+{
+	// Only apply to Farnham
+	if (towner._ttype != TOWN_DRUNK) {
+		return;
+	}
+	
+	// Don't change posture during dialog
+	if (qtextflag) {
+		return;
+	}
+	
+	// Try to use more upright frames from his animation set
+	// Farnham typically has frames that show him in different postures
+	if (!towner.animOrder.empty() && towner.animOrder.size() > 4) {
+		// Create a modified animation order that favors more upright frames
+		// Use the middle portion of his animation frames which tend to be more upright
+		std::vector<uint8_t> uprightAnimOrder;
+		
+		// Use frames from the middle range of his animation (typically more upright)
+		const size_t midStart = towner._tAnimLen / 3;
+		const size_t midEnd = (towner._tAnimLen * 2) / 3;
+		
+		// Create a sequence that uses more upright frames
+		for (size_t i = midStart; i < midEnd && i < towner._tAnimLen; ++i) {
+			uprightAnimOrder.push_back(static_cast<uint8_t>(i));
+		}
+		
+		// Add some variety but still favor upright frames
+		if (uprightAnimOrder.size() >= 2) {
+			// Repeat the sequence to make it longer and more stable
+			std::vector<uint8_t> extendedOrder = uprightAnimOrder;
+			extendedOrder.insert(extendedOrder.end(), uprightAnimOrder.begin(), uprightAnimOrder.end());
+			
+			// Update animation order storage and span
+			TownerAnimOrderStorage.push_back(extendedOrder);
+			towner.animOrder = { TownerAnimOrderStorage.back() };
+			towner._tAnimFrameCnt = 0;
+		}
+	}
+}
+
+/**
+ * @brief Updates idle facing behavior for NPCs to make them more lively
+ * 
+ * This function makes NPCs occasionally change their facing direction when idle,
+ * creating a more dynamic and alive feeling in the town.
+ * 
+ * @param towner The towner to update idle behavior for
+ */
+void UpdateIdleFacing(Towner &towner)
+{
+	// Apply idle facing to main NPCs (full dynamic facing) and others (subtle variation)
+	bool isMainNPC = IsAnyOf(towner._ttype, TOWN_WITCH, TOWN_STORY, TOWN_SMITH, TOWN_HEALER, TOWN_TAVERN);
+	bool isSecondaryNPC = IsAnyOf(towner._ttype, TOWN_DRUNK, TOWN_BMAID, TOWN_PEGBOY);
+	
+	if (!isMainNPC && !isSecondaryNPC) {
+		return;
+	}
+	
+	// Don't update idle facing if currently in dialog
+	if (qtextflag) {
+		return;
+	}
+	
+	// Decrement idle facing timer
+	towner._tIdleFacingTimer--;
+	
+	// Time to change facing direction?
+	if (towner._tIdleFacingTimer <= 0) {
+		if (isMainNPC) {
+			// Main NPCs: More frequent facing changes (3-6 seconds)
+			towner._tIdleFacingTimer = GenerateRnd(180) + 180;
+		} else {
+			// Secondary NPCs: Less frequent, subtle changes (8-15 seconds)
+			towner._tIdleFacingTimer = GenerateRnd(420) + 480;
+		}
+		
+		// Choose a new direction
+		Direction newDirection;
+		if (isMainNPC) {
+			// Main NPCs: Full range of directions
+			do {
+				newDirection = static_cast<Direction>(GenerateRnd(8));
+			} while (newDirection == towner._tIdleFacingDirection);
+		} else {
+			// Secondary NPCs: Only subtle variations (adjacent directions)
+			const Direction currentDir = towner._tIdleFacingDirection;
+			const int currentDirInt = static_cast<int>(currentDir);
+			
+			// Choose adjacent direction (±1 or ±2 from current)
+			const int variation = (GenerateRnd(2) == 0) ? -1 : 1;
+			const int newDirInt = (currentDirInt + variation + 8) % 8;
+			newDirection = static_cast<Direction>(newDirInt);
+		}
+		
+		towner._tIdleFacingDirection = newDirection;
+		
+		// Apply the new facing using our existing stable facing system
+		UpdateTownerFacing(towner, newDirection);
+	}
+}
+
+/**
+ * @brief Updates towner facing direction using stable single frames
+ * 
+ * This function provides clean, discrete facing changes without continuous animation
+ * to avoid visual glitches like the Griswold arm movement bug.
+ * 
+ * @param towner The towner to update
+ * @param targetDirection Direction the towner should face
+ */
+void UpdateTownerFacing(Towner &towner, Direction targetDirection)
+{
+	// Only update facing for NPCs that have animation orders (most town NPCs)
+	if (towner.animOrder.empty())
+		return;
+
+	std::vector<uint8_t> facingAnimOrder;
+	
+	// Use stable single frames for each direction to prevent animation loops
+	switch (towner._ttype) {
+	case TOWN_WITCH: // Adria - 19 frames (0-18)
+		switch (targetDirection) {
+		case Direction::North:
+		case Direction::NorthEast:
+		case Direction::NorthWest:
+			facingAnimOrder = { 13, 13, 13, 13 }; // Stable northward frame
+			break;
+		case Direction::East:
+		case Direction::SouthEast:
+			facingAnimOrder = { 17, 17, 17, 17 }; // Stable eastward frame
+			break;
+		case Direction::West:
+		case Direction::SouthWest:
+			facingAnimOrder = { 1, 1, 1, 1 }; // Stable westward frame
+			break;
+		default: // South
+			facingAnimOrder = { 4, 4, 4, 4 }; // Stable southward frame (default)
+			break;
+		}
+		break;
+		
+	case TOWN_STORY: // Cain - 25 frames (0-24)
+		switch (targetDirection) {
+		case Direction::North:
+		case Direction::NorthEast:
+		case Direction::NorthWest:
+			facingAnimOrder = { 22, 22, 22, 22 }; // Stable northward frame
+			break;
+		case Direction::East:
+		case Direction::SouthEast:
+			facingAnimOrder = { 17, 17, 17, 17 }; // Stable eastward frame
+			break;
+		case Direction::West:
+		case Direction::SouthWest:
+			facingAnimOrder = { 3, 3, 3, 3 }; // Stable westward frame
+			break;
+		default: // South
+			facingAnimOrder = { 12, 12, 12, 12 }; // Stable southward frame (default)
+			break;
+		}
+		break;
+		
+	case TOWN_SMITH: // Griswold - 16 frames (0-15)
+		switch (targetDirection) {
+		case Direction::North:
+		case Direction::NorthEast:
+		case Direction::NorthWest:
+			facingAnimOrder = { 13, 13, 13, 13 }; // Stable northward frame
+			break;
+		case Direction::East:
+		case Direction::SouthEast:
+			facingAnimOrder = { 9, 9, 9, 9 }; // Stable eastward frame
+			break;
+		case Direction::West:
+		case Direction::SouthWest:
+			facingAnimOrder = { 1, 1, 1, 1 }; // Stable westward frame
+			break;
+		default: // South
+			facingAnimOrder = { 5, 5, 5, 5 }; // Stable southward frame (default)
+			break;
+		}
+		break;
+		
+	case TOWN_HEALER: // Pepin - 20 frames (0-19)
+		switch (targetDirection) {
+		case Direction::North:
+		case Direction::NorthEast:
+		case Direction::NorthWest:
+			facingAnimOrder = { 17, 17, 17, 17 }; // Stable northward frame
+			break;
+		case Direction::East:
+		case Direction::SouthEast:
+			facingAnimOrder = { 13, 13, 13, 13 }; // Stable eastward frame
+			break;
+		case Direction::West:
+		case Direction::SouthWest:
+			facingAnimOrder = { 5, 5, 5, 5 }; // Stable westward frame
+			break;
+		default: // South
+			facingAnimOrder = { 9, 9, 9, 9 }; // Stable southward frame (default)
+			break;
+		}
+		break;
+		
+	case TOWN_TAVERN: // Ogden - 16 frames (0-15)
+		switch (targetDirection) {
+		case Direction::North:
+		case Direction::NorthEast:
+		case Direction::NorthWest:
+			facingAnimOrder = { 13, 13, 13, 13 }; // Stable northward frame
+			break;
+		case Direction::East:
+		case Direction::SouthEast:
+			facingAnimOrder = { 9, 9, 9, 9 }; // Stable eastward frame
+			break;
+		case Direction::West:
+		case Direction::SouthWest:
+			facingAnimOrder = { 1, 1, 1, 1 }; // Stable westward frame
+			break;
+		default: // South
+			facingAnimOrder = { 5, 5, 5, 5 }; // Stable southward frame (default)
+			break;
+		}
+		break;
+		
+	default:
+		// Generic facing for other NPCs - use simple frame offset approach
+		{
+			uint8_t baseFrame = 0;
+			switch (targetDirection) {
+			case Direction::North:
+			case Direction::NorthEast:
+			case Direction::NorthWest:
+				baseFrame = (towner._tAnimLen * 3) / 4; // Last quarter
+				break;
+			case Direction::East:
+			case Direction::SouthEast:
+				baseFrame = towner._tAnimLen / 2; // Middle
+				break;
+			case Direction::West:
+			case Direction::SouthWest:
+				baseFrame = towner._tAnimLen / 4; // First quarter
+				break;
+			default: // South
+				baseFrame = 0; // Default
+				break;
+			}
+			
+			// Ensure frame is within bounds and create stable animation
+			baseFrame = baseFrame % towner._tAnimLen;
+			facingAnimOrder = { baseFrame, baseFrame, baseFrame, baseFrame };
+		}
+		break;
+	}
+	
+	// Update animation order storage and span
+	if (!facingAnimOrder.empty()) {
+		TownerAnimOrderStorage.push_back(facingAnimOrder);
+		towner.animOrder = { TownerAnimOrderStorage.back() };
+		towner._tAnimFrameCnt = 0; // Reset animation counter for clean transition
+	}
+}
+
 void TalkToTowner(Player &player, int t)
 {
 	auto &towner = Towners[t];
@@ -830,6 +1113,11 @@ void TalkToTowner(Player &player, int t)
 	if (!player.HoldItem.isEmpty()) {
 		return;
 	}
+
+	// FEATURE: Complete NPC Facing Logic
+	// Make NPCs face the player during interaction using stable single frames
+	Direction playerDirection = GetDirection(towner.position, player.position.tile);
+	UpdateTownerFacing(towner, playerDirection);
 
 	towner.talk(player, towner);
 }

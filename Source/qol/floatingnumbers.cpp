@@ -45,6 +45,13 @@ void ClearExpiredNumbers()
 
 		FloatingQueue.pop_front();
 	}
+	
+	// BUGFIX: Prevent overflow with high monster density
+	// Limit floating numbers to prevent crashes with many monsters + area effects
+	constexpr size_t MAX_FLOATING_NUMBERS = 50; // Reasonable limit for performance
+	while (FloatingQueue.size() > MAX_FLOATING_NUMBERS) {
+		FloatingQueue.pop_front(); // Remove oldest numbers first
+	}
 }
 
 GameFontTables GetGameFontSizeByDamage(int value)
@@ -99,6 +106,16 @@ void UpdateFloatingData(FloatingNumber &num)
 
 void AddFloatingNumber(Point pos, Displacement offset, DamageType type, int value, size_t index, bool damageToPlayer)
 {
+	// BUGFIX: Prevent overflow with high monster density
+	// Skip adding new floating numbers if queue is getting too large
+	constexpr size_t QUEUE_WARNING_SIZE = 40;
+	if (FloatingQueue.size() > QUEUE_WARNING_SIZE) {
+		ClearExpiredNumbers(); // Try to clear expired numbers first
+		if (FloatingQueue.size() > QUEUE_WARNING_SIZE) {
+			return; // Skip this floating number to prevent overflow
+		}
+	}
+	
 	// 45 deg angles to avoid jitter caused by px alignment
 	const Displacement goodAngles[] = {
 		{ 0, -140 },

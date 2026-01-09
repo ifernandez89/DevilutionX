@@ -222,8 +222,28 @@ void GenerateRoom(WorldTileRectangle area, bool verticalLayout)
 	WorldTileRectangle room1;
 
 	for (int num = 0; num < 20; num++) {
-		const int32_t randomWidth = (GenerateRnd(5) + 2) & ~1;
-		const int32_t randomHeight = (GenerateRnd(5) + 2) & ~1;
+		// FEATURE: Intelligent Difficulty System - More Hostile Dungeon Layouts
+		// Create smaller, more cramped rooms for tactical pressure in deeper levels
+		int32_t baseWidth = GenerateRnd(5) + 2;
+		int32_t baseHeight = GenerateRnd(5) + 2;
+		
+		// Adjust room sizes based on level depth for more hostile layouts
+		if (currlevel >= 13) {
+			// Hell: Smaller, more cramped rooms (2-4 instead of 2-6)
+			baseWidth = GenerateRnd(3) + 2;
+			baseHeight = GenerateRnd(3) + 2;
+		} else if (currlevel >= 9) {
+			// Deep caves: Medium-small rooms (2-5 instead of 2-6)
+			baseWidth = GenerateRnd(4) + 2;
+			baseHeight = GenerateRnd(4) + 2;
+		} else if (currlevel >= 5) {
+			// Mid-levels: Slightly smaller rooms (2-5 instead of 2-6)
+			baseWidth = GenerateRnd(4) + 2;
+			baseHeight = GenerateRnd(4) + 2;
+		}
+		
+		const int32_t randomWidth = baseWidth & ~1;
+		const int32_t randomHeight = baseHeight & ~1;
 		room1.size = WorldTileSize(randomWidth, randomHeight);
 		room1.position = area.position;
 		if (verticalLayout) {
@@ -267,8 +287,28 @@ void FirstRoom()
 		} else if (currlevel == Quests[Q_BETRAYER]._qlevel && UseMultiplayerQuests()) {
 			room.size = { 11, 11 };
 		} else {
-			const int32_t randomWidth = GenerateRnd(5) + 2;
-			const int32_t randomHeight = GenerateRnd(5) + 2;
+			// FEATURE: Intelligent Difficulty System - More Hostile Dungeon Layouts
+			// Create smaller, more cramped rooms for tactical pressure in deeper levels
+			int32_t baseWidth = GenerateRnd(5) + 2;
+			int32_t baseHeight = GenerateRnd(5) + 2;
+			
+			// Adjust room sizes based on level depth for more hostile layouts
+			if (currlevel >= 13) {
+				// Hell: Smaller, more cramped rooms (2-4 instead of 2-6)
+				baseWidth = GenerateRnd(3) + 2;
+				baseHeight = GenerateRnd(3) + 2;
+			} else if (currlevel >= 9) {
+				// Deep caves: Medium-small rooms (2-5 instead of 2-6)
+				baseWidth = GenerateRnd(4) + 2;
+				baseHeight = GenerateRnd(4) + 2;
+			} else if (currlevel >= 5) {
+				// Mid-levels: Slightly smaller rooms (2-5 instead of 2-6)
+				baseWidth = GenerateRnd(4) + 2;
+				baseHeight = GenerateRnd(4) + 2;
+			}
+			
+			const int32_t randomWidth = baseWidth;
+			const int32_t randomHeight = baseHeight;
 			room.size = WorldTileSize(randomWidth, randomHeight);
 		}
 	}

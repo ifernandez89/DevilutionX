@@ -51,6 +51,7 @@ enum monster_flag : uint16_t {
 	MFLAG_NO_ENEMY        = 1 << 10,
 	MFLAG_BERSERK         = 1 << 11,
 	MFLAG_NOLIFESTEAL     = 1 << 12,
+	MFLAG_ELITE           = 1 << 13,  // Elite monster with enhanced stats
 	// clang-format on
 };
 
@@ -326,6 +327,26 @@ struct Monster { // note: missing field _mAFNum
 	const MonsterData &data() const
 	{
 		return type().data();
+	}
+
+	/**
+	 * @brief Returns monster's name with elite prefix if mutated
+	 * @return Monster's name, potentially with "Corrupted" prefix for elite monsters
+	 */
+	std::string getDisplayName() const
+	{
+		std::string baseName;
+		if (uniqueType != UniqueMonsterType::None)
+			baseName = pgettext("monster", UniqueMonstersData[static_cast<size_t>(uniqueType)].mName);
+		else
+			baseName = pgettext("monster", data().name);
+
+		// Add elite prefix for elite monsters (identified by MFLAG_ELITE flag)
+		if ((flags & MFLAG_ELITE) != 0 && uniqueType == UniqueMonsterType::None) {
+			return "Corrupted " + baseName;
+		}
+
+		return baseName;
 	}
 
 	/**

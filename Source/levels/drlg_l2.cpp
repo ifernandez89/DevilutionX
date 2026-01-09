@@ -1772,13 +1772,34 @@ void CreateRoom(WorldTilePosition topLeft, WorldTilePosition bottomRight, int nR
 	const WorldTileDisplacement areaDisplacement = bottomRight - topLeft;
 	const WorldTileSize area(areaDisplacement.deltaX, areaDisplacement.deltaY);
 
+	// FEATURE: Intelligent Difficulty System - More Hostile Dungeon Layouts
+	// Create smaller, more cramped rooms for tactical pressure in deeper levels
 	constexpr WorldTileCoord RoomMax = 10;
 	constexpr WorldTileCoord RoomMin = 4;
+	
+	// Adjust room sizes based on level depth for more hostile layouts
+	WorldTileCoord adjustedRoomMax = RoomMax;
+	WorldTileCoord adjustedRoomMin = RoomMin;
+	
+	if (currlevel >= 13) {
+		// Hell: Smaller, more cramped rooms (3-7 instead of 4-10)
+		adjustedRoomMax = 7;
+		adjustedRoomMin = 3;
+	} else if (currlevel >= 9) {
+		// Deep caves: Medium-small rooms (3-8 instead of 4-10)
+		adjustedRoomMax = 8;
+		adjustedRoomMin = 3;
+	} else if (currlevel >= 5) {
+		// Mid-levels: Slightly smaller rooms (4-9 instead of 4-10)
+		adjustedRoomMax = 9;
+		adjustedRoomMin = 4;
+	}
+	
 	WorldTileSize roomSize = area;
-	if (area.width > RoomMin)
-		roomSize.width = GenerateRnd(std::min(area.width, RoomMax) - RoomMin) + RoomMin;
-	if (area.height > RoomMin)
-		roomSize.height = GenerateRnd(std::min(area.height, RoomMax) - RoomMin) + RoomMin;
+	if (area.width > adjustedRoomMin)
+		roomSize.width = GenerateRnd(std::min(area.width, adjustedRoomMax) - adjustedRoomMin) + adjustedRoomMin;
+	if (area.height > adjustedRoomMin)
+		roomSize.height = GenerateRnd(std::min(area.height, adjustedRoomMax) - adjustedRoomMin) + adjustedRoomMin;
 
 	if (size)
 		roomSize = *size;
@@ -2073,11 +2094,15 @@ void FixTilesPatterns()
 
 void Substitution()
 {
+	// FEATURE: Enhanced Blood Atmosphere System - Increased blood decoration persistence
+	// Original: 25% chance (FlipCoin(4)), Enhanced: More frequent blood spawning for heavier atmosphere
+	int decorationChance = 2; // ~50% chance for more persistent blood atmosphere
+	
 	for (WorldTileCoord y = 0; y < DMAXY; y++) {
 		for (WorldTileCoord x = 0; x < DMAXX; x++) {
 			if (SetPieceRoom.contains(x, y))
 				continue;
-			if (!FlipCoin(4))
+			if (!FlipCoin(decorationChance))
 				continue;
 
 			const uint8_t c = BTYPESL2[dungeon[x][y]];
@@ -2793,8 +2818,11 @@ void GenerateLevel(lvl_entry entry)
 	PlaceMiniSetRandom1x1(2, 85, 10);
 	PlaceMiniSetRandom1x1(2, 86, 10);
 	PlaceMiniSetRandom1x1(8, 87, 50);
-	PlaceMiniSetRandom(PANCREAS1, 1);
-	PlaceMiniSetRandom(PANCREAS2, 1);
+	
+	// FEATURE: Enhanced Blood Atmosphere System - Increased bloody gib persistence
+	// Original: 1% chance, Enhanced: 5% chance for more disturbing combat aftermath
+	PlaceMiniSetRandom(PANCREAS1, 5); // More frequent bloody gibs for heavier atmosphere
+	PlaceMiniSetRandom(PANCREAS2, 5); // More persistent blood evidence
 	PlaceMiniSetRandom(BIG1, 3);
 	PlaceMiniSetRandom(BIG2, 3);
 	PlaceMiniSetRandom(BIG3, 3);

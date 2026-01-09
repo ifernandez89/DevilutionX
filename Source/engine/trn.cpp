@@ -43,21 +43,31 @@ std::optional<std::array<uint8_t, 256>> GetClassTRN(Player &player)
 			trn[i] = i; // Default: no change
 		}
 		
-		// Transform red colors (224-231) to violet/purple colors
-		// Red range in Diablo palette typically 224-231
-		trn[224] = 203; // Dark purple
-		trn[225] = 204; // Purple
-		trn[226] = 205; // Medium purple
-		trn[227] = 206; // Light purple
-		trn[228] = 207; // Bright purple
-		trn[229] = 163; // Violet
-		trn[230] = 164; // Light violet
-		trn[231] = 165; // Bright violet
+		// Transform ALL red/orange colors to violet/purple spectrum
+		// More comprehensive color mapping for better coverage
 		
-		// Also transform some brown/orange tones to complement
-		trn[232] = 200; // Dark violet
-		trn[233] = 201; // Medium violet
-		trn[234] = 202; // Light violet
+		// Dark reds to dark purples
+		for (int i = 224; i <= 231; i++) {
+			trn[i] = 200 + (i - 224); // Map to purple range 200-207
+		}
+		
+		// Orange/brown tones to violet
+		for (int i = 232; i <= 239; i++) {
+			trn[i] = 160 + (i - 232); // Map to violet range 160-167
+		}
+		
+		// Light reds to light purples
+		for (int i = 240; i <= 247; i++) {
+			trn[i] = 208 + (i - 240); // Map to light purple range 208-215
+		}
+		
+		// Additional red tones that might be used
+		trn[176] = 203; // Dark red -> Dark purple
+		trn[177] = 204; // Red -> Purple
+		trn[178] = 205; // Medium red -> Medium purple
+		trn[179] = 206; // Light red -> Light purple
+		trn[180] = 163; // Bright red -> Violet
+		trn[181] = 164; // Very bright red -> Light violet
 		
 		return trn;
 	}

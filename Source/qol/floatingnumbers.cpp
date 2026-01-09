@@ -46,9 +46,9 @@ void ClearExpiredNumbers()
 		FloatingQueue.pop_front();
 	}
 	
-	// BUGFIX: Enhanced overflow prevention - more aggressive limits for stability
-	// Reduced limits to prevent crashes in all levels (especially 5 and Hell)
-	constexpr size_t MAX_FLOATING_NUMBERS = 30; // Reduced from 50 for better stability
+	// BUGFIX: ULTRA AGGRESSIVE overflow prevention - maximum stability
+	// Even more reduced limits to prevent crashes with Inferno spam + many monsters
+	constexpr size_t MAX_FLOATING_NUMBERS = 15; // Reduced from 30 for ultimate stability
 	while (FloatingQueue.size() > MAX_FLOATING_NUMBERS) {
 		FloatingQueue.pop_front(); // Remove oldest numbers first
 	}
@@ -106,9 +106,9 @@ void UpdateFloatingData(FloatingNumber &num)
 
 void AddFloatingNumber(Point pos, Displacement offset, DamageType type, int value, size_t index, bool damageToPlayer)
 {
-	// BUGFIX: Enhanced overflow prevention - more aggressive early warning
+	// BUGFIX: ULTRA AGGRESSIVE overflow prevention - maximum stability
 	// Skip adding new floating numbers if queue is getting too large
-	constexpr size_t QUEUE_WARNING_SIZE = 25; // Reduced from 40 for better stability
+	constexpr size_t QUEUE_WARNING_SIZE = 10; // Reduced from 25 for ultimate stability
 	if (FloatingQueue.size() > QUEUE_WARNING_SIZE) {
 		ClearExpiredNumbers(); // Try to clear expired numbers first
 		if (FloatingQueue.size() > QUEUE_WARNING_SIZE) {

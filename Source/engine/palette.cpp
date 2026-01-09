@@ -30,6 +30,7 @@
 #include "utils/palette_blending.hpp"
 #include "visual_feedback.h"
 #include "contextual_palette.h"
+#include "town_cinematic.h"
 #include "utils/sdl_compat.h"
 #include "utils/str_cat.hpp"
 
@@ -268,7 +269,10 @@ void UpdateSystemPalette(std::span<const SDL_Color, 256> src)
 	// Paso 5: Aplicar mejoras contextuales específicas por nivel
 	ApplyContextualPaletteEnhancement(system_palette.data());
 	
-	// Paso 6: Aplicar simulación de profundidad atmosférica
+	// Paso 6: 🎬 NUEVO - Aplicar efectos cinematográficos de Town
+	ApplyTownCinematicEffects(system_palette.data());
+	
+	// Paso 7: Aplicar simulación de profundidad atmosférica
 	ApplyAtmosphericDepthSimulation(system_palette.data());
 	
 	// Actualizar sistema y redibujar

@@ -73,6 +73,7 @@
 #include "lighting.h"
 #include "visual_feedback.h"
 #include "contextual_palette.h"
+#include "town_cinematic.h"
 #include "loadsave.h"
 #include "lua/lua_global.hpp"
 #include "menu.h"
@@ -1537,6 +1538,9 @@ void GameLogic()
 		
 		// 🎨 FASE V2 - Update Contextual Palette System
 		UpdateContextualPalette();
+		
+		// 🏰 FASE D3 - Update Town Cinematográfica System
+		UpdateTownCinematic();
 		
 		ProcessVisionList();
 	} else {
@@ -3406,6 +3410,9 @@ tl::expected<void, std::string> LoadGameLevel(bool firstflag, lvl_entry lvldir)
 	
 	// 🎨 FASE V2 - Initialize Contextual Palette System
 	InitContextualPalette();
+	
+	// 🏰 FASE D3 - Initialize Town Cinematográfica System
+	InitTownCinematic();
 
 	InitLevelMonsters();
 
@@ -3446,6 +3453,13 @@ tl::expected<void, std::string> LoadGameLevel(bool firstflag, lvl_entry lvldir)
 	LoadGameLevelStartMusic(neededTrack);
 
 	CompleteProgress();
+
+	// 🏰 FASE D3 - Town Cinematográfica triggers
+	if (leveltype == DTYPE_TOWN) {
+		OnEnterTown();
+	} else {
+		OnExitTown();
+	}
 
 	LoadGameLevelCalculateCursor();
 	return {};

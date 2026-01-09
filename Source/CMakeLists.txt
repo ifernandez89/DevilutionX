@@ -511,6 +511,16 @@ target_link_dependencies(libdevilutionx_contextual_palette PUBLIC
   unordered_dense::unordered_dense
 )
 
+# 🏰 FASE D3 - Town Cinematográfica System
+add_devilutionx_object_library(libdevilutionx_town_cinematic
+  town_cinematic.cpp
+)
+target_link_dependencies(libdevilutionx_town_cinematic PUBLIC
+  DevilutionX::SDL
+  fmt::fmt
+  libdevilutionx_log
+)
+
 add_devilutionx_object_library(libdevilutionx_logged_fstream
   utils/logged_fstream.cpp
 )
@@ -964,6 +974,7 @@ target_link_dependencies(libdevilutionx PUBLIC
   libdevilutionx_lighting
   libdevilutionx_visual_feedback
   libdevilutionx_contextual_palette
+  libdevilutionx_town_cinematic
   libdevilutionx_monster
   libdevilutionx_mpq
   libdevilutionx_multiplayer

@@ -582,6 +582,20 @@ libdevilutionx_contextual_palette/fast:
 .PHONY : libdevilutionx_contextual_palette/fast
 
 # Convenience name for target.
+Source/CMakeFiles/libdevilutionx_town_cinematic.dir/rule:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 Source/CMakeFiles/libdevilutionx_town_cinematic.dir/rule
+.PHONY : Source/CMakeFiles/libdevilutionx_town_cinematic.dir/rule
+
+# Convenience name for target.
+libdevilutionx_town_cinematic: Source/CMakeFiles/libdevilutionx_town_cinematic.dir/rule
+.PHONY : libdevilutionx_town_cinematic
+
+# fast build rule for target.
+libdevilutionx_town_cinematic/fast:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_town_cinematic.dir\build.make Source/CMakeFiles/libdevilutionx_town_cinematic.dir/build
+.PHONY : libdevilutionx_town_cinematic/fast
+
+# Convenience name for target.
 Source/CMakeFiles/libdevilutionx_logged_fstream.dir/rule:
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 Source/CMakeFiles/libdevilutionx_logged_fstream.dir/rule
 .PHONY : Source/CMakeFiles/libdevilutionx_logged_fstream.dir/rule
@@ -5869,6 +5883,30 @@ tmsg.cpp.s:
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/tmsg.cpp.s
 .PHONY : tmsg.cpp.s
 
+town_cinematic.obj: town_cinematic.cpp.obj
+.PHONY : town_cinematic.obj
+
+# target to build an object file
+town_cinematic.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_town_cinematic.dir\build.make Source/CMakeFiles/libdevilutionx_town_cinematic.dir/town_cinematic.cpp.obj
+.PHONY : town_cinematic.cpp.obj
+
+town_cinematic.i: town_cinematic.cpp.i
+.PHONY : town_cinematic.i
+
+# target to preprocess a source file
+town_cinematic.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_town_cinematic.dir\build.make Source/CMakeFiles/libdevilutionx_town_cinematic.dir/town_cinematic.cpp.i
+.PHONY : town_cinematic.cpp.i
+
+town_cinematic.s: town_cinematic.cpp.s
+.PHONY : town_cinematic.s
+
+# target to generate assembly for a file
+town_cinematic.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_town_cinematic.dir\build.make Source/CMakeFiles/libdevilutionx_town_cinematic.dir/town_cinematic.cpp.s
+.PHONY : town_cinematic.cpp.s
+
 towners.obj: towners.cpp.obj
 .PHONY : towners.obj
 
@@ -6606,6 +6644,7 @@ help:
 	@echo ... libdevilutionx_surface_to_png
 	@echo ... libdevilutionx_text_render
 	@echo ... libdevilutionx_ticks
+	@echo ... libdevilutionx_town_cinematic
 	@echo ... libdevilutionx_txtdata
 	@echo ... libdevilutionx_utf8
 	@echo ... libdevilutionx_utils_console
@@ -7223,6 +7262,9 @@ help:
 	@echo ... tmsg.obj
 	@echo ... tmsg.i
 	@echo ... tmsg.s
+	@echo ... town_cinematic.obj
+	@echo ... town_cinematic.i
+	@echo ... town_cinematic.s
 	@echo ... towners.obj
 	@echo ... towners.i
 	@echo ... towners.s

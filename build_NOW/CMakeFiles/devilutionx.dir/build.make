@@ -162,6 +162,7 @@ devilutionx_EXTERNAL_OBJECTS = \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_lighting.dir/lighting.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_visual_feedback.dir/visual_feedback.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_contextual_palette.dir/contextual_palette.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_town_cinematic.dir/town_cinematic.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_multiplayer.dir/multi.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_multiplayer.dir/pack.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_padmapper.dir/controls/padmapper.cpp.obj" \
@@ -397,6 +398,7 @@ devilutionx.exe: Source/CMakeFiles/libdevilutionx_vision.dir/vision.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_lighting.dir/lighting.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_visual_feedback.dir/visual_feedback.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_contextual_palette.dir/contextual_palette.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx_town_cinematic.dir/town_cinematic.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_multiplayer.dir/multi.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_multiplayer.dir/pack.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_padmapper.dir/controls/padmapper.cpp.obj

@@ -929,6 +929,19 @@ libdevilutionx_contextual_palette/fast:
 .PHONY : libdevilutionx_contextual_palette/fast
 
 #=============================================================================
+# Target rules for targets named libdevilutionx_town_cinematic
+
+# Build rule for target.
+libdevilutionx_town_cinematic: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 libdevilutionx_town_cinematic
+.PHONY : libdevilutionx_town_cinematic
+
+# fast build rule for target.
+libdevilutionx_town_cinematic/fast:
+	$(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_town_cinematic.dir\build.make Source/CMakeFiles/libdevilutionx_town_cinematic.dir/build
+.PHONY : libdevilutionx_town_cinematic/fast
+
+#=============================================================================
 # Target rules for targets named libdevilutionx_logged_fstream
 
 # Build rule for target.
@@ -1414,6 +1427,7 @@ help:
 	@echo ... libdevilutionx_surface_to_png
 	@echo ... libdevilutionx_text_render
 	@echo ... libdevilutionx_ticks
+	@echo ... libdevilutionx_town_cinematic
 	@echo ... libdevilutionx_txtdata
 	@echo ... libdevilutionx_utf8
 	@echo ... libdevilutionx_utils_console

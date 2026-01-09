@@ -207,6 +207,7 @@ C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_light_render.d
 C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_lighting.dir
 C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_visual_feedback.dir
 C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_contextual_palette.dir
+C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_town_cinematic.dir
 C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_logged_fstream.dir
 C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_items.dir
 C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_ini.dir

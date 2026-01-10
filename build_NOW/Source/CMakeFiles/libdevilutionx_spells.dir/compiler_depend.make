@@ -471,6 +471,7 @@ Source/CMakeFiles/libdevilutionx_spells.dir/spells.cpp.obj: C:/c\ -\ c++/Devilut
   C:/c\ -\ c++/DevilutionX/Source/player.h \
   C:/c\ -\ c++/DevilutionX/Source/portal.h \
   C:/c\ -\ c++/DevilutionX/Source/quests.h \
+  C:/c\ -\ c++/DevilutionX/Source/spell_throttling.h \
   C:/c\ -\ c++/DevilutionX/Source/spells.h \
   C:/c\ -\ c++/DevilutionX/Source/tables/itemdat.h \
   C:/c\ -\ c++/DevilutionX/Source/tables/misdat.h \
@@ -1669,6 +1670,8 @@ C:/c\ -\ c++/DevilutionX/Source/objects.h:
 C:/c\ -\ c++/DevilutionX/Source/panels/info_box.hpp:
 
 C:/c\ -\ c++/DevilutionX/Source/player.h:
+
+C:/c\ -\ c++/DevilutionX/Source/spell_throttling.h:
 
 C:/c\ -\ c++/DevilutionX/Source/tables/monstdat.h:
 

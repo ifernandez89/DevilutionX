@@ -4885,17 +4885,9 @@ void RechargeItem(Item &item, Player &player)
 	if (item._iCharges == item._iMaxCharges)
 		return;
 
-	const int rechargeStrength = RandomIntBetween(1, player.getCharacterLevel() / GetSpellStaffLevel(item._iSpell));
-
-	do {
-		item._iMaxCharges--;
-		if (item._iMaxCharges == 0) {
-			return;
-		}
-		item._iCharges += rechargeStrength;
-	} while (item._iCharges < item._iMaxCharges);
-
-	item._iCharges = std::min(item._iCharges, item._iMaxCharges);
+	// 🔧 IMPROVED STAFF RECHARGE: Como Adria, sin reducir cargas máximas
+	// Restaurar cargas completamente como lo hace Adria
+	item._iCharges = item._iMaxCharges;
 
 	if (&player != MyPlayer)
 		return;

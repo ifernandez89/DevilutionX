@@ -47,36 +47,36 @@ void InitSpellThrottling()
     
     // Configurar throttling específico para spells problemáticos
     g_spellThrottling.spellConfigs[SpellID::Inferno] = SpellThrottleConfig(
-        SpellThrottling::INFERNO_MAX_CONTROLS,
-        SpellThrottling::INFERNO_CAST_COOLDOWN,
+        2,  // REDUCIDO: Solo 2 InfernoControls máximo (era 3)
+        250,  // AUMENTADO: 250ms cooldown (era 150ms)
         SpellThrottling::DEFAULT_EMERGENCY_THRESHOLD,
         true
     );
     
     g_spellThrottling.spellConfigs[SpellID::ChainLightning] = SpellThrottleConfig(
-        SpellThrottling::CHAIN_LIGHTNING_MAX_CHAINS,
-        SpellThrottling::CHAIN_LIGHTNING_COOLDOWN,
+        2,  // REDUCIDO: Solo 2 ChainLightnings (era 4)
+        200,  // AUMENTADO: 200ms cooldown (era 120ms)
         SpellThrottling::DEFAULT_EMERGENCY_THRESHOLD,
         true
     );
     
     g_spellThrottling.spellConfigs[SpellID::Fireball] = SpellThrottleConfig(
-        SpellThrottling::FIREBALL_MAX_MISSILES,
-        SpellThrottling::FIREBALL_COOLDOWN,
+        4,  // REDUCIDO: Solo 4 Fireballs (era 6)
+        120,  // AUMENTADO: 120ms cooldown (era 80ms)
         SpellThrottling::DEFAULT_EMERGENCY_THRESHOLD,
         true
     );
     
     g_spellThrottling.spellConfigs[SpellID::Lightning] = SpellThrottleConfig(
-        SpellThrottling::LIGHTNING_MAX_CONTROLS,
-        SpellThrottling::LIGHTNING_COOLDOWN,
+        2,  // REDUCIDO: Solo 2 LightningControls (era 3)
+        150,  // AUMENTADO: 150ms cooldown (era 100ms)
         SpellThrottling::DEFAULT_EMERGENCY_THRESHOLD,
         true
     );
     
     g_spellThrottling.spellConfigs[SpellID::FireWall] = SpellThrottleConfig(
-        SpellThrottling::FIREWALL_MAX_CONTROLS,
-        SpellThrottling::FIREWALL_COOLDOWN,
+        3,  // REDUCIDO: Solo 3 FireWallControls (era 4)
+        300,  // AUMENTADO: 300ms cooldown (era 200ms)
         SpellThrottling::DEFAULT_EMERGENCY_THRESHOLD,
         true
     );
@@ -119,7 +119,8 @@ void UpdateSpellThrottling()
         totalActiveMissiles += count;
     }
     
-    g_spellThrottling.globalThrottlingActive = (totalActiveMissiles > 20);
+    // THROTTLING MÁS AGRESIVO: Activar con menos missiles
+    g_spellThrottling.globalThrottlingActive = (totalActiveMissiles > 10);  // Era 20, ahora 10
 }
 
 bool CanCastSpell(SpellID spellId, int playerId)
@@ -155,8 +156,8 @@ bool CanCastSpell(SpellID spellId, int playerId)
     
     // Si hay throttling global activo, ser más restrictivo
     if (g_spellThrottling.globalThrottlingActive) {
-        // Reducir probabilidad de cast durante throttling global
-        if (GenerateRnd(3) == 0) {  // Solo 33% de probabilidad
+        // THROTTLING EXTREMO: Solo 20% de probabilidad (era 33%)
+        if (GenerateRnd(5) != 0) {  // Solo 1 de cada 5 casts
             g_spellThrottling.totalCastsPrevented++;
             return false;
         }

@@ -3226,6 +3226,13 @@ tl::expected<void, std::string> LoadGameLevelDungeon(bool firstflag, lvl_entry l
 
 		IncProgress();
 	}
+	
+	// 🎨 PALETTE FIX: Ensure palette is correctly loaded after all initialization
+	// This fixes the broken colors bug when creating new games
+	if (firstflag || lvldir != ENTRY_LOAD) {
+		LoadRndLvlPal(leveltype);
+	}
+	
 	return {};
 }
 

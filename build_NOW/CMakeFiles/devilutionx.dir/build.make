@@ -210,6 +210,7 @@ devilutionx_EXTERNAL_OBJECTS = \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/pfile.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/plrmsg.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/portal.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/progressive_silence.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/restrict.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/sync.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/tmsg.cpp.obj" \
@@ -458,6 +459,7 @@ devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/nthread.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/pfile.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/plrmsg.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/portal.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/progressive_silence.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/restrict.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/sync.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/tmsg.cpp.obj

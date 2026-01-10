@@ -5493,6 +5493,30 @@ portals/validation.cpp.s:
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/portals/validation.cpp.s
 .PHONY : portals/validation.cpp.s
 
+progressive_silence.obj: progressive_silence.cpp.obj
+.PHONY : progressive_silence.obj
+
+# target to build an object file
+progressive_silence.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/progressive_silence.cpp.obj
+.PHONY : progressive_silence.cpp.obj
+
+progressive_silence.i: progressive_silence.cpp.i
+.PHONY : progressive_silence.i
+
+# target to preprocess a source file
+progressive_silence.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/progressive_silence.cpp.i
+.PHONY : progressive_silence.cpp.i
+
+progressive_silence.s: progressive_silence.cpp.s
+.PHONY : progressive_silence.s
+
+# target to generate assembly for a file
+progressive_silence.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/progressive_silence.cpp.s
+.PHONY : progressive_silence.cpp.s
+
 qol/autopickup.obj: qol/autopickup.cpp.obj
 .PHONY : qol/autopickup.obj
 
@@ -7541,6 +7565,9 @@ help:
 	@echo ... portals/validation.obj
 	@echo ... portals/validation.i
 	@echo ... portals/validation.s
+	@echo ... progressive_silence.obj
+	@echo ... progressive_silence.i
+	@echo ... progressive_silence.s
 	@echo ... qol/autopickup.obj
 	@echo ... qol/autopickup.i
 	@echo ... qol/autopickup.s

@@ -31,6 +31,7 @@ set(libdevilutionx_SRCS
   pfile.cpp
   plrmsg.cpp
   portal.cpp
+  progressive_silence.cpp
   restrict.cpp
   sync.cpp
   tmsg.cpp

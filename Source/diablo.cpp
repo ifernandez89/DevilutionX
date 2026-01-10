@@ -63,6 +63,7 @@
 #include "enhanced_portal.h"
 #include "inferno_defense.h"
 #include "spell_throttling.h"
+#include "progressive_silence.h"  // 🎵 PROGRESSIVE SILENCE SYSTEM
 #include "crash_diagnostics.h"  // 🔍 CRASH DIAGNOSTICS SYSTEM
 #include "hellfire_book_fix.h"  // 🔥 HELLFIRE BOOK RECOVERY SYSTEM
 #include "guarantee_inferno_book.h"  // 🔥 GUARANTEE INFERNO BOOK SYSTEM
@@ -1591,6 +1592,9 @@ void GameLogic()
 		// 🌀 ENHANCED PORTAL - Update Portal Enhancement System
 		UpdateEnhancedPortal();
 		
+		// 🎵 PROGRESSIVE SILENCE - Update Progressive Silence System
+		UpdateProgressiveSilence();
+		
 		// DISABLED: Crash diagnostics system disabled after successful crash fix
 		// UpdateCrashDiagnostics();
 		
@@ -1629,6 +1633,9 @@ void GameLogic()
 		
 		// 🎯 UNIVERSAL SPELL THROTTLING: Reset frame counters after missile processing (town)
 		ResetSpellThrottlingFrameCounters();
+		
+		// 🎵 PROGRESSIVE SILENCE - Update Progressive Silence System (town)
+		UpdateProgressiveSilence();
 	}
 	gGameLogicStep = GameLogicStep::None;
 
@@ -3125,7 +3132,7 @@ void LoadGameLevelStopMusic(_music_id neededTrack)
 void LoadGameLevelStartMusic(_music_id neededTrack)
 {
 	if (sgnMusicTrack != neededTrack)
-		music_start(neededTrack);
+		ProgressiveSilence_StartMusic(neededTrack); // 🎵 PROGRESSIVE SILENCE
 
 	if (MinimizePaused) {
 		music_mute();
@@ -3305,6 +3312,7 @@ tl::expected<void, std::string> LoadGameLevelTown(bool firstflag, lvl_entry lvld
 	InitEnhancedPortal();
 	InitInfernoDefense();
 	InitSpellThrottling();
+	InitProgressiveSilence(); // 🎵 PROGRESSIVE SILENCE SYSTEM
 	// DISABLED: Crash diagnostics system disabled after successful crash fix
 	// InitCrashDiagnostics();  // 🔍 CRASH DIAGNOSTICS SYSTEM
 	InitMissiles();

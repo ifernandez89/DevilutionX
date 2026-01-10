@@ -63,6 +63,10 @@
 #include "enhanced_portal.h"
 #include "inferno_defense.h"
 #include "spell_throttling.h"
+#include "crash_diagnostics.h"  // 🔍 CRASH DIAGNOSTICS SYSTEM
+#include "hellfire_book_fix.h"  // 🔥 HELLFIRE BOOK RECOVERY SYSTEM
+#include "guarantee_inferno_book.h"  // 🔥 GUARANTEE INFERNO BOOK SYSTEM
+#include "emergency_diagnostics.h"  // 🚨 EMERGENCY DIAGNOSTICS SYSTEM
 #include "hwcursor.hpp"
 #include "init.hpp"
 #include "inv.h"
@@ -188,6 +192,10 @@ bool was_ui_init = false;
 
 void StartGame(interface_mode uMsg)
 {
+	// 🚨 EMERGENCY DIAGNOSTICS: Sistema desactivado después del fix exitoso
+	// EmergencyDiagnostics::Initialize();
+	// EMERGENCY_CRITICAL("=== GAME STARTING ===");
+	
 	CalcViewportGeometry();
 	cineflag = false;
 	InitCursor();
@@ -689,12 +697,16 @@ void HandleMouseButtonDown(Uint8 button, uint16_t modState)
 	case SDL_BUTTON_LEFT:
 		if (sgbMouseDown == CLICK_NONE) {
 			sgbMouseDown = CLICK_LEFT;
+			// 🔍 CRASH DIAGNOSTICS - Track player clicks
+			RegisterPlayerClick();
 			LeftMouseDown(modState);
 		}
 		break;
 	case SDL_BUTTON_RIGHT:
 		if (sgbMouseDown == CLICK_NONE) {
 			sgbMouseDown = CLICK_RIGHT;
+			// 🔍 CRASH DIAGNOSTICS - Track player clicks
+			RegisterPlayerClick();
 			RightMouseDown((modState & SDL_KMOD_SHIFT) != 0);
 		}
 		break;
@@ -1578,6 +1590,23 @@ void GameLogic()
 		
 		// 🌀 ENHANCED PORTAL - Update Portal Enhancement System
 		UpdateEnhancedPortal();
+		
+		// 🔍 CRASH DIAGNOSTICS - Update diagnostic system
+		UpdateCrashDiagnostics();
+		
+		// 🔍 CRASH DIAGNOSTICS - Check for critical state
+		CHECK_CRITICAL_STATE();
+		
+		// 🔥 HELLFIRE RECOVERY - Emergency scan (ejecutar solo una vez por sesión, de forma segura)
+		static bool hellfireRecoveryExecuted = false;
+		if (!hellfireRecoveryExecuted && MyPlayer != nullptr && MyPlayer->plractive) {
+			// Solo ejecutar si estamos realmente en el juego, no en menús
+			if (gbRunGame && !gbIsMultiplayer) {
+				LogInfo("🔥 EXECUTING SAFE HELLFIRE RECOVERY...");
+				EmergencyHellfireItemRecovery();
+				hellfireRecoveryExecuted = true;
+			}
+		}
 		
 		ProcessVisionList();
 	} else {
@@ -3269,6 +3298,7 @@ tl::expected<void, std::string> LoadGameLevelTown(bool firstflag, lvl_entry lvld
 	InitEnhancedPortal();
 	InitInfernoDefense();
 	InitSpellThrottling();
+	InitCrashDiagnostics();  // 🔍 CRASH DIAGNOSTICS SYSTEM
 	InitMissiles();
 
 	IncProgress();

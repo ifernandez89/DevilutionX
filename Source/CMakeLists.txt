@@ -6,10 +6,13 @@ set(libdevilutionx_SRCS
   appfat.cpp
   automap.cpp
   capture.cpp
+  crash_diagnostics.cpp
   cursor.cpp
   dead.cpp
   debug.cpp
   diablo.cpp
+  emergency_diagnostics.cpp
+  guarantee_inferno_book.cpp
   diablo_msg.cpp
   doom.cpp
   gamemenu.cpp
@@ -568,6 +571,7 @@ target_link_dependencies(libdevilutionx_logged_fstream PUBLIC
 add_devilutionx_object_library(libdevilutionx_items
   tables/itemdat.cpp
   items.cpp
+  hellfire_book_fix.cpp
 )
 target_link_dependencies(libdevilutionx_items PUBLIC
   DevilutionX::SDL

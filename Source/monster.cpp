@@ -3764,26 +3764,31 @@ tl::expected<void, std::string> InitMonsters()
 		}
 		// FEATURE: Intelligent Difficulty System - Increased Monster Density
 		// Original formula: na / 30, Enhanced for Hell difficulty pressure
-		// BUGFIX: Reduced Hell density slightly to prevent overflow with area effects
-		size_t baseDensityDivisor = 30;
+		// CRITICAL BUGFIX: Reduced monster density to prevent 200-monster crash
+		// The game crashes when hitting MaxMonsters (200), so we need safer limits
+		size_t baseDensityDivisor = 35; // INCREASED from 30 to reduce base density
 		
 		// Increase density based on level depth for late-game pressure
 		if (currlevel >= 13) {
-			// Hell difficulty: 40% more monsters (na / 22 instead of na / 20) - reduced from 50% to prevent crashes
-			baseDensityDivisor = 22;
+			// Hell difficulty: Reduced from na/22 to na/30 to prevent crashes
+			baseDensityDivisor = 30;
 		} else if (currlevel >= 9) {
-			// Deep caves: 25% more monsters (na / 24 instead of na / 30)
-			baseDensityDivisor = 24;
+			// Deep caves: Reduced from na/24 to na/32
+			baseDensityDivisor = 32;
 		} else if (currlevel >= 5) {
-			// Mid-levels: 15% more monsters (na / 26 instead of na / 30)
-			baseDensityDivisor = 26;
+			// Mid-levels: Reduced from na/26 to na/34
+			baseDensityDivisor = 34;
 		}
 		
 		size_t numplacemonsters = na / baseDensityDivisor;
 		if (gbIsMultiplayer)
 			numplacemonsters += numplacemonsters / 2;
-		if (ActiveMonsterCount + numplacemonsters > MaxMonsters - 10)
-			numplacemonsters = MaxMonsters - 10 - ActiveMonsterCount;
+		
+		// CRITICAL SAFETY: Much more aggressive monster limit to prevent crashes
+		// Keep total monsters well below 200 to prevent crash at MaxMonsters limit
+		const size_t SAFE_MONSTER_LIMIT = 150; // Well below MaxMonsters (200)
+		if (ActiveMonsterCount + numplacemonsters > SAFE_MONSTER_LIMIT)
+			numplacemonsters = SAFE_MONSTER_LIMIT - ActiveMonsterCount;
 		totalmonsters = ActiveMonsterCount + numplacemonsters;
 		int numscattypes = 0;
 		size_t scattertypes[NUM_MAX_MTYPES];

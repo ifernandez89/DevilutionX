@@ -4,6 +4,7 @@
  * Implementation of item functionality.
  */
 #include "items.h"
+#include "hellfire_book_fix.h"  // 🔥 HELLFIRE BOOK RECOVERY SYSTEM
 
 #include <algorithm>
 #include <array>
@@ -5024,6 +5025,14 @@ void UpdateHellfireFlag(Item &item, const char *identifiedItemName)
 	// This ensures that Item::getName() returns the correct translated item name
 	if ((item.dwBuff & CF_HELLFIRE) != 0U)
 		return; // Item is already a hellfire item
+
+	// 🔥 ENHANCED: Usar el sistema robusto de detección de Hellfire
+	ForceHellfireItemDetection(item);
+	
+	// Si ya se detectó como Hellfire, no continuar con el método original
+	if ((item.dwBuff & CF_HELLFIRE) != 0U)
+		return;
+
 	if (item._iMagical != ITEM_QUALITY_MAGIC)
 		return; // Only magic item's name can differ between diablo and hellfire
 	if (gbIsMultiplayer)

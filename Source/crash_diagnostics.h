@@ -227,14 +227,8 @@ void SetVerboseLogging(bool enabled);
     RegisterCrashEvent(type, desc, info)
 
 /**
- * Macro para verificar estado crítico
+ * Macro para verificar estado crítico - DISABLED after successful crash fix
  */
-#define CHECK_CRITICAL_STATE() \
-    do { \
-        if (IsInCriticalState()) { \
-            LOG_CRASH_EVENT("CRITICAL_STATE", "Critical state detected"); \
-            SaveDiagnosticsToFile(); \
-        } \
-    } while(0)
+#define CHECK_CRITICAL_STATE() do { } while(0)
 
 } // namespace devilution

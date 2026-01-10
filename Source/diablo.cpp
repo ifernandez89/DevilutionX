@@ -697,16 +697,16 @@ void HandleMouseButtonDown(Uint8 button, uint16_t modState)
 	case SDL_BUTTON_LEFT:
 		if (sgbMouseDown == CLICK_NONE) {
 			sgbMouseDown = CLICK_LEFT;
-			// 🔍 CRASH DIAGNOSTICS - Track player clicks
-			RegisterPlayerClick();
+			// DISABLED: Crash diagnostics system disabled after successful crash fix
+			// RegisterPlayerClick();
 			LeftMouseDown(modState);
 		}
 		break;
 	case SDL_BUTTON_RIGHT:
 		if (sgbMouseDown == CLICK_NONE) {
 			sgbMouseDown = CLICK_RIGHT;
-			// 🔍 CRASH DIAGNOSTICS - Track player clicks
-			RegisterPlayerClick();
+			// DISABLED: Crash diagnostics system disabled after successful crash fix
+			// RegisterPlayerClick();
 			RightMouseDown((modState & SDL_KMOD_SHIFT) != 0);
 		}
 		break;
@@ -1591,11 +1591,11 @@ void GameLogic()
 		// 🌀 ENHANCED PORTAL - Update Portal Enhancement System
 		UpdateEnhancedPortal();
 		
-		// 🔍 CRASH DIAGNOSTICS - Update diagnostic system
-		UpdateCrashDiagnostics();
+		// DISABLED: Crash diagnostics system disabled after successful crash fix
+		// UpdateCrashDiagnostics();
 		
-		// 🔍 CRASH DIAGNOSTICS - Check for critical state
-		CHECK_CRITICAL_STATE();
+		// DISABLED: Crash diagnostics system disabled after successful crash fix
+		// CHECK_CRITICAL_STATE();
 		
 		// 🔥 HELLFIRE RECOVERY - Emergency scan (ejecutar solo una vez por sesión, de forma segura)
 		static bool hellfireRecoveryExecuted = false;
@@ -3298,7 +3298,8 @@ tl::expected<void, std::string> LoadGameLevelTown(bool firstflag, lvl_entry lvld
 	InitEnhancedPortal();
 	InitInfernoDefense();
 	InitSpellThrottling();
-	InitCrashDiagnostics();  // 🔍 CRASH DIAGNOSTICS SYSTEM
+	// DISABLED: Crash diagnostics system disabled after successful crash fix
+	// InitCrashDiagnostics();  // 🔍 CRASH DIAGNOSTICS SYSTEM
 	InitMissiles();
 
 	IncProgress();

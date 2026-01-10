@@ -147,6 +147,7 @@ devilutionx_EXTERNAL_OBJECTS = \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_stores.dir/stores.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_items.dir/tables/itemdat.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_items.dir/items.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_items.dir/hellfire_book_fix.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_monster.dir/tables/monstdat.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_monster.dir/monster.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_gendung.dir/levels/crypt.cpp.obj" \
@@ -184,10 +185,13 @@ devilutionx_EXTERNAL_OBJECTS = \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/appfat.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/automap.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/capture.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/crash_diagnostics.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/cursor.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/dead.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/debug.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/diablo.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/emergency_diagnostics.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/guarantee_inferno_book.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/diablo_msg.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/doom.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/gamemenu.cpp.obj" \
@@ -391,6 +395,7 @@ devilutionx.exe: Source/CMakeFiles/libdevilutionx_spells.dir/spells.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_stores.dir/stores.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_items.dir/tables/itemdat.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_items.dir/items.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx_items.dir/hellfire_book_fix.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_monster.dir/tables/monstdat.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_monster.dir/monster.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_gendung.dir/levels/crypt.cpp.obj
@@ -428,10 +433,13 @@ devilutionx.exe: Source/CMakeFiles/libdevilutionx_surface_to_png.dir/utils/surfa
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/appfat.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/automap.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/capture.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/crash_diagnostics.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/cursor.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/dead.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/debug.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/diablo.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/emergency_diagnostics.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/guarantee_inferno_book.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/diablo_msg.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/doom.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/gamemenu.cpp.obj

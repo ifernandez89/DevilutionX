@@ -523,6 +523,7 @@ Source/CMakeFiles/libdevilutionx_player.dir/player.cpp.obj: C:/c\ -\ c++/Devilut
   C:/c\ -\ c++/DevilutionX/Source/engine/render/clx_render.hpp \
   C:/c\ -\ c++/DevilutionX/Source/engine/trn.hpp \
   C:/c\ -\ c++/DevilutionX/Source/gamemenu.h \
+  C:/c\ -\ c++/DevilutionX/Source/guarantee_inferno_book.h \
   C:/c\ -\ c++/DevilutionX/Source/help.h \
   C:/c\ -\ c++/DevilutionX/Source/inv.h \
   C:/c\ -\ c++/DevilutionX/Source/inv_iterators.hpp \
@@ -1484,6 +1485,8 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/ios:
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/raointintrin.h:
 
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_misc.h:
+
+C:/c\ -\ c++/DevilutionX/Source/guarantee_inferno_book.h:
 
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_mouse.h:
 

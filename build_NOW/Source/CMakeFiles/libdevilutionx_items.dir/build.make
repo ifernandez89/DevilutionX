@@ -101,8 +101,24 @@ Source/CMakeFiles/libdevilutionx_items.dir/items.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/libdevilutionx_items.dir/items.cpp.s"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\c - c++\DevilutionX\Source\items.cpp" -o CMakeFiles\libdevilutionx_items.dir\items.cpp.s
 
+Source/CMakeFiles/libdevilutionx_items.dir/hellfire_book_fix.cpp.obj: Source/CMakeFiles/libdevilutionx_items.dir/flags.make
+Source/CMakeFiles/libdevilutionx_items.dir/hellfire_book_fix.cpp.obj: Source/CMakeFiles/libdevilutionx_items.dir/includes_CXX.rsp
+Source/CMakeFiles/libdevilutionx_items.dir/hellfire_book_fix.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/hellfire_book_fix.cpp
+Source/CMakeFiles/libdevilutionx_items.dir/hellfire_book_fix.cpp.obj: Source/CMakeFiles/libdevilutionx_items.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object Source/CMakeFiles/libdevilutionx_items.dir/hellfire_book_fix.cpp.obj"
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx_items.dir/hellfire_book_fix.cpp.obj -MF CMakeFiles\libdevilutionx_items.dir\hellfire_book_fix.cpp.obj.d -o CMakeFiles\libdevilutionx_items.dir\hellfire_book_fix.cpp.obj -c "C:\c - c++\DevilutionX\Source\hellfire_book_fix.cpp"
+
+Source/CMakeFiles/libdevilutionx_items.dir/hellfire_book_fix.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/libdevilutionx_items.dir/hellfire_book_fix.cpp.i"
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\c - c++\DevilutionX\Source\hellfire_book_fix.cpp" > CMakeFiles\libdevilutionx_items.dir\hellfire_book_fix.cpp.i
+
+Source/CMakeFiles/libdevilutionx_items.dir/hellfire_book_fix.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/libdevilutionx_items.dir/hellfire_book_fix.cpp.s"
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\c - c++\DevilutionX\Source\hellfire_book_fix.cpp" -o CMakeFiles\libdevilutionx_items.dir\hellfire_book_fix.cpp.s
+
 libdevilutionx_items: Source/CMakeFiles/libdevilutionx_items.dir/tables/itemdat.cpp.obj
 libdevilutionx_items: Source/CMakeFiles/libdevilutionx_items.dir/items.cpp.obj
+libdevilutionx_items: Source/CMakeFiles/libdevilutionx_items.dir/hellfire_book_fix.cpp.obj
 libdevilutionx_items: Source/CMakeFiles/libdevilutionx_strings.dir/utils/str_cat.cpp.obj
 libdevilutionx_items: Source/CMakeFiles/libdevilutionx_strings.dir/utils/str_case.cpp.obj
 libdevilutionx_items: Source/CMakeFiles/libdevilutionx_items.dir/build.make

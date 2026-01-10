@@ -2181,6 +2181,30 @@ controls/touch/renderers.cpp.s:
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/controls/touch/renderers.cpp.s
 .PHONY : controls/touch/renderers.cpp.s
 
+crash_diagnostics.obj: crash_diagnostics.cpp.obj
+.PHONY : crash_diagnostics.obj
+
+# target to build an object file
+crash_diagnostics.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/crash_diagnostics.cpp.obj
+.PHONY : crash_diagnostics.cpp.obj
+
+crash_diagnostics.i: crash_diagnostics.cpp.i
+.PHONY : crash_diagnostics.i
+
+# target to preprocess a source file
+crash_diagnostics.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/crash_diagnostics.cpp.i
+.PHONY : crash_diagnostics.cpp.i
+
+crash_diagnostics.s: crash_diagnostics.cpp.s
+.PHONY : crash_diagnostics.s
+
+# target to generate assembly for a file
+crash_diagnostics.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/crash_diagnostics.cpp.s
+.PHONY : crash_diagnostics.cpp.s
+
 crawl.obj: crawl.cpp.obj
 .PHONY : crawl.obj
 
@@ -2636,6 +2660,30 @@ effects.s: effects.cpp.s
 effects.cpp.s:
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_sound.dir\build.make Source/CMakeFiles/libdevilutionx_sound.dir/effects.cpp.s
 .PHONY : effects.cpp.s
+
+emergency_diagnostics.obj: emergency_diagnostics.cpp.obj
+.PHONY : emergency_diagnostics.obj
+
+# target to build an object file
+emergency_diagnostics.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/emergency_diagnostics.cpp.obj
+.PHONY : emergency_diagnostics.cpp.obj
+
+emergency_diagnostics.i: emergency_diagnostics.cpp.i
+.PHONY : emergency_diagnostics.i
+
+# target to preprocess a source file
+emergency_diagnostics.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/emergency_diagnostics.cpp.i
+.PHONY : emergency_diagnostics.cpp.i
+
+emergency_diagnostics.s: emergency_diagnostics.cpp.s
+.PHONY : emergency_diagnostics.s
+
+# target to generate assembly for a file
+emergency_diagnostics.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/emergency_diagnostics.cpp.s
+.PHONY : emergency_diagnostics.cpp.s
 
 encrypt.obj: encrypt.cpp.obj
 .PHONY : encrypt.obj
@@ -3405,6 +3453,30 @@ gmenu.cpp.s:
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/gmenu.cpp.s
 .PHONY : gmenu.cpp.s
 
+guarantee_inferno_book.obj: guarantee_inferno_book.cpp.obj
+.PHONY : guarantee_inferno_book.obj
+
+# target to build an object file
+guarantee_inferno_book.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/guarantee_inferno_book.cpp.obj
+.PHONY : guarantee_inferno_book.cpp.obj
+
+guarantee_inferno_book.i: guarantee_inferno_book.cpp.i
+.PHONY : guarantee_inferno_book.i
+
+# target to preprocess a source file
+guarantee_inferno_book.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/guarantee_inferno_book.cpp.i
+.PHONY : guarantee_inferno_book.cpp.i
+
+guarantee_inferno_book.s: guarantee_inferno_book.cpp.s
+.PHONY : guarantee_inferno_book.s
+
+# target to generate assembly for a file
+guarantee_inferno_book.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/guarantee_inferno_book.cpp.s
+.PHONY : guarantee_inferno_book.cpp.s
+
 headless_mode.obj: headless_mode.cpp.obj
 .PHONY : headless_mode.obj
 
@@ -3428,6 +3500,30 @@ headless_mode.s: headless_mode.cpp.s
 headless_mode.cpp.s:
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_headless_mode.dir\build.make Source/CMakeFiles/libdevilutionx_headless_mode.dir/headless_mode.cpp.s
 .PHONY : headless_mode.cpp.s
+
+hellfire_book_fix.obj: hellfire_book_fix.cpp.obj
+.PHONY : hellfire_book_fix.obj
+
+# target to build an object file
+hellfire_book_fix.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_items.dir\build.make Source/CMakeFiles/libdevilutionx_items.dir/hellfire_book_fix.cpp.obj
+.PHONY : hellfire_book_fix.cpp.obj
+
+hellfire_book_fix.i: hellfire_book_fix.cpp.i
+.PHONY : hellfire_book_fix.i
+
+# target to preprocess a source file
+hellfire_book_fix.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_items.dir\build.make Source/CMakeFiles/libdevilutionx_items.dir/hellfire_book_fix.cpp.i
+.PHONY : hellfire_book_fix.cpp.i
+
+hellfire_book_fix.s: hellfire_book_fix.cpp.s
+.PHONY : hellfire_book_fix.s
+
+# target to generate assembly for a file
+hellfire_book_fix.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_items.dir\build.make Source/CMakeFiles/libdevilutionx_items.dir/hellfire_book_fix.cpp.s
+.PHONY : hellfire_book_fix.cpp.s
 
 help.obj: help.cpp.obj
 .PHONY : help.obj
@@ -7031,6 +7127,9 @@ help:
 	@echo ... controls/touch/renderers.obj
 	@echo ... controls/touch/renderers.i
 	@echo ... controls/touch/renderers.s
+	@echo ... crash_diagnostics.obj
+	@echo ... crash_diagnostics.i
+	@echo ... crash_diagnostics.s
 	@echo ... crawl.obj
 	@echo ... crawl.i
 	@echo ... crawl.s
@@ -7088,6 +7187,9 @@ help:
 	@echo ... effects.obj
 	@echo ... effects.i
 	@echo ... effects.s
+	@echo ... emergency_diagnostics.obj
+	@echo ... emergency_diagnostics.i
+	@echo ... emergency_diagnostics.s
 	@echo ... encrypt.obj
 	@echo ... encrypt.i
 	@echo ... encrypt.s
@@ -7184,9 +7286,15 @@ help:
 	@echo ... gmenu.obj
 	@echo ... gmenu.i
 	@echo ... gmenu.s
+	@echo ... guarantee_inferno_book.obj
+	@echo ... guarantee_inferno_book.i
+	@echo ... guarantee_inferno_book.s
 	@echo ... headless_mode.obj
 	@echo ... headless_mode.i
 	@echo ... headless_mode.s
+	@echo ... hellfire_book_fix.obj
+	@echo ... hellfire_book_fix.i
+	@echo ... hellfire_book_fix.s
 	@echo ... help.obj
 	@echo ... help.i
 	@echo ... help.s

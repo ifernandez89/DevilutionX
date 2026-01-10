@@ -1,4 +1,6 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/libdevilutionx_items.dir/hellfire_book_fix.cpp.obj"
+  "CMakeFiles/libdevilutionx_items.dir/hellfire_book_fix.cpp.obj.d"
   "CMakeFiles/libdevilutionx_items.dir/items.cpp.obj"
   "CMakeFiles/libdevilutionx_items.dir/items.cpp.obj.d"
   "CMakeFiles/libdevilutionx_items.dir/tables/itemdat.cpp.obj"

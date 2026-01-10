@@ -8,6 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "C:/c - c++/DevilutionX/Source/hellfire_book_fix.cpp" "Source/CMakeFiles/libdevilutionx_items.dir/hellfire_book_fix.cpp.obj" "gcc" "Source/CMakeFiles/libdevilutionx_items.dir/hellfire_book_fix.cpp.obj.d"
   "C:/c - c++/DevilutionX/Source/items.cpp" "Source/CMakeFiles/libdevilutionx_items.dir/items.cpp.obj" "gcc" "Source/CMakeFiles/libdevilutionx_items.dir/items.cpp.obj.d"
   "C:/c - c++/DevilutionX/Source/tables/itemdat.cpp" "Source/CMakeFiles/libdevilutionx_items.dir/tables/itemdat.cpp.obj" "gcc" "Source/CMakeFiles/libdevilutionx_items.dir/tables/itemdat.cpp.obj.d"
   )

@@ -535,7 +535,6 @@ Source/CMakeFiles/libdevilutionx_multiplayer.dir/pack.cpp.obj: C:/c\ -\ c++/Devi
   C:/c\ -\ c++/DevilutionX/Source/mpq/mpq_common.hpp \
   C:/c\ -\ c++/DevilutionX/Source/panels/ui_panels.hpp \
   C:/c\ -\ c++/DevilutionX/Source/sound_effect_enums.h \
-  C:/c\ -\ c++/DevilutionX/Source/spells.h \
   C:/c\ -\ c++/DevilutionX/Source/tables/objdat.h \
   C:/c\ -\ c++/DevilutionX/Source/tables/spelldat.h \
   C:/c\ -\ c++/DevilutionX/Source/tables/textdat.h \
@@ -546,7 +545,6 @@ Source/CMakeFiles/libdevilutionx_multiplayer.dir/pack.cpp.obj: C:/c\ -\ c++/Devi
   C:/c\ -\ c++/DevilutionX/Source/utils/enum_traits.h \
   C:/c\ -\ c++/DevilutionX/Source/utils/file_util.h \
   C:/c\ -\ c++/DevilutionX/Source/utils/intrusive_optional.hpp \
-  C:/c\ -\ c++/DevilutionX/Source/utils/log.hpp \
   C:/c\ -\ c++/DevilutionX/Source/utils/logged_fstream.hpp \
   C:/c\ -\ c++/DevilutionX/Source/utils/sdl2_backports.h \
   C:/c\ -\ c++/DevilutionX/Source/utils/sdl_geometry.h \
@@ -973,6 +971,7 @@ Source/CMakeFiles/libdevilutionx_multiplayer.dir/pack.cpp.obj: C:/c\ -\ c++/Devi
   C:/c\ -\ c++/DevilutionX/Source/engine/sound.h \
   C:/c\ -\ c++/DevilutionX/Source/engine/surface.hpp \
   C:/c\ -\ c++/DevilutionX/Source/game_mode.hpp \
+  C:/c\ -\ c++/DevilutionX/Source/hellfire_book_fix.h \
   C:/c\ -\ c++/DevilutionX/Source/interfac.h \
   C:/c\ -\ c++/DevilutionX/Source/inv.h \
   C:/c\ -\ c++/DevilutionX/Source/inv_iterators.hpp \
@@ -993,6 +992,7 @@ Source/CMakeFiles/libdevilutionx_multiplayer.dir/pack.cpp.obj: C:/c\ -\ c++/Devi
   C:/c\ -\ c++/DevilutionX/Source/plrmsg.h \
   C:/c\ -\ c++/DevilutionX/Source/portal.h \
   C:/c\ -\ c++/DevilutionX/Source/quests.h \
+  C:/c\ -\ c++/DevilutionX/Source/spells.h \
   C:/c\ -\ c++/DevilutionX/Source/stores.h \
   C:/c\ -\ c++/DevilutionX/Source/tables/itemdat.h \
   C:/c\ -\ c++/DevilutionX/Source/tables/misdat.h \
@@ -1002,6 +1002,7 @@ Source/CMakeFiles/libdevilutionx_multiplayer.dir/pack.cpp.obj: C:/c\ -\ c++/Devi
   C:/c\ -\ c++/DevilutionX/Source/utils/endian_swap.hpp \
   C:/c\ -\ c++/DevilutionX/Source/utils/is_of.hpp \
   C:/c\ -\ c++/DevilutionX/Source/utils/language.h \
+  C:/c\ -\ c++/DevilutionX/Source/utils/log.hpp \
   C:/c\ -\ c++/DevilutionX/Source/utils/static_vector.hpp \
   C:/c\ -\ c++/DevilutionX/Source/utils/string_or_view.hpp \
   C:/c\ -\ c++/DevilutionX/Source/utils/ui_fwd.h
@@ -1556,6 +1557,8 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/atomic_wait.h:
 C:/c\ -\ c++/DevilutionX/Source/pack.cpp:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/basic_ios.h:
+
+C:/c\ -\ c++/DevilutionX/Source/hellfire_book_fix.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/basic_ios.tcc:
 

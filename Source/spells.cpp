@@ -244,7 +244,8 @@ void CastSpell(Player &player, SpellID spl, WorldTilePosition src, WorldTilePosi
 			return; // BLOQUEAR COMPLETAMENTE
 		}
 		
-		RegisterInfernoClick();
+		// DISABLED: Crash diagnostics system disabled after successful crash fix
+		// RegisterInfernoClick();
 	}
 	
 	// 🎯 UNIVERSAL SPELL THROTTLING: Protección contra spam para TODOS los hechizos

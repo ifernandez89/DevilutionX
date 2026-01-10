@@ -26,6 +26,7 @@
 #include "hwcursor.hpp"
 #include "inv.h"
 #include "minitext.h"
+#include "hidden_content.h"
 #include "stores.h"
 #include "utils/display.h"
 #include "utils/format_int.hpp"
@@ -513,7 +514,9 @@ bool UseStashItem(uint16_t c)
 	if (Stash.stashList[c]._iMiscId == IMISC_MAPOFDOOM)
 		return true;
 	if (Stash.stashList[c]._iMiscId == IMISC_NOTE) {
-		InitQTextMsg(TEXT_BOOK9);
+		// FEATURE: Hidden Content Recovery - enhance book reading with discovered content
+		_speech_id bookText = GetRandomHiddenBookText(TEXT_BOOK9);
+		InitQTextMsg(bookText);
 		CloseInventory();
 		return true;
 	}

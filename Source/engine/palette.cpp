@@ -251,31 +251,55 @@ void ApplyFadeLevel(unsigned fadeval, SDL_Color *dst, const SDL_Color *src)
 // and 100 produces maximum brightening.
 void UpdateSystemPalette(std::span<const SDL_Color, 256> src)
 {
-	// 🎨 FASE V2 - PALETA CONTEXTUAL COMPLETA 🎨
-	// Aplicar todas las mejoras de paleta en el orden correcto
+	// 🚨 SELECTIVE VISUAL EFFECTS CONTROL
+	// Control which visual effects are enabled to isolate corruption source
+	static bool enableBasicBrightness = true;        // Always safe
+	static bool enableContextualPalette = false;     // V2 - Contextual palette system
+	static bool enableVisualFeedback = false;        // V3 - Visual feedback effects  
+	static bool enableDynamicAdjustment = false;     // Dynamic palette adjustments
+	static bool enableContextualEnhancement = false; // Contextual enhancements
+	static bool enableTownCinematic = false;         // D3 - Town cinematic effects
+	static bool enableAtmosphericDepth = false;      // D1 - Atmospheric depth simulation
 	
-	// Paso 1: Aplicar brillo global (sistema original)
-	ApplyGlobalBrightness(system_palette.data(), src.data());
+	// Step 1: Always apply basic brightness (this is safe)
+	if (enableBasicBrightness) {
+		ApplyGlobalBrightness(system_palette.data(), src.data());
+	} else {
+		// Copy source palette directly if brightness is disabled
+		std::copy(src.begin(), src.end(), system_palette.begin());
+	}
 	
-	// Paso 2: 🎨 NUEVO - Aplicar paleta contextual por bioma
-	ApplyContextualPalette(system_palette.data());
+	// Step 2: 🎨 CONTEXTUAL PALETTE (V2) - Test this first
+	if (enableContextualPalette) {
+		ApplyContextualPalette(system_palette.data());
+	}
 	
-	// Paso 3: 🎮 Aplicar efectos de feedback visual
-	ApplyVisualFeedbackToPalette(system_palette.data());
+	// Step 3: 🎮 VISUAL FEEDBACK (V3) - Test this second  
+	if (enableVisualFeedback) {
+		ApplyVisualFeedbackToPalette(system_palette.data());
+	}
 	
-	// Paso 4: Aplicar ajustes dinámicos basados en estado del juego
-	ApplyDynamicPaletteAdjustment(system_palette.data());
+	// Step 4: Dynamic adjustments - Test this third
+	if (enableDynamicAdjustment) {
+		ApplyDynamicPaletteAdjustment(system_palette.data());
+	}
 	
-	// Paso 5: Aplicar mejoras contextuales específicas por nivel
-	ApplyContextualPaletteEnhancement(system_palette.data());
+	// Step 5: Contextual enhancements - Test this fourth
+	if (enableContextualEnhancement) {
+		ApplyContextualPaletteEnhancement(system_palette.data());
+	}
 	
-	// Paso 6: 🎬 NUEVO - Aplicar efectos cinematográficos de Town
-	ApplyTownCinematicEffects(system_palette.data());
+	// Step 6: 🎬 TOWN CINEMATIC (D3) - Test this fifth
+	if (enableTownCinematic) {
+		ApplyTownCinematicEffects(system_palette.data());
+	}
 	
-	// Paso 7: Aplicar simulación de profundidad atmosférica
-	ApplyAtmosphericDepthSimulation(system_palette.data());
+	// Step 7: 🌫️ ATMOSPHERIC DEPTH (D1) - Test this last
+	if (enableAtmosphericDepth) {
+		ApplyAtmosphericDepthSimulation(system_palette.data());
+	}
 	
-	// Actualizar sistema y redibujar
+	// Update system and redraw
 	SystemPaletteUpdated();
 	RedrawEverything();
 }

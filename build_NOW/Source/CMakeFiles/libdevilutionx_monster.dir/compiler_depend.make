@@ -498,6 +498,7 @@ Source/CMakeFiles/libdevilutionx_monster.dir/monster.cpp.obj: C:/c\ -\ c++/Devil
   C:/c\ -\ c++/DevilutionX/Source/controls/controller_buttons.h \
   C:/c\ -\ c++/DevilutionX/Source/crawl.hpp \
   C:/c\ -\ c++/DevilutionX/Source/dead.h \
+  C:/c\ -\ c++/DevilutionX/Source/dormant_assets.h \
   C:/c\ -\ c++/DevilutionX/Source/engine/actor_position.hpp \
   C:/c\ -\ c++/DevilutionX/Source/engine/lighting_defs.hpp \
   C:/c\ -\ c++/DevilutionX/Source/engine/load_cl2.hpp \
@@ -1271,6 +1272,8 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/atomic_lockfree_de
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/error_constants.h:
 
+C:/c\ -\ c++/DevilutionX/Source/dormant_assets.h:
+
 C:/c\ -\ c++/DevilutionX/Source/utils/pointer_value_union.hpp:
 
 C:/c\ -\ c++/DevilutionX/Source/utils/sdl2_backports.h:
@@ -1955,8 +1958,6 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/mm_malloc.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/mwaitintrin.h:
 
-C:/c\ -\ c++/DevilutionX/Source/levels/themes.h:
-
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/mwaitxintrin.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/pconfigintrin.h:
@@ -2062,6 +2063,8 @@ C:/c\ -\ c++/DevilutionX/Source/engine/points_in_rectangle_range.hpp:
 C:/c\ -\ c++/DevilutionX/Source/engine/random.hpp:
 
 C:/c\ -\ c++/DevilutionX/Source/levels/drlg_l4.h:
+
+C:/c\ -\ c++/DevilutionX/Source/levels/themes.h:
 
 C:/c\ -\ c++/DevilutionX/Source/pack.h:
 

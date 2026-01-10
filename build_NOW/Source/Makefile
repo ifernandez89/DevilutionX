@@ -596,6 +596,48 @@ libdevilutionx_town_cinematic/fast:
 .PHONY : libdevilutionx_town_cinematic/fast
 
 # Convenience name for target.
+Source/CMakeFiles/libdevilutionx_life_volume.dir/rule:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 Source/CMakeFiles/libdevilutionx_life_volume.dir/rule
+.PHONY : Source/CMakeFiles/libdevilutionx_life_volume.dir/rule
+
+# Convenience name for target.
+libdevilutionx_life_volume: Source/CMakeFiles/libdevilutionx_life_volume.dir/rule
+.PHONY : libdevilutionx_life_volume
+
+# fast build rule for target.
+libdevilutionx_life_volume/fast:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_life_volume.dir\build.make Source/CMakeFiles/libdevilutionx_life_volume.dir/build
+.PHONY : libdevilutionx_life_volume/fast
+
+# Convenience name for target.
+Source/CMakeFiles/libdevilutionx_parallax_depth.dir/rule:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 Source/CMakeFiles/libdevilutionx_parallax_depth.dir/rule
+.PHONY : Source/CMakeFiles/libdevilutionx_parallax_depth.dir/rule
+
+# Convenience name for target.
+libdevilutionx_parallax_depth: Source/CMakeFiles/libdevilutionx_parallax_depth.dir/rule
+.PHONY : libdevilutionx_parallax_depth
+
+# fast build rule for target.
+libdevilutionx_parallax_depth/fast:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_parallax_depth.dir\build.make Source/CMakeFiles/libdevilutionx_parallax_depth.dir/build
+.PHONY : libdevilutionx_parallax_depth/fast
+
+# Convenience name for target.
+Source/CMakeFiles/libdevilutionx_mp_discipline.dir/rule:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 Source/CMakeFiles/libdevilutionx_mp_discipline.dir/rule
+.PHONY : Source/CMakeFiles/libdevilutionx_mp_discipline.dir/rule
+
+# Convenience name for target.
+libdevilutionx_mp_discipline: Source/CMakeFiles/libdevilutionx_mp_discipline.dir/rule
+.PHONY : libdevilutionx_mp_discipline
+
+# fast build rule for target.
+libdevilutionx_mp_discipline/fast:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_mp_discipline.dir\build.make Source/CMakeFiles/libdevilutionx_mp_discipline.dir/build
+.PHONY : libdevilutionx_mp_discipline/fast
+
+# Convenience name for target.
 Source/CMakeFiles/libdevilutionx_logged_fstream.dir/rule:
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 Source/CMakeFiles/libdevilutionx_logged_fstream.dir/rule
 .PHONY : Source/CMakeFiles/libdevilutionx_logged_fstream.dir/rule
@@ -2403,6 +2445,30 @@ doom.cpp.s:
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/doom.cpp.s
 .PHONY : doom.cpp.s
 
+dormant_assets.obj: dormant_assets.cpp.obj
+.PHONY : dormant_assets.obj
+
+# target to build an object file
+dormant_assets.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/dormant_assets.cpp.obj
+.PHONY : dormant_assets.cpp.obj
+
+dormant_assets.i: dormant_assets.cpp.i
+.PHONY : dormant_assets.i
+
+# target to preprocess a source file
+dormant_assets.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/dormant_assets.cpp.i
+.PHONY : dormant_assets.cpp.i
+
+dormant_assets.s: dormant_assets.cpp.s
+.PHONY : dormant_assets.s
+
+# target to generate assembly for a file
+dormant_assets.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/dormant_assets.cpp.s
+.PHONY : dormant_assets.cpp.s
+
 dvlnet/abstract_net.obj: dvlnet/abstract_net.cpp.obj
 .PHONY : dvlnet/abstract_net.obj
 
@@ -3243,6 +3309,30 @@ engine/trn.cpp.s:
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/engine/trn.cpp.s
 .PHONY : engine/trn.cpp.s
 
+enhanced_portal.obj: enhanced_portal.cpp.obj
+.PHONY : enhanced_portal.obj
+
+# target to build an object file
+enhanced_portal.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/enhanced_portal.cpp.obj
+.PHONY : enhanced_portal.cpp.obj
+
+enhanced_portal.i: enhanced_portal.cpp.i
+.PHONY : enhanced_portal.i
+
+# target to preprocess a source file
+enhanced_portal.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/enhanced_portal.cpp.i
+.PHONY : enhanced_portal.cpp.i
+
+enhanced_portal.s: enhanced_portal.cpp.s
+.PHONY : enhanced_portal.s
+
+# target to generate assembly for a file
+enhanced_portal.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/enhanced_portal.cpp.s
+.PHONY : enhanced_portal.cpp.s
+
 game_mode.obj: game_mode.cpp.obj
 .PHONY : game_mode.obj
 
@@ -3362,6 +3452,30 @@ help.s: help.cpp.s
 help.cpp.s:
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/help.cpp.s
 .PHONY : help.cpp.s
+
+hidden_content.obj: hidden_content.cpp.obj
+.PHONY : hidden_content.obj
+
+# target to build an object file
+hidden_content.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/hidden_content.cpp.obj
+.PHONY : hidden_content.cpp.obj
+
+hidden_content.i: hidden_content.cpp.i
+.PHONY : hidden_content.i
+
+# target to preprocess a source file
+hidden_content.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/hidden_content.cpp.i
+.PHONY : hidden_content.cpp.i
+
+hidden_content.s: hidden_content.cpp.s
+.PHONY : hidden_content.s
+
+# target to generate assembly for a file
+hidden_content.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/hidden_content.cpp.s
+.PHONY : hidden_content.cpp.s
 
 hwcursor.obj: hwcursor.cpp.obj
 .PHONY : hwcursor.obj
@@ -3794,6 +3908,30 @@ levels/trigs.s: levels/trigs.cpp.s
 levels/trigs.cpp.s:
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/levels/trigs.cpp.s
 .PHONY : levels/trigs.cpp.s
+
+life_volume.obj: life_volume.cpp.obj
+.PHONY : life_volume.obj
+
+# target to build an object file
+life_volume.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_life_volume.dir\build.make Source/CMakeFiles/libdevilutionx_life_volume.dir/life_volume.cpp.obj
+.PHONY : life_volume.cpp.obj
+
+life_volume.i: life_volume.cpp.i
+.PHONY : life_volume.i
+
+# target to preprocess a source file
+life_volume.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_life_volume.dir\build.make Source/CMakeFiles/libdevilutionx_life_volume.dir/life_volume.cpp.i
+.PHONY : life_volume.cpp.i
+
+life_volume.s: life_volume.cpp.s
+.PHONY : life_volume.s
+
+# target to generate assembly for a file
+life_volume.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_life_volume.dir\build.make Source/CMakeFiles/libdevilutionx_life_volume.dir/life_volume.cpp.s
+.PHONY : life_volume.cpp.s
 
 lighting.obj: lighting.cpp.obj
 .PHONY : lighting.obj
@@ -4611,6 +4749,30 @@ movie.cpp.s:
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/movie.cpp.s
 .PHONY : movie.cpp.s
 
+mp_discipline.obj: mp_discipline.cpp.obj
+.PHONY : mp_discipline.obj
+
+# target to build an object file
+mp_discipline.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_mp_discipline.dir\build.make Source/CMakeFiles/libdevilutionx_mp_discipline.dir/mp_discipline.cpp.obj
+.PHONY : mp_discipline.cpp.obj
+
+mp_discipline.i: mp_discipline.cpp.i
+.PHONY : mp_discipline.i
+
+# target to preprocess a source file
+mp_discipline.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_mp_discipline.dir\build.make Source/CMakeFiles/libdevilutionx_mp_discipline.dir/mp_discipline.cpp.i
+.PHONY : mp_discipline.cpp.i
+
+mp_discipline.s: mp_discipline.cpp.s
+.PHONY : mp_discipline.s
+
+# target to generate assembly for a file
+mp_discipline.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_mp_discipline.dir\build.make Source/CMakeFiles/libdevilutionx_mp_discipline.dir/mp_discipline.cpp.s
+.PHONY : mp_discipline.cpp.s
+
 mpq/mpq_common.obj: mpq/mpq_common.cpp.obj
 .PHONY : mpq/mpq_common.obj
 
@@ -5042,6 +5204,30 @@ panels/spell_list.s: panels/spell_list.cpp.s
 panels/spell_list.cpp.s:
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/panels/spell_list.cpp.s
 .PHONY : panels/spell_list.cpp.s
+
+parallax_depth.obj: parallax_depth.cpp.obj
+.PHONY : parallax_depth.obj
+
+# target to build an object file
+parallax_depth.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_parallax_depth.dir\build.make Source/CMakeFiles/libdevilutionx_parallax_depth.dir/parallax_depth.cpp.obj
+.PHONY : parallax_depth.cpp.obj
+
+parallax_depth.i: parallax_depth.cpp.i
+.PHONY : parallax_depth.i
+
+# target to preprocess a source file
+parallax_depth.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_parallax_depth.dir\build.make Source/CMakeFiles/libdevilutionx_parallax_depth.dir/parallax_depth.cpp.i
+.PHONY : parallax_depth.cpp.i
+
+parallax_depth.s: parallax_depth.cpp.s
+.PHONY : parallax_depth.s
+
+# target to generate assembly for a file
+parallax_depth.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_parallax_depth.dir\build.make Source/CMakeFiles/libdevilutionx_parallax_depth.dir/parallax_depth.cpp.s
+.PHONY : parallax_depth.cpp.s
 
 pfile.obj: pfile.cpp.obj
 .PHONY : pfile.obj
@@ -6612,6 +6798,7 @@ help:
 	@echo ... libdevilutionx_init
 	@echo ... libdevilutionx_items
 	@echo ... libdevilutionx_level_objects
+	@echo ... libdevilutionx_life_volume
 	@echo ... libdevilutionx_light_render
 	@echo ... libdevilutionx_lighting
 	@echo ... libdevilutionx_load_cel
@@ -6620,12 +6807,14 @@ help:
 	@echo ... libdevilutionx_load_pcx
 	@echo ... libdevilutionx_logged_fstream
 	@echo ... libdevilutionx_monster
+	@echo ... libdevilutionx_mp_discipline
 	@echo ... libdevilutionx_mpq
 	@echo ... libdevilutionx_multiplayer
 	@echo ... libdevilutionx_options
 	@echo ... libdevilutionx_padmapper
 	@echo ... libdevilutionx_palette_blending
 	@echo ... libdevilutionx_palette_kd_tree
+	@echo ... libdevilutionx_parallax_depth
 	@echo ... libdevilutionx_parse_int
 	@echo ... libdevilutionx_pathfinding
 	@echo ... libdevilutionx_paths
@@ -6827,6 +7016,9 @@ help:
 	@echo ... doom.obj
 	@echo ... doom.i
 	@echo ... doom.s
+	@echo ... dormant_assets.obj
+	@echo ... dormant_assets.i
+	@echo ... dormant_assets.s
 	@echo ... dvlnet/abstract_net.obj
 	@echo ... dvlnet/abstract_net.i
 	@echo ... dvlnet/abstract_net.s
@@ -6932,6 +7124,9 @@ help:
 	@echo ... engine/trn.obj
 	@echo ... engine/trn.i
 	@echo ... engine/trn.s
+	@echo ... enhanced_portal.obj
+	@echo ... enhanced_portal.i
+	@echo ... enhanced_portal.s
 	@echo ... game_mode.obj
 	@echo ... game_mode.i
 	@echo ... game_mode.s
@@ -6947,6 +7142,9 @@ help:
 	@echo ... help.obj
 	@echo ... help.i
 	@echo ... help.s
+	@echo ... hidden_content.obj
+	@echo ... hidden_content.i
+	@echo ... hidden_content.s
 	@echo ... hwcursor.obj
 	@echo ... hwcursor.i
 	@echo ... hwcursor.s
@@ -7001,6 +7199,9 @@ help:
 	@echo ... levels/trigs.obj
 	@echo ... levels/trigs.i
 	@echo ... levels/trigs.s
+	@echo ... life_volume.obj
+	@echo ... life_volume.i
+	@echo ... life_volume.s
 	@echo ... lighting.obj
 	@echo ... lighting.i
 	@echo ... lighting.s
@@ -7103,6 +7304,9 @@ help:
 	@echo ... movie.obj
 	@echo ... movie.i
 	@echo ... movie.s
+	@echo ... mp_discipline.obj
+	@echo ... mp_discipline.i
+	@echo ... mp_discipline.s
 	@echo ... mpq/mpq_common.obj
 	@echo ... mpq/mpq_common.i
 	@echo ... mpq/mpq_common.s
@@ -7157,6 +7361,9 @@ help:
 	@echo ... panels/spell_list.obj
 	@echo ... panels/spell_list.i
 	@echo ... panels/spell_list.s
+	@echo ... parallax_depth.obj
+	@echo ... parallax_depth.i
+	@echo ... parallax_depth.s
 	@echo ... pfile.obj
 	@echo ... pfile.i
 	@echo ... pfile.s

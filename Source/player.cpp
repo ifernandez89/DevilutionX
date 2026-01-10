@@ -26,6 +26,7 @@
 #endif
 #include "engine/backbuffer_state.hpp"
 #include "engine/load_cl2.hpp"
+#include "engine/load_cl2.hpp"
 #include "engine/load_file.hpp"
 #include "engine/points_in_rectangle_range.hpp"
 #include "engine/random.hpp"
@@ -2099,10 +2100,94 @@ bool IsPlayerUnarmed(Player &player)
 	return animWeaponId == PlayerWeaponGraphic::Unarmed;
 }
 
+// 🎭 DARK SORCERER SKIN - Load Advocate sprites for Sorcerer
+void LoadDarkSorcererGFX(Player &player, player_graphic graphic)
+{
+	auto &animationData = player.AnimationData[static_cast<size_t>(graphic)];
+	if (animationData.sprites)
+		return;
+
+	// Map player graphics to monster graphics
+	MonsterGraphic monsterGraphic;
+	switch (graphic) {
+	case player_graphic::Stand:
+		monsterGraphic = MonsterGraphic::Stand;
+		break;
+	case player_graphic::Walk:
+		monsterGraphic = MonsterGraphic::Walk;
+		break;
+	case player_graphic::Attack:
+	case player_graphic::Lightning:
+	case player_graphic::Fire:
+	case player_graphic::Magic:
+		monsterGraphic = MonsterGraphic::Attack;
+		break;
+	case player_graphic::Hit:
+		monsterGraphic = MonsterGraphic::GotHit;
+		break;
+	case player_graphic::Death:
+		monsterGraphic = MonsterGraphic::Death;
+		break;
+	case player_graphic::Block:
+		monsterGraphic = MonsterGraphic::Stand; // Use stand animation for block
+		break;
+	default:
+		// Fallback: disable dark sorcerer for unsupported animations and use normal loading
+		LogVerbose("🎭 Dark Sorcerer: Unsupported animation {}, falling back to normal", static_cast<int>(graphic));
+		// Temporarily disable dark sorcerer to avoid recursion
+		bool originalSetting = *GetOptions().Gameplay.darkSorcererSkin;
+		GetOptions().Gameplay.darkSorcererSkin.SetValue(false);
+		LoadPlrGFX(player, graphic);
+		GetOptions().Gameplay.darkSorcererSkin.SetValue(originalSetting);
+		return;
+	}
+
+	// Get animation letter for monster graphic
+	const char animLetters[] = "nwahds"; // Stand, Walk, Attack, Hit, Death, Special
+	const char animLetter = animLetters[static_cast<size_t>(monsterGraphic)];
+	
+	// Get Advocate monster data
+	const MonsterData &advocateData = MonstersData[MT_ADVOCATE];
+	
+	// 🔧 DEBUG: Log the sprite path being used
+	LogVerbose("🎭 Dark Sorcerer: Advocate sprite path base: {}", advocateData.spritePath());
+	
+	// Load Advocate sprites for this animation
+	char advocateSpritePath[256];
+	*BufCopy(advocateSpritePath, "monsters\\", advocateData.spritePath(), animLetter, DEVILUTIONX_CL2_EXT) = '\0';
+	
+	// 🔧 DEBUG: Log the full path being loaded
+	LogVerbose("🎭 Dark Sorcerer: Attempting to load sprite from: {}", advocateSpritePath);
+	
+	// Load the sprite sheet with appropriate width (use default monster width)
+	const uint16_t animationWidth = 128; // Standard monster width
+	
+	// 🔧 ENHANCED: Try to load the sprite sheet with error handling
+	animationData.sprites = LoadCl2Sheet(advocateSpritePath, animationWidth);
+	
+	if (animationData.sprites) {
+		LogVerbose("🎭 Dark Sorcerer: Successfully loaded {} animation from {}", 
+			static_cast<int>(graphic), advocateSpritePath);
+	} else {
+		LogError("🎭 Dark Sorcerer: Failed to load sprite sheet from {}", advocateSpritePath);
+		// Fallback to normal Sorcerer sprites
+		bool originalSetting = *GetOptions().Gameplay.darkSorcererSkin;
+		GetOptions().Gameplay.darkSorcererSkin.SetValue(false);
+		LoadPlrGFX(player, graphic);
+		GetOptions().Gameplay.darkSorcererSkin.SetValue(originalSetting);
+	}
+}
+
 void LoadPlrGFX(Player &player, player_graphic graphic)
 {
 	if (HeadlessMode)
 		return;
+
+	// 🎭 DARK SORCERER SKIN - Use Advocate sprites for Sorcerer
+	if (player._pClass == HeroClass::Sorcerer && *GetOptions().Gameplay.darkSorcererSkin) {
+		LoadDarkSorcererGFX(player, graphic);
+		return;
+	}
 
 	auto &animationData = player.AnimationData[static_cast<size_t>(graphic)];
 	if (animationData.sprites)

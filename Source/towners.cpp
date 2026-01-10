@@ -10,6 +10,7 @@
 #include "engine/load_file.hpp"
 #include "engine/random.hpp"
 #include "game_mode.hpp"
+#include "hidden_content.h"
 #include "inv.h"
 #include "minitext.h"
 #include "stores.h"
@@ -129,10 +130,18 @@ void InitTownerFromData(Towner &towner, const TownerDataEntry &entry)
 		LoadTownerAnimations(towner, entry.animPath.c_str(), entry.animFrames, entry.animDelay);
 	}
 
-	// Set gossip from TSV data
+	// Set gossip from TSV data with hidden content enhancement
 	if (!entry.gossipTexts.empty()) {
 		const auto index = std::max<int32_t>(GenerateRnd(static_cast<int32_t>(entry.gossipTexts.size())), 0);
-		towner.gossip = entry.gossipTexts[index];
+		_speech_id originalGossip = entry.gossipTexts[index];
+		
+		// FEATURE: Hidden Content Recovery - enhance gossip with discovered content
+		// SAFETY: Only enhance if systems are ready
+		if (MyPlayer != nullptr && g_hiddenContent.IsInitialized()) {
+			towner.gossip = GetRandomHiddenGossip(originalGossip);
+		} else {
+			towner.gossip = originalGossip;
+		}
 	}
 	
 	// FEATURE: Improved Town NPC Visual Liveliness - Initialize idle facing system

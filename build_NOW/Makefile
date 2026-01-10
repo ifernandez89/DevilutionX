@@ -942,6 +942,45 @@ libdevilutionx_town_cinematic/fast:
 .PHONY : libdevilutionx_town_cinematic/fast
 
 #=============================================================================
+# Target rules for targets named libdevilutionx_life_volume
+
+# Build rule for target.
+libdevilutionx_life_volume: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 libdevilutionx_life_volume
+.PHONY : libdevilutionx_life_volume
+
+# fast build rule for target.
+libdevilutionx_life_volume/fast:
+	$(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_life_volume.dir\build.make Source/CMakeFiles/libdevilutionx_life_volume.dir/build
+.PHONY : libdevilutionx_life_volume/fast
+
+#=============================================================================
+# Target rules for targets named libdevilutionx_parallax_depth
+
+# Build rule for target.
+libdevilutionx_parallax_depth: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 libdevilutionx_parallax_depth
+.PHONY : libdevilutionx_parallax_depth
+
+# fast build rule for target.
+libdevilutionx_parallax_depth/fast:
+	$(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_parallax_depth.dir\build.make Source/CMakeFiles/libdevilutionx_parallax_depth.dir/build
+.PHONY : libdevilutionx_parallax_depth/fast
+
+#=============================================================================
+# Target rules for targets named libdevilutionx_mp_discipline
+
+# Build rule for target.
+libdevilutionx_mp_discipline: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 libdevilutionx_mp_discipline
+.PHONY : libdevilutionx_mp_discipline
+
+# fast build rule for target.
+libdevilutionx_mp_discipline/fast:
+	$(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_mp_discipline.dir\build.make Source/CMakeFiles/libdevilutionx_mp_discipline.dir/build
+.PHONY : libdevilutionx_mp_discipline/fast
+
+#=============================================================================
 # Target rules for targets named libdevilutionx_logged_fstream
 
 # Build rule for target.
@@ -1395,6 +1434,7 @@ help:
 	@echo ... libdevilutionx_init
 	@echo ... libdevilutionx_items
 	@echo ... libdevilutionx_level_objects
+	@echo ... libdevilutionx_life_volume
 	@echo ... libdevilutionx_light_render
 	@echo ... libdevilutionx_lighting
 	@echo ... libdevilutionx_load_cel
@@ -1403,12 +1443,14 @@ help:
 	@echo ... libdevilutionx_load_pcx
 	@echo ... libdevilutionx_logged_fstream
 	@echo ... libdevilutionx_monster
+	@echo ... libdevilutionx_mp_discipline
 	@echo ... libdevilutionx_mpq
 	@echo ... libdevilutionx_multiplayer
 	@echo ... libdevilutionx_options
 	@echo ... libdevilutionx_padmapper
 	@echo ... libdevilutionx_palette_blending
 	@echo ... libdevilutionx_palette_kd_tree
+	@echo ... libdevilutionx_parallax_depth
 	@echo ... libdevilutionx_parse_int
 	@echo ... libdevilutionx_pathfinding
 	@echo ... libdevilutionx_paths

@@ -163,6 +163,9 @@ devilutionx_EXTERNAL_OBJECTS = \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_visual_feedback.dir/visual_feedback.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_contextual_palette.dir/contextual_palette.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_town_cinematic.dir/town_cinematic.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_life_volume.dir/life_volume.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_parallax_depth.dir/parallax_depth.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_mp_discipline.dir/mp_discipline.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_multiplayer.dir/multi.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_multiplayer.dir/pack.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_padmapper.dir/controls/padmapper.cpp.obj" \
@@ -314,6 +317,9 @@ devilutionx_EXTERNAL_OBJECTS = \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/safety/stress_test_runner.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/audio/audio_throttling.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/audio/enhanced_audio.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/hidden_content.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/dormant_assets.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/enhanced_portal.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/quests/validation.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/storm/storm_net.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/storm/storm_svid.cpp.obj" \
@@ -399,6 +405,9 @@ devilutionx.exe: Source/CMakeFiles/libdevilutionx_lighting.dir/lighting.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_visual_feedback.dir/visual_feedback.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_contextual_palette.dir/contextual_palette.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_town_cinematic.dir/town_cinematic.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx_life_volume.dir/life_volume.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx_parallax_depth.dir/parallax_depth.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx_mp_discipline.dir/mp_discipline.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_multiplayer.dir/multi.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_multiplayer.dir/pack.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_padmapper.dir/controls/padmapper.cpp.obj
@@ -550,6 +559,9 @@ devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/safety/stress_testing.cpp.
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/safety/stress_test_runner.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/audio/audio_throttling.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/audio/enhanced_audio.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/hidden_content.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/dormant_assets.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/enhanced_portal.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/quests/validation.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/storm/storm_net.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/storm/storm_svid.cpp.obj

@@ -155,6 +155,9 @@ set(libdevilutionx_SRCS
 
   audio/audio_throttling.cpp
   audio/enhanced_audio.cpp
+  hidden_content.cpp
+  dormant_assets.cpp
+  enhanced_portal.cpp
 
   quests/validation.cpp
 
@@ -519,6 +522,37 @@ target_link_dependencies(libdevilutionx_town_cinematic PUBLIC
   DevilutionX::SDL
   fmt::fmt
   libdevilutionx_log
+)
+
+# 🎨 FASE D2 - Life & Volume System
+add_devilutionx_object_library(libdevilutionx_life_volume
+  life_volume.cpp
+)
+target_link_dependencies(libdevilutionx_life_volume PUBLIC
+  DevilutionX::SDL
+  fmt::fmt
+  libdevilutionx_log
+)
+
+# 🌟 FASE D3.2 - Parallax Depth System
+add_devilutionx_object_library(libdevilutionx_parallax_depth
+  parallax_depth.cpp
+)
+target_link_dependencies(libdevilutionx_parallax_depth PUBLIC
+  DevilutionX::SDL
+  fmt::fmt
+  libdevilutionx_log
+)
+
+# 🎯 FASE MP1 - MP Discipline System
+add_devilutionx_object_library(libdevilutionx_mp_discipline
+  mp_discipline.cpp
+)
+target_link_dependencies(libdevilutionx_mp_discipline PUBLIC
+  DevilutionX::SDL
+  fmt::fmt
+  libdevilutionx_log
+  libdevilutionx_random
 )
 
 add_devilutionx_object_library(libdevilutionx_logged_fstream
@@ -975,6 +1009,9 @@ target_link_dependencies(libdevilutionx PUBLIC
   libdevilutionx_visual_feedback
   libdevilutionx_contextual_palette
   libdevilutionx_town_cinematic
+  libdevilutionx_life_volume
+  libdevilutionx_parallax_depth
+  libdevilutionx_mp_discipline
   libdevilutionx_monster
   libdevilutionx_mpq
   libdevilutionx_multiplayer

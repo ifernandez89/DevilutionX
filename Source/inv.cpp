@@ -34,6 +34,7 @@
 #include "levels/tile_properties.hpp"
 #include "levels/town.h"
 #include "minitext.h"
+#include "hidden_content.h"
 #include "options.h"
 #include "panels/ui_panels.hpp"
 #include "player.h"
@@ -2188,7 +2189,9 @@ bool UseInvItem(int cii)
 
 	if (speedlist) {
 		if (player.SpdList[c]._iMiscId == IMISC_NOTE) {
-			InitQTextMsg(TEXT_BOOK9);
+			// FEATURE: Hidden Content Recovery - enhance book reading with discovered content
+			_speech_id bookText = GetRandomHiddenBookText(TEXT_BOOK9);
+			InitQTextMsg(bookText);
 			CloseInventory();
 			return true;
 		}
@@ -2199,7 +2202,9 @@ bool UseInvItem(int cii)
 	if (player.InvList[c]._iMiscId == IMISC_MAPOFDOOM)
 		return true;
 	if (player.InvList[c]._iMiscId == IMISC_NOTE) {
-		InitQTextMsg(TEXT_BOOK9);
+		// FEATURE: Hidden Content Recovery - enhance book reading with discovered content
+		_speech_id bookText = GetRandomHiddenBookText(TEXT_BOOK9);
+		InitQTextMsg(bookText);
 		CloseInventory();
 		return true;
 	}

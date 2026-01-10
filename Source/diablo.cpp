@@ -58,6 +58,9 @@
 #include "gmenu.h"
 #include "headless_mode.hpp"
 #include "help.h"
+#include "hidden_content.h"
+#include "dormant_assets.h"
+#include "enhanced_portal.h"
 #include "hwcursor.hpp"
 #include "init.hpp"
 #include "inv.h"
@@ -74,6 +77,9 @@
 #include "visual_feedback.h"
 #include "contextual_palette.h"
 #include "town_cinematic.h"
+#include "life_volume.h"
+#include "parallax_depth.h"
+#include "mp_discipline.h"
 #include "loadsave.h"
 #include "lua/lua_global.hpp"
 #include "menu.h"
@@ -1462,6 +1468,9 @@ void CreateLevel(lvl_entry entry)
 		Freeupstairs();
 	}
 	LoadRndLvlPal(leveltype);
+	
+	// FEATURE: Dormant Assets Recovery - enhance level with discovered decorative elements
+	EnhanceLevelWithDormantAssets(leveltype, 15); // 15% chance to add decorations
 }
 
 void UnstuckChargers()
@@ -1541,6 +1550,18 @@ void GameLogic()
 		
 		// 🏰 FASE D3 - Update Town Cinematográfica System
 		UpdateTownCinematic();
+		
+		// 🎨 FASE D2 - Update Life & Volume System
+		UpdateLifeVolume();
+		
+		// 🌟 FASE D3.2 - Update Parallax Depth System
+		UpdateParallaxDepth();
+		
+		// 🎯 FASE MP1 - Update MP Discipline System
+		UpdateMPDiscipline();
+		
+		// 🌀 ENHANCED PORTAL - Update Portal Enhancement System
+		UpdateEnhancedPortal();
 		
 		ProcessVisionList();
 	} else {
@@ -2757,6 +2778,9 @@ int DiabloMain(int argc, char **argv)
 	LoadGameArchives();
 
 	LoadTextData();
+	
+	// Note: Hidden Content and Dormant Assets systems will be initialized 
+	// later after game systems are fully ready (after InitTowners)
 
 	// Load dynamic data before we go into the menu as we need to initialise player characters in memory pretty early.
 	LoadPlayerDataFiles();
@@ -3209,6 +3233,11 @@ tl::expected<void, std::string> LoadGameLevelTown(bool firstflag, lvl_entry lvld
 	InitTowners();
 	InitStash();
 	InitItems();
+	
+	// FEATURE: Initialize Hidden Content and Dormant Assets systems after core game systems are ready
+	InitHiddenContent();
+	InitDormantAssets();
+	InitEnhancedPortal();
 	InitMissiles();
 
 	IncProgress();
@@ -3413,6 +3442,15 @@ tl::expected<void, std::string> LoadGameLevel(bool firstflag, lvl_entry lvldir)
 	
 	// 🏰 FASE D3 - Initialize Town Cinematográfica System
 	InitTownCinematic();
+	
+	// 🎨 FASE D2 - Initialize Life & Volume System
+	InitLifeVolume();
+	
+	// 🌟 FASE D3.2 - Initialize Parallax Depth System
+	InitParallaxDepth();
+	
+	// 🎯 FASE MP1 - Initialize MP Discipline System
+	InitMPDiscipline();
 
 	InitLevelMonsters();
 

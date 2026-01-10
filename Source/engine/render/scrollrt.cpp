@@ -27,6 +27,7 @@
 #include "dead.h"
 #include "diablo_msg.hpp"
 #include "doom.h"
+#include "enhanced_portal.h"
 #include "engine/backbuffer_state.hpp"
 #include "engine/displacement.hpp"
 #include "engine/dx.h"
@@ -382,10 +383,27 @@ void DrawMissilePrivate(const Surface &out, const Missile &missile, Point target
 
 	const Point missileRenderPosition { targetBufferPosition + missile.position.offsetForRendering - Displacement { missile._miAnimWidth2, 0 } };
 	const ClxSprite sprite = (*missile._miAnimData)[missile._miAnimFrame - 1];
+	
+	// FEATURE: Enhanced Portal System - subtle visual improvements for portals
+	bool isPortal = (missile._mitype == MissileID::TownPortal || missile._mitype == MissileID::RedPortal);
+	float colorMod = 1.0f;
+	float intensityMod = 1.0f;
+	
+	if (isPortal && g_enhancedPortal.IsEnabled()) {
+		colorMod = GetPortalColorModifier(missile.position.tile);
+		intensityMod = GetPortalIntensityModifier(missile.position.tile);
+		
+		// Trigger audio feedback on first render (throttled internally)
+		TriggerPortalAudioFeedback(missile.position.tile);
+	}
+	
+	// Apply enhanced rendering with fallback safety
 	if (missile._miUniqTrans != 0) {
 		ClxDrawTRN(out, missileRenderPosition, sprite, Monsters[missile._misource].uniqueMonsterTRN.get());
-	} else if (missile._miLightFlag) {
-		ClxDrawLight(out, missileRenderPosition, sprite, lightTableIndex);
+	} else if (missile._miLightFlag || (isPortal && intensityMod > 1.0f)) {
+		// Enhanced portal gets improved lighting
+		int enhancedLightIndex = isPortal ? std::max(0, static_cast<int>(lightTableIndex * intensityMod)) : lightTableIndex;
+		ClxDrawLight(out, missileRenderPosition, sprite, enhancedLightIndex);
 	} else {
 		ClxDraw(out, missileRenderPosition, sprite);
 	}

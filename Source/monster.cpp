@@ -40,6 +40,7 @@
 #include "crawl.hpp"
 #include "cursor.h"
 #include "dead.h"
+#include "dormant_assets.h"
 #include "diablo.h"
 #include "dvlnet/leaveinfo.hpp"
 #include "effects.h"
@@ -153,7 +154,7 @@ constexpr const std::array<_monster_id, 12> SkeletonTypes {
 };
 
 /** Maps from monster action to monster animation letter. */
-constexpr char Animletter[7] = "nwahds";
+const char Animletter[7] = "nwahds";
 
 size_t GetNumAnims(const MonsterData &monsterData)
 {
@@ -3957,6 +3958,15 @@ void ApplyMonsterDamage(DamageType damageType, Monster &monster, int damage)
 	AddFloatingNumber(damageType, monster, damage);
 
 	monster.hitPoints -= damage;
+	
+	// FEATURE: Dormant Assets Recovery - enhance combat with visual effects
+	// SAFETY: Only add effects if systems are ready and damage is significant
+	if (damage > 0 && MyPlayer != nullptr && g_dormantAssets.IsInitialized()) {
+		// 25% chance to add enhanced visual effect on significant damage
+		if (damage > 10 && GenerateRnd(100) < 25) {
+			AddDormantVisualEffect("combat_impact", monster.position.tile);
+		}
+	}
 
 	if (monster.hasNoLife()) {
 		delta_kill_monster(monster, monster.position.tile, *MyPlayer);

@@ -81,6 +81,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "C:/c - c++/DevilutionX/Source/help.cpp" "Source/CMakeFiles/libdevilutionx.dir/help.cpp.obj" "gcc" "Source/CMakeFiles/libdevilutionx.dir/help.cpp.obj.d"
   "C:/c - c++/DevilutionX/Source/hidden_content.cpp" "Source/CMakeFiles/libdevilutionx.dir/hidden_content.cpp.obj" "gcc" "Source/CMakeFiles/libdevilutionx.dir/hidden_content.cpp.obj.d"
   "C:/c - c++/DevilutionX/Source/hwcursor.cpp" "Source/CMakeFiles/libdevilutionx.dir/hwcursor.cpp.obj" "gcc" "Source/CMakeFiles/libdevilutionx.dir/hwcursor.cpp.obj.d"
+  "C:/c - c++/DevilutionX/Source/inferno_defense.cpp" "Source/CMakeFiles/libdevilutionx.dir/inferno_defense.cpp.obj" "gcc" "Source/CMakeFiles/libdevilutionx.dir/inferno_defense.cpp.obj.d"
   "C:/c - c++/DevilutionX/Source/interfac.cpp" "Source/CMakeFiles/libdevilutionx.dir/interfac.cpp.obj" "gcc" "Source/CMakeFiles/libdevilutionx.dir/interfac.cpp.obj.d"
   "C:/c - c++/DevilutionX/Source/inv.cpp" "Source/CMakeFiles/libdevilutionx.dir/inv.cpp.obj" "gcc" "Source/CMakeFiles/libdevilutionx.dir/inv.cpp.obj.d"
   "C:/c - c++/DevilutionX/Source/items/validation.cpp" "Source/CMakeFiles/libdevilutionx.dir/items/validation.cpp.obj" "gcc" "Source/CMakeFiles/libdevilutionx.dir/items/validation.cpp.obj.d"

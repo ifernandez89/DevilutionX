@@ -158,6 +158,7 @@ set(libdevilutionx_SRCS
   hidden_content.cpp
   dormant_assets.cpp
   enhanced_portal.cpp
+  inferno_defense.cpp
 
   quests/validation.cpp
 

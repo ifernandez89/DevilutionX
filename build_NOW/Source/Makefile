@@ -3501,6 +3501,30 @@ hwcursor.cpp.s:
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/hwcursor.cpp.s
 .PHONY : hwcursor.cpp.s
 
+inferno_defense.obj: inferno_defense.cpp.obj
+.PHONY : inferno_defense.obj
+
+# target to build an object file
+inferno_defense.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/inferno_defense.cpp.obj
+.PHONY : inferno_defense.cpp.obj
+
+inferno_defense.i: inferno_defense.cpp.i
+.PHONY : inferno_defense.i
+
+# target to preprocess a source file
+inferno_defense.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/inferno_defense.cpp.i
+.PHONY : inferno_defense.cpp.i
+
+inferno_defense.s: inferno_defense.cpp.s
+.PHONY : inferno_defense.s
+
+# target to generate assembly for a file
+inferno_defense.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/inferno_defense.cpp.s
+.PHONY : inferno_defense.cpp.s
+
 init.obj: init.cpp.obj
 .PHONY : init.obj
 
@@ -7148,6 +7172,9 @@ help:
 	@echo ... hwcursor.obj
 	@echo ... hwcursor.i
 	@echo ... hwcursor.s
+	@echo ... inferno_defense.obj
+	@echo ... inferno_defense.i
+	@echo ... inferno_defense.s
 	@echo ... init.obj
 	@echo ... init.i
 	@echo ... init.s

@@ -28,6 +28,9 @@
 #include "diablo.h"
 #include "effects.h"
 #include "engine/clx_sprite.hpp"
+
+// 🔥 INFERNO DEFENSE SYSTEM
+#include "inferno_defense.h"
 #include "engine/direction.hpp"
 #include "engine/displacement.hpp"
 #include "engine/lighting_defs.hpp"
@@ -487,6 +490,12 @@ void CheckMissileCol(Missile &missile, DamageType damageType, int minDamage, int
 {
 	if (!InDungeonBounds(position))
 		return;
+
+	// 🔥 INFERNO DEFENSE: Throttling específico para Inferno
+	bool isInfernoMissile = (missile._mitype == MissileID::Inferno);
+	if (isInfernoMissile && !INFERNO_SAFE_DAMAGE(maxDamage, position)) {
+		return; // Skip damage application but keep missile alive
+	}
 
 	bool isMonsterHit = false;
 	int mid = dMonster[position.x][position.y];
@@ -3952,7 +3961,12 @@ void ProcessInferno(Missile &missile)
 	missile.duration--;
 	missile.var2--;
 	int k = missile.duration;
-	CheckMissileCol(missile, GetMissileData(missile._mitype).damageType(), missile._midam, missile._midam, true, missile.position.tile, false);
+	
+	// 🔥 INFERNO DEFENSE: Collision check con throttling inteligente
+	if (INFERNO_SAFE_COLLISION(missile, missile.position.tile)) {
+		CheckMissileCol(missile, GetMissileData(missile._mitype).damageType(), missile._midam, missile._midam, true, missile.position.tile, false);
+	}
+	
 	if (missile.duration == 0 && missile._miHitFlag)
 		missile.duration = k;
 	if (missile.var2 == 0)
@@ -3978,20 +3992,19 @@ void ProcessInfernoControl(Missile &missile)
 	UpdateMissilePos(missile);
 	if (missile.position.tile != Point { missile.var1, missile.var2 }) {
 		if (!TileHasAny(missile.position.tile, TileProperties::BlockMissile)) {
-			// SAFETY LAYER: Verificación específica para Inferno antes de spawn
-			// PRINCIPIO: Intensidad > cantidad (solo para Inferno, no global)
-			SAFETY_CHECK_SPAWN(Missile);
-			
-			AddMissile(
-			    missile.position.tile,
-			    missile.position.start,
-			    Direction::South,
-			    MissileID::Inferno,
-			    missile._micaster,
-			    missile._misource,
-			    missile.var3,
-			    missile._mispllvl,
-			    &missile);
+			// 🔥 INFERNO DEFENSE: Spawn con throttling inteligente
+			if (INFERNO_SAFE_SPAWN(missile.position.tile)) {
+				AddMissile(
+				    missile.position.tile,
+				    missile.position.start,
+				    Direction::South,
+				    MissileID::Inferno,
+				    missile._micaster,
+				    missile._misource,
+				    missile.var3,
+				    missile._mispllvl,
+				    &missile);
+			}
 		} else {
 			missile.duration = 0;
 		}

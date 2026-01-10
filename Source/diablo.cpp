@@ -61,6 +61,7 @@
 #include "hidden_content.h"
 #include "dormant_assets.h"
 #include "enhanced_portal.h"
+#include "inferno_defense.h"
 #include "hwcursor.hpp"
 #include "init.hpp"
 #include "inv.h"
@@ -1537,7 +1538,15 @@ void GameLogic()
 		gGameLogicStep = GameLogicStep::ProcessObjects;
 		ProcessObjects();
 		gGameLogicStep = GameLogicStep::ProcessMissiles;
+		
+		// 🔥 INFERNO DEFENSE: Update system before missile processing
+		UpdateInfernoDefense();
+		
 		ProcessMissiles();
+		
+		// 🔥 INFERNO DEFENSE: Reset frame counters after missile processing
+		ResetInfernoDefenseFrameCounters();
+		
 		gGameLogicStep = GameLogicStep::ProcessItems;
 		ProcessItems();
 		ProcessLightList();
@@ -1570,7 +1579,14 @@ void GameLogic()
 		gGameLogicStep = GameLogicStep::ProcessItemsTown;
 		ProcessItems();
 		gGameLogicStep = GameLogicStep::ProcessMissilesTown;
+		
+		// 🔥 INFERNO DEFENSE: Update system before missile processing (town)
+		UpdateInfernoDefense();
+		
 		ProcessMissiles();
+		
+		// 🔥 INFERNO DEFENSE: Reset frame counters after missile processing (town)
+		ResetInfernoDefenseFrameCounters();
 	}
 	gGameLogicStep = GameLogicStep::None;
 
@@ -3238,6 +3254,7 @@ tl::expected<void, std::string> LoadGameLevelTown(bool firstflag, lvl_entry lvld
 	InitHiddenContent();
 	InitDormantAssets();
 	InitEnhancedPortal();
+	InitInfernoDefense();
 	InitMissiles();
 
 	IncProgress();

@@ -145,6 +145,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/libdevilutionx.dir/hidden_content.cpp.obj.d"
   "CMakeFiles/libdevilutionx.dir/hwcursor.cpp.obj"
   "CMakeFiles/libdevilutionx.dir/hwcursor.cpp.obj.d"
+  "CMakeFiles/libdevilutionx.dir/inferno_defense.cpp.obj"
+  "CMakeFiles/libdevilutionx.dir/inferno_defense.cpp.obj.d"
   "CMakeFiles/libdevilutionx.dir/interfac.cpp.obj"
   "CMakeFiles/libdevilutionx.dir/interfac.cpp.obj.d"
   "CMakeFiles/libdevilutionx.dir/inv.cpp.obj"

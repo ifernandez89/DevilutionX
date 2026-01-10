@@ -320,6 +320,7 @@ devilutionx_EXTERNAL_OBJECTS = \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/hidden_content.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/dormant_assets.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/enhanced_portal.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/inferno_defense.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/quests/validation.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/storm/storm_net.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/storm/storm_svid.cpp.obj" \
@@ -562,6 +563,7 @@ devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/audio/enhanced_audio.cpp.o
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/hidden_content.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/dormant_assets.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/enhanced_portal.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/inferno_defense.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/quests/validation.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/storm/storm_net.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/storm/storm_svid.cpp.obj

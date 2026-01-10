@@ -211,6 +211,23 @@ SpellCheckResult CheckSpell(const Player &player, SpellID sn, SpellType st, bool
 
 void CastSpell(Player &player, SpellID spl, WorldTilePosition src, WorldTilePosition dst, int spllvl)
 {
+	// 🔥 INFERNO DEFENSE: Throttling crítico para spam de Inferno
+	if (spl == SpellID::Inferno) {
+		// Contar InfernoControls activos
+		int activeInfernoControls = 0;
+		for (const auto &missile : Missiles) {
+			if (missile._mitype == MissileID::InfernoControl) {
+				activeInfernoControls++;
+			}
+		}
+		
+		// Límite crítico: máximo 3 InfernoControls simultáneos
+		if (activeInfernoControls >= 3) {
+			// Throttling: no permitir más casts hasta que termine alguno
+			return;
+		}
+	}
+
 	// 🎮 FASE V3.6 - BRILLO DE HECHIZO
 	// Activar brillo visual cuando se lanza un hechizo
 	if (&player == MyPlayer) {

@@ -28,15 +28,32 @@ void UpdateInfernoDefense()
     // Obtener tiempo actual
     uint32_t currentTime = SDL_GetTicks();
     
+    // Contar InfernoControls activos para ajustar throttling
+    int activeInfernoControls = 0;
+    for (const auto &missile : Missiles) {
+        if (missile._mitype == MissileID::InfernoControl) {
+            activeInfernoControls++;
+        }
+    }
+    
     // Contar enemigos cerca del jugador para determinar modo
     if (MyPlayer != nullptr) {
         g_infernoDefense.nearbyEnemyCount = CountNearbyEnemies(MyPlayer->position.tile, 8);
         
-        // Determinar modo de operación
-        if (g_infernoDefense.nearbyEnemyCount >= InfernoDefense::INFERNO_EMERGENCY_THRESHOLD) {
+        // Determinar modo de operación (más agresivo con múltiples InfernoControls)
+        int adjustedThreshold = InfernoDefense::INFERNO_THROTTLE_THRESHOLD;
+        int adjustedEmergencyThreshold = InfernoDefense::INFERNO_EMERGENCY_THRESHOLD;
+        
+        // Si hay múltiples InfernoControls, ser más restrictivo
+        if (activeInfernoControls >= 2) {
+            adjustedThreshold = 10;  // Más restrictivo
+            adjustedEmergencyThreshold = 15;  // Emergencia antes
+        }
+        
+        if (g_infernoDefense.nearbyEnemyCount >= adjustedEmergencyThreshold || activeInfernoControls >= 3) {
             g_infernoDefense.isEmergencyMode = true;
             g_infernoDefense.isThrottlingActive = true;
-        } else if (g_infernoDefense.nearbyEnemyCount >= InfernoDefense::INFERNO_THROTTLE_THRESHOLD) {
+        } else if (g_infernoDefense.nearbyEnemyCount >= adjustedThreshold || activeInfernoControls >= 2) {
             g_infernoDefense.isEmergencyMode = false;
             g_infernoDefense.isThrottlingActive = true;
         } else {
@@ -60,6 +77,23 @@ bool CanSpawnInfernoMissile(Point position)
     // Verificar límite por frame
     if (g_infernoDefense.infernoMissilesSpawnedThisFrame >= InfernoDefense::MAX_INFERNO_MISSILES_PER_FRAME) {
         return false;
+    }
+    
+    // Contar InfernoControls activos para throttling más agresivo
+    int activeInfernoControls = 0;
+    for (const auto &missile : Missiles) {
+        if (missile._mitype == MissileID::InfernoControl) {
+            activeInfernoControls++;
+        }
+    }
+    
+    // Con múltiples InfernoControls, ser MUY restrictivo
+    if (activeInfernoControls >= 2) {
+        // Solo permitir 1 de cada 4 spawns con múltiples controles
+        if (GenerateRnd(4) != 0) {
+            g_infernoDefense.totalInfernoMissilesPrevented++;
+            return false;
+        }
     }
     
     // En modo emergencia, ser más restrictivo

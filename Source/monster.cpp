@@ -25,6 +25,7 @@
 #include <vector>
 
 #include "combat_pauses.h"  // ⚔️ Combat Pauses System
+#include "waiting_enemies.h"  // 👁️ Waiting Enemies System
 
 #ifdef USE_SDL3
 #include <SDL3/SDL_timer.h>
@@ -895,6 +896,13 @@ void WalkInDirection(Monster &monster, Direction endDir)
 
 void StartAttack(Monster &monster)
 {
+	// 👁️ WAITING ENEMIES: Check if monster should wait before attacking
+	if (ShouldMonsterWait(monster)) {
+		StartWaitingBehavior(monster);
+		// Don't start attack immediately, monster will wait first
+		return;
+	}
+	
 	const Direction md = GetMonsterDirection(monster);
 	NewMonsterAnim(monster, MonsterGraphic::Attack, md, AnimationDistributionFlags::ProcessAnimationPending);
 	monster.mode = MonsterMode::MeleeAttack;
@@ -1144,6 +1152,35 @@ void SyncLightPosition(Monster &monster)
 
 void MonsterIdle(Monster &monster)
 {
+	// 👁️ WAITING ENEMIES: Handle waiting behavior
+	if (IsMonsterWaiting(monster)) {
+		if (!UpdateWaitingBehavior(monster)) {
+			// Waiting period ended, start attack
+			const Direction md = GetMonsterDirection(monster);
+			NewMonsterAnim(monster, MonsterGraphic::Attack, md, AnimationDistributionFlags::ProcessAnimationPending);
+			monster.mode = MonsterMode::MeleeAttack;
+			monster.position.future = monster.position.tile;
+			monster.position.old = monster.position.tile;
+			return;
+		}
+		// Still waiting, use slower animation and movement
+		if (monster.type().type == MT_GOLEM)
+			monster.changeAnimationData(MonsterGraphic::Walk);
+		else
+			monster.changeAnimationData(MonsterGraphic::Stand);
+		
+		// Slow movement toward player during wait
+		if (monster.animInfo.isLastFrame()) {
+			UpdateEnemy(monster);
+			// Move slowly toward player (handled by normal AI but with hesitation)
+		}
+		
+		if (monster.var2 < std::numeric_limits<int16_t>::max())
+			monster.var2++;
+		return;
+	}
+	
+	// Normal idle behavior
 	if (monster.type().type == MT_GOLEM)
 		monster.changeAnimationData(MonsterGraphic::Walk);
 	else
@@ -4104,6 +4141,11 @@ void MonsterDeath(Monster &monster, Direction md, bool sendmsg)
 	
 	// ⚔️ COMBAT PAUSES: Record monster kill for combat tracking
 	RecordMonsterKill(monster.getId(), monster.isUnique() || (monster.flags & MFLAG_ELITE) != 0);
+	
+	// 👁️ WAITING ENEMIES: End waiting behavior on death
+	if (IsMonsterWaiting(monster)) {
+		EndWaitingBehavior(monster);
+	}
 	
 	monster.hitPoints = 0;
 	monster.flags &= ~MFLAG_HIDDEN;

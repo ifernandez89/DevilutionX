@@ -99,6 +99,7 @@
 #include "plrmsg.h"
 #include "qol/chatlog.h"
 #include "combat_pauses.h"
+#include "waiting_enemies.h"
 #include "qol/floatingnumbers.h"
 #include "qol/itemlabels.h"
 #include "qol/monhealthbar.h"
@@ -1567,6 +1568,9 @@ void GameLogic()
 		// ⚔️ COMBAT PAUSES - Update Combat Pauses System
 		UpdateCombatPauses();
 		
+		// 👁️ WAITING ENEMIES - Update Waiting Enemies System
+		UpdateWaitingEnemies();
+		
 		ProcessVisionList();
 	} else {
 		gGameLogicStep = GameLogicStep::ProcessTowners;
@@ -2708,6 +2712,7 @@ bool StartGame(bool bNewGame, bool bSinglePlayer)
 			InitQuests();
 			InitPortals();
 			InitCombatPauses();  // ⚔️ Initialize Combat Pauses System
+			InitWaitingEnemies(); // 👁️ Initialize Waiting Enemies System
 			InitDungMsgs(*MyPlayer);
 			DeltaSyncJunk();
 		}

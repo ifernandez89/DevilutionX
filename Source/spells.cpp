@@ -23,6 +23,12 @@
 // 🎯 UNIVERSAL SPELL THROTTLING SYSTEM
 #include "spell_throttling.h"
 
+// 🔍 CRASH DIAGNOSTICS SYSTEM
+#include "crash_diagnostics.h"
+
+// 🚨 EMERGENCY DIAGNOSTICS SYSTEM
+#include "emergency_diagnostics.h"
+
 namespace devilution {
 
 namespace {
@@ -214,8 +220,36 @@ SpellCheckResult CheckSpell(const Player &player, SpellID sn, SpellType st, bool
 
 void CastSpell(Player &player, SpellID spl, WorldTilePosition src, WorldTilePosition dst, int spllvl)
 {
+	// 🚨 EMERGENCY DIAGNOSTICS: Detectar específicamente clicks de Inferno
+	if (spl == SpellID::Inferno && &player == MyPlayer) {
+		// Contar InfernoControls activos ANTES de permitir el cast
+		int activeControls = 0;
+		int activeInfernos = 0;
+		for (const auto &missile : Missiles) {
+			if (missile._mitype == MissileID::InfernoControl) activeControls++;
+			if (missile._mitype == MissileID::Inferno) activeInfernos++;
+		}
+		
+		EMERGENCY_CRITICAL(fmt::format("🔥 INFERNO CAST ATTEMPT! Current: {} Controls, {} Infernos", activeControls, activeInfernos));
+		
+		// 🚨 LÍMITE ABSOLUTO CRÍTICO: NO permitir más de 1 InfernoControl NUNCA
+		if (activeControls >= 1) {
+			EMERGENCY_CRITICAL("❌ INFERNO CAST BLOCKED - Too many InfernoControls active!");
+			return; // BLOQUEAR COMPLETAMENTE
+		}
+		
+		// 🚨 LÍMITE ABSOLUTO CRÍTICO: NO permitir más de 3 Infernos NUNCA
+		if (activeInfernos >= 3) {
+			EMERGENCY_CRITICAL("❌ INFERNO CAST BLOCKED - Too many Infernos active!");
+			return; // BLOQUEAR COMPLETAMENTE
+		}
+		
+		RegisterInfernoClick();
+	}
+	
 	// 🎯 UNIVERSAL SPELL THROTTLING: Protección contra spam para TODOS los hechizos
 	if (!SPELL_SAFE_CAST(spl, player.getId())) {
+		EMERGENCY_LOG(fmt::format("SPELL THROTTLED: {} for player {}", static_cast<int>(spl), player._pName));
 		// Throttling activo - no permitir cast
 		return;
 	}

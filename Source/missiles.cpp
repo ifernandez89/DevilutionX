@@ -31,6 +31,14 @@
 
 // 🔥 INFERNO DEFENSE SYSTEM
 #include "inferno_defense.h"
+
+// 🔍 CRASH DIAGNOSTICS SYSTEM
+#include "crash_diagnostics.h"
+
+// 🚨 EMERGENCY DIAGNOSTICS SYSTEM
+#include "emergency_diagnostics.h"
+
+#include <fmt/format.h>
 #include "engine/direction.hpp"
 #include "engine/displacement.hpp"
 #include "engine/lighting_defs.hpp"
@@ -3992,8 +4000,50 @@ void ProcessInfernoControl(Missile &missile)
 	UpdateMissilePos(missile);
 	if (missile.position.tile != Point { missile.var1, missile.var2 }) {
 		if (!TileHasAny(missile.position.tile, TileProperties::BlockMissile)) {
-			// 🔥 INFERNO DEFENSE: Spawn con throttling inteligente
+			// 🚨 EMERGENCY: Contar todos los missiles antes de spawn
+			int totalInfernos = 0;
+			int totalControls = 0;
+			int totalMissiles = 0;
+			for (const auto &m : Missiles) {
+				totalMissiles++;
+				if (m._mitype == MissileID::Inferno) totalInfernos++;
+				if (m._mitype == MissileID::InfernoControl) totalControls++;
+			}
+			
+			EMERGENCY_CRITICAL(fmt::format("🔥 INFERNO SPAWN ATTEMPT: {} Infernos, {} Controls, {} total missiles", totalInfernos, totalControls, totalMissiles));
+			
+			// 🚨 LÍMITE CRÍTICO: Máximo total de missiles (NUEVO)
+			if (totalMissiles >= 80) {
+				EMERGENCY_CRITICAL(fmt::format("❌ MISSILE OVERFLOW PREVENTION! {} total missiles (limit: 80)", totalMissiles));
+				missile.duration = 0;
+				missile._miDelFlag = true;
+				RegisterCrashEvent("MISSILE_OVERFLOW", 
+					fmt::format("Total missiles: {} (limit: 80)", totalMissiles),
+					"Critical overflow prevention");
+				return;
+			}
+			
+			// 🚨 LÍMITE ULTRA-AGRESIVO: Máximo 2 Infernos simultáneos (reducido de 3)
+			if (totalInfernos >= 2) {
+				EMERGENCY_CRITICAL(fmt::format("❌ INFERNO SPAWN BLOCKED! {} active Infernos (limit: 2)", totalInfernos));
+				missile.duration = 0;
+				missile._miDelFlag = true;
+				RegisterCrashEvent("INFERNO_LIMIT", 
+					fmt::format("Inferno spawn blocked - {} active Infernos", totalInfernos),
+					"Ultra-aggressive limit");
+				return;
+			}
+			
+			// 🚨 LÍMITE ULTRA-AGRESIVO: Máximo 1 control (reducido de 2)
+			if (totalControls >= 1) {
+				EMERGENCY_CRITICAL(fmt::format("❌ INFERNO CONTROL BLOCKED! {} active Controls (limit: 1)", totalControls));
+				missile.duration = 0;
+				missile._miDelFlag = true;
+				return;
+			}
+			
 			if (INFERNO_SAFE_SPAWN(missile.position.tile)) {
+				EMERGENCY_LOG("✅ INFERNO SPAWN ALLOWED");
 				AddMissile(
 				    missile.position.tile,
 				    missile.position.start,
@@ -4004,16 +4054,24 @@ void ProcessInfernoControl(Missile &missile)
 				    missile.var3,
 				    missile._mispllvl,
 				    &missile);
+			} else {
+				EMERGENCY_CRITICAL("❌ INFERNO SPAWN BLOCKED by INFERNO_SAFE_SPAWN");
+				missile.duration = 0;
 			}
 		} else {
+			EMERGENCY_LOG("InfernoControl blocked by tile");
 			missile.duration = 0;
 		}
 		missile.var1 = missile.position.tile.x;
 		missile.var2 = missile.position.tile.y;
 		missile.var3++;
 	}
-	if (missile.duration == 0 || missile.var3 == 3)
+	
+	// 🚨 LÍMITE ULTRA-AGRESIVO: Terminar después de 1 spawn solamente
+	if (missile.duration == 0 || missile.var3 >= 1) {
+		EMERGENCY_LOG(fmt::format("InfernoControl terminating: duration={}, var3={}", missile.duration, missile.var3));
 		missile._miDelFlag = true;
+	}
 }
 
 void ProcessChargedBolt(Missile &missile)

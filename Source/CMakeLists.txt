@@ -6,6 +6,7 @@ set(libdevilutionx_SRCS
   appfat.cpp
   automap.cpp
   capture.cpp
+  combat_pauses.cpp
   cursor.cpp
   dead.cpp
   debug.cpp

@@ -98,6 +98,7 @@
 #include "pfile.h"
 #include "plrmsg.h"
 #include "qol/chatlog.h"
+#include "combat_pauses.h"
 #include "qol/floatingnumbers.h"
 #include "qol/itemlabels.h"
 #include "qol/monhealthbar.h"
@@ -1563,6 +1564,9 @@ void GameLogic()
 		// 🌀 ENHANCED PORTAL - Update Portal Enhancement System
 		UpdateEnhancedPortal();
 		
+		// ⚔️ COMBAT PAUSES - Update Combat Pauses System
+		UpdateCombatPauses();
+		
 		ProcessVisionList();
 	} else {
 		gGameLogicStep = GameLogicStep::ProcessTowners;
@@ -2703,6 +2707,7 @@ bool StartGame(bool bNewGame, bool bSinglePlayer)
 			InitLevels();
 			InitQuests();
 			InitPortals();
+			InitCombatPauses();  // ⚔️ Initialize Combat Pauses System
 			InitDungMsgs(*MyPlayer);
 			DeltaSyncJunk();
 		}
@@ -3500,6 +3505,15 @@ tl::expected<void, std::string> LoadGameLevel(bool firstflag, lvl_entry lvldir)
 	}
 
 	LoadGameLevelCalculateCursor();
+	
+	// 🎨 FIX: Reload palette after all initialization to prevent color corruption
+	// This fixes the red/magenta color bug when creating new games
+	if (leveltype != DTYPE_TOWN) {
+		LoadPalette("levels\\l1data\\l1.pal");
+	} else {
+		LoadPalette("levels\\towndata\\town.pal");
+	}
+	
 	return {};
 }
 

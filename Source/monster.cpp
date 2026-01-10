@@ -24,6 +24,8 @@
 #include <utility>
 #include <vector>
 
+#include "combat_pauses.h"  // ⚔️ Combat Pauses System
+
 #ifdef USE_SDL3
 #include <SDL3/SDL_timer.h>
 #else
@@ -3860,6 +3862,11 @@ Monster *AddMonster(Point position, Direction dir, size_t typeIndex, bool inMap)
 	// SAFETY LAYER: Verificar límites antes de agregar monster
 	SAFETY_CHECK_SPAWN_RET(Monster, nullptr);
 	
+	// ⚔️ COMBAT PAUSES: Check if spawning is allowed
+	if (!CanSpawnMonsters()) {
+		return nullptr; // Spawn blocked by combat pause
+	}
+	
 	if (ActiveMonsterCount < MaxMonsters) {
 		Monster &monster = Monsters[ActiveMonsters[ActiveMonsterCount++]];
 		if (inMap)
@@ -3876,6 +3883,11 @@ void SpawnMonster(Point position, Direction dir, size_t typeIndex)
 	// SAFETY LAYER: Verificar límites y aplicar guardas de seguridad
 	SAFETY_GUARD();
 	SAFETY_CHECK_SPAWN(Monster);
+	
+	// ⚔️ COMBAT PAUSES: Check if spawning is allowed
+	if (!CanSpawnMonsters()) {
+		return; // Spawn blocked by combat pause
+	}
 	
 	if (ActiveMonsterCount >= MaxMonsters)
 		return;
@@ -4089,6 +4101,10 @@ void MonsterDeath(Monster &monster, Direction md, bool sendmsg)
 		AddPlrMonstExper(monster.level(sgGameInitInfo.nDifficulty), monster.exp(sgGameInitInfo.nDifficulty), monster.whoHit);
 
 	MonsterKillCounts[monster.type().type]++;
+	
+	// ⚔️ COMBAT PAUSES: Record monster kill for combat tracking
+	RecordMonsterKill(monster.getId(), monster.isUnique() || (monster.flags & MFLAG_ELITE) != 0);
+	
 	monster.hitPoints = 0;
 	monster.flags &= ~MFLAG_HIDDEN;
 	SetRndSeed(monster.rndItemSeed);

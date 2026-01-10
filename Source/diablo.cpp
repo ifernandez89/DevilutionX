@@ -62,6 +62,7 @@
 #include "dormant_assets.h"
 #include "enhanced_portal.h"
 #include "inferno_defense.h"
+#include "spell_throttling.h"
 #include "hwcursor.hpp"
 #include "init.hpp"
 #include "inv.h"
@@ -1542,10 +1543,16 @@ void GameLogic()
 		// 🔥 INFERNO DEFENSE: Update system before missile processing
 		UpdateInfernoDefense();
 		
+		// 🎯 UNIVERSAL SPELL THROTTLING: Update system before missile processing
+		UpdateSpellThrottling();
+		
 		ProcessMissiles();
 		
 		// 🔥 INFERNO DEFENSE: Reset frame counters after missile processing
 		ResetInfernoDefenseFrameCounters();
+		
+		// 🎯 UNIVERSAL SPELL THROTTLING: Reset frame counters after missile processing
+		ResetSpellThrottlingFrameCounters();
 		
 		gGameLogicStep = GameLogicStep::ProcessItems;
 		ProcessItems();
@@ -1583,10 +1590,16 @@ void GameLogic()
 		// 🔥 INFERNO DEFENSE: Update system before missile processing (town)
 		UpdateInfernoDefense();
 		
+		// 🎯 UNIVERSAL SPELL THROTTLING: Update system before missile processing (town)
+		UpdateSpellThrottling();
+		
 		ProcessMissiles();
 		
 		// 🔥 INFERNO DEFENSE: Reset frame counters after missile processing (town)
 		ResetInfernoDefenseFrameCounters();
+		
+		// 🎯 UNIVERSAL SPELL THROTTLING: Reset frame counters after missile processing (town)
+		ResetSpellThrottlingFrameCounters();
 	}
 	gGameLogicStep = GameLogicStep::None;
 
@@ -3255,6 +3268,7 @@ tl::expected<void, std::string> LoadGameLevelTown(bool firstflag, lvl_entry lvld
 	InitDormantAssets();
 	InitEnhancedPortal();
 	InitInfernoDefense();
+	InitSpellThrottling();
 	InitMissiles();
 
 	IncProgress();

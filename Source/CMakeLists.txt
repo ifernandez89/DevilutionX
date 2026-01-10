@@ -159,6 +159,7 @@ set(libdevilutionx_SRCS
   dormant_assets.cpp
   enhanced_portal.cpp
   inferno_defense.cpp
+  spell_throttling.cpp
 
   quests/validation.cpp
 

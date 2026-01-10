@@ -5757,6 +5757,30 @@ sha.cpp.s:
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_codec.dir\build.make Source/CMakeFiles/libdevilutionx_codec.dir/sha.cpp.s
 .PHONY : sha.cpp.s
 
+spell_throttling.obj: spell_throttling.cpp.obj
+.PHONY : spell_throttling.obj
+
+# target to build an object file
+spell_throttling.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/spell_throttling.cpp.obj
+.PHONY : spell_throttling.cpp.obj
+
+spell_throttling.i: spell_throttling.cpp.i
+.PHONY : spell_throttling.i
+
+# target to preprocess a source file
+spell_throttling.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/spell_throttling.cpp.i
+.PHONY : spell_throttling.cpp.i
+
+spell_throttling.s: spell_throttling.cpp.s
+.PHONY : spell_throttling.s
+
+# target to generate assembly for a file
+spell_throttling.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/spell_throttling.cpp.s
+.PHONY : spell_throttling.cpp.s
+
 spells.obj: spells.cpp.obj
 .PHONY : spells.obj
 
@@ -7454,6 +7478,9 @@ help:
 	@echo ... sha.obj
 	@echo ... sha.i
 	@echo ... sha.s
+	@echo ... spell_throttling.obj
+	@echo ... spell_throttling.i
+	@echo ... spell_throttling.s
 	@echo ... spells.obj
 	@echo ... spells.i
 	@echo ... spells.s

@@ -150,6 +150,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "C:/c - c++/DevilutionX/Source/safety/safety_metrics.cpp" "Source/CMakeFiles/libdevilutionx.dir/safety/safety_metrics.cpp.obj" "gcc" "Source/CMakeFiles/libdevilutionx.dir/safety/safety_metrics.cpp.obj.d"
   "C:/c - c++/DevilutionX/Source/safety/stress_test_runner.cpp" "Source/CMakeFiles/libdevilutionx.dir/safety/stress_test_runner.cpp.obj" "gcc" "Source/CMakeFiles/libdevilutionx.dir/safety/stress_test_runner.cpp.obj.d"
   "C:/c - c++/DevilutionX/Source/safety/stress_testing.cpp" "Source/CMakeFiles/libdevilutionx.dir/safety/stress_testing.cpp.obj" "gcc" "Source/CMakeFiles/libdevilutionx.dir/safety/stress_testing.cpp.obj.d"
+  "C:/c - c++/DevilutionX/Source/spell_throttling.cpp" "Source/CMakeFiles/libdevilutionx.dir/spell_throttling.cpp.obj" "gcc" "Source/CMakeFiles/libdevilutionx.dir/spell_throttling.cpp.obj.d"
   "C:/c - c++/DevilutionX/Source/storm/storm_net.cpp" "Source/CMakeFiles/libdevilutionx.dir/storm/storm_net.cpp.obj" "gcc" "Source/CMakeFiles/libdevilutionx.dir/storm/storm_net.cpp.obj.d"
   "C:/c - c++/DevilutionX/Source/storm/storm_svid.cpp" "Source/CMakeFiles/libdevilutionx.dir/storm/storm_svid.cpp.obj" "gcc" "Source/CMakeFiles/libdevilutionx.dir/storm/storm_svid.cpp.obj.d"
   "C:/c - c++/DevilutionX/Source/sync.cpp" "Source/CMakeFiles/libdevilutionx.dir/sync.cpp.obj" "gcc" "Source/CMakeFiles/libdevilutionx.dir/sync.cpp.obj.d"

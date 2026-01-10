@@ -20,6 +20,9 @@
 #include "missiles.h"
 #include "visual_feedback.h"
 
+// 🎯 UNIVERSAL SPELL THROTTLING SYSTEM
+#include "spell_throttling.h"
+
 namespace devilution {
 
 namespace {
@@ -211,21 +214,10 @@ SpellCheckResult CheckSpell(const Player &player, SpellID sn, SpellType st, bool
 
 void CastSpell(Player &player, SpellID spl, WorldTilePosition src, WorldTilePosition dst, int spllvl)
 {
-	// 🔥 INFERNO DEFENSE: Throttling crítico para spam de Inferno
-	if (spl == SpellID::Inferno) {
-		// Contar InfernoControls activos
-		int activeInfernoControls = 0;
-		for (const auto &missile : Missiles) {
-			if (missile._mitype == MissileID::InfernoControl) {
-				activeInfernoControls++;
-			}
-		}
-		
-		// Límite crítico: máximo 3 InfernoControls simultáneos
-		if (activeInfernoControls >= 3) {
-			// Throttling: no permitir más casts hasta que termine alguno
-			return;
-		}
+	// 🎯 UNIVERSAL SPELL THROTTLING: Protección contra spam para TODOS los hechizos
+	if (!SPELL_SAFE_CAST(spl, player.getId())) {
+		// Throttling activo - no permitir cast
+		return;
 	}
 
 	// 🎮 FASE V3.6 - BRILLO DE HECHIZO

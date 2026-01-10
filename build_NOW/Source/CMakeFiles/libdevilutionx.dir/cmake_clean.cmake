@@ -283,6 +283,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/libdevilutionx.dir/safety/stress_test_runner.cpp.obj.d"
   "CMakeFiles/libdevilutionx.dir/safety/stress_testing.cpp.obj"
   "CMakeFiles/libdevilutionx.dir/safety/stress_testing.cpp.obj.d"
+  "CMakeFiles/libdevilutionx.dir/spell_throttling.cpp.obj"
+  "CMakeFiles/libdevilutionx.dir/spell_throttling.cpp.obj.d"
   "CMakeFiles/libdevilutionx.dir/storm/storm_net.cpp.obj"
   "CMakeFiles/libdevilutionx.dir/storm/storm_net.cpp.obj.d"
   "CMakeFiles/libdevilutionx.dir/storm/storm_svid.cpp.obj"

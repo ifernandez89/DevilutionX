@@ -2650,6 +2650,20 @@ void AddTrapDisarm(Missile &missile, AddMissileParameter & /*parameter*/)
 
 void AddApocalypse(Missile &missile, AddMissileParameter & /*parameter*/)
 {
+	// SAFETY LAYER: Limitar Apocalypse missiles simultáneos para prevenir overflow
+	// Contar Apocalypse missiles activos del mismo jugador
+	int apocalypseCount = 0;
+	for (auto &existingMissile : Missiles) {
+		if (existingMissile._mitype == MissileID::Apocalypse && existingMissile._misource == missile._misource) {
+			apocalypseCount++;
+		}
+	}
+	
+	// Máximo 2 Apocalypse missiles simultáneos por jugador
+	if (apocalypseCount >= 2) {
+		return; // Falla silenciosamente para mantener gameplay fluido
+	}
+
 	const Player &player = Players[missile._misource];
 
 	missile.var1 = 8;
@@ -3873,6 +3887,10 @@ void ProcessApocalypse(Missile &missile)
 				continue;
 			if (gbIsHellfire && !LineClearMissile(missile.position.tile, { k, j }))
 				continue;
+
+			// SAFETY LAYER: Verificación específica para Apocalypse antes de spawn
+			// PRINCIPIO: Prevenir overflow de missiles con múltiples clicks de Apocalypse
+			SAFETY_CHECK_SPAWN(Missile);
 
 			const int id = missile._misource;
 			AddMissile(WorldTilePosition(k, j), WorldTilePosition(k, j), Players[id]._pdir, MissileID::ApocalypseBoom, TARGET_MONSTERS, id, missile._midam, 0);

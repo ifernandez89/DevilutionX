@@ -28,7 +28,7 @@
 
 #### ✅ CAMBIO REALIZADO
 - **Posición original:** (11, 53) - Esquina noroeste del pueblo
-- **Nueva posición:** (70, 72) - Sector sudeste del pueblo
+- **Nueva posición:** (62, 35) - Zona norte cerca de casas vacías
 - **Orientación:** South (mirando hacia el camino/centro)
 - **Ubicación:** Cerca de una casa desocupada fuera del centro
 
@@ -54,9 +54,9 @@
 - Vaca #3: (59, 20) North
 
 **Nuevas vacas agregadas:**
-- Vaca #4: (48, 58) SouthWest - Zona noroeste abierta
-- Vaca #5: (50, 60) North - Zona noroeste abierta
-- Vaca #6: (52, 57) NorthWest - Zona noroeste abierta
+- Vaca #4: (25, 45) SouthWest - Zona oeste abierta
+- Vaca #5: (28, 48) North - Zona oeste abierta  
+- Vaca #6: (31, 46) NorthWest - Zona oeste abierta
 
 #### ✅ CARACTERÍSTICAS TÉCNICAS
 - **Asset utilizado:** 100% original (mismo sprite de vaca existente)
@@ -85,15 +85,15 @@ mods/Hellfire/txtdata/towners/towners.tsv
 #### Wirt (TOWN_PEGBOY):
 ```tsv
 ANTES: TOWN_PEGBOY	Wirt the Peg-legged boy	11	53	South	96	...
-DESPUÉS: TOWN_PEGBOY	Wirt the Peg-legged boy	70	72	South	96	...
+DESPUÉS: TOWN_PEGBOY	Wirt the Peg-legged boy	62	35	South	96	...
 ```
 
 #### Vacas adicionales (TOWN_COW):
 ```tsv
 AGREGADAS:
-TOWN_COW	Cow	48	58	SouthWest	128			12	3		
-TOWN_COW	Cow	50	60	North	128			12	3		
-TOWN_COW	Cow	52	57	NorthWest	128			12	3		
+TOWN_COW	Cow	25	45	SouthWest	128		12	3		
+TOWN_COW	Cow	28	48	North	128		12	3		
+TOWN_COW	Cow	31	46	NorthWest	128		12	3		
 ```
 
 ### ✅ INTEGRACIÓN

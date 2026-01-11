@@ -25,7 +25,12 @@
 #include <vector>
 
 #include "combat_pauses.h"  // ⚔️ Combat Pauses System
+#include "depth_variants.h"  // 🎯 Depth Variants System
+#include "light_mutations.h"  // 🧬 Light Mutations System
 #include "waiting_enemies.h"  // 👁️ Waiting Enemies System
+#include "levels/gendung.h"   // 🩸 For difficulty constants
+#include "multi.h"            // 🩸 For sgGameInitInfo
+#include "advanced_debug.h"   // 🎮 Advanced Debug System
 
 #ifdef USE_SDL3
 #include <SDL3/SDL_timer.h>
@@ -325,29 +330,14 @@ void InitMonster(Monster &monster, Direction rd, size_t typeIndex, Point positio
 		monster.resistance = monster.data().resistanceHell;
 	}
 
-	// FEATURE 5: Variantes de monstruos por profundidad
-	// Escalado adicional basado en el nivel actual del dungeon
-	if (currlevel > 1) {
-		// Escalado progresivo: cada 2 niveles aumenta stats
-		int depthBonus = (currlevel - 1) / 2;
-		
-		// Aumentar HP progresivamente (5% por cada 2 niveles)
-		int hpBonus = (monster.maxHitPoints * depthBonus * 5) / 100;
-		monster.maxHitPoints += hpBonus;
-		monster.hitPoints = monster.maxHitPoints;
-		
-		// Aumentar damage progresivamente (3% por cada 2 niveles)
-		int damageBonus = std::max(1, (depthBonus * 3) / 10);
-		monster.minDamage += damageBonus;
-		monster.maxDamage += damageBonus;
-		monster.minDamageSpecial += damageBonus;
-		monster.maxDamageSpecial += damageBonus;
-		
-		// Aumentar AC ligeramente (1 punto cada 4 niveles)
-		if (currlevel >= 4) {
-			monster.armorClass += (currlevel - 1) / 4;
-		}
-	}
+	// 🎯 FEATURE #5: Depth Variants System - Enhanced monster scaling
+	ApplyDepthScaling(monster);
+	
+	// 🧬 FEATURE #6: Light Mutations System - Subtle random variations
+	ApplyLightMutations(monster);
+	
+	// Try to apply elite transformation (very rare)
+	ApplyEliteTransformation(monster);
 
 	// FEATURE: Enhanced Elite Monster System - Improved implementation
 	TryApplyEliteModifier(monster);
@@ -2075,6 +2065,104 @@ void AiRangedAvoidance(Monster &monster)
 {
 	if (monster.mode != MonsterMode::Stand || monster.activeForTicks == 0) {
 		return;
+	}
+
+	// 🩸 FEATURE #7: DIABLO AI REFINEMENT - Intelligent Multi-Teleport System
+	if (monster.ai == MonsterAIID::Diablo && monster.type().type == MT_DIABLO) {
+		static int diabloTeleportCooldown = 0;
+		static int diabloTeleportCount = 0;
+		
+		// Decrementar cooldown cada tick
+		if (diabloTeleportCooldown > 0) {
+			diabloTeleportCooldown--;
+		}
+		
+		const unsigned distanceToEnemy = monster.distanceToEnemy();
+		const int currentHP = monster.hitPoints;
+		const int maxHP = monster.maxHitPoints;
+		const float hpPercent = (float)currentHP / (float)maxHP;
+		
+		// Calcular agresividad basada en HP y dificultad
+		int baseCooldown = 4 * 60; // 4 segundos base
+		int minDistance = 5;       // Distancia mínima para teleport
+		
+		// En Hell difficulty, ser MÁS agresivo
+		if (sgGameInitInfo.nDifficulty == DIFF_HELL) {
+			baseCooldown = 2 * 60;  // 2 segundos en Hell
+			minDistance = 4;        // Teleport más frecuente
+		}
+		
+		// Más agresivo cuando HP está bajo
+		if (hpPercent < 0.75f) {
+			baseCooldown = baseCooldown * 0.7f; // 30% más rápido
+		}
+		if (hpPercent < 0.5f) {
+			baseCooldown = baseCooldown * 0.6f; // 40% más rápido
+		}
+		if (hpPercent < 0.25f) {
+			baseCooldown = baseCooldown * 0.5f; // 50% más rápido (muy agresivo)
+		}
+		
+		// Condiciones para teleport inteligente múltiple
+		bool shouldTeleport = diabloTeleportCooldown <= 0 &&           // Sin cooldown activo
+		                     distanceToEnemy >= minDistance &&         // Jugador suficientemente lejos
+		                     hpPercent > 0.1f;                         // No teleport si casi muerto (10% HP)
+		
+		if (shouldTeleport) {
+			// Encontrar posición estratégica cerca del jugador
+			const Player &player = *MyPlayer;
+			Point targetPos = player.position.tile;
+			bool teleported = false;
+			
+			// Intentar múltiples posiciones para encontrar la mejor
+			for (int i = 0; i < 12; i++) {
+				// Posiciones más variadas - puede aparecer en cualquier lado
+				int offsetX = GenerateRnd(5) - 2; // -2 a +2
+				int offsetY = GenerateRnd(5) - 2; // -2 a +2
+				Point testPos = targetPos + Displacement { offsetX, offsetY };
+				
+				if (InDungeonBounds(testPos) && IsTileAvailable(monster, testPos)) {
+					// Crear efecto de teleport como Advocate - desaparecer
+					monster.mode = MonsterMode::FadeOut;
+					monster.var1 = 0;
+					monster.var2 = 0;
+					
+					// Teleport a nueva posición
+					monster.position.tile = testPos;
+					monster.position.future = testPos;
+					
+					// Crear efecto visual de aparición
+					monster.mode = MonsterMode::FadeIn;
+					
+					teleported = true;
+					diabloTeleportCount++;
+					
+					// Cooldown dinámico basado en situación
+					diabloTeleportCooldown = baseCooldown;
+					
+					// Efectos especiales basados en HP
+					if (hpPercent < 0.5f) {
+						music_stop(); // Tensión cuando HP está bajo
+					}
+					
+					// Atacar inmediatamente después del teleport
+					// Variar el tipo de ataque basado en HP
+					if (hpPercent < 0.3f) {
+						// Muy agresivo - ataque especial
+						StartRangedSpecialAttack(monster, MissileID::DiabloApocalypse, 50);
+					} else {
+						// Ataque normal
+						StartRangedSpecialAttack(monster, MissileID::DiabloApocalypse, 40);
+					}
+					
+					break;
+				}
+			}
+			
+			if (teleported) {
+				return; // Salir temprano - teleport ejecutado
+			}
+		}
 	}
 
 	const Direction md = GetDirection(monster.position.tile, monster.position.last);

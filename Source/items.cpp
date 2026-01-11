@@ -28,6 +28,7 @@
 #include <fmt/core.h>
 
 #include "DiabloUI/ui_flags.hpp"
+#include "invisible_wear.h"  // 💰 Invisible Wear System
 #include "control/control.hpp"
 #include "controls/control_mode.hpp"
 #include "controls/controller_buttons.h"
@@ -3167,6 +3168,9 @@ void GetItemAttrs(Item &item, _item_indexes itemData, int lvl)
 	}
 	if (leveltype == DTYPE_HELL)
 		rndv += rndv / 8;
+
+	// 💰 INVISIBLE WEAR: Apply wear to gold drops in deep levels
+	rndv = ApplyGoldDropWear(rndv);
 
 	item._ivalue = std::min(rndv, GOLD_MAX_LIMIT);
 	SetPlrHandGoldCurs(item);

@@ -21,11 +21,13 @@
 #include "engine/render/text_render.hpp"
 #include "engine/trn.hpp"
 #include "game_mode.hpp"
+#include "invisible_wear.h"  // 💰 Invisible Wear System
 #include "minitext.h"
 #include "multi.h"
 #include "options.h"
 #include "panels/info_box.hpp"
 #include "qol/stash.h"
+#include "spells.h"  // For SpellID
 #include "tables/townerdat.hpp"
 #include "towners.h"
 #include "utils/format_int.hpp"
@@ -1531,7 +1533,18 @@ void WitchBuyItem(Item &item)
 	if (idx < 3)
 		item._iSeed = AdvanceRndSeed();
 
-	TakePlrsMoney(item._iIvalue);
+	// 💰 INVISIBLE WEAR: Apply wear to scroll and portal prices
+	int finalPrice = item._iIvalue;
+	if (item.isScroll() || item._iMiscId == IMISC_SCROLL) {
+		// Check if it's a Town Portal scroll specifically
+		if (item._iSpell == SpellID::TownPortal) {
+			finalPrice = ApplyPortalCostWear(finalPrice);
+		} else {
+			finalPrice = ApplyScrollPriceWear(finalPrice);
+		}
+	}
+
+	TakePlrsMoney(finalPrice);
 	StoreAutoPlace(item, true);
 
 	if (idx >= 3) {
@@ -1555,7 +1568,18 @@ void WitchBuyEnter()
 
 	const int idx = ScrollPos + ((CurrentTextLine - PreviousScrollPos) / 4);
 
-	if (!PlayerCanAfford(WitchItems[idx]._iIvalue)) {
+	// 💰 INVISIBLE WEAR: Apply wear to displayed price
+	int displayPrice = WitchItems[idx]._iIvalue;
+	if (WitchItems[idx].isScroll() || WitchItems[idx]._iMiscId == IMISC_SCROLL) {
+		// Check if it's a Town Portal scroll specifically
+		if (WitchItems[idx]._iSpell == SpellID::TownPortal) {
+			displayPrice = ApplyPortalCostWear(displayPrice);
+		} else {
+			displayPrice = ApplyScrollPriceWear(displayPrice);
+		}
+	}
+
+	if (!PlayerCanAfford(displayPrice)) {
 		StartStore(TalkID::NoMoney);
 		return;
 	}
@@ -2053,6 +2077,10 @@ void AddStoreHoldRepair(Item *itm, int8_t i)
 		v = item->_ivalue * due / (item->_iMaxDur * 2);
 		v = std::max(v, 1);
 	}
+	
+	// 💰 INVISIBLE WEAR: Apply wear to repair costs in deep levels
+	v = ApplyRepairCostWear(v);
+	
 	item->_iIvalue = v;
 	item->_ivalue = v;
 	PlayerItemIndexes[CurrentItemIndex] = i;

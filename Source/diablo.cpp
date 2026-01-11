@@ -80,6 +80,8 @@
 #include "life_volume.h"
 #include "parallax_depth.h"
 #include "mp_discipline.h"
+#include "advanced_debug.h"  // 🎮 Advanced Debug System
+#include "guarantee_apocalypse_book.h"  // 📖 Book of Apocalypse Guarantee
 #include "loadsave.h"
 #include "lua/lua_global.hpp"
 #include "menu.h"
@@ -99,7 +101,10 @@
 #include "plrmsg.h"
 #include "qol/chatlog.h"
 #include "combat_pauses.h"
+#include "depth_variants.h"  // 🎯 Depth Variants System
+#include "light_mutations.h"  // 🧬 Light Mutations System
 #include "waiting_enemies.h"
+#include "invisible_wear.h"
 #include "qol/floatingnumbers.h"
 #include "qol/itemlabels.h"
 #include "qol/monhealthbar.h"
@@ -581,6 +586,10 @@ void PressKey(SDL_Keycode vkey, uint16_t modState)
 	}
 
 	switch (vkey) {
+	case SDLK_F12:
+		// 🎮 FEATURE #8: Toggle Advanced Debug System
+		ToggleAdvancedDebug();
+		return;
 	case SDLK_PLUS:
 	case SDLK_KP_PLUS:
 	case SDLK_EQUALS:
@@ -1570,6 +1579,12 @@ void GameLogic()
 		
 		// 👁️ WAITING ENEMIES - Update Waiting Enemies System
 		UpdateWaitingEnemies();
+		
+		// 🎮 ADVANCED DEBUG - Update Advanced Debug System
+		UpdateAdvancedDebug();
+		
+		// 📖 BOOK OF APOCALYPSE - Update Guarantee System
+		UpdateApocalypseBookGuarantee();
 		
 		ProcessVisionList();
 	} else {
@@ -2713,6 +2728,9 @@ bool StartGame(bool bNewGame, bool bSinglePlayer)
 			InitPortals();
 			InitCombatPauses();  // ⚔️ Initialize Combat Pauses System
 			InitWaitingEnemies(); // 👁️ Initialize Waiting Enemies System
+			InitDepthVariants();  // 🎯 Initialize Depth Variants System
+			InitLightMutations(); // 🧬 Initialize Light Mutations System
+			InitInvisibleWear();  // 💰 Initialize Invisible Wear System
 			InitDungMsgs(*MyPlayer);
 			DeltaSyncJunk();
 		}
@@ -3248,6 +3266,13 @@ tl::expected<void, std::string> LoadGameLevelTown(bool firstflag, lvl_entry lvld
 	InitHiddenContent();
 	InitDormantAssets();
 	InitEnhancedPortal();
+	
+	// 🎮 FEATURE #8: Initialize Advanced Debug System
+	InitAdvancedDebug();
+	
+	// 📖 FEATURE: Initialize Book of Apocalypse Guarantee System
+	InitApocalypseBookGuarantee();
+	
 	InitMissiles();
 
 	IncProgress();
@@ -3518,6 +3543,15 @@ tl::expected<void, std::string> LoadGameLevel(bool firstflag, lvl_entry lvldir)
 	} else {
 		LoadPalette("levels\\towndata\\town.pal");
 	}
+	
+	// 💰 INVISIBLE WEAR - Update wear multipliers for new level
+	UpdateInvisibleWear();
+	
+	// 🎯 DEPTH VARIANTS - Update depth bonuses for new level
+	UpdateDepthVariants();
+	
+	// 🧬 LIGHT MUTATIONS - Update mutation chances for new level
+	UpdateLightMutations();
 	
 	return {};
 }

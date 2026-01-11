@@ -488,6 +488,7 @@ Source/CMakeFiles/libdevilutionx_items.dir/items.cpp.obj: C:/c\ -\ c++/Devilutio
   C:/c\ -\ c++/DevilutionX/Source/headless_mode.hpp \
   C:/c\ -\ c++/DevilutionX/Source/inv.h \
   C:/c\ -\ c++/DevilutionX/Source/inv_iterators.hpp \
+  C:/c\ -\ c++/DevilutionX/Source/invisible_wear.h \
   C:/c\ -\ c++/DevilutionX/Source/items.h \
   C:/c\ -\ c++/DevilutionX/Source/levels/dun_tile.hpp \
   C:/c\ -\ c++/DevilutionX/Source/levels/tile_properties.hpp \
@@ -1030,9 +1031,9 @@ _deps/unordered_dense-src/include/ankerl/unordered_dense.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/cxxabi_init_exception.h:
 
-C:/c\ -\ c++/DevilutionX/Source/items/validation.h:
-
 C:/c\ -\ c++/DevilutionX/Source/utils/string_view_hash.hpp:
+
+C:/c\ -\ c++/DevilutionX/Source/items/validation.h:
 
 C:/c\ -\ c++/DevilutionX/Source/engine/path.h:
 
@@ -1967,6 +1968,8 @@ C:/c\ -\ c++/DevilutionX/Source/engine/render/primitive_render.hpp:
 C:/c\ -\ c++/DevilutionX/Source/engine/sound.h:
 
 C:/c\ -\ c++/DevilutionX/Source/engine/surface.hpp:
+
+C:/c\ -\ c++/DevilutionX/Source/invisible_wear.h:
 
 C:/c\ -\ c++/DevilutionX/Source/items.h:
 

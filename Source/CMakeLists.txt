@@ -3,6 +3,7 @@ include(functions/devilutionx_library)
 include(functions/genex)
 
 set(libdevilutionx_SRCS
+  advanced_debug.cpp
   appfat.cpp
   automap.cpp
   capture.cpp
@@ -10,15 +11,19 @@ set(libdevilutionx_SRCS
   cursor.cpp
   dead.cpp
   debug.cpp
+  depth_variants.cpp
   diablo.cpp
   diablo_msg.cpp
   doom.cpp
   gamemenu.cpp
   gmenu.cpp
+  guarantee_apocalypse_book.cpp
   help.cpp
   hwcursor.cpp
   interfac.cpp
+  invisible_wear.cpp
   inv.cpp
+  light_mutations.cpp
   loadsave.cpp
   menu.cpp
   minitext.cpp

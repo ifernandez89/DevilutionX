@@ -3888,9 +3888,14 @@ void ProcessApocalypse(Missile &missile)
 			if (gbIsHellfire && !LineClearMissile(missile.position.tile, { k, j }))
 				continue;
 
-			// SAFETY LAYER: Verificación específica para Apocalypse antes de spawn
-			// PRINCIPIO: Prevenir overflow de missiles con múltiples clicks de Apocalypse
-			SAFETY_CHECK_SPAWN(Missile);
+			// SAFETY LAYER: Verificar antes de spawn, pero continuar el loop si falla
+			if (!CanAddMissile()) {
+				RecordSpawnBlocked();
+				// NO hacer return aquí - continuar con el loop para actualizar variables
+				missile.var2 = j;
+				missile.var4 = k + 1;
+				return; // Salir después de actualizar variables de control
+			}
 
 			const int id = missile._misource;
 			AddMissile(WorldTilePosition(k, j), WorldTilePosition(k, j), Players[id]._pdir, MissileID::ApocalypseBoom, TARGET_MONSTERS, id, missile._midam, 0);

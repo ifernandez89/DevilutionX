@@ -72,11 +72,7 @@ inline bool CanAddMissiles(size_t count) {
  */
 #define SAFETY_CHECK_SPAWN(type) \
     do { \
-        RecordSafetyCheck(); \
-        if (!CanAdd##type()) { \
-            RecordSpawnBlocked(); \
-            return; /* Falla silenciosamente para mantener gameplay fluido */ \
-        } \
+        /* DISABLED: No safety checks - trust original engine */ \
     } while(0)
 
 /**
@@ -85,11 +81,7 @@ inline bool CanAddMissiles(size_t count) {
  */
 #define SAFETY_CHECK_SPAWN_RET(type, retval) \
     do { \
-        RecordSafetyCheck(); \
-        if (!CanAdd##type()) { \
-            RecordSpawnBlocked(); \
-            return retval; \
-        } \
+        /* DISABLED: No safety checks - trust original engine */ \
     } while(0)
 
 /**
@@ -98,13 +90,13 @@ inline bool CanAddMissiles(size_t count) {
 #ifdef _DEBUG
 #define SAFETY_CHECK_SPAWN_LOG(type, msg) \
     do { \
-        if (!CanAdd##type()) { \
-            /* En release esto se optimiza completamente */ \
-            return; \
-        } \
+        /* DISABLED: No safety checks - trust original engine */ \
     } while(0)
 #else
-#define SAFETY_CHECK_SPAWN_LOG(type, msg) SAFETY_CHECK_SPAWN(type)
+#define SAFETY_CHECK_SPAWN_LOG(type, msg) \
+    do { \
+        /* DISABLED: No safety checks - trust original engine */ \
+    } while(0)
 #endif
 
 // ============================================================================

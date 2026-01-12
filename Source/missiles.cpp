@@ -8,15 +8,20 @@
 #include <algorithm>
 #include <array>
 #include <cassert>
+#include <chrono>
 #include <climits>
 #include <cmath>
 #include <cstddef>
 #include <cstdint>
+#include <fstream>
+#include <iomanip>
 #include <limits>
 #include <list>
 #include <optional>
 #include <type_traits>
 #include <utility>
+
+#include "architectural_analysis.h"
 
 #include "appfat.h"
 #include "control/control.hpp"
@@ -28,6 +33,8 @@
 #include "diablo.h"
 #include "effects.h"
 #include "engine/clx_sprite.hpp"
+#include "engine_health.h"
+#include "global_protection_system.h" // 🛡️ Global Protection System
 #include "engine/direction.hpp"
 #include "engine/displacement.hpp"
 #include "engine/lighting_defs.hpp"
@@ -827,10 +834,6 @@ void SpawnLightning(Missile &missile, int dam)
 	auto position = missile.position.tile;
 	if (!TileHasAny(position, TileProperties::BlockMissile)) {
 		if (position != Point { missile.var1, missile.var2 } && InDungeonBounds(position)) {
-			// SAFETY LAYER: Verificación antes de spawn de chain lightning
-			// TECHO CUANTITATIVO: Solo en puntos de presión (chains), no global
-			SAFETY_CHECK_SPAWN(Missile);
-			
 			MissileID type = MissileID::Lightning;
 			if (missile.sourceType() == MissileSource::Monster
 			    && IsAnyOf(missile.sourceMonster()->type().type, MT_STORM, MT_RSTORM, MT_STORML, MT_MAEL)) {
@@ -2650,20 +2653,6 @@ void AddTrapDisarm(Missile &missile, AddMissileParameter & /*parameter*/)
 
 void AddApocalypse(Missile &missile, AddMissileParameter & /*parameter*/)
 {
-	// SAFETY LAYER: Limitar Apocalypse missiles simultáneos para prevenir overflow
-	// Contar Apocalypse missiles activos del mismo jugador
-	int apocalypseCount = 0;
-	for (auto &existingMissile : Missiles) {
-		if (existingMissile._mitype == MissileID::Apocalypse && existingMissile._misource == missile._misource) {
-			apocalypseCount++;
-		}
-	}
-	
-	// Máximo 2 Apocalypse missiles simultáneos por jugador
-	if (apocalypseCount >= 2) {
-		return; // Falla silenciosamente para mantener gameplay fluido
-	}
-
 	const Player &player = Players[missile._misource];
 
 	missile.var1 = 8;
@@ -2815,6 +2804,22 @@ Missile *AddMissile(WorldTilePosition src, WorldTilePosition dst, Direction midi
     mienemy_type micaster, int id, int midam, int spllvl,
     Missile *parent, std::optional<SfxID> lSFX)
 {
+	// UNIVERSAL APOCALYPSE PROTECTION - CATCHES ALL SOURCES
+	// Protects against player casts, monster casts, jester casts, etc.
+	if (mitype == MissileID::Apocalypse) {
+		// DEBUG LOGS DISABLED - But system remains active for future debugging
+		// ARCH_LOG_CRASH_PREVENTION("AddMissile Apocalypse detected - checking protection", "AddMissile DEBUG");
+		
+		if (!CanSafelyCastApocalypse()) {
+			// ARCH_LOG_CRASH_PREVENTION("Universal Apocalypse protection triggered", "AddMissile");
+			return nullptr; // fail-soft - no crash, just ignore
+		}
+		
+		// If we reach here, protection passed
+		// ARCH_LOG_CRASH_PREVENTION("Apocalypse protection PASSED - allowing creation", "AddMissile ALLOWED");
+	}
+
+	// LÍMITE TONTO - Sin inteligencia, sin coordinación
 	if (Missiles.size() >= Missiles.max_size()) {
 		return nullptr;
 	}
@@ -3876,36 +3881,44 @@ void ProcessInfravision(Missile &missile)
 
 void ProcessApocalypse(Missile &missile)
 {
+	int id = missile._misource;
+	
+	// ARCHITECTURAL ANALYSIS - Log ProcessApocalypse calls
+	ARCH_LOG_PROCESS_APOCALYPSE(missile.var2, missile.var3, missile.var4, missile.var5, static_cast<int>(Missiles.size()));
+	
+	// ARQUITECTURA ULTRA SIMPLE - SINGLE FRAME PROCESSING
+	// "Diablo no necesita protección inteligente, necesita límites tontos"
+	// FIX: Process entire area in ONE frame to prevent infinite loops
+	
 	for (int j = missile.var2; j < missile.var3; j++) {
 		for (int k = missile.var4; k < missile.var5; k++) {
-			const int mid = dMonster[k][j] - 1;
-			if (mid < 0)
-				continue;
-			if (Monsters[mid].isPlayerMinion())
-				continue;
-			if (TileHasAny(PointOf { k, j }, TileProperties::Solid))
-				continue;
-			if (gbIsHellfire && !LineClearMissile(missile.position.tile, { k, j }))
-				continue;
-
-			// SAFETY LAYER: Verificar antes de spawn, pero continuar el loop si falla
-			if (!CanAddMissile()) {
-				RecordSpawnBlocked();
-				// NO hacer return aquí - continuar con el loop para actualizar variables
-				missile.var2 = j;
-				missile.var4 = k + 1;
-				return; // Salir después de actualizar variables de control
+			if (dMonster[k][j] > 0) {
+				int mid = dMonster[k][j] - 1;
+				if (!Monsters[mid].isPlayerMinion()) {
+					// ARCHITECTURAL ANALYSIS - Log boom creation attempts
+					ARCH_LOG_BOOM_CREATION(k, j, static_cast<int>(Missiles.size()));
+					
+					// GUARDIÁN ULTRA SIMPLE - FAIL-SOFT
+					if (!TryAddMissile(WorldTilePosition(k, j), WorldTilePosition(k, j), Players[id]._pdir, MissileID::ApocalypseBoom, TARGET_MONSTERS, id, missile._midam, 0)) {
+						// Límite alcanzado - el resto del spell se cancela limpiamente
+						// Sin crashes, sin corrupción, sin rollbacks
+						ARCH_LOG_CRASH_PREVENTION("TryAddMissile failed in ProcessApocalypse", "ProcessApocalypse loop");
+						missile._miDelFlag = true;
+						// ATOMIC UNLOCK: Clear the in-progress flag
+						ClearApocalypseInProgress();
+						return;
+					}
+				}
 			}
-
-			const int id = missile._misource;
-			AddMissile(WorldTilePosition(k, j), WorldTilePosition(k, j), Players[id]._pdir, MissileID::ApocalypseBoom, TARGET_MONSTERS, id, missile._midam, 0);
-			missile.var2 = j;
-			missile.var4 = k + 1;
-			return;
+			// CRITICAL FIX: NO early return, NO state updates
+			// Process entire area in single frame
 		}
-		missile.var4 = missile.var6;
 	}
+	
+	// Spell completado naturalmente - ALWAYS delete after full processing
 	missile._miDelFlag = true;
+	// ATOMIC UNLOCK: Clear the in-progress flag
+	ClearApocalypseInProgress();
 }
 
 void ProcessFlameWaveControl(Missile &missile)
@@ -4001,10 +4014,6 @@ void ProcessInfernoControl(Missile &missile)
 	UpdateMissilePos(missile);
 	if (missile.position.tile != Point { missile.var1, missile.var2 }) {
 		if (!TileHasAny(missile.position.tile, TileProperties::BlockMissile)) {
-			// SAFETY LAYER: Verificación específica para Inferno antes de spawn
-			// PRINCIPIO: Intensidad > cantidad (solo para Inferno, no global)
-			SAFETY_CHECK_SPAWN(Missile);
-			
 			AddMissile(
 			    missile.position.tile,
 			    missile.position.start,

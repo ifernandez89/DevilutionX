@@ -5,6 +5,13 @@
  */
 #include "spells.h"
 
+#include <SDL.h>
+#include <string>
+#include <chrono>
+#include <fstream>
+#include <iomanip>
+#include <unordered_map>
+#include "architectural_analysis.h"
 #include "control/control.hpp"
 #include "cursor.h"
 #ifdef _DEBUG
@@ -14,11 +21,11 @@
 #include "engine/point.hpp"
 #include "engine/random.hpp"
 #include "engine/world_tile.hpp"
+#include "engine_health.h"
 #include "game_mode.hpp"
 #include "gamemenu.h"
 #include "inv.h"
 #include "missiles.h"
-#include "visual_feedback.h"
 
 namespace devilution {
 
@@ -211,12 +218,12 @@ SpellCheckResult CheckSpell(const Player &player, SpellID sn, SpellType st, bool
 
 void CastSpell(Player &player, SpellID spl, WorldTilePosition src, WorldTilePosition dst, int spllvl)
 {
-	// 🎮 FASE V3.6 - BRILLO DE HECHIZO
-	// Activar brillo visual cuando se lanza un hechizo
-	if (&player == MyPlayer) {
-		TriggerSpellCastGlow(player, spl);
+	// ARCHITECTURAL ANALYSIS - Log Apocalypse casts
+	if (spl == SpellID::Apocalypse) {
+		ARCH_LOG_APOCALYPSE_CAST(player.getId(), spllvl, static_cast<int>(Missiles.size()));
+		// Note: Universal protection now handled in AddMissile
 	}
-	
+
 	Direction dir = player._pdir;
 	if (IsWallSpell(spl)) {
 		dir = player.tempDirection;

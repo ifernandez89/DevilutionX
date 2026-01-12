@@ -216,6 +216,8 @@ Source/CMakeFiles/libdevilutionx_player.dir/player.cpp.obj: C:/c\ -\ c++/Devilut
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/char_traits.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/charconv.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/chrono.h \
+  C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/chrono_io.h \
+  C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/codecvt.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/concept_check.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/cpp_type_traits.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/cxxabi_forced.h \
@@ -227,6 +229,7 @@ Source/CMakeFiles/libdevilutionx_player.dir/player.cpp.obj: C:/c\ -\ c++/Devilut
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/exception_ptr.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/forward_list.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/forward_list.tcc \
+  C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/fstream.tcc \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/functexcept.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/functional_hash.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/hash_bytes.h \
@@ -234,12 +237,16 @@ Source/CMakeFiles/libdevilutionx_player.dir/player.cpp.obj: C:/c\ -\ c++/Devilut
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/hashtable_policy.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/invoke.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/ios_base.h \
+  C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/istream.tcc \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/iterator_concepts.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/list.tcc \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/locale_classes.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/locale_classes.tcc \
+  C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/locale_conv.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/locale_facets.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/locale_facets.tcc \
+  C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/locale_facets_nonio.h \
+  C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/locale_facets_nonio.tcc \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/localefwd.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/max_size_type.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/memory_resource.h \
@@ -254,6 +261,7 @@ Source/CMakeFiles/libdevilutionx_player.dir/player.cpp.obj: C:/c\ -\ c++/Devilut
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/postypes.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/predefined_ops.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/ptr_traits.h \
+  C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/quoted_string.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/random.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/random.tcc \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/range_access.h \
@@ -269,6 +277,7 @@ Source/CMakeFiles/libdevilutionx_player.dir/player.cpp.obj: C:/c\ -\ c++/Devilut
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/shared_ptr_atomic.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/shared_ptr_base.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/specfun.h \
+  C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/sstream.tcc \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/std_abs.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/std_function.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/std_mutex.h \
@@ -297,6 +306,8 @@ Source/CMakeFiles/libdevilutionx_player.dir/player.cpp.obj: C:/c\ -\ c++/Devilut
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/streambuf_iterator.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/string_view.tcc \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/stringfwd.h \
+  C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/unicode-data.h \
+  C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/unicode.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/uniform_int_dist.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/unique_ptr.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/unordered_map.h \
@@ -309,6 +320,8 @@ Source/CMakeFiles/libdevilutionx_player.dir/player.cpp.obj: C:/c\ -\ c++/Devilut
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/cassert \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/cctype \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/cerrno \
+  C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/charconv \
+  C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/chrono \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/clocale \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/cmath \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/compare \
@@ -331,14 +344,19 @@ Source/CMakeFiles/libdevilutionx_player.dir/player.cpp.obj: C:/c\ -\ c++/Devilut
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/ext/numeric_traits.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/ext/string_conversions.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/ext/type_traits.h \
+  C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/format \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/forward_list \
+  C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/fstream \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/functional \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/initializer_list \
+  C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/iomanip \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/ios \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/iosfwd \
+  C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/istream \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/iterator \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/limits \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/list \
+  C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/locale \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/map \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/memory \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/memory_resource \
@@ -356,6 +374,7 @@ Source/CMakeFiles/libdevilutionx_player.dir/player.cpp.obj: C:/c\ -\ c++/Devilut
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/ratio \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/shared_mutex \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/span \
+  C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/sstream \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/stdexcept \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/stdlib.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/streambuf \
@@ -382,8 +401,10 @@ Source/CMakeFiles/libdevilutionx_player.dir/player.cpp.obj: C:/c\ -\ c++/Devilut
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/variant \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/vector \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/atomic_word.h \
+  C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/basic_file.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/c++allocator.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/c++config.h \
+  C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/c++io.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/c++locale.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/cpu_defines.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/ctype_base.h \
@@ -391,8 +412,10 @@ Source/CMakeFiles/libdevilutionx_player.dir/player.cpp.obj: C:/c\ -\ c++/Devilut
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/error_constants.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/gthr-default.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/gthr.h \
+  C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/messages_members.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/opt_random.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/os_defines.h \
+  C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/time_members.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/cetintrin.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/cldemoteintrin.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/clflushoptintrin.h \
@@ -511,6 +534,8 @@ Source/CMakeFiles/libdevilutionx_player.dir/player.cpp.obj: C:/c\ -\ c++/Devilut
   C:/mingw64/x86_64-w64-mingw32/include/winapifamily.h \
   C:/mingw64/x86_64-w64-mingw32/include/winsdkver.h \
   C:/c\ -\ c++/DevilutionX/Source/DiabloUI/diabloui.h \
+  C:/c\ -\ c++/DevilutionX/Source/apocalypse_crash_debug.h \
+  C:/c\ -\ c++/DevilutionX/Source/architectural_analysis.h \
   C:/c\ -\ c++/DevilutionX/Source/automap.h \
   C:/c\ -\ c++/DevilutionX/Source/control/control.hpp \
   C:/c\ -\ c++/DevilutionX/Source/controls/control_mode.hpp \
@@ -1039,8 +1064,6 @@ C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/S
 
 C:/c\ -\ c++/DevilutionX/Source/engine/assets.hpp:
 
-C:/mingw64/x86_64-w64-mingw32/include/swprintf.inl:
-
 C:/c\ -\ c++/DevilutionX/Source/player.cpp:
 
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_sensor.h:
@@ -1062,6 +1085,8 @@ C:/c\ -\ c++/DevilutionX/3rdParty/tl/function_ref.hpp:
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_blendmode.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/emmintrin.h:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/iomanip:
 
 _deps/libfmt-src/include/fmt/base.h:
 
@@ -1096,6 +1121,8 @@ C:/c\ -\ c++/DevilutionX/Source/engine/sound_defs.hpp:
 _deps/unordered_dense-src/include/ankerl/unordered_dense.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/cxxabi_init_exception.h:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/unicode-data.h:
 
 C:/c\ -\ c++/DevilutionX/Source/utils/string_view_hash.hpp:
 
@@ -1187,17 +1214,19 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/gfniintrin.h:
 
 C:/c\ -\ c++/DevilutionX/Source/engine/lighting_defs.hpp:
 
-C:/mingw64/x86_64-w64-mingw32/include/sec_api/sys/timeb_s.h:
-
 C:/c\ -\ c++/DevilutionX/Source/engine/palette.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/limits:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/fstream.tcc:
 
 C:/c\ -\ c++/DevilutionX/Source/engine/point.hpp:
 
 C:/c\ -\ c++/DevilutionX/Source/engine/rectangle.hpp:
 
 C:/c\ -\ c++/DevilutionX/Source/engine/render/light_render.hpp:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/chrono:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/ext/concurrence.h:
 
@@ -1217,9 +1246,9 @@ C:/c\ -\ c++/DevilutionX/Source/lighting.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/chrono.h:
 
-C:/c\ -\ c++/DevilutionX/Source/headless_mode.hpp:
-
 C:/c\ -\ c++/DevilutionX/Source/automap.h:
+
+C:/c\ -\ c++/DevilutionX/Source/headless_mode.hpp:
 
 C:/c\ -\ c++/DevilutionX/Source/interfac.h:
 
@@ -1313,9 +1342,9 @@ C:/c\ -\ c++/DevilutionX/Source/controls/control_mode.hpp:
 
 C:/c\ -\ c++/DevilutionX/Source/utils/endian_read.hpp:
 
-C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/cassert:
-
 C:/mingw64/x86_64-w64-mingw32/include/stdio.h:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/cassert:
 
 C:/c\ -\ c++/DevilutionX/Source/utils/endian_swap.hpp:
 
@@ -1467,13 +1496,13 @@ C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/S
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/ctype_inline.h:
 
+C:/mingw64/x86_64-w64-mingw32/include/sys/types.h:
+
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/tr1/riemann_zeta.tcc:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/cldemoteintrin.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/rtmintrin.h:
-
-C:/mingw64/x86_64-w64-mingw32/include/sys/types.h:
 
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_messagebox.h:
 
@@ -1489,13 +1518,15 @@ C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/S
 
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_pixels.h:
 
-C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_platform.h:
-
 C:/mingw64/x86_64-w64-mingw32/include/wctype.h:
 
-C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_power.h:
+C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_platform.h:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/time_members.h:
 
 C:/mingw64/x86_64-w64-mingw32/include/stddef.h:
+
+C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_power.h:
 
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_quit.h:
 
@@ -1521,9 +1552,9 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/atomic_base.h:
 
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_system.h:
 
-C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_thread.h:
-
 C:/mingw64/x86_64-w64-mingw32/include/sys/timeb.h:
+
+C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_thread.h:
 
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_timer.h:
 
@@ -1544,6 +1575,8 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/amxint8intrin.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/ext/atomicity.h:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/istream.tcc:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/amxtileintrin.h:
 
@@ -1567,11 +1600,11 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/avx512bitalgintrin.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/avx512bitalgvlintrin.h:
 
+C:/mingw64/x86_64-w64-mingw32/include/stdint.h:
+
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/avx512cdintrin.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/stl_uninitialized.h:
-
-C:/mingw64/x86_64-w64-mingw32/include/stdint.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/avx512dqintrin.h:
 
@@ -1600,6 +1633,8 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/invoke.h:
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/avx512vbmivlintrin.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/avx512vlintrin.h:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/unicode.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/avx512vnniintrin.h:
 
@@ -1675,6 +1710,10 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/charconv.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/cpuid.h:
 
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/chrono_io.h:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/codecvt.h:
+
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/cwchar:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/concept_check.h:
@@ -1733,9 +1772,17 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/list.tcc:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/locale_classes.tcc:
 
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/locale_conv.h:
+
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/xtestintrin.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/locale_facets.h:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/locale_facets_nonio.h:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/locale_facets_nonio.tcc:
+
+C:/mingw64/x86_64-w64-mingw32/include/corecrt_wstdlib.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/ostream_insert.h:
 
@@ -1762,6 +1809,8 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/parse_numbers.h:
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/predefined_ops.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/ptr_traits.h:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/quoted_string.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/random.tcc:
 
@@ -1796,6 +1845,8 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/shared_ptr_atomic.
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/vaesintrin.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/specfun.h:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/sstream.tcc:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/std_abs.h:
 
@@ -1837,6 +1888,8 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/unordered_map.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/new:
 
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/basic_file.h:
+
 C:/mingw64/x86_64-w64-mingw32/include/pthread_unistd.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/uses_allocator.h:
@@ -1849,9 +1902,13 @@ C:/mingw64/x86_64-w64-mingw32/include/sdks/_mingw_ddk.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bitset:
 
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/istream:
+
 C:/mingw64/x86_64-w64-mingw32/include/pthread_compat.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/cctype:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/charconv:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/tr1/legendre_function.tcc:
 
@@ -1867,6 +1924,8 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/cstdlib:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/cstring:
 
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/c++io.h:
+
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/stddef.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/ctime:
@@ -1881,11 +1940,21 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/ext/numeric_traits.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/ext/type_traits.h:
 
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/format:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/tr1/beta_function.tcc:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/fstream:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/sgxintrin.h:
+
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/functional:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/iterator:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/list:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/locale:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/memory:
 
@@ -1915,7 +1984,7 @@ C:/c\ -\ c++/DevilutionX/Source/inv_iterators.hpp:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/random:
 
-C:/mingw64/x86_64-w64-mingw32/include/stdlib.h:
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/sstream:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/stdlib.h:
 
@@ -1925,11 +1994,7 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/string_view:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/system_error:
 
-C:/mingw64/x86_64-w64-mingw32/include/winsdkver.h:
-
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/tr1/bessel_function.tcc:
-
-C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/tr1/beta_function.tcc:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/tr1/exp_integral.tcc:
 
@@ -1960,6 +2025,10 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/gthr-default.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/gthr.h:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/messages_members.h:
+
+C:/mingw64/x86_64-w64-mingw32/include/psdk_inc/intrin-impl.h:
 
 C:/c\ -\ c++/DevilutionX/Source/engine/render/clx_render.hpp:
 
@@ -1999,15 +2068,13 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/mwaitxintrin.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/pconfigintrin.h:
 
-C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/popcntintrin.h:
-
 C:/mingw64/x86_64-w64-mingw32/include/sec_api/wchar_s.h:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/popcntintrin.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/rdseedintrin.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/sm3intrin.h:
-
-C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/sgxintrin.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/stdarg.h:
 
@@ -2027,8 +2094,6 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/xsaveoptintrin.h:
 
 C:/mingw64/x86_64-w64-mingw32/include/_mingw.h:
 
-C:/mingw64/x86_64-w64-mingw32/include/stdarg.h:
-
 C:/mingw64/x86_64-w64-mingw32/include/_mingw_secapi.h:
 
 C:/mingw64/x86_64-w64-mingw32/include/_mingw_stat64.h:
@@ -2041,8 +2106,6 @@ C:/mingw64/x86_64-w64-mingw32/include/corecrt_startup.h:
 
 C:/mingw64/x86_64-w64-mingw32/include/corecrt_stdio_config.h:
 
-C:/mingw64/x86_64-w64-mingw32/include/corecrt_wstdlib.h:
-
 C:/mingw64/x86_64-w64-mingw32/include/crtdefs.h:
 
 C:/mingw64/x86_64-w64-mingw32/include/limits.h:
@@ -2050,10 +2113,6 @@ C:/mingw64/x86_64-w64-mingw32/include/limits.h:
 C:/mingw64/x86_64-w64-mingw32/include/locale.h:
 
 C:/mingw64/x86_64-w64-mingw32/include/process.h:
-
-C:/mingw64/x86_64-w64-mingw32/include/setjmp.h:
-
-C:/mingw64/x86_64-w64-mingw32/include/psdk_inc/intrin-impl.h:
 
 C:/mingw64/x86_64-w64-mingw32/include/pthread_signal.h:
 
@@ -2063,11 +2122,21 @@ C:/mingw64/x86_64-w64-mingw32/include/sec_api/stdlib_s.h:
 
 C:/mingw64/x86_64-w64-mingw32/include/sec_api/string_s.h:
 
+C:/mingw64/x86_64-w64-mingw32/include/sec_api/sys/timeb_s.h:
+
+C:/mingw64/x86_64-w64-mingw32/include/setjmp.h:
+
 C:/c\ -\ c++/DevilutionX/Source/minitext.h:
 
 C:/mingw64/x86_64-w64-mingw32/include/signal.h:
 
+C:/mingw64/x86_64-w64-mingw32/include/stdarg.h:
+
+C:/mingw64/x86_64-w64-mingw32/include/stdlib.h:
+
 C:/mingw64/x86_64-w64-mingw32/include/string.h:
+
+C:/mingw64/x86_64-w64-mingw32/include/swprintf.inl:
 
 C:/mingw64/x86_64-w64-mingw32/include/time.h:
 
@@ -2077,7 +2146,13 @@ C:/mingw64/x86_64-w64-mingw32/include/wchar.h:
 
 C:/mingw64/x86_64-w64-mingw32/include/winapifamily.h:
 
+C:/mingw64/x86_64-w64-mingw32/include/winsdkver.h:
+
 C:/c\ -\ c++/DevilutionX/Source/DiabloUI/diabloui.h:
+
+C:/c\ -\ c++/DevilutionX/Source/apocalypse_crash_debug.h:
+
+C:/c\ -\ c++/DevilutionX/Source/architectural_analysis.h:
 
 C:/c\ -\ c++/DevilutionX/Source/inv.h:
 
@@ -2124,5 +2199,3 @@ C:/c\ -\ c++/DevilutionX/Source/data/value_reader.hpp:
 C:/c\ -\ c++/DevilutionX/Source/utils/parse_int.hpp:
 
 C:/c\ -\ c++/DevilutionX/Source/utils/str_split.hpp:
-
-C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/charconv:

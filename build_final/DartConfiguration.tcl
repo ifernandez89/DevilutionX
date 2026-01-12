@@ -5,7 +5,7 @@
 
 # Configuration directories and files
 SourceDirectory: C:/c - c++/DevilutionX
-BuildDirectory: C:/c - c++/DevilutionX/build_final_working
+BuildDirectory: C:/c - c++/DevilutionX/build_final
 
 # Where to place the cost data store
 CostDataFile: 

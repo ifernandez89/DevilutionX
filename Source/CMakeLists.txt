@@ -4,6 +4,7 @@ include(functions/genex)
 
 set(libdevilutionx_SRCS
   advanced_debug.cpp
+  apocalypse_crash_debug.cpp
   appfat.cpp
   automap.cpp
   capture.cpp
@@ -15,7 +16,10 @@ set(libdevilutionx_SRCS
   diablo.cpp
   diablo_msg.cpp
   doom.cpp
+  architectural_analysis.cpp
+  engine_health.cpp
   gamemenu.cpp
+  global_protection_system.cpp
   gmenu.cpp
   guarantee_apocalypse_book.cpp
   help.cpp

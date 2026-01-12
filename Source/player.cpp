@@ -4,8 +4,12 @@
  * Implementation of player functionality, leveling, actions, creation, loading, etc.
  */
 #include <algorithm>
+#include <chrono>
 #include <cmath>
 #include <cstdint>
+#include <fstream>
+#include <iomanip>
+#include <unordered_map>
 
 #ifdef USE_SDL3
 #include <SDL3/SDL_events.h>
@@ -28,6 +32,7 @@
 #include "engine/load_cl2.hpp"
 #include "engine/load_cl2.hpp"
 #include "engine/load_file.hpp"
+#include "apocalypse_crash_debug.h"  // 🚨 Debug system for Apocalypse crashes
 #include "engine/points_in_rectangle_range.hpp"
 #include "engine/random.hpp"
 #include "engine/render/clx_render.hpp"

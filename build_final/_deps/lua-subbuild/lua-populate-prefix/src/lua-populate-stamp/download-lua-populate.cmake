@@ -22,14 +22,14 @@ function(check_file_hash has_hash hash_is_good)
   set("${has_hash}" TRUE PARENT_SCOPE)
 
   message(VERBOSE "verifying file...
-       file='C:/c - c++/DevilutionX/build_final_working/_deps/lua-subbuild/lua-populate-prefix/src/3ed55a56eaa05c9221f40b3c07d0e908eb1067b0.tar.gz'")
+       file='C:/c - c++/DevilutionX/build_final/_deps/lua-subbuild/lua-populate-prefix/src/3ed55a56eaa05c9221f40b3c07d0e908eb1067b0.tar.gz'")
 
-  file("MD5" "C:/c - c++/DevilutionX/build_final_working/_deps/lua-subbuild/lua-populate-prefix/src/3ed55a56eaa05c9221f40b3c07d0e908eb1067b0.tar.gz" actual_value)
+  file("MD5" "C:/c - c++/DevilutionX/build_final/_deps/lua-subbuild/lua-populate-prefix/src/3ed55a56eaa05c9221f40b3c07d0e908eb1067b0.tar.gz" actual_value)
 
   if(NOT "${actual_value}" STREQUAL "77907b8209f77c65cb681a5012f2d804")
     set("${hash_is_good}" FALSE PARENT_SCOPE)
     message(VERBOSE "MD5 hash of
-    C:/c - c++/DevilutionX/build_final_working/_deps/lua-subbuild/lua-populate-prefix/src/3ed55a56eaa05c9221f40b3c07d0e908eb1067b0.tar.gz
+    C:/c - c++/DevilutionX/build_final/_deps/lua-subbuild/lua-populate-prefix/src/3ed55a56eaa05c9221f40b3c07d0e908eb1067b0.tar.gz
   does not match expected value
     expected: '77907b8209f77c65cb681a5012f2d804'
       actual: '${actual_value}'")
@@ -71,32 +71,32 @@ function(sleep_before_download attempt)
   execute_process(COMMAND "${CMAKE_COMMAND}" -E sleep "${sleep_seconds}")
 endfunction()
 
-if(EXISTS "C:/c - c++/DevilutionX/build_final_working/_deps/lua-subbuild/lua-populate-prefix/src/3ed55a56eaa05c9221f40b3c07d0e908eb1067b0.tar.gz")
+if(EXISTS "C:/c - c++/DevilutionX/build_final/_deps/lua-subbuild/lua-populate-prefix/src/3ed55a56eaa05c9221f40b3c07d0e908eb1067b0.tar.gz")
   check_file_hash(has_hash hash_is_good)
   if(has_hash)
     if(hash_is_good)
       message(VERBOSE "File already exists and hash match (skip download):
-  file='C:/c - c++/DevilutionX/build_final_working/_deps/lua-subbuild/lua-populate-prefix/src/3ed55a56eaa05c9221f40b3c07d0e908eb1067b0.tar.gz'
+  file='C:/c - c++/DevilutionX/build_final/_deps/lua-subbuild/lua-populate-prefix/src/3ed55a56eaa05c9221f40b3c07d0e908eb1067b0.tar.gz'
   MD5='77907b8209f77c65cb681a5012f2d804'"
       )
       return()
     else()
       message(VERBOSE "File already exists but hash mismatch. Removing...")
-      file(REMOVE "C:/c - c++/DevilutionX/build_final_working/_deps/lua-subbuild/lua-populate-prefix/src/3ed55a56eaa05c9221f40b3c07d0e908eb1067b0.tar.gz")
+      file(REMOVE "C:/c - c++/DevilutionX/build_final/_deps/lua-subbuild/lua-populate-prefix/src/3ed55a56eaa05c9221f40b3c07d0e908eb1067b0.tar.gz")
     endif()
   else()
     message(VERBOSE "File already exists but no hash specified (use URL_HASH):
-  file='C:/c - c++/DevilutionX/build_final_working/_deps/lua-subbuild/lua-populate-prefix/src/3ed55a56eaa05c9221f40b3c07d0e908eb1067b0.tar.gz'
+  file='C:/c - c++/DevilutionX/build_final/_deps/lua-subbuild/lua-populate-prefix/src/3ed55a56eaa05c9221f40b3c07d0e908eb1067b0.tar.gz'
 Old file will be removed and new file downloaded from URL."
     )
-    file(REMOVE "C:/c - c++/DevilutionX/build_final_working/_deps/lua-subbuild/lua-populate-prefix/src/3ed55a56eaa05c9221f40b3c07d0e908eb1067b0.tar.gz")
+    file(REMOVE "C:/c - c++/DevilutionX/build_final/_deps/lua-subbuild/lua-populate-prefix/src/3ed55a56eaa05c9221f40b3c07d0e908eb1067b0.tar.gz")
   endif()
 endif()
 
 set(retry_number 5)
 
 message(VERBOSE "Downloading...
-   dst='C:/c - c++/DevilutionX/build_final_working/_deps/lua-subbuild/lua-populate-prefix/src/3ed55a56eaa05c9221f40b3c07d0e908eb1067b0.tar.gz'
+   dst='C:/c - c++/DevilutionX/build_final/_deps/lua-subbuild/lua-populate-prefix/src/3ed55a56eaa05c9221f40b3c07d0e908eb1067b0.tar.gz'
    timeout='none'
    inactivity timeout='none'"
 )
@@ -119,7 +119,7 @@ foreach(i RANGE ${retry_number})
 
       file(
         DOWNLOAD
-        "${url}" "C:/c - c++/DevilutionX/build_final_working/_deps/lua-subbuild/lua-populate-prefix/src/3ed55a56eaa05c9221f40b3c07d0e908eb1067b0.tar.gz"
+        "${url}" "C:/c - c++/DevilutionX/build_final/_deps/lua-subbuild/lua-populate-prefix/src/3ed55a56eaa05c9221f40b3c07d0e908eb1067b0.tar.gz"
         SHOW_PROGRESS
         # no TIMEOUT
         # no INACTIVITY_TIMEOUT
@@ -136,7 +136,7 @@ foreach(i RANGE ${retry_number})
         check_file_hash(has_hash hash_is_good)
         if(has_hash AND NOT hash_is_good)
           message(VERBOSE "Hash mismatch, removing...")
-          file(REMOVE "C:/c - c++/DevilutionX/build_final_working/_deps/lua-subbuild/lua-populate-prefix/src/3ed55a56eaa05c9221f40b3c07d0e908eb1067b0.tar.gz")
+          file(REMOVE "C:/c - c++/DevilutionX/build_final/_deps/lua-subbuild/lua-populate-prefix/src/3ed55a56eaa05c9221f40b3c07d0e908eb1067b0.tar.gz")
         else()
           message(VERBOSE "Downloading... done")
           return()

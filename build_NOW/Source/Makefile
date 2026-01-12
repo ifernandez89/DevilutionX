@@ -1485,6 +1485,30 @@ advanced_debug.cpp.s:
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/advanced_debug.cpp.s
 .PHONY : advanced_debug.cpp.s
 
+apocalypse_crash_debug.obj: apocalypse_crash_debug.cpp.obj
+.PHONY : apocalypse_crash_debug.obj
+
+# target to build an object file
+apocalypse_crash_debug.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/apocalypse_crash_debug.cpp.obj
+.PHONY : apocalypse_crash_debug.cpp.obj
+
+apocalypse_crash_debug.i: apocalypse_crash_debug.cpp.i
+.PHONY : apocalypse_crash_debug.i
+
+# target to preprocess a source file
+apocalypse_crash_debug.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/apocalypse_crash_debug.cpp.i
+.PHONY : apocalypse_crash_debug.cpp.i
+
+apocalypse_crash_debug.s: apocalypse_crash_debug.cpp.s
+.PHONY : apocalypse_crash_debug.s
+
+# target to generate assembly for a file
+apocalypse_crash_debug.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/apocalypse_crash_debug.cpp.s
+.PHONY : apocalypse_crash_debug.cpp.s
+
 appfat.obj: appfat.cpp.obj
 .PHONY : appfat.obj
 
@@ -1508,6 +1532,30 @@ appfat.s: appfat.cpp.s
 appfat.cpp.s:
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/appfat.cpp.s
 .PHONY : appfat.cpp.s
+
+architectural_analysis.obj: architectural_analysis.cpp.obj
+.PHONY : architectural_analysis.obj
+
+# target to build an object file
+architectural_analysis.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/architectural_analysis.cpp.obj
+.PHONY : architectural_analysis.cpp.obj
+
+architectural_analysis.i: architectural_analysis.cpp.i
+.PHONY : architectural_analysis.i
+
+# target to preprocess a source file
+architectural_analysis.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/architectural_analysis.cpp.i
+.PHONY : architectural_analysis.cpp.i
+
+architectural_analysis.s: architectural_analysis.cpp.s
+.PHONY : architectural_analysis.s
+
+# target to generate assembly for a file
+architectural_analysis.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/architectural_analysis.cpp.s
+.PHONY : architectural_analysis.cpp.s
 
 audio/audio_throttling.obj: audio/audio_throttling.cpp.obj
 .PHONY : audio/audio_throttling.obj
@@ -3381,6 +3429,30 @@ engine/trn.cpp.s:
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/engine/trn.cpp.s
 .PHONY : engine/trn.cpp.s
 
+engine_health.obj: engine_health.cpp.obj
+.PHONY : engine_health.obj
+
+# target to build an object file
+engine_health.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/engine_health.cpp.obj
+.PHONY : engine_health.cpp.obj
+
+engine_health.i: engine_health.cpp.i
+.PHONY : engine_health.i
+
+# target to preprocess a source file
+engine_health.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/engine_health.cpp.i
+.PHONY : engine_health.cpp.i
+
+engine_health.s: engine_health.cpp.s
+.PHONY : engine_health.s
+
+# target to generate assembly for a file
+engine_health.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/engine_health.cpp.s
+.PHONY : engine_health.cpp.s
+
 enhanced_portal.obj: enhanced_portal.cpp.obj
 .PHONY : enhanced_portal.obj
 
@@ -3452,6 +3524,30 @@ gamemenu.s: gamemenu.cpp.s
 gamemenu.cpp.s:
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/gamemenu.cpp.s
 .PHONY : gamemenu.cpp.s
+
+global_protection_system.obj: global_protection_system.cpp.obj
+.PHONY : global_protection_system.obj
+
+# target to build an object file
+global_protection_system.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/global_protection_system.cpp.obj
+.PHONY : global_protection_system.cpp.obj
+
+global_protection_system.i: global_protection_system.cpp.i
+.PHONY : global_protection_system.i
+
+# target to preprocess a source file
+global_protection_system.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/global_protection_system.cpp.i
+.PHONY : global_protection_system.cpp.i
+
+global_protection_system.s: global_protection_system.cpp.s
+.PHONY : global_protection_system.s
+
+# target to generate assembly for a file
+global_protection_system.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/global_protection_system.cpp.s
+.PHONY : global_protection_system.cpp.s
 
 gmenu.obj: gmenu.cpp.obj
 .PHONY : gmenu.obj
@@ -7064,9 +7160,15 @@ help:
 	@echo ... advanced_debug.obj
 	@echo ... advanced_debug.i
 	@echo ... advanced_debug.s
+	@echo ... apocalypse_crash_debug.obj
+	@echo ... apocalypse_crash_debug.i
+	@echo ... apocalypse_crash_debug.s
 	@echo ... appfat.obj
 	@echo ... appfat.i
 	@echo ... appfat.s
+	@echo ... architectural_analysis.obj
+	@echo ... architectural_analysis.i
+	@echo ... architectural_analysis.s
 	@echo ... audio/audio_throttling.obj
 	@echo ... audio/audio_throttling.i
 	@echo ... audio/audio_throttling.s
@@ -7301,6 +7403,9 @@ help:
 	@echo ... engine/trn.obj
 	@echo ... engine/trn.i
 	@echo ... engine/trn.s
+	@echo ... engine_health.obj
+	@echo ... engine_health.i
+	@echo ... engine_health.s
 	@echo ... enhanced_portal.obj
 	@echo ... enhanced_portal.i
 	@echo ... enhanced_portal.s
@@ -7310,6 +7415,9 @@ help:
 	@echo ... gamemenu.obj
 	@echo ... gamemenu.i
 	@echo ... gamemenu.s
+	@echo ... global_protection_system.obj
+	@echo ... global_protection_system.i
+	@echo ... global_protection_system.s
 	@echo ... gmenu.obj
 	@echo ... gmenu.i
 	@echo ... gmenu.s

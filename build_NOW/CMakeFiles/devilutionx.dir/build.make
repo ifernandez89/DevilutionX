@@ -182,6 +182,7 @@ devilutionx_EXTERNAL_OBJECTS = \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_utils_console.dir/utils/console.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_surface_to_png.dir/utils/surface_to_png.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/advanced_debug.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/apocalypse_crash_debug.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/appfat.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/automap.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/capture.cpp.obj" \
@@ -193,7 +194,10 @@ devilutionx_EXTERNAL_OBJECTS = \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/diablo.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/diablo_msg.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/doom.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/architectural_analysis.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/engine_health.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/gamemenu.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/global_protection_system.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/gmenu.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/guarantee_apocalypse_book.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/help.cpp.obj" \
@@ -431,6 +435,7 @@ devilutionx.exe: Source/CMakeFiles/libdevilutionx_text_render.dir/engine/render/
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_utils_console.dir/utils/console.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_surface_to_png.dir/utils/surface_to_png.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/advanced_debug.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/apocalypse_crash_debug.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/appfat.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/automap.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/capture.cpp.obj
@@ -442,7 +447,10 @@ devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/depth_variants.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/diablo.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/diablo_msg.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/doom.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/architectural_analysis.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/engine_health.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/gamemenu.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/global_protection_system.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/gmenu.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/guarantee_apocalypse_book.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/help.cpp.obj

@@ -7,6 +7,8 @@
 #include <cstdint>
 #include <string_view>
 
+#include "architectural_analysis.h"
+
 #ifdef USE_SDL3
 #include <SDL3/SDL_events.h>
 #include <SDL3/SDL_init.h>
@@ -48,6 +50,7 @@
 #include "engine/demomode.h"
 #include "engine/dx.h"
 #include "engine/events.hpp"
+#include "global_protection_system.h" // 🛡️ Global Protection System
 #include "engine/load_cel.hpp"
 #include "engine/load_file.hpp"
 #include "engine/random.hpp"
@@ -82,6 +85,8 @@
 #include "mp_discipline.h"
 #include "advanced_debug.h"  // 🎮 Advanced Debug System
 #include "guarantee_apocalypse_book.h"  // 📖 Book of Apocalypse Guarantee
+#include "engine_health.h"  // 🔍 Modern Assist Layer (MAL) - Engine Health Monitoring
+#include "apocalypse_crash_debug.h"  // 🚨 Apocalypse Crash Debugging System
 #include "loadsave.h"
 #include "lua/lua_global.hpp"
 #include "menu.h"
@@ -203,6 +208,13 @@ void StartGame(interface_mode uMsg)
 	music_stop();
 	InitMonsterHealthBar();
 	InitXPBar();
+	
+	// MAL INTEGRATION: Initialize Modern Assist Layer
+	InitEngineHealth();
+	
+	// 🚨 DEBUG: Initialize Apocalypse crash debugging system
+	APOCALYPSE_DEBUG_INIT();
+	
 	ShowProgress(uMsg);
 	gmenu_init_menu();
 	InitLevelCursor();
@@ -229,6 +241,13 @@ void FreeGame()
 #ifdef _DEBUG
 	FreeDebugGFX();
 #endif
+	
+	// 🚨 DEBUG: Cleanup Apocalypse crash debugging system
+	APOCALYPSE_DEBUG_CLEANUP();
+	
+	// MAL INTEGRATION: Cleanup Modern Assist Layer
+	CleanupEngineHealth();
+	
 	FreeGameMem();
 	stream_stop();
 	music_stop();
@@ -2751,6 +2770,9 @@ bool StartGame(bool bNewGame, bool bSinglePlayer)
 			return true;
 	} while (gbRunGameResult);
 
+	// ARCHITECTURAL ANALYSIS - Generate final report before shutdown
+	ArchitecturalAnalyzer::getInstance().shutdown();
+
 	SNetDestroy();
 	return gbRunGameResult;
 }
@@ -2782,6 +2804,9 @@ int DiabloMain(int argc, char **argv)
 #ifdef _DEBUG
 	SDL_SetLogPriorities(SDL_LOG_PRIORITY_DEBUG);
 #endif
+
+	// ARCHITECTURAL ANALYSIS - Initialize permanent logging system
+	ArchitecturalAnalyzer::getInstance().initialize();
 
 	DiabloParseFlags(argc, argv);
 	InitKeymapActions();
@@ -3558,6 +3583,9 @@ tl::expected<void, std::string> LoadGameLevel(bool firstflag, lvl_entry lvldir)
 
 bool game_loop(bool bStartup)
 {
+	// 🛡️ GLOBAL PROTECTION SYSTEM - Update frame stats
+	GPS.updateFrameStats();
+	
 	const uint16_t wait = bStartup ? sgGameInitInfo.nTickRate * 3 : 3;
 
 	for (unsigned i = 0; i < wait; i++) {

@@ -168,6 +168,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "C:/c - c++/DevilutionX/Source/tmsg.cpp" "Source/CMakeFiles/libdevilutionx.dir/tmsg.cpp.obj" "gcc" "Source/CMakeFiles/libdevilutionx.dir/tmsg.cpp.obj.d"
   "C:/c - c++/DevilutionX/Source/towners.cpp" "Source/CMakeFiles/libdevilutionx.dir/towners.cpp.obj" "gcc" "Source/CMakeFiles/libdevilutionx.dir/towners.cpp.obj.d"
   "C:/c - c++/DevilutionX/Source/track.cpp" "Source/CMakeFiles/libdevilutionx.dir/track.cpp.obj" "gcc" "Source/CMakeFiles/libdevilutionx.dir/track.cpp.obj.d"
+  "C:/c - c++/DevilutionX/Source/ui_nightmare.cpp" "Source/CMakeFiles/libdevilutionx.dir/ui_nightmare.cpp.obj" "gcc" "Source/CMakeFiles/libdevilutionx.dir/ui_nightmare.cpp.obj.d"
   "C:/c - c++/DevilutionX/Source/utils/display.cpp" "Source/CMakeFiles/libdevilutionx.dir/utils/display.cpp.obj" "gcc" "Source/CMakeFiles/libdevilutionx.dir/utils/display.cpp.obj.d"
   "C:/c - c++/DevilutionX/Source/utils/language.cpp" "Source/CMakeFiles/libdevilutionx.dir/utils/language.cpp.obj" "gcc" "Source/CMakeFiles/libdevilutionx.dir/utils/language.cpp.obj.d"
   "C:/c - c++/DevilutionX/Source/utils/sdl_bilinear_scale.cpp" "Source/CMakeFiles/libdevilutionx.dir/utils/sdl_bilinear_scale.cpp.obj" "gcc" "Source/CMakeFiles/libdevilutionx.dir/utils/sdl_bilinear_scale.cpp.obj.d"

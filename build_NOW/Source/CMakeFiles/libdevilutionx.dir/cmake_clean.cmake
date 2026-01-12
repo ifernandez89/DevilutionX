@@ -319,6 +319,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/libdevilutionx.dir/towners.cpp.obj.d"
   "CMakeFiles/libdevilutionx.dir/track.cpp.obj"
   "CMakeFiles/libdevilutionx.dir/track.cpp.obj.d"
+  "CMakeFiles/libdevilutionx.dir/ui_nightmare.cpp.obj"
+  "CMakeFiles/libdevilutionx.dir/ui_nightmare.cpp.obj.d"
   "CMakeFiles/libdevilutionx.dir/utils/display.cpp.obj"
   "CMakeFiles/libdevilutionx.dir/utils/display.cpp.obj.d"
   "CMakeFiles/libdevilutionx.dir/utils/language.cpp.obj"

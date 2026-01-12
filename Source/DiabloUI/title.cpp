@@ -19,6 +19,7 @@
 #include "engine/clx_sprite.hpp"
 #include "engine/load_clx.hpp"
 #include "engine/load_pcx.hpp"
+#include "ui_nightmare.h"
 #include "engine/point.hpp"
 #include "utils/algorithm/container.hpp"
 #include "utils/language.h"
@@ -59,6 +60,14 @@ void UiTitleDialog()
 {
 	TitleLoad();
 	const Point uiPosition = GetUIRectangle().position;
+	
+	// Activar sistema Nightmare UI si está disponible
+	if (HasCustomTitleImage()) {
+		SetNightmareAnimatedBackground(true);
+		TriggerNightmareFadeTransition();
+		LogVerbose("Nightmare UI activated for title screen");
+	}
+	
 	if (ArtBackgroundWidescreen.has_value()) {
 		const SDL_Rect rect = MakeSdlRect(0, uiPosition.y, 0, 0);
 		if (ArtBackgroundWidescreen)
@@ -79,6 +88,10 @@ void UiTitleDialog()
 
 	SDL_Event event;
 	while (!endMenu && SDL_GetTicks() < timeOut) {
+		// Actualizar sistema Nightmare UI
+		float deltaTime = 0.016f; // ~60 FPS
+		UpdateNightmareUI(deltaTime);
+		
 		UiRenderItems(vecTitleScreen);
 		UiFadeIn();
 
@@ -99,6 +112,8 @@ void UiTitleDialog()
 		}
 	}
 
+	// Desactivar efectos Nightmare al salir
+	SetNightmareAnimatedBackground(false);
 	TitleFree();
 }
 

@@ -671,11 +671,26 @@ Source/CMakeFiles/libdevilutionx.dir/track.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/libdevilutionx.dir/track.cpp.s"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\c - c++\DevilutionX\Source\track.cpp" -o CMakeFiles\libdevilutionx.dir\track.cpp.s
 
+Source/CMakeFiles/libdevilutionx.dir/ui_nightmare.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/flags.make
+Source/CMakeFiles/libdevilutionx.dir/ui_nightmare.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
+Source/CMakeFiles/libdevilutionx.dir/ui_nightmare.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/ui_nightmare.cpp
+Source/CMakeFiles/libdevilutionx.dir/ui_nightmare.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_41) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/ui_nightmare.cpp.obj"
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/ui_nightmare.cpp.obj -MF CMakeFiles\libdevilutionx.dir\ui_nightmare.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\ui_nightmare.cpp.obj -c "C:\c - c++\DevilutionX\Source\ui_nightmare.cpp"
+
+Source/CMakeFiles/libdevilutionx.dir/ui_nightmare.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/libdevilutionx.dir/ui_nightmare.cpp.i"
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\c - c++\DevilutionX\Source\ui_nightmare.cpp" > CMakeFiles\libdevilutionx.dir\ui_nightmare.cpp.i
+
+Source/CMakeFiles/libdevilutionx.dir/ui_nightmare.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/libdevilutionx.dir/ui_nightmare.cpp.s"
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\c - c++\DevilutionX\Source\ui_nightmare.cpp" -o CMakeFiles\libdevilutionx.dir\ui_nightmare.cpp.s
+
 Source/CMakeFiles/libdevilutionx.dir/waiting_enemies.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/flags.make
 Source/CMakeFiles/libdevilutionx.dir/waiting_enemies.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/waiting_enemies.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/waiting_enemies.cpp
 Source/CMakeFiles/libdevilutionx.dir/waiting_enemies.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_41) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/waiting_enemies.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_42) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/waiting_enemies.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/waiting_enemies.cpp.obj -MF CMakeFiles\libdevilutionx.dir\waiting_enemies.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\waiting_enemies.cpp.obj -c "C:\c - c++\DevilutionX\Source\waiting_enemies.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/waiting_enemies.cpp.i: cmake_force
@@ -690,7 +705,7 @@ Source/CMakeFiles/libdevilutionx.dir/control/control_chat.cpp.obj: Source/CMakeF
 Source/CMakeFiles/libdevilutionx.dir/control/control_chat.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/control/control_chat.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/control/control_chat.cpp
 Source/CMakeFiles/libdevilutionx.dir/control/control_chat.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_42) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/control/control_chat.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_43) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/control/control_chat.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/control/control_chat.cpp.obj -MF CMakeFiles\libdevilutionx.dir\control\control_chat.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\control\control_chat.cpp.obj -c "C:\c - c++\DevilutionX\Source\control\control_chat.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/control/control_chat.cpp.i: cmake_force
@@ -705,7 +720,7 @@ Source/CMakeFiles/libdevilutionx.dir/control/control_chat_commands.cpp.obj: Sour
 Source/CMakeFiles/libdevilutionx.dir/control/control_chat_commands.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/control/control_chat_commands.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/control/control_chat_commands.cpp
 Source/CMakeFiles/libdevilutionx.dir/control/control_chat_commands.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_43) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/control/control_chat_commands.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_44) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/control/control_chat_commands.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/control/control_chat_commands.cpp.obj -MF CMakeFiles\libdevilutionx.dir\control\control_chat_commands.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\control\control_chat_commands.cpp.obj -c "C:\c - c++\DevilutionX\Source\control\control_chat_commands.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/control/control_chat_commands.cpp.i: cmake_force
@@ -720,7 +735,7 @@ Source/CMakeFiles/libdevilutionx.dir/control/control_flasks.cpp.obj: Source/CMak
 Source/CMakeFiles/libdevilutionx.dir/control/control_flasks.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/control/control_flasks.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/control/control_flasks.cpp
 Source/CMakeFiles/libdevilutionx.dir/control/control_flasks.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_44) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/control/control_flasks.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_45) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/control/control_flasks.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/control/control_flasks.cpp.obj -MF CMakeFiles\libdevilutionx.dir\control\control_flasks.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\control\control_flasks.cpp.obj -c "C:\c - c++\DevilutionX\Source\control\control_flasks.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/control/control_flasks.cpp.i: cmake_force
@@ -735,7 +750,7 @@ Source/CMakeFiles/libdevilutionx.dir/control/control_gold.cpp.obj: Source/CMakeF
 Source/CMakeFiles/libdevilutionx.dir/control/control_gold.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/control/control_gold.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/control/control_gold.cpp
 Source/CMakeFiles/libdevilutionx.dir/control/control_gold.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_45) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/control/control_gold.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_46) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/control/control_gold.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/control/control_gold.cpp.obj -MF CMakeFiles\libdevilutionx.dir\control\control_gold.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\control\control_gold.cpp.obj -c "C:\c - c++\DevilutionX\Source\control\control_gold.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/control/control_gold.cpp.i: cmake_force
@@ -750,7 +765,7 @@ Source/CMakeFiles/libdevilutionx.dir/control/control_infobox.cpp.obj: Source/CMa
 Source/CMakeFiles/libdevilutionx.dir/control/control_infobox.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/control/control_infobox.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/control/control_infobox.cpp
 Source/CMakeFiles/libdevilutionx.dir/control/control_infobox.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_46) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/control/control_infobox.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_47) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/control/control_infobox.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/control/control_infobox.cpp.obj -MF CMakeFiles\libdevilutionx.dir\control\control_infobox.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\control\control_infobox.cpp.obj -c "C:\c - c++\DevilutionX\Source\control\control_infobox.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/control/control_infobox.cpp.i: cmake_force
@@ -765,7 +780,7 @@ Source/CMakeFiles/libdevilutionx.dir/control/control_panel.cpp.obj: Source/CMake
 Source/CMakeFiles/libdevilutionx.dir/control/control_panel.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/control/control_panel.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/control/control_panel.cpp
 Source/CMakeFiles/libdevilutionx.dir/control/control_panel.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_47) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/control/control_panel.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_48) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/control/control_panel.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/control/control_panel.cpp.obj -MF CMakeFiles\libdevilutionx.dir\control\control_panel.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\control\control_panel.cpp.obj -c "C:\c - c++\DevilutionX\Source\control\control_panel.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/control/control_panel.cpp.i: cmake_force
@@ -780,7 +795,7 @@ Source/CMakeFiles/libdevilutionx.dir/controls/axis_direction.cpp.obj: Source/CMa
 Source/CMakeFiles/libdevilutionx.dir/controls/axis_direction.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/controls/axis_direction.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/controls/axis_direction.cpp
 Source/CMakeFiles/libdevilutionx.dir/controls/axis_direction.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_48) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/controls/axis_direction.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_49) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/controls/axis_direction.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/controls/axis_direction.cpp.obj -MF CMakeFiles\libdevilutionx.dir\controls\axis_direction.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\controls\axis_direction.cpp.obj -c "C:\c - c++\DevilutionX\Source\controls\axis_direction.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/controls/axis_direction.cpp.i: cmake_force
@@ -795,7 +810,7 @@ Source/CMakeFiles/libdevilutionx.dir/controls/controller_motion.cpp.obj: Source/
 Source/CMakeFiles/libdevilutionx.dir/controls/controller_motion.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/controls/controller_motion.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/controls/controller_motion.cpp
 Source/CMakeFiles/libdevilutionx.dir/controls/controller_motion.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_49) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/controls/controller_motion.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_50) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/controls/controller_motion.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/controls/controller_motion.cpp.obj -MF CMakeFiles\libdevilutionx.dir\controls\controller_motion.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\controls\controller_motion.cpp.obj -c "C:\c - c++\DevilutionX\Source\controls\controller_motion.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/controls/controller_motion.cpp.i: cmake_force
@@ -810,7 +825,7 @@ Source/CMakeFiles/libdevilutionx.dir/controls/controller.cpp.obj: Source/CMakeFi
 Source/CMakeFiles/libdevilutionx.dir/controls/controller.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/controls/controller.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/controls/controller.cpp
 Source/CMakeFiles/libdevilutionx.dir/controls/controller.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_50) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/controls/controller.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_51) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/controls/controller.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/controls/controller.cpp.obj -MF CMakeFiles\libdevilutionx.dir\controls\controller.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\controls\controller.cpp.obj -c "C:\c - c++\DevilutionX\Source\controls\controller.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/controls/controller.cpp.i: cmake_force
@@ -825,7 +840,7 @@ Source/CMakeFiles/libdevilutionx.dir/controls/devices/joystick.cpp.obj: Source/C
 Source/CMakeFiles/libdevilutionx.dir/controls/devices/joystick.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/controls/devices/joystick.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/controls/devices/joystick.cpp
 Source/CMakeFiles/libdevilutionx.dir/controls/devices/joystick.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_51) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/controls/devices/joystick.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_52) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/controls/devices/joystick.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/controls/devices/joystick.cpp.obj -MF CMakeFiles\libdevilutionx.dir\controls\devices\joystick.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\controls\devices\joystick.cpp.obj -c "C:\c - c++\DevilutionX\Source\controls\devices\joystick.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/controls/devices/joystick.cpp.i: cmake_force
@@ -840,7 +855,7 @@ Source/CMakeFiles/libdevilutionx.dir/controls/devices/kbcontroller.cpp.obj: Sour
 Source/CMakeFiles/libdevilutionx.dir/controls/devices/kbcontroller.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/controls/devices/kbcontroller.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/controls/devices/kbcontroller.cpp
 Source/CMakeFiles/libdevilutionx.dir/controls/devices/kbcontroller.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_52) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/controls/devices/kbcontroller.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_53) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/controls/devices/kbcontroller.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/controls/devices/kbcontroller.cpp.obj -MF CMakeFiles\libdevilutionx.dir\controls\devices\kbcontroller.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\controls\devices\kbcontroller.cpp.obj -c "C:\c - c++\DevilutionX\Source\controls\devices\kbcontroller.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/controls/devices/kbcontroller.cpp.i: cmake_force
@@ -855,7 +870,7 @@ Source/CMakeFiles/libdevilutionx.dir/controls/game_controls.cpp.obj: Source/CMak
 Source/CMakeFiles/libdevilutionx.dir/controls/game_controls.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/controls/game_controls.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/controls/game_controls.cpp
 Source/CMakeFiles/libdevilutionx.dir/controls/game_controls.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_53) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/controls/game_controls.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_54) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/controls/game_controls.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/controls/game_controls.cpp.obj -MF CMakeFiles\libdevilutionx.dir\controls\game_controls.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\controls\game_controls.cpp.obj -c "C:\c - c++\DevilutionX\Source\controls\game_controls.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/controls/game_controls.cpp.i: cmake_force
@@ -870,7 +885,7 @@ Source/CMakeFiles/libdevilutionx.dir/controls/keymapper.cpp.obj: Source/CMakeFil
 Source/CMakeFiles/libdevilutionx.dir/controls/keymapper.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/controls/keymapper.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/controls/keymapper.cpp
 Source/CMakeFiles/libdevilutionx.dir/controls/keymapper.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_54) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/controls/keymapper.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_55) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/controls/keymapper.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/controls/keymapper.cpp.obj -MF CMakeFiles\libdevilutionx.dir\controls\keymapper.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\controls\keymapper.cpp.obj -c "C:\c - c++\DevilutionX\Source\controls\keymapper.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/controls/keymapper.cpp.i: cmake_force
@@ -885,7 +900,7 @@ Source/CMakeFiles/libdevilutionx.dir/controls/menu_controls.cpp.obj: Source/CMak
 Source/CMakeFiles/libdevilutionx.dir/controls/menu_controls.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/controls/menu_controls.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/controls/menu_controls.cpp
 Source/CMakeFiles/libdevilutionx.dir/controls/menu_controls.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_55) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/controls/menu_controls.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_56) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/controls/menu_controls.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/controls/menu_controls.cpp.obj -MF CMakeFiles\libdevilutionx.dir\controls\menu_controls.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\controls\menu_controls.cpp.obj -c "C:\c - c++\DevilutionX\Source\controls\menu_controls.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/controls/menu_controls.cpp.i: cmake_force
@@ -900,7 +915,7 @@ Source/CMakeFiles/libdevilutionx.dir/controls/modifier_hints.cpp.obj: Source/CMa
 Source/CMakeFiles/libdevilutionx.dir/controls/modifier_hints.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/controls/modifier_hints.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/controls/modifier_hints.cpp
 Source/CMakeFiles/libdevilutionx.dir/controls/modifier_hints.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_56) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/controls/modifier_hints.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_57) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/controls/modifier_hints.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/controls/modifier_hints.cpp.obj -MF CMakeFiles\libdevilutionx.dir\controls\modifier_hints.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\controls\modifier_hints.cpp.obj -c "C:\c - c++\DevilutionX\Source\controls\modifier_hints.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/controls/modifier_hints.cpp.i: cmake_force
@@ -915,7 +930,7 @@ Source/CMakeFiles/libdevilutionx.dir/controls/plrctrls.cpp.obj: Source/CMakeFile
 Source/CMakeFiles/libdevilutionx.dir/controls/plrctrls.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/controls/plrctrls.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/controls/plrctrls.cpp
 Source/CMakeFiles/libdevilutionx.dir/controls/plrctrls.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_57) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/controls/plrctrls.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_58) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/controls/plrctrls.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/controls/plrctrls.cpp.obj -MF CMakeFiles\libdevilutionx.dir\controls\plrctrls.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\controls\plrctrls.cpp.obj -c "C:\c - c++\DevilutionX\Source\controls\plrctrls.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/controls/plrctrls.cpp.i: cmake_force
@@ -930,7 +945,7 @@ Source/CMakeFiles/libdevilutionx.dir/DiabloUI/button.cpp.obj: Source/CMakeFiles/
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/button.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/button.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/DiabloUI/button.cpp
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/button.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_58) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/DiabloUI/button.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_59) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/DiabloUI/button.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/DiabloUI/button.cpp.obj -MF CMakeFiles\libdevilutionx.dir\DiabloUI\button.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\DiabloUI\button.cpp.obj -c "C:\c - c++\DevilutionX\Source\DiabloUI\button.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/button.cpp.i: cmake_force
@@ -945,7 +960,7 @@ Source/CMakeFiles/libdevilutionx.dir/DiabloUI/credits.cpp.obj: Source/CMakeFiles
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/credits.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/credits.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/DiabloUI/credits.cpp
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/credits.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_59) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/DiabloUI/credits.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_60) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/DiabloUI/credits.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/DiabloUI/credits.cpp.obj -MF CMakeFiles\libdevilutionx.dir\DiabloUI\credits.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\DiabloUI\credits.cpp.obj -c "C:\c - c++\DevilutionX\Source\DiabloUI\credits.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/credits.cpp.i: cmake_force
@@ -960,7 +975,7 @@ Source/CMakeFiles/libdevilutionx.dir/DiabloUI/credits_lines.cpp.obj: Source/CMak
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/credits_lines.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/credits_lines.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/DiabloUI/credits_lines.cpp
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/credits_lines.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_60) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/DiabloUI/credits_lines.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_61) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/DiabloUI/credits_lines.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/DiabloUI/credits_lines.cpp.obj -MF CMakeFiles\libdevilutionx.dir\DiabloUI\credits_lines.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\DiabloUI\credits_lines.cpp.obj -c "C:\c - c++\DevilutionX\Source\DiabloUI\credits_lines.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/credits_lines.cpp.i: cmake_force
@@ -975,7 +990,7 @@ Source/CMakeFiles/libdevilutionx.dir/DiabloUI/diabloui.cpp.obj: Source/CMakeFile
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/diabloui.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/diabloui.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/DiabloUI/diabloui.cpp
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/diabloui.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_61) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/DiabloUI/diabloui.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_62) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/DiabloUI/diabloui.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/DiabloUI/diabloui.cpp.obj -MF CMakeFiles\libdevilutionx.dir\DiabloUI\diabloui.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\DiabloUI\diabloui.cpp.obj -c "C:\c - c++\DevilutionX\Source\DiabloUI\diabloui.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/diabloui.cpp.i: cmake_force
@@ -990,7 +1005,7 @@ Source/CMakeFiles/libdevilutionx.dir/DiabloUI/dialogs.cpp.obj: Source/CMakeFiles
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/dialogs.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/dialogs.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/DiabloUI/dialogs.cpp
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/dialogs.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_62) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/DiabloUI/dialogs.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_63) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/DiabloUI/dialogs.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/DiabloUI/dialogs.cpp.obj -MF CMakeFiles\libdevilutionx.dir\DiabloUI\dialogs.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\DiabloUI\dialogs.cpp.obj -c "C:\c - c++\DevilutionX\Source\DiabloUI\dialogs.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/dialogs.cpp.i: cmake_force
@@ -1005,7 +1020,7 @@ Source/CMakeFiles/libdevilutionx.dir/DiabloUI/hero/selhero.cpp.obj: Source/CMake
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/hero/selhero.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/hero/selhero.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/DiabloUI/hero/selhero.cpp
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/hero/selhero.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_63) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/DiabloUI/hero/selhero.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_64) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/DiabloUI/hero/selhero.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/DiabloUI/hero/selhero.cpp.obj -MF CMakeFiles\libdevilutionx.dir\DiabloUI\hero\selhero.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\DiabloUI\hero\selhero.cpp.obj -c "C:\c - c++\DevilutionX\Source\DiabloUI\hero\selhero.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/hero/selhero.cpp.i: cmake_force
@@ -1020,7 +1035,7 @@ Source/CMakeFiles/libdevilutionx.dir/DiabloUI/mainmenu.cpp.obj: Source/CMakeFile
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/mainmenu.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/mainmenu.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/DiabloUI/mainmenu.cpp
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/mainmenu.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_64) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/DiabloUI/mainmenu.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_65) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/DiabloUI/mainmenu.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/DiabloUI/mainmenu.cpp.obj -MF CMakeFiles\libdevilutionx.dir\DiabloUI\mainmenu.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\DiabloUI\mainmenu.cpp.obj -c "C:\c - c++\DevilutionX\Source\DiabloUI\mainmenu.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/mainmenu.cpp.i: cmake_force
@@ -1035,7 +1050,7 @@ Source/CMakeFiles/libdevilutionx.dir/DiabloUI/multi/selconn.cpp.obj: Source/CMak
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/multi/selconn.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/multi/selconn.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/DiabloUI/multi/selconn.cpp
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/multi/selconn.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_65) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/DiabloUI/multi/selconn.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_66) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/DiabloUI/multi/selconn.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/DiabloUI/multi/selconn.cpp.obj -MF CMakeFiles\libdevilutionx.dir\DiabloUI\multi\selconn.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\DiabloUI\multi\selconn.cpp.obj -c "C:\c - c++\DevilutionX\Source\DiabloUI\multi\selconn.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/multi/selconn.cpp.i: cmake_force
@@ -1050,7 +1065,7 @@ Source/CMakeFiles/libdevilutionx.dir/DiabloUI/multi/selgame.cpp.obj: Source/CMak
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/multi/selgame.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/multi/selgame.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/DiabloUI/multi/selgame.cpp
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/multi/selgame.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_66) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/DiabloUI/multi/selgame.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_67) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/DiabloUI/multi/selgame.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/DiabloUI/multi/selgame.cpp.obj -MF CMakeFiles\libdevilutionx.dir\DiabloUI\multi\selgame.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\DiabloUI\multi\selgame.cpp.obj -c "C:\c - c++\DevilutionX\Source\DiabloUI\multi\selgame.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/multi/selgame.cpp.i: cmake_force
@@ -1065,7 +1080,7 @@ Source/CMakeFiles/libdevilutionx.dir/DiabloUI/progress.cpp.obj: Source/CMakeFile
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/progress.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/progress.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/DiabloUI/progress.cpp
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/progress.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_67) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/DiabloUI/progress.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_68) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/DiabloUI/progress.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/DiabloUI/progress.cpp.obj -MF CMakeFiles\libdevilutionx.dir\DiabloUI\progress.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\DiabloUI\progress.cpp.obj -c "C:\c - c++\DevilutionX\Source\DiabloUI\progress.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/progress.cpp.i: cmake_force
@@ -1080,7 +1095,7 @@ Source/CMakeFiles/libdevilutionx.dir/DiabloUI/scrollbar.cpp.obj: Source/CMakeFil
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/scrollbar.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/scrollbar.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/DiabloUI/scrollbar.cpp
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/scrollbar.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_68) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/DiabloUI/scrollbar.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_69) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/DiabloUI/scrollbar.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/DiabloUI/scrollbar.cpp.obj -MF CMakeFiles\libdevilutionx.dir\DiabloUI\scrollbar.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\DiabloUI\scrollbar.cpp.obj -c "C:\c - c++\DevilutionX\Source\DiabloUI\scrollbar.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/scrollbar.cpp.i: cmake_force
@@ -1095,7 +1110,7 @@ Source/CMakeFiles/libdevilutionx.dir/DiabloUI/selok.cpp.obj: Source/CMakeFiles/l
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/selok.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/selok.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/DiabloUI/selok.cpp
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/selok.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_69) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/DiabloUI/selok.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_70) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/DiabloUI/selok.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/DiabloUI/selok.cpp.obj -MF CMakeFiles\libdevilutionx.dir\DiabloUI\selok.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\DiabloUI\selok.cpp.obj -c "C:\c - c++\DevilutionX\Source\DiabloUI\selok.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/selok.cpp.i: cmake_force
@@ -1110,7 +1125,7 @@ Source/CMakeFiles/libdevilutionx.dir/DiabloUI/selstart.cpp.obj: Source/CMakeFile
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/selstart.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/selstart.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/DiabloUI/selstart.cpp
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/selstart.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_70) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/DiabloUI/selstart.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_71) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/DiabloUI/selstart.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/DiabloUI/selstart.cpp.obj -MF CMakeFiles\libdevilutionx.dir\DiabloUI\selstart.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\DiabloUI\selstart.cpp.obj -c "C:\c - c++\DevilutionX\Source\DiabloUI\selstart.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/selstart.cpp.i: cmake_force
@@ -1125,7 +1140,7 @@ Source/CMakeFiles/libdevilutionx.dir/DiabloUI/selyesno.cpp.obj: Source/CMakeFile
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/selyesno.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/selyesno.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/DiabloUI/selyesno.cpp
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/selyesno.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_71) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/DiabloUI/selyesno.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_72) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/DiabloUI/selyesno.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/DiabloUI/selyesno.cpp.obj -MF CMakeFiles\libdevilutionx.dir\DiabloUI\selyesno.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\DiabloUI\selyesno.cpp.obj -c "C:\c - c++\DevilutionX\Source\DiabloUI\selyesno.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/selyesno.cpp.i: cmake_force
@@ -1140,7 +1155,7 @@ Source/CMakeFiles/libdevilutionx.dir/DiabloUI/settingsmenu.cpp.obj: Source/CMake
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/settingsmenu.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/settingsmenu.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/DiabloUI/settingsmenu.cpp
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/settingsmenu.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_72) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/DiabloUI/settingsmenu.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_73) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/DiabloUI/settingsmenu.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/DiabloUI/settingsmenu.cpp.obj -MF CMakeFiles\libdevilutionx.dir\DiabloUI\settingsmenu.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\DiabloUI\settingsmenu.cpp.obj -c "C:\c - c++\DevilutionX\Source\DiabloUI\settingsmenu.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/settingsmenu.cpp.i: cmake_force
@@ -1155,7 +1170,7 @@ Source/CMakeFiles/libdevilutionx.dir/DiabloUI/support_lines.cpp.obj: Source/CMak
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/support_lines.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/support_lines.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/DiabloUI/support_lines.cpp
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/support_lines.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_73) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/DiabloUI/support_lines.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_74) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/DiabloUI/support_lines.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/DiabloUI/support_lines.cpp.obj -MF CMakeFiles\libdevilutionx.dir\DiabloUI\support_lines.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\DiabloUI\support_lines.cpp.obj -c "C:\c - c++\DevilutionX\Source\DiabloUI\support_lines.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/support_lines.cpp.i: cmake_force
@@ -1170,7 +1185,7 @@ Source/CMakeFiles/libdevilutionx.dir/DiabloUI/title.cpp.obj: Source/CMakeFiles/l
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/title.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/title.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/DiabloUI/title.cpp
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/title.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_74) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/DiabloUI/title.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_75) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/DiabloUI/title.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/DiabloUI/title.cpp.obj -MF CMakeFiles\libdevilutionx.dir\DiabloUI\title.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\DiabloUI\title.cpp.obj -c "C:\c - c++\DevilutionX\Source\DiabloUI\title.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/title.cpp.i: cmake_force
@@ -1185,7 +1200,7 @@ Source/CMakeFiles/libdevilutionx.dir/DiabloUI/text_input.cpp.obj: Source/CMakeFi
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/text_input.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/text_input.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/DiabloUI/text_input.cpp
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/text_input.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_75) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/DiabloUI/text_input.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_76) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/DiabloUI/text_input.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/DiabloUI/text_input.cpp.obj -MF CMakeFiles\libdevilutionx.dir\DiabloUI\text_input.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\DiabloUI\text_input.cpp.obj -c "C:\c - c++\DevilutionX\Source\DiabloUI\text_input.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/DiabloUI/text_input.cpp.i: cmake_force
@@ -1200,7 +1215,7 @@ Source/CMakeFiles/libdevilutionx.dir/dvlnet/abstract_net.cpp.obj: Source/CMakeFi
 Source/CMakeFiles/libdevilutionx.dir/dvlnet/abstract_net.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/dvlnet/abstract_net.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/dvlnet/abstract_net.cpp
 Source/CMakeFiles/libdevilutionx.dir/dvlnet/abstract_net.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_76) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/dvlnet/abstract_net.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_77) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/dvlnet/abstract_net.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/dvlnet/abstract_net.cpp.obj -MF CMakeFiles\libdevilutionx.dir\dvlnet\abstract_net.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\dvlnet\abstract_net.cpp.obj -c "C:\c - c++\DevilutionX\Source\dvlnet\abstract_net.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/dvlnet/abstract_net.cpp.i: cmake_force
@@ -1215,7 +1230,7 @@ Source/CMakeFiles/libdevilutionx.dir/dvlnet/base.cpp.obj: Source/CMakeFiles/libd
 Source/CMakeFiles/libdevilutionx.dir/dvlnet/base.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/dvlnet/base.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/dvlnet/base.cpp
 Source/CMakeFiles/libdevilutionx.dir/dvlnet/base.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_77) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/dvlnet/base.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_78) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/dvlnet/base.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/dvlnet/base.cpp.obj -MF CMakeFiles\libdevilutionx.dir\dvlnet\base.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\dvlnet\base.cpp.obj -c "C:\c - c++\DevilutionX\Source\dvlnet\base.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/dvlnet/base.cpp.i: cmake_force
@@ -1230,7 +1245,7 @@ Source/CMakeFiles/libdevilutionx.dir/dvlnet/cdwrap.cpp.obj: Source/CMakeFiles/li
 Source/CMakeFiles/libdevilutionx.dir/dvlnet/cdwrap.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/dvlnet/cdwrap.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/dvlnet/cdwrap.cpp
 Source/CMakeFiles/libdevilutionx.dir/dvlnet/cdwrap.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_78) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/dvlnet/cdwrap.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_79) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/dvlnet/cdwrap.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/dvlnet/cdwrap.cpp.obj -MF CMakeFiles\libdevilutionx.dir\dvlnet\cdwrap.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\dvlnet\cdwrap.cpp.obj -c "C:\c - c++\DevilutionX\Source\dvlnet\cdwrap.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/dvlnet/cdwrap.cpp.i: cmake_force
@@ -1245,7 +1260,7 @@ Source/CMakeFiles/libdevilutionx.dir/dvlnet/frame_queue.cpp.obj: Source/CMakeFil
 Source/CMakeFiles/libdevilutionx.dir/dvlnet/frame_queue.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/dvlnet/frame_queue.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/dvlnet/frame_queue.cpp
 Source/CMakeFiles/libdevilutionx.dir/dvlnet/frame_queue.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_79) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/dvlnet/frame_queue.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_80) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/dvlnet/frame_queue.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/dvlnet/frame_queue.cpp.obj -MF CMakeFiles\libdevilutionx.dir\dvlnet\frame_queue.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\dvlnet\frame_queue.cpp.obj -c "C:\c - c++\DevilutionX\Source\dvlnet\frame_queue.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/dvlnet/frame_queue.cpp.i: cmake_force
@@ -1260,7 +1275,7 @@ Source/CMakeFiles/libdevilutionx.dir/dvlnet/loopback.cpp.obj: Source/CMakeFiles/
 Source/CMakeFiles/libdevilutionx.dir/dvlnet/loopback.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/dvlnet/loopback.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/dvlnet/loopback.cpp
 Source/CMakeFiles/libdevilutionx.dir/dvlnet/loopback.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_80) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/dvlnet/loopback.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_81) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/dvlnet/loopback.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/dvlnet/loopback.cpp.obj -MF CMakeFiles\libdevilutionx.dir\dvlnet\loopback.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\dvlnet\loopback.cpp.obj -c "C:\c - c++\DevilutionX\Source\dvlnet\loopback.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/dvlnet/loopback.cpp.i: cmake_force
@@ -1275,7 +1290,7 @@ Source/CMakeFiles/libdevilutionx.dir/dvlnet/packet.cpp.obj: Source/CMakeFiles/li
 Source/CMakeFiles/libdevilutionx.dir/dvlnet/packet.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/dvlnet/packet.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/dvlnet/packet.cpp
 Source/CMakeFiles/libdevilutionx.dir/dvlnet/packet.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_81) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/dvlnet/packet.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_82) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/dvlnet/packet.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/dvlnet/packet.cpp.obj -MF CMakeFiles\libdevilutionx.dir\dvlnet\packet.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\dvlnet\packet.cpp.obj -c "C:\c - c++\DevilutionX\Source\dvlnet\packet.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/dvlnet/packet.cpp.i: cmake_force
@@ -1290,7 +1305,7 @@ Source/CMakeFiles/libdevilutionx.dir/engine/actor_position.cpp.obj: Source/CMake
 Source/CMakeFiles/libdevilutionx.dir/engine/actor_position.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/engine/actor_position.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/engine/actor_position.cpp
 Source/CMakeFiles/libdevilutionx.dir/engine/actor_position.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_82) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/engine/actor_position.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_83) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/engine/actor_position.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/engine/actor_position.cpp.obj -MF CMakeFiles\libdevilutionx.dir\engine\actor_position.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\engine\actor_position.cpp.obj -c "C:\c - c++\DevilutionX\Source\engine\actor_position.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/engine/actor_position.cpp.i: cmake_force
@@ -1305,7 +1320,7 @@ Source/CMakeFiles/libdevilutionx.dir/engine/animationinfo.cpp.obj: Source/CMakeF
 Source/CMakeFiles/libdevilutionx.dir/engine/animationinfo.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/engine/animationinfo.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/engine/animationinfo.cpp
 Source/CMakeFiles/libdevilutionx.dir/engine/animationinfo.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_83) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/engine/animationinfo.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_84) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/engine/animationinfo.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/engine/animationinfo.cpp.obj -MF CMakeFiles\libdevilutionx.dir\engine\animationinfo.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\engine\animationinfo.cpp.obj -c "C:\c - c++\DevilutionX\Source\engine\animationinfo.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/engine/animationinfo.cpp.i: cmake_force
@@ -1320,7 +1335,7 @@ Source/CMakeFiles/libdevilutionx.dir/engine/backbuffer_state.cpp.obj: Source/CMa
 Source/CMakeFiles/libdevilutionx.dir/engine/backbuffer_state.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/engine/backbuffer_state.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/engine/backbuffer_state.cpp
 Source/CMakeFiles/libdevilutionx.dir/engine/backbuffer_state.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_84) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/engine/backbuffer_state.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_85) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/engine/backbuffer_state.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/engine/backbuffer_state.cpp.obj -MF CMakeFiles\libdevilutionx.dir\engine\backbuffer_state.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\engine\backbuffer_state.cpp.obj -c "C:\c - c++\DevilutionX\Source\engine\backbuffer_state.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/engine/backbuffer_state.cpp.i: cmake_force
@@ -1335,7 +1350,7 @@ Source/CMakeFiles/libdevilutionx.dir/engine/dx.cpp.obj: Source/CMakeFiles/libdev
 Source/CMakeFiles/libdevilutionx.dir/engine/dx.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/engine/dx.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/engine/dx.cpp
 Source/CMakeFiles/libdevilutionx.dir/engine/dx.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_85) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/engine/dx.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_86) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/engine/dx.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/engine/dx.cpp.obj -MF CMakeFiles\libdevilutionx.dir\engine\dx.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\engine\dx.cpp.obj -c "C:\c - c++\DevilutionX\Source\engine\dx.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/engine/dx.cpp.i: cmake_force
@@ -1350,7 +1365,7 @@ Source/CMakeFiles/libdevilutionx.dir/engine/events.cpp.obj: Source/CMakeFiles/li
 Source/CMakeFiles/libdevilutionx.dir/engine/events.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/engine/events.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/engine/events.cpp
 Source/CMakeFiles/libdevilutionx.dir/engine/events.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_86) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/engine/events.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_87) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/engine/events.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/engine/events.cpp.obj -MF CMakeFiles\libdevilutionx.dir\engine\events.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\engine\events.cpp.obj -c "C:\c - c++\DevilutionX\Source\engine\events.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/engine/events.cpp.i: cmake_force
@@ -1365,7 +1380,7 @@ Source/CMakeFiles/libdevilutionx.dir/engine/palette.cpp.obj: Source/CMakeFiles/l
 Source/CMakeFiles/libdevilutionx.dir/engine/palette.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/engine/palette.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/engine/palette.cpp
 Source/CMakeFiles/libdevilutionx.dir/engine/palette.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_87) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/engine/palette.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_88) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/engine/palette.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/engine/palette.cpp.obj -MF CMakeFiles\libdevilutionx.dir\engine\palette.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\engine\palette.cpp.obj -c "C:\c - c++\DevilutionX\Source\engine\palette.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/engine/palette.cpp.i: cmake_force
@@ -1380,7 +1395,7 @@ Source/CMakeFiles/libdevilutionx.dir/engine/sound_position.cpp.obj: Source/CMake
 Source/CMakeFiles/libdevilutionx.dir/engine/sound_position.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/engine/sound_position.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/engine/sound_position.cpp
 Source/CMakeFiles/libdevilutionx.dir/engine/sound_position.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_88) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/engine/sound_position.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_89) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/engine/sound_position.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/engine/sound_position.cpp.obj -MF CMakeFiles\libdevilutionx.dir\engine\sound_position.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\engine\sound_position.cpp.obj -c "C:\c - c++\DevilutionX\Source\engine\sound_position.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/engine/sound_position.cpp.i: cmake_force
@@ -1395,7 +1410,7 @@ Source/CMakeFiles/libdevilutionx.dir/engine/trn.cpp.obj: Source/CMakeFiles/libde
 Source/CMakeFiles/libdevilutionx.dir/engine/trn.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/engine/trn.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/engine/trn.cpp
 Source/CMakeFiles/libdevilutionx.dir/engine/trn.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_89) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/engine/trn.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_90) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/engine/trn.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/engine/trn.cpp.obj -MF CMakeFiles\libdevilutionx.dir\engine\trn.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\engine\trn.cpp.obj -c "C:\c - c++\DevilutionX\Source\engine\trn.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/engine/trn.cpp.i: cmake_force
@@ -1410,7 +1425,7 @@ Source/CMakeFiles/libdevilutionx.dir/engine/render/automap_render.cpp.obj: Sourc
 Source/CMakeFiles/libdevilutionx.dir/engine/render/automap_render.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/engine/render/automap_render.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/engine/render/automap_render.cpp
 Source/CMakeFiles/libdevilutionx.dir/engine/render/automap_render.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_90) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/engine/render/automap_render.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_91) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/engine/render/automap_render.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/engine/render/automap_render.cpp.obj -MF CMakeFiles\libdevilutionx.dir\engine\render\automap_render.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\engine\render\automap_render.cpp.obj -c "C:\c - c++\DevilutionX\Source\engine\render\automap_render.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/engine/render/automap_render.cpp.i: cmake_force
@@ -1425,7 +1440,7 @@ Source/CMakeFiles/libdevilutionx.dir/engine/render/scrollrt.cpp.obj: Source/CMak
 Source/CMakeFiles/libdevilutionx.dir/engine/render/scrollrt.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/engine/render/scrollrt.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/engine/render/scrollrt.cpp
 Source/CMakeFiles/libdevilutionx.dir/engine/render/scrollrt.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_91) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/engine/render/scrollrt.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_92) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/engine/render/scrollrt.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/engine/render/scrollrt.cpp.obj -MF CMakeFiles\libdevilutionx.dir\engine\render\scrollrt.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\engine\render\scrollrt.cpp.obj -c "C:\c - c++\DevilutionX\Source\engine\render\scrollrt.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/engine/render/scrollrt.cpp.i: cmake_force
@@ -1440,7 +1455,7 @@ Source/CMakeFiles/libdevilutionx.dir/items/validation.cpp.obj: Source/CMakeFiles
 Source/CMakeFiles/libdevilutionx.dir/items/validation.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/items/validation.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/items/validation.cpp
 Source/CMakeFiles/libdevilutionx.dir/items/validation.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_92) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/items/validation.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_93) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/items/validation.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/items/validation.cpp.obj -MF CMakeFiles\libdevilutionx.dir\items\validation.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\items\validation.cpp.obj -c "C:\c - c++\DevilutionX\Source\items\validation.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/items/validation.cpp.i: cmake_force
@@ -1455,7 +1470,7 @@ Source/CMakeFiles/libdevilutionx.dir/levels/reencode_dun_cels.cpp.obj: Source/CM
 Source/CMakeFiles/libdevilutionx.dir/levels/reencode_dun_cels.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/levels/reencode_dun_cels.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/levels/reencode_dun_cels.cpp
 Source/CMakeFiles/libdevilutionx.dir/levels/reencode_dun_cels.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_93) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/levels/reencode_dun_cels.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_94) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/levels/reencode_dun_cels.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/levels/reencode_dun_cels.cpp.obj -MF CMakeFiles\libdevilutionx.dir\levels\reencode_dun_cels.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\levels\reencode_dun_cels.cpp.obj -c "C:\c - c++\DevilutionX\Source\levels\reencode_dun_cels.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/levels/reencode_dun_cels.cpp.i: cmake_force
@@ -1470,7 +1485,7 @@ Source/CMakeFiles/libdevilutionx.dir/levels/setmaps.cpp.obj: Source/CMakeFiles/l
 Source/CMakeFiles/libdevilutionx.dir/levels/setmaps.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/levels/setmaps.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/levels/setmaps.cpp
 Source/CMakeFiles/libdevilutionx.dir/levels/setmaps.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_94) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/levels/setmaps.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_95) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/levels/setmaps.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/levels/setmaps.cpp.obj -MF CMakeFiles\libdevilutionx.dir\levels\setmaps.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\levels\setmaps.cpp.obj -c "C:\c - c++\DevilutionX\Source\levels\setmaps.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/levels/setmaps.cpp.i: cmake_force
@@ -1485,7 +1500,7 @@ Source/CMakeFiles/libdevilutionx.dir/levels/themes.cpp.obj: Source/CMakeFiles/li
 Source/CMakeFiles/libdevilutionx.dir/levels/themes.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/levels/themes.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/levels/themes.cpp
 Source/CMakeFiles/libdevilutionx.dir/levels/themes.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_95) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/levels/themes.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_96) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/levels/themes.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/levels/themes.cpp.obj -MF CMakeFiles\libdevilutionx.dir\levels\themes.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\levels\themes.cpp.obj -c "C:\c - c++\DevilutionX\Source\levels\themes.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/levels/themes.cpp.i: cmake_force
@@ -1500,7 +1515,7 @@ Source/CMakeFiles/libdevilutionx.dir/levels/tile_properties.cpp.obj: Source/CMak
 Source/CMakeFiles/libdevilutionx.dir/levels/tile_properties.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/levels/tile_properties.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/levels/tile_properties.cpp
 Source/CMakeFiles/libdevilutionx.dir/levels/tile_properties.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_96) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/levels/tile_properties.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_97) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/levels/tile_properties.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/levels/tile_properties.cpp.obj -MF CMakeFiles\libdevilutionx.dir\levels\tile_properties.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\levels\tile_properties.cpp.obj -c "C:\c - c++\DevilutionX\Source\levels\tile_properties.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/levels/tile_properties.cpp.i: cmake_force
@@ -1515,7 +1530,7 @@ Source/CMakeFiles/libdevilutionx.dir/levels/town.cpp.obj: Source/CMakeFiles/libd
 Source/CMakeFiles/libdevilutionx.dir/levels/town.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/levels/town.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/levels/town.cpp
 Source/CMakeFiles/libdevilutionx.dir/levels/town.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_97) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/levels/town.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_98) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/levels/town.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/levels/town.cpp.obj -MF CMakeFiles\libdevilutionx.dir\levels\town.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\levels\town.cpp.obj -c "C:\c - c++\DevilutionX\Source\levels\town.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/levels/town.cpp.i: cmake_force
@@ -1530,7 +1545,7 @@ Source/CMakeFiles/libdevilutionx.dir/levels/trigs.cpp.obj: Source/CMakeFiles/lib
 Source/CMakeFiles/libdevilutionx.dir/levels/trigs.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/levels/trigs.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/levels/trigs.cpp
 Source/CMakeFiles/libdevilutionx.dir/levels/trigs.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_98) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/levels/trigs.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_99) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/levels/trigs.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/levels/trigs.cpp.obj -MF CMakeFiles\libdevilutionx.dir\levels\trigs.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\levels\trigs.cpp.obj -c "C:\c - c++\DevilutionX\Source\levels\trigs.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/levels/trigs.cpp.i: cmake_force
@@ -1545,7 +1560,7 @@ Source/CMakeFiles/libdevilutionx.dir/lua/autocomplete.cpp.obj: Source/CMakeFiles
 Source/CMakeFiles/libdevilutionx.dir/lua/autocomplete.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/lua/autocomplete.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/lua/autocomplete.cpp
 Source/CMakeFiles/libdevilutionx.dir/lua/autocomplete.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_99) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/lua/autocomplete.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_100) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/lua/autocomplete.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/lua/autocomplete.cpp.obj -MF CMakeFiles\libdevilutionx.dir\lua\autocomplete.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\lua\autocomplete.cpp.obj -c "C:\c - c++\DevilutionX\Source\lua\autocomplete.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/lua/autocomplete.cpp.i: cmake_force
@@ -1560,7 +1575,7 @@ Source/CMakeFiles/libdevilutionx.dir/lua/lua_global.cpp.obj: Source/CMakeFiles/l
 Source/CMakeFiles/libdevilutionx.dir/lua/lua_global.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/lua/lua_global.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/lua/lua_global.cpp
 Source/CMakeFiles/libdevilutionx.dir/lua/lua_global.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_100) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/lua/lua_global.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_101) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/lua/lua_global.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/lua/lua_global.cpp.obj -MF CMakeFiles\libdevilutionx.dir\lua\lua_global.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\lua\lua_global.cpp.obj -c "C:\c - c++\DevilutionX\Source\lua\lua_global.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/lua/lua_global.cpp.i: cmake_force
@@ -1575,7 +1590,7 @@ Source/CMakeFiles/libdevilutionx.dir/lua/modules/audio.cpp.obj: Source/CMakeFile
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/audio.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/audio.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/lua/modules/audio.cpp
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/audio.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_101) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/lua/modules/audio.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_102) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/lua/modules/audio.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/lua/modules/audio.cpp.obj -MF CMakeFiles\libdevilutionx.dir\lua\modules\audio.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\lua\modules\audio.cpp.obj -c "C:\c - c++\DevilutionX\Source\lua\modules\audio.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/audio.cpp.i: cmake_force
@@ -1590,7 +1605,7 @@ Source/CMakeFiles/libdevilutionx.dir/lua/modules/hellfire.cpp.obj: Source/CMakeF
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/hellfire.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/hellfire.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/lua/modules/hellfire.cpp
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/hellfire.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_102) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/lua/modules/hellfire.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_103) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/lua/modules/hellfire.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/lua/modules/hellfire.cpp.obj -MF CMakeFiles\libdevilutionx.dir\lua\modules\hellfire.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\lua\modules\hellfire.cpp.obj -c "C:\c - c++\DevilutionX\Source\lua\modules\hellfire.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/hellfire.cpp.i: cmake_force
@@ -1605,7 +1620,7 @@ Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev.cpp.obj: Source/CMakeFiles/
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/lua/modules/dev.cpp
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_103) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_104) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev.cpp.obj -MF CMakeFiles\libdevilutionx.dir\lua\modules\dev.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\lua\modules\dev.cpp.obj -c "C:\c - c++\DevilutionX\Source\lua\modules\dev.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev.cpp.i: cmake_force
@@ -1620,7 +1635,7 @@ Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/display.cpp.obj: Source/CMa
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/display.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/display.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/lua/modules/dev/display.cpp
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/display.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_104) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/display.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_105) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/display.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/display.cpp.obj -MF CMakeFiles\libdevilutionx.dir\lua\modules\dev\display.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\lua\modules\dev\display.cpp.obj -c "C:\c - c++\DevilutionX\Source\lua\modules\dev\display.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/display.cpp.i: cmake_force
@@ -1635,7 +1650,7 @@ Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/items.cpp.obj: Source/CMake
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/items.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/items.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/lua/modules/dev/items.cpp
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/items.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_105) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/items.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_106) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/items.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/items.cpp.obj -MF CMakeFiles\libdevilutionx.dir\lua\modules\dev\items.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\lua\modules\dev\items.cpp.obj -c "C:\c - c++\DevilutionX\Source\lua\modules\dev\items.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/items.cpp.i: cmake_force
@@ -1650,7 +1665,7 @@ Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/level.cpp.obj: Source/CMake
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/level.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/level.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/lua/modules/dev/level.cpp
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/level.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_106) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/level.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_107) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/level.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/level.cpp.obj -MF CMakeFiles\libdevilutionx.dir\lua\modules\dev\level.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\lua\modules\dev\level.cpp.obj -c "C:\c - c++\DevilutionX\Source\lua\modules\dev\level.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/level.cpp.i: cmake_force
@@ -1665,7 +1680,7 @@ Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/level/map.cpp.obj: Source/C
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/level/map.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/level/map.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/lua/modules/dev/level/map.cpp
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/level/map.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_107) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/level/map.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_108) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/level/map.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/level/map.cpp.obj -MF CMakeFiles\libdevilutionx.dir\lua\modules\dev\level\map.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\lua\modules\dev\level\map.cpp.obj -c "C:\c - c++\DevilutionX\Source\lua\modules\dev\level\map.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/level/map.cpp.i: cmake_force
@@ -1680,7 +1695,7 @@ Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/level/warp.cpp.obj: Source/
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/level/warp.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/level/warp.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/lua/modules/dev/level/warp.cpp
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/level/warp.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_108) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/level/warp.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_109) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/level/warp.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/level/warp.cpp.obj -MF CMakeFiles\libdevilutionx.dir\lua\modules\dev\level\warp.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\lua\modules\dev\level\warp.cpp.obj -c "C:\c - c++\DevilutionX\Source\lua\modules\dev\level\warp.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/level/warp.cpp.i: cmake_force
@@ -1695,7 +1710,7 @@ Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/monsters.cpp.obj: Source/CM
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/monsters.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/monsters.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/lua/modules/dev/monsters.cpp
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/monsters.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_109) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/monsters.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_110) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/monsters.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/monsters.cpp.obj -MF CMakeFiles\libdevilutionx.dir\lua\modules\dev\monsters.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\lua\modules\dev\monsters.cpp.obj -c "C:\c - c++\DevilutionX\Source\lua\modules\dev\monsters.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/monsters.cpp.i: cmake_force
@@ -1710,7 +1725,7 @@ Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/player.cpp.obj: Source/CMak
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/player.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/player.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/lua/modules/dev/player.cpp
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/player.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_110) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/player.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_111) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/player.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/player.cpp.obj -MF CMakeFiles\libdevilutionx.dir\lua\modules\dev\player.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\lua\modules\dev\player.cpp.obj -c "C:\c - c++\DevilutionX\Source\lua\modules\dev\player.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/player.cpp.i: cmake_force
@@ -1725,7 +1740,7 @@ Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/player/gold.cpp.obj: Source
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/player/gold.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/player/gold.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/lua/modules/dev/player/gold.cpp
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/player/gold.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_111) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/player/gold.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_112) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/player/gold.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/player/gold.cpp.obj -MF CMakeFiles\libdevilutionx.dir\lua\modules\dev\player\gold.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\lua\modules\dev\player\gold.cpp.obj -c "C:\c - c++\DevilutionX\Source\lua\modules\dev\player\gold.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/player/gold.cpp.i: cmake_force
@@ -1740,7 +1755,7 @@ Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/player/spells.cpp.obj: Sour
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/player/spells.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/player/spells.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/lua/modules/dev/player/spells.cpp
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/player/spells.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_112) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/player/spells.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_113) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/player/spells.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/player/spells.cpp.obj -MF CMakeFiles\libdevilutionx.dir\lua\modules\dev\player\spells.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\lua\modules\dev\player\spells.cpp.obj -c "C:\c - c++\DevilutionX\Source\lua\modules\dev\player\spells.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/player/spells.cpp.i: cmake_force
@@ -1755,7 +1770,7 @@ Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/player/stats.cpp.obj: Sourc
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/player/stats.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/player/stats.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/lua/modules/dev/player/stats.cpp
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/player/stats.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_113) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/player/stats.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_114) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/player/stats.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/player/stats.cpp.obj -MF CMakeFiles\libdevilutionx.dir\lua\modules\dev\player\stats.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\lua\modules\dev\player\stats.cpp.obj -c "C:\c - c++\DevilutionX\Source\lua\modules\dev\player\stats.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/player/stats.cpp.i: cmake_force
@@ -1770,7 +1785,7 @@ Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/quests.cpp.obj: Source/CMak
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/quests.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/quests.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/lua/modules/dev/quests.cpp
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/quests.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_114) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/quests.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_115) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/quests.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/quests.cpp.obj -MF CMakeFiles\libdevilutionx.dir\lua\modules\dev\quests.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\lua\modules\dev\quests.cpp.obj -c "C:\c - c++\DevilutionX\Source\lua\modules\dev\quests.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/quests.cpp.i: cmake_force
@@ -1785,7 +1800,7 @@ Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/search.cpp.obj: Source/CMak
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/search.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/search.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/lua/modules/dev/search.cpp
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/search.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_115) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/search.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_116) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/search.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/search.cpp.obj -MF CMakeFiles\libdevilutionx.dir\lua\modules\dev\search.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\lua\modules\dev\search.cpp.obj -c "C:\c - c++\DevilutionX\Source\lua\modules\dev\search.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/search.cpp.i: cmake_force
@@ -1800,7 +1815,7 @@ Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/towners.cpp.obj: Source/CMa
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/towners.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/towners.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/lua/modules/dev/towners.cpp
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/towners.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_116) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/towners.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_117) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/towners.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/towners.cpp.obj -MF CMakeFiles\libdevilutionx.dir\lua\modules\dev\towners.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\lua\modules\dev\towners.cpp.obj -c "C:\c - c++\DevilutionX\Source\lua\modules\dev\towners.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/dev/towners.cpp.i: cmake_force
@@ -1815,7 +1830,7 @@ Source/CMakeFiles/libdevilutionx.dir/lua/modules/i18n.cpp.obj: Source/CMakeFiles
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/i18n.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/i18n.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/lua/modules/i18n.cpp
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/i18n.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_117) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/lua/modules/i18n.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_118) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/lua/modules/i18n.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/lua/modules/i18n.cpp.obj -MF CMakeFiles\libdevilutionx.dir\lua\modules\i18n.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\lua\modules\i18n.cpp.obj -c "C:\c - c++\DevilutionX\Source\lua\modules\i18n.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/i18n.cpp.i: cmake_force
@@ -1830,7 +1845,7 @@ Source/CMakeFiles/libdevilutionx.dir/lua/modules/items.cpp.obj: Source/CMakeFile
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/items.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/items.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/lua/modules/items.cpp
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/items.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_118) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/lua/modules/items.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_119) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/lua/modules/items.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/lua/modules/items.cpp.obj -MF CMakeFiles\libdevilutionx.dir\lua\modules\items.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\lua\modules\items.cpp.obj -c "C:\c - c++\DevilutionX\Source\lua\modules\items.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/items.cpp.i: cmake_force
@@ -1845,7 +1860,7 @@ Source/CMakeFiles/libdevilutionx.dir/lua/modules/log.cpp.obj: Source/CMakeFiles/
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/log.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/log.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/lua/modules/log.cpp
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/log.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_119) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/lua/modules/log.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_120) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/lua/modules/log.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/lua/modules/log.cpp.obj -MF CMakeFiles\libdevilutionx.dir\lua\modules\log.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\lua\modules\log.cpp.obj -c "C:\c - c++\DevilutionX\Source\lua\modules\log.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/log.cpp.i: cmake_force
@@ -1860,7 +1875,7 @@ Source/CMakeFiles/libdevilutionx.dir/lua/modules/monsters.cpp.obj: Source/CMakeF
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/monsters.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/monsters.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/lua/modules/monsters.cpp
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/monsters.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_120) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/lua/modules/monsters.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_121) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/lua/modules/monsters.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/lua/modules/monsters.cpp.obj -MF CMakeFiles\libdevilutionx.dir\lua\modules\monsters.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\lua\modules\monsters.cpp.obj -c "C:\c - c++\DevilutionX\Source\lua\modules\monsters.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/monsters.cpp.i: cmake_force
@@ -1875,7 +1890,7 @@ Source/CMakeFiles/libdevilutionx.dir/lua/modules/player.cpp.obj: Source/CMakeFil
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/player.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/player.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/lua/modules/player.cpp
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/player.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_121) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/lua/modules/player.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_122) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/lua/modules/player.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/lua/modules/player.cpp.obj -MF CMakeFiles\libdevilutionx.dir\lua\modules\player.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\lua\modules\player.cpp.obj -c "C:\c - c++\DevilutionX\Source\lua\modules\player.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/player.cpp.i: cmake_force
@@ -1890,7 +1905,7 @@ Source/CMakeFiles/libdevilutionx.dir/lua/modules/render.cpp.obj: Source/CMakeFil
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/render.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/render.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/lua/modules/render.cpp
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/render.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_122) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/lua/modules/render.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_123) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/lua/modules/render.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/lua/modules/render.cpp.obj -MF CMakeFiles\libdevilutionx.dir\lua\modules\render.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\lua\modules\render.cpp.obj -c "C:\c - c++\DevilutionX\Source\lua\modules\render.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/render.cpp.i: cmake_force
@@ -1905,7 +1920,7 @@ Source/CMakeFiles/libdevilutionx.dir/lua/modules/towners.cpp.obj: Source/CMakeFi
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/towners.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/towners.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/lua/modules/towners.cpp
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/towners.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_123) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/lua/modules/towners.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_124) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/lua/modules/towners.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/lua/modules/towners.cpp.obj -MF CMakeFiles\libdevilutionx.dir\lua\modules\towners.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\lua\modules\towners.cpp.obj -c "C:\c - c++\DevilutionX\Source\lua\modules\towners.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/lua/modules/towners.cpp.i: cmake_force
@@ -1920,7 +1935,7 @@ Source/CMakeFiles/libdevilutionx.dir/lua/repl.cpp.obj: Source/CMakeFiles/libdevi
 Source/CMakeFiles/libdevilutionx.dir/lua/repl.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/lua/repl.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/lua/repl.cpp
 Source/CMakeFiles/libdevilutionx.dir/lua/repl.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_124) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/lua/repl.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_125) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/lua/repl.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/lua/repl.cpp.obj -MF CMakeFiles\libdevilutionx.dir\lua\repl.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\lua\repl.cpp.obj -c "C:\c - c++\DevilutionX\Source\lua\repl.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/lua/repl.cpp.i: cmake_force
@@ -1935,7 +1950,7 @@ Source/CMakeFiles/libdevilutionx.dir/monsters/validation.cpp.obj: Source/CMakeFi
 Source/CMakeFiles/libdevilutionx.dir/monsters/validation.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/monsters/validation.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/monsters/validation.cpp
 Source/CMakeFiles/libdevilutionx.dir/monsters/validation.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_125) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/monsters/validation.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_126) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/monsters/validation.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/monsters/validation.cpp.obj -MF CMakeFiles\libdevilutionx.dir\monsters\validation.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\monsters\validation.cpp.obj -c "C:\c - c++\DevilutionX\Source\monsters\validation.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/monsters/validation.cpp.i: cmake_force
@@ -1950,7 +1965,7 @@ Source/CMakeFiles/libdevilutionx.dir/panels/charpanel.cpp.obj: Source/CMakeFiles
 Source/CMakeFiles/libdevilutionx.dir/panels/charpanel.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/panels/charpanel.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/panels/charpanel.cpp
 Source/CMakeFiles/libdevilutionx.dir/panels/charpanel.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_126) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/panels/charpanel.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_127) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/panels/charpanel.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/panels/charpanel.cpp.obj -MF CMakeFiles\libdevilutionx.dir\panels\charpanel.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\panels\charpanel.cpp.obj -c "C:\c - c++\DevilutionX\Source\panels\charpanel.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/panels/charpanel.cpp.i: cmake_force
@@ -1965,7 +1980,7 @@ Source/CMakeFiles/libdevilutionx.dir/panels/console.cpp.obj: Source/CMakeFiles/l
 Source/CMakeFiles/libdevilutionx.dir/panels/console.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/panels/console.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/panels/console.cpp
 Source/CMakeFiles/libdevilutionx.dir/panels/console.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_127) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/panels/console.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_128) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/panels/console.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/panels/console.cpp.obj -MF CMakeFiles\libdevilutionx.dir\panels\console.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\panels\console.cpp.obj -c "C:\c - c++\DevilutionX\Source\panels\console.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/panels/console.cpp.i: cmake_force
@@ -1980,7 +1995,7 @@ Source/CMakeFiles/libdevilutionx.dir/panels/info_box.cpp.obj: Source/CMakeFiles/
 Source/CMakeFiles/libdevilutionx.dir/panels/info_box.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/panels/info_box.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/panels/info_box.cpp
 Source/CMakeFiles/libdevilutionx.dir/panels/info_box.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_128) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/panels/info_box.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_129) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/panels/info_box.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/panels/info_box.cpp.obj -MF CMakeFiles\libdevilutionx.dir\panels\info_box.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\panels\info_box.cpp.obj -c "C:\c - c++\DevilutionX\Source\panels\info_box.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/panels/info_box.cpp.i: cmake_force
@@ -1995,7 +2010,7 @@ Source/CMakeFiles/libdevilutionx.dir/panels/mainpanel.cpp.obj: Source/CMakeFiles
 Source/CMakeFiles/libdevilutionx.dir/panels/mainpanel.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/panels/mainpanel.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/panels/mainpanel.cpp
 Source/CMakeFiles/libdevilutionx.dir/panels/mainpanel.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_129) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/panels/mainpanel.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_130) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/panels/mainpanel.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/panels/mainpanel.cpp.obj -MF CMakeFiles\libdevilutionx.dir\panels\mainpanel.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\panels\mainpanel.cpp.obj -c "C:\c - c++\DevilutionX\Source\panels\mainpanel.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/panels/mainpanel.cpp.i: cmake_force
@@ -2010,7 +2025,7 @@ Source/CMakeFiles/libdevilutionx.dir/panels/partypanel.cpp.obj: Source/CMakeFile
 Source/CMakeFiles/libdevilutionx.dir/panels/partypanel.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/panels/partypanel.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/panels/partypanel.cpp
 Source/CMakeFiles/libdevilutionx.dir/panels/partypanel.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_130) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/panels/partypanel.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_131) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/panels/partypanel.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/panels/partypanel.cpp.obj -MF CMakeFiles\libdevilutionx.dir\panels\partypanel.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\panels\partypanel.cpp.obj -c "C:\c - c++\DevilutionX\Source\panels\partypanel.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/panels/partypanel.cpp.i: cmake_force
@@ -2025,7 +2040,7 @@ Source/CMakeFiles/libdevilutionx.dir/panels/spell_book.cpp.obj: Source/CMakeFile
 Source/CMakeFiles/libdevilutionx.dir/panels/spell_book.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/panels/spell_book.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/panels/spell_book.cpp
 Source/CMakeFiles/libdevilutionx.dir/panels/spell_book.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_131) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/panels/spell_book.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_132) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/panels/spell_book.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/panels/spell_book.cpp.obj -MF CMakeFiles\libdevilutionx.dir\panels\spell_book.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\panels\spell_book.cpp.obj -c "C:\c - c++\DevilutionX\Source\panels\spell_book.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/panels/spell_book.cpp.i: cmake_force
@@ -2040,7 +2055,7 @@ Source/CMakeFiles/libdevilutionx.dir/panels/spell_icons.cpp.obj: Source/CMakeFil
 Source/CMakeFiles/libdevilutionx.dir/panels/spell_icons.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/panels/spell_icons.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/panels/spell_icons.cpp
 Source/CMakeFiles/libdevilutionx.dir/panels/spell_icons.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_132) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/panels/spell_icons.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_133) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/panels/spell_icons.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/panels/spell_icons.cpp.obj -MF CMakeFiles\libdevilutionx.dir\panels\spell_icons.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\panels\spell_icons.cpp.obj -c "C:\c - c++\DevilutionX\Source\panels\spell_icons.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/panels/spell_icons.cpp.i: cmake_force
@@ -2055,7 +2070,7 @@ Source/CMakeFiles/libdevilutionx.dir/panels/spell_list.cpp.obj: Source/CMakeFile
 Source/CMakeFiles/libdevilutionx.dir/panels/spell_list.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/panels/spell_list.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/panels/spell_list.cpp
 Source/CMakeFiles/libdevilutionx.dir/panels/spell_list.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_133) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/panels/spell_list.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_134) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/panels/spell_list.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/panels/spell_list.cpp.obj -MF CMakeFiles\libdevilutionx.dir\panels\spell_list.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\panels\spell_list.cpp.obj -c "C:\c - c++\DevilutionX\Source\panels\spell_list.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/panels/spell_list.cpp.i: cmake_force
@@ -2070,7 +2085,7 @@ Source/CMakeFiles/libdevilutionx.dir/platform/locale.cpp.obj: Source/CMakeFiles/
 Source/CMakeFiles/libdevilutionx.dir/platform/locale.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/platform/locale.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/platform/locale.cpp
 Source/CMakeFiles/libdevilutionx.dir/platform/locale.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_134) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/platform/locale.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_135) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/platform/locale.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/platform/locale.cpp.obj -MF CMakeFiles\libdevilutionx.dir\platform\locale.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\platform\locale.cpp.obj -c "C:\c - c++\DevilutionX\Source\platform\locale.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/platform/locale.cpp.i: cmake_force
@@ -2085,7 +2100,7 @@ Source/CMakeFiles/libdevilutionx.dir/portals/validation.cpp.obj: Source/CMakeFil
 Source/CMakeFiles/libdevilutionx.dir/portals/validation.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/portals/validation.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/portals/validation.cpp
 Source/CMakeFiles/libdevilutionx.dir/portals/validation.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_135) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/portals/validation.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_136) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/portals/validation.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/portals/validation.cpp.obj -MF CMakeFiles\libdevilutionx.dir\portals\validation.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\portals\validation.cpp.obj -c "C:\c - c++\DevilutionX\Source\portals\validation.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/portals/validation.cpp.i: cmake_force
@@ -2100,7 +2115,7 @@ Source/CMakeFiles/libdevilutionx.dir/qol/autopickup.cpp.obj: Source/CMakeFiles/l
 Source/CMakeFiles/libdevilutionx.dir/qol/autopickup.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/qol/autopickup.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/qol/autopickup.cpp
 Source/CMakeFiles/libdevilutionx.dir/qol/autopickup.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_136) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/qol/autopickup.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_137) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/qol/autopickup.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/qol/autopickup.cpp.obj -MF CMakeFiles\libdevilutionx.dir\qol\autopickup.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\qol\autopickup.cpp.obj -c "C:\c - c++\DevilutionX\Source\qol\autopickup.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/qol/autopickup.cpp.i: cmake_force
@@ -2115,7 +2130,7 @@ Source/CMakeFiles/libdevilutionx.dir/qol/chatlog.cpp.obj: Source/CMakeFiles/libd
 Source/CMakeFiles/libdevilutionx.dir/qol/chatlog.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/qol/chatlog.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/qol/chatlog.cpp
 Source/CMakeFiles/libdevilutionx.dir/qol/chatlog.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_137) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/qol/chatlog.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_138) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/qol/chatlog.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/qol/chatlog.cpp.obj -MF CMakeFiles\libdevilutionx.dir\qol\chatlog.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\qol\chatlog.cpp.obj -c "C:\c - c++\DevilutionX\Source\qol\chatlog.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/qol/chatlog.cpp.i: cmake_force
@@ -2130,7 +2145,7 @@ Source/CMakeFiles/libdevilutionx.dir/qol/floatingnumbers.cpp.obj: Source/CMakeFi
 Source/CMakeFiles/libdevilutionx.dir/qol/floatingnumbers.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/qol/floatingnumbers.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/qol/floatingnumbers.cpp
 Source/CMakeFiles/libdevilutionx.dir/qol/floatingnumbers.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_138) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/qol/floatingnumbers.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_139) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/qol/floatingnumbers.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/qol/floatingnumbers.cpp.obj -MF CMakeFiles\libdevilutionx.dir\qol\floatingnumbers.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\qol\floatingnumbers.cpp.obj -c "C:\c - c++\DevilutionX\Source\qol\floatingnumbers.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/qol/floatingnumbers.cpp.i: cmake_force
@@ -2145,7 +2160,7 @@ Source/CMakeFiles/libdevilutionx.dir/qol/itemlabels.cpp.obj: Source/CMakeFiles/l
 Source/CMakeFiles/libdevilutionx.dir/qol/itemlabels.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/qol/itemlabels.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/qol/itemlabels.cpp
 Source/CMakeFiles/libdevilutionx.dir/qol/itemlabels.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_139) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/qol/itemlabels.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_140) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/qol/itemlabels.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/qol/itemlabels.cpp.obj -MF CMakeFiles\libdevilutionx.dir\qol\itemlabels.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\qol\itemlabels.cpp.obj -c "C:\c - c++\DevilutionX\Source\qol\itemlabels.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/qol/itemlabels.cpp.i: cmake_force
@@ -2160,7 +2175,7 @@ Source/CMakeFiles/libdevilutionx.dir/qol/monhealthbar.cpp.obj: Source/CMakeFiles
 Source/CMakeFiles/libdevilutionx.dir/qol/monhealthbar.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/qol/monhealthbar.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/qol/monhealthbar.cpp
 Source/CMakeFiles/libdevilutionx.dir/qol/monhealthbar.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_140) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/qol/monhealthbar.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_141) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/qol/monhealthbar.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/qol/monhealthbar.cpp.obj -MF CMakeFiles\libdevilutionx.dir\qol\monhealthbar.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\qol\monhealthbar.cpp.obj -c "C:\c - c++\DevilutionX\Source\qol\monhealthbar.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/qol/monhealthbar.cpp.i: cmake_force
@@ -2175,7 +2190,7 @@ Source/CMakeFiles/libdevilutionx.dir/qol/stash.cpp.obj: Source/CMakeFiles/libdev
 Source/CMakeFiles/libdevilutionx.dir/qol/stash.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/qol/stash.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/qol/stash.cpp
 Source/CMakeFiles/libdevilutionx.dir/qol/stash.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_141) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/qol/stash.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_142) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/qol/stash.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/qol/stash.cpp.obj -MF CMakeFiles\libdevilutionx.dir\qol\stash.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\qol\stash.cpp.obj -c "C:\c - c++\DevilutionX\Source\qol\stash.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/qol/stash.cpp.i: cmake_force
@@ -2190,7 +2205,7 @@ Source/CMakeFiles/libdevilutionx.dir/qol/xpbar.cpp.obj: Source/CMakeFiles/libdev
 Source/CMakeFiles/libdevilutionx.dir/qol/xpbar.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/qol/xpbar.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/qol/xpbar.cpp
 Source/CMakeFiles/libdevilutionx.dir/qol/xpbar.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_142) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/qol/xpbar.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_143) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/qol/xpbar.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/qol/xpbar.cpp.obj -MF CMakeFiles\libdevilutionx.dir\qol\xpbar.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\qol\xpbar.cpp.obj -c "C:\c - c++\DevilutionX\Source\qol\xpbar.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/qol/xpbar.cpp.i: cmake_force
@@ -2205,7 +2220,7 @@ Source/CMakeFiles/libdevilutionx.dir/safety/safety_metrics.cpp.obj: Source/CMake
 Source/CMakeFiles/libdevilutionx.dir/safety/safety_metrics.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/safety/safety_metrics.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/safety/safety_metrics.cpp
 Source/CMakeFiles/libdevilutionx.dir/safety/safety_metrics.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_143) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/safety/safety_metrics.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_144) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/safety/safety_metrics.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/safety/safety_metrics.cpp.obj -MF CMakeFiles\libdevilutionx.dir\safety\safety_metrics.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\safety\safety_metrics.cpp.obj -c "C:\c - c++\DevilutionX\Source\safety\safety_metrics.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/safety/safety_metrics.cpp.i: cmake_force
@@ -2220,7 +2235,7 @@ Source/CMakeFiles/libdevilutionx.dir/safety/stress_testing.cpp.obj: Source/CMake
 Source/CMakeFiles/libdevilutionx.dir/safety/stress_testing.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/safety/stress_testing.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/safety/stress_testing.cpp
 Source/CMakeFiles/libdevilutionx.dir/safety/stress_testing.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_144) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/safety/stress_testing.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_145) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/safety/stress_testing.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/safety/stress_testing.cpp.obj -MF CMakeFiles\libdevilutionx.dir\safety\stress_testing.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\safety\stress_testing.cpp.obj -c "C:\c - c++\DevilutionX\Source\safety\stress_testing.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/safety/stress_testing.cpp.i: cmake_force
@@ -2235,7 +2250,7 @@ Source/CMakeFiles/libdevilutionx.dir/safety/stress_test_runner.cpp.obj: Source/C
 Source/CMakeFiles/libdevilutionx.dir/safety/stress_test_runner.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/safety/stress_test_runner.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/safety/stress_test_runner.cpp
 Source/CMakeFiles/libdevilutionx.dir/safety/stress_test_runner.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_145) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/safety/stress_test_runner.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_146) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/safety/stress_test_runner.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/safety/stress_test_runner.cpp.obj -MF CMakeFiles\libdevilutionx.dir\safety\stress_test_runner.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\safety\stress_test_runner.cpp.obj -c "C:\c - c++\DevilutionX\Source\safety\stress_test_runner.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/safety/stress_test_runner.cpp.i: cmake_force
@@ -2250,7 +2265,7 @@ Source/CMakeFiles/libdevilutionx.dir/audio/audio_throttling.cpp.obj: Source/CMak
 Source/CMakeFiles/libdevilutionx.dir/audio/audio_throttling.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/audio/audio_throttling.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/audio/audio_throttling.cpp
 Source/CMakeFiles/libdevilutionx.dir/audio/audio_throttling.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_146) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/audio/audio_throttling.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_147) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/audio/audio_throttling.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/audio/audio_throttling.cpp.obj -MF CMakeFiles\libdevilutionx.dir\audio\audio_throttling.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\audio\audio_throttling.cpp.obj -c "C:\c - c++\DevilutionX\Source\audio\audio_throttling.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/audio/audio_throttling.cpp.i: cmake_force
@@ -2265,7 +2280,7 @@ Source/CMakeFiles/libdevilutionx.dir/audio/enhanced_audio.cpp.obj: Source/CMakeF
 Source/CMakeFiles/libdevilutionx.dir/audio/enhanced_audio.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/audio/enhanced_audio.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/audio/enhanced_audio.cpp
 Source/CMakeFiles/libdevilutionx.dir/audio/enhanced_audio.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_147) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/audio/enhanced_audio.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_148) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/audio/enhanced_audio.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/audio/enhanced_audio.cpp.obj -MF CMakeFiles\libdevilutionx.dir\audio\enhanced_audio.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\audio\enhanced_audio.cpp.obj -c "C:\c - c++\DevilutionX\Source\audio\enhanced_audio.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/audio/enhanced_audio.cpp.i: cmake_force
@@ -2280,7 +2295,7 @@ Source/CMakeFiles/libdevilutionx.dir/hidden_content.cpp.obj: Source/CMakeFiles/l
 Source/CMakeFiles/libdevilutionx.dir/hidden_content.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/hidden_content.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/hidden_content.cpp
 Source/CMakeFiles/libdevilutionx.dir/hidden_content.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_148) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/hidden_content.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_149) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/hidden_content.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/hidden_content.cpp.obj -MF CMakeFiles\libdevilutionx.dir\hidden_content.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\hidden_content.cpp.obj -c "C:\c - c++\DevilutionX\Source\hidden_content.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/hidden_content.cpp.i: cmake_force
@@ -2295,7 +2310,7 @@ Source/CMakeFiles/libdevilutionx.dir/dormant_assets.cpp.obj: Source/CMakeFiles/l
 Source/CMakeFiles/libdevilutionx.dir/dormant_assets.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/dormant_assets.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/dormant_assets.cpp
 Source/CMakeFiles/libdevilutionx.dir/dormant_assets.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_149) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/dormant_assets.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_150) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/dormant_assets.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/dormant_assets.cpp.obj -MF CMakeFiles\libdevilutionx.dir\dormant_assets.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\dormant_assets.cpp.obj -c "C:\c - c++\DevilutionX\Source\dormant_assets.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/dormant_assets.cpp.i: cmake_force
@@ -2310,7 +2325,7 @@ Source/CMakeFiles/libdevilutionx.dir/enhanced_portal.cpp.obj: Source/CMakeFiles/
 Source/CMakeFiles/libdevilutionx.dir/enhanced_portal.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/enhanced_portal.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/enhanced_portal.cpp
 Source/CMakeFiles/libdevilutionx.dir/enhanced_portal.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_150) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/enhanced_portal.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_151) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/enhanced_portal.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/enhanced_portal.cpp.obj -MF CMakeFiles\libdevilutionx.dir\enhanced_portal.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\enhanced_portal.cpp.obj -c "C:\c - c++\DevilutionX\Source\enhanced_portal.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/enhanced_portal.cpp.i: cmake_force
@@ -2325,7 +2340,7 @@ Source/CMakeFiles/libdevilutionx.dir/quests/validation.cpp.obj: Source/CMakeFile
 Source/CMakeFiles/libdevilutionx.dir/quests/validation.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/quests/validation.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/quests/validation.cpp
 Source/CMakeFiles/libdevilutionx.dir/quests/validation.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_151) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/quests/validation.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_152) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/quests/validation.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/quests/validation.cpp.obj -MF CMakeFiles\libdevilutionx.dir\quests\validation.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\quests\validation.cpp.obj -c "C:\c - c++\DevilutionX\Source\quests\validation.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/quests/validation.cpp.i: cmake_force
@@ -2340,7 +2355,7 @@ Source/CMakeFiles/libdevilutionx.dir/storm/storm_net.cpp.obj: Source/CMakeFiles/
 Source/CMakeFiles/libdevilutionx.dir/storm/storm_net.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/storm/storm_net.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/storm/storm_net.cpp
 Source/CMakeFiles/libdevilutionx.dir/storm/storm_net.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_152) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/storm/storm_net.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_153) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/storm/storm_net.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/storm/storm_net.cpp.obj -MF CMakeFiles\libdevilutionx.dir\storm\storm_net.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\storm\storm_net.cpp.obj -c "C:\c - c++\DevilutionX\Source\storm\storm_net.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/storm/storm_net.cpp.i: cmake_force
@@ -2355,7 +2370,7 @@ Source/CMakeFiles/libdevilutionx.dir/storm/storm_svid.cpp.obj: Source/CMakeFiles
 Source/CMakeFiles/libdevilutionx.dir/storm/storm_svid.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/storm/storm_svid.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/storm/storm_svid.cpp
 Source/CMakeFiles/libdevilutionx.dir/storm/storm_svid.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_153) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/storm/storm_svid.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_154) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/storm/storm_svid.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/storm/storm_svid.cpp.obj -MF CMakeFiles\libdevilutionx.dir\storm\storm_svid.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\storm\storm_svid.cpp.obj -c "C:\c - c++\DevilutionX\Source\storm\storm_svid.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/storm/storm_svid.cpp.i: cmake_force
@@ -2370,7 +2385,7 @@ Source/CMakeFiles/libdevilutionx.dir/tables/misdat.cpp.obj: Source/CMakeFiles/li
 Source/CMakeFiles/libdevilutionx.dir/tables/misdat.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/tables/misdat.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/tables/misdat.cpp
 Source/CMakeFiles/libdevilutionx.dir/tables/misdat.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_154) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/tables/misdat.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_155) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/tables/misdat.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/tables/misdat.cpp.obj -MF CMakeFiles\libdevilutionx.dir\tables\misdat.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\tables\misdat.cpp.obj -c "C:\c - c++\DevilutionX\Source\tables\misdat.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/tables/misdat.cpp.i: cmake_force
@@ -2385,7 +2400,7 @@ Source/CMakeFiles/libdevilutionx.dir/tables/textdat.cpp.obj: Source/CMakeFiles/l
 Source/CMakeFiles/libdevilutionx.dir/tables/textdat.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/tables/textdat.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/tables/textdat.cpp
 Source/CMakeFiles/libdevilutionx.dir/tables/textdat.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_155) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/tables/textdat.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_156) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/tables/textdat.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/tables/textdat.cpp.obj -MF CMakeFiles\libdevilutionx.dir\tables\textdat.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\tables\textdat.cpp.obj -c "C:\c - c++\DevilutionX\Source\tables\textdat.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/tables/textdat.cpp.i: cmake_force
@@ -2400,7 +2415,7 @@ Source/CMakeFiles/libdevilutionx.dir/tables/townerdat.cpp.obj: Source/CMakeFiles
 Source/CMakeFiles/libdevilutionx.dir/tables/townerdat.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/tables/townerdat.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/tables/townerdat.cpp
 Source/CMakeFiles/libdevilutionx.dir/tables/townerdat.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_156) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/tables/townerdat.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_157) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/tables/townerdat.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/tables/townerdat.cpp.obj -MF CMakeFiles\libdevilutionx.dir\tables\townerdat.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\tables\townerdat.cpp.obj -c "C:\c - c++\DevilutionX\Source\tables\townerdat.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/tables/townerdat.cpp.i: cmake_force
@@ -2415,7 +2430,7 @@ Source/CMakeFiles/libdevilutionx.dir/utils/display.cpp.obj: Source/CMakeFiles/li
 Source/CMakeFiles/libdevilutionx.dir/utils/display.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/utils/display.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/utils/display.cpp
 Source/CMakeFiles/libdevilutionx.dir/utils/display.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_157) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/utils/display.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_158) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/utils/display.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/utils/display.cpp.obj -MF CMakeFiles\libdevilutionx.dir\utils\display.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\utils\display.cpp.obj -c "C:\c - c++\DevilutionX\Source\utils\display.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/utils/display.cpp.i: cmake_force
@@ -2430,7 +2445,7 @@ Source/CMakeFiles/libdevilutionx.dir/utils/language.cpp.obj: Source/CMakeFiles/l
 Source/CMakeFiles/libdevilutionx.dir/utils/language.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/utils/language.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/utils/language.cpp
 Source/CMakeFiles/libdevilutionx.dir/utils/language.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_158) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/utils/language.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_159) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/utils/language.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/utils/language.cpp.obj -MF CMakeFiles\libdevilutionx.dir\utils\language.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\utils\language.cpp.obj -c "C:\c - c++\DevilutionX\Source\utils\language.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/utils/language.cpp.i: cmake_force
@@ -2445,7 +2460,7 @@ Source/CMakeFiles/libdevilutionx.dir/utils/sdl_bilinear_scale.cpp.obj: Source/CM
 Source/CMakeFiles/libdevilutionx.dir/utils/sdl_bilinear_scale.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/utils/sdl_bilinear_scale.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/utils/sdl_bilinear_scale.cpp
 Source/CMakeFiles/libdevilutionx.dir/utils/sdl_bilinear_scale.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_159) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/utils/sdl_bilinear_scale.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_160) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/utils/sdl_bilinear_scale.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/utils/sdl_bilinear_scale.cpp.obj -MF CMakeFiles\libdevilutionx.dir\utils\sdl_bilinear_scale.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\utils\sdl_bilinear_scale.cpp.obj -c "C:\c - c++\DevilutionX\Source\utils\sdl_bilinear_scale.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/utils/sdl_bilinear_scale.cpp.i: cmake_force
@@ -2460,7 +2475,7 @@ Source/CMakeFiles/libdevilutionx.dir/utils/sdl_thread.cpp.obj: Source/CMakeFiles
 Source/CMakeFiles/libdevilutionx.dir/utils/sdl_thread.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/utils/sdl_thread.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/utils/sdl_thread.cpp
 Source/CMakeFiles/libdevilutionx.dir/utils/sdl_thread.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_160) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/utils/sdl_thread.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_161) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/utils/sdl_thread.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/utils/sdl_thread.cpp.obj -MF CMakeFiles\libdevilutionx.dir\utils\sdl_thread.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\utils\sdl_thread.cpp.obj -c "C:\c - c++\DevilutionX\Source\utils\sdl_thread.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/utils/sdl_thread.cpp.i: cmake_force
@@ -2475,7 +2490,7 @@ Source/CMakeFiles/libdevilutionx.dir/utils/surface_to_clx.cpp.obj: Source/CMakeF
 Source/CMakeFiles/libdevilutionx.dir/utils/surface_to_clx.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/utils/surface_to_clx.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/utils/surface_to_clx.cpp
 Source/CMakeFiles/libdevilutionx.dir/utils/surface_to_clx.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_161) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/utils/surface_to_clx.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_162) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/utils/surface_to_clx.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/utils/surface_to_clx.cpp.obj -MF CMakeFiles\libdevilutionx.dir\utils\surface_to_clx.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\utils\surface_to_clx.cpp.obj -c "C:\c - c++\DevilutionX\Source\utils\surface_to_clx.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/utils/surface_to_clx.cpp.i: cmake_force
@@ -2490,7 +2505,7 @@ Source/CMakeFiles/libdevilutionx.dir/utils/timer.cpp.obj: Source/CMakeFiles/libd
 Source/CMakeFiles/libdevilutionx.dir/utils/timer.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/utils/timer.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/utils/timer.cpp
 Source/CMakeFiles/libdevilutionx.dir/utils/timer.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_162) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/utils/timer.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_163) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/utils/timer.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/utils/timer.cpp.obj -MF CMakeFiles\libdevilutionx.dir\utils\timer.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\utils\timer.cpp.obj -c "C:\c - c++\DevilutionX\Source\utils\timer.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/utils/timer.cpp.i: cmake_force
@@ -2505,7 +2520,7 @@ Source/CMakeFiles/libdevilutionx.dir/engine/demomode.cpp.obj: Source/CMakeFiles/
 Source/CMakeFiles/libdevilutionx.dir/engine/demomode.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/engine/demomode.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/engine/demomode.cpp
 Source/CMakeFiles/libdevilutionx.dir/engine/demomode.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_163) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/engine/demomode.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_164) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/engine/demomode.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/engine/demomode.cpp.obj -MF CMakeFiles\libdevilutionx.dir\engine\demomode.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\engine\demomode.cpp.obj -c "C:\c - c++\DevilutionX\Source\engine\demomode.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/engine/demomode.cpp.i: cmake_force
@@ -2520,7 +2535,7 @@ Source/CMakeFiles/libdevilutionx.dir/controls/devices/game_controller.cpp.obj: S
 Source/CMakeFiles/libdevilutionx.dir/controls/devices/game_controller.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/controls/devices/game_controller.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/controls/devices/game_controller.cpp
 Source/CMakeFiles/libdevilutionx.dir/controls/devices/game_controller.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_164) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/controls/devices/game_controller.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_165) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/controls/devices/game_controller.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/controls/devices/game_controller.cpp.obj -MF CMakeFiles\libdevilutionx.dir\controls\devices\game_controller.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\controls\devices\game_controller.cpp.obj -c "C:\c - c++\DevilutionX\Source\controls\devices\game_controller.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/controls/devices/game_controller.cpp.i: cmake_force
@@ -2535,7 +2550,7 @@ Source/CMakeFiles/libdevilutionx.dir/controls/touch/event_handlers.cpp.obj: Sour
 Source/CMakeFiles/libdevilutionx.dir/controls/touch/event_handlers.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/controls/touch/event_handlers.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/controls/touch/event_handlers.cpp
 Source/CMakeFiles/libdevilutionx.dir/controls/touch/event_handlers.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_165) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/controls/touch/event_handlers.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_166) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/controls/touch/event_handlers.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/controls/touch/event_handlers.cpp.obj -MF CMakeFiles\libdevilutionx.dir\controls\touch\event_handlers.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\controls\touch\event_handlers.cpp.obj -c "C:\c - c++\DevilutionX\Source\controls\touch\event_handlers.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/controls/touch/event_handlers.cpp.i: cmake_force
@@ -2550,7 +2565,7 @@ Source/CMakeFiles/libdevilutionx.dir/controls/touch/gamepad.cpp.obj: Source/CMak
 Source/CMakeFiles/libdevilutionx.dir/controls/touch/gamepad.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/controls/touch/gamepad.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/controls/touch/gamepad.cpp
 Source/CMakeFiles/libdevilutionx.dir/controls/touch/gamepad.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_166) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/controls/touch/gamepad.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_167) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/controls/touch/gamepad.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/controls/touch/gamepad.cpp.obj -MF CMakeFiles\libdevilutionx.dir\controls\touch\gamepad.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\controls\touch\gamepad.cpp.obj -c "C:\c - c++\DevilutionX\Source\controls\touch\gamepad.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/controls/touch/gamepad.cpp.i: cmake_force
@@ -2565,7 +2580,7 @@ Source/CMakeFiles/libdevilutionx.dir/controls/touch/renderers.cpp.obj: Source/CM
 Source/CMakeFiles/libdevilutionx.dir/controls/touch/renderers.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/includes_CXX.rsp
 Source/CMakeFiles/libdevilutionx.dir/controls/touch/renderers.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/controls/touch/renderers.cpp
 Source/CMakeFiles/libdevilutionx.dir/controls/touch/renderers.cpp.obj: Source/CMakeFiles/libdevilutionx.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_167) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/controls/touch/renderers.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_168) "Building CXX object Source/CMakeFiles/libdevilutionx.dir/controls/touch/renderers.cpp.obj"
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\Source && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT Source/CMakeFiles/libdevilutionx.dir/controls/touch/renderers.cpp.obj -MF CMakeFiles\libdevilutionx.dir\controls\touch\renderers.cpp.obj.d -o CMakeFiles\libdevilutionx.dir\controls\touch\renderers.cpp.obj -c "C:\c - c++\DevilutionX\Source\controls\touch\renderers.cpp"
 
 Source/CMakeFiles/libdevilutionx.dir/controls/touch/renderers.cpp.i: cmake_force
@@ -2616,6 +2631,7 @@ libdevilutionx: Source/CMakeFiles/libdevilutionx.dir/sync.cpp.obj
 libdevilutionx: Source/CMakeFiles/libdevilutionx.dir/tmsg.cpp.obj
 libdevilutionx: Source/CMakeFiles/libdevilutionx.dir/towners.cpp.obj
 libdevilutionx: Source/CMakeFiles/libdevilutionx.dir/track.cpp.obj
+libdevilutionx: Source/CMakeFiles/libdevilutionx.dir/ui_nightmare.cpp.obj
 libdevilutionx: Source/CMakeFiles/libdevilutionx.dir/waiting_enemies.cpp.obj
 libdevilutionx: Source/CMakeFiles/libdevilutionx.dir/control/control_chat.cpp.obj
 libdevilutionx: Source/CMakeFiles/libdevilutionx.dir/control/control_chat_commands.cpp.obj

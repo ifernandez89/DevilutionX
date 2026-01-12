@@ -6381,6 +6381,30 @@ track.cpp.s:
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/track.cpp.s
 .PHONY : track.cpp.s
 
+ui_nightmare.obj: ui_nightmare.cpp.obj
+.PHONY : ui_nightmare.obj
+
+# target to build an object file
+ui_nightmare.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/ui_nightmare.cpp.obj
+.PHONY : ui_nightmare.cpp.obj
+
+ui_nightmare.i: ui_nightmare.cpp.i
+.PHONY : ui_nightmare.i
+
+# target to preprocess a source file
+ui_nightmare.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/ui_nightmare.cpp.i
+.PHONY : ui_nightmare.cpp.i
+
+ui_nightmare.s: ui_nightmare.cpp.s
+.PHONY : ui_nightmare.s
+
+# target to generate assembly for a file
+ui_nightmare.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/ui_nightmare.cpp.s
+.PHONY : ui_nightmare.cpp.s
+
 utils/cel_to_clx.obj: utils/cel_to_clx.cpp.obj
 .PHONY : utils/cel_to_clx.obj
 
@@ -7772,6 +7796,9 @@ help:
 	@echo ... track.obj
 	@echo ... track.i
 	@echo ... track.s
+	@echo ... ui_nightmare.obj
+	@echo ... ui_nightmare.i
+	@echo ... ui_nightmare.s
 	@echo ... utils/cel_to_clx.obj
 	@echo ... utils/cel_to_clx.i
 	@echo ... utils/cel_to_clx.s

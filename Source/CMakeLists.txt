@@ -43,6 +43,7 @@ set(libdevilutionx_SRCS
   tmsg.cpp
   towners.cpp
   track.cpp
+  ui_nightmare.cpp
   waiting_enemies.cpp
 
   control/control_chat.cpp

@@ -221,6 +221,7 @@ devilutionx_EXTERNAL_OBJECTS = \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/tmsg.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/towners.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/track.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/ui_nightmare.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/waiting_enemies.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/control/control_chat.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/control/control_chat_commands.cpp.obj" \
@@ -474,6 +475,7 @@ devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/sync.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/tmsg.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/towners.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/track.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/ui_nightmare.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/waiting_enemies.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/control/control_chat.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/control/control_chat_commands.cpp.obj

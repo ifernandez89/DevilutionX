@@ -6,11 +6,14 @@ Sistema de clima atmosférico implementado para **DevilutionX** que agrega lluvi
 
 ## 🎯 CARACTERÍSTICAS IMPLEMENTADAS
 
-### ✅ LLUVIA ATMOSFÉRICA RESPONSIVA
+### ✅ LLUVIA ATMOSFÉRICA RESPONSIVA (NIVEL CORE)
 - **Densidad Adaptativa**: 120-300 gotas según resolución (fórmula: viewport/18000)
+- **Rain Budget**: Máximo 400 actualizaciones/frame (blindaje contra mods extremos)
 - **3 tipos de gotas** con distribución natural (fina 40%, media 40%, pesada 20%)
+- **Micro-varianza vertical**: Gotas pesadas "pesan", finas "flotan" (ilusión 3D)
 - **Sistema de capas**: 60% detrás de personajes, 40% delante
 - **Viento dinámico interpolado** que cambia suavemente cada 8-12 segundos
+- **Atenuación por luz**: Gotas más claras cerca del jugador (conecta con el mundo)
 - **Colores optimizados** para paleta de Diablo (grises 240-247)
 - **Solo activo en Tristram** (`DTYPE_TOWN`)
 
@@ -121,9 +124,22 @@ struct WeatherState {
 int targetDrops = (viewport_width * viewport_height) / 18000;
 targetDrops = clamp(targetDrops, 120, 300);
 
+// Rain budget (blindaje extremo)
+constexpr int MAX_RAIN_UPDATES_PER_FRAME = 400;
+int maxUpdates = min(MAX_RAIN_UPDATES_PER_FRAME, drops.size());
+
+// Micro-varianza vertical (ilusión 3D)
+int verticalSpeed = drop.speed;
+if (drop.type == FINE && (drop.y + drop.x) % 7 == 0) verticalSpeed -= 1; // Flotan
+if (drop.type == HEAVY && (drop.y + drop.x) % 5 == 0) verticalSpeed += 1; // Pesan
+
 // Viento interpolado suave
 float t = windTransition; // 0.0 a 1.0 durante 2 segundos
 wind.direction = lerp(currentWind, targetWind, t);
+
+// Atenuación por luz (conecta con el mundo)
+int distanceToPlayer = abs(dropX - playerX) + abs(dropY - playerY);
+if (distanceToPlayer < 160) waterColor = min(255, waterColor + 1);
 
 // Supresión inteligente
 if (PauseMode || invflag || spselflag || qtextflag) {

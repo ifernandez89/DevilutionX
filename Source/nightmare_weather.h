@@ -5,6 +5,9 @@
 
 namespace devilution {
 
+// Rain budget - blindaje contra mods mal hechos
+constexpr int MAX_RAIN_UPDATES_PER_FRAME = 400;
+
 // Contexto del clima para manejo inteligente
 enum class WeatherContext : uint8_t {
 	TOWN_IDLE = 0,      // Tristram normal, clima activo

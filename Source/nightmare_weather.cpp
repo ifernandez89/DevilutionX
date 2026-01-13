@@ -8,6 +8,7 @@
 #include "utils/log.hpp"
 #include "levels/gendung.h"  // Para leveltype
 #include "diablo.h"          // Para flags de pausa y menús
+#include "lighting.h"        // Para sistema de luces
 
 namespace devilution {
 
@@ -172,9 +173,27 @@ void UpdateRain()
 
 	const auto &wind = nightmareWeather.rain.wind;
 
+	// MEJORA 1: Rain budget - blindaje contra intensidades extremas
+	int updatesThisFrame = 0;
+	const int maxUpdates = std::min(MAX_RAIN_UPDATES_PER_FRAME, static_cast<int>(nightmareWeather.rain.drops.size()));
+
 	for (auto &drop : nightmareWeather.rain.drops) {
-		// Movimiento vertical
-		drop.y += drop.speed;
+		if (updatesThisFrame >= maxUpdates) break;
+		updatesThisFrame++;
+
+		// MEJORA 2: Micro-varianza vertical para ilusión 3D
+		// Gotas pesadas "pesan" más, finas flotan un poco más
+		int verticalSpeed = drop.speed;
+		if (drop.type == RainType::FINE) {
+			// Finas flotan un poco más (ocasionalmente 1 px menos)
+			if ((drop.y + drop.x) % 7 == 0) verticalSpeed -= 1;
+		} else if (drop.type == RainType::HEAVY) {
+			// Pesadas "pesan" más (ocasionalmente 1 px extra)
+			if ((drop.y + drop.x) % 5 == 0) verticalSpeed += 1;
+		}
+		
+		// Movimiento vertical con micro-varianza
+		drop.y += std::max(1, verticalSpeed); // Mínimo 1 px/frame
 
 		// Movimiento horizontal por viento (muy sutil)
 		drop.windOffset += wind.direction * wind.strength * 0.5f;
@@ -253,7 +272,8 @@ void DrawRainLayer(RainLayer layer)
 			continue;
 		}
 
-		// Color según tipo - Optimizado para atmósfera de Tristram
+		// MEJORA 3: Atenuación por luz (MUY Diablo)
+		// Conecta la lluvia con el mundo - cerca de luces se ve un poco más clara
 		uint8_t waterColor;
 		switch (drop.type) {
 		case RainType::FINE:
@@ -265,6 +285,14 @@ void DrawRainLayer(RainLayer layer)
 		case RainType::HEAVY:
 			waterColor = 244 + (drop.y % 4);  // 244-247 (gris más visible)
 			break;
+		}
+
+		// Atenuación simple por luz - si estamos en área iluminada, un poco más claro
+		// Usamos una aproximación simple basada en la posición del jugador
+		extern Point ViewPosition; // Posición de la cámara/jugador
+		int distanceToPlayer = abs(finalX - (ViewPosition.x * 32)) + abs(drawY - (ViewPosition.y * 32));
+		if (distanceToPlayer < 160) { // Dentro del radio de luz del jugador (~5 tiles)
+			waterColor = std::min(255, waterColor + 1); // Un poco más claro cerca del jugador
 		}
 
 		// Dibujar línea vertical

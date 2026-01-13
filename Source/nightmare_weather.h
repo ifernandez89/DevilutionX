@@ -5,6 +5,13 @@
 
 namespace devilution {
 
+// Contexto del clima para manejo inteligente
+enum class WeatherContext : uint8_t {
+	TOWN_IDLE = 0,      // Tristram normal, clima activo
+	TOWN_ACTIVE = 1,    // Tristram con interacción, clima activo
+	SUPPRESSED = 2      // Menús/inventario abiertos, clima suprimido
+};
+
 // Tipos de lluvia
 enum class RainType : uint8_t {
 	FINE = 0,    // Lluvia fina (40% de gotas)
@@ -38,13 +45,18 @@ struct GlobalWind {
 struct WeatherState {
 	bool enabled;
 	uint32_t lastUpdateTime;
+	WeatherContext context;           // Nuevo: contexto actual
 
 	struct {
 		bool enabled;
 		float intensity;
 		uint32_t lastUpdateTime;
-		std::array<RainDrop, 220> drops;  // 220 gotas
-		GlobalWind wind;                   // Sistema de viento
+		std::vector<RainDrop> drops;  // Cambiado de array fijo a vector dinámico
+		GlobalWind wind;
+		int targetDropCount;          // Nuevo: cantidad objetivo basada en resolución
+		float windTransition;         // Nuevo: para interpolación suave del viento
+		float targetWindDirection;    // Nuevo: dirección objetivo del viento
+		float targetWindStrength;     // Nuevo: fuerza objetivo del viento
 	} rain;
 
 	struct {

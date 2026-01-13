@@ -6,12 +6,23 @@ Sistema de clima atmosférico implementado para **DevilutionX** que agrega lluvi
 
 ## 🎯 CARACTERÍSTICAS IMPLEMENTADAS
 
-### ✅ LLUVIA ATMOSFÉRICA
-- **220 gotas simultáneas** con 3 tipos (fina 40%, media 40%, pesada 20%)
+### ✅ LLUVIA ATMOSFÉRICA RESPONSIVA
+- **Densidad Adaptativa**: 120-300 gotas según resolución (fórmula: viewport/18000)
+- **3 tipos de gotas** con distribución natural (fina 40%, media 40%, pesada 20%)
 - **Sistema de capas**: 60% detrás de personajes, 40% delante
-- **Viento dinámico sutil** que cambia cada 8-12 segundos
+- **Viento dinámico interpolado** que cambia suavemente cada 8-12 segundos
 - **Colores optimizados** para paleta de Diablo (grises 240-247)
 - **Solo activo en Tristram** (`DTYPE_TOWN`)
+
+### ✅ SISTEMA DE CONTEXTO INTELIGENTE
+- **Supresión automática** durante menús, inventario, pausa
+- **Transiciones suaves** sin cortes abruptos
+- **Regla de oro de Diablo**: El clima nunca compite con sistemas core
+
+### ✅ VIENTO NATURAL MEJORADO
+- **Interpolación suave** durante 2 segundos (no cambios abruptos)
+- **Dirección y fuerza variables** con transiciones naturales
+- **Offset sutil** ±3 píxeles para movimiento orgánico
 
 ### ✅ SISTEMA DE NIEBLA (OPCIONAL)
 - **8 frames de animación** lenta (500ms por frame)
@@ -74,6 +85,12 @@ La arquitectura permite fácilmente:
 
 ### Estructuras de Datos
 ```cpp
+enum class WeatherContext : uint8_t {
+    TOWN_IDLE = 0,      // Tristram normal, clima activo
+    TOWN_ACTIVE = 1,    // Tristram con interacción, clima activo  
+    SUPPRESSED = 2      // Menús/inventario abiertos, clima suprimido
+};
+
 struct RainDrop {
     int x, y;              // Posición
     int speed;             // Velocidad (1-5 px/frame)
@@ -86,16 +103,41 @@ struct RainDrop {
 
 struct WeatherState {
     bool enabled;
-    struct { /* lluvia */ } rain;
+    WeatherContext context;           // Contexto actual
+    struct { 
+        std::vector<RainDrop> drops;  // Densidad responsiva
+        int targetDropCount;          // Basado en resolución
+        float windTransition;         // Interpolación suave
+        float targetWindDirection;    // Dirección objetivo
+        float targetWindStrength;     // Fuerza objetivo
+    } rain;
     struct { /* niebla */ } fog;
 };
 ```
 
+### Algoritmos Clave
+```cpp
+// Densidad responsiva
+int targetDrops = (viewport_width * viewport_height) / 18000;
+targetDrops = clamp(targetDrops, 120, 300);
+
+// Viento interpolado suave
+float t = windTransition; // 0.0 a 1.0 durante 2 segundos
+wind.direction = lerp(currentWind, targetWind, t);
+
+// Supresión inteligente
+if (PauseMode || invflag || spselflag || qtextflag) {
+    return; // No actualizar, dejar morir gotas existentes
+}
+```
+
 ### Distribución de Gotas
+- **Densidad**: 120-300 gotas (responsiva según resolución)
 - **Tipos**: 40% fina, 40% media, 20% pesada
 - **Capas**: 60% atrás, 40% adelante
 - **Velocidades**: 1-5 píxeles por frame
 - **Longitudes**: 1-6 píxeles
+- **Viento**: Interpolación suave durante 2 segundos
 
 ### Colores Utilizados
 - **Lluvia fina**: 240-242 (gris claro sutil)

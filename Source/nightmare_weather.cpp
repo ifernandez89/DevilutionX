@@ -2,10 +2,12 @@
 
 #include <cstdlib>
 #include <algorithm>
+#include <vector>
 
 #include "engine/backbuffer_state.hpp"
 #include "utils/log.hpp"
 #include "levels/gendung.h"  // Para leveltype
+#include "diablo.h"          // Para flags de pausa y menús
 
 namespace devilution {
 
@@ -21,6 +23,14 @@ void InitRain()
 	const Surface &out = GlobalBackBuffer();
 	const int gameViewportW = out.w();
 	const int gameViewportH = out.h() - 144;
+
+	// MEJORA 1: Densidad responsiva basada en resolución
+	int targetDrops = (gameViewportW * gameViewportH) / 18000;
+	targetDrops = std::clamp(targetDrops, 120, 300);
+	nightmareWeather.rain.targetDropCount = targetDrops;
+	
+	// Redimensionar vector de gotas
+	nightmareWeather.rain.drops.resize(targetDrops);
 
 	for (size_t i = 0; i < nightmareWeather.rain.drops.size(); i++) {
 		auto &drop = nightmareWeather.rain.drops[i];
@@ -55,12 +65,18 @@ void InitRain()
 		drop.windOffset = 0.0f;
 	}
 
-	// Inicializar viento global
+	// Inicializar viento global con sistema de interpolación
 	nightmareWeather.rain.wind.direction = -0.15f; // Leve hacia la izquierda
 	nightmareWeather.rain.wind.strength = 0.3f;    // Sutil
 	nightmareWeather.rain.wind.lastChange = SDL_GetTicks();
+	
+	// MEJORA 2: Sistema de interpolación de viento
+	nightmareWeather.rain.targetWindDirection = nightmareWeather.rain.wind.direction;
+	nightmareWeather.rain.targetWindStrength = nightmareWeather.rain.wind.strength;
+	nightmareWeather.rain.windTransition = 1.0f; // Completamente interpolado al inicio
 
-	LogVerbose("🌧️ Rain initialized: 220 drops (40% fine, 40% medium, 20% heavy)");
+	LogVerbose("🌧️ Rain initialized: {} drops (40% fine, 40% medium, 20% heavy) for {}x{}", 
+		targetDrops, gameViewportW, gameViewportH);
 }
 
 void InitFog()
@@ -75,6 +91,7 @@ void InitFog()
 void InitNightmareWeather()
 {
 	nightmareWeather.enabled = true;
+	nightmareWeather.context = WeatherContext::TOWN_IDLE;
 	nightmareWeather.rain.enabled = true;
 	nightmareWeather.rain.intensity = 0.7f;
 	nightmareWeather.fog.enabled = false; // Desactivada por ahora
@@ -83,7 +100,35 @@ void InitNightmareWeather()
 	InitRain();
 	InitFog();
 
-	LogVerbose("🌙 Nightmare Weather System initialized");
+	LogVerbose("🌙 Nightmare Weather System initialized with responsive density");
+}
+
+WeatherContext GetCurrentWeatherContext()
+{
+	// MEJORA 3: Regla de oro de Diablo - supresión silenciosa
+	// El clima debe apagarse silenciosamente durante interacciones importantes
+	
+	// Verificar flags de pausa y menús (necesitamos incluir los headers apropiados)
+	extern bool PauseMode;
+	extern bool invflag;
+	extern bool spselflag;
+	extern bool qtextflag;
+	extern bool stextflag;
+	extern bool helpflag;
+	extern bool msgflag;
+	extern bool gmenu_is_active();
+	
+	if (PauseMode || invflag || spselflag || qtextflag || 
+	    stextflag || helpflag || msgflag || gmenu_is_active()) {
+		return WeatherContext::SUPPRESSED;
+	}
+	
+	// Si estamos en Tristram sin interferencias, clima activo
+	if (leveltype == DTYPE_TOWN) {
+		return WeatherContext::TOWN_ACTIVE;
+	}
+	
+	return WeatherContext::SUPPRESSED;
 }
 
 void UpdateWind(uint32_t currentTime)
@@ -93,12 +138,26 @@ void UpdateWind(uint32_t currentTime)
 	// Cambiar dirección del viento cada 8-12 segundos
 	if (currentTime - wind.lastChange > 8000 + (rand() % 4000)) {
 		// Nueva dirección sutil (-0.3 a 0.3)
-		wind.direction = -0.3f + (static_cast<float>(rand() % 100) / 100.0f * 0.6f);
+		nightmareWeather.rain.targetWindDirection = -0.3f + (static_cast<float>(rand() % 100) / 100.0f * 0.6f);
 
 		// Nueva fuerza sutil (0.2 a 0.5)
-		wind.strength = 0.2f + (static_cast<float>(rand() % 30) / 100.0f);
+		nightmareWeather.rain.targetWindStrength = 0.2f + (static_cast<float>(rand() % 30) / 100.0f);
 
 		wind.lastChange = currentTime;
+		nightmareWeather.rain.windTransition = 0.0f; // Iniciar interpolación
+	}
+
+	// MEJORA 2: Interpolación suave del viento (1-2 segundos)
+	if (nightmareWeather.rain.windTransition < 1.0f) {
+		nightmareWeather.rain.windTransition += 1.0f / 120.0f; // ~2 segundos a 60 FPS
+		if (nightmareWeather.rain.windTransition > 1.0f) {
+			nightmareWeather.rain.windTransition = 1.0f;
+		}
+		
+		// Interpolación suave (lerp)
+		float t = nightmareWeather.rain.windTransition;
+		wind.direction = wind.direction * (1.0f - t) + nightmareWeather.rain.targetWindDirection * t;
+		wind.strength = wind.strength * (1.0f - t) + nightmareWeather.rain.targetWindStrength * t;
 	}
 }
 
@@ -147,7 +206,16 @@ void UpdateNightmareWeather(float deltaTime)
 	// Solo activo en Tristram (DTYPE_TOWN)
 	if (!nightmareWeather.enabled || leveltype != DTYPE_TOWN) return;
 
-	// Actualizar lluvia
+	// MEJORA 3: Actualizar contexto y manejar supresión inteligente
+	WeatherContext newContext = GetCurrentWeatherContext();
+	nightmareWeather.context = newContext;
+	
+	// Si estamos suprimidos, no actualizar gotas (dejar morir las existentes)
+	if (newContext == WeatherContext::SUPPRESSED) {
+		return; // Las gotas existentes seguirán cayendo pero no se actualizan ni respawnean
+	}
+
+	// Actualizar lluvia solo si no estamos suprimidos
 	if (nightmareWeather.rain.enabled) {
 		UpdateRain();
 	}
@@ -162,6 +230,11 @@ void DrawRainLayer(RainLayer layer)
 {
 	// Solo renderizar en Tristram (DTYPE_TOWN)
 	if (leveltype != DTYPE_TOWN) return;
+	
+	// MEJORA 3: Respetar contexto de supresión también en capa frontal
+	if (nightmareWeather.context == WeatherContext::SUPPRESSED) {
+		return;
+	}
 	
 	const Surface &out = GlobalBackBuffer();
 	const int gameViewportW = out.w();
@@ -244,6 +317,12 @@ void RenderNightmareWeather()
 {
 	// Solo renderizar en Tristram (DTYPE_TOWN)
 	if (!nightmareWeather.enabled || leveltype != DTYPE_TOWN) return;
+
+	// MEJORA 3: Respetar contexto de supresión
+	// Si estamos suprimidos, no renderizar nuevas gotas
+	if (nightmareWeather.context == WeatherContext::SUPPRESSED) {
+		return;
+	}
 
 	// Renderizar niebla primero (fondo)
 	if (nightmareWeather.fog.enabled) {

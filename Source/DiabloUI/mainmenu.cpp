@@ -55,7 +55,7 @@ void MainmenuLoad(const char *name)
 	InitContemplativeMenu();
 	TriggerMenuEntry();
 	
-	vecMenuItems.push_back(std::make_unique<UiListItem>(_("Single"), MAINMENU_SINGLE_PLAYER));
+	vecMenuItems.push_back(std::make_unique<UiListItem>(_("Player"), MAINMENU_SINGLE_PLAYER));
 	vecMenuItems.push_back(std::make_unique<UiListItem>(_("Multi"), MAINMENU_MULTIPLAYER));
 	vecMenuItems.push_back(std::make_unique<UiListItem>(_("Settings"), MAINMENU_SETTINGS));
 #ifndef NOEXIT

@@ -12,6 +12,7 @@
 #endif
 
 #include "DiabloUI/diabloui.h"
+#include "nightmare_menu_contemplative.h"  // 🌑 Sistema de menú contemplativo
 #include "DiabloUI/ui_flags.hpp"
 #include "DiabloUI/ui_item.h"
 #include "engine/assets.hpp"
@@ -50,18 +51,26 @@ void MainmenuEsc()
 
 void MainmenuLoad(const char *name)
 {
-	vecMenuItems.push_back(std::make_unique<UiListItem>(_("Single Player"), MAINMENU_SINGLE_PLAYER));
-	vecMenuItems.push_back(std::make_unique<UiListItem>(_("Multi Player"), MAINMENU_MULTIPLAYER));
+	// 🌑 NIGHTMARE: Inicializar menú contemplativo
+	InitContemplativeMenu();
+	TriggerMenuEntry();
+	
+	vecMenuItems.push_back(std::make_unique<UiListItem>(_("Single"), MAINMENU_SINGLE_PLAYER));
+	vecMenuItems.push_back(std::make_unique<UiListItem>(_("Multi"), MAINMENU_MULTIPLAYER));
 	vecMenuItems.push_back(std::make_unique<UiListItem>(_("Settings"), MAINMENU_SETTINGS));
-	vecMenuItems.push_back(std::make_unique<UiListItem>(_("Support"), MAINMENU_SHOW_SUPPORT));
-	vecMenuItems.push_back(std::make_unique<UiListItem>(_("Show Credits"), MAINMENU_SHOW_CREDITS));
 #ifndef NOEXIT
-	vecMenuItems.push_back(std::make_unique<UiListItem>(gbIsHellfire ? _("Exit Hellfire") : _("Exit Diablo"), MAINMENU_EXIT_DIABLO));
+	vecMenuItems.push_back(std::make_unique<UiListItem>(_("Exit"), MAINMENU_EXIT_DIABLO));
 #endif
 
 	if (!gbIsSpawn || gbIsHellfire) {
-		ArtBackgroundWidescreen = LoadOptionalClx("ui_art\\mainmenuw.clx");
-		LoadBackgroundArt("ui_art\\mainmenu");
+		// 🌑 NIGHTMARE: Usar fondo de Credits/Support en lugar del menú principal
+		ArtBackgroundWidescreen = LoadOptionalClx("ui_art\\supportw.clx");
+		if (ArtBackgroundWidescreen.has_value()) {
+			LoadBackgroundArt("ui_art\\support");
+		} else {
+			ArtBackgroundWidescreen = LoadOptionalClx("ui_art\\creditsw.clx");
+			LoadBackgroundArt("ui_art\\credits");
+		}
 	} else {
 		LoadBackgroundArt("ui_art\\swmmenu");
 	}
@@ -78,8 +87,9 @@ void MainmenuLoad(const char *name)
 
 	vecMainMenuDialog.push_back(std::make_unique<UiList>(vecMenuItems, vecMenuItems.size(), uiPosition.x + 64, (uiPosition.y + 192), 510, 43, UiFlags::FontSize42 | UiFlags::ColorUiGold | UiFlags::AlignCenter, 5));
 
-	const SDL_Rect rect2 = { 17, (Sint16)(gnScreenHeight - 36), 605, 21 };
-	vecMainMenuDialog.push_back(std::make_unique<UiArtText>(name, rect2, UiFlags::FontSize12 | UiFlags::ColorUiSilverDark));
+	// 🌑 NIGHTMARE: Información de versión eliminada para menú limpio
+	// const SDL_Rect rect2 = { 17, (Sint16)(gnScreenHeight - 36), 605, 21 };
+	// vecMainMenuDialog.push_back(std::make_unique<UiArtText>(name, rect2, UiFlags::FontSize12 | UiFlags::ColorUiSilverDark));
 
 #ifndef NOEXIT
 	UiInitList(nullptr, UiMainMenuSelect, MainmenuEsc, vecMainMenuDialog, true);
@@ -115,7 +125,14 @@ bool UiMainMenuDialog(const char *name, _mainmenu_selections *pdwResult, int att
 		mainmenu_restart_repintro(); // for automatic starts
 
 		while (MainMenuResult == MAINMENU_NONE) {
+			// 🌑 NIGHTMARE: Actualizar sistema contemplativo
+			UpdateContemplativeMenu(SDL_GetTicks());
+			
 			UiClearScreen();
+			
+			// 🌑 NIGHTMARE: Renderizar efectos contemplativo ANTES del UI
+			RenderContemplativeMenu();
+			
 			UiPollAndRender();
 			if (SDL_GetTicks() >= dwAttractTicks && (HaveIntro() || gbIsHellfire)) {
 				MainMenuResult = MAINMENU_ATTRACT_MODE;

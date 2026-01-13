@@ -240,7 +240,15 @@ bool SpecialThemeFit(int i, theme_id t)
 			rv = TFit_Obj5(i);
 		}
 		if (rv) {
-			bFountainFlag = false;
+			// FEATURE: Enhanced Blood Atmosphere System - Allow multiple blood fountains
+			// Original: bFountainFlag = false (only one fountain), Enhanced: Keep flag true for more blood
+			// Only disable after 2-3 blood fountains for heavier, more disturbing atmosphere
+			static int bloodFountainCount = 0;
+			bloodFountainCount++;
+			if (bloodFountainCount >= 2) { // Allow up to 2 blood fountains per level
+				bFountainFlag = false;
+				bloodFountainCount = 0; // Reset for next level
+			}
 		}
 		break;
 	case THEME_PURIFYINGFOUNTAIN:

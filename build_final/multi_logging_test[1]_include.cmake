@@ -1,0 +1,5 @@
+if(EXISTS "C:/Diablo/DevilutionX Repo/DevilutionX/build_final_working/multi_logging_test[1]_tests.cmake")
+  include("C:/Diablo/DevilutionX Repo/DevilutionX/build_final_working/multi_logging_test[1]_tests.cmake")
+else()
+  add_test(multi_logging_test_NOT_BUILT multi_logging_test_NOT_BUILT)
+endif()

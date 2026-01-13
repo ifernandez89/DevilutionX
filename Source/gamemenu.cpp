@@ -49,11 +49,11 @@ void GamemenuSpeed(bool bActivate);
 TMenuItem sgSingleMenu[] = {
 	// clang-format off
 	// dwFlags,      pszStr,                  fnMenu
-	{ GMENU_ENABLED, N_("Options"),           &GamemenuOptions    },
 	{ GMENU_ENABLED, N_("Save Game"),         &gamemenu_save_game },
+	{ GMENU_ENABLED, N_("Options"),           &GamemenuOptions    },
 	{ GMENU_ENABLED, N_("Load Game"),         &gamemenu_load_game },
-	{ GMENU_ENABLED, N_("Exit to Main Menu"), &GamemenuNewGame    },
-	{ GMENU_ENABLED, N_("Quit Game"),         &gamemenu_quit_game },
+	{ GMENU_ENABLED, N_("Exit"),              &GamemenuNewGame    },  // 🌑 NIGHTMARE: Simplificado
+	{ GMENU_ENABLED, N_("Quit"),              &gamemenu_quit_game }, // 🌑 NIGHTMARE: Simplificado
 	{ GMENU_ENABLED, nullptr,                 nullptr             },
 	// clang-format on
 };
@@ -62,8 +62,8 @@ TMenuItem sgMultiMenu[] = {
 	// clang-format off
 	// dwFlags,      pszStr,                  fnMenu
 	{ GMENU_ENABLED, N_("Options"),           &GamemenuOptions    },
-	{ GMENU_ENABLED, N_("Exit to Main Menu"), &GamemenuNewGame    },
-	{ GMENU_ENABLED, N_("Quit Game"),         &gamemenu_quit_game },
+	{ GMENU_ENABLED, N_("Exit"),              &GamemenuNewGame    },  // 🌑 NIGHTMARE: Simplificado
+	{ GMENU_ENABLED, N_("Quit"),              &gamemenu_quit_game }, // 🌑 NIGHTMARE: Simplificado
 	{ GMENU_ENABLED, nullptr,                 nullptr             },
 	// clang-format on
 };
@@ -91,11 +91,12 @@ const char *const SoundToggleNames[] = {
 
 void GamemenuUpdateSingle()
 {
-	sgSingleMenu[2].setEnabled(gbValidSaveFile);
+	sgSingleMenu[2].setEnabled(gbValidSaveFile); // Load Game
 
 	const bool enable = MyPlayer->_pmode != PM_DEATH && !MyPlayerIsDead;
 
-	sgSingleMenu[0].setEnabled(enable);
+	sgSingleMenu[0].setEnabled(enable); // Save Game
+	sgSingleMenu[1].setEnabled(enable); // Options
 }
 
 void GamemenuPrevious(bool /*bActivate*/)

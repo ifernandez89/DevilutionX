@@ -9,6 +9,7 @@
 #include <list>
 #include <optional>
 
+#include "architectural_analysis.h"
 #include "engine/displacement.hpp"
 #include "engine/point.hpp"
 #include "engine/world_tile.hpp"
@@ -439,6 +440,50 @@ inline Missile *AddMissile(WorldTilePosition src, WorldTilePosition dst, Directi
     Missile *parent = nullptr, std::optional<SfxID> lSFX = std::nullopt)
 {
 	return AddMissile(src, dst, midir, mitype, micaster, static_cast<int>(monster.getId()), midam, spllvl, parent, lSFX);
+}
+
+/**
+ * TryAddMissile - GUARDIÁN ULTRA SIMPLE
+ * 
+ * FILOSOFÍA: "Diablo no necesita protección inteligente, necesita límites tontos"
+ * 
+ * @return true si se pudo agregar, false si se alcanzó el límite
+ * 
+ * COMPORTAMIENTO:
+ * - ✔️ Booleano simple
+ * - ✔️ No lanza excepciones  
+ * - ✔️ No aborta loops
+ * - ✔️ Diablo-style fail-soft
+ */
+inline bool TryAddMissile(WorldTilePosition src, WorldTilePosition dst, Direction midir, MissileID mitype,
+    mienemy_type micaster, int id, int midam, int spllvl,
+    Missile *parent = nullptr, std::optional<SfxID> lSFX = std::nullopt)
+{
+    // ARCHITECTURAL ANALYSIS - Log missile creation attempts
+    std::string missileTypeName = (mitype == MissileID::Apocalypse) ? "Apocalypse" : 
+                                 (mitype == MissileID::ApocalypseBoom) ? "ApocalypseBoom" : "Other";
+    
+    // Límite tonto - sin inteligencia, sin coordinación
+    if (Missiles.size() >= 500) {
+        ARCH_LOG_MISSILE_CREATION(missileTypeName, false, static_cast<int>(Missiles.size()));
+        ARCH_LOG_CRASH_PREVENTION("Missile limit reached (500)", "TryAddMissile");
+        return false;  // fail-soft
+    }
+    
+    // Intentar agregar - si falla por cualquier razón, fail-soft
+    Missile *result = AddMissile(src, dst, midir, mitype, micaster, id, midam, spllvl, parent, lSFX);
+    bool success = (result != nullptr);
+    
+    ARCH_LOG_MISSILE_CREATION(missileTypeName, success, static_cast<int>(Missiles.size()));
+    
+    return success;
+}
+
+inline bool TryAddMissile(WorldTilePosition src, WorldTilePosition dst, Direction midir, MissileID mitype,
+    mienemy_type micaster, const Player &player, int midam, int spllvl,
+    Missile *parent = nullptr, std::optional<SfxID> lSFX = std::nullopt)
+{
+    return TryAddMissile(src, dst, midir, mitype, micaster, player.getId(), midam, spllvl, parent, lSFX);
 }
 void ProcessElementalArrow(Missile &missile);
 void ProcessArrow(Missile &missile);

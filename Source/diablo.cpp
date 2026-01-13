@@ -7,6 +7,8 @@
 #include <cstdint>
 #include <string_view>
 
+#include "architectural_analysis.h"
+
 #ifdef USE_SDL3
 #include <SDL3/SDL_events.h>
 #include <SDL3/SDL_init.h>
@@ -46,8 +48,13 @@
 #include "engine/backbuffer_state.hpp"
 #include "engine/clx_sprite.hpp"
 #include "engine/demomode.h"
+#include "ui_nightmare.h"
+#include "tile_detective.h"
+#include "nightmare_testing.h"  // 🧪 Para funciones de testing
+#include "nightmare_immediate_effects.h"  // 🎭 Para efectos inmediatos visibles
 #include "engine/dx.h"
 #include "engine/events.hpp"
+#include "global_protection_system.h" // 🛡️ Global Protection System
 #include "engine/load_cel.hpp"
 #include "engine/load_file.hpp"
 #include "engine/random.hpp"
@@ -58,6 +65,9 @@
 #include "gmenu.h"
 #include "headless_mode.hpp"
 #include "help.h"
+#include "hidden_content.h"
+#include "dormant_assets.h"
+#include "enhanced_portal.h"
 #include "hwcursor.hpp"
 #include "init.hpp"
 #include "inv.h"
@@ -71,6 +81,16 @@
 #include "levels/town.h"
 #include "levels/trigs.h"
 #include "lighting.h"
+#include "visual_feedback.h"
+#include "contextual_palette.h"
+#include "town_cinematic.h"
+#include "life_volume.h"
+#include "parallax_depth.h"
+#include "mp_discipline.h"
+#include "advanced_debug.h"  // 🎮 Advanced Debug System
+#include "guarantee_apocalypse_book.h"  // 📖 Book of Apocalypse Guarantee
+#include "engine_health.h"  // 🔍 Modern Assist Layer (MAL) - Engine Health Monitoring
+#include "apocalypse_crash_debug.h"  // 🚨 Apocalypse Crash Debugging System
 #include "loadsave.h"
 #include "lua/lua_global.hpp"
 #include "menu.h"
@@ -89,6 +109,11 @@
 #include "pfile.h"
 #include "plrmsg.h"
 #include "qol/chatlog.h"
+#include "combat_pauses.h"
+#include "depth_variants.h"  // 🎯 Depth Variants System
+#include "light_mutations.h"  // 🧬 Light Mutations System
+#include "waiting_enemies.h"
+#include "invisible_wear.h"
 #include "qol/floatingnumbers.h"
 #include "qol/itemlabels.h"
 #include "qol/monhealthbar.h"
@@ -187,6 +212,13 @@ void StartGame(interface_mode uMsg)
 	music_stop();
 	InitMonsterHealthBar();
 	InitXPBar();
+	
+	// MAL INTEGRATION: Initialize Modern Assist Layer
+	InitEngineHealth();
+	
+	// 🚨 DEBUG: Initialize Apocalypse crash debugging system
+	APOCALYPSE_DEBUG_INIT();
+	
 	ShowProgress(uMsg);
 	gmenu_init_menu();
 	InitLevelCursor();
@@ -213,6 +245,13 @@ void FreeGame()
 #ifdef _DEBUG
 	FreeDebugGFX();
 #endif
+	
+	// 🚨 DEBUG: Cleanup Apocalypse crash debugging system
+	APOCALYPSE_DEBUG_CLEANUP();
+	
+	// MAL INTEGRATION: Cleanup Modern Assist Layer
+	CleanupEngineHealth();
+	
 	FreeGameMem();
 	stream_stop();
 	music_stop();
@@ -570,6 +609,52 @@ void PressKey(SDL_Keycode vkey, uint16_t modState)
 	}
 
 	switch (vkey) {
+	case SDLK_F12:
+		// 🎮 FEATURE #8: Toggle Advanced Debug System
+		ToggleAdvancedDebug();
+		return;
+	case SDLK_F11:
+		// 🔄 NIGHTMARE TESTING: RESET all effects to normal
+		LogVerbose("🔄 KEY F11 PRESSED - Resetting all effects");
+		ResetImmediateEffects();
+		return;
+	case SDLK_F10:
+		// 🎭 NIGHTMARE TESTING: Show active effects info
+		LogVerbose("🎭 KEY F10 PRESSED - Showing effects info");
+		ShowActiveEffectsInfo();
+		return;
+	case SDLK_F9:
+		// 🎭 NIGHTMARE TESTING: Show systems status
+		LogVerbose("🎭 KEY F9 PRESSED - Showing systems status");
+		ShowNightmareSystemsStatus();
+		return;
+	case SDLK_F8:
+		// 🌫️ NIGHTMARE TESTING: Toggle visual fog (immediate effect)
+		LogVerbose("🌫️ KEY F8 PRESSED - Toggling visual fog");
+		ToggleVisualFog();
+		return;
+	case SDLK_F7:
+		// 🌙 NIGHTMARE TESTING: Toggle visual darkening
+		LogVerbose("🌙 KEY F7 PRESSED - Toggling visual darkening");
+		ToggleVisualDarkening();
+		return;
+	case SDLK_F6:
+		// 🌧️ NIGHTMARE TESTING: Toggle rain
+		LogVerbose("🌧️ KEY F6 PRESSED - Toggling rain");
+		ToggleRainForTesting();
+		return;
+	case SDLK_t:
+		// 🔍 TILE DETECTIVE: Toggle capture mode (only in town)
+		if (leveltype == DTYPE_TOWN) {
+			SetTileDetectiveCapture(!tileDetective.captureMode);
+		}
+		return;
+	case SDLK_e:
+		// 🔍 TILE DETECTIVE: Export detected tiles (only in town)
+		if (leveltype == DTYPE_TOWN) {
+			ExportDetectedTiles();
+		}
+		return;
 	case SDLK_PLUS:
 	case SDLK_KP_PLUS:
 	case SDLK_EQUALS:
@@ -1289,6 +1374,12 @@ void DiabloInit()
 
 	ui_sound_init();
 
+	// 🌙 NIGHTMARE UI - Initialize Nightmare UI Architecture
+	InitNightmareUI();
+
+	// 🔍 TILE DETECTIVE - Initialize tile detection system
+	InitTileDetective();
+
 	// Item graphics are loaded early, they already get touched during hero selection.
 	InitItemGFX();
 
@@ -1459,6 +1550,9 @@ void CreateLevel(lvl_entry entry)
 		Freeupstairs();
 	}
 	LoadRndLvlPal(leveltype);
+	
+	// FEATURE: Dormant Assets Recovery - enhance level with discovered decorative elements
+	EnhanceLevelWithDormantAssets(leveltype, 15); // 15% chance to add decorations
 }
 
 void UnstuckChargers()
@@ -1529,6 +1623,40 @@ void GameLogic()
 		gGameLogicStep = GameLogicStep::ProcessItems;
 		ProcessItems();
 		ProcessLightList();
+		
+		// 🎮 FASE V3 - Update Visual Feedback System
+		UpdateVisualFeedback();
+		
+		// 🎨 FASE V2 - Update Contextual Palette System
+		UpdateContextualPalette();
+		
+		// 🏰 FASE D3 - Update Town Cinematográfica System
+		UpdateTownCinematic();
+		
+		// 🎨 FASE D2 - Update Life & Volume System
+		UpdateLifeVolume();
+		
+		// 🌟 FASE D3.2 - Update Parallax Depth System
+		UpdateParallaxDepth();
+		
+		// 🎯 FASE MP1 - Update MP Discipline System
+		UpdateMPDiscipline();
+		
+		// 🌀 ENHANCED PORTAL - Update Portal Enhancement System
+		UpdateEnhancedPortal();
+		
+		// ⚔️ COMBAT PAUSES - Update Combat Pauses System
+		UpdateCombatPauses();
+		
+		// 👁️ WAITING ENEMIES - Update Waiting Enemies System
+		UpdateWaitingEnemies();
+		
+		// 🎮 ADVANCED DEBUG - Update Advanced Debug System
+		UpdateAdvancedDebug();
+		
+		// 📖 BOOK OF APOCALYPSE - Update Guarantee System
+		UpdateApocalypseBookGuarantee();
+		
 		ProcessVisionList();
 	} else {
 		gGameLogicStep = GameLogicStep::ProcessTowners;
@@ -1547,6 +1675,13 @@ void GameLogic()
 #endif
 
 	sound_update();
+	
+	// 🌙 NIGHTMARE UI - Update Atmospheric Systems
+	UpdateNightmareUI(0.016f); // Assuming ~60 FPS (16ms per frame)
+	
+	// 🔍 TILE DETECTIVE - Update tile detection
+	UpdateTileDetective();
+	
 	CheckTriggers();
 	CheckQuests();
 	RedrawViewport();
@@ -2669,6 +2804,11 @@ bool StartGame(bool bNewGame, bool bSinglePlayer)
 			InitLevels();
 			InitQuests();
 			InitPortals();
+			InitCombatPauses();  // ⚔️ Initialize Combat Pauses System
+			InitWaitingEnemies(); // 👁️ Initialize Waiting Enemies System
+			InitDepthVariants();  // 🎯 Initialize Depth Variants System
+			InitLightMutations(); // 🧬 Initialize Light Mutations System
+			InitInvisibleWear();  // 💰 Initialize Invisible Wear System
 			InitDungMsgs(*MyPlayer);
 			DeltaSyncJunk();
 		}
@@ -2688,6 +2828,9 @@ bool StartGame(bool bNewGame, bool bSinglePlayer)
 		if (ReturnToMainMenu)
 			return true;
 	} while (gbRunGameResult);
+
+	// ARCHITECTURAL ANALYSIS - Generate final report before shutdown
+	ArchitecturalAnalyzer::getInstance().shutdown();
 
 	SNetDestroy();
 	return gbRunGameResult;
@@ -2721,6 +2864,9 @@ int DiabloMain(int argc, char **argv)
 	SDL_SetLogPriorities(SDL_LOG_PRIORITY_DEBUG);
 #endif
 
+	// ARCHITECTURAL ANALYSIS - Initialize permanent logging system
+	ArchitecturalAnalyzer::getInstance().initialize();
+
 	DiabloParseFlags(argc, argv);
 	InitKeymapActions();
 	InitPadmapActions();
@@ -2744,6 +2890,9 @@ int DiabloMain(int argc, char **argv)
 	LoadGameArchives();
 
 	LoadTextData();
+	
+	// Note: Hidden Content and Dormant Assets systems will be initialized 
+	// later after game systems are fully ready (after InitTowners)
 
 	// Load dynamic data before we go into the menu as we need to initialise player characters in memory pretty early.
 	LoadPlayerDataFiles();
@@ -3196,6 +3345,18 @@ tl::expected<void, std::string> LoadGameLevelTown(bool firstflag, lvl_entry lvld
 	InitTowners();
 	InitStash();
 	InitItems();
+	
+	// FEATURE: Initialize Hidden Content and Dormant Assets systems after core game systems are ready
+	InitHiddenContent();
+	InitDormantAssets();
+	InitEnhancedPortal();
+	
+	// 🎮 FEATURE #8: Initialize Advanced Debug System
+	InitAdvancedDebug();
+	
+	// 📖 FEATURE: Initialize Book of Apocalypse Guarantee System
+	InitApocalypseBookGuarantee();
+	
 	InitMissiles();
 
 	IncProgress();
@@ -3391,6 +3552,24 @@ tl::expected<void, std::string> LoadGameLevel(bool firstflag, lvl_entry lvldir)
 	if (leveltype != DTYPE_TOWN && lvldir != ENTRY_LOAD) {
 		InitLighting();
 	}
+	
+	// 🎮 FASE V3 - Initialize Visual Feedback System
+	InitVisualFeedback();
+	
+	// 🎨 FASE V2 - Initialize Contextual Palette System
+	InitContextualPalette();
+	
+	// 🏰 FASE D3 - Initialize Town Cinematográfica System
+	InitTownCinematic();
+	
+	// 🎨 FASE D2 - Initialize Life & Volume System
+	InitLifeVolume();
+	
+	// 🌟 FASE D3.2 - Initialize Parallax Depth System
+	InitParallaxDepth();
+	
+	// 🎯 FASE MP1 - Initialize MP Discipline System
+	InitMPDiscipline();
 
 	InitLevelMonsters();
 
@@ -3432,12 +3611,40 @@ tl::expected<void, std::string> LoadGameLevel(bool firstflag, lvl_entry lvldir)
 
 	CompleteProgress();
 
+	// 🏰 FASE D3 - Town Cinematográfica triggers
+	if (leveltype == DTYPE_TOWN) {
+		OnEnterTown();
+	} else {
+		OnExitTown();
+	}
+
 	LoadGameLevelCalculateCursor();
+	
+	// 🎨 FIX: Reload palette after all initialization to prevent color corruption
+	// This fixes the red/magenta color bug when creating new games
+	if (leveltype != DTYPE_TOWN) {
+		LoadPalette("levels\\l1data\\l1.pal");
+	} else {
+		LoadPalette("levels\\towndata\\town.pal");
+	}
+	
+	// 💰 INVISIBLE WEAR - Update wear multipliers for new level
+	UpdateInvisibleWear();
+	
+	// 🎯 DEPTH VARIANTS - Update depth bonuses for new level
+	UpdateDepthVariants();
+	
+	// 🧬 LIGHT MUTATIONS - Update mutation chances for new level
+	UpdateLightMutations();
+	
 	return {};
 }
 
 bool game_loop(bool bStartup)
 {
+	// 🛡️ GLOBAL PROTECTION SYSTEM - Update frame stats
+	GPS.updateFrameStats();
+	
 	const uint16_t wait = bStartup ? sgGameInitInfo.nTickRate * 3 : 3;
 
 	for (unsigned i = 0; i < wait; i++) {
@@ -3483,7 +3690,8 @@ bool IsDiabloAlive(bool playSFX)
 	if (Quests[Q_DIABLO]._qactive == QUEST_DONE && !gbIsMultiplayer) {
 		if (playSFX)
 			PlaySFX(SfxID::DiabloDeath);
-		return false;
+		// Return true to allow continued gameplay after Diablo's death in single player
+		return true;
 	}
 
 	return true;

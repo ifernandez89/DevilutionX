@@ -3,21 +3,31 @@ include(functions/devilutionx_library)
 include(functions/genex)
 
 set(libdevilutionx_SRCS
+  advanced_debug.cpp
+  apocalypse_crash_debug.cpp
   appfat.cpp
   automap.cpp
   capture.cpp
+  combat_pauses.cpp
   cursor.cpp
   dead.cpp
   debug.cpp
+  depth_variants.cpp
   diablo.cpp
   diablo_msg.cpp
   doom.cpp
+  architectural_analysis.cpp
+  engine_health.cpp
   gamemenu.cpp
+  global_protection_system.cpp
   gmenu.cpp
+  guarantee_apocalypse_book.cpp
   help.cpp
   hwcursor.cpp
   interfac.cpp
+  invisible_wear.cpp
   inv.cpp
+  light_mutations.cpp
   loadsave.cpp
   menu.cpp
   minitext.cpp
@@ -33,6 +43,21 @@ set(libdevilutionx_SRCS
   tmsg.cpp
   towners.cpp
   track.cpp
+  ui_nightmare.cpp
+  ui_transitions.cpp
+  ui_contemplative.cpp
+  ui_integration.cpp
+  nightmare_menu_effects.cpp
+  nightmare_weather.cpp
+  nightmare_menu_contemplative.cpp
+  nightmare_testing.cpp
+  nightmare_immediate_effects.cpp
+  waiting_enemies.cpp
+  water_animation.cpp
+  organic_lighting.cpp
+  nightmare_atmosphere.cpp
+  tile_detective.cpp
+  tile_detective.cpp
 
   control/control_chat.cpp
   control/control_chat_commands.cpp
@@ -148,6 +173,16 @@ set(libdevilutionx_SRCS
   qol/monhealthbar.cpp
   qol/stash.cpp
   qol/xpbar.cpp
+
+  safety/safety_metrics.cpp
+  safety/stress_testing.cpp
+  safety/stress_test_runner.cpp
+
+  audio/audio_throttling.cpp
+  audio/enhanced_audio.cpp
+  hidden_content.cpp
+  dormant_assets.cpp
+  enhanced_portal.cpp
 
   quests/validation.cpp
 
@@ -477,6 +512,72 @@ target_link_dependencies(libdevilutionx_lighting PUBLIC
   tl
   unordered_dense::unordered_dense
   libdevilutionx_vision
+)
+
+# 🎮 FASE V3 - Visual Feedback System
+add_devilutionx_object_library(libdevilutionx_visual_feedback
+  visual_feedback.cpp
+)
+target_link_dependencies(libdevilutionx_visual_feedback PUBLIC
+  DevilutionX::SDL
+  fmt::fmt
+  magic_enum::magic_enum
+  tl
+  unordered_dense::unordered_dense
+  libdevilutionx_vision
+)
+
+# 🎨 FASE V2 - Contextual Palette System
+add_devilutionx_object_library(libdevilutionx_contextual_palette
+  contextual_palette.cpp
+)
+target_link_dependencies(libdevilutionx_contextual_palette PUBLIC
+  DevilutionX::SDL
+  fmt::fmt
+  magic_enum::magic_enum
+  tl
+  unordered_dense::unordered_dense
+)
+
+# 🏰 FASE D3 - Town Cinematográfica System
+add_devilutionx_object_library(libdevilutionx_town_cinematic
+  town_cinematic.cpp
+)
+target_link_dependencies(libdevilutionx_town_cinematic PUBLIC
+  DevilutionX::SDL
+  fmt::fmt
+  libdevilutionx_log
+)
+
+# 🎨 FASE D2 - Life & Volume System
+add_devilutionx_object_library(libdevilutionx_life_volume
+  life_volume.cpp
+)
+target_link_dependencies(libdevilutionx_life_volume PUBLIC
+  DevilutionX::SDL
+  fmt::fmt
+  libdevilutionx_log
+)
+
+# 🌟 FASE D3.2 - Parallax Depth System
+add_devilutionx_object_library(libdevilutionx_parallax_depth
+  parallax_depth.cpp
+)
+target_link_dependencies(libdevilutionx_parallax_depth PUBLIC
+  DevilutionX::SDL
+  fmt::fmt
+  libdevilutionx_log
+)
+
+# 🎯 FASE MP1 - MP Discipline System
+add_devilutionx_object_library(libdevilutionx_mp_discipline
+  mp_discipline.cpp
+)
+target_link_dependencies(libdevilutionx_mp_discipline PUBLIC
+  DevilutionX::SDL
+  fmt::fmt
+  libdevilutionx_log
+  libdevilutionx_random
 )
 
 add_devilutionx_object_library(libdevilutionx_logged_fstream
@@ -930,6 +1031,12 @@ target_link_dependencies(libdevilutionx PUBLIC
   libdevilutionx_level_objects
   libdevilutionx_light_render
   libdevilutionx_lighting
+  libdevilutionx_visual_feedback
+  libdevilutionx_contextual_palette
+  libdevilutionx_town_cinematic
+  libdevilutionx_life_volume
+  libdevilutionx_parallax_depth
+  libdevilutionx_mp_discipline
   libdevilutionx_monster
   libdevilutionx_mpq
   libdevilutionx_multiplayer

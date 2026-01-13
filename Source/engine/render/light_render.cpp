@@ -7,6 +7,7 @@
 #include <cstring>
 #include <span>
 #include <vector>
+#include <cmath>
 
 #include "engine/displacement.hpp"
 #include "engine/lighting_defs.hpp"
@@ -135,7 +136,36 @@ uint8_t GetLightLevel(const uint8_t tileLights[MAXDUNX][MAXDUNY], Point tile)
 {
 	const int x = std::clamp(tile.x, 0, MAXDUNX - 1);
 	const int y = std::clamp(tile.y, 0, MAXDUNY - 1);
-	return tileLights[x][y];
+	uint8_t baseLightLevel = tileLights[x][y];
+	
+	// 🎯 FASE D1 - Depth Cues Simplificado
+	// Aplicar depth cues básicos sin dependencias del jugador
+	// Esto crea una sensación de profundidad general
+	
+	// D1.1 - Distancia desde el centro del mapa (aproximación)
+	const float centerX = MAXDUNX / 2.0f;
+	const float centerY = MAXDUNY / 2.0f;
+	const float dx = static_cast<float>(x - centerX);
+	const float dy = static_cast<float>(y - centerY);
+	const float distance = std::sqrt(dx * dx + dy * dy);
+	
+	// D1.2 - Bias vertical para reforzar perspectiva isométrica
+	const float verticalBias = 0.2f;
+	const float verticalOffset = dy * verticalBias;
+	
+	// Combinar efectos
+	const float totalDistance = distance + std::abs(verticalOffset);
+	const float maxDistance = 25.0f;
+	
+	// Calcular factor de profundidad (más sutil)
+	float depthFactor = 1.0f - (totalDistance / maxDistance * 0.3f); // Solo 30% de efecto
+	depthFactor = std::max(0.7f, std::min(1.0f, depthFactor)); // Rango más conservador
+	
+	// Aplicar depth cues al nivel de luz
+	const float adjustedLight = baseLightLevel / depthFactor;
+	baseLightLevel = static_cast<uint8_t>(std::min(15.0f, adjustedLight));
+	
+	return baseLightLevel;
 }
 
 uint8_t Interpolate(int q1, int q2, int lightLevel)

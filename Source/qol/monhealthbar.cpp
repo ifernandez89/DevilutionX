@@ -144,15 +144,18 @@ void DrawMonsterHealthBar(const Surface &out)
 	}
 
 	UiFlags style = UiFlags::AlignCenter | UiFlags::VerticalCenter;
-	DrawString(out, monster.name(), { position + Displacement { -1, 1 }, { width, height } },
+	std::string displayName = monster.getDisplayName();
+	DrawString(out, displayName, { position + Displacement { -1, 1 }, { width, height } },
 	    { .flags = style | UiFlags::ColorBlack });
 	if (monster.isUnique())
 		style |= UiFlags::ColorWhitegold;
 	else if (monster.leader != Monster::NoLeader)
 		style |= UiFlags::ColorBlue;
+	else if ((monster.flags & MFLAG_ELITE) != 0)
+		style |= UiFlags::ColorRed;  // Show elite monsters in red
 	else
 		style |= UiFlags::ColorWhite;
-	DrawString(out, monster.name(), { position, { width, height } },
+	DrawString(out, displayName, { position, { width, height } },
 	    { .flags = style });
 
 	if (multiplier > 0)

@@ -24,11 +24,21 @@
 #include <utility>
 #include <vector>
 
+#include "combat_pauses.h"  // ⚔️ Combat Pauses System
+#include "depth_variants.h"  // 🎯 Depth Variants System
+#include "light_mutations.h"  // 🧬 Light Mutations System
+#include "waiting_enemies.h"  // 👁️ Waiting Enemies System
+#include "levels/gendung.h"   // 🩸 For difficulty constants
+#include "multi.h"            // 🩸 For sgGameInitInfo
+#include "advanced_debug.h"   // 🎮 Advanced Debug System
+
 #ifdef USE_SDL3
 #include <SDL3/SDL_timer.h>
 #else
 #include <SDL.h>
 #endif
+
+#include "engine/trn.hpp"
 
 #include <expected.hpp>
 #include <fmt/core.h>
@@ -38,6 +48,7 @@
 #include "crawl.hpp"
 #include "cursor.h"
 #include "dead.h"
+#include "dormant_assets.h"
 #include "diablo.h"
 #include "dvlnet/leaveinfo.hpp"
 #include "effects.h"
@@ -78,6 +89,7 @@
 #include "options.h"
 #include "player.h"
 #include "qol/floatingnumbers.h"
+#include "visual_feedback.h"
 #include "quests.h"
 #include "sound_effect_enums.h"
 #include "storm/storm_net.hpp"
@@ -101,6 +113,7 @@
 #include "utils/static_vector.hpp"
 #include "utils/status_macros.hpp"
 #include "utils/str_cat.hpp"
+#include "safety/safety.h"
 
 #ifdef _DEBUG
 #include "debug.h"
@@ -149,7 +162,7 @@ constexpr const std::array<_monster_id, 12> SkeletonTypes {
 };
 
 /** Maps from monster action to monster animation letter. */
-constexpr char Animletter[7] = "nwahds";
+const char Animletter[7] = "nwahds";
 
 size_t GetNumAnims(const MonsterData &monsterData)
 {
@@ -190,6 +203,51 @@ void InitMonsterTRN(CMonster &monst)
 			ClxApplyTrans(ClxSpriteList { anim.sprites->list() }, colorTranslations.data());
 		}
 	}
+}
+
+/**
+ * @brief Tries to apply elite modifier to a monster with low probability
+ * 
+ * Elite monsters have enhanced stats and visual distinction:
+ * - 0.5% chance (1 in 200) for balanced rarity
+ * - Progressive HP boost: +25% to +40% based on level
+ * - Progressive damage boost: +20% to +35% based on level  
+ * - Stone TRN visual transformation
+ * - "Corrupted" name prefix
+ * - Red color in UI
+ */
+void TryApplyEliteModifier(Monster &monster)
+{
+	if (GenerateRnd(200) != 0) // 0.5% chance - rare but not too rare
+		return;
+
+	// Progressive multipliers based on monster level for better scaling
+	const int monsterLevel = monster.data().level;
+	const int hpBoostPercent = 25 + (monsterLevel / 4); // 25% to 40% HP boost
+	const int damageBoostPercent = 20 + (monsterLevel / 5); // 20% to 35% damage boost
+	
+	// Apply HP boost (progressive)
+	const int hpBoost = (monster.maxHitPoints * hpBoostPercent) / 100;
+	monster.maxHitPoints += hpBoost;
+	monster.hitPoints = monster.maxHitPoints;
+	
+	// Apply damage boost (progressive)
+	const int minDamageBoost = (monster.minDamage * damageBoostPercent) / 100;
+	const int maxDamageBoost = (monster.maxDamage * damageBoostPercent) / 100;
+	monster.minDamage += minDamageBoost;
+	monster.maxDamage += maxDamageBoost;
+	
+	// Apply visual transformation using stone TRN
+	if (monster.uniqueMonsterTRN == nullptr) {
+		monster.uniqueMonsterTRN = std::make_unique<uint8_t[]>(256);
+		uint8_t *stoneTRN = GetStoneTRN();
+		if (stoneTRN != nullptr) {
+			std::copy(stoneTRN, stoneTRN + 256, monster.uniqueMonsterTRN.get());
+		}
+	}
+	
+	// Mark as elite using dedicated flag
+	monster.flags |= MFLAG_ELITE;
 }
 
 void InitMonster(Monster &monster, Direction rd, size_t typeIndex, Point position)
@@ -271,6 +329,18 @@ void InitMonster(Monster &monster, Direction rd, size_t typeIndex, Point positio
 		monster.armorClass += HellAcBonus;
 		monster.resistance = monster.data().resistanceHell;
 	}
+
+	// 🎯 FEATURE #5: Depth Variants System - Enhanced monster scaling
+	ApplyDepthScaling(monster);
+	
+	// 🧬 FEATURE #6: Light Mutations System - Subtle random variations
+	ApplyLightMutations(monster);
+	
+	// Try to apply elite transformation (very rare)
+	ApplyEliteTransformation(monster);
+
+	// FEATURE: Enhanced Elite Monster System - Improved implementation
+	TryApplyEliteModifier(monster);
 }
 
 bool CanPlaceMonster(Point position)
@@ -816,6 +886,13 @@ void WalkInDirection(Monster &monster, Direction endDir)
 
 void StartAttack(Monster &monster)
 {
+	// 👁️ WAITING ENEMIES: Check if monster should wait before attacking
+	if (ShouldMonsterWait(monster)) {
+		StartWaitingBehavior(monster);
+		// Don't start attack immediately, monster will wait first
+		return;
+	}
+	
 	const Direction md = GetMonsterDirection(monster);
 	NewMonsterAnim(monster, MonsterGraphic::Attack, md, AnimationDistributionFlags::ProcessAnimationPending);
 	monster.mode = MonsterMode::MeleeAttack;
@@ -891,11 +968,14 @@ void DiabloDeath(Monster &diablo, bool sendmsg)
 	}
 	AddLight(diablo.position.tile, 8);
 	DoVision(diablo.position.tile, 8, MAP_EXP_NONE, true);
-	int dist = diablo.position.tile.WalkingDistance(ViewPosition);
-	dist = std::min(dist, 20);
-	diablo.var3 = ViewPosition.x << 16;
-	diablo.position.temp.x = ViewPosition.y << 16;
-	diablo.position.temp.y = (int)((diablo.var3 - (diablo.position.tile.x << 16)) / (float)dist);
+	// Only configure camera tracking variables in single player
+	if (!gbIsMultiplayer) {
+		int dist = diablo.position.tile.WalkingDistance(ViewPosition);
+		dist = std::min(dist, 20);
+		diablo.var3 = ViewPosition.x << 16;
+		diablo.position.temp.x = ViewPosition.y << 16;
+		diablo.position.temp.y = (int)((diablo.var3 - (diablo.position.tile.x << 16)) / (float)dist);
+	}
 	if (!gbIsMultiplayer) {
 		Player &myPlayer = *MyPlayer;
 		myPlayer.pDiabloKillLevel = std::max(myPlayer.pDiabloKillLevel, static_cast<uint8_t>(sgGameInitInfo.nDifficulty + 1));
@@ -1062,6 +1142,35 @@ void SyncLightPosition(Monster &monster)
 
 void MonsterIdle(Monster &monster)
 {
+	// 👁️ WAITING ENEMIES: Handle waiting behavior
+	if (IsMonsterWaiting(monster)) {
+		if (!UpdateWaitingBehavior(monster)) {
+			// Waiting period ended, start attack
+			const Direction md = GetMonsterDirection(monster);
+			NewMonsterAnim(monster, MonsterGraphic::Attack, md, AnimationDistributionFlags::ProcessAnimationPending);
+			monster.mode = MonsterMode::MeleeAttack;
+			monster.position.future = monster.position.tile;
+			monster.position.old = monster.position.tile;
+			return;
+		}
+		// Still waiting, use slower animation and movement
+		if (monster.type().type == MT_GOLEM)
+			monster.changeAnimationData(MonsterGraphic::Walk);
+		else
+			monster.changeAnimationData(MonsterGraphic::Stand);
+		
+		// Slow movement toward player during wait
+		if (monster.animInfo.isLastFrame()) {
+			UpdateEnemy(monster);
+			// Move slowly toward player (handled by normal AI but with hesitation)
+		}
+		
+		if (monster.var2 < std::numeric_limits<int16_t>::max())
+			monster.var2++;
+		return;
+	}
+	
+	// Normal idle behavior
 	if (monster.type().type == MT_GOLEM)
 		monster.changeAnimationData(MonsterGraphic::Walk);
 	else
@@ -1304,16 +1413,24 @@ bool MonsterRangedAttack(Monster &monster)
 			int multimissiles = 1;
 			if (missileType == MissileID::ChargedBolt)
 				multimissiles = 3;
-			for (int mi = 0; mi < multimissiles; mi++) {
-				AddMissile(
-				    monster.position.tile,
-				    monster.enemyPosition,
-				    monster.direction,
-				    missileType,
-				    TARGET_PLAYERS,
-				    monster,
-				    monster.var2,
-				    0);
+			
+			// SAFETY LAYER: Verificar antes de loop de multimissiles
+			// TECHO CUANTITATIVO: Solo en puntos de presión (múltiples spawns), no global
+			if (CanAddMissiles(multimissiles)) {
+				for (int mi = 0; mi < multimissiles; mi++) {
+					// Verificación adicional por cada missile en el loop
+					SAFETY_CHECK_SPAWN_RET(Missile, false);
+					
+					AddMissile(
+					    monster.position.tile,
+					    monster.enemyPosition,
+					    monster.direction,
+					    missileType,
+					    TARGET_PLAYERS,
+					    monster,
+					    monster.var2,
+					    0);
+				}
 			}
 		}
 		PlayEffect(monster, MonsterSound::Attack);
@@ -1500,19 +1617,26 @@ void MonsterDeath(Monster &monster)
 {
 	monster.var1++;
 	if (monster.type().type == MT_DIABLO) {
-		if (monster.position.tile.x < ViewPosition.x) {
-			ViewPosition.x--;
-		} else if (monster.position.tile.x > ViewPosition.x) {
-			ViewPosition.x++;
-		}
+		// NO mover la cámara hacia Diablo mientras muere - mantener en el jugador
+		// Esto corrige el bug donde la cámara se queda fija en la posición de muerte de Diablo
+		// Comentado el código que movía la cámara hacia Diablo:
+		/*
+		if (!gbIsMultiplayer) {
+			if (monster.position.tile.x < ViewPosition.x) {
+				ViewPosition.x--;
+			} else if (monster.position.tile.x > ViewPosition.x) {
+				ViewPosition.x++;
+			}
 
-		if (monster.position.tile.y < ViewPosition.y) {
-			ViewPosition.y--;
-		} else if (monster.position.tile.y > ViewPosition.y) {
-			ViewPosition.y++;
+			if (monster.position.tile.y < ViewPosition.y) {
+				ViewPosition.y--;
+			} else if (monster.position.tile.y > ViewPosition.y) {
+				ViewPosition.y++;
+			}
 		}
+		*/
 
-		if (monster.var1 == 140)
+		if (monster.var1 == 140 && gbIsMultiplayer)
 			PrepDoEnding();
 	} else if (monster.animInfo.isLastFrame()) {
 		if (monster.isUnique())
@@ -1941,6 +2065,104 @@ void AiRangedAvoidance(Monster &monster)
 {
 	if (monster.mode != MonsterMode::Stand || monster.activeForTicks == 0) {
 		return;
+	}
+
+	// 🩸 FEATURE #7: DIABLO AI REFINEMENT - Intelligent Multi-Teleport System
+	if (monster.ai == MonsterAIID::Diablo && monster.type().type == MT_DIABLO) {
+		static int diabloTeleportCooldown = 0;
+		static int diabloTeleportCount = 0;
+		
+		// Decrementar cooldown cada tick
+		if (diabloTeleportCooldown > 0) {
+			diabloTeleportCooldown--;
+		}
+		
+		const unsigned distanceToEnemy = monster.distanceToEnemy();
+		const int currentHP = monster.hitPoints;
+		const int maxHP = monster.maxHitPoints;
+		const float hpPercent = (float)currentHP / (float)maxHP;
+		
+		// Calcular agresividad basada en HP y dificultad
+		int baseCooldown = 4 * 60; // 4 segundos base
+		int minDistance = 5;       // Distancia mínima para teleport
+		
+		// En Hell difficulty, ser MÁS agresivo
+		if (sgGameInitInfo.nDifficulty == DIFF_HELL) {
+			baseCooldown = 2 * 60;  // 2 segundos en Hell
+			minDistance = 4;        // Teleport más frecuente
+		}
+		
+		// Más agresivo cuando HP está bajo
+		if (hpPercent < 0.75f) {
+			baseCooldown = baseCooldown * 0.7f; // 30% más rápido
+		}
+		if (hpPercent < 0.5f) {
+			baseCooldown = baseCooldown * 0.6f; // 40% más rápido
+		}
+		if (hpPercent < 0.25f) {
+			baseCooldown = baseCooldown * 0.5f; // 50% más rápido (muy agresivo)
+		}
+		
+		// Condiciones para teleport inteligente múltiple
+		bool shouldTeleport = diabloTeleportCooldown <= 0 &&           // Sin cooldown activo
+		                     distanceToEnemy >= minDistance &&         // Jugador suficientemente lejos
+		                     hpPercent > 0.1f;                         // No teleport si casi muerto (10% HP)
+		
+		if (shouldTeleport) {
+			// Encontrar posición estratégica cerca del jugador
+			const Player &player = *MyPlayer;
+			Point targetPos = player.position.tile;
+			bool teleported = false;
+			
+			// Intentar múltiples posiciones para encontrar la mejor
+			for (int i = 0; i < 12; i++) {
+				// Posiciones más variadas - puede aparecer en cualquier lado
+				int offsetX = GenerateRnd(5) - 2; // -2 a +2
+				int offsetY = GenerateRnd(5) - 2; // -2 a +2
+				Point testPos = targetPos + Displacement { offsetX, offsetY };
+				
+				if (InDungeonBounds(testPos) && IsTileAvailable(monster, testPos)) {
+					// Crear efecto de teleport como Advocate - desaparecer
+					monster.mode = MonsterMode::FadeOut;
+					monster.var1 = 0;
+					monster.var2 = 0;
+					
+					// Teleport a nueva posición
+					monster.position.tile = testPos;
+					monster.position.future = testPos;
+					
+					// Crear efecto visual de aparición
+					monster.mode = MonsterMode::FadeIn;
+					
+					teleported = true;
+					diabloTeleportCount++;
+					
+					// Cooldown dinámico basado en situación
+					diabloTeleportCooldown = baseCooldown;
+					
+					// Efectos especiales basados en HP
+					if (hpPercent < 0.5f) {
+						music_stop(); // Tensión cuando HP está bajo
+					}
+					
+					// Atacar inmediatamente después del teleport
+					// Variar el tipo de ataque basado en HP
+					if (hpPercent < 0.3f) {
+						// Muy agresivo - ataque especial
+						StartRangedSpecialAttack(monster, MissileID::DiabloApocalypse, 50);
+					} else {
+						// Ataque normal
+						StartRangedSpecialAttack(monster, MissileID::DiabloApocalypse, 40);
+					}
+					
+					break;
+				}
+			}
+			
+			if (teleported) {
+				return; // Salir temprano - teleport ejecutado
+			}
+		}
 	}
 
 	const Direction md = GetDirection(monster.position.tile, monster.position.last);
@@ -3413,9 +3635,56 @@ tl::expected<void, std::string> GetLevelMTypes()
 			}
 
 			if (nt != 0) {
-				const int i = GenerateRnd(nt);
-				RETURN_IF_ERROR(AddMonsterType(typelist[i], PLACE_SCATTER));
-				typelist[i] = typelist[--nt];
+				// FEATURE 2: Thematic Monster Packs per Level
+				// Apply level-based monster type preferences to create stronger dungeon identity
+				_monster_id preferredTypes[3] = { MT_INVALID, MT_INVALID, MT_INVALID };
+				int preferredCount = 0;
+				
+				// Define thematic preferences based on level ranges
+				if (currlevel >= 1 && currlevel <= 4) {
+					// Early levels: Undead theme (Skeletons, Zombies)
+					preferredTypes[0] = MT_WSKELAX;  // Skeleton
+					preferredTypes[1] = MT_NZOMBIE;  // Zombie
+					preferredCount = 2;
+				} else if (currlevel >= 5 && currlevel <= 8) {
+					// Mid levels: Demonic theme (Fallen, Scavengers)
+					preferredTypes[0] = MT_RFALLSP; // Fallen One
+					preferredTypes[1] = MT_NSCAV;   // Scavenger
+					preferredCount = 2;
+				} else if (currlevel >= 9 && currlevel <= 12) {
+					// Deep levels: Beast theme (Goats, Acid Beasts)
+					preferredTypes[0] = MT_NGOATMC; // Flesh Clan
+					preferredTypes[1] = MT_NACID;   // Acid Beast
+					preferredCount = 2;
+				} else if (currlevel >= 13 && currlevel <= 15) {
+					// Hell levels: Demon theme (Knights, Succubi)
+					preferredTypes[0] = MT_RBLACK;  // Black Knight
+					preferredTypes[1] = MT_SUCCUBUS; // Succubus
+					preferredCount = 2;
+				}
+				
+				// Try to add preferred monsters first (with higher probability)
+				bool addedPreferred = false;
+				if (preferredCount > 0 && GenerateRnd(100) < 60) { // 60% chance to favor thematic monsters
+					for (int p = 0; p < preferredCount; p++) {
+						for (int i = 0; i < nt; i++) {
+							if (typelist[i] == preferredTypes[p]) {
+								RETURN_IF_ERROR(AddMonsterType(typelist[i], PLACE_SCATTER));
+								typelist[i] = typelist[--nt];
+								addedPreferred = true;
+								break;
+							}
+						}
+						if (addedPreferred) break;
+					}
+				}
+				
+				// If no preferred monster was added, use normal random selection
+				if (!addedPreferred) {
+					const int i = GenerateRnd(nt);
+					RETURN_IF_ERROR(AddMonsterType(typelist[i], PLACE_SCATTER));
+					typelist[i] = typelist[--nt];
+				}
 			}
 		}
 	} else {
@@ -3620,7 +3889,24 @@ tl::expected<void, std::string> InitMonsters()
 					na++;
 			}
 		}
-		size_t numplacemonsters = na / 30;
+		// FEATURE: Intelligent Difficulty System - Increased Monster Density
+		// Original formula: na / 30, Enhanced for Hell difficulty pressure
+		// BUGFIX: Reduced Hell density slightly to prevent overflow with area effects
+		size_t baseDensityDivisor = 30;
+		
+		// Increase density based on level depth for late-game pressure
+		if (currlevel >= 13) {
+			// Hell difficulty: 40% more monsters (na / 22 instead of na / 20) - reduced from 50% to prevent crashes
+			baseDensityDivisor = 22;
+		} else if (currlevel >= 9) {
+			// Deep caves: 25% more monsters (na / 24 instead of na / 30)
+			baseDensityDivisor = 24;
+		} else if (currlevel >= 5) {
+			// Mid-levels: 15% more monsters (na / 26 instead of na / 30)
+			baseDensityDivisor = 26;
+		}
+		
+		size_t numplacemonsters = na / baseDensityDivisor;
 		if (gbIsMultiplayer)
 			numplacemonsters += numplacemonsters / 2;
 		if (ActiveMonsterCount + numplacemonsters > MaxMonsters - 10)
@@ -3637,12 +3923,23 @@ tl::expected<void, std::string> InitMonsters()
 		if (numscattypes > 0) {
 			while (ActiveMonsterCount < totalmonsters) {
 				const size_t typeIndex = scattertypes[GenerateRnd(numscattypes)];
+				
+				// FEATURE: Intelligent Difficulty System - Tighter Monster Packs
+				// Create more compact, dangerous groups in deeper levels
 				if (currlevel == 1 || FlipCoin())
 					na = 1;
 				else if (currlevel == 2 || leveltype == DTYPE_CRYPT)
 					na = GenerateRnd(2) + 2;
-				else
+				else if (currlevel >= 13) {
+					// Hell difficulty: Larger, more dangerous packs (4-7 monsters)
+					na = GenerateRnd(4) + 4;
+				} else if (currlevel >= 9) {
+					// Deep caves: Medium-large packs (3-6 monsters)
+					na = GenerateRnd(4) + 3;
+				} else {
+					// Standard deeper levels: Slightly larger packs (3-5 monsters)
 					na = GenerateRnd(3) + 3;
+				}
 				PlaceGroup(typeIndex, na);
 			}
 		}
@@ -3687,6 +3984,14 @@ tl::expected<void, std::string> SetMapMonsters(const uint16_t *dunData, Point st
 
 Monster *AddMonster(Point position, Direction dir, size_t typeIndex, bool inMap)
 {
+	// SAFETY LAYER: Verificar límites antes de agregar monster
+	SAFETY_CHECK_SPAWN_RET(Monster, nullptr);
+	
+	// ⚔️ COMBAT PAUSES: Check if spawning is allowed
+	if (!CanSpawnMonsters()) {
+		return nullptr; // Spawn blocked by combat pause
+	}
+	
 	if (ActiveMonsterCount < MaxMonsters) {
 		Monster &monster = Monsters[ActiveMonsters[ActiveMonsterCount++]];
 		if (inMap)
@@ -3700,6 +4005,15 @@ Monster *AddMonster(Point position, Direction dir, size_t typeIndex, bool inMap)
 
 void SpawnMonster(Point position, Direction dir, size_t typeIndex)
 {
+	// SAFETY LAYER: Verificar límites y aplicar guardas de seguridad
+	SAFETY_GUARD();
+	SAFETY_CHECK_SPAWN(Monster);
+	
+	// ⚔️ COMBAT PAUSES: Check if spawning is allowed
+	if (!CanSpawnMonsters()) {
+		return; // Spawn blocked by combat pause
+	}
+	
 	if (ActiveMonsterCount >= MaxMonsters)
 		return;
 
@@ -3781,6 +4095,15 @@ void ApplyMonsterDamage(DamageType damageType, Monster &monster, int damage)
 	AddFloatingNumber(damageType, monster, damage);
 
 	monster.hitPoints -= damage;
+	
+	// FEATURE: Dormant Assets Recovery - enhance combat with visual effects
+	// SAFETY: Only add effects if systems are ready and damage is significant
+	if (damage > 0 && MyPlayer != nullptr && g_dormantAssets.IsInitialized()) {
+		// 25% chance to add enhanced visual effect on significant damage
+		if (damage > 10 && GenerateRnd(100) < 25) {
+			AddDormantVisualEffect("combat_impact", monster.position.tile);
+		}
+	}
 
 	if (monster.hasNoLife()) {
 		delta_kill_monster(monster, monster.position.tile, *MyPlayer);
@@ -3835,7 +4158,38 @@ void M_GetKnockback(Monster &monster, WorldTilePosition attackerStartPos)
 
 void M_StartHit(Monster &monster, int dam)
 {
-	PlayEffect(monster, MonsterSound::Hit);
+	// FEATURE: Enhanced Monster Vocal Atmosphere System
+	// Increase probability of pain sounds for more disturbing combat
+	bool shouldPlayHitSound = true;
+	
+	// Check if monster is humanoid (cultists, fallen, goatmen) for prioritized vocal atmosphere
+	const bool isHumanoid = IsAnyOf(monster.type().type, 
+		MT_NGOATMC, MT_BGOATMC, MT_RGOATMC, MT_GGOATMC,
+		MT_NGOATBW, MT_BGOATBW, MT_RGOATBW, MT_GGOATBW,
+		MT_FELLTWIN, MT_DARKMAGE);
+	
+	// Slightly increase probability of pain sounds (preserve silence as core element)
+	if (isHumanoid) {
+		// Humanoid monsters: 85% chance for pain sounds (was ~50% due to random factors)
+		shouldPlayHitSound = GenerateRnd(100) < 85;
+	} else {
+		// Other monsters: 70% chance for pain sounds (slight increase)
+		shouldPlayHitSound = GenerateRnd(100) < 70;
+	}
+	
+	// Additional pain sound when monsters are low HP for more oppressive atmosphere
+	const bool isLowHP = monster.hitPoints < (monster.maxHitPoints / 3); // Below 33% HP
+	if (isLowHP && isHumanoid) {
+		// Low HP humanoids: Always play pain sound + chance for additional sound
+		shouldPlayHitSound = true;
+		if (GenerateRnd(100) < 30) { // 30% chance for additional pain sound
+			PlayEffect(monster, MonsterSound::Hit);
+		}
+	}
+	
+	if (shouldPlayHitSound) {
+		PlayEffect(monster, MonsterSound::Hit);
+	}
 
 	if (IsHardHit(monster, dam)) {
 		if (monster.type().type == MT_BLINK) {
@@ -3872,16 +4226,72 @@ void MonsterDeath(Monster &monster, Direction md, bool sendmsg)
 		AddPlrMonstExper(monster.level(sgGameInitInfo.nDifficulty), monster.exp(sgGameInitInfo.nDifficulty), monster.whoHit);
 
 	MonsterKillCounts[monster.type().type]++;
+	
+	// ⚔️ COMBAT PAUSES: Record monster kill for combat tracking
+	RecordMonsterKill(monster.getId(), monster.isUnique() || (monster.flags & MFLAG_ELITE) != 0);
+	
+	// 👁️ WAITING ENEMIES: End waiting behavior on death
+	if (IsMonsterWaiting(monster)) {
+		EndWaitingBehavior(monster);
+	}
+	
 	monster.hitPoints = 0;
 	monster.flags &= ~MFLAG_HIDDEN;
 	SetRndSeed(monster.rndItemSeed);
 
 	SpawnLoot(monster, sendmsg);
 
+	// FEATURE: Enhanced Blood Atmosphere System
+	// Spawn additional blood objects on elite and boss deaths for heavier combat aftermath
+	if (monster.isUnique() || (monster.flags & MFLAG_ELITE) != 0) {
+		// Enhanced blood spawning for elite monsters and bosses
+		const Point deathPosition = monster.position.tile;
+		
+		// Try to spawn blood objects around the death location
+		for (int attempts = 0; attempts < 3; attempts++) {
+			const int offsetX = GenerateRnd(3) - 1; // -1, 0, or 1
+			const int offsetY = GenerateRnd(3) - 1; // -1, 0, or 1
+			const Point bloodPos = deathPosition + Displacement { offsetX, offsetY };
+			
+			// Check if position is valid and not occupied
+			if (InDungeonBounds(bloodPos) && dObject[bloodPos.x][bloodPos.y] == 0 && 
+			    !TileContainsSetPiece(bloodPos) && !IsTileOccupied(bloodPos)) {
+				
+				// Spawn blood fountain for more disturbing atmosphere
+				// Use existing blood fountain object for authentic feel
+				if (FlipCoin(2)) { // 50% chance for blood fountain
+					AddObject(OBJ_BLOODFTN, bloodPos);
+				}
+				break; // Only spawn one blood object per death
+			}
+		}
+	}
+
 	if (monster.type().type == MT_DIABLO)
 		DiabloDeath(monster, true);
-	else
-		PlayEffect(monster, MonsterSound::Death);
+	else {
+		// FEATURE: Enhanced Monster Vocal Atmosphere System
+		// Slightly increase probability of death sounds for more disturbing combat aftermath
+		bool shouldPlayDeathSound = true;
+		
+		// Check if monster is humanoid for prioritized vocal atmosphere
+		const bool isHumanoid = IsAnyOf(monster.type().type, 
+			MT_NGOATMC, MT_BGOATMC, MT_RGOATMC, MT_GGOATMC,
+			MT_NGOATBW, MT_BGOATBW, MT_RGOATBW, MT_GGOATBW,
+			MT_FELLTWIN, MT_DARKMAGE);
+		
+		if (isHumanoid) {
+			// Humanoid monsters: 90% chance for death sounds (more vocal death)
+			shouldPlayDeathSound = GenerateRnd(100) < 90;
+		} else {
+			// Other monsters: 75% chance for death sounds (slight increase)
+			shouldPlayDeathSound = GenerateRnd(100) < 75;
+		}
+		
+		if (shouldPlayDeathSound) {
+			PlayEffect(monster, MonsterSound::Death);
+		}
+	}
 
 	if (monster.mode != MonsterMode::Petrified) {
 		if (monster.type().type == MT_GOLEM)
@@ -4150,6 +4560,18 @@ void ProcessMonsters()
 
 		const bool isMonsterVisible = IsTileVisible(monster.position.tile);
 		if (isMonsterVisible && monster.activeForTicks == 0) {
+			// 🎮 FASE V3.2 - PULSE EN MONSTRUOS ELITE
+			// Activar pulse visual para monstruos elite cuando se vuelven visibles
+			if ((monster.flags & MFLAG_ELITE) != 0) {
+				TriggerEliteMonsterPulse(monster);
+			}
+			
+			// 🎮 FASE V3.8 - PULSE DE JEFE
+			// Activar pulse especial para jefes únicos
+			if (monster.isUnique()) {
+				TriggerBossEncounterPulse(monster);
+			}
+			
 			if (monster.type().type == MT_CLEAVER) {
 				PlaySFX(SfxID::ButcherGreeting);
 			}

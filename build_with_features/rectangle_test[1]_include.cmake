@@ -1,0 +1,5 @@
+if(EXISTS "C:/Diablo/DevilutionX Repo/DevilutionX/build_final_working/rectangle_test[1]_tests.cmake")
+  include("C:/Diablo/DevilutionX Repo/DevilutionX/build_final_working/rectangle_test[1]_tests.cmake")
+else()
+  add_test(rectangle_test_NOT_BUILT rectangle_test_NOT_BUILT)
+endif()

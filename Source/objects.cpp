@@ -50,6 +50,7 @@
 #include "utils/language.h"
 #include "utils/log.hpp"
 #include "utils/str_cat.hpp"
+#include "safety/safety.h"
 
 namespace devilution {
 
@@ -477,6 +478,8 @@ void AddL2Torches()
 
 void AddObjTraps()
 {
+	// FEATURE: Intelligent Difficulty System - Increased Trap Frequency
+	// Enhanced trap placement for environmental danger and tension
 	int rndv;
 	if (currlevel == 1)
 		rndv = 10;
@@ -486,6 +489,13 @@ void AddObjTraps()
 		rndv = 20;
 	if (currlevel >= 7)
 		rndv = 25;
+	
+	// Significantly increase trap frequency for Hell difficulty pressure
+	if (currlevel >= 13)
+		rndv = 45; // Hell: 45% trap chance (was 25%)
+	else if (currlevel >= 9)
+		rndv = 35; // Deep caves: 35% trap chance (was 25%)
+	
 	for (int j = 0; j < MAXDUNY; j++) {
 		for (int i = 0; i < MAXDUNX; i++) {
 			Object *triggerObject = FindObjectAtPosition({ i, j }, false);
@@ -528,10 +538,22 @@ void AddObjTraps()
 
 void AddChestTraps()
 {
+	// FEATURE: Intelligent Difficulty System - Enhanced Chest Trap Frequency
+	// Increase chest trap frequency for environmental danger
+	int baseTrapChance = 10; // Original: 10%
+	
+	// Scale trap chance with level depth
+	if (currlevel >= 13)
+		baseTrapChance = 25; // Hell: 25% chest trap chance
+	else if (currlevel >= 9)
+		baseTrapChance = 20; // Deep caves: 20% chest trap chance
+	else if (currlevel >= 5)
+		baseTrapChance = 15; // Mid-levels: 15% chest trap chance
+	
 	for (int j = 0; j < MAXDUNY; j++) {
 		for (int i = 0; i < MAXDUNX; i++) { // NOLINT(modernize-loop-convert)
 			Object *chestObject = FindObjectAtPosition({ i, j }, false);
-			if (chestObject != nullptr && chestObject->IsUntrappedChest() && GenerateRnd(100) < 10) {
+			if (chestObject != nullptr && chestObject->IsUntrappedChest() && GenerateRnd(100) < baseTrapChance) {
 				switch (chestObject->_otype) {
 				case OBJ_CHEST1:
 					chestObject->_otype = OBJ_TCHEST1;
@@ -3961,6 +3983,19 @@ void InitObjects()
 		InitRndLocObj(5, 10, OBJ_CHEST1);
 		InitRndLocObj(3, 6, OBJ_CHEST2);
 		InitRndLocObj(1, 5, OBJ_CHEST3);
+		
+		// FEATURE 6: Densidad decorativa leve - más objetos decorativos
+		// Agregar más barriles/urnas/pods según el tipo de nivel
+		if (leveltype == DTYPE_CATACOMBS) {
+			InitRndLocObj(3, 7, OBJ_BARREL);  // Más barriles en catacumbas
+		} else if (leveltype == DTYPE_CAVES) {
+			InitRndLocObj(2, 5, OBJ_BARREL);  // Algunos barriles en cuevas
+		} else if (leveltype == DTYPE_CRYPT) {
+			InitRndLocObj(3, 6, OBJ_URN);     // Más urnas en criptas
+		} else if (leveltype == DTYPE_NEST) {
+			InitRndLocObj(2, 4, OBJ_POD);     // Más pods en nests
+		}
+		
 		if (leveltype != DTYPE_HELL)
 			AddObjTraps();
 		if (IsAnyOf(leveltype, DTYPE_CATACOMBS, DTYPE_CAVES, DTYPE_HELL, DTYPE_NEST))
@@ -4177,6 +4212,19 @@ void OperateTrap(Object &trap)
 	if (!UpdateTrapState(trap))
 		return;
 
+	// SAFETY LAYER: Throttling para traps - evitar spam de activación
+	// TECHO CUANTITATIVO: Solo en puntos de presión (traps), no global
+	static SpawnThrottle trapThrottle;
+	trapThrottle.minInterval = 200; // 200ms mínimo entre activaciones de trap
+	
+	uint32_t currentTime = SDL_GetTicks();
+	if (!trapThrottle.CanSpawnNow(currentTime)) {
+		return; // Demasiado pronto para otra activación
+	}
+
+	// Verificar límites antes de spawn de missile
+	SAFETY_CHECK_SPAWN(Missile);
+
 	// default to firing at the trigger object
 	const Point triggerPosition = { trap._oVar1, trap._oVar2 };
 	Point target = triggerPosition;
@@ -4190,8 +4238,16 @@ void OperateTrap(Object &trap)
 	}
 
 	const Direction dir = GetDirection(trap.position, target);
+	
+	// SAFETY LAYER: Throttling para traps - evitar spam de activación
+	// TECHO CUANTITATIVO: Solo en puntos de presión (traps), no global
+	SAFETY_CHECK_SPAWN(Missile);
+	
 	AddMissile(trap.position, target, dir, static_cast<MissileID>(trap._oVar3), TARGET_PLAYERS, -1, 0, 0);
 	PlaySfxLoc(SfxID::TriggerTrap, triggerPosition);
+	
+	// Registrar el tiempo de activación
+	trapThrottle.RecordSpawn(currentTime);
 }
 
 void ProcessObjects()

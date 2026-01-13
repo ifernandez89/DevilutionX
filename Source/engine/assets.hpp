@@ -18,7 +18,7 @@
 
 #include <expected.hpp>
 
-#include <fmt/format.h>
+// #include <fmt/core.h>
 
 #include "appfat.h"
 #include "game_mode.hpp"

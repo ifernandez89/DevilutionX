@@ -144,22 +144,33 @@ void EnhanceDecorativeDensity() {
 
 ### **🌧️ FASE 3: SISTEMA DE CLIMA ATMOSFÉRICO**
 
-#### **3.1 Nightmare Weather System**
+#### **3.1 Nightmare Weather System (Enterprise-Grade)**
 **Fecha**: Enero 2026 (Más Reciente)  
-**Archivos**: `Source/nightmare_weather.h`, `Source/nightmare_weather.cpp`, `Source/diablo.cpp`, `Source/engine/render/scrollrt.cpp`  
+**Archivos**: `Source/nightmare_weather.h`, `Source/nightmare_weather.cpp`, `Source/diablo.cpp`, `Source/engine/render/scrollrt.cpp`, `Source/monster.cpp`  
 **Riesgo**: ⭐ Muy Bajo  
-**Estado**: ✅ **IMPLEMENTADO Y LISTO PARA TESTING**
+**Estado**: ✅ **ENTERPRISE-GRADE - LISTO PARA UPSTREAM**
 
 **Funcionalidades Completas**:
 
-##### **🌧️ Sistema de Lluvia Avanzado**
-- ✅ **220 Gotas Simultáneas** con 3 tipos:
-  - **Fina (40%)**: Velocidad 1-2 px/frame, longitud 1-2 px
-  - **Media (40%)**: Velocidad 2-3 px/frame, longitud 2-4 px  
-  - **Pesada (20%)**: Velocidad 3-5 px/frame, longitud 4-6 px
+##### **🌧️ Sistema de Lluvia Enterprise**
+- ✅ **Densidad Responsiva**: MIN_RAIN_DROPS-MAX_RAIN_DROPS según resolución
+- ✅ **Rain Budget**: MAX_RAIN_UPDATES_PER_FRAME (blindaje contra mods extremos)
+- ✅ **3 tipos con micro-varianza**:
+  - **Fina (40%)**: Velocidad 1-2 px/frame, ocasionalmente "flotan" (-1 px)
+  - **Media (40%)**: Velocidad 2-3 px/frame, comportamiento estándar
+  - **Pesada (20%)**: Velocidad 3-5 px/frame, ocasionalmente "pesan" (+1 px)
 - ✅ **Sistema de Capas**: 60% atrás de personajes, 40% adelante
-- ✅ **Viento Dinámico**: Cambia cada 8-12 segundos, offset sutil ±3px
+- ✅ **Viento Interpolado**: Transiciones suaves de 2 segundos (no abruptas)
+- ✅ **Atenuación por Luz**: Gotas más claras cerca del jugador
 - ✅ **Colores Optimizados**: Grises 240-247 para atmósfera de Diablo
+
+##### **🏗️ Mejoras Enterprise Implementadas**
+- ✅ **Thread Safety**: Documentado como single-threaded by design
+- ✅ **Magic Numbers Eliminados**: DIABLO_DEATH_TIMER = 140
+- ✅ **Constantes Nombradas**: MIN/MAX_RAIN_DROPS, RAIN_DENSITY_DIVISOR
+- ✅ **Debug Reproducible**: Seed determinístico en debug builds
+- ✅ **Feature Flag**: ENABLE_NIGHTMARE_WEATHER compile-time control
+- ✅ **Blindaje Extra**: dPiece[x][y] != 0 check en decoraciones
 
 ##### **🌫️ Sistema de Niebla (Opcional)**
 - ✅ **8 Frames de Animación**: 500ms por frame para movimiento lento
@@ -169,40 +180,66 @@ void EnhanceDecorativeDensity() {
 ##### **🎯 Integración Perfecta**
 - ✅ **Solo en Tristram**: `leveltype == DTYPE_TOWN`
 - ✅ **UI Intacta**: Respeta viewport, no interfiere con HUD
+- ✅ **Supresión Inteligente**: Durante menús, inventario, pausa
 - ✅ **Renderizado Correcto**: Fondo → Personajes → Frente
 - ✅ **Performance Optimizada**: CPU-only, compatible con hardware vintage
 
-**Arquitectura del Sistema**:
+**Arquitectura del Sistema Enterprise**:
 ```cpp
+// Compile-time control
+#ifndef ENABLE_NIGHTMARE_WEATHER
+#define ENABLE_NIGHTMARE_WEATHER 1
+#endif
+
+// Thread safety documentation
+// NOT THREAD-SAFE BY DESIGN.
+// DevilutionX render & game loop are single-threaded.
+static WeatherState gWeather;
+
+// Named constants (no magic numbers)
+constexpr int MIN_RAIN_DROPS = 120;
+constexpr int MAX_RAIN_DROPS = 300;
+constexpr int RAIN_DENSITY_DIVISOR = 18000;
+constexpr int MAX_RAIN_UPDATES_PER_FRAME = 400;
+constexpr int DIABLO_DEATH_TIMER = 140;
+
+// Debug reproducibility
+#ifdef _DEBUG
+static std::mt19937 weatherRng(0xDEADBEEF);
+#endif
+
 struct WeatherState {
     bool enabled;
+    WeatherContext context;
     struct {
-        bool enabled;
-        float intensity;
-        std::array<RainDrop, 220> drops;
-        GlobalWind wind;
+        std::vector<RainDrop> drops;  // Responsive density
+        int targetDropCount;          // Based on resolution
+        float windTransition;         // Smooth interpolation
+        float targetWindDirection;    // Target direction
+        float targetWindStrength;     // Target strength
     } rain;
-    struct {
-        bool enabled;
-        int frame;
-        uint8_t alpha;
-        float intensity;
-    } fog;
+    struct { /* fog */ } fog;
 };
 
-// Integración en game loop
+// Integration in game loop
 void DiabloInit() {
-    InitNightmareWeather(); // Inicialización una vez
+#if ENABLE_NIGHTMARE_WEATHER
+    InitNightmareWeather(); // One-time initialization
+#endif
 }
 
 void GameLogic() {
-    UpdateNightmareWeather(1.0f / 60.0f); // Actualización cada frame
+#if ENABLE_NIGHTMARE_WEATHER
+    UpdateNightmareWeather(1.0f / 60.0f); // Per-frame update
+#endif
 }
 
 void DrawAndBlit() {
-    RenderNightmareWeather(); // Capa de fondo
-    // ... renderizado de personajes ...
-    DrawRainLayer(RainLayer::FRONT); // Capa frontal
+#if ENABLE_NIGHTMARE_WEATHER
+    RenderNightmareWeather(); // Background layer
+    // ... character rendering ...
+    DrawRainLayer(RainLayer::FRONT); // Foreground layer
+#endif
 }
 ```
 
@@ -607,8 +644,8 @@ valgrind --leak-check=full ./build/devilutionx
 
 **Desarrollado con**: Pasión por Diablo, respeto por el código original, y compromiso con la excelencia técnica.  
 **Fecha**: Enero 2026  
-**Versión**: 1.0.0 - "Nightmare Weather Edition"  
-**Estado**: ✅ **IMPLEMENTACIÓN COMPLETA - LISTO PARA LA ETERNIDAD**
+**Versión**: 1.0.0 - "Enterprise Weather Edition"  
+**Estado**: ✅ **ENTERPRISE-GRADE - LISTO PARA LA ETERNIDAD**
 
 ---
 

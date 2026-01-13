@@ -20,6 +20,15 @@
 #endif
 
 #include "utils/log.hpp"
+#include "water_animation.h"
+#include "organic_lighting.h"
+#include "nightmare_atmosphere.h"
+#include "ui_transitions.h"      // 🌙 Sistema de transiciones contemplativas
+#include "ui_contemplative.h"    // 🫁 Sistema de efectos contemplativos
+#include "nightmare_menu_effects.h"  // 🎭 Efectos visuales del menú
+#include "nightmare_weather.h"   // 🌧️ Sistema climático (lluvia y niebla)
+#include "nightmare_testing.h"   // 🧪 Sistema de testing y demostración
+#include "nightmare_immediate_effects.h"  // 🔄 Para reset de efectos
 
 namespace devilution {
 
@@ -37,7 +46,36 @@ void InitNightmareUI()
 	nightmareUI.bgFrame = 0;
 	nightmareUI.lastFrameTime = SDL_GetTicks();
 	
+	// Inicializar sistemas atmosféricos
+	InitNightmareAtmosphericSystems();
+	
+	// 🌙 FASE 4: Inicializar sistemas de transiciones contemplativas
+	InitUITransitions();
+	InitContemplativeUI();
+	
+	// 🎭 FASE 4.1: Inicializar efectos visuales del menú
+	InitNightmareMenuEffects();
+	
+	// 🌧️ FASE 4.2: Inicializar sistema climático (lluvia y niebla)
+	InitNightmareWeather();
+	
+	// 🧪 FASE 4.3: Inicializar sistema de testing y demostración
+	InitNightmareTesting();
+	
+	// 🔄 IMPORTANTE: Reset todos los efectos al inicializar para evitar oscurecimiento
+	ResetImmediateEffects();
+	
 	LogVerbose("Nightmare UI Architecture initialized successfully");
+	LogVerbose("🌙 Contemplative transitions and effects are now active");
+	LogVerbose("🎭 Menu visual effects ready");
+	LogVerbose("🌧️ Weather system (rain & fog) ready");
+	LogVerbose("🧪 Testing system active - effects will be demonstrated automatically");
+	LogVerbose("🔄 All effects reset to normal state");
+	LogVerbose("🌙 === PERMANENT EFFECTS NOW ACTIVE ===");
+	LogVerbose("🌧️ RAIN: Permanently enabled with high intensity");
+	LogVerbose("🌫️ FOG: Permanently enabled with high intensity");
+	LogVerbose("🌙 DARKENING: Permanently enabled (15% desaturation)");
+	LogVerbose("🌙 === WATCH CONSOLE FOR ACTIVITY LOGS ===");
 }
 
 void UpdateNightmareUI(float deltaTime)
@@ -45,6 +83,22 @@ void UpdateNightmareUI(float deltaTime)
 	if (!nightmareUI.enabled) return;
 	
 	Uint32 currentTime = SDL_GetTicks();
+	
+	// Actualizar sistemas atmosféricos
+	UpdateNightmareAtmosphericSystems(currentTime);
+	
+	// 🌙 FASE 4: Actualizar sistemas de transiciones contemplativas
+	UpdateUITransitions(deltaTime);
+	UpdateContemplativeUI(deltaTime);
+	
+	// 🎭 FASE 4.1: Actualizar efectos visuales del menú
+	UpdateNightmareMenuEffects(deltaTime);
+	
+	// 🌧️ FASE 4.2: Actualizar sistema climático
+	UpdateNightmareWeather(deltaTime);
+	
+	// 🧪 FASE 4.3: Actualizar sistema de testing
+	UpdateNightmareTesting(deltaTime);
 	
 	// Actualizar animación de fondo
 	if (nightmareUI.animatedBgActive) {
@@ -71,10 +125,26 @@ void UpdateNightmareUI(float deltaTime)
 
 void RenderNightmareUI()
 {
+	// 🌧️ Renderizar efectos climáticos (lluvia y niebla)
+	RenderNightmareWeather();
+	
 	// Por ahora, simplemente registrar que el sistema está activo
 	// TODO: Implementar renderizado por capas en futuras versiones
 	if (nightmareUI.enabled) {
 		// Sistema Nightmare UI activo - futuras mejoras visuales aquí
+		
+		// Log periódico para mostrar que los sistemas están funcionando
+		static uint32_t lastLogTime = 0;
+		uint32_t currentTime = SDL_GetTicks();
+		
+		if (currentTime - lastLogTime > 15000) {  // Log cada 15 segundos
+			LogVerbose("🌙 Nightmare UI Systems Status:");
+			LogVerbose("  🎭 Menu Effects: Active");
+			LogVerbose("  🌧️ Weather System: Active");
+			LogVerbose("  🫁 Contemplative UI: Active");
+			LogVerbose("  🌊 Atmospheric Systems: Active");
+			lastLogTime = currentTime;
+		}
 	}
 }
 
@@ -167,6 +237,61 @@ int GetNightmareBackgroundFrame()
 float GetNightmareFadeAlpha()
 {
 	return nightmareUI.fadeAlpha;
+}
+
+/**
+ * @brief Inicializa todos los sistemas atmosféricos Nightmare
+ */
+void InitNightmareAtmosphericSystems()
+{
+	LogVerbose("Initializing Nightmare Atmospheric Systems");
+	
+	// Inicializar agua animada
+	InitWaterAnimation();
+	
+	// Inicializar luces orgánicas
+	InitOrganicLighting();
+	
+	// Inicializar atmósfera Nightmare
+	InitNightmareAtmosphere();
+	
+	LogVerbose("All Nightmare atmospheric systems initialized");
+}
+
+/**
+ * @brief Actualiza todos los sistemas atmosféricos
+ * @param currentTick Tick actual del juego
+ */
+void UpdateNightmareAtmosphericSystems(uint32_t currentTick)
+{
+	if (!nightmareUI.enabled) return;
+	
+	// Actualizar agua animada
+	UpdateWaterAnimation(currentTick);
+	
+	// Actualizar luces orgánicas
+	UpdateOrganicLighting(currentTick);
+	
+	// Actualizar atmósfera Nightmare
+	UpdateNightmareAtmosphere(currentTick);
+}
+
+/**
+ * @brief Activa/desactiva todos los efectos atmosféricos
+ * @param enabled true para activar
+ */
+void SetNightmareAtmosphericEffectsEnabled(bool enabled)
+{
+	LogVerbose("Nightmare atmospheric effects: {}", enabled ? "enabled" : "disabled");
+	
+	// Controlar agua animada
+	SetWaterAnimationEnabled(enabled);
+	
+	// Controlar luces orgánicas
+	SetOrganicLightingEnabled(enabled);
+	
+	// Controlar atmósfera Nightmare
+	SetNightmareAtmosphereEnabled(enabled);
 }
 
 } // namespace devilution

@@ -30,7 +30,11 @@
 #include <SDL.h>
 #endif
 
+// Forward declarations for atmospheric systems
 namespace devilution {
+class WaterAnimationState;
+class OrganicLightingState;
+class NightmareAtmosphereState;
 
 /**
  * @brief Capas de renderizado Nightmare Edition
@@ -127,5 +131,22 @@ int GetNightmareBackgroundFrame();
  * @return Alpha value (0.0-1.0)
  */
 float GetNightmareFadeAlpha();
+
+/**
+ * @brief Inicializa todos los sistemas atmosféricos Nightmare
+ */
+void InitNightmareAtmosphericSystems();
+
+/**
+ * @brief Actualiza todos los sistemas atmosféricos
+ * @param currentTick Tick actual del juego
+ */
+void UpdateNightmareAtmosphericSystems(uint32_t currentTick);
+
+/**
+ * @brief Activa/desactiva todos los efectos atmosféricos
+ * @param enabled true para activar
+ */
+void SetNightmareAtmosphericEffectsEnabled(bool enabled);
 
 } // namespace devilution

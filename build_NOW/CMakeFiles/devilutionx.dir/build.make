@@ -222,7 +222,19 @@ devilutionx_EXTERNAL_OBJECTS = \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/towners.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/track.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/ui_nightmare.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/ui_transitions.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/ui_contemplative.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/ui_integration.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/nightmare_menu_effects.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/nightmare_weather.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/nightmare_menu_contemplative.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/nightmare_testing.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/nightmare_immediate_effects.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/waiting_enemies.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/water_animation.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/organic_lighting.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/nightmare_atmosphere.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/tile_detective.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/control/control_chat.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/control/control_chat_commands.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/control/control_flasks.cpp.obj" \
@@ -476,7 +488,19 @@ devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/tmsg.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/towners.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/track.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/ui_nightmare.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/ui_transitions.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/ui_contemplative.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/ui_integration.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/nightmare_menu_effects.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/nightmare_weather.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/nightmare_menu_contemplative.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/nightmare_testing.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/nightmare_immediate_effects.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/waiting_enemies.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/water_animation.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/organic_lighting.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/nightmare_atmosphere.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/tile_detective.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/control/control_chat.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/control/control_chat_commands.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/control/control_flasks.cpp.obj

@@ -44,7 +44,20 @@ set(libdevilutionx_SRCS
   towners.cpp
   track.cpp
   ui_nightmare.cpp
+  ui_transitions.cpp
+  ui_contemplative.cpp
+  ui_integration.cpp
+  nightmare_menu_effects.cpp
+  nightmare_weather.cpp
+  nightmare_menu_contemplative.cpp
+  nightmare_testing.cpp
+  nightmare_immediate_effects.cpp
   waiting_enemies.cpp
+  water_animation.cpp
+  organic_lighting.cpp
+  nightmare_atmosphere.cpp
+  tile_detective.cpp
+  tile_detective.cpp
 
   control/control_chat.cpp
   control/control_chat_commands.cpp

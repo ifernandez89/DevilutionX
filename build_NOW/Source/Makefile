@@ -5157,6 +5157,150 @@ multi.cpp.s:
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_multiplayer.dir\build.make Source/CMakeFiles/libdevilutionx_multiplayer.dir/multi.cpp.s
 .PHONY : multi.cpp.s
 
+nightmare_atmosphere.obj: nightmare_atmosphere.cpp.obj
+.PHONY : nightmare_atmosphere.obj
+
+# target to build an object file
+nightmare_atmosphere.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/nightmare_atmosphere.cpp.obj
+.PHONY : nightmare_atmosphere.cpp.obj
+
+nightmare_atmosphere.i: nightmare_atmosphere.cpp.i
+.PHONY : nightmare_atmosphere.i
+
+# target to preprocess a source file
+nightmare_atmosphere.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/nightmare_atmosphere.cpp.i
+.PHONY : nightmare_atmosphere.cpp.i
+
+nightmare_atmosphere.s: nightmare_atmosphere.cpp.s
+.PHONY : nightmare_atmosphere.s
+
+# target to generate assembly for a file
+nightmare_atmosphere.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/nightmare_atmosphere.cpp.s
+.PHONY : nightmare_atmosphere.cpp.s
+
+nightmare_immediate_effects.obj: nightmare_immediate_effects.cpp.obj
+.PHONY : nightmare_immediate_effects.obj
+
+# target to build an object file
+nightmare_immediate_effects.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/nightmare_immediate_effects.cpp.obj
+.PHONY : nightmare_immediate_effects.cpp.obj
+
+nightmare_immediate_effects.i: nightmare_immediate_effects.cpp.i
+.PHONY : nightmare_immediate_effects.i
+
+# target to preprocess a source file
+nightmare_immediate_effects.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/nightmare_immediate_effects.cpp.i
+.PHONY : nightmare_immediate_effects.cpp.i
+
+nightmare_immediate_effects.s: nightmare_immediate_effects.cpp.s
+.PHONY : nightmare_immediate_effects.s
+
+# target to generate assembly for a file
+nightmare_immediate_effects.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/nightmare_immediate_effects.cpp.s
+.PHONY : nightmare_immediate_effects.cpp.s
+
+nightmare_menu_contemplative.obj: nightmare_menu_contemplative.cpp.obj
+.PHONY : nightmare_menu_contemplative.obj
+
+# target to build an object file
+nightmare_menu_contemplative.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/nightmare_menu_contemplative.cpp.obj
+.PHONY : nightmare_menu_contemplative.cpp.obj
+
+nightmare_menu_contemplative.i: nightmare_menu_contemplative.cpp.i
+.PHONY : nightmare_menu_contemplative.i
+
+# target to preprocess a source file
+nightmare_menu_contemplative.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/nightmare_menu_contemplative.cpp.i
+.PHONY : nightmare_menu_contemplative.cpp.i
+
+nightmare_menu_contemplative.s: nightmare_menu_contemplative.cpp.s
+.PHONY : nightmare_menu_contemplative.s
+
+# target to generate assembly for a file
+nightmare_menu_contemplative.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/nightmare_menu_contemplative.cpp.s
+.PHONY : nightmare_menu_contemplative.cpp.s
+
+nightmare_menu_effects.obj: nightmare_menu_effects.cpp.obj
+.PHONY : nightmare_menu_effects.obj
+
+# target to build an object file
+nightmare_menu_effects.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/nightmare_menu_effects.cpp.obj
+.PHONY : nightmare_menu_effects.cpp.obj
+
+nightmare_menu_effects.i: nightmare_menu_effects.cpp.i
+.PHONY : nightmare_menu_effects.i
+
+# target to preprocess a source file
+nightmare_menu_effects.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/nightmare_menu_effects.cpp.i
+.PHONY : nightmare_menu_effects.cpp.i
+
+nightmare_menu_effects.s: nightmare_menu_effects.cpp.s
+.PHONY : nightmare_menu_effects.s
+
+# target to generate assembly for a file
+nightmare_menu_effects.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/nightmare_menu_effects.cpp.s
+.PHONY : nightmare_menu_effects.cpp.s
+
+nightmare_testing.obj: nightmare_testing.cpp.obj
+.PHONY : nightmare_testing.obj
+
+# target to build an object file
+nightmare_testing.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/nightmare_testing.cpp.obj
+.PHONY : nightmare_testing.cpp.obj
+
+nightmare_testing.i: nightmare_testing.cpp.i
+.PHONY : nightmare_testing.i
+
+# target to preprocess a source file
+nightmare_testing.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/nightmare_testing.cpp.i
+.PHONY : nightmare_testing.cpp.i
+
+nightmare_testing.s: nightmare_testing.cpp.s
+.PHONY : nightmare_testing.s
+
+# target to generate assembly for a file
+nightmare_testing.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/nightmare_testing.cpp.s
+.PHONY : nightmare_testing.cpp.s
+
+nightmare_weather.obj: nightmare_weather.cpp.obj
+.PHONY : nightmare_weather.obj
+
+# target to build an object file
+nightmare_weather.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/nightmare_weather.cpp.obj
+.PHONY : nightmare_weather.cpp.obj
+
+nightmare_weather.i: nightmare_weather.cpp.i
+.PHONY : nightmare_weather.i
+
+# target to preprocess a source file
+nightmare_weather.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/nightmare_weather.cpp.i
+.PHONY : nightmare_weather.cpp.i
+
+nightmare_weather.s: nightmare_weather.cpp.s
+.PHONY : nightmare_weather.s
+
+# target to generate assembly for a file
+nightmare_weather.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/nightmare_weather.cpp.s
+.PHONY : nightmare_weather.cpp.s
+
 nthread.obj: nthread.cpp.obj
 .PHONY : nthread.obj
 
@@ -5228,6 +5372,30 @@ options.s: options.cpp.s
 options.cpp.s:
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_options.dir\build.make Source/CMakeFiles/libdevilutionx_options.dir/options.cpp.s
 .PHONY : options.cpp.s
+
+organic_lighting.obj: organic_lighting.cpp.obj
+.PHONY : organic_lighting.obj
+
+# target to build an object file
+organic_lighting.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/organic_lighting.cpp.obj
+.PHONY : organic_lighting.cpp.obj
+
+organic_lighting.i: organic_lighting.cpp.i
+.PHONY : organic_lighting.i
+
+# target to preprocess a source file
+organic_lighting.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/organic_lighting.cpp.i
+.PHONY : organic_lighting.cpp.i
+
+organic_lighting.s: organic_lighting.cpp.s
+.PHONY : organic_lighting.s
+
+# target to generate assembly for a file
+organic_lighting.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/organic_lighting.cpp.s
+.PHONY : organic_lighting.cpp.s
 
 pack.obj: pack.cpp.obj
 .PHONY : pack.obj
@@ -6285,6 +6453,30 @@ tables/townerdat.cpp.s:
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/tables/townerdat.cpp.s
 .PHONY : tables/townerdat.cpp.s
 
+tile_detective.obj: tile_detective.cpp.obj
+.PHONY : tile_detective.obj
+
+# target to build an object file
+tile_detective.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/tile_detective.cpp.obj
+.PHONY : tile_detective.cpp.obj
+
+tile_detective.i: tile_detective.cpp.i
+.PHONY : tile_detective.i
+
+# target to preprocess a source file
+tile_detective.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/tile_detective.cpp.i
+.PHONY : tile_detective.cpp.i
+
+tile_detective.s: tile_detective.cpp.s
+.PHONY : tile_detective.s
+
+# target to generate assembly for a file
+tile_detective.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/tile_detective.cpp.s
+.PHONY : tile_detective.cpp.s
+
 tmsg.obj: tmsg.cpp.obj
 .PHONY : tmsg.obj
 
@@ -6381,6 +6573,54 @@ track.cpp.s:
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/track.cpp.s
 .PHONY : track.cpp.s
 
+ui_contemplative.obj: ui_contemplative.cpp.obj
+.PHONY : ui_contemplative.obj
+
+# target to build an object file
+ui_contemplative.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/ui_contemplative.cpp.obj
+.PHONY : ui_contemplative.cpp.obj
+
+ui_contemplative.i: ui_contemplative.cpp.i
+.PHONY : ui_contemplative.i
+
+# target to preprocess a source file
+ui_contemplative.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/ui_contemplative.cpp.i
+.PHONY : ui_contemplative.cpp.i
+
+ui_contemplative.s: ui_contemplative.cpp.s
+.PHONY : ui_contemplative.s
+
+# target to generate assembly for a file
+ui_contemplative.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/ui_contemplative.cpp.s
+.PHONY : ui_contemplative.cpp.s
+
+ui_integration.obj: ui_integration.cpp.obj
+.PHONY : ui_integration.obj
+
+# target to build an object file
+ui_integration.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/ui_integration.cpp.obj
+.PHONY : ui_integration.cpp.obj
+
+ui_integration.i: ui_integration.cpp.i
+.PHONY : ui_integration.i
+
+# target to preprocess a source file
+ui_integration.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/ui_integration.cpp.i
+.PHONY : ui_integration.cpp.i
+
+ui_integration.s: ui_integration.cpp.s
+.PHONY : ui_integration.s
+
+# target to generate assembly for a file
+ui_integration.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/ui_integration.cpp.s
+.PHONY : ui_integration.cpp.s
+
 ui_nightmare.obj: ui_nightmare.cpp.obj
 .PHONY : ui_nightmare.obj
 
@@ -6404,6 +6644,30 @@ ui_nightmare.s: ui_nightmare.cpp.s
 ui_nightmare.cpp.s:
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/ui_nightmare.cpp.s
 .PHONY : ui_nightmare.cpp.s
+
+ui_transitions.obj: ui_transitions.cpp.obj
+.PHONY : ui_transitions.obj
+
+# target to build an object file
+ui_transitions.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/ui_transitions.cpp.obj
+.PHONY : ui_transitions.cpp.obj
+
+ui_transitions.i: ui_transitions.cpp.i
+.PHONY : ui_transitions.i
+
+# target to preprocess a source file
+ui_transitions.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/ui_transitions.cpp.i
+.PHONY : ui_transitions.cpp.i
+
+ui_transitions.s: ui_transitions.cpp.s
+.PHONY : ui_transitions.s
+
+# target to generate assembly for a file
+ui_transitions.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/ui_transitions.cpp.s
+.PHONY : ui_transitions.cpp.s
 
 utils/cel_to_clx.obj: utils/cel_to_clx.cpp.obj
 .PHONY : utils/cel_to_clx.obj
@@ -7053,6 +7317,30 @@ waiting_enemies.cpp.s:
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/waiting_enemies.cpp.s
 .PHONY : waiting_enemies.cpp.s
 
+water_animation.obj: water_animation.cpp.obj
+.PHONY : water_animation.obj
+
+# target to build an object file
+water_animation.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/water_animation.cpp.obj
+.PHONY : water_animation.cpp.obj
+
+water_animation.i: water_animation.cpp.i
+.PHONY : water_animation.i
+
+# target to preprocess a source file
+water_animation.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/water_animation.cpp.i
+.PHONY : water_animation.cpp.i
+
+water_animation.s: water_animation.cpp.s
+.PHONY : water_animation.s
+
+# target to generate assembly for a file
+water_animation.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/water_animation.cpp.s
+.PHONY : water_animation.cpp.s
+
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -7643,6 +7931,24 @@ help:
 	@echo ... multi.obj
 	@echo ... multi.i
 	@echo ... multi.s
+	@echo ... nightmare_atmosphere.obj
+	@echo ... nightmare_atmosphere.i
+	@echo ... nightmare_atmosphere.s
+	@echo ... nightmare_immediate_effects.obj
+	@echo ... nightmare_immediate_effects.i
+	@echo ... nightmare_immediate_effects.s
+	@echo ... nightmare_menu_contemplative.obj
+	@echo ... nightmare_menu_contemplative.i
+	@echo ... nightmare_menu_contemplative.s
+	@echo ... nightmare_menu_effects.obj
+	@echo ... nightmare_menu_effects.i
+	@echo ... nightmare_menu_effects.s
+	@echo ... nightmare_testing.obj
+	@echo ... nightmare_testing.i
+	@echo ... nightmare_testing.s
+	@echo ... nightmare_weather.obj
+	@echo ... nightmare_weather.i
+	@echo ... nightmare_weather.s
 	@echo ... nthread.obj
 	@echo ... nthread.i
 	@echo ... nthread.s
@@ -7652,6 +7958,9 @@ help:
 	@echo ... options.obj
 	@echo ... options.i
 	@echo ... options.s
+	@echo ... organic_lighting.obj
+	@echo ... organic_lighting.i
+	@echo ... organic_lighting.s
 	@echo ... pack.obj
 	@echo ... pack.i
 	@echo ... pack.s
@@ -7784,6 +8093,9 @@ help:
 	@echo ... tables/townerdat.obj
 	@echo ... tables/townerdat.i
 	@echo ... tables/townerdat.s
+	@echo ... tile_detective.obj
+	@echo ... tile_detective.i
+	@echo ... tile_detective.s
 	@echo ... tmsg.obj
 	@echo ... tmsg.i
 	@echo ... tmsg.s
@@ -7796,9 +8108,18 @@ help:
 	@echo ... track.obj
 	@echo ... track.i
 	@echo ... track.s
+	@echo ... ui_contemplative.obj
+	@echo ... ui_contemplative.i
+	@echo ... ui_contemplative.s
+	@echo ... ui_integration.obj
+	@echo ... ui_integration.i
+	@echo ... ui_integration.s
 	@echo ... ui_nightmare.obj
 	@echo ... ui_nightmare.i
 	@echo ... ui_nightmare.s
+	@echo ... ui_transitions.obj
+	@echo ... ui_transitions.i
+	@echo ... ui_transitions.s
 	@echo ... utils/cel_to_clx.obj
 	@echo ... utils/cel_to_clx.i
 	@echo ... utils/cel_to_clx.s
@@ -7880,6 +8201,9 @@ help:
 	@echo ... waiting_enemies.obj
 	@echo ... waiting_enemies.i
 	@echo ... waiting_enemies.s
+	@echo ... water_animation.obj
+	@echo ... water_animation.i
+	@echo ... water_animation.s
 .PHONY : help
 
 

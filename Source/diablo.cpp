@@ -48,6 +48,10 @@
 #include "engine/backbuffer_state.hpp"
 #include "engine/clx_sprite.hpp"
 #include "engine/demomode.h"
+#include "ui_nightmare.h"
+#include "tile_detective.h"
+#include "nightmare_testing.h"  // 🧪 Para funciones de testing
+#include "nightmare_immediate_effects.h"  // 🎭 Para efectos inmediatos visibles
 #include "engine/dx.h"
 #include "engine/events.hpp"
 #include "global_protection_system.h" // 🛡️ Global Protection System
@@ -608,6 +612,48 @@ void PressKey(SDL_Keycode vkey, uint16_t modState)
 	case SDLK_F12:
 		// 🎮 FEATURE #8: Toggle Advanced Debug System
 		ToggleAdvancedDebug();
+		return;
+	case SDLK_F11:
+		// 🔄 NIGHTMARE TESTING: RESET all effects to normal
+		LogVerbose("🔄 KEY F11 PRESSED - Resetting all effects");
+		ResetImmediateEffects();
+		return;
+	case SDLK_F10:
+		// 🎭 NIGHTMARE TESTING: Show active effects info
+		LogVerbose("🎭 KEY F10 PRESSED - Showing effects info");
+		ShowActiveEffectsInfo();
+		return;
+	case SDLK_F9:
+		// 🎭 NIGHTMARE TESTING: Show systems status
+		LogVerbose("🎭 KEY F9 PRESSED - Showing systems status");
+		ShowNightmareSystemsStatus();
+		return;
+	case SDLK_F8:
+		// 🌫️ NIGHTMARE TESTING: Toggle visual fog (immediate effect)
+		LogVerbose("🌫️ KEY F8 PRESSED - Toggling visual fog");
+		ToggleVisualFog();
+		return;
+	case SDLK_F7:
+		// 🌙 NIGHTMARE TESTING: Toggle visual darkening
+		LogVerbose("🌙 KEY F7 PRESSED - Toggling visual darkening");
+		ToggleVisualDarkening();
+		return;
+	case SDLK_F6:
+		// 🌧️ NIGHTMARE TESTING: Toggle rain
+		LogVerbose("🌧️ KEY F6 PRESSED - Toggling rain");
+		ToggleRainForTesting();
+		return;
+	case SDLK_t:
+		// 🔍 TILE DETECTIVE: Toggle capture mode (only in town)
+		if (leveltype == DTYPE_TOWN) {
+			SetTileDetectiveCapture(!tileDetective.captureMode);
+		}
+		return;
+	case SDLK_e:
+		// 🔍 TILE DETECTIVE: Export detected tiles (only in town)
+		if (leveltype == DTYPE_TOWN) {
+			ExportDetectedTiles();
+		}
 		return;
 	case SDLK_PLUS:
 	case SDLK_KP_PLUS:
@@ -1328,6 +1374,12 @@ void DiabloInit()
 
 	ui_sound_init();
 
+	// 🌙 NIGHTMARE UI - Initialize Nightmare UI Architecture
+	InitNightmareUI();
+
+	// 🔍 TILE DETECTIVE - Initialize tile detection system
+	InitTileDetective();
+
 	// Item graphics are loaded early, they already get touched during hero selection.
 	InitItemGFX();
 
@@ -1623,6 +1675,13 @@ void GameLogic()
 #endif
 
 	sound_update();
+	
+	// 🌙 NIGHTMARE UI - Update Atmospheric Systems
+	UpdateNightmareUI(0.016f); // Assuming ~60 FPS (16ms per frame)
+	
+	// 🔍 TILE DETECTIVE - Update tile detection
+	UpdateTileDetective();
+	
 	CheckTriggers();
 	CheckQuests();
 	RedrawViewport();

@@ -11,11 +11,9 @@ Source/CMakeFiles/libdevilutionx_monster.dir/monster.cpp.obj: C:/c\ -\ c++/Devil
   _deps/magic_enum-src/include/magic_enum/magic_enum.hpp \
   _deps/unordered_dense-src/include/ankerl/unordered_dense.h \
   C:/c\ -\ c++/DevilutionX/Source/DiabloUI/text_input.hpp \
-  C:/c\ -\ c++/DevilutionX/Source/DiabloUI/ui_flags.hpp \
   C:/c\ -\ c++/DevilutionX/Source/appfat.h \
   C:/c\ -\ c++/DevilutionX/Source/cursor.h \
   C:/c\ -\ c++/DevilutionX/Source/diablo.h \
-  C:/c\ -\ c++/DevilutionX/Source/dvlnet/leaveinfo.hpp \
   C:/c\ -\ c++/DevilutionX/Source/effects.h \
   C:/c\ -\ c++/DevilutionX/Source/engine/animationinfo.h \
   C:/c\ -\ c++/DevilutionX/Source/engine/assets.hpp \
@@ -36,24 +34,16 @@ Source/CMakeFiles/libdevilutionx_monster.dir/monster.cpp.obj: C:/c\ -\ c++/Devil
   C:/c\ -\ c++/DevilutionX/Source/engine/world_tile.hpp \
   C:/c\ -\ c++/DevilutionX/Source/headless_mode.hpp \
   C:/c\ -\ c++/DevilutionX/Source/interfac.h \
-  C:/c\ -\ c++/DevilutionX/Source/items.h \
   C:/c\ -\ c++/DevilutionX/Source/items/validation.h \
   C:/c\ -\ c++/DevilutionX/Source/levels/dun_tile.hpp \
   C:/c\ -\ c++/DevilutionX/Source/levels/gendung.h \
   C:/c\ -\ c++/DevilutionX/Source/levels/gendung_defs.hpp \
   C:/c\ -\ c++/DevilutionX/Source/mpq/mpq_common.hpp \
   C:/c\ -\ c++/DevilutionX/Source/mpq/mpq_reader.hpp \
-  C:/c\ -\ c++/DevilutionX/Source/msg.h \
-  C:/c\ -\ c++/DevilutionX/Source/multi.h \
-  C:/c\ -\ c++/DevilutionX/Source/objects.h \
-  C:/c\ -\ c++/DevilutionX/Source/panels/info_box.hpp \
   C:/c\ -\ c++/DevilutionX/Source/panels/ui_panels.hpp \
   C:/c\ -\ c++/DevilutionX/Source/player.h \
-  C:/c\ -\ c++/DevilutionX/Source/portal.h \
-  C:/c\ -\ c++/DevilutionX/Source/quests.h \
   C:/c\ -\ c++/DevilutionX/Source/sound_effect_enums.h \
   C:/c\ -\ c++/DevilutionX/Source/spells.h \
-  C:/c\ -\ c++/DevilutionX/Source/tables/itemdat.h \
   C:/c\ -\ c++/DevilutionX/Source/tables/objdat.h \
   C:/c\ -\ c++/DevilutionX/Source/tables/playerdat.hpp \
   C:/c\ -\ c++/DevilutionX/Source/tables/spelldat.h \
@@ -67,7 +57,6 @@ Source/CMakeFiles/libdevilutionx_monster.dir/monster.cpp.obj: C:/c\ -\ c++/Devil
   C:/c\ -\ c++/DevilutionX/Source/utils/enum_traits.h \
   C:/c\ -\ c++/DevilutionX/Source/utils/file_util.h \
   C:/c\ -\ c++/DevilutionX/Source/utils/intrusive_optional.hpp \
-  C:/c\ -\ c++/DevilutionX/Source/utils/is_of.hpp \
   C:/c\ -\ c++/DevilutionX/Source/utils/pointer_value_union.hpp \
   C:/c\ -\ c++/DevilutionX/Source/utils/sdl2_backports.h \
   C:/c\ -\ c++/DevilutionX/Source/utils/sdl_compat.h \
@@ -79,7 +68,6 @@ Source/CMakeFiles/libdevilutionx_monster.dir/monster.cpp.obj: C:/c\ -\ c++/Devil
   C:/c\ -\ c++/DevilutionX/Source/utils/status_macros.hpp \
   C:/c\ -\ c++/DevilutionX/Source/utils/stdcompat/shared_ptr_array.hpp \
   C:/c\ -\ c++/DevilutionX/Source/utils/str_cat.hpp \
-  C:/c\ -\ c++/DevilutionX/Source/utils/string_or_view.hpp \
   C:/c\ -\ c++/DevilutionX/Source/utils/ui_fwd.h \
   C:/c\ -\ c++/DevilutionX/Source/utils/utf8.hpp \
   C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL.h \
@@ -198,6 +186,8 @@ Source/CMakeFiles/libdevilutionx_monster.dir/monster.cpp.obj: C:/c\ -\ c++/Devil
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/char_traits.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/charconv.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/chrono.h \
+  C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/chrono_io.h \
+  C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/codecvt.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/concept_check.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/cpp_type_traits.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/cxxabi_forced.h \
@@ -209,6 +199,7 @@ Source/CMakeFiles/libdevilutionx_monster.dir/monster.cpp.obj: C:/c\ -\ c++/Devil
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/exception_ptr.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/forward_list.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/forward_list.tcc \
+  C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/fstream.tcc \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/functexcept.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/functional_hash.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/hash_bytes.h \
@@ -216,12 +207,16 @@ Source/CMakeFiles/libdevilutionx_monster.dir/monster.cpp.obj: C:/c\ -\ c++/Devil
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/hashtable_policy.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/invoke.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/ios_base.h \
+  C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/istream.tcc \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/iterator_concepts.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/list.tcc \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/locale_classes.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/locale_classes.tcc \
+  C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/locale_conv.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/locale_facets.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/locale_facets.tcc \
+  C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/locale_facets_nonio.h \
+  C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/locale_facets_nonio.tcc \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/localefwd.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/max_size_type.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/memory_resource.h \
@@ -236,6 +231,7 @@ Source/CMakeFiles/libdevilutionx_monster.dir/monster.cpp.obj: C:/c\ -\ c++/Devil
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/postypes.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/predefined_ops.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/ptr_traits.h \
+  C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/quoted_string.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/random.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/random.tcc \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/range_access.h \
@@ -251,6 +247,7 @@ Source/CMakeFiles/libdevilutionx_monster.dir/monster.cpp.obj: C:/c\ -\ c++/Devil
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/shared_ptr_atomic.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/shared_ptr_base.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/specfun.h \
+  C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/sstream.tcc \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/std_abs.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/std_function.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/std_mutex.h \
@@ -279,6 +276,8 @@ Source/CMakeFiles/libdevilutionx_monster.dir/monster.cpp.obj: C:/c\ -\ c++/Devil
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/streambuf_iterator.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/string_view.tcc \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/stringfwd.h \
+  C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/unicode-data.h \
+  C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/unicode.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/uniform_int_dist.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/unique_ptr.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/unordered_map.h \
@@ -291,6 +290,8 @@ Source/CMakeFiles/libdevilutionx_monster.dir/monster.cpp.obj: C:/c\ -\ c++/Devil
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/cassert \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/cctype \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/cerrno \
+  C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/charconv \
+  C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/chrono \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/climits \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/clocale \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/cmath \
@@ -314,14 +315,19 @@ Source/CMakeFiles/libdevilutionx_monster.dir/monster.cpp.obj: C:/c\ -\ c++/Devil
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/ext/numeric_traits.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/ext/string_conversions.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/ext/type_traits.h \
+  C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/format \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/forward_list \
+  C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/fstream \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/functional \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/initializer_list \
+  C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/iomanip \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/ios \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/iosfwd \
+  C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/istream \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/iterator \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/limits \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/list \
+  C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/locale \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/map \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/memory \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/memory_resource \
@@ -339,6 +345,7 @@ Source/CMakeFiles/libdevilutionx_monster.dir/monster.cpp.obj: C:/c\ -\ c++/Devil
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/ratio \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/shared_mutex \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/span \
+  C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/sstream \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/stdexcept \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/stdlib.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/streambuf \
@@ -365,8 +372,10 @@ Source/CMakeFiles/libdevilutionx_monster.dir/monster.cpp.obj: C:/c\ -\ c++/Devil
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/variant \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/vector \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/atomic_word.h \
+  C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/basic_file.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/c++allocator.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/c++config.h \
+  C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/c++io.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/c++locale.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/cpu_defines.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/ctype_base.h \
@@ -374,8 +383,10 @@ Source/CMakeFiles/libdevilutionx_monster.dir/monster.cpp.obj: C:/c\ -\ c++/Devil
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/error_constants.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/gthr-default.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/gthr.h \
+  C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/messages_members.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/opt_random.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/os_defines.h \
+  C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/time_members.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/cetintrin.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/cldemoteintrin.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/clflushoptintrin.h \
@@ -493,12 +504,18 @@ Source/CMakeFiles/libdevilutionx_monster.dir/monster.cpp.obj: C:/c\ -\ c++/Devil
   C:/mingw64/x86_64-w64-mingw32/include/wctype.h \
   C:/mingw64/x86_64-w64-mingw32/include/winapifamily.h \
   C:/mingw64/x86_64-w64-mingw32/include/winsdkver.h \
+  C:/c\ -\ c++/DevilutionX/Source/DiabloUI/ui_flags.hpp \
+  C:/c\ -\ c++/DevilutionX/Source/advanced_debug.h \
+  C:/c\ -\ c++/DevilutionX/Source/architectural_analysis.h \
   C:/c\ -\ c++/DevilutionX/Source/automap.h \
+  C:/c\ -\ c++/DevilutionX/Source/combat_pauses.h \
   C:/c\ -\ c++/DevilutionX/Source/control/control.hpp \
   C:/c\ -\ c++/DevilutionX/Source/controls/controller_buttons.h \
   C:/c\ -\ c++/DevilutionX/Source/crawl.hpp \
   C:/c\ -\ c++/DevilutionX/Source/dead.h \
+  C:/c\ -\ c++/DevilutionX/Source/depth_variants.h \
   C:/c\ -\ c++/DevilutionX/Source/dormant_assets.h \
+  C:/c\ -\ c++/DevilutionX/Source/dvlnet/leaveinfo.hpp \
   C:/c\ -\ c++/DevilutionX/Source/engine/actor_position.hpp \
   C:/c\ -\ c++/DevilutionX/Source/engine/lighting_defs.hpp \
   C:/c\ -\ c++/DevilutionX/Source/engine/load_cl2.hpp \
@@ -511,19 +528,27 @@ Source/CMakeFiles/libdevilutionx_monster.dir/monster.cpp.obj: C:/c\ -\ c++/Devil
   C:/c\ -\ c++/DevilutionX/Source/game_mode.hpp \
   C:/c\ -\ c++/DevilutionX/Source/inv.h \
   C:/c\ -\ c++/DevilutionX/Source/inv_iterators.hpp \
+  C:/c\ -\ c++/DevilutionX/Source/items.h \
   C:/c\ -\ c++/DevilutionX/Source/levels/crypt.h \
   C:/c\ -\ c++/DevilutionX/Source/levels/drlg_l4.h \
   C:/c\ -\ c++/DevilutionX/Source/levels/themes.h \
   C:/c\ -\ c++/DevilutionX/Source/levels/tile_properties.hpp \
   C:/c\ -\ c++/DevilutionX/Source/levels/trigs.h \
+  C:/c\ -\ c++/DevilutionX/Source/light_mutations.h \
   C:/c\ -\ c++/DevilutionX/Source/lighting.h \
   C:/c\ -\ c++/DevilutionX/Source/minitext.h \
   C:/c\ -\ c++/DevilutionX/Source/missiles.h \
   C:/c\ -\ c++/DevilutionX/Source/monster.h \
   C:/c\ -\ c++/DevilutionX/Source/movie.h \
+  C:/c\ -\ c++/DevilutionX/Source/msg.h \
+  C:/c\ -\ c++/DevilutionX/Source/multi.h \
+  C:/c\ -\ c++/DevilutionX/Source/objects.h \
   C:/c\ -\ c++/DevilutionX/Source/options.h \
   C:/c\ -\ c++/DevilutionX/Source/pack.h \
+  C:/c\ -\ c++/DevilutionX/Source/panels/info_box.hpp \
+  C:/c\ -\ c++/DevilutionX/Source/portal.h \
   C:/c\ -\ c++/DevilutionX/Source/qol/floatingnumbers.h \
+  C:/c\ -\ c++/DevilutionX/Source/quests.h \
   C:/c\ -\ c++/DevilutionX/Source/quick_messages.hpp \
   C:/c\ -\ c++/DevilutionX/Source/safety/safety.h \
   C:/c\ -\ c++/DevilutionX/Source/safety/safety_iter.h \
@@ -532,14 +557,18 @@ Source/CMakeFiles/libdevilutionx_monster.dir/monster.cpp.obj: C:/c\ -\ c++/Devil
   C:/c\ -\ c++/DevilutionX/Source/safety/safety_metrics.h \
   C:/c\ -\ c++/DevilutionX/Source/safety/safety_spawn.h \
   C:/c\ -\ c++/DevilutionX/Source/storm/storm_net.hpp \
+  C:/c\ -\ c++/DevilutionX/Source/tables/itemdat.h \
   C:/c\ -\ c++/DevilutionX/Source/tables/misdat.h \
   C:/c\ -\ c++/DevilutionX/Source/tables/monstdat.h \
   C:/c\ -\ c++/DevilutionX/Source/utils/algorithm/container.hpp \
   C:/c\ -\ c++/DevilutionX/Source/utils/file_name_generator.hpp \
+  C:/c\ -\ c++/DevilutionX/Source/utils/is_of.hpp \
   C:/c\ -\ c++/DevilutionX/Source/utils/language.h \
   C:/c\ -\ c++/DevilutionX/Source/utils/log.hpp \
+  C:/c\ -\ c++/DevilutionX/Source/utils/string_or_view.hpp \
   C:/c\ -\ c++/DevilutionX/Source/utils/string_view_hash.hpp \
-  C:/c\ -\ c++/DevilutionX/Source/visual_feedback.h
+  C:/c\ -\ c++/DevilutionX/Source/visual_feedback.h \
+  C:/c\ -\ c++/DevilutionX/Source/waiting_enemies.h
 
 Source/CMakeFiles/libdevilutionx_monster.dir/tables/monstdat.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/tables/monstdat.cpp \
   C:/c\ -\ c++/DevilutionX/3rdParty/sol2/sol_config/sol/config.hpp \
@@ -1002,13 +1031,13 @@ Source/CMakeFiles/libdevilutionx_monster.dir/tables/monstdat.cpp.obj: C:/c\ -\ c
   C:/mingw64/x86_64-w64-mingw32/include/winsdkver.h
 
 
-C:/c\ -\ c++/DevilutionX/Source/dvlnet/leaveinfo.hpp:
-
 C:/c\ -\ c++/DevilutionX/3rdParty/tl/function_ref.hpp:
 
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_blendmode.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/emmintrin.h:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/iomanip:
 
 C:/c\ -\ c++/DevilutionX/Source/player.h:
 
@@ -1018,19 +1047,11 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/cmpccxaddintrin.h:
 
 C:/c\ -\ c++/DevilutionX/Source/monster.cpp:
 
-C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_sensor.h:
-
-C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/ranges_algo.h:
-
-C:/c\ -\ c++/DevilutionX/Source/quests.h:
-
 _deps/magic_enum-src/include/magic_enum/magic_enum.hpp:
 
 C:/c\ -\ c++/DevilutionX/Source/engine/animationinfo.h:
 
 C:/c\ -\ c++/DevilutionX/3rdParty/tl/expected.hpp:
-
-C:/c\ -\ c++/DevilutionX/Source/engine/sound_position.hpp:
 
 _deps/libfmt-src/include/fmt/base.h:
 
@@ -1046,11 +1067,11 @@ C:/c\ -\ c++/DevilutionX/Source/engine/direction.hpp:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/cxxabi_forced.h:
 
-C:/c\ -\ c++/DevilutionX/Source/DiabloUI/ui_flags.hpp:
-
 _deps/libfmt-src/include/fmt/core.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/stl_construct.h:
+
+C:/c\ -\ c++/DevilutionX/Source/DiabloUI/ui_flags.hpp:
 
 C:/c\ -\ c++/DevilutionX/Source/sound_effect_enums.h:
 
@@ -1080,6 +1101,8 @@ _deps/unordered_dense-src/include/ankerl/unordered_dense.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/cxxabi_init_exception.h:
 
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/unicode-data.h:
+
 C:/c\ -\ c++/DevilutionX/Source/utils/string_view_hash.hpp:
 
 C:/c\ -\ c++/DevilutionX/Source/items/validation.h:
@@ -1091,8 +1114,6 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/pmmintrin.h:
 C:/mingw64/x86_64-w64-mingw32/include/intrin.h:
 
 C:/c\ -\ c++/DevilutionX/Source/DiabloUI/text_input.hpp:
-
-C:/c\ -\ c++/DevilutionX/Source/items.h:
 
 C:/c\ -\ c++/DevilutionX/Source/engine/render/text_render.hpp:
 
@@ -1108,13 +1129,11 @@ C:/mingw64/x86_64-w64-mingw32/include/errno.h:
 
 C:/c\ -\ c++/DevilutionX/Source/appfat.h:
 
-C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/avx512vnnivlintrin.h:
-
-C:/c\ -\ c++/DevilutionX/Source/tables/itemdat.h:
-
-C:/c\ -\ c++/DevilutionX/Source/objects.h:
-
 C:/c\ -\ c++/DevilutionX/Source/cursor.h:
+
+C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_version.h:
+
+C:/c\ -\ c++/DevilutionX/Source/utils/soundsample.h:
 
 C:/c\ -\ c++/DevilutionX/Source/diablo.h:
 
@@ -1125,6 +1144,8 @@ C:/c\ -\ c++/DevilutionX/Source/effects.h:
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_shape.h:
 
 C:/c\ -\ c++/DevilutionX/Source/engine/assets.hpp:
+
+C:/c\ -\ c++/DevilutionX/Source/utils/sdl_compat.h:
 
 C:/c\ -\ c++/DevilutionX/Source/tables/objdat.h:
 
@@ -1148,11 +1169,21 @@ C:/c\ -\ c++/DevilutionX/Source/engine/palette.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/limits:
 
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/fstream.tcc:
+
 C:/c\ -\ c++/DevilutionX/Source/engine/point.hpp:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/iosfwd:
+
+C:/c\ -\ c++/DevilutionX/Source/utils/intrusive_optional.hpp:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/avx512fp16intrin.h:
 
 C:/c\ -\ c++/DevilutionX/Source/engine/rectangle.hpp:
 
 C:/c\ -\ c++/DevilutionX/Source/engine/render/light_render.hpp:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/chrono:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/ext/concurrence.h:
 
@@ -1194,33 +1225,33 @@ C:/c\ -\ c++/DevilutionX/Source/levels/dun_tile.hpp:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/avx512bwintrin.h:
 
-C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/string_view.tcc:
-
-C:/c\ -\ c++/DevilutionX/Source/portal.h:
-
-C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/backward/auto_ptr.h:
-
 C:/c\ -\ c++/DevilutionX/Source/levels/gendung.h:
-
-C:/c\ -\ c++/DevilutionX/Source/levels/gendung_defs.hpp:
-
-C:/c\ -\ c++/DevilutionX/Source/engine/trn.hpp:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/stl_function.h:
 
+C:/c\ -\ c++/DevilutionX/Source/engine/trn.hpp:
+
+C:/c\ -\ c++/DevilutionX/Source/levels/gendung_defs.hpp:
+
 C:/c\ -\ c++/DevilutionX/Source/mpq/mpq_common.hpp:
 
-C:/c\ -\ c++/DevilutionX/Source/msg.h:
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/stl_map.h:
 
-C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_log.h:
+C:/c\ -\ c++/DevilutionX/Source/utils/sdl_ptrs.h:
+
+C:/c\ -\ c++/DevilutionX/Source/utils/file_util.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/cstdint:
 
 C:/c\ -\ c++/DevilutionX/Source/mpq/mpq_reader.hpp:
 
-C:/c\ -\ c++/DevilutionX/Source/multi.h:
+C:/c\ -\ c++/DevilutionX/Source/dormant_assets.h:
 
-C:/c\ -\ c++/DevilutionX/Source/panels/info_box.hpp:
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/atomic_lockfree_defines.h:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/error_constants.h:
+
+C:/c\ -\ c++/DevilutionX/Source/utils/pointer_value_union.hpp:
 
 C:/c\ -\ c++/DevilutionX/Source/spells.h:
 
@@ -1254,45 +1285,15 @@ C:/mingw64/x86_64-w64-mingw32/include/stdio.h:
 
 C:/c\ -\ c++/DevilutionX/Source/utils/endian_swap.hpp:
 
-C:/c\ -\ c++/DevilutionX/Source/utils/endian_write.hpp:
-
-C:/c\ -\ c++/DevilutionX/Source/utils/file_util.h:
-
-C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/iosfwd:
-
-C:/c\ -\ c++/DevilutionX/Source/utils/intrusive_optional.hpp:
-
-C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/avx512fp16intrin.h:
-
-C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/xsavesintrin.h:
-
-C:/c\ -\ c++/DevilutionX/Source/utils/is_of.hpp:
-
-C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/atomic_lockfree_defines.h:
-
-C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/error_constants.h:
-
-C:/c\ -\ c++/DevilutionX/Source/dormant_assets.h:
-
-C:/c\ -\ c++/DevilutionX/Source/utils/pointer_value_union.hpp:
-
 C:/c\ -\ c++/DevilutionX/Source/utils/sdl2_backports.h:
 
-C:/c\ -\ c++/DevilutionX/Source/utils/sdl_compat.h:
+C:/c\ -\ c++/DevilutionX/Source/utils/endian_write.hpp:
 
 C:/c\ -\ c++/DevilutionX/Source/utils/sdl_geometry.h:
 
 C:/mingw64/x86_64-w64-mingw32/include/malloc.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/pstl/glue_numeric_defs.h:
-
-C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/stl_map.h:
-
-C:/c\ -\ c++/DevilutionX/Source/utils/sdl_ptrs.h:
-
-C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_version.h:
-
-C:/c\ -\ c++/DevilutionX/Source/utils/soundsample.h:
 
 C:/c\ -\ c++/DevilutionX/Source/utils/static_vector.hpp:
 
@@ -1305,8 +1306,6 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/avxifmaintrin.h:
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/tsxldtrkintrin.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/mmintrin.h:
-
-C:/c\ -\ c++/DevilutionX/Source/utils/string_or_view.hpp:
 
 C:/c\ -\ c++/DevilutionX/Source/utils/utf8.hpp:
 
@@ -1398,6 +1397,10 @@ C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/S
 
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_locale.h:
 
+C:/c\ -\ c++/DevilutionX/Source/msg.h:
+
+C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_log.h:
+
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_main.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/ctype_inline.h:
@@ -1426,6 +1429,8 @@ C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/S
 
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_platform.h:
 
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/time_members.h:
+
 C:/mingw64/x86_64-w64-mingw32/include/wctype.h:
 
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_power.h:
@@ -1441,6 +1446,10 @@ C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/S
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_rwops.h:
 
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_scancode.h:
+
+C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_sensor.h:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/ranges_algo.h:
 
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_stdinc.h:
 
@@ -1477,6 +1486,8 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/amxint8intrin.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/ext/atomicity.h:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/istream.tcc:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/amxtileintrin.h:
 
@@ -1542,7 +1553,11 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/avx512vp2intersectintrin.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/avx512vlintrin.h:
 
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/unicode.h:
+
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/avx512vnniintrin.h:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/avx512vnnivlintrin.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/avx512vp2intersectvlintrin.h:
 
@@ -1580,6 +1595,12 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/random.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/algorithm:
 
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/string_view.tcc:
+
+C:/c\ -\ c++/DevilutionX/Source/portal.h:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/backward/auto_ptr.h:
+
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/backward/binders.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bit:
@@ -1616,6 +1637,12 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/charconv.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/cpuid.h:
 
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/chrono_io.h:
+
+C:/mingw64/x86_64-w64-mingw32/include/wchar.h:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/codecvt.h:
+
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/cwchar:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/concept_check.h:
@@ -1646,13 +1673,13 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/forward_list.tcc:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/stl_iterator.h:
 
+C:/c\ -\ c++/DevilutionX/Source/engine/load_cl2.hpp:
+
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/functional_hash.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/requires_hosted.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/stl_iterator_base_types.h:
-
-C:/c\ -\ c++/DevilutionX/Source/engine/load_cl2.hpp:
 
 C:/c\ -\ c++/DevilutionX/Source/lua/lua_global.hpp:
 
@@ -1676,9 +1703,17 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/list.tcc:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/locale_classes.tcc:
 
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/locale_conv.h:
+
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/xtestintrin.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/locale_facets.h:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/locale_facets_nonio.h:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/locale_facets_nonio.tcc:
+
+C:/mingw64/x86_64-w64-mingw32/include/corecrt_wstdlib.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/ostream_insert.h:
 
@@ -1705,6 +1740,8 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/parse_numbers.h:
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/predefined_ops.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/ptr_traits.h:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/quoted_string.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/random.tcc:
 
@@ -1742,6 +1779,10 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/vaesintrin.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/specfun.h:
 
+C:/mingw64/x86_64-w64-mingw32/include/sec_api/string_s.h:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/sstream.tcc:
+
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/std_abs.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/std_function.h:
@@ -1770,6 +1811,8 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/stl_vector.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/forward_list:
 
+C:/c\ -\ c++/DevilutionX/Source/combat_pauses.h:
+
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/stream_iterator.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/streambuf_iterator.h:
@@ -1782,9 +1825,13 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/unordered_map.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/new:
 
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/basic_file.h:
+
 C:/mingw64/x86_64-w64-mingw32/include/pthread_unistd.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/uses_allocator.h:
+
+C:/c\ -\ c++/DevilutionX/Source/waiting_enemies.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/vector.tcc:
 
@@ -1794,9 +1841,13 @@ C:/mingw64/x86_64-w64-mingw32/include/sdks/_mingw_ddk.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bitset:
 
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/istream:
+
 C:/mingw64/x86_64-w64-mingw32/include/pthread_compat.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/cctype:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/charconv:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/climits:
 
@@ -1812,13 +1863,9 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/cstdio:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/cstdlib:
 
-C:/c\ -\ c++/DevilutionX/Source/options.h:
-
-C:/c\ -\ c++/DevilutionX/Source/levels/tile_properties.hpp:
-
-C:/c\ -\ c++/DevilutionX/Source/levels/crypt.h:
-
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/cstring:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/c++io.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/stddef.h:
 
@@ -1834,15 +1881,25 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/ext/numeric_traits.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/ext/type_traits.h:
 
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/format:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/tr1/beta_function.tcc:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/fstream:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/sgxintrin.h:
+
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/functional:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/iterator:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/list:
 
-C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/map:
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/locale:
 
 C:/c\ -\ c++/DevilutionX/Source/engine/sound.h:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/map:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/memory:
 
@@ -1870,9 +1927,11 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/x86intrin.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/pstl/pstl_config.h:
 
+C:/c\ -\ c++/DevilutionX/Source/inv_iterators.hpp:
+
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/random:
 
-C:/c\ -\ c++/DevilutionX/Source/inv_iterators.hpp:
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/sstream:
 
 C:/mingw64/x86_64-w64-mingw32/include/stdlib.h:
 
@@ -1888,8 +1947,6 @@ C:/mingw64/x86_64-w64-mingw32/include/winsdkver.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/tr1/bessel_function.tcc:
 
-C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/tr1/beta_function.tcc:
-
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/tr1/exp_integral.tcc:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/smmintrin.h:
@@ -1900,13 +1957,13 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/tr1/hypergeometric.tcc:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/variant:
 
+C:/c\ -\ c++/DevilutionX/Source/light_mutations.h:
+
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/tr1/modified_bessel_func.tcc:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/tr1/poly_hermite.tcc:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/type_traits:
-
-C:/c\ -\ c++/DevilutionX/Source/game_mode.hpp:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/typeinfo:
 
@@ -1924,11 +1981,17 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/gthr.h:
 
+C:/mingw64/x86_64-w64-mingw32/include/setjmp.h:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/messages_members.h:
+
+C:/mingw64/x86_64-w64-mingw32/include/psdk_inc/intrin-impl.h:
+
+C:/c\ -\ c++/DevilutionX/Source/engine/render/clx_render.hpp:
+
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/opt_random.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/os_defines.h:
-
-C:/c\ -\ c++/DevilutionX/Source/engine/render/clx_render.hpp:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/clzerointrin.h:
 
@@ -1958,6 +2021,8 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/mm_malloc.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/mwaitintrin.h:
 
+C:/c\ -\ c++/DevilutionX/Source/depth_variants.h:
+
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/mwaitxintrin.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/pconfigintrin.h:
@@ -1971,8 +2036,6 @@ C:/mingw64/x86_64-w64-mingw32/include/sec_api/wchar_s.h:
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/rdseedintrin.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/sm3intrin.h:
-
-C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/sgxintrin.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/stdarg.h:
 
@@ -1994,6 +2057,8 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/xsaveintrin.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/xsaveoptintrin.h:
 
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/xsavesintrin.h:
+
 C:/mingw64/x86_64-w64-mingw32/include/_mingw.h:
 
 C:/mingw64/x86_64-w64-mingw32/include/stdarg.h:
@@ -2010,8 +2075,6 @@ C:/mingw64/x86_64-w64-mingw32/include/corecrt_startup.h:
 
 C:/mingw64/x86_64-w64-mingw32/include/corecrt_stdio_config.h:
 
-C:/mingw64/x86_64-w64-mingw32/include/corecrt_wstdlib.h:
-
 C:/mingw64/x86_64-w64-mingw32/include/crtdefs.h:
 
 C:/mingw64/x86_64-w64-mingw32/include/limits.h:
@@ -2020,17 +2083,11 @@ C:/mingw64/x86_64-w64-mingw32/include/locale.h:
 
 C:/mingw64/x86_64-w64-mingw32/include/process.h:
 
-C:/mingw64/x86_64-w64-mingw32/include/setjmp.h:
-
-C:/mingw64/x86_64-w64-mingw32/include/psdk_inc/intrin-impl.h:
-
 C:/mingw64/x86_64-w64-mingw32/include/pthread_signal.h:
 
 C:/mingw64/x86_64-w64-mingw32/include/sec_api/stdio_s.h:
 
 C:/mingw64/x86_64-w64-mingw32/include/sec_api/stdlib_s.h:
-
-C:/mingw64/x86_64-w64-mingw32/include/sec_api/string_s.h:
 
 C:/c\ -\ c++/DevilutionX/Source/minitext.h:
 
@@ -2044,15 +2101,19 @@ C:/mingw64/x86_64-w64-mingw32/include/time.h:
 
 C:/mingw64/x86_64-w64-mingw32/include/vadefs.h:
 
-C:/mingw64/x86_64-w64-mingw32/include/wchar.h:
-
 C:/mingw64/x86_64-w64-mingw32/include/winapifamily.h:
 
-C:/c\ -\ c++/DevilutionX/Source/control/control.hpp:
+C:/c\ -\ c++/DevilutionX/Source/advanced_debug.h:
+
+C:/c\ -\ c++/DevilutionX/Source/architectural_analysis.h:
 
 C:/c\ -\ c++/DevilutionX/Source/inv.h:
 
+C:/c\ -\ c++/DevilutionX/Source/control/control.hpp:
+
 C:/c\ -\ c++/DevilutionX/Source/controls/controller_buttons.h:
+
+C:/c\ -\ c++/DevilutionX/Source/dvlnet/leaveinfo.hpp:
 
 C:/c\ -\ c++/DevilutionX/Source/engine/actor_position.hpp:
 
@@ -2062,15 +2123,35 @@ C:/c\ -\ c++/DevilutionX/Source/engine/points_in_rectangle_range.hpp:
 
 C:/c\ -\ c++/DevilutionX/Source/engine/random.hpp:
 
+C:/c\ -\ c++/DevilutionX/Source/engine/sound_position.hpp:
+
+C:/c\ -\ c++/DevilutionX/Source/game_mode.hpp:
+
+C:/c\ -\ c++/DevilutionX/Source/items.h:
+
+C:/c\ -\ c++/DevilutionX/Source/options.h:
+
+C:/c\ -\ c++/DevilutionX/Source/levels/tile_properties.hpp:
+
+C:/c\ -\ c++/DevilutionX/Source/levels/crypt.h:
+
 C:/c\ -\ c++/DevilutionX/Source/levels/drlg_l4.h:
 
 C:/c\ -\ c++/DevilutionX/Source/levels/themes.h:
 
+C:/c\ -\ c++/DevilutionX/Source/multi.h:
+
+C:/c\ -\ c++/DevilutionX/Source/objects.h:
+
 C:/c\ -\ c++/DevilutionX/Source/pack.h:
+
+C:/c\ -\ c++/DevilutionX/Source/panels/info_box.hpp:
 
 C:/c\ -\ c++/DevilutionX/Source/data/file.hpp:
 
 C:/c\ -\ c++/DevilutionX/Source/qol/floatingnumbers.h:
+
+C:/c\ -\ c++/DevilutionX/Source/quests.h:
 
 C:/c\ -\ c++/DevilutionX/Source/safety/safety.h:
 
@@ -2082,11 +2163,17 @@ C:/c\ -\ c++/DevilutionX/Source/safety/safety_metrics.h:
 
 C:/c\ -\ c++/DevilutionX/Source/storm/storm_net.hpp:
 
+C:/c\ -\ c++/DevilutionX/Source/tables/itemdat.h:
+
 C:/c\ -\ c++/DevilutionX/Source/tables/monstdat.h:
 
 C:/c\ -\ c++/DevilutionX/Source/utils/algorithm/container.hpp:
 
+C:/c\ -\ c++/DevilutionX/Source/utils/is_of.hpp:
+
 C:/c\ -\ c++/DevilutionX/Source/utils/log.hpp:
+
+C:/c\ -\ c++/DevilutionX/Source/utils/string_or_view.hpp:
 
 C:/c\ -\ c++/DevilutionX/Source/visual_feedback.h:
 
@@ -2107,5 +2194,3 @@ C:/c\ -\ c++/DevilutionX/Source/data/record_reader.hpp:
 C:/c\ -\ c++/DevilutionX/Source/utils/parse_int.hpp:
 
 C:/c\ -\ c++/DevilutionX/Source/utils/str_split.hpp:
-
-C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/charconv:

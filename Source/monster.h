@@ -574,6 +574,14 @@ void PrintUniqueHistory();
 void PlayEffect(Monster &monster, MonsterSound mode);
 void MissToMonst(Missile &missile, Point position);
 
+// AI and combat functions - removed from public interface
+// void AiDelay(Monster &monster, int len);
+// void StartAttack(Monster &monster);
+// void StartRangedSpecialAttack(Monster &monster, MissileID missileType, int dam);
+// void Teleport(Monster &monster);
+// bool RandomWalk(Monster &monster, Direction md);
+// void AiRangedAvoidance(Monster &monster);
+
 Monster *FindMonsterAtPosition(Point position, bool ignoreMovingMonsters = false);
 Monster *FindUniqueMonster(UniqueMonsterType monsterType);
 Monster *FindGolemForPlayer(const Player &player);

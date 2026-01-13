@@ -1,0 +1,14 @@
+# Target labels
+ sol2-populate
+# Source files and their labels
+C:/c - c++/DevilutionX/build_APOCALYPSE/_deps/sol2-subbuild/CMakeFiles/sol2-populate
+C:/c - c++/DevilutionX/build_APOCALYPSE/_deps/sol2-subbuild/CMakeFiles/sol2-populate.rule
+C:/c - c++/DevilutionX/build_APOCALYPSE/_deps/sol2-subbuild/CMakeFiles/sol2-populate-complete.rule
+C:/c - c++/DevilutionX/build_APOCALYPSE/_deps/sol2-subbuild/sol2-populate-prefix/src/sol2-populate-stamp/sol2-populate-build.rule
+C:/c - c++/DevilutionX/build_APOCALYPSE/_deps/sol2-subbuild/sol2-populate-prefix/src/sol2-populate-stamp/sol2-populate-configure.rule
+C:/c - c++/DevilutionX/build_APOCALYPSE/_deps/sol2-subbuild/sol2-populate-prefix/src/sol2-populate-stamp/sol2-populate-download.rule
+C:/c - c++/DevilutionX/build_APOCALYPSE/_deps/sol2-subbuild/sol2-populate-prefix/src/sol2-populate-stamp/sol2-populate-install.rule
+C:/c - c++/DevilutionX/build_APOCALYPSE/_deps/sol2-subbuild/sol2-populate-prefix/src/sol2-populate-stamp/sol2-populate-mkdir.rule
+C:/c - c++/DevilutionX/build_APOCALYPSE/_deps/sol2-subbuild/sol2-populate-prefix/src/sol2-populate-stamp/sol2-populate-patch.rule
+C:/c - c++/DevilutionX/build_APOCALYPSE/_deps/sol2-subbuild/sol2-populate-prefix/src/sol2-populate-stamp/sol2-populate-test.rule
+C:/c - c++/DevilutionX/build_APOCALYPSE/_deps/sol2-subbuild/sol2-populate-prefix/src/sol2-populate-stamp/sol2-populate-update.rule

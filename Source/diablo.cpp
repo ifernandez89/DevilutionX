@@ -7,6 +7,8 @@
 #include <cstdint>
 #include <string_view>
 
+#include "architectural_analysis.h"
+
 #ifdef USE_SDL3
 #include <SDL3/SDL_events.h>
 #include <SDL3/SDL_init.h>
@@ -46,8 +48,13 @@
 #include "engine/backbuffer_state.hpp"
 #include "engine/clx_sprite.hpp"
 #include "engine/demomode.h"
+#include "ui_nightmare.h"
+#include "tile_detective.h"
+#include "nightmare_testing.h"  // 🧪 Para funciones de testing
+#include "nightmare_immediate_effects.h"  // 🎭 Para efectos inmediatos visibles
 #include "engine/dx.h"
 #include "engine/events.hpp"
+#include "global_protection_system.h" // 🛡️ Global Protection System
 #include "engine/load_cel.hpp"
 #include "engine/load_file.hpp"
 #include "engine/random.hpp"
@@ -61,13 +68,6 @@
 #include "hidden_content.h"
 #include "dormant_assets.h"
 #include "enhanced_portal.h"
-#include "inferno_defense.h"
-#include "spell_throttling.h"
-#include "progressive_silence.h"  // 🎵 PROGRESSIVE SILENCE SYSTEM
-#include "crash_diagnostics.h"  // 🔍 CRASH DIAGNOSTICS SYSTEM
-#include "hellfire_book_fix.h"  // 🔥 HELLFIRE BOOK RECOVERY SYSTEM
-#include "guarantee_inferno_book.h"  // 🔥 GUARANTEE INFERNO BOOK SYSTEM
-#include "emergency_diagnostics.h"  // 🚨 EMERGENCY DIAGNOSTICS SYSTEM
 #include "hwcursor.hpp"
 #include "init.hpp"
 #include "inv.h"
@@ -81,12 +81,26 @@
 #include "levels/town.h"
 #include "levels/trigs.h"
 #include "lighting.h"
+#include "nightmare_ambience.h"
+#include "nightmare_ambient_effects.h"
+#include "nightmare_audio.h"
+#include "nightmare_config.h"
+#include "nightmare_effects_status.h"
+#include "nightmare_items.h"
+#include "nightmare_lighting.h"
+#include "nightmare_post_diablo.h"
+#include "nightmare_quests.h"
+#include "nightmare_visual_effects.h"
 #include "visual_feedback.h"
 #include "contextual_palette.h"
 #include "town_cinematic.h"
 #include "life_volume.h"
 #include "parallax_depth.h"
 #include "mp_discipline.h"
+#include "advanced_debug.h"  // 🎮 Advanced Debug System
+#include "guarantee_apocalypse_book.h"  // 📖 Book of Apocalypse Guarantee
+#include "engine_health.h"  // 🔍 Modern Assist Layer (MAL) - Engine Health Monitoring
+#include "apocalypse_crash_debug.h"  // 🚨 Apocalypse Crash Debugging System
 #include "loadsave.h"
 #include "lua/lua_global.hpp"
 #include "menu.h"
@@ -105,6 +119,11 @@
 #include "pfile.h"
 #include "plrmsg.h"
 #include "qol/chatlog.h"
+#include "combat_pauses.h"
+#include "depth_variants.h"  // 🎯 Depth Variants System
+#include "light_mutations.h"  // 🧬 Light Mutations System
+#include "waiting_enemies.h"
+#include "invisible_wear.h"
 #include "qol/floatingnumbers.h"
 #include "qol/itemlabels.h"
 #include "qol/monhealthbar.h"
@@ -193,10 +212,6 @@ bool was_ui_init = false;
 
 void StartGame(interface_mode uMsg)
 {
-	// 🚨 EMERGENCY DIAGNOSTICS: Sistema desactivado después del fix exitoso
-	// EmergencyDiagnostics::Initialize();
-	// EMERGENCY_CRITICAL("=== GAME STARTING ===");
-	
 	CalcViewportGeometry();
 	cineflag = false;
 	InitCursor();
@@ -207,6 +222,13 @@ void StartGame(interface_mode uMsg)
 	music_stop();
 	InitMonsterHealthBar();
 	InitXPBar();
+	
+	// MAL INTEGRATION: Initialize Modern Assist Layer
+	InitEngineHealth();
+	
+	// 🚨 DEBUG: Initialize Apocalypse crash debugging system
+	APOCALYPSE_DEBUG_INIT();
+	
 	ShowProgress(uMsg);
 	gmenu_init_menu();
 	InitLevelCursor();
@@ -233,6 +255,13 @@ void FreeGame()
 #ifdef _DEBUG
 	FreeDebugGFX();
 #endif
+	
+	// 🚨 DEBUG: Cleanup Apocalypse crash debugging system
+	APOCALYPSE_DEBUG_CLEANUP();
+	
+	// MAL INTEGRATION: Cleanup Modern Assist Layer
+	CleanupEngineHealth();
+	
 	FreeGameMem();
 	stream_stop();
 	music_stop();
@@ -590,6 +619,52 @@ void PressKey(SDL_Keycode vkey, uint16_t modState)
 	}
 
 	switch (vkey) {
+	case SDLK_F12:
+		// 🎮 FEATURE #8: Toggle Advanced Debug System
+		ToggleAdvancedDebug();
+		return;
+	case SDLK_F11:
+		// 🔄 NIGHTMARE TESTING: RESET all effects to normal
+		LogVerbose("🔄 KEY F11 PRESSED - Resetting all effects");
+		ResetImmediateEffects();
+		return;
+	case SDLK_F10:
+		// 🎭 NIGHTMARE TESTING: Show active effects info
+		LogVerbose("🎭 KEY F10 PRESSED - Showing effects info");
+		ShowActiveEffectsInfo();
+		return;
+	case SDLK_F9:
+		// 🎭 NIGHTMARE TESTING: Show systems status
+		LogVerbose("🎭 KEY F9 PRESSED - Showing systems status");
+		ShowNightmareSystemsStatus();
+		return;
+	case SDLK_F8:
+		// 🌫️ NIGHTMARE TESTING: Toggle visual fog (immediate effect)
+		LogVerbose("🌫️ KEY F8 PRESSED - Toggling visual fog");
+		ToggleVisualFog();
+		return;
+	case SDLK_F7:
+		// 🌙 NIGHTMARE TESTING: Toggle visual darkening
+		LogVerbose("🌙 KEY F7 PRESSED - Toggling visual darkening");
+		ToggleVisualDarkening();
+		return;
+	case SDLK_F6:
+		// 🌧️ NIGHTMARE TESTING: Toggle rain
+		LogVerbose("🌧️ KEY F6 PRESSED - Toggling rain");
+		ToggleRainForTesting();
+		return;
+	case SDLK_t:
+		// 🔍 TILE DETECTIVE: Toggle capture mode (only in town)
+		if (leveltype == DTYPE_TOWN) {
+			SetTileDetectiveCapture(!tileDetective.captureMode);
+		}
+		return;
+	case SDLK_e:
+		// 🔍 TILE DETECTIVE: Export detected tiles (only in town)
+		if (leveltype == DTYPE_TOWN) {
+			ExportDetectedTiles();
+		}
+		return;
 	case SDLK_PLUS:
 	case SDLK_KP_PLUS:
 	case SDLK_EQUALS:
@@ -698,16 +773,12 @@ void HandleMouseButtonDown(Uint8 button, uint16_t modState)
 	case SDL_BUTTON_LEFT:
 		if (sgbMouseDown == CLICK_NONE) {
 			sgbMouseDown = CLICK_LEFT;
-			// DISABLED: Crash diagnostics system disabled after successful crash fix
-			// RegisterPlayerClick();
 			LeftMouseDown(modState);
 		}
 		break;
 	case SDL_BUTTON_RIGHT:
 		if (sgbMouseDown == CLICK_NONE) {
 			sgbMouseDown = CLICK_RIGHT;
-			// DISABLED: Crash diagnostics system disabled after successful crash fix
-			// RegisterPlayerClick();
 			RightMouseDown((modState & SDL_KMOD_SHIFT) != 0);
 		}
 		break;
@@ -1313,6 +1384,40 @@ void DiabloInit()
 
 	ui_sound_init();
 
+	// 🌙 NIGHTMARE UI - Initialize Nightmare UI Architecture
+	InitNightmareUI();
+	
+	// 🌙 NIGHTMARE CONFIG - Initialize Configuration System
+	InitNightmareConfig();
+	
+	// 🌙 NIGHTMARE AMBIENCE - Initialize Ambience System
+	InitNightmareAmbience();
+	
+	// 🎵 NIGHTMARE AUDIO - Initialize Enhanced Audio System
+	InitNightmareAudio();
+	
+	// ✨ NIGHTMARE VISUAL EFFECTS - Initialize Visual Effects System
+	InitNightmareVisualEffects();
+	
+	// 🗝️ NIGHTMARE POST-DIABLO - Initialize Post-Diablo Content System
+	InitPostDiabloSystem();
+	
+	// 🎯 NIGHTMARE QUESTS - Initialize Post-Diablo Quests System
+	InitNightmareQuests();
+	
+	// ⚔️ NIGHTMARE ITEMS - Initialize Unique Items System
+	InitNightmareItems();
+	
+	// 🌙 NIGHTMARE AMBIENT EFFECTS - Initialize Ambient Effects (FORCED ACTIVE)
+	InitNightmareAmbientEffects();
+	
+	// 🎮 NIGHTMARE EFFECTS STATUS - Verify all effects are active
+	VerifyAllNightmareEffectsActive();
+	ShowNightmareEffectsStatus();
+
+	// 🔍 TILE DETECTIVE - Initialize tile detection system
+	InitTileDetective();
+
 	// Item graphics are loaded early, they already get touched during hero selection.
 	InitItemGFX();
 
@@ -1552,24 +1657,34 @@ void GameLogic()
 		gGameLogicStep = GameLogicStep::ProcessObjects;
 		ProcessObjects();
 		gGameLogicStep = GameLogicStep::ProcessMissiles;
-		
-		// 🔥 INFERNO DEFENSE: Update system before missile processing
-		UpdateInfernoDefense();
-		
-		// 🎯 UNIVERSAL SPELL THROTTLING: Update system before missile processing
-		UpdateSpellThrottling();
-		
 		ProcessMissiles();
-		
-		// 🔥 INFERNO DEFENSE: Reset frame counters after missile processing
-		ResetInfernoDefenseFrameCounters();
-		
-		// 🎯 UNIVERSAL SPELL THROTTLING: Reset frame counters after missile processing
-		ResetSpellThrottlingFrameCounters();
-		
 		gGameLogicStep = GameLogicStep::ProcessItems;
 		ProcessItems();
 		ProcessLightList();
+		
+		// 🔥 NIGHTMARE ATMOSPHERIC LIGHTING - Update atmospheric lighting effects
+		UpdateNightmareLighting();
+		
+		// 🌙 NIGHTMARE CONFIG - Update configuration system
+		UpdateNightmareConfig();
+		
+		// 🌙 NIGHTMARE AMBIENCE - Update ambience system
+		UpdateNightmareAmbience();
+		
+		// 🎵 NIGHTMARE AUDIO - Update enhanced audio system
+		UpdateNightmareAudio();
+		
+		// ✨ NIGHTMARE VISUAL EFFECTS - Update visual effects system
+		UpdateNightmareVisualEffects();
+		
+		// 🗝️ NIGHTMARE POST-DIABLO - Update post-Diablo content system
+		UpdatePostDiabloSystem();
+		
+		// 🎯 NIGHTMARE QUESTS - Update post-Diablo quests system
+		UpdateNightmareQuests();
+		
+		// 🌙 NIGHTMARE AMBIENT EFFECTS - Update ambient effects (FORCED ACTIVE)
+		UpdateNightmareAmbientEffects();
 		
 		// 🎮 FASE V3 - Update Visual Feedback System
 		UpdateVisualFeedback();
@@ -1592,25 +1707,17 @@ void GameLogic()
 		// 🌀 ENHANCED PORTAL - Update Portal Enhancement System
 		UpdateEnhancedPortal();
 		
-		// 🎵 PROGRESSIVE SILENCE - Update Progressive Silence System
-		UpdateProgressiveSilence();
+		// ⚔️ COMBAT PAUSES - Update Combat Pauses System
+		UpdateCombatPauses();
 		
-		// DISABLED: Crash diagnostics system disabled after successful crash fix
-		// UpdateCrashDiagnostics();
+		// 👁️ WAITING ENEMIES - Update Waiting Enemies System
+		UpdateWaitingEnemies();
 		
-		// DISABLED: Crash diagnostics system disabled after successful crash fix
-		// CHECK_CRITICAL_STATE();
+		// 🎮 ADVANCED DEBUG - Update Advanced Debug System
+		UpdateAdvancedDebug();
 		
-		// 🔥 HELLFIRE RECOVERY - Emergency scan (ejecutar solo una vez por sesión, de forma segura)
-		static bool hellfireRecoveryExecuted = false;
-		if (!hellfireRecoveryExecuted && MyPlayer != nullptr && MyPlayer->plractive) {
-			// Solo ejecutar si estamos realmente en el juego, no en menús
-			if (gbRunGame && !gbIsMultiplayer) {
-				LogInfo("🔥 EXECUTING SAFE HELLFIRE RECOVERY...");
-				EmergencyHellfireItemRecovery();
-				hellfireRecoveryExecuted = true;
-			}
-		}
+		// 📖 BOOK OF APOCALYPSE - Update Guarantee System
+		UpdateApocalypseBookGuarantee();
 		
 		ProcessVisionList();
 	} else {
@@ -1619,23 +1726,7 @@ void GameLogic()
 		gGameLogicStep = GameLogicStep::ProcessItemsTown;
 		ProcessItems();
 		gGameLogicStep = GameLogicStep::ProcessMissilesTown;
-		
-		// 🔥 INFERNO DEFENSE: Update system before missile processing (town)
-		UpdateInfernoDefense();
-		
-		// 🎯 UNIVERSAL SPELL THROTTLING: Update system before missile processing (town)
-		UpdateSpellThrottling();
-		
 		ProcessMissiles();
-		
-		// 🔥 INFERNO DEFENSE: Reset frame counters after missile processing (town)
-		ResetInfernoDefenseFrameCounters();
-		
-		// 🎯 UNIVERSAL SPELL THROTTLING: Reset frame counters after missile processing (town)
-		ResetSpellThrottlingFrameCounters();
-		
-		// 🎵 PROGRESSIVE SILENCE - Update Progressive Silence System (town)
-		UpdateProgressiveSilence();
 	}
 	gGameLogicStep = GameLogicStep::None;
 
@@ -1646,6 +1737,13 @@ void GameLogic()
 #endif
 
 	sound_update();
+	
+	// 🌙 NIGHTMARE UI - Update Atmospheric Systems
+	UpdateNightmareUI(0.016f); // Assuming ~60 FPS (16ms per frame)
+	
+	// 🔍 TILE DETECTIVE - Update tile detection
+	UpdateTileDetective();
+	
 	CheckTriggers();
 	CheckQuests();
 	RedrawViewport();
@@ -2768,6 +2866,11 @@ bool StartGame(bool bNewGame, bool bSinglePlayer)
 			InitLevels();
 			InitQuests();
 			InitPortals();
+			InitCombatPauses();  // ⚔️ Initialize Combat Pauses System
+			InitWaitingEnemies(); // 👁️ Initialize Waiting Enemies System
+			InitDepthVariants();  // 🎯 Initialize Depth Variants System
+			InitLightMutations(); // 🧬 Initialize Light Mutations System
+			InitInvisibleWear();  // 💰 Initialize Invisible Wear System
 			InitDungMsgs(*MyPlayer);
 			DeltaSyncJunk();
 		}
@@ -2787,6 +2890,9 @@ bool StartGame(bool bNewGame, bool bSinglePlayer)
 		if (ReturnToMainMenu)
 			return true;
 	} while (gbRunGameResult);
+
+	// ARCHITECTURAL ANALYSIS - Generate final report before shutdown
+	ArchitecturalAnalyzer::getInstance().shutdown();
 
 	SNetDestroy();
 	return gbRunGameResult;
@@ -2819,6 +2925,9 @@ int DiabloMain(int argc, char **argv)
 #ifdef _DEBUG
 	SDL_SetLogPriorities(SDL_LOG_PRIORITY_DEBUG);
 #endif
+
+	// ARCHITECTURAL ANALYSIS - Initialize permanent logging system
+	ArchitecturalAnalyzer::getInstance().initialize();
 
 	DiabloParseFlags(argc, argv);
 	InitKeymapActions();
@@ -3132,7 +3241,7 @@ void LoadGameLevelStopMusic(_music_id neededTrack)
 void LoadGameLevelStartMusic(_music_id neededTrack)
 {
 	if (sgnMusicTrack != neededTrack)
-		ProgressiveSilence_StartMusic(neededTrack); // 🎵 PROGRESSIVE SILENCE
+		music_start(neededTrack);
 
 	if (MinimizePaused) {
 		music_mute();
@@ -3233,13 +3342,6 @@ tl::expected<void, std::string> LoadGameLevelDungeon(bool firstflag, lvl_entry l
 
 		IncProgress();
 	}
-	
-	// 🎨 PALETTE FIX: Ensure palette is correctly loaded after all initialization
-	// This fixes the broken colors bug when creating new games
-	if (firstflag || lvldir != ENTRY_LOAD) {
-		LoadRndLvlPal(leveltype);
-	}
-	
 	return {};
 }
 
@@ -3310,11 +3412,13 @@ tl::expected<void, std::string> LoadGameLevelTown(bool firstflag, lvl_entry lvld
 	InitHiddenContent();
 	InitDormantAssets();
 	InitEnhancedPortal();
-	InitInfernoDefense();
-	InitSpellThrottling();
-	InitProgressiveSilence(); // 🎵 PROGRESSIVE SILENCE SYSTEM
-	// DISABLED: Crash diagnostics system disabled after successful crash fix
-	// InitCrashDiagnostics();  // 🔍 CRASH DIAGNOSTICS SYSTEM
+	
+	// 🎮 FEATURE #8: Initialize Advanced Debug System
+	InitAdvancedDebug();
+	
+	// 📖 FEATURE: Initialize Book of Apocalypse Guarantee System
+	InitApocalypseBookGuarantee();
+	
 	InitMissiles();
 
 	IncProgress();
@@ -3577,11 +3681,32 @@ tl::expected<void, std::string> LoadGameLevel(bool firstflag, lvl_entry lvldir)
 	}
 
 	LoadGameLevelCalculateCursor();
+	
+	// 🎨 FIX: Reload palette after all initialization to prevent color corruption
+	// This fixes the red/magenta color bug when creating new games
+	if (leveltype != DTYPE_TOWN) {
+		LoadPalette("levels\\l1data\\l1.pal");
+	} else {
+		LoadPalette("levels\\towndata\\town.pal");
+	}
+	
+	// 💰 INVISIBLE WEAR - Update wear multipliers for new level
+	UpdateInvisibleWear();
+	
+	// 🎯 DEPTH VARIANTS - Update depth bonuses for new level
+	UpdateDepthVariants();
+	
+	// 🧬 LIGHT MUTATIONS - Update mutation chances for new level
+	UpdateLightMutations();
+	
 	return {};
 }
 
 bool game_loop(bool bStartup)
 {
+	// 🛡️ GLOBAL PROTECTION SYSTEM - Update frame stats
+	GPS.updateFrameStats();
+	
 	const uint16_t wait = bStartup ? sgGameInitInfo.nTickRate * 3 : 3;
 
 	for (unsigned i = 0; i < wait; i++) {

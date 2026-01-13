@@ -52,10 +52,10 @@ RM = "C:\Program Files\CMake\bin\cmake.exe" -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "C:\c - c++\DevilutionX\build_final_working\_deps\sol2-subbuild"
+CMAKE_SOURCE_DIR = "C:\c - c++\DevilutionX\build_final\_deps\sol2-subbuild"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "C:\c - c++\DevilutionX\build_final_working\_deps\sol2-subbuild"
+CMAKE_BINARY_DIR = "C:\c - c++\DevilutionX\build_final\_deps\sol2-subbuild"
 
 # Utility rule file for sol2-populate.
 
@@ -76,57 +76,57 @@ CMakeFiles/sol2-populate-complete: sol2-populate-prefix/src/sol2-populate-stamp/
 CMakeFiles/sol2-populate-complete: sol2-populate-prefix/src/sol2-populate-stamp/sol2-populate-build
 CMakeFiles/sol2-populate-complete: sol2-populate-prefix/src/sol2-populate-stamp/sol2-populate-install
 CMakeFiles/sol2-populate-complete: sol2-populate-prefix/src/sol2-populate-stamp/sol2-populate-test
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_final_working\_deps\sol2-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Completed 'sol2-populate'"
-	"C:\Program Files\CMake\bin\cmake.exe" -E make_directory "C:/c - c++/DevilutionX/build_final_working/_deps/sol2-subbuild/CMakeFiles"
-	"C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_final_working/_deps/sol2-subbuild/CMakeFiles/sol2-populate-complete"
-	"C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_final_working/_deps/sol2-subbuild/sol2-populate-prefix/src/sol2-populate-stamp/sol2-populate-done"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_final\_deps\sol2-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Completed 'sol2-populate'"
+	"C:\Program Files\CMake\bin\cmake.exe" -E make_directory "C:/c - c++/DevilutionX/build_final/_deps/sol2-subbuild/CMakeFiles"
+	"C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_final/_deps/sol2-subbuild/CMakeFiles/sol2-populate-complete"
+	"C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_final/_deps/sol2-subbuild/sol2-populate-prefix/src/sol2-populate-stamp/sol2-populate-done"
 
 sol2-populate-prefix/src/sol2-populate-stamp/sol2-populate-build: sol2-populate-prefix/src/sol2-populate-stamp/sol2-populate-configure
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_final_working\_deps\sol2-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "No build step for 'sol2-populate'"
-	cd /d C:\C-C__~1\DEVILU~1\BUILD_~1\_deps\SOL2-B~1 && "C:\Program Files\CMake\bin\cmake.exe" -E echo_append
-	cd /d C:\C-C__~1\DEVILU~1\BUILD_~1\_deps\SOL2-B~1 && "C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_final_working/_deps/sol2-subbuild/sol2-populate-prefix/src/sol2-populate-stamp/sol2-populate-build"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_final\_deps\sol2-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "No build step for 'sol2-populate'"
+	cd /d C:\C-C__~1\DEVILU~1\BUILD_~4\_deps\SOL2-B~1 && "C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+	cd /d C:\C-C__~1\DEVILU~1\BUILD_~4\_deps\SOL2-B~1 && "C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_final/_deps/sol2-subbuild/sol2-populate-prefix/src/sol2-populate-stamp/sol2-populate-build"
 
 sol2-populate-prefix/src/sol2-populate-stamp/sol2-populate-configure: sol2-populate-prefix/tmp/sol2-populate-cfgcmd.txt
 sol2-populate-prefix/src/sol2-populate-stamp/sol2-populate-configure: sol2-populate-prefix/src/sol2-populate-stamp/sol2-populate-patch
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_final_working\_deps\sol2-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "No configure step for 'sol2-populate'"
-	cd /d C:\C-C__~1\DEVILU~1\BUILD_~1\_deps\SOL2-B~1 && "C:\Program Files\CMake\bin\cmake.exe" -E echo_append
-	cd /d C:\C-C__~1\DEVILU~1\BUILD_~1\_deps\SOL2-B~1 && "C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_final_working/_deps/sol2-subbuild/sol2-populate-prefix/src/sol2-populate-stamp/sol2-populate-configure"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_final\_deps\sol2-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "No configure step for 'sol2-populate'"
+	cd /d C:\C-C__~1\DEVILU~1\BUILD_~4\_deps\SOL2-B~1 && "C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+	cd /d C:\C-C__~1\DEVILU~1\BUILD_~4\_deps\SOL2-B~1 && "C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_final/_deps/sol2-subbuild/sol2-populate-prefix/src/sol2-populate-stamp/sol2-populate-configure"
 
 sol2-populate-prefix/src/sol2-populate-stamp/sol2-populate-download: sol2-populate-prefix/src/sol2-populate-stamp/download-sol2-populate.cmake
 sol2-populate-prefix/src/sol2-populate-stamp/sol2-populate-download: sol2-populate-prefix/src/sol2-populate-stamp/sol2-populate-urlinfo.txt
 sol2-populate-prefix/src/sol2-populate-stamp/sol2-populate-download: sol2-populate-prefix/src/sol2-populate-stamp/sol2-populate-mkdir
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_final_working\_deps\sol2-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_4) "Performing download step (download, verify and extract) for 'sol2-populate'"
-	cd /d C:\C-C__~1\DEVILU~1\BUILD_~1\_deps && "C:\Program Files\CMake\bin\cmake.exe" -DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE -P "C:/c - c++/DevilutionX/build_final_working/_deps/sol2-subbuild/sol2-populate-prefix/src/sol2-populate-stamp/download-sol2-populate.cmake"
-	cd /d C:\C-C__~1\DEVILU~1\BUILD_~1\_deps && "C:\Program Files\CMake\bin\cmake.exe" -DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE -P "C:/c - c++/DevilutionX/build_final_working/_deps/sol2-subbuild/sol2-populate-prefix/src/sol2-populate-stamp/verify-sol2-populate.cmake"
-	cd /d C:\C-C__~1\DEVILU~1\BUILD_~1\_deps && "C:\Program Files\CMake\bin\cmake.exe" -DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE -P "C:/c - c++/DevilutionX/build_final_working/_deps/sol2-subbuild/sol2-populate-prefix/src/sol2-populate-stamp/extract-sol2-populate.cmake"
-	cd /d C:\C-C__~1\DEVILU~1\BUILD_~1\_deps && "C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_final_working/_deps/sol2-subbuild/sol2-populate-prefix/src/sol2-populate-stamp/sol2-populate-download"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_final\_deps\sol2-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_4) "Performing download step (download, verify and extract) for 'sol2-populate'"
+	cd /d C:\C-C__~1\DEVILU~1\BUILD_~4\_deps && "C:\Program Files\CMake\bin\cmake.exe" -DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE -P "C:/c - c++/DevilutionX/build_final/_deps/sol2-subbuild/sol2-populate-prefix/src/sol2-populate-stamp/download-sol2-populate.cmake"
+	cd /d C:\C-C__~1\DEVILU~1\BUILD_~4\_deps && "C:\Program Files\CMake\bin\cmake.exe" -DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE -P "C:/c - c++/DevilutionX/build_final/_deps/sol2-subbuild/sol2-populate-prefix/src/sol2-populate-stamp/verify-sol2-populate.cmake"
+	cd /d C:\C-C__~1\DEVILU~1\BUILD_~4\_deps && "C:\Program Files\CMake\bin\cmake.exe" -DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE -P "C:/c - c++/DevilutionX/build_final/_deps/sol2-subbuild/sol2-populate-prefix/src/sol2-populate-stamp/extract-sol2-populate.cmake"
+	cd /d C:\C-C__~1\DEVILU~1\BUILD_~4\_deps && "C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_final/_deps/sol2-subbuild/sol2-populate-prefix/src/sol2-populate-stamp/sol2-populate-download"
 
 sol2-populate-prefix/src/sol2-populate-stamp/sol2-populate-install: sol2-populate-prefix/src/sol2-populate-stamp/sol2-populate-build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_final_working\_deps\sol2-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_5) "No install step for 'sol2-populate'"
-	cd /d C:\C-C__~1\DEVILU~1\BUILD_~1\_deps\SOL2-B~1 && "C:\Program Files\CMake\bin\cmake.exe" -E echo_append
-	cd /d C:\C-C__~1\DEVILU~1\BUILD_~1\_deps\SOL2-B~1 && "C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_final_working/_deps/sol2-subbuild/sol2-populate-prefix/src/sol2-populate-stamp/sol2-populate-install"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_final\_deps\sol2-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_5) "No install step for 'sol2-populate'"
+	cd /d C:\C-C__~1\DEVILU~1\BUILD_~4\_deps\SOL2-B~1 && "C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+	cd /d C:\C-C__~1\DEVILU~1\BUILD_~4\_deps\SOL2-B~1 && "C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_final/_deps/sol2-subbuild/sol2-populate-prefix/src/sol2-populate-stamp/sol2-populate-install"
 
 sol2-populate-prefix/src/sol2-populate-stamp/sol2-populate-mkdir:
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_final_working\_deps\sol2-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_6) "Creating directories for 'sol2-populate'"
-	"C:\Program Files\CMake\bin\cmake.exe" -Dcfgdir= -P "C:/c - c++/DevilutionX/build_final_working/_deps/sol2-subbuild/sol2-populate-prefix/tmp/sol2-populate-mkdirs.cmake"
-	"C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_final_working/_deps/sol2-subbuild/sol2-populate-prefix/src/sol2-populate-stamp/sol2-populate-mkdir"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_final\_deps\sol2-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_6) "Creating directories for 'sol2-populate'"
+	"C:\Program Files\CMake\bin\cmake.exe" -Dcfgdir= -P "C:/c - c++/DevilutionX/build_final/_deps/sol2-subbuild/sol2-populate-prefix/tmp/sol2-populate-mkdirs.cmake"
+	"C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_final/_deps/sol2-subbuild/sol2-populate-prefix/src/sol2-populate-stamp/sol2-populate-mkdir"
 
 sol2-populate-prefix/src/sol2-populate-stamp/sol2-populate-patch: sol2-populate-prefix/src/sol2-populate-stamp/sol2-populate-patch-info.txt
 sol2-populate-prefix/src/sol2-populate-stamp/sol2-populate-patch: sol2-populate-prefix/src/sol2-populate-stamp/sol2-populate-update
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_final_working\_deps\sol2-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_7) "No patch step for 'sol2-populate'"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_final\_deps\sol2-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_7) "No patch step for 'sol2-populate'"
 	"C:\Program Files\CMake\bin\cmake.exe" -E echo_append
-	"C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_final_working/_deps/sol2-subbuild/sol2-populate-prefix/src/sol2-populate-stamp/sol2-populate-patch"
+	"C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_final/_deps/sol2-subbuild/sol2-populate-prefix/src/sol2-populate-stamp/sol2-populate-patch"
 
 sol2-populate-prefix/src/sol2-populate-stamp/sol2-populate-test: sol2-populate-prefix/src/sol2-populate-stamp/sol2-populate-install
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_final_working\_deps\sol2-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_8) "No test step for 'sol2-populate'"
-	cd /d C:\C-C__~1\DEVILU~1\BUILD_~1\_deps\SOL2-B~1 && "C:\Program Files\CMake\bin\cmake.exe" -E echo_append
-	cd /d C:\C-C__~1\DEVILU~1\BUILD_~1\_deps\SOL2-B~1 && "C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_final_working/_deps/sol2-subbuild/sol2-populate-prefix/src/sol2-populate-stamp/sol2-populate-test"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_final\_deps\sol2-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_8) "No test step for 'sol2-populate'"
+	cd /d C:\C-C__~1\DEVILU~1\BUILD_~4\_deps\SOL2-B~1 && "C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+	cd /d C:\C-C__~1\DEVILU~1\BUILD_~4\_deps\SOL2-B~1 && "C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_final/_deps/sol2-subbuild/sol2-populate-prefix/src/sol2-populate-stamp/sol2-populate-test"
 
 sol2-populate-prefix/src/sol2-populate-stamp/sol2-populate-update: sol2-populate-prefix/src/sol2-populate-stamp/sol2-populate-update-info.txt
 sol2-populate-prefix/src/sol2-populate-stamp/sol2-populate-update: sol2-populate-prefix/src/sol2-populate-stamp/sol2-populate-download
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_final_working\_deps\sol2-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_9) "No update step for 'sol2-populate'"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_final\_deps\sol2-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_9) "No update step for 'sol2-populate'"
 	"C:\Program Files\CMake\bin\cmake.exe" -E echo_append
-	"C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_final_working/_deps/sol2-subbuild/sol2-populate-prefix/src/sol2-populate-stamp/sol2-populate-update"
+	"C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_final/_deps/sol2-subbuild/sol2-populate-prefix/src/sol2-populate-stamp/sol2-populate-update"
 
 CMakeFiles/sol2-populate.dir/codegen:
 .PHONY : CMakeFiles/sol2-populate.dir/codegen
@@ -153,6 +153,6 @@ CMakeFiles/sol2-populate.dir/clean:
 .PHONY : CMakeFiles/sol2-populate.dir/clean
 
 CMakeFiles/sol2-populate.dir/depend:
-	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" "C:\c - c++\DevilutionX\build_final_working\_deps\sol2-subbuild" "C:\c - c++\DevilutionX\build_final_working\_deps\sol2-subbuild" "C:\c - c++\DevilutionX\build_final_working\_deps\sol2-subbuild" "C:\c - c++\DevilutionX\build_final_working\_deps\sol2-subbuild" "C:\c - c++\DevilutionX\build_final_working\_deps\sol2-subbuild\CMakeFiles\sol2-populate.dir\DependInfo.cmake" "--color=$(COLOR)" sol2-populate
+	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" "C:\c - c++\DevilutionX\build_final\_deps\sol2-subbuild" "C:\c - c++\DevilutionX\build_final\_deps\sol2-subbuild" "C:\c - c++\DevilutionX\build_final\_deps\sol2-subbuild" "C:\c - c++\DevilutionX\build_final\_deps\sol2-subbuild" "C:\c - c++\DevilutionX\build_final\_deps\sol2-subbuild\CMakeFiles\sol2-populate.dir\DependInfo.cmake" "--color=$(COLOR)" sol2-populate
 .PHONY : CMakeFiles/sol2-populate.dir/depend
 

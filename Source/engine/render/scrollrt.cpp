@@ -48,6 +48,7 @@
 #include "levels/dun_tile.hpp"
 #include "levels/gendung.h"
 #include "levels/tile_properties.hpp"
+#include "ui_nightmare.h"  // 🌙 Nightmare UI Architecture
 #include "lighting.h"
 #include "lua/lua_global.hpp"
 #include "minitext.h"
@@ -2010,6 +2011,9 @@ void DrawAndBlit()
 	nthread_UpdateProgressToNextGameTick();
 
 	DrawView(out, ViewPosition);
+	
+	// 🌙 NIGHTMARE UI - Render atmospheric effects AFTER game view but BEFORE UI panels
+	RenderNightmareUI();
 	if (drawCtrlPan) {
 		DrawMainPanel(out);
 	}

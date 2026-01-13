@@ -52,8 +52,8 @@ TMenuItem sgSingleMenu[] = {
 	{ GMENU_ENABLED, N_("Save Game"),         &gamemenu_save_game },
 	{ GMENU_ENABLED, N_("Options"),           &GamemenuOptions    },
 	{ GMENU_ENABLED, N_("Load Game"),         &gamemenu_load_game },
-	{ GMENU_ENABLED, N_("Exit to Main Menu"), &GamemenuNewGame    },
-	{ GMENU_ENABLED, N_("Quit Game"),         &gamemenu_quit_game },
+	{ GMENU_ENABLED, N_("Exit"),              &GamemenuNewGame    },  // 🌑 NIGHTMARE: Simplificado
+	{ GMENU_ENABLED, N_("Quit"),              &gamemenu_quit_game }, // 🌑 NIGHTMARE: Simplificado
 	{ GMENU_ENABLED, nullptr,                 nullptr             },
 	// clang-format on
 };
@@ -62,8 +62,8 @@ TMenuItem sgMultiMenu[] = {
 	// clang-format off
 	// dwFlags,      pszStr,                  fnMenu
 	{ GMENU_ENABLED, N_("Options"),           &GamemenuOptions    },
-	{ GMENU_ENABLED, N_("Exit to Main Menu"), &GamemenuNewGame    },
-	{ GMENU_ENABLED, N_("Quit Game"),         &gamemenu_quit_game },
+	{ GMENU_ENABLED, N_("Exit"),              &GamemenuNewGame    },  // 🌑 NIGHTMARE: Simplificado
+	{ GMENU_ENABLED, N_("Quit"),              &gamemenu_quit_game }, // 🌑 NIGHTMARE: Simplificado
 	{ GMENU_ENABLED, nullptr,                 nullptr             },
 	// clang-format on
 };

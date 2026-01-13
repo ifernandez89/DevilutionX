@@ -5,8 +5,8 @@
 cmake_minimum_required(VERSION 4.2.1)
 
 # CTest Start Step
-set(CTEST_SOURCE_DIRECTORY "C:/c - c++/DevilutionX/build_final_working/_deps/sol2-src")
-set(CTEST_BINARY_DIRECTORY "C:/c - c++/DevilutionX/build_final_working/_deps/sol2-build")
+set(CTEST_SOURCE_DIRECTORY "C:/c - c++/DevilutionX/build_final/_deps/sol2-src")
+set(CTEST_BINARY_DIRECTORY "C:/c - c++/DevilutionX/build_final/_deps/sol2-build")
 
 # CTest Update Step
 set(CTEST_UPDATE_COMMAND "C:/Program Files/Git/cmd/git.exe")

@@ -21,6 +21,8 @@
 #include "engine/points_in_rectangle_range.hpp"
 #include "engine/world_tile.hpp"
 #include "levels/tile_properties.hpp"
+#include "nightmare_config.h"
+#include "nightmare_lighting.h"
 #include "objects.h"
 #include "player.h"
 #include "utils/attributes.h"
@@ -610,6 +612,10 @@ void InitLighting()
 	
 	// 🎯 FASE D1 - Initialize Depth Cues System
 	InitDepthCues();
+	
+	// 🔥 NIGHTMARE ATMOSPHERIC LIGHTING - Initialize atmospheric lighting system
+	// SIEMPRE habilitado para que veas el parpadeo
+	InitNightmareLighting();
 }
 
 int AddLight(Point position, uint8_t radius)
@@ -631,6 +637,18 @@ int AddLight(Point position, uint8_t radius)
 
 	UpdateLighting = true;
 
+	// 🔥 NIGHTMARE ATMOSPHERIC LIGHTING - Register light for atmospheric effects
+	// SIEMPRE habilitado para efectos visuales
+	// Determine light type based on radius (simple heuristic for now)
+	AtmosphericLightType lightType = AtmosphericLightType::TORCH; // Default to torch
+	if (radius <= 3) {
+		lightType = AtmosphericLightType::CANDLE;
+	} else if (radius >= 8) {
+		lightType = AtmosphericLightType::FIRE;
+	}
+	
+	RegisterAtmosphericLight(lid, lightType, radius);
+
 	return lid;
 }
 
@@ -644,6 +662,18 @@ void AddUnLight(int i)
 		return;
 
 	Lights[i].isInvalid = true;
+	
+	// 🔥 NIGHTMARE ATMOSPHERIC LIGHTING - Unregister atmospheric light
+	// Solo si la feature está habilitada
+	if (NIGHTMARE_LIGHTING_ENABLED()) {
+		// Find and unregister the atmospheric light with this ID
+		for (int j = 0; j < g_nightmareLighting.activeLightCount; j++) {
+			if (g_nightmareLighting.lights[j].lightId == i) {
+				UnregisterAtmosphericLight(j);
+				break;
+			}
+		}
+	}
 
 	UpdateLighting = true;
 }

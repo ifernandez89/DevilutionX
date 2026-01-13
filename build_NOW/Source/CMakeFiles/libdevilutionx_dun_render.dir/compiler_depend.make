@@ -60,6 +60,7 @@ Source/CMakeFiles/libdevilutionx_dun_render.dir/engine/render/dun_render.cpp.obj
   C:/c\ -\ c++/DevilutionX/Source/tables/playerdat.hpp \
   C:/c\ -\ c++/DevilutionX/Source/tables/spelldat.h \
   C:/c\ -\ c++/DevilutionX/Source/tables/textdat.h \
+  C:/c\ -\ c++/DevilutionX/Source/tile_detective.h \
   C:/c\ -\ c++/DevilutionX/Source/utils/algorithm/container.hpp \
   C:/c\ -\ c++/DevilutionX/Source/utils/attributes.h \
   C:/c\ -\ c++/DevilutionX/Source/utils/bitset2d.hpp \
@@ -79,6 +80,7 @@ Source/CMakeFiles/libdevilutionx_dun_render.dir/engine/render/dun_render.cpp.obj
   C:/c\ -\ c++/DevilutionX/Source/utils/string_or_view.hpp \
   C:/c\ -\ c++/DevilutionX/Source/utils/string_view_hash.hpp \
   C:/c\ -\ c++/DevilutionX/Source/utils/ui_fwd.h \
+  C:/c\ -\ c++/DevilutionX/Source/water_animation.h \
   C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL.h \
   C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_assert.h \
   C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_atomic.h \
@@ -273,6 +275,7 @@ Source/CMakeFiles/libdevilutionx_dun_render.dir/engine/render/dun_render.cpp.obj
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/uniform_int_dist.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/unique_ptr.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/unordered_map.h \
+  C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/unordered_set.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/uses_allocator.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/uses_allocator_args.h \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/utility.h \
@@ -365,6 +368,7 @@ Source/CMakeFiles/libdevilutionx_dun_render.dir/engine/render/dun_render.cpp.obj
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/type_traits \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/typeinfo \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/unordered_map \
+  C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/unordered_set \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/utility \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/variant \
   C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/vector \
@@ -566,6 +570,10 @@ C:/c\ -\ c++/DevilutionX/Source/diablo.h:
 C:/c\ -\ c++/DevilutionX/Source/utils/language.h:
 
 C:/c\ -\ c++/DevilutionX/Source/effects.h:
+
+C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_events.h:
+
+C:/c\ -\ c++/DevilutionX/Source/tile_detective.h:
 
 C:/c\ -\ c++/DevilutionX/Source/tables/playerdat.hpp:
 
@@ -775,6 +783,8 @@ C:/c\ -\ c++/DevilutionX/Source/utils/stdcompat/shared_ptr_array.hpp:
 
 C:/c\ -\ c++/DevilutionX/Source/utils/string_or_view.hpp:
 
+C:/c\ -\ c++/DevilutionX/Source/water_animation.h:
+
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/c++config.h:
 
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_video.h:
@@ -822,8 +832,6 @@ C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/S
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/pstl/glue_memory_defs.h:
 
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_endian.h:
-
-C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_events.h:
 
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_filesystem.h:
 
@@ -952,6 +960,8 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/avx2intrin.h:
 C:/mingw64/x86_64-w64-mingw32/include/pthread_time.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/avx5124fmapsintrin.h:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/unordered_set:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/shared_ptr_base.h:
 
@@ -1150,6 +1160,8 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/ostream_insert.h:
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/localefwd.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/utility:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/unordered_set.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/node_handle.h:
 

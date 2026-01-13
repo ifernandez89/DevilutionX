@@ -4,8 +4,8 @@
 
 
 # Configuration directories and files
-SourceDirectory: C:/c - c++/DevilutionX/build_final_working/_deps/sol2-src
-BuildDirectory: C:/c - c++/DevilutionX/build_final_working/_deps/sol2-build
+SourceDirectory: C:/c - c++/DevilutionX/build_final/_deps/sol2-src
+BuildDirectory: C:/c - c++/DevilutionX/build_final/_deps/sol2-build
 
 # Where to place the cost data store
 CostDataFile: 
@@ -27,7 +27,7 @@ SubmitInactivityTimeout:
 NightlyStartTime: 00:00:00 EDT
 
 # Commands for the build/test/submit cycle
-ConfigureCommand: "C:/Program Files/CMake/bin/cmake.exe" "C:/c - c++/DevilutionX/build_final_working/_deps/sol2-src"
+ConfigureCommand: "C:/Program Files/CMake/bin/cmake.exe" "C:/c - c++/DevilutionX/build_final/_deps/sol2-src"
 MakeCommand: C:/Program\ Files/CMake/bin/cmake.exe --build . --config "${CTEST_CONFIGURATION_TYPE}"
 DefaultCTestConfigurationType: Release
 

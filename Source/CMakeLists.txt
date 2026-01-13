@@ -3,24 +3,31 @@ include(functions/devilutionx_library)
 include(functions/genex)
 
 set(libdevilutionx_SRCS
+  advanced_debug.cpp
+  apocalypse_crash_debug.cpp
   appfat.cpp
   automap.cpp
   capture.cpp
-  crash_diagnostics.cpp
+  combat_pauses.cpp
   cursor.cpp
   dead.cpp
   debug.cpp
+  depth_variants.cpp
   diablo.cpp
-  emergency_diagnostics.cpp
-  guarantee_inferno_book.cpp
   diablo_msg.cpp
   doom.cpp
+  architectural_analysis.cpp
+  engine_health.cpp
   gamemenu.cpp
+  global_protection_system.cpp
   gmenu.cpp
+  guarantee_apocalypse_book.cpp
   help.cpp
   hwcursor.cpp
   interfac.cpp
+  invisible_wear.cpp
   inv.cpp
+  light_mutations.cpp
   loadsave.cpp
   menu.cpp
   minitext.cpp
@@ -31,12 +38,36 @@ set(libdevilutionx_SRCS
   pfile.cpp
   plrmsg.cpp
   portal.cpp
-  progressive_silence.cpp
   restrict.cpp
   sync.cpp
   tmsg.cpp
   towners.cpp
   track.cpp
+  ui_nightmare.cpp
+  ui_transitions.cpp
+  ui_contemplative.cpp
+  ui_integration.cpp
+  nightmare_menu_effects.cpp
+  nightmare_weather.cpp
+  nightmare_menu_contemplative.cpp
+  nightmare_testing.cpp
+  nightmare_immediate_effects.cpp
+  nightmare_lighting.cpp
+  nightmare_config.cpp
+  nightmare_ambience.cpp
+  nightmare_audio.cpp
+  nightmare_post_diablo.cpp
+  nightmare_quests.cpp
+  nightmare_items.cpp
+  nightmare_ambient_effects.cpp
+  nightmare_effects_status.cpp
+  nightmare_visual_effects.cpp
+  waiting_enemies.cpp
+  water_animation.cpp
+  organic_lighting.cpp
+  nightmare_atmosphere.cpp
+  tile_detective.cpp
+  tile_detective.cpp
 
   control/control_chat.cpp
   control/control_chat_commands.cpp
@@ -162,8 +193,6 @@ set(libdevilutionx_SRCS
   hidden_content.cpp
   dormant_assets.cpp
   enhanced_portal.cpp
-  inferno_defense.cpp
-  spell_throttling.cpp
 
   quests/validation.cpp
 
@@ -572,7 +601,6 @@ target_link_dependencies(libdevilutionx_logged_fstream PUBLIC
 add_devilutionx_object_library(libdevilutionx_items
   tables/itemdat.cpp
   items.cpp
-  hellfire_book_fix.cpp
 )
 target_link_dependencies(libdevilutionx_items PUBLIC
   DevilutionX::SDL

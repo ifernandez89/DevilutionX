@@ -182,24 +182,37 @@ devilutionx_EXTERNAL_OBJECTS = \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_text_render.dir/engine/render/text_render.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_utils_console.dir/utils/console.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx_surface_to_png.dir/utils/surface_to_png.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/advanced_debug.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/apocalypse_crash_debug.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/appfat.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/automap.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/capture.cpp.obj" \
+<<<<<<< HEAD
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/crash_diagnostics.cpp.obj" \
+=======
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/combat_pauses.cpp.obj" \
+>>>>>>> develop
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/cursor.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/dead.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/debug.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/depth_variants.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/diablo.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/emergency_diagnostics.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/guarantee_inferno_book.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/diablo_msg.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/doom.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/architectural_analysis.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/engine_health.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/gamemenu.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/global_protection_system.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/gmenu.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/guarantee_apocalypse_book.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/help.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/hwcursor.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/interfac.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/invisible_wear.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/inv.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/light_mutations.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/loadsave.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/menu.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/minitext.cpp.obj" \
@@ -216,6 +229,30 @@ devilutionx_EXTERNAL_OBJECTS = \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/tmsg.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/towners.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/track.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/ui_nightmare.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/ui_transitions.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/ui_contemplative.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/ui_integration.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/nightmare_menu_effects.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/nightmare_weather.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/nightmare_menu_contemplative.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/nightmare_testing.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/nightmare_immediate_effects.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/nightmare_lighting.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/nightmare_config.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/nightmare_ambience.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/nightmare_audio.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/nightmare_post_diablo.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/nightmare_quests.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/nightmare_items.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/nightmare_ambient_effects.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/nightmare_effects_status.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/nightmare_visual_effects.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/waiting_enemies.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/water_animation.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/organic_lighting.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/nightmare_atmosphere.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/tile_detective.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/control/control_chat.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/control/control_chat_commands.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/control/control_flasks.cpp.obj" \
@@ -431,24 +468,37 @@ devilutionx.exe: Source/CMakeFiles/libdevilutionx_ticks.dir/engine/ticks.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_text_render.dir/engine/render/text_render.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_utils_console.dir/utils/console.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx_surface_to_png.dir/utils/surface_to_png.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/advanced_debug.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/apocalypse_crash_debug.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/appfat.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/automap.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/capture.cpp.obj
+<<<<<<< HEAD
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/crash_diagnostics.cpp.obj
+=======
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/combat_pauses.cpp.obj
+>>>>>>> develop
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/cursor.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/dead.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/debug.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/depth_variants.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/diablo.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/emergency_diagnostics.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/guarantee_inferno_book.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/diablo_msg.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/doom.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/architectural_analysis.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/engine_health.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/gamemenu.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/global_protection_system.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/gmenu.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/guarantee_apocalypse_book.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/help.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/hwcursor.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/interfac.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/invisible_wear.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/inv.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/light_mutations.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/loadsave.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/menu.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/minitext.cpp.obj
@@ -465,6 +515,30 @@ devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/sync.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/tmsg.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/towners.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/track.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/ui_nightmare.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/ui_transitions.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/ui_contemplative.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/ui_integration.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/nightmare_menu_effects.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/nightmare_weather.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/nightmare_menu_contemplative.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/nightmare_testing.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/nightmare_immediate_effects.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/nightmare_lighting.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/nightmare_config.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/nightmare_ambience.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/nightmare_audio.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/nightmare_post_diablo.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/nightmare_quests.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/nightmare_items.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/nightmare_ambient_effects.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/nightmare_effects_status.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/nightmare_visual_effects.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/waiting_enemies.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/water_animation.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/organic_lighting.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/nightmare_atmosphere.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/tile_detective.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/control/control_chat.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/control/control_chat_commands.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/control/control_flasks.cpp.obj

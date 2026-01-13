@@ -5,6 +5,13 @@
  */
 #include "spells.h"
 
+#include <SDL.h>
+#include <string>
+#include <chrono>
+#include <fstream>
+#include <iomanip>
+#include <unordered_map>
+#include "architectural_analysis.h"
 #include "control/control.hpp"
 #include "cursor.h"
 #ifdef _DEBUG
@@ -14,20 +21,11 @@
 #include "engine/point.hpp"
 #include "engine/random.hpp"
 #include "engine/world_tile.hpp"
+#include "engine_health.h"
 #include "game_mode.hpp"
 #include "gamemenu.h"
 #include "inv.h"
 #include "missiles.h"
-#include "visual_feedback.h"
-
-// 🎯 UNIVERSAL SPELL THROTTLING SYSTEM
-#include "spell_throttling.h"
-
-// 🔍 CRASH DIAGNOSTICS SYSTEM
-#include "crash_diagnostics.h"
-
-// 🚨 EMERGENCY DIAGNOSTICS SYSTEM
-#include "emergency_diagnostics.h"
 
 namespace devilution {
 
@@ -220,47 +218,12 @@ SpellCheckResult CheckSpell(const Player &player, SpellID sn, SpellType st, bool
 
 void CastSpell(Player &player, SpellID spl, WorldTilePosition src, WorldTilePosition dst, int spllvl)
 {
-	// 🚨 EMERGENCY DIAGNOSTICS: Detectar específicamente clicks de Inferno
-	if (spl == SpellID::Inferno && &player == MyPlayer) {
-		// Contar InfernoControls activos ANTES de permitir el cast
-		int activeControls = 0;
-		int activeInfernos = 0;
-		for (const auto &missile : Missiles) {
-			if (missile._mitype == MissileID::InfernoControl) activeControls++;
-			if (missile._mitype == MissileID::Inferno) activeInfernos++;
-		}
-		
-		EMERGENCY_CRITICAL(fmt::format("🔥 INFERNO CAST ATTEMPT! Current: {} Controls, {} Infernos", activeControls, activeInfernos));
-		
-		// 🚨 LÍMITE ABSOLUTO CRÍTICO: NO permitir más de 1 InfernoControl NUNCA
-		if (activeControls >= 1) {
-			EMERGENCY_CRITICAL("❌ INFERNO CAST BLOCKED - Too many InfernoControls active!");
-			return; // BLOQUEAR COMPLETAMENTE
-		}
-		
-		// 🚨 LÍMITE ABSOLUTO CRÍTICO: NO permitir más de 3 Infernos NUNCA
-		if (activeInfernos >= 3) {
-			EMERGENCY_CRITICAL("❌ INFERNO CAST BLOCKED - Too many Infernos active!");
-			return; // BLOQUEAR COMPLETAMENTE
-		}
-		
-		// DISABLED: Crash diagnostics system disabled after successful crash fix
-		// RegisterInfernoClick();
-	}
-	
-	// 🎯 UNIVERSAL SPELL THROTTLING: Protección contra spam para TODOS los hechizos
-	if (!SPELL_SAFE_CAST(spl, player.getId())) {
-		EMERGENCY_LOG(fmt::format("SPELL THROTTLED: {} for player {}", static_cast<int>(spl), player._pName));
-		// Throttling activo - no permitir cast
-		return;
+	// ARCHITECTURAL ANALYSIS - Log Apocalypse casts
+	if (spl == SpellID::Apocalypse) {
+		ARCH_LOG_APOCALYPSE_CAST(player.getId(), spllvl, static_cast<int>(Missiles.size()));
+		// Note: Universal protection now handled in AddMissile
 	}
 
-	// 🎮 FASE V3.6 - BRILLO DE HECHIZO
-	// Activar brillo visual cuando se lanza un hechizo
-	if (&player == MyPlayer) {
-		TriggerSpellCastGlow(player, spl);
-	}
-	
 	Direction dir = player._pdir;
 	if (IsWallSpell(spl)) {
 		dir = player.tempDirection;

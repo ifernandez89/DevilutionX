@@ -967,6 +967,7 @@ Source/CMakeFiles/libdevilutionx_items.dir/items.cpp.obj: C:/c\ -\ c++/Devilutio
   C:/c\ -\ c++/DevilutionX/Source/interfac.h \
   C:/c\ -\ c++/DevilutionX/Source/inv.h \
   C:/c\ -\ c++/DevilutionX/Source/inv_iterators.hpp \
+  C:/c\ -\ c++/DevilutionX/Source/invisible_wear.h \
   C:/c\ -\ c++/DevilutionX/Source/items.h \
   C:/c\ -\ c++/DevilutionX/Source/items/validation.h \
   C:/c\ -\ c++/DevilutionX/Source/levels/dun_tile.hpp \
@@ -1518,9 +1519,21 @@ _deps/unordered_dense-src/include/ankerl/unordered_dense.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/cxxabi_init_exception.h:
 
+<<<<<<< HEAD
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/tuple:
 
 C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_haptic.h:
+=======
+C:/c\ -\ c++/DevilutionX/Source/utils/string_view_hash.hpp:
+
+C:/c\ -\ c++/DevilutionX/Source/items/validation.h:
+
+C:/c\ -\ c++/DevilutionX/Source/engine/path.h:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/pmmintrin.h:
+
+C:/mingw64/x86_64-w64-mingw32/include/intrin.h:
+>>>>>>> develop
 
 C:/c\ -\ c++/DevilutionX/Source/DiabloUI/text_input.hpp:
 
@@ -2498,6 +2511,19 @@ C:/c\ -\ c++/DevilutionX/Source/engine/backbuffer_state.hpp:
 
 C:/c\ -\ c++/DevilutionX/Source/engine/render/primitive_render.hpp:
 
+<<<<<<< HEAD
+=======
+C:/c\ -\ c++/DevilutionX/Source/engine/sound.h:
+
+C:/c\ -\ c++/DevilutionX/Source/engine/surface.hpp:
+
+C:/c\ -\ c++/DevilutionX/Source/invisible_wear.h:
+
+C:/c\ -\ c++/DevilutionX/Source/items.h:
+
+C:/c\ -\ c++/DevilutionX/Source/levels/town.h:
+
+>>>>>>> develop
 C:/c\ -\ c++/DevilutionX/Source/pack.h:
 
 C:/c\ -\ c++/DevilutionX/Source/stores.h:

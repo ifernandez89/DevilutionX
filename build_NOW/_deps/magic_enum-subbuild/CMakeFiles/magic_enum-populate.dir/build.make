@@ -83,14 +83,14 @@ CMakeFiles/magic_enum-populate-complete: magic_enum-populate-prefix/src/magic_en
 
 magic_enum-populate-prefix/src/magic_enum-populate-stamp/magic_enum-populate-build: magic_enum-populate-prefix/src/magic_enum-populate-stamp/magic_enum-populate-configure
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\_deps\magic_enum-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "No build step for 'magic_enum-populate'"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\MAGIC_~3 && "C:\Program Files\CMake\bin\cmake.exe" -E echo_append
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\MAGIC_~3 && "C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_NOW/_deps/magic_enum-subbuild/magic_enum-populate-prefix/src/magic_enum-populate-stamp/magic_enum-populate-build"
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\MAGIC_~2 && "C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\MAGIC_~2 && "C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_NOW/_deps/magic_enum-subbuild/magic_enum-populate-prefix/src/magic_enum-populate-stamp/magic_enum-populate-build"
 
 magic_enum-populate-prefix/src/magic_enum-populate-stamp/magic_enum-populate-configure: magic_enum-populate-prefix/tmp/magic_enum-populate-cfgcmd.txt
 magic_enum-populate-prefix/src/magic_enum-populate-stamp/magic_enum-populate-configure: magic_enum-populate-prefix/src/magic_enum-populate-stamp/magic_enum-populate-patch
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\_deps\magic_enum-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "No configure step for 'magic_enum-populate'"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\MAGIC_~3 && "C:\Program Files\CMake\bin\cmake.exe" -E echo_append
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\MAGIC_~3 && "C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_NOW/_deps/magic_enum-subbuild/magic_enum-populate-prefix/src/magic_enum-populate-stamp/magic_enum-populate-configure"
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\MAGIC_~2 && "C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\MAGIC_~2 && "C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_NOW/_deps/magic_enum-subbuild/magic_enum-populate-prefix/src/magic_enum-populate-stamp/magic_enum-populate-configure"
 
 magic_enum-populate-prefix/src/magic_enum-populate-stamp/magic_enum-populate-download: magic_enum-populate-prefix/src/magic_enum-populate-stamp/download-magic_enum-populate.cmake
 magic_enum-populate-prefix/src/magic_enum-populate-stamp/magic_enum-populate-download: magic_enum-populate-prefix/src/magic_enum-populate-stamp/magic_enum-populate-urlinfo.txt
@@ -103,8 +103,8 @@ magic_enum-populate-prefix/src/magic_enum-populate-stamp/magic_enum-populate-dow
 
 magic_enum-populate-prefix/src/magic_enum-populate-stamp/magic_enum-populate-install: magic_enum-populate-prefix/src/magic_enum-populate-stamp/magic_enum-populate-build
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\_deps\magic_enum-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_5) "No install step for 'magic_enum-populate'"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\MAGIC_~3 && "C:\Program Files\CMake\bin\cmake.exe" -E echo_append
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\MAGIC_~3 && "C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_NOW/_deps/magic_enum-subbuild/magic_enum-populate-prefix/src/magic_enum-populate-stamp/magic_enum-populate-install"
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\MAGIC_~2 && "C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\MAGIC_~2 && "C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_NOW/_deps/magic_enum-subbuild/magic_enum-populate-prefix/src/magic_enum-populate-stamp/magic_enum-populate-install"
 
 magic_enum-populate-prefix/src/magic_enum-populate-stamp/magic_enum-populate-mkdir:
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\_deps\magic_enum-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_6) "Creating directories for 'magic_enum-populate'"
@@ -119,8 +119,8 @@ magic_enum-populate-prefix/src/magic_enum-populate-stamp/magic_enum-populate-pat
 
 magic_enum-populate-prefix/src/magic_enum-populate-stamp/magic_enum-populate-test: magic_enum-populate-prefix/src/magic_enum-populate-stamp/magic_enum-populate-install
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\_deps\magic_enum-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_8) "No test step for 'magic_enum-populate'"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\MAGIC_~3 && "C:\Program Files\CMake\bin\cmake.exe" -E echo_append
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\MAGIC_~3 && "C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_NOW/_deps/magic_enum-subbuild/magic_enum-populate-prefix/src/magic_enum-populate-stamp/magic_enum-populate-test"
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\MAGIC_~2 && "C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\MAGIC_~2 && "C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_NOW/_deps/magic_enum-subbuild/magic_enum-populate-prefix/src/magic_enum-populate-stamp/magic_enum-populate-test"
 
 magic_enum-populate-prefix/src/magic_enum-populate-stamp/magic_enum-populate-update: magic_enum-populate-prefix/src/magic_enum-populate-stamp/magic_enum-populate-update-info.txt
 magic_enum-populate-prefix/src/magic_enum-populate-stamp/magic_enum-populate-update: magic_enum-populate-prefix/src/magic_enum-populate-stamp/magic_enum-populate-download

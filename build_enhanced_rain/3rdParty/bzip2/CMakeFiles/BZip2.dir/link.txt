@@ -1,0 +1,3 @@
+"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\BZip2.dir/objects.a
+C:\mingw64\bin\ar.exe qc CMakeFiles\BZip2.dir/objects.a @CMakeFiles\BZip2.dir\objects1.rsp
+C:\mingw64\bin\gcc.exe -O3 -DNDEBUG -flto=auto -fno-fat-lto-objects -shared -Wl,--gc-sections,--as-needed -o libBZip2.dll -Wl,--out-implib,libBZip2.dll.a -Wl,--major-image-version,0,--minor-image-version,0 -Wl,--whole-archive CMakeFiles\BZip2.dir/objects.a -Wl,--no-whole-archive @CMakeFiles\BZip2.dir\linkLibs.rsp

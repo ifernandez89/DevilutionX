@@ -32,35 +32,9 @@ CMAKE_ADDR2LINE:FILEPATH=C:/mingw64/bin/addr2line.exe
 //Path to a program.
 CMAKE_AR:FILEPATH=C:/mingw64/bin/ar.exe
 
-//ASM compiler
-CMAKE_ASM_COMPILER:FILEPATH=C:/mingw64/bin/gcc.exe
-
-//A wrapper around 'ar' adding the appropriate '--plugin' option
-// for the GCC compiler
-CMAKE_ASM_COMPILER_AR:FILEPATH=C:/mingw64/bin/gcc-ar.exe
-
-//A wrapper around 'ranlib' adding the appropriate '--plugin' option
-// for the GCC compiler
-CMAKE_ASM_COMPILER_RANLIB:FILEPATH=C:/mingw64/bin/gcc-ranlib.exe
-
-//Flags used by the ASM compiler during all build types.
-CMAKE_ASM_FLAGS:STRING=
-
-//Flags used by the ASM compiler during DEBUG builds.
-CMAKE_ASM_FLAGS_DEBUG:STRING=-g
-
-//Flags used by the ASM compiler during MINSIZEREL builds.
-CMAKE_ASM_FLAGS_MINSIZEREL:STRING=-Os -DNDEBUG
-
-//Flags used by the ASM compiler during RELEASE builds.
-CMAKE_ASM_FLAGS_RELEASE:STRING=-O3 -DNDEBUG
-
-//Flags used by the ASM compiler during RELWITHDEBINFO builds.
-CMAKE_ASM_FLAGS_RELWITHDEBINFO:STRING=-O2 -g -DNDEBUG
-
 //Choose the type of build, options are: None Debug Release RelWithDebInfo
 // MinSizeRel ...
-CMAKE_BUILD_TYPE:STRING=Release
+CMAKE_BUILD_TYPE:STRING=
 
 //Enable/Disable color output during build.
 CMAKE_COLOR_MAKEFILE:BOOL=ON
@@ -371,12 +345,6 @@ DEBUG:STRING=FOR_DEBUG
 //Default resampler
 DEVILUTIONX_DEFAULT_RESAMPLER:STRING=Speex
 
-//Disable exceptions
-DEVILUTIONX_DISABLE_EXCEPTIONS:BOOL=ON
-
-//Disable RTTI
-DEVILUTIONX_DISABLE_RTTI:BOOL=ON
-
 //Texture format for DevilutionX textures when using the GPU renderer
 DEVILUTIONX_DISPLAY_TEXTURE_FORMAT:STRING=SDL_PIXELFORMAT_RGB888
 
@@ -410,17 +378,11 @@ DEVILUTIONX_STATIC_BZIP2:BOOL=OFF
 //Link C++ standard library statically (if available)
 DEVILUTIONX_STATIC_CXX_STDLIB:STRING=FOR_RELEASE
 
-//Link libpng statically
-DEVILUTIONX_STATIC_LIBPNG:BOOL=ON
-
 //Link lua statically
 DEVILUTIONX_STATIC_LUA:BOOL=ON
 
 //Link SDL2 statically
 DEVILUTIONX_STATIC_SDL2:BOOL=OFF
-
-//Link SDL_image statically
-DEVILUTIONX_STATIC_SDL_IMAGE:BOOL=ON
 
 //Link zlib statically
 DEVILUTIONX_STATIC_ZLIB:BOOL=OFF
@@ -441,14 +403,17 @@ DISABLE_DEMOMODE:BOOL=OFF
 // mode)
 DISABLE_LTO:BOOL=OFF
 
-//No help, variable specified on the command line.
-DISABLE_LUA:UNINITIALIZED=ON
-
 //Disable streaming music (to work around broken platform implementations)
 DISABLE_STREAMING_MUSIC:BOOL=OFF
 
 //Disable streaming sounds (to work around broken platform implementations)
 DISABLE_STREAMING_SOUNDS:BOOL=OFF
+
+//Disable TCP multiplayer option
+DISABLE_TCP:BOOL=OFF
+
+//Disable ZeroTier multiplayer option
+DISABLE_ZERO_TIER:BOOL=OFF
 
 //Build with Discord SDK for rich presence support
 DISCORD_INTEGRATION:BOOL=OFF
@@ -476,10 +441,6 @@ FETCHCONTENT_FULLY_DISCONNECTED:BOOL=OFF
 FETCHCONTENT_QUIET:BOOL=ON
 
 //When not empty, overrides where to find pre-populated content
-// for libpng
-FETCHCONTENT_SOURCE_DIR_LIBPNG:PATH=
-
-//When not empty, overrides where to find pre-populated content
 // for Lua
 FETCHCONTENT_SOURCE_DIR_LUA:PATH=
 
@@ -489,9 +450,6 @@ FETCHCONTENT_SOURCE_DIR_SOL2:PATH=
 
 //Enables UPDATE_DISCONNECTED behavior for all content population
 FETCHCONTENT_UPDATES_DISCONNECTED:BOOL=OFF
-
-//Enables UPDATE_DISCONNECTED behavior just for population of libpng
-FETCHCONTENT_UPDATES_DISCONNECTED_LIBPNG:BOOL=OFF
 
 //Enables UPDATE_DISCONNECTED behavior just for population of Lua
 FETCHCONTENT_UPDATES_DISCONNECTED_LUA:BOOL=OFF
@@ -537,37 +495,22 @@ MEMORYCHECK_COMMAND:FILEPATH=MEMORYCHECK_COMMAND-NOTFOUND
 MEMORYCHECK_SUPPRESSIONS_FILE:FILEPATH=
 
 //Disable network support
-NONET:BOOL=ON
+NONET:BOOL=OFF
 
 //Disable sound support
 NOSOUND:BOOL=OFF
 
+//Encrypt network packets
+PACKET_ENCRYPTION:BOOL=ON
+
 //Generate position-independent code
 PIE:BOOL=OFF
-
-//Arguments to supply to pkg-config
-PKG_CONFIG_ARGN:STRING=
-
-//pkg-config executable
-PKG_CONFIG_EXECUTABLE:FILEPATH=PKG_CONFIG_EXECUTABLE-NOTFOUND
-
-//Custom zlib Location, else find_package is used
-PNG_BUILD_ZLIB:BOOL=OFF
 
 //Build with screen reader support
 SCREEN_READER_INTEGRATION:BOOL=OFF
 
-//No help, variable specified on the command line.
-SDL2_DIR:UNINITIALIZED=C:/c - c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/lib/cmake/SDL2
-
-//The directory containing a CMake configuration file for SDL2_image.
-SDL2_image_DIR:PATH=SDL2_image_DIR-NOTFOUND
-
-//Path to a file.
-SDL2_image_INCLUDE_DIR:PATH=SDL2_image_INCLUDE_DIR-NOTFOUND
-
-//Path to a library.
-SDL2_image_LIBRARY:FILEPATH=SDL2_image_LIBRARY-NOTFOUND
+//The directory containing a CMake configuration file for SDL2.
+SDL2_DIR:PATH=SDL2_DIR-NOTFOUND
 
 //Name of the computer/site where compile is being run
 SITE:STRING=XIPHOS-PC1
@@ -642,24 +585,6 @@ USE_SDL3:BOOL=OFF
 //Generate an NSIS installer
 WIN_NSIS:BOOL=OFF
 
-//Path to a file.
-ZLIB_INCLUDE_DIR:PATH=ZLIB_INCLUDE_DIR-NOTFOUND
-
-//Path to a library.
-ZLIB_LIBRARY_DEBUG:FILEPATH=ZLIB_LIBRARY_DEBUG-NOTFOUND
-
-//Path to a library.
-ZLIB_LIBRARY_RELEASE:FILEPATH=ZLIB_LIBRARY_RELEASE-NOTFOUND
-
-//Value Computed by CMake
-libpng_BINARY_DIR:STATIC=C:/c - c++/DevilutionX/build_simple/_deps/libpng-build
-
-//Value Computed by CMake
-libpng_IS_TOP_LEVEL:STATIC=OFF
-
-//Value Computed by CMake
-libpng_SOURCE_DIR:STATIC=C:/c - c++/DevilutionX/build_simple/_deps/libpng-src
-
 //Value Computed by CMake
 lua_BINARY_DIR:STATIC=C:/c - c++/DevilutionX/build_simple/_deps/lua-build
 
@@ -668,9 +593,6 @@ lua_IS_TOP_LEVEL:STATIC=OFF
 
 //Value Computed by CMake
 lua_SOURCE_DIR:STATIC=C:/c - c++/DevilutionX/build_simple/_deps/lua-src
-
-//The directory containing a CMake configuration file for sdl2-image.
-sdl2-image_DIR:PATH=sdl2-image_DIR-NOTFOUND
 
 //Value Computed by CMake
 sol2_BINARY_DIR:STATIC=C:/c - c++/DevilutionX/build_simple/_deps/sol2-build
@@ -692,23 +614,6 @@ ASAN-STRINGS:INTERNAL=FOR_DEBUG;FOR_RELEASE;ON;OFF
 CMAKE_ADDR2LINE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_AR
 CMAKE_AR-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CMAKE_ASM_COMPILER
-CMAKE_ASM_COMPILER-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CMAKE_ASM_COMPILER_AR
-CMAKE_ASM_COMPILER_AR-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CMAKE_ASM_COMPILER_RANLIB
-CMAKE_ASM_COMPILER_RANLIB-ADVANCED:INTERNAL=1
-CMAKE_ASM_COMPILER_WORKS:INTERNAL=1
-//ADVANCED property for variable: CMAKE_ASM_FLAGS
-CMAKE_ASM_FLAGS-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CMAKE_ASM_FLAGS_DEBUG
-CMAKE_ASM_FLAGS_DEBUG-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CMAKE_ASM_FLAGS_MINSIZEREL
-CMAKE_ASM_FLAGS_MINSIZEREL-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CMAKE_ASM_FLAGS_RELEASE
-CMAKE_ASM_FLAGS_RELEASE-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CMAKE_ASM_FLAGS_RELWITHDEBINFO
-CMAKE_ASM_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //This is the directory where this CMakeCache.txt was created
 CMAKE_CACHEFILE_DIR:INTERNAL=c:/c - c++/DevilutionX/build_simple
 //Major version of cmake used to create the current loaded cache
@@ -845,7 +750,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=9
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=6
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP
@@ -931,8 +836,6 @@ DEVILUTIONX_STATIC_CXX_STDLIB-STRINGS:INTERNAL=FOR_DEBUG;FOR_RELEASE;ON;OFF
 DISABLE_STREAMING_MUSIC-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: DISABLE_STREAMING_SOUNDS
 DISABLE_STREAMING_SOUNDS-ADVANCED:INTERNAL=1
-//Disable ZeroTier multiplayer option
-DISABLE_ZERO_TIER:INTERNAL=ON
 //Details about finding Threads
 FIND_PACKAGE_MESSAGE_DETAILS_Threads:INTERNAL=[TRUE][v()]
 //ADVANCED property for variable: GITCOMMAND
@@ -947,31 +850,6 @@ MAKECOMMAND-ADVANCED:INTERNAL=1
 MEMORYCHECK_COMMAND-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: MEMORYCHECK_SUPPRESSIONS_FILE
 MEMORYCHECK_SUPPRESSIONS_FILE-ADVANCED:INTERNAL=1
-PC_SDL2_image_CFLAGS:INTERNAL=
-PC_SDL2_image_CFLAGS_I:INTERNAL=
-PC_SDL2_image_CFLAGS_OTHER:INTERNAL=
-PC_SDL2_image_FOUND:INTERNAL=
-PC_SDL2_image_INCLUDEDIR:INTERNAL=
-PC_SDL2_image_LIBDIR:INTERNAL=
-PC_SDL2_image_LIBS:INTERNAL=
-PC_SDL2_image_LIBS_L:INTERNAL=
-PC_SDL2_image_LIBS_OTHER:INTERNAL=
-PC_SDL2_image_LIBS_PATHS:INTERNAL=
-PC_SDL2_image_MODULE_NAME:INTERNAL=
-PC_SDL2_image_PREFIX:INTERNAL=
-PC_SDL2_image_STATIC_CFLAGS:INTERNAL=
-PC_SDL2_image_STATIC_CFLAGS_I:INTERNAL=
-PC_SDL2_image_STATIC_CFLAGS_OTHER:INTERNAL=
-PC_SDL2_image_STATIC_LIBDIR:INTERNAL=
-PC_SDL2_image_STATIC_LIBS:INTERNAL=
-PC_SDL2_image_STATIC_LIBS_L:INTERNAL=
-PC_SDL2_image_STATIC_LIBS_OTHER:INTERNAL=
-PC_SDL2_image_STATIC_LIBS_PATHS:INTERNAL=
-PC_SDL2_image_VERSION:INTERNAL=
-//ADVANCED property for variable: PKG_CONFIG_ARGN
-PKG_CONFIG_ARGN-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: PKG_CONFIG_EXECUTABLE
-PKG_CONFIG_EXECUTABLE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: SCREEN_READER_INTEGRATION
 SCREEN_READER_INTEGRATION-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: SITE
@@ -982,13 +860,6 @@ STREAM_ALL_AUDIO_MIN_FILE_SIZE-ADVANCED:INTERNAL=1
 TARGET_PLATFORM-STRINGS:INTERNAL=host;retrofw;rg99;rg350;gkd350h;cpigamesh;miyoo_mini;windows9x;windowsXP
 //STRINGS property for variable: UBSAN
 UBSAN-STRINGS:INTERNAL=FOR_DEBUG;FOR_RELEASE;ON;OFF
-//ADVANCED property for variable: ZLIB_INCLUDE_DIR
-ZLIB_INCLUDE_DIR-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: ZLIB_LIBRARY_DEBUG
-ZLIB_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: ZLIB_LIBRARY_RELEASE
-ZLIB_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
 //CMAKE_INSTALL_PREFIX during last run
 _GNUInstallDirs_LAST_CMAKE_INSTALL_PREFIX:INTERNAL=C:/Program Files (x86)/DevilutionX
-__pkg_config_checked_PC_SDL2_image:INTERNAL=1
 

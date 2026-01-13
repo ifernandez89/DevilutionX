@@ -1,7 +1,7 @@
 {
 	"InstallScripts" : 
 	[
-		"C:/c - c++/DevilutionX/build_final_working/_deps/lua-subbuild/cmake_install.cmake"
+		"C:/c - c++/DevilutionX/build_final/_deps/lua-subbuild/cmake_install.cmake"
 	],
 	"Parallel" : false
 }

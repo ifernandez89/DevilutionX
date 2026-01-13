@@ -493,6 +493,7 @@ Source/CMakeFiles/libdevilutionx_stores.dir/stores.cpp.obj: C:/c\ -\ c++/Devilut
   C:/c\ -\ c++/DevilutionX/Source/engine/trn.hpp \
   C:/c\ -\ c++/DevilutionX/Source/inv.h \
   C:/c\ -\ c++/DevilutionX/Source/inv_iterators.hpp \
+  C:/c\ -\ c++/DevilutionX/Source/invisible_wear.h \
   C:/c\ -\ c++/DevilutionX/Source/minitext.h \
   C:/c\ -\ c++/DevilutionX/Source/options.h \
   C:/c\ -\ c++/DevilutionX/Source/pack.h \
@@ -1508,6 +1509,8 @@ C:/c\ -\ c++/DevilutionX/Source/engine/random.hpp:
 C:/c\ -\ c++/DevilutionX/Source/engine/backbuffer_state.hpp:
 
 C:/c\ -\ c++/DevilutionX/Source/engine/render/primitive_render.hpp:
+
+C:/c\ -\ c++/DevilutionX/Source/invisible_wear.h:
 
 C:/c\ -\ c++/DevilutionX/Source/stores.h:
 

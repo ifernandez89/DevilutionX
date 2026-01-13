@@ -20,8 +20,8 @@ project(lua-populate NONE)
 include(ExternalProject)
 ExternalProject_Add(lua-populate
                      "UPDATE_DISCONNECTED" "False" "DOWNLOAD_EXTRACT_TIMESTAMP" "FALSE" "EXTERNALPROJECT_INTERNAL_ARGUMENT_SEPARATOR" "URL" "https://github.com/walterschell/Lua/archive/3ed55a56eaa05c9221f40b3c07d0e908eb1067b0.tar.gz" "URL_HASH" "MD5=77907b8209f77c65cb681a5012f2d804"
-                    SOURCE_DIR          "C:/c - c++/DevilutionX/build_final_working/_deps/lua-src"
-                    BINARY_DIR          "C:/c - c++/DevilutionX/build_final_working/_deps/lua-build"
+                    SOURCE_DIR          "C:/c - c++/DevilutionX/build_final/_deps/lua-src"
+                    BINARY_DIR          "C:/c - c++/DevilutionX/build_final/_deps/lua-build"
                     CONFIGURE_COMMAND   ""
                     BUILD_COMMAND       ""
                     INSTALL_COMMAND     ""

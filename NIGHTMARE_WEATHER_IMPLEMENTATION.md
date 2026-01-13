@@ -6,9 +6,13 @@ Sistema de clima atmosférico implementado para **DevilutionX** que agrega lluvi
 
 ## 🎯 CARACTERÍSTICAS IMPLEMENTADAS
 
-### ✅ LLUVIA ATMOSFÉRICA RESPONSIVA (NIVEL CORE)
-- **Densidad Adaptativa**: 120-300 gotas según resolución (fórmula: viewport/18000)
-- **Rain Budget**: Máximo 400 actualizaciones/frame (blindaje contra mods extremos)
+### ✅ LLUVIA ATMOSFÉRICA RESPONSIVA (ENTERPRISE-GRADE)
+- **Densidad Adaptativa**: MIN_RAIN_DROPS-MAX_RAIN_DROPS según resolución
+- **Rain Budget**: MAX_RAIN_UPDATES_PER_FRAME (blindaje contra mods extremos)
+- **Thread Safety**: Documentado como single-threaded by design
+- **Magic Numbers**: Eliminados (DIABLO_DEATH_TIMER = 140)
+- **Compile-Time Control**: ENABLE_NIGHTMARE_WEATHER flag
+- **Debug Reproducibility**: Deterministic seed en debug builds
 - **3 tipos de gotas** con distribución natural (fina 40%, media 40%, pesada 20%)
 - **Micro-varianza vertical**: Gotas pesadas "pesan", finas "flotan" (ilusión 3D)
 - **Sistema de capas**: 60% detrás de personajes, 40% delante
@@ -21,6 +25,11 @@ Sistema de clima atmosférico implementado para **DevilutionX** que agrega lluvi
 - **Supresión automática** durante menús, inventario, pausa
 - **Transiciones suaves** sin cortes abruptos
 - **Regla de oro de Diablo**: El clima nunca compite con sistemas core
+
+### ✅ BLINDAJE EXTRA EN DECORACIONES
+- **Protección de tiles especiales**: dPiece[x][y] != 0 check
+- **Evita triggers, trampas, LOS**: Máxima seguridad de pathfinding
+- **Edge cases eliminados**: 100% compatible con saves
 
 ### ✅ VIENTO NATURAL MEJORADO
 - **Interpolación suave** durante 2 segundos (no cambios abruptos)

@@ -3,10 +3,28 @@
 #include <array>
 #include <cstdint>
 
+// COMPILE-TIME FEATURE FLAG: Complete control over weather system
+#ifndef ENABLE_NIGHTMARE_WEATHER
+#define ENABLE_NIGHTMARE_WEATHER 1
+#endif
+
+#if ENABLE_NIGHTMARE_WEATHER
+
 namespace devilution {
+
+// Rain system constants
+constexpr int MIN_RAIN_DROPS = 120;
+constexpr int MAX_RAIN_DROPS = 300;
+constexpr int RAIN_DENSITY_DIVISOR = 18000;
 
 // Rain budget - blindaje contra mods mal hechos
 constexpr int MAX_RAIN_UPDATES_PER_FRAME = 400;
+
+// THREAD SAFETY WARNING:
+// NOT THREAD-SAFE BY DESIGN.
+// DevilutionX render & game loop are single-threaded.
+// Any future threading must protect this state.
+static WeatherState gWeather;
 
 // Contexto del clima para manejo inteligente
 enum class WeatherContext : uint8_t {
@@ -89,3 +107,5 @@ void SetFogIntensity(float intensity);
 void DrawRainLayer(RainLayer layer);
 
 } // namespace devilution
+
+#endif // ENABLE_NIGHTMARE_WEATHER

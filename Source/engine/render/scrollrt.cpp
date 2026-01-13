@@ -1840,7 +1840,9 @@ void DrawAndBlit()
 	DrawView(out, ViewPosition);
 	
 	// 🌧️ NIGHTMARE WEATHER - Render background effects (fog, rain back layer)
+#if ENABLE_NIGHTMARE_WEATHER
 	RenderNightmareWeather();
+#endif
 	
 	if (drawCtrlPan) {
 		DrawMainPanel(out);
@@ -1864,9 +1866,11 @@ void DrawAndBlit()
 	}
 	
 	// 🌧️ NIGHTMARE WEATHER - Render FRONT layer (in front of characters)
+#if ENABLE_NIGHTMARE_WEATHER
 	if (drawCtrlPan) {
 		DrawRainLayer(RainLayer::FRONT);
 	}
+#endif
 	
 	DrawXPBar(out);
 	if (*GetOptions().Gameplay.showHealthValues)

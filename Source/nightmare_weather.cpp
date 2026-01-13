@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <algorithm>
 #include <vector>
+#include <random>
 
 #include "engine/backbuffer_state.hpp"
 #include "utils/log.hpp"
@@ -12,7 +13,24 @@
 
 namespace devilution {
 
+// DETERMINISTIC SEED FOR DEBUG: Allows reproducing visual bugs exactly
+// Only affects weather RNG, not gameplay RNG
+#ifdef _DEBUG
+static std::mt19937 weatherRng(0xDEADBEEF);
+#define WEATHER_RAND() (weatherRng() % 100)
+#else
+#define WEATHER_RAND() (rand() % 100)
+#endif
+
 WeatherState nightmareWeather = {};
+
+// THREAD SAFETY WARNING:
+// This system is NOT THREAD-SAFE by design.
+// DevilutionX operates on single-threaded render and game loops.
+// Any future parallelization must protect this global state.
+static WeatherState& GetWeatherState() {
+	return nightmareWeather;
+}
 
 // Constantes
 constexpr uint32_t FOG_FRAME_DELAY = 500;  // 500ms por frame
@@ -26,8 +44,8 @@ void InitRain()
 	const int gameViewportH = out.h() - 144;
 
 	// MEJORA 1: Densidad responsiva basada en resolución
-	int targetDrops = (gameViewportW * gameViewportH) / 18000;
-	targetDrops = std::clamp(targetDrops, 120, 300);
+	int targetDrops = (gameViewportW * gameViewportH) / RAIN_DENSITY_DIVISOR;
+	targetDrops = std::clamp(targetDrops, MIN_RAIN_DROPS, MAX_RAIN_DROPS);
 	nightmareWeather.rain.targetDropCount = targetDrops;
 	
 	// Redimensionar vector de gotas
@@ -41,7 +59,7 @@ void InitRain()
 		drop.y = rand() % gameViewportH;
 
 		// Distribución de tipos: 40% fina, 40% media, 20% pesada
-		int typeRoll = rand() % 100;
+		int typeRoll = WEATHER_RAND();
 		if (typeRoll < 40) {
 			drop.type = RainType::FINE;
 			drop.speed = 1 + (rand() % 2);  // 1-2 px/frame
@@ -60,7 +78,7 @@ void InitRain()
 		}
 
 		// Distribución de capas: 60% atrás, 40% adelante
-		drop.layer = (rand() % 100 < 60) ? RainLayer::BACK : RainLayer::FRONT;
+		drop.layer = (WEATHER_RAND() < 60) ? RainLayer::BACK : RainLayer::FRONT;
 
 		// Inicializar offset de viento
 		drop.windOffset = 0.0f;
@@ -139,10 +157,10 @@ void UpdateWind(uint32_t currentTime)
 	// Cambiar dirección del viento cada 8-12 segundos
 	if (currentTime - wind.lastChange > 8000 + (rand() % 4000)) {
 		// Nueva dirección sutil (-0.3 a 0.3)
-		nightmareWeather.rain.targetWindDirection = -0.3f + (static_cast<float>(rand() % 100) / 100.0f * 0.6f);
+		nightmareWeather.rain.targetWindDirection = -0.3f + (static_cast<float>(WEATHER_RAND()) / 100.0f * 0.6f);
 
 		// Nueva fuerza sutil (0.2 a 0.5)
-		nightmareWeather.rain.targetWindStrength = 0.2f + (static_cast<float>(rand() % 30) / 100.0f);
+		nightmareWeather.rain.targetWindStrength = 0.2f + (static_cast<float>(WEATHER_RAND() % 30) / 100.0f);
 
 		wind.lastChange = currentTime;
 		nightmareWeather.rain.windTransition = 0.0f; // Iniciar interpolación

@@ -1297,7 +1297,9 @@ void DiabloInit()
 	LoadSmallSelectionSpinner();
 
 	// Initialize Nightmare Weather System
+#if ENABLE_NIGHTMARE_WEATHER
 	InitNightmareWeather();
+#endif
 
 	CheckArchivesUpToDate();
 }
@@ -1553,7 +1555,9 @@ void GameLogic()
 	sound_update();
 	
 	// Update Nightmare Weather System
+#if ENABLE_NIGHTMARE_WEATHER
 	UpdateNightmareWeather(1.0f / 60.0f); // Assuming 60 FPS
+#endif
 	
 	CheckTriggers();
 	CheckQuests();
@@ -3536,6 +3540,9 @@ void EnhanceDecorativeDensity()
 			
 			// Only place on empty floor tiles
 			if (dObject[x][y] != 0) continue;
+			
+			// BLINDAJE EXTRA: Never decorate special tiles (triggers, traps, LOS)
+			if (dPiece[x][y] != 0) continue; // Avoid any special tiles
 			
 			// Check if it's a floor tile (basic safety)
 			if (dungeon[x][y] < 3 || dungeon[x][y] > 7) continue; // Rough floor tile range

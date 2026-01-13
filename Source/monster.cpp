@@ -1518,7 +1518,9 @@ void MonsterDeath(Monster &monster)
 			}
 		}
 
-		if (monster.var1 == 140 && gbIsMultiplayer)
+		// MAGIC NUMBER ELIMINATION: Diablo death timer
+		constexpr int DIABLO_DEATH_TIMER = 140;
+		if (monster.var1 == DIABLO_DEATH_TIMER && gbIsMultiplayer)
 			PrepDoEnding();
 	} else if (monster.animInfo.isLastFrame()) {
 		if (monster.isUnique())

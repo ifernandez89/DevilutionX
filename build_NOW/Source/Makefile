@@ -5157,6 +5157,54 @@ multi.cpp.s:
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_multiplayer.dir\build.make Source/CMakeFiles/libdevilutionx_multiplayer.dir/multi.cpp.s
 .PHONY : multi.cpp.s
 
+nightmare_ambience.obj: nightmare_ambience.cpp.obj
+.PHONY : nightmare_ambience.obj
+
+# target to build an object file
+nightmare_ambience.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/nightmare_ambience.cpp.obj
+.PHONY : nightmare_ambience.cpp.obj
+
+nightmare_ambience.i: nightmare_ambience.cpp.i
+.PHONY : nightmare_ambience.i
+
+# target to preprocess a source file
+nightmare_ambience.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/nightmare_ambience.cpp.i
+.PHONY : nightmare_ambience.cpp.i
+
+nightmare_ambience.s: nightmare_ambience.cpp.s
+.PHONY : nightmare_ambience.s
+
+# target to generate assembly for a file
+nightmare_ambience.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/nightmare_ambience.cpp.s
+.PHONY : nightmare_ambience.cpp.s
+
+nightmare_ambient_effects.obj: nightmare_ambient_effects.cpp.obj
+.PHONY : nightmare_ambient_effects.obj
+
+# target to build an object file
+nightmare_ambient_effects.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/nightmare_ambient_effects.cpp.obj
+.PHONY : nightmare_ambient_effects.cpp.obj
+
+nightmare_ambient_effects.i: nightmare_ambient_effects.cpp.i
+.PHONY : nightmare_ambient_effects.i
+
+# target to preprocess a source file
+nightmare_ambient_effects.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/nightmare_ambient_effects.cpp.i
+.PHONY : nightmare_ambient_effects.cpp.i
+
+nightmare_ambient_effects.s: nightmare_ambient_effects.cpp.s
+.PHONY : nightmare_ambient_effects.s
+
+# target to generate assembly for a file
+nightmare_ambient_effects.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/nightmare_ambient_effects.cpp.s
+.PHONY : nightmare_ambient_effects.cpp.s
+
 nightmare_atmosphere.obj: nightmare_atmosphere.cpp.obj
 .PHONY : nightmare_atmosphere.obj
 
@@ -5181,6 +5229,78 @@ nightmare_atmosphere.cpp.s:
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/nightmare_atmosphere.cpp.s
 .PHONY : nightmare_atmosphere.cpp.s
 
+nightmare_audio.obj: nightmare_audio.cpp.obj
+.PHONY : nightmare_audio.obj
+
+# target to build an object file
+nightmare_audio.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/nightmare_audio.cpp.obj
+.PHONY : nightmare_audio.cpp.obj
+
+nightmare_audio.i: nightmare_audio.cpp.i
+.PHONY : nightmare_audio.i
+
+# target to preprocess a source file
+nightmare_audio.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/nightmare_audio.cpp.i
+.PHONY : nightmare_audio.cpp.i
+
+nightmare_audio.s: nightmare_audio.cpp.s
+.PHONY : nightmare_audio.s
+
+# target to generate assembly for a file
+nightmare_audio.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/nightmare_audio.cpp.s
+.PHONY : nightmare_audio.cpp.s
+
+nightmare_config.obj: nightmare_config.cpp.obj
+.PHONY : nightmare_config.obj
+
+# target to build an object file
+nightmare_config.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/nightmare_config.cpp.obj
+.PHONY : nightmare_config.cpp.obj
+
+nightmare_config.i: nightmare_config.cpp.i
+.PHONY : nightmare_config.i
+
+# target to preprocess a source file
+nightmare_config.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/nightmare_config.cpp.i
+.PHONY : nightmare_config.cpp.i
+
+nightmare_config.s: nightmare_config.cpp.s
+.PHONY : nightmare_config.s
+
+# target to generate assembly for a file
+nightmare_config.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/nightmare_config.cpp.s
+.PHONY : nightmare_config.cpp.s
+
+nightmare_effects_status.obj: nightmare_effects_status.cpp.obj
+.PHONY : nightmare_effects_status.obj
+
+# target to build an object file
+nightmare_effects_status.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/nightmare_effects_status.cpp.obj
+.PHONY : nightmare_effects_status.cpp.obj
+
+nightmare_effects_status.i: nightmare_effects_status.cpp.i
+.PHONY : nightmare_effects_status.i
+
+# target to preprocess a source file
+nightmare_effects_status.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/nightmare_effects_status.cpp.i
+.PHONY : nightmare_effects_status.cpp.i
+
+nightmare_effects_status.s: nightmare_effects_status.cpp.s
+.PHONY : nightmare_effects_status.s
+
+# target to generate assembly for a file
+nightmare_effects_status.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/nightmare_effects_status.cpp.s
+.PHONY : nightmare_effects_status.cpp.s
+
 nightmare_immediate_effects.obj: nightmare_immediate_effects.cpp.obj
 .PHONY : nightmare_immediate_effects.obj
 
@@ -5204,6 +5324,54 @@ nightmare_immediate_effects.s: nightmare_immediate_effects.cpp.s
 nightmare_immediate_effects.cpp.s:
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/nightmare_immediate_effects.cpp.s
 .PHONY : nightmare_immediate_effects.cpp.s
+
+nightmare_items.obj: nightmare_items.cpp.obj
+.PHONY : nightmare_items.obj
+
+# target to build an object file
+nightmare_items.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/nightmare_items.cpp.obj
+.PHONY : nightmare_items.cpp.obj
+
+nightmare_items.i: nightmare_items.cpp.i
+.PHONY : nightmare_items.i
+
+# target to preprocess a source file
+nightmare_items.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/nightmare_items.cpp.i
+.PHONY : nightmare_items.cpp.i
+
+nightmare_items.s: nightmare_items.cpp.s
+.PHONY : nightmare_items.s
+
+# target to generate assembly for a file
+nightmare_items.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/nightmare_items.cpp.s
+.PHONY : nightmare_items.cpp.s
+
+nightmare_lighting.obj: nightmare_lighting.cpp.obj
+.PHONY : nightmare_lighting.obj
+
+# target to build an object file
+nightmare_lighting.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/nightmare_lighting.cpp.obj
+.PHONY : nightmare_lighting.cpp.obj
+
+nightmare_lighting.i: nightmare_lighting.cpp.i
+.PHONY : nightmare_lighting.i
+
+# target to preprocess a source file
+nightmare_lighting.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/nightmare_lighting.cpp.i
+.PHONY : nightmare_lighting.cpp.i
+
+nightmare_lighting.s: nightmare_lighting.cpp.s
+.PHONY : nightmare_lighting.s
+
+# target to generate assembly for a file
+nightmare_lighting.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/nightmare_lighting.cpp.s
+.PHONY : nightmare_lighting.cpp.s
 
 nightmare_menu_contemplative.obj: nightmare_menu_contemplative.cpp.obj
 .PHONY : nightmare_menu_contemplative.obj
@@ -5253,6 +5421,54 @@ nightmare_menu_effects.cpp.s:
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/nightmare_menu_effects.cpp.s
 .PHONY : nightmare_menu_effects.cpp.s
 
+nightmare_post_diablo.obj: nightmare_post_diablo.cpp.obj
+.PHONY : nightmare_post_diablo.obj
+
+# target to build an object file
+nightmare_post_diablo.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/nightmare_post_diablo.cpp.obj
+.PHONY : nightmare_post_diablo.cpp.obj
+
+nightmare_post_diablo.i: nightmare_post_diablo.cpp.i
+.PHONY : nightmare_post_diablo.i
+
+# target to preprocess a source file
+nightmare_post_diablo.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/nightmare_post_diablo.cpp.i
+.PHONY : nightmare_post_diablo.cpp.i
+
+nightmare_post_diablo.s: nightmare_post_diablo.cpp.s
+.PHONY : nightmare_post_diablo.s
+
+# target to generate assembly for a file
+nightmare_post_diablo.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/nightmare_post_diablo.cpp.s
+.PHONY : nightmare_post_diablo.cpp.s
+
+nightmare_quests.obj: nightmare_quests.cpp.obj
+.PHONY : nightmare_quests.obj
+
+# target to build an object file
+nightmare_quests.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/nightmare_quests.cpp.obj
+.PHONY : nightmare_quests.cpp.obj
+
+nightmare_quests.i: nightmare_quests.cpp.i
+.PHONY : nightmare_quests.i
+
+# target to preprocess a source file
+nightmare_quests.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/nightmare_quests.cpp.i
+.PHONY : nightmare_quests.cpp.i
+
+nightmare_quests.s: nightmare_quests.cpp.s
+.PHONY : nightmare_quests.s
+
+# target to generate assembly for a file
+nightmare_quests.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/nightmare_quests.cpp.s
+.PHONY : nightmare_quests.cpp.s
+
 nightmare_testing.obj: nightmare_testing.cpp.obj
 .PHONY : nightmare_testing.obj
 
@@ -5276,6 +5492,30 @@ nightmare_testing.s: nightmare_testing.cpp.s
 nightmare_testing.cpp.s:
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/nightmare_testing.cpp.s
 .PHONY : nightmare_testing.cpp.s
+
+nightmare_visual_effects.obj: nightmare_visual_effects.cpp.obj
+.PHONY : nightmare_visual_effects.obj
+
+# target to build an object file
+nightmare_visual_effects.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/nightmare_visual_effects.cpp.obj
+.PHONY : nightmare_visual_effects.cpp.obj
+
+nightmare_visual_effects.i: nightmare_visual_effects.cpp.i
+.PHONY : nightmare_visual_effects.i
+
+# target to preprocess a source file
+nightmare_visual_effects.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/nightmare_visual_effects.cpp.i
+.PHONY : nightmare_visual_effects.cpp.i
+
+nightmare_visual_effects.s: nightmare_visual_effects.cpp.s
+.PHONY : nightmare_visual_effects.s
+
+# target to generate assembly for a file
+nightmare_visual_effects.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/nightmare_visual_effects.cpp.s
+.PHONY : nightmare_visual_effects.cpp.s
 
 nightmare_weather.obj: nightmare_weather.cpp.obj
 .PHONY : nightmare_weather.obj
@@ -7931,21 +8171,51 @@ help:
 	@echo ... multi.obj
 	@echo ... multi.i
 	@echo ... multi.s
+	@echo ... nightmare_ambience.obj
+	@echo ... nightmare_ambience.i
+	@echo ... nightmare_ambience.s
+	@echo ... nightmare_ambient_effects.obj
+	@echo ... nightmare_ambient_effects.i
+	@echo ... nightmare_ambient_effects.s
 	@echo ... nightmare_atmosphere.obj
 	@echo ... nightmare_atmosphere.i
 	@echo ... nightmare_atmosphere.s
+	@echo ... nightmare_audio.obj
+	@echo ... nightmare_audio.i
+	@echo ... nightmare_audio.s
+	@echo ... nightmare_config.obj
+	@echo ... nightmare_config.i
+	@echo ... nightmare_config.s
+	@echo ... nightmare_effects_status.obj
+	@echo ... nightmare_effects_status.i
+	@echo ... nightmare_effects_status.s
 	@echo ... nightmare_immediate_effects.obj
 	@echo ... nightmare_immediate_effects.i
 	@echo ... nightmare_immediate_effects.s
+	@echo ... nightmare_items.obj
+	@echo ... nightmare_items.i
+	@echo ... nightmare_items.s
+	@echo ... nightmare_lighting.obj
+	@echo ... nightmare_lighting.i
+	@echo ... nightmare_lighting.s
 	@echo ... nightmare_menu_contemplative.obj
 	@echo ... nightmare_menu_contemplative.i
 	@echo ... nightmare_menu_contemplative.s
 	@echo ... nightmare_menu_effects.obj
 	@echo ... nightmare_menu_effects.i
 	@echo ... nightmare_menu_effects.s
+	@echo ... nightmare_post_diablo.obj
+	@echo ... nightmare_post_diablo.i
+	@echo ... nightmare_post_diablo.s
+	@echo ... nightmare_quests.obj
+	@echo ... nightmare_quests.i
+	@echo ... nightmare_quests.s
 	@echo ... nightmare_testing.obj
 	@echo ... nightmare_testing.i
 	@echo ... nightmare_testing.s
+	@echo ... nightmare_visual_effects.obj
+	@echo ... nightmare_visual_effects.i
+	@echo ... nightmare_visual_effects.s
 	@echo ... nightmare_weather.obj
 	@echo ... nightmare_weather.i
 	@echo ... nightmare_weather.s

@@ -52,6 +52,16 @@ set(libdevilutionx_SRCS
   nightmare_menu_contemplative.cpp
   nightmare_testing.cpp
   nightmare_immediate_effects.cpp
+  nightmare_lighting.cpp
+  nightmare_config.cpp
+  nightmare_ambience.cpp
+  nightmare_audio.cpp
+  nightmare_post_diablo.cpp
+  nightmare_quests.cpp
+  nightmare_items.cpp
+  nightmare_ambient_effects.cpp
+  nightmare_effects_status.cpp
+  nightmare_visual_effects.cpp
   waiting_enemies.cpp
   water_animation.cpp
   organic_lighting.cpp

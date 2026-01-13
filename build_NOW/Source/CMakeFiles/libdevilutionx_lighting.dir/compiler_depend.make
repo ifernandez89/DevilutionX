@@ -467,6 +467,8 @@ Source/CMakeFiles/libdevilutionx_lighting.dir/lighting.cpp.obj: C:/c\ -\ c++/Dev
   C:/c\ -\ c++/DevilutionX/Source/monster.h \
   C:/c\ -\ c++/DevilutionX/Source/msg.h \
   C:/c\ -\ c++/DevilutionX/Source/multi.h \
+  C:/c\ -\ c++/DevilutionX/Source/nightmare_config.h \
+  C:/c\ -\ c++/DevilutionX/Source/nightmare_lighting.h \
   C:/c\ -\ c++/DevilutionX/Source/objects.h \
   C:/c\ -\ c++/DevilutionX/Source/panels/info_box.hpp \
   C:/c\ -\ c++/DevilutionX/Source/player.h \
@@ -1340,6 +1342,8 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/xmmintrin.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/xopintrin.h:
 
+C:/c\ -\ c++/DevilutionX/Source/nightmare_config.h:
+
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/xsavecintrin.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/xsaveintrin.h:
@@ -1427,6 +1431,8 @@ C:/c\ -\ c++/DevilutionX/Source/items/validation.h:
 C:/c\ -\ c++/DevilutionX/Source/levels/gendung.h:
 
 C:/c\ -\ c++/DevilutionX/Source/multi.h:
+
+C:/c\ -\ c++/DevilutionX/Source/nightmare_lighting.h:
 
 C:/c\ -\ c++/DevilutionX/Source/objects.h:
 

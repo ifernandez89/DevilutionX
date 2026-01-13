@@ -1,0 +1,47 @@
+name: CMake
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        build_type: [Release, Debug]
+        os: [macos-latest, ubuntu-latest, windows-latest]
+        CC: [clang, gcc, cl]
+        gcc_version: [latest, 11]
+        exclude:
+          - os: macos-latest
+            CC: gcc
+          - os: macos-latest
+            CC: cl
+          - os: ubuntu-latest
+            CC: cl
+          - os: windows-latest
+            CC: gcc
+          - os: windows-latest
+            CC: clang
+          - CC: clang
+            gcc_version: 11
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Install GCC
+      if: matrix.CC == 'gcc'
+      uses: egor-tensin/setup-gcc@v1
+      with:
+        version: ${{ matrix.gcc_version }}
+
+    - name: Configure CMake
+      env:
+        CC: ${{ matrix.CC }}
+      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{matrix.build_type}} samples
+
+    - name: Build
+      run: cmake --build ${{github.workspace}}/build --config ${{matrix.build_type}}

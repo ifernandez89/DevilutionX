@@ -14,6 +14,9 @@ TOWN_COW	Cow	59	20	North	128			12	3
 TOWN_COW	Cow	25	45	SouthWest	128			12	3		
 TOWN_COW	Cow	28	48	North	128			12	3		
 TOWN_COW	Cow	31	46	NorthWest	128			12	3		
+TOWN_COW	Cow	33	49	South	128			12	3		
+TOWN_COW	Cow	26	42	SouthEast	128			12	3		
+TOWN_COW	Cow	60	18	NorthEast	128			12	3		
 TOWN_COWFARM	Complete Nut	61	22	SouthWest	96	towners\farmer\cfrmrn2	15	3		
 TOWN_FARMER	Lester the farmer	62	16	South	96	towners\farmer\farmrn2	15	3		
 TOWN_GIRL	Celia	77	43	South	96	towners\girl\girlw1	20	6		

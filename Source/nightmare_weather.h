@@ -23,7 +23,31 @@
 namespace devilution {
 
 /**
- * @brief Estructura de una gota de lluvia
+ * @brief Estructura de una partícula flotante
+ */
+struct FloatingParticle {
+	int x = 0;              ///< Posición X
+	int y = 0;              ///< Posición Y
+	float speedX = 0.0f;    ///< Velocidad horizontal
+	float speedY = 0.0f;    ///< Velocidad vertical
+	uint8_t color = 128;    ///< Color de la partícula
+	uint8_t alpha = 50;     ///< Transparencia
+	int life = 100;         ///< Vida restante
+};
+
+/**
+ * @brief Estado del sistema de partículas flotantes
+ */
+struct ParticleState {
+	bool enabled = true;                           ///< Sistema habilitado
+	std::array<FloatingParticle, 32> particles;   ///< 32 partículas flotantes
+	uint32_t lastUpdateTime = 0;                  ///< Último tiempo de actualización
+	float windDirection = 0.0f;                   ///< Dirección del viento
+	float windStrength = 0.5f;                    ///< Fuerza del viento
+};
+
+/**
+ * @brief Estructura de una gota de lluvia (LEGACY - No usada)
  */
 struct RainDrop {
 	int x = 0;              ///< Posición X
@@ -33,13 +57,13 @@ struct RainDrop {
 };
 
 /**
- * @brief Estado del sistema de lluvia
+ * @brief Estado del sistema de lluvia (DESHABILITADO)
  */
 struct RainState {
-	bool enabled = false;                       ///< Lluvia habilitada
-	std::array<RainDrop, 64> drops;            ///< 64 gotas de lluvia
+	bool enabled = false;                       ///< Lluvia deshabilitada
+	std::array<RainDrop, 64> drops;            ///< 64 gotas de lluvia (no usadas)
 	uint32_t lastUpdateTime = 0;               ///< Último tiempo de actualización
-	float intensity = 0.5f;                    ///< Intensidad de lluvia (0.0 - 1.0)
+	float intensity = 0.0f;                    ///< Intensidad de lluvia (0.0)
 };
 
 /**
@@ -58,8 +82,9 @@ struct FogState {
  */
 struct WeatherState {
 	bool enabled = true;                        ///< Sistema climático habilitado
-	RainState rain;                            ///< Estado de lluvia
+	RainState rain;                            ///< Estado de lluvia (deshabilitada)
 	FogState fog;                              ///< Estado de niebla
+	ParticleState particles;                   ///< Estado de partículas flotantes
 	uint32_t lastUpdateTime = 0;               ///< Último tiempo de actualización
 };
 
@@ -82,7 +107,30 @@ void UpdateNightmareWeather(float deltaTime);
  */
 void RenderNightmareWeather();
 
-// === SISTEMA DE LLUVIA ===
+// === SISTEMA DE PARTÍCULAS FLOTANTES ===
+
+/**
+ * @brief Inicializa el sistema de partículas flotantes
+ */
+void InitParticles();
+
+/**
+ * @brief Actualiza las partículas flotantes
+ */
+void UpdateParticles();
+
+/**
+ * @brief Renderiza las partículas flotantes
+ */
+void DrawParticles();
+
+/**
+ * @brief Habilita/deshabilita las partículas
+ * @param enabled true para habilitar
+ */
+void SetParticlesEnabled(bool enabled);
+
+// === SISTEMA DE LLUVIA (DESHABILITADO) ===
 
 /**
  * @brief Inicializa el sistema de lluvia

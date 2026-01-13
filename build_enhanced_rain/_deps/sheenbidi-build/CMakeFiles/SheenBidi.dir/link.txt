@@ -1,0 +1,2 @@
+"C:/mingw64/bin/gcc-ar.exe" qc libSheenBidi.a CMakeFiles/SheenBidi.dir/Source/SheenBidi.c.obj
+"C:/mingw64/bin/gcc-ranlib.exe" libSheenBidi.a

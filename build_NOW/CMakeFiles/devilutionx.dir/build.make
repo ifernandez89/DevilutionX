@@ -230,6 +230,16 @@ devilutionx_EXTERNAL_OBJECTS = \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/nightmare_menu_contemplative.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/nightmare_testing.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/nightmare_immediate_effects.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/nightmare_lighting.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/nightmare_config.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/nightmare_ambience.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/nightmare_audio.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/nightmare_post_diablo.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/nightmare_quests.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/nightmare_items.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/nightmare_ambient_effects.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/nightmare_effects_status.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/nightmare_visual_effects.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/waiting_enemies.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/water_animation.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/organic_lighting.cpp.obj" \
@@ -496,6 +506,16 @@ devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/nightmare_weather.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/nightmare_menu_contemplative.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/nightmare_testing.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/nightmare_immediate_effects.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/nightmare_lighting.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/nightmare_config.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/nightmare_ambience.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/nightmare_audio.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/nightmare_post_diablo.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/nightmare_quests.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/nightmare_items.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/nightmare_ambient_effects.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/nightmare_effects_status.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/nightmare_visual_effects.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/waiting_enemies.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/water_animation.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/organic_lighting.cpp.obj

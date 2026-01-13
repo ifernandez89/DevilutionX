@@ -81,6 +81,16 @@
 #include "levels/town.h"
 #include "levels/trigs.h"
 #include "lighting.h"
+#include "nightmare_ambience.h"
+#include "nightmare_ambient_effects.h"
+#include "nightmare_audio.h"
+#include "nightmare_config.h"
+#include "nightmare_effects_status.h"
+#include "nightmare_items.h"
+#include "nightmare_lighting.h"
+#include "nightmare_post_diablo.h"
+#include "nightmare_quests.h"
+#include "nightmare_visual_effects.h"
 #include "visual_feedback.h"
 #include "contextual_palette.h"
 #include "town_cinematic.h"
@@ -1376,6 +1386,34 @@ void DiabloInit()
 
 	// 🌙 NIGHTMARE UI - Initialize Nightmare UI Architecture
 	InitNightmareUI();
+	
+	// 🌙 NIGHTMARE CONFIG - Initialize Configuration System
+	InitNightmareConfig();
+	
+	// 🌙 NIGHTMARE AMBIENCE - Initialize Ambience System
+	InitNightmareAmbience();
+	
+	// 🎵 NIGHTMARE AUDIO - Initialize Enhanced Audio System
+	InitNightmareAudio();
+	
+	// ✨ NIGHTMARE VISUAL EFFECTS - Initialize Visual Effects System
+	InitNightmareVisualEffects();
+	
+	// 🗝️ NIGHTMARE POST-DIABLO - Initialize Post-Diablo Content System
+	InitPostDiabloSystem();
+	
+	// 🎯 NIGHTMARE QUESTS - Initialize Post-Diablo Quests System
+	InitNightmareQuests();
+	
+	// ⚔️ NIGHTMARE ITEMS - Initialize Unique Items System
+	InitNightmareItems();
+	
+	// 🌙 NIGHTMARE AMBIENT EFFECTS - Initialize Ambient Effects (FORCED ACTIVE)
+	InitNightmareAmbientEffects();
+	
+	// 🎮 NIGHTMARE EFFECTS STATUS - Verify all effects are active
+	VerifyAllNightmareEffectsActive();
+	ShowNightmareEffectsStatus();
 
 	// 🔍 TILE DETECTIVE - Initialize tile detection system
 	InitTileDetective();
@@ -1623,6 +1661,30 @@ void GameLogic()
 		gGameLogicStep = GameLogicStep::ProcessItems;
 		ProcessItems();
 		ProcessLightList();
+		
+		// 🔥 NIGHTMARE ATMOSPHERIC LIGHTING - Update atmospheric lighting effects
+		UpdateNightmareLighting();
+		
+		// 🌙 NIGHTMARE CONFIG - Update configuration system
+		UpdateNightmareConfig();
+		
+		// 🌙 NIGHTMARE AMBIENCE - Update ambience system
+		UpdateNightmareAmbience();
+		
+		// 🎵 NIGHTMARE AUDIO - Update enhanced audio system
+		UpdateNightmareAudio();
+		
+		// ✨ NIGHTMARE VISUAL EFFECTS - Update visual effects system
+		UpdateNightmareVisualEffects();
+		
+		// 🗝️ NIGHTMARE POST-DIABLO - Update post-Diablo content system
+		UpdatePostDiabloSystem();
+		
+		// 🎯 NIGHTMARE QUESTS - Update post-Diablo quests system
+		UpdateNightmareQuests();
+		
+		// 🌙 NIGHTMARE AMBIENT EFFECTS - Update ambient effects (FORCED ACTIVE)
+		UpdateNightmareAmbientEffects();
 		
 		// 🎮 FASE V3 - Update Visual Feedback System
 		UpdateVisualFeedback();

@@ -731,7 +731,9 @@ bool IsTownerPresent(_talker_id npc)
 {
 	switch (npc) {
 	case TOWN_DEADGUY:
-		return Quests[Q_BUTCHER]._qactive != QUEST_NOTAVAIL && Quests[Q_BUTCHER]._qactive != QUEST_DONE;
+		// 🏥 NIGHTMARE EDITION - El Moribundo siempre presente frente a la catedral
+		// Garantiza que el Moribundo esté siempre disponible para dar información sobre el Butcher
+		return true; // Siempre presente, independientemente del estado de la quest
 	case TOWN_FARMER:
 		return gbIsHellfire && sgGameInitInfo.bCowQuest == 0 && Quests[Q_FARMER]._qactive != QUEST_HIVE_DONE;
 	case TOWN_COWFARM:

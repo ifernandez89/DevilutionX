@@ -41,89 +41,42 @@ namespace {
 
 void InitNightmareWeather()
 {
-	LogVerbose("Initializing Nightmare Weather System");
+	LogVerbose("Nightmare Weather System - ALL EFFECTS DISABLED");
 	
-	nightmareWeather.enabled = true;
+	nightmareWeather.enabled = false;  // 🚫 TODO DESHABILITADO
 	nightmareWeather.lastUpdateTime = SDL_GetTicks();
 	
-	// Inicializar lluvia y niebla
-	InitRain();
-	InitFog();
+	// Todos los sistemas deshabilitados
+	nightmareWeather.rain.enabled = false;
+	nightmareWeather.fog.enabled = false;
+	nightmareWeather.particles.enabled = false;
 	
-	// 🌧️ ACTIVAR LLUVIA PERMANENTEMENTE para testing
-	nightmareWeather.rain.enabled = true;
-	nightmareWeather.rain.intensity = 0.7f;  // Intensidad alta para visibilidad
-	
-	// 🌫️ ACTIVAR NIEBLA PERMANENTEMENTE para testing
-	nightmareWeather.fog.enabled = true;
-	nightmareWeather.fog.intensity = 0.8f;   // Intensidad alta para visibilidad
-	
-	LogVerbose("🌧️ Nightmare Weather System initialized");
-	LogVerbose("🌫️ Rain and fog effects PERMANENTLY ACTIVE for testing");
+	LogVerbose("🚫 ALL WEATHER EFFECTS DISABLED - Clean gameplay ready");
 }
 
 void UpdateNightmareWeather(float deltaTime)
 {
-	if (!nightmareWeather.enabled) {
-		return;
-	}
-	
-	uint32_t currentTime = SDL_GetTicks();
-	nightmareWeather.lastUpdateTime = currentTime;
-	
-	// Actualizar lluvia
-	if (nightmareWeather.rain.enabled) {
-		UpdateRain();
-	}
-	
-	// Actualizar niebla
-	if (nightmareWeather.fog.enabled) {
-		UpdateFog(currentTime);
-	}
+	// 🚫 ALL EFFECTS DISABLED - No updates
+	return;
 }
 
 void RenderNightmareWeather()
 {
-	if (!nightmareWeather.enabled) {
-		return;
-	}
-	
-	// Renderizar niebla primero (fondo)
-	if (nightmareWeather.fog.enabled) {
-		DrawFog();
-	}
-	
-	// Renderizar lluvia encima
-	if (nightmareWeather.rain.enabled) {
-		DrawRain();
-	}
+	// 🚫 ALL EFFECTS DISABLED - No rendering
+	return;
 }
 
 // === SISTEMA DE LLUVIA ===
 
 void InitRain()
 {
-	LogVerbose("🌧️ Initializing rain system");
+	LogVerbose("🌧️ Rain system DISABLED by design choice");
 	
-	nightmareWeather.rain.enabled = false;  // Deshabilitada por defecto
-	nightmareWeather.rain.intensity = 0.5f;
+	nightmareWeather.rain.enabled = false;  // 🚫 DESHABILITADA - No convence al usuario
+	nightmareWeather.rain.intensity = 0.0f;
 	nightmareWeather.rain.lastUpdateTime = SDL_GetTicks();
 	
-	// 🎯 USAR DIMENSIONES REALES DE PANTALLA
-	const Surface &out = GlobalBackBuffer();
-	const int gameViewportW = out.w();
-	const int gameViewportH = out.h() - 144;  // Excluir panel inferior
-	
-	// Inicializar gotas de lluvia en posiciones aleatorias
-	for (auto &drop : nightmareWeather.rain.drops) {
-		drop.x = rand() % gameViewportW;
-		drop.y = rand() % gameViewportH;
-		drop.speed = RAIN_SPEED_BASE + (rand() % RAIN_SPEED_VARIANCE);
-		drop.alpha = RAIN_ALPHA;
-	}
-	
-	LogVerbose("🌧️ Rain initialized with {} drops (viewport: {}x{})", 
-		nightmareWeather.rain.drops.size(), gameViewportW, gameViewportH);
+	LogVerbose("🌧️ Rain system disabled - focusing on other atmospheric effects");
 }
 
 void UpdateRain()
@@ -133,58 +86,34 @@ void UpdateRain()
 	const int gameViewportW = out.w();
 	const int gameViewportH = out.h() - 144;  // Excluir panel inferior
 	
-	// Actualizar posición de cada gota - MOVIMIENTO VERTICAL hacia abajo
+	// Actualizar posición de cada gota - MOVIMIENTO MÁS REALISTA
 	for (auto &drop : nightmareWeather.rain.drops) {
-		// 🌧️ MOVIMIENTO VERTICAL: Solo actualizar Y (hacia abajo)
+		// 🌧️ MOVIMIENTO VERTICAL con micro-variación horizontal
 		drop.y += drop.speed;
+		
+		// 🌬️ MICRO-VIENTO: Variación horizontal muy sutil (±1 píxel ocasional)
+		if (rand() % 20 == 0) {  // 5% de probabilidad por frame
+			drop.x += (rand() % 3) - 1;  // -1, 0, o +1 píxel
+		}
 		
 		// Reiniciar gota cuando sale de pantalla por abajo
 		if (drop.y > gameViewportH) {
 			drop.x = rand() % gameViewportW;
-			drop.y = -(rand() % 60);  // Aparecer más arriba de la pantalla
-			drop.speed = RAIN_SPEED_BASE + (rand() % RAIN_SPEED_VARIANCE);
+			drop.y = -(rand() % 100);  // Aparecer arriba con variación
+			drop.speed = 1 + (rand() % 4);  // Nueva velocidad aleatoria
+			drop.alpha = 40 + (rand() % 30); // Nuevo alpha aleatorio
 		}
+		
+		// Mantener gota dentro de límites horizontales
+		if (drop.x < 0) drop.x = 0;
+		if (drop.x >= gameViewportW) drop.x = gameViewportW - 1;
 	}
 }
 
 void DrawRain()
 {
-	static uint32_t lastLogTime = 0;
-	uint32_t currentTime = SDL_GetTicks();
-	
-	if (currentTime - lastLogTime > 2000) {  // Log cada 2 segundos
-		LogVerbose("🌧️ RAIN ACTIVE: Drawing {} drops - DIABLO STYLE", 
-			nightmareWeather.rain.drops.size());
-		lastLogTime = currentTime;
-	}
-	
-	// 🌧️ IMPLEMENTACIÓN DIABLO-STYLE: Pool fijo, reciclaje, líneas simples
-	const Surface &out = GlobalBackBuffer();
-	
-	// 🎯 VIEWPORT CORRECTO: Solo renderizar en el área de juego (no en UI)
-	const int gameViewportX = 0;
-	const int gameViewportY = 0;
-	const int gameViewportW = out.w();
-	const int gameViewportH = out.h() - 144;  // Excluir panel inferior (144px)
-	
-	// Renderizar cada gota como línea vertical AZUL (agua real)
-	for (const auto &drop : nightmareWeather.rain.drops) {
-		// Verificar límites del viewport del juego
-		if (drop.x >= gameViewportX && drop.x < gameViewportW && 
-		    drop.y >= gameViewportY && drop.y < gameViewportH) {
-			
-			// 🌧️ COLOR AZUL AGUA REAL (azules/celestes)
-			uint8_t waterColor = 200 + (drop.y % 8);  // Azules 200-207
-			
-			// 🌧️ LÍNEA VERTICAL PARA SIMULAR CAÍDA
-			int lineLength = 2 + (drop.speed / 3);  // 2-5 píxeles
-			lineLength = std::min(lineLength, 5);
-			
-			for (int i = 0; i < lineLength && (drop.y + i) < gameViewportH; i++) {
-				out.SetPixel({drop.x, drop.y + i}, waterColor);
-			}
-		}
-	}
+	// 🚫 LLUVIA DESHABILITADA - No renderizar nada
+	return;
 }
 
 void SetRainEnabled(bool enabled)
@@ -212,13 +141,13 @@ void InitFog()
 {
 	LogVerbose("🌫️ Initializing fog system");
 	
-	nightmareWeather.fog.enabled = true;   // Habilitada por defecto
+	nightmareWeather.fog.enabled = true;    // 🌫️ HABILITADA PERMANENTEMENTE
 	nightmareWeather.fog.frame = 0;
 	nightmareWeather.fog.lastFrameTime = SDL_GetTicks();
 	nightmareWeather.fog.alpha = FOG_ALPHA_BASE;
-	nightmareWeather.fog.intensity = 0.7f;
+	nightmareWeather.fog.intensity = 0.8f;  // Intensidad alta para visibilidad
 	
-	LogVerbose("🌫️ Fog initialized - {} frames, {}ms delay", FOG_FRAMES, FOG_FRAME_DELAY);
+	LogVerbose("🌫️ Fog initialized PERMANENTLY ACTIVE - {} frames, {}ms delay", FOG_FRAMES, FOG_FRAME_DELAY);
 }
 
 void UpdateFog(uint32_t ticks)
@@ -237,12 +166,12 @@ void DrawFog()
 	static uint32_t lastLogTime = 0;
 	uint32_t currentTime = SDL_GetTicks();
 	
-	if (currentTime - lastLogTime > 3000) {  // Log cada 3 segundos
-		LogVerbose("🌫️ FOG ACTIVE: Drawing overlay - DIABLO STYLE");
+	if (currentTime - lastLogTime > 2000) {  // Log cada 2 segundos
+		LogVerbose("🌫️ FOG ACTIVE: Drawing HIGHLY VISIBLE overlay - NIGHTMARE STYLE");
 		lastLogTime = currentTime;
 	}
 	
-	// 🌫️ IMPLEMENTACIÓN DIABLO-STYLE: Sprites simulados, movimiento lento
+	// 🌫️ IMPLEMENTACIÓN NIGHTMARE: Niebla MUY VISIBLE y atmosférica
 	const Surface &out = GlobalBackBuffer();
 	
 	// 🎯 VIEWPORT CORRECTO: Solo renderizar en el área de juego
@@ -254,24 +183,29 @@ void DrawFog()
 	// Crear efecto de niebla con "sprites" simulados
 	int fogPattern = nightmareWeather.fog.frame;
 	
-	// 🌫️ NIEBLA DIABLO-STYLE: Blobs grises claros que se mueven lentamente
-	for (int y = gameViewportY; y < gameViewportH; y += 8) {  // Cada 8 píxeles
-		for (int x = gameViewportX; x < gameViewportW; x += 12) {  // Cada 12 píxeles
+	// 🌫️ NIEBLA NIGHTMARE: Blobs GRANDES y MUY VISIBLES
+	for (int y = gameViewportY; y < gameViewportH; y += 4) {  // Cada 4 píxeles (MUY DENSO)
+		for (int x = gameViewportX; x < gameViewportW; x += 6) {  // Cada 6 píxeles
 			// Patrón de "sprite" basado en posición y frame
-			int spritePattern = (x + y + fogPattern * 2) % 23;
+			int spritePattern = (x + y + fogPattern * 4) % 13;
 			
-			// 🌫️ COBERTURA SUTIL PERO VISIBLE (Diablo-style)
-			if (spritePattern < 4) {  // ~17% de cobertura
+			// 🌫️ COBERTURA ALTA Y MUY VISIBLE
+			if (spritePattern < 8) {  // ~60% de cobertura (MUY VISIBLE)
 				// Verificar límites del área de juego
 				if (x < gameViewportW && y < gameViewportH) {
-					// 🌫️ COLOR GRIS CLARO VISIBLE (más claro que antes)
-					uint8_t fogColor = 240 + (spritePattern % 8);  // Grises claros 240-247
+					// 🌫️ COLORES GRISES MUY CONTRASTANTES Y VISIBLES
+					uint8_t fogColor;
+					if (spritePattern < 3) {
+						fogColor = 160 + (spritePattern % 8);  // Grises oscuros 160-167
+					} else {
+						fogColor = 200 + (spritePattern % 10); // Grises claros 200-209
+					}
 					
-					// 🌫️ "SPRITE" SIMULADO: Blob de 2x2 píxeles
-					for (int dy = 0; dy < 2 && (y + dy) < gameViewportH; dy++) {
-						for (int dx = 0; dx < 2 && (x + dx) < gameViewportW; dx++) {
-							// Patrón de blob (centro más denso)
-							if ((dx == 0 && dy == 0) || spritePattern < 2) {
+					// 🌫️ "SPRITE" GRANDE: Blob de 4x4 píxeles para MÁXIMA visibilidad
+					for (int dy = 0; dy < 4 && (y + dy) < gameViewportH; dy++) {
+						for (int dx = 0; dx < 4 && (x + dx) < gameViewportW; dx++) {
+							// Patrón de blob denso (casi todos los píxeles)
+							if (spritePattern < 6 || (dx < 2 && dy < 2)) {
 								out.SetPixel({x + dx, y + dy}, fogColor);
 							}
 						}
@@ -299,6 +233,130 @@ void SetFogIntensity(float intensity)
 		nightmareWeather.fog.intensity, nightmareWeather.fog.alpha);
 }
 
+// === SISTEMA DE PARTÍCULAS FLOTANTES ===
+
+void InitParticles()
+{
+	LogVerbose("✨ Initializing floating particles system");
+	
+	nightmareWeather.particles.enabled = true;
+	nightmareWeather.particles.lastUpdateTime = SDL_GetTicks();
+	nightmareWeather.particles.windDirection = 0.2f;  // Viento suave hacia la derecha
+	nightmareWeather.particles.windStrength = 0.3f;   // Fuerza moderada
+	
+	// 🎯 USAR DIMENSIONES REALES DE PANTALLA
+	const Surface &out = GlobalBackBuffer();
+	const int gameViewportW = out.w();
+	const int gameViewportH = out.h() - 144;  // Excluir panel inferior
+	
+	// Inicializar partículas flotantes con variación
+	for (auto &particle : nightmareWeather.particles.particles) {
+		particle.x = rand() % gameViewportW;
+		particle.y = rand() % gameViewportH;
+		particle.speedX = (rand() % 100 - 50) / 100.0f;  // -0.5 a 0.5
+		particle.speedY = (rand() % 50 - 25) / 100.0f;   // -0.25 a 0.25
+		particle.color = 140 + (rand() % 40);             // Grises 140-179
+		particle.alpha = 30 + (rand() % 40);              // Alpha 30-69
+		particle.life = 200 + (rand() % 300);             // Vida 200-499 frames
+	}
+	
+	LogVerbose("✨ Particles initialized with {} floating elements", 
+		nightmareWeather.particles.particles.size());
+}
+
+void UpdateParticles()
+{
+	// 🎯 USAR DIMENSIONES REALES DE PANTALLA
+	const Surface &out = GlobalBackBuffer();
+	const int gameViewportW = out.w();
+	const int gameViewportH = out.h() - 144;  // Excluir panel inferior
+	
+	// Actualizar viento ocasionalmente
+	static int windTimer = 0;
+	windTimer++;
+	if (windTimer > 300) {  // Cada 5 segundos aprox
+		nightmareWeather.particles.windDirection += (rand() % 20 - 10) / 100.0f;
+		nightmareWeather.particles.windStrength = 0.1f + (rand() % 40) / 100.0f;
+		windTimer = 0;
+	}
+	
+	// Actualizar cada partícula
+	for (auto &particle : nightmareWeather.particles.particles) {
+		// Aplicar viento
+		particle.speedX += nightmareWeather.particles.windDirection * 0.01f;
+		particle.speedY += (rand() % 3 - 1) / 100.0f;  // Movimiento vertical aleatorio
+		
+		// Actualizar posición
+		particle.x += static_cast<int>(particle.speedX);
+		particle.y += static_cast<int>(particle.speedY);
+		
+		// Reducir vida
+		particle.life--;
+		
+		// Reiniciar partícula si sale de pantalla o muere
+		if (particle.x < 0 || particle.x >= gameViewportW || 
+		    particle.y < 0 || particle.y >= gameViewportH || 
+		    particle.life <= 0) {
+			
+			// Reaparecer en posición aleatoria
+			particle.x = rand() % gameViewportW;
+			particle.y = rand() % gameViewportH;
+			particle.speedX = (rand() % 100 - 50) / 100.0f;
+			particle.speedY = (rand() % 50 - 25) / 100.0f;
+			particle.color = 140 + (rand() % 40);
+			particle.alpha = 30 + (rand() % 40);
+			particle.life = 200 + (rand() % 300);
+		}
+	}
+}
+
+void DrawParticles()
+{
+	static uint32_t lastLogTime = 0;
+	uint32_t currentTime = SDL_GetTicks();
+	
+	if (currentTime - lastLogTime > 4000) {  // Log cada 4 segundos
+		LogVerbose("✨ PARTICLES ACTIVE: Drawing {} floating elements - NIGHTMARE ATMOSPHERE", 
+			nightmareWeather.particles.particles.size());
+		lastLogTime = currentTime;
+	}
+	
+	// ✨ IMPLEMENTACIÓN NIGHTMARE: Partículas flotantes atmosféricas
+	const Surface &out = GlobalBackBuffer();
+	
+	// 🎯 VIEWPORT CORRECTO: Solo renderizar en el área de juego
+	const int gameViewportX = 0;
+	const int gameViewportY = 0;
+	const int gameViewportW = out.w();
+	const int gameViewportH = out.h() - 144;  // Excluir panel inferior
+	
+	// Renderizar cada partícula
+	for (const auto &particle : nightmareWeather.particles.particles) {
+		// Verificar límites del viewport del juego
+		if (particle.x >= gameViewportX && particle.x < gameViewportW && 
+		    particle.y >= gameViewportY && particle.y < gameViewportH) {
+			
+			// ✨ PARTÍCULA COMO PEQUEÑO BLOB (2x2 píxeles)
+			uint8_t particleColor = particle.color;
+			
+			// Renderizar blob de 2x2 con variación
+			for (int dy = 0; dy < 2 && (particle.y + dy) < gameViewportH; dy++) {
+				for (int dx = 0; dx < 2 && (particle.x + dx) < gameViewportW; dx++) {
+					// Variación de color para efecto orgánico
+					uint8_t finalColor = particleColor + (dx + dy);
+					out.SetPixel({particle.x + dx, particle.y + dy}, finalColor);
+				}
+			}
+		}
+	}
+}
+
+void SetParticlesEnabled(bool enabled)
+{
+	nightmareWeather.particles.enabled = enabled;
+	LogVerbose("✨ Particles: {}", enabled ? "enabled" : "disabled");
+}
+
 void SetNightmareWeatherEnabled(bool enabled)
 {
 	nightmareWeather.enabled = enabled;
@@ -308,6 +366,7 @@ void SetNightmareWeatherEnabled(bool enabled)
 		// Deshabilitar todos los efectos
 		nightmareWeather.rain.enabled = false;
 		nightmareWeather.fog.enabled = false;
+		nightmareWeather.particles.enabled = false;
 	}
 }
 

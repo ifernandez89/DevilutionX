@@ -24,6 +24,7 @@ set(libdevilutionx_SRCS
   missiles.cpp
   movie.cpp
   msg.cpp
+  nightmare_weather.cpp
   nthread.cpp
   pfile.cpp
   plrmsg.cpp

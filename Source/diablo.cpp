@@ -48,6 +48,7 @@
 #include "engine/demomode.h"
 #include "engine/dx.h"
 #include "engine/events.hpp"
+#include "nightmare_weather.h"
 #include "engine/load_cel.hpp"
 #include "engine/load_file.hpp"
 #include "engine/random.hpp"
@@ -1295,6 +1296,9 @@ void DiabloInit()
 	// Always available.
 	LoadSmallSelectionSpinner();
 
+	// Initialize Nightmare Weather System
+	InitNightmareWeather();
+
 	CheckArchivesUpToDate();
 }
 
@@ -1547,6 +1551,10 @@ void GameLogic()
 #endif
 
 	sound_update();
+	
+	// Update Nightmare Weather System
+	UpdateNightmareWeather(1.0f / 60.0f); // Assuming 60 FPS
+	
 	CheckTriggers();
 	CheckQuests();
 	RedrawViewport();

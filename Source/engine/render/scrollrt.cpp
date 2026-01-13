@@ -48,9 +48,11 @@
 #include "levels/gendung.h"
 #include "levels/tile_properties.hpp"
 #include "lighting.h"
+#include "nightmare_weather.h"
 #include "lua/lua_global.hpp"
 #include "minitext.h"
 #include "missiles.h"
+#include "nightmare_weather.h"
 #include "nthread.h"
 #include "options.h"
 #include "panels/charpanel.hpp"
@@ -1836,6 +1838,10 @@ void DrawAndBlit()
 	nthread_UpdateProgressToNextGameTick();
 
 	DrawView(out, ViewPosition);
+	
+	// 🌧️ NIGHTMARE WEATHER - Render background effects (fog, rain back layer)
+	RenderNightmareWeather();
+	
 	if (drawCtrlPan) {
 		DrawMainPanel(out);
 	}
@@ -1856,6 +1862,12 @@ void DrawAndBlit()
 	if (drawChatInput) {
 		DrawChatBox(out);
 	}
+	
+	// 🌧️ NIGHTMARE WEATHER - Render FRONT layer (in front of characters)
+	if (drawCtrlPan) {
+		DrawRainLayer(RainLayer::FRONT);
+	}
+	
 	DrawXPBar(out);
 	if (*GetOptions().Gameplay.showHealthValues)
 		DrawFlaskValues(out, { mainPanel.position.x + 134, mainPanel.position.y + 28 }, MyPlayer->_pHitPoints >> 6, MyPlayer->_pMaxHP >> 6);

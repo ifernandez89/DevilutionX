@@ -5,6 +5,7 @@
 
 #include "engine/backbuffer_state.hpp"
 #include "utils/log.hpp"
+#include "levels/gendung.h"  // Para leveltype
 
 namespace devilution {
 
@@ -143,7 +144,8 @@ void UpdateFog(uint32_t ticks)
 
 void UpdateNightmareWeather(float deltaTime)
 {
-	if (!nightmareWeather.enabled) return;
+	// Solo activo en Tristram (DTYPE_TOWN)
+	if (!nightmareWeather.enabled || leveltype != DTYPE_TOWN) return;
 
 	// Actualizar lluvia
 	if (nightmareWeather.rain.enabled) {
@@ -158,6 +160,9 @@ void UpdateNightmareWeather(float deltaTime)
 
 void DrawRainLayer(RainLayer layer)
 {
+	// Solo renderizar en Tristram (DTYPE_TOWN)
+	if (leveltype != DTYPE_TOWN) return;
+	
 	const Surface &out = GlobalBackBuffer();
 	const int gameViewportW = out.w();
 	const int gameViewportH = out.h() - 144;
@@ -175,17 +180,17 @@ void DrawRainLayer(RainLayer layer)
 			continue;
 		}
 
-		// Color según tipo
+		// Color según tipo - Optimizado para atmósfera de Tristram
 		uint8_t waterColor;
 		switch (drop.type) {
 		case RainType::FINE:
-			waterColor = 200 + (drop.y % 4);  // 200-203 (más claro)
+			waterColor = 240 + (drop.y % 3);  // 240-242 (gris claro, sutil)
 			break;
 		case RainType::MEDIUM:
-			waterColor = 202 + (drop.y % 4);  // 202-205 (medio)
+			waterColor = 242 + (drop.y % 3);  // 242-244 (gris medio)
 			break;
 		case RainType::HEAVY:
-			waterColor = 204 + (drop.y % 4);  // 204-207 (más oscuro)
+			waterColor = 244 + (drop.y % 4);  // 244-247 (gris más visible)
 			break;
 		}
 
@@ -237,7 +242,8 @@ void DrawFog()
 
 void RenderNightmareWeather()
 {
-	if (!nightmareWeather.enabled) return;
+	// Solo renderizar en Tristram (DTYPE_TOWN)
+	if (!nightmareWeather.enabled || leveltype != DTYPE_TOWN) return;
 
 	// Renderizar niebla primero (fondo)
 	if (nightmareWeather.fog.enabled) {

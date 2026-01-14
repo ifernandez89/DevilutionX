@@ -122,6 +122,9 @@ set(libdevilutionx_SRCS
   engine/sound_position.cpp
   engine/trn.cpp
 
+  engine/platform/platform.cpp
+  engine/platform/dynamic_scaling.cpp
+
   engine/render/automap_render.cpp
   engine/render/scrollrt.cpp
 

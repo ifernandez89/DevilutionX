@@ -1,5 +1,0 @@
-if(EXISTS "C:/Diablo/DevilutionX Repo/DevilutionX/build_final_working/appfat_test[1]_tests.cmake")
-  include("C:/Diablo/DevilutionX Repo/DevilutionX/build_final_working/appfat_test[1]_tests.cmake")
-else()
-  add_test(appfat_test_NOT_BUILT appfat_test_NOT_BUILT)
-endif()

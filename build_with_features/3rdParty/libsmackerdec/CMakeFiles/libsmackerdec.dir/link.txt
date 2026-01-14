@@ -1,2 +1,0 @@
-"C:/msys64/mingw64/bin/gcc-ar.exe" qc liblibsmackerdec.a "CMakeFiles/libsmackerdec.dir/__/__/_deps/libsmackerdec-src/src/BitReader.cpp.obj" "CMakeFiles/libsmackerdec.dir/__/__/_deps/libsmackerdec-src/src/FileStream.cpp.obj" "CMakeFiles/libsmackerdec.dir/__/__/_deps/libsmackerdec-src/src/LogError.cpp.obj" "CMakeFiles/libsmackerdec.dir/__/__/_deps/libsmackerdec-src/src/SmackerDecoder.cpp.obj"
-"C:/msys64/mingw64/bin/gcc-ranlib.exe" liblibsmackerdec.a

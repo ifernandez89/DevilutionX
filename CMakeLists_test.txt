@@ -1,0 +1,10 @@
+cmake_minimum_required(VERSION 3.10)
+project(ApocalypseRealisticTest)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# Compilar el test standalone
+add_executable(test_apocalypse_realistic test_apocalypse_realistic.cpp)
+
+# No necesita linkear con nada, es standalone

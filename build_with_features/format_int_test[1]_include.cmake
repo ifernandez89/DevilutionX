@@ -1,5 +1,0 @@
-if(EXISTS "C:/Diablo/DevilutionX Repo/DevilutionX/build_final_working/format_int_test[1]_tests.cmake")
-  include("C:/Diablo/DevilutionX Repo/DevilutionX/build_final_working/format_int_test[1]_tests.cmake")
-else()
-  add_test(format_int_test_NOT_BUILT format_int_test_NOT_BUILT)
-endif()

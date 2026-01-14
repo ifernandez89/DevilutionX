@@ -137,48 +137,23 @@ void IncrementGlobalFrameCounter()
 
 bool CanSafelyCastApocalypse()
 {
-    // DELAYED UNLOCK APOCALYPSE PROTECTION - SENIOR ENGINEER SOLUTION
-    // "El flag atómico debe sobrevivir al frame de procesamiento"
-    
-    // DO NOT increment frameCounter here - it's incremented globally once per frame
-    
-    // Check if we should unlock the atomic flag (DELAYED unlock after processing completes)
-    if (apocalypseInProgress && globalFrameCounter >= apocalypseUnlockFrame) {
-        apocalypseInProgress = false;
-        ARCH_LOG_CRASH_PREVENTION("Apocalypse atomic flag UNLOCKED", "CanSafelyCastApocalypse delayed unlock");
-    }
-    
-    // ATOMIC CHECK: If any Apocalypse is in progress, fail immediately
-    if (apocalypseInProgress) {
-        ARCH_LOG_CRASH_PREVENTION("Apocalypse already in progress", "CanSafelyCastApocalypse atomic check");
-        return false;
-    }
-    
-    // FRAME-BASED COOLDOWN: Only 1 Apocalypse per frame (ESSENTIAL for crash prevention)
-    if (lastApocalypseFrame == globalFrameCounter) {
-        ARCH_LOG_CRASH_PREVENTION("Apocalypse frame cooldown active", "CanSafelyCastApocalypse frame-based");
-        return false;
-    }
-    
-    // MINIMAL TIME-BASED COOLDOWN: Only 16ms (1 frame at 60fps)
-    // ULTRA-RESPONSIVE: Maintains original Diablo feel while preventing crashes
-    auto now = std::chrono::steady_clock::now();
-    auto timeSinceLastCast = std::chrono::duration_cast<std::chrono::milliseconds>(now - lastApocalypseCast);
-    
-    if (timeSinceLastCast.count() < 16) { // 16ms = 1 frame at 60fps - gaming-grade responsiveness
-        ARCH_LOG_CRASH_PREVENTION("Apocalypse time cooldown active", "CanSafelyCastApocalypse time-based");
-        return false;
-    }
-    
-    // ATOMIC LOCK with DELAYED UNLOCK (3 frames for safety)
-    // This prevents the immediate unlock bug that was causing crashes
-    apocalypseInProgress = true;
-    lastApocalypseCast = now;
-    lastApocalypseFrame = globalFrameCounter;
-    apocalypseUnlockFrame = globalFrameCounter + 3; // DELAYED: Unlock after 3 frames
-    
-    ARCH_LOG_CRASH_PREVENTION("Apocalypse protection ALLOWING cast", "CanSafelyCastApocalypse SUCCESS");
-    return true;
+	// ULTRA-SIMPLE APOCALYPSE COOLDOWN
+	// "Diablo no necesita protección inteligente, necesita límites tontos"
+	// ORIGINAL WORKING SOLUTION - restored after merge overwrote it
+	
+	static auto lastApocalypseCast = std::chrono::steady_clock::now();
+	auto now = std::chrono::steady_clock::now();
+	auto timeSinceLastCast = std::chrono::duration_cast<std::chrono::milliseconds>(now - lastApocalypseCast);
+	
+	// Límite tonto: 1 Apocalypse cada 100ms (10 por segundo máximo)
+	// This prevents fast-click spam while maintaining responsive feel
+	if (timeSinceLastCast.count() < 100) {
+		ARCH_LOG_CRASH_PREVENTION("Apocalypse cooldown active", "CanSafelyCastApocalypse");
+		return false; // fail-soft
+	}
+	
+	lastApocalypseCast = now;
+	return true;
 }
 
 void ClearApocalypseInProgress()

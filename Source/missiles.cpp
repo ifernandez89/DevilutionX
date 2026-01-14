@@ -3901,26 +3901,10 @@ void ProcessApocalypse(Missile &missile)
 	// ARCHITECTURAL ANALYSIS - Log ProcessApocalypse calls
 	ARCH_LOG_PROCESS_APOCALYPSE(missile.var2, missile.var3, missile.var4, missile.var5, static_cast<int>(Missiles.size()));
 	
-	// 🚨 CRITICAL PROTECTION: Count active ApocalypseBoom missiles
-	// This prevents exponential boom accumulation that causes crashes
-	int currentBoomCount = 0;
-	for (const auto &m : Missiles) {
-		if (m._mitype == MissileID::ApocalypseBoom) {
-			currentBoomCount++;
-		}
-	}
-	
-	// EMERGENCY BRAKE: If too many booms exist, stop creating more
-	// Limit of 20 booms prevents crash while maintaining spell effectiveness
-	if (currentBoomCount >= 20) {
-		ARCH_LOG_CRASH_PREVENTION("ApocalypseBoom limit reached (20)", "ProcessApocalypse boom limit");
-		missile._miDelFlag = true;
-		return;
-	}
-	
-	// ORIGINAL DIABLO DESIGN - ONE TILE PER FRAME
-	// "Diablo procesa un tile por frame, no todo de golpe"
-	// This prevents missile explosion while maintaining original game feel
+	// ARQUITECTURA ULTRA SIMPLE - SINGLE FRAME PROCESSING
+	// "Diablo no necesita protección inteligente, necesita límites tontos"
+	// FIX: Process entire area in ONE frame to prevent infinite loops
+	// This was the ORIGINAL WORKING SOLUTION that was overwritten by merge
 	
 	for (int j = missile.var2; j < missile.var3; j++) {
 		for (int k = missile.var4; k < missile.var5; k++) {
@@ -3932,22 +3916,20 @@ void ProcessApocalypse(Missile &missile)
 					
 					// GUARDIÁN ULTRA SIMPLE - FAIL-SOFT
 					if (!TryAddMissile(WorldTilePosition(k, j), WorldTilePosition(k, j), Players[id]._pdir, MissileID::ApocalypseBoom, TARGET_MONSTERS, id, missile._midam, 0)) {
-						// Límite alcanzado - terminar spell limpiamente
+						// Límite alcanzado - el resto del spell se cancela limpiamente
+						// Sin crashes, sin corrupción, sin rollbacks
 						ARCH_LOG_CRASH_PREVENTION("TryAddMissile failed in ProcessApocalypse", "ProcessApocalypse loop");
 						missile._miDelFlag = true;
 						return;
 					}
 				}
 			}
-			// ORIGINAL DESIGN: Update state and return (one tile per frame)
-			missile.var2 = j;
-			missile.var4 = k + 1;
-			return; // Process only ONE tile per frame
+			// CRITICAL FIX: NO early return, NO state updates
+			// Process entire area in single frame
 		}
-		missile.var4 = missile.var6; // Reset column for next row
 	}
 	
-	// Spell completado - processed all tiles
+	// Spell completado naturalmente - ALWAYS delete after full processing
 	missile._miDelFlag = true;
 }
 

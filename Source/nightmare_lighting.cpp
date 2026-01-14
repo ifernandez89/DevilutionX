@@ -62,6 +62,12 @@ void UpdateNightmareLighting()
 		return;
 	}
 	
+	// 🛡️ SAFETY CHECK - Don't update during level transitions
+	// ActiveLightCount == 0 indicates lighting system is being reinitialized
+	if (ActiveLightCount == 0) {
+		return;
+	}
+	
 	// FORCE ALWAYS ENABLED for visibility
 	g_nightmareLighting.config.enabled = true;
 	
@@ -79,6 +85,13 @@ void UpdateNightmareLighting()
 		AtmosphericLight &light = g_nightmareLighting.lights[i];
 		
 		if (!light.enabled || light.lightId == -1) {
+			continue;
+		}
+		
+		// 🛡️ SAFETY CHECK - Verify light ID is still valid
+		if (light.lightId < 0 || light.lightId >= MAXLIGHTS) {
+			light.enabled = false;
+			light.lightId = -1;
 			continue;
 		}
 		

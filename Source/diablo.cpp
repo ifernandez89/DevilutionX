@@ -103,6 +103,7 @@
 #include "engine/platform/platform.h"  // 🌍 Nightmare Portability Layer
 #include "engine/platform/dynamic_scaling.h"  // 📉 Dynamic Performance Scaling
 #include "apocalypse_crash_debug.h"  // 🚨 Apocalypse Crash Debugging System
+#include "portal_debug.h"  // 🚪 Portal Debug System
 #include "loadsave.h"
 #include "lua/lua_global.hpp"
 #include "menu.h"
@@ -2845,6 +2846,10 @@ void SetCursorPos(Point position)
 
 void FreeGameMem()
 {
+	// 🔥 NIGHTMARE ATMOSPHERIC LIGHTING - Cleanup FIRST before freeing other resources
+	// This prevents crashes when changing levels via portal
+	CleanupNightmareLighting();
+	
 	pDungeonCels = nullptr;
 	pMegaTiles = nullptr;
 	pSpecialCels = std::nullopt;
@@ -3596,6 +3601,22 @@ void LoadGameLevelCalculateCursor()
 
 tl::expected<void, std::string> LoadGameLevel(bool firstflag, lvl_entry lvldir)
 {
+	// 🚪 PORTAL DEBUG - Log level load start
+	const char* entryType = "UNKNOWN";
+	switch (lvldir) {
+		case ENTRY_MAIN: entryType = "ENTRY_MAIN"; break;
+		case ENTRY_PREV: entryType = "ENTRY_PREV"; break;
+		case ENTRY_SETLVL: entryType = "ENTRY_SETLVL"; break;
+		case ENTRY_RTNLVL: entryType = "ENTRY_RTNLVL"; break;
+		case ENTRY_LOAD: entryType = "ENTRY_LOAD"; break;
+		case ENTRY_WARPLVL: entryType = "ENTRY_WARPLVL"; break;
+		case ENTRY_TWARPDN: entryType = "ENTRY_TWARPDN"; break;
+		case ENTRY_TWARPUP: entryType = "ENTRY_TWARPUP"; break;
+	}
+	PORTAL_LOG_EVENT("LoadGameLevel START", entryType);
+	PORTAL_LOG_STATE("BEFORE_LOAD", currlevel, leveltype);
+	PORTAL_LOG_LIGHTING("BEFORE_LOAD", ActiveLightCount, MAXLIGHTS);
+	
 	const _music_id neededTrack = GetLevelMusic(leveltype);
 
 	ClearFloatingNumbers();
@@ -3635,17 +3656,30 @@ tl::expected<void, std::string> LoadGameLevel(bool firstflag, lvl_entry lvldir)
 	InitAutomap();
 
 	if (leveltype != DTYPE_TOWN && lvldir != ENTRY_LOAD) {
+		// 🚪 PORTAL DEBUG - Log before lighting cleanup
+		PORTAL_LOG_EVENT("LIGHTING_CLEANUP", "Before CleanupNightmareLighting");
+		PORTAL_LOG_LIGHTING("BEFORE_CLEANUP", ActiveLightCount, MAXLIGHTS);
+		
 		// 🔥 NIGHTMARE ATMOSPHERIC LIGHTING - Cleanup before reinitializing
 		// This prevents crashes when changing levels via portal
 		CleanupNightmareLighting();
+		
+		// 🚪 PORTAL DEBUG - Log after cleanup, before init
+		PORTAL_LOG_EVENT("LIGHTING_INIT", "Before InitLighting");
+		PORTAL_LOG_LIGHTING("AFTER_CLEANUP", ActiveLightCount, MAXLIGHTS);
+		
 		InitLighting();
+		
+		// 🚪 PORTAL DEBUG - Log after init
+		PORTAL_LOG_EVENT("LIGHTING_COMPLETE", "After InitLighting");
+		PORTAL_LOG_LIGHTING("AFTER_INIT", ActiveLightCount, MAXLIGHTS);
 	}
 	
 	// 🎮 FASE V3 - Initialize Visual Feedback System
 	InitVisualFeedback();
 	
 	// 🎨 FASE V2 - Initialize Contextual Palette System
-	InitContextualPalette();
+	InitContextualPalette();;
 	
 	// 🏰 FASE D3 - Initialize Town Cinematográfica System
 	InitTownCinematic();
@@ -3724,6 +3758,12 @@ tl::expected<void, std::string> LoadGameLevel(bool firstflag, lvl_entry lvldir)
 	
 	// 🧬 LIGHT MUTATIONS - Update mutation chances for new level
 	UpdateLightMutations();
+	
+	// 🚪 PORTAL DEBUG - Log level load complete
+	PORTAL_LOG_EVENT("LoadGameLevel COMPLETE", "Level loaded successfully");
+	PORTAL_LOG_STATE("AFTER_LOAD", currlevel, leveltype);
+	PORTAL_LOG_LIGHTING("AFTER_LOAD", ActiveLightCount, MAXLIGHTS);
+	FlushPortalDebugLog();
 	
 	return {};
 }

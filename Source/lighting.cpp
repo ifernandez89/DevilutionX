@@ -25,6 +25,7 @@
 #include "nightmare_lighting.h"
 #include "objects.h"
 #include "player.h"
+#include "portal_debug.h"  // 🚪 Portal Debug System
 #include "utils/attributes.h"
 #include "utils/is_of.hpp"
 #include "utils/status_macros.hpp"
@@ -686,8 +687,17 @@ void ChangeLightRadius(int i, uint8_t radius)
 #endif
 	if (i == NO_LIGHT)
 		return;
+	
+	// 🛡️ SAFETY CHECK - Prevent access to invalid light indices
+	if (i < 0 || i >= MAXLIGHTS)
+		return;
 
 	Light &light = Lights[i];
+	
+	// 🛡️ SAFETY CHECK - Don't modify invalidated lights
+	if (light.isInvalid)
+		return;
+	
 	light.hasChanged = true;
 	light.position.old = light.position.tile;
 	light.oldRadius = light.radius;

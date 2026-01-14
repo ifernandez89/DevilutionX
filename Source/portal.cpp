@@ -10,6 +10,7 @@
 #include "multi.h"
 #include "player.h"
 #include "tables/misdat.h"
+#include "portal_debug.h"  // 🚪 Portal Debug System
 
 namespace devilution {
 
@@ -85,6 +86,10 @@ void AddPortalInTown(const Player &player)
 
 void ActivatePortal(const Player &player, Point position, int lvl, dungeon_type dungeonType, bool isSetLevel)
 {
+	// 🚪 PORTAL DEBUG - Log portal activation
+	PORTAL_LOG_EVENT("ActivatePortal", "Portal being activated");
+	PORTAL_LOG_STATE("PORTAL_ACTIVATE", lvl, static_cast<int>(dungeonType));
+	
 	Portal &portal = Portals[player.getId()];
 	portal.open = true;
 
@@ -94,10 +99,13 @@ void ActivatePortal(const Player &player, Point position, int lvl, dungeon_type 
 		portal.ltype = dungeonType;
 		portal.setlvl = isSetLevel;
 	}
+	
+	PORTAL_LOG_EVENT("ActivatePortal COMPLETE", "Portal activated successfully");
 }
 
 void DeactivatePortal(const Player &player)
 {
+	PORTAL_LOG_EVENT("DeactivatePortal", "Portal being deactivated");
 	Portals[player.getId()].open = false;
 }
 

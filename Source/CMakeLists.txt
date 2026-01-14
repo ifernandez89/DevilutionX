@@ -18,6 +18,7 @@ set(libdevilutionx_SRCS
   doom.cpp
   architectural_analysis.cpp
   engine_health.cpp
+  portal_debug.cpp
   gamemenu.cpp
   global_protection_system.cpp
   gmenu.cpp

@@ -137,19 +137,33 @@ void IncrementGlobalFrameCounter()
 
 bool CanSafelyCastApocalypse()
 {
-	// ULTRA-SIMPLE APOCALYPSE COOLDOWN
+	// ULTRA-SIMPLE APOCALYPSE PROTECTION - FINAL SOLUTION
 	// "Diablo no necesita protección inteligente, necesita límites tontos"
-	// ORIGINAL WORKING SOLUTION - restored after merge overwrote it
+	// After 20+ attempts, the simplest solution: Only 1 Apocalypse active at a time
 	
 	static auto lastApocalypseCast = std::chrono::steady_clock::now();
 	auto now = std::chrono::steady_clock::now();
 	auto timeSinceLastCast = std::chrono::duration_cast<std::chrono::milliseconds>(now - lastApocalypseCast);
 	
-	// Límite tonto: 1 Apocalypse cada 100ms (10 por segundo máximo)
-	// This prevents fast-click spam while maintaining responsive feel
+	// Cooldown básico: 100ms (ultra-responsive)
 	if (timeSinceLastCast.count() < 100) {
 		ARCH_LOG_CRASH_PREVENTION("Apocalypse cooldown active", "CanSafelyCastApocalypse");
-		return false; // fail-soft
+		return false;
+	}
+	
+	// LÍMITE TONTO: Máximo 1 Apocalypse activo a la vez
+	// This prevents boom accumulation: 1 spell × 16 booms = SAFE
+	// Multiple spells × 16 booms each = CRASH
+	int activeApocalypse = 0;
+	for (const auto &m : Missiles) {
+		if (m._mitype == MissileID::Apocalypse) {
+			activeApocalypse++;
+		}
+	}
+	
+	if (activeApocalypse >= 1) {
+		ARCH_LOG_CRASH_PREVENTION("Apocalypse already active (limit 1)", "CanSafelyCastApocalypse");
+		return false;
 	}
 	
 	lastApocalypseCast = now;

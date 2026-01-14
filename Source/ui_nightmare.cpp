@@ -21,7 +21,7 @@
 
 #include "utils/log.hpp"
 #include "water_animation.h"
-#include "organic_lighting.h"
+#include "nightmare_lighting.h"  // Consolidated lighting system (replaces organic_lighting)
 #include "nightmare_atmosphere.h"
 #include "ui_transitions.h"      // 🌙 Sistema de transiciones contemplativas
 #include "ui_contemplative.h"    // 🫁 Sistema de efectos contemplativos
@@ -249,8 +249,8 @@ void InitNightmareAtmosphericSystems()
 	// Inicializar agua animada
 	InitWaterAnimation();
 	
-	// Inicializar luces orgánicas
-	InitOrganicLighting();
+	// Inicializar iluminación atmosférica (nightmare_lighting)
+	InitNightmareLighting();
 	
 	// Inicializar atmósfera Nightmare
 	InitNightmareAtmosphere();
@@ -269,8 +269,8 @@ void UpdateNightmareAtmosphericSystems(uint32_t currentTick)
 	// Actualizar agua animada
 	UpdateWaterAnimation(currentTick);
 	
-	// Actualizar luces orgánicas
-	UpdateOrganicLighting(currentTick);
+	// Actualizar iluminación atmosférica (nightmare_lighting)
+	UpdateNightmareLighting();
 	
 	// Actualizar atmósfera Nightmare
 	UpdateNightmareAtmosphere(currentTick);
@@ -287,8 +287,8 @@ void SetNightmareAtmosphericEffectsEnabled(bool enabled)
 	// Controlar agua animada
 	SetWaterAnimationEnabled(enabled);
 	
-	// Controlar luces orgánicas
-	SetOrganicLightingEnabled(enabled);
+	// Controlar iluminación atmosférica (nightmare_lighting)
+	SetNightmareLightingEnabled(enabled);
 	
 	// Controlar atmósfera Nightmare
 	SetNightmareAtmosphereEnabled(enabled);

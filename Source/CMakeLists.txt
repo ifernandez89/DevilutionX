@@ -64,9 +64,7 @@ set(libdevilutionx_SRCS
   nightmare_visual_effects.cpp
   waiting_enemies.cpp
   water_animation.cpp
-  organic_lighting.cpp
   nightmare_atmosphere.cpp
-  tile_detective.cpp
   tile_detective.cpp
 
   control/control_chat.cpp

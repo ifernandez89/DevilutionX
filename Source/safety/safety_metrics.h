@@ -82,6 +82,11 @@ enum class StressEventCategory {
 SafetyMetrics& GetSafetyMetrics();
 
 /**
+ * Resetea todas las métricas (llamar al iniciar nueva partida)
+ */
+void ResetSafetyMetrics();
+
+/**
  * Actualiza las métricas con los valores actuales del juego
  */
 void UpdateSafetyMetrics();

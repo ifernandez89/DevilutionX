@@ -229,6 +229,9 @@ void StartGame(interface_mode uMsg)
 	// Reset Apocalypse cooldowns for new game
 	ResetApocalypseCooldowns();
 	
+	// Reset Global Protection System for new game
+	ResetGlobalProtection();
+	
 	// 🚨 DEBUG: Initialize Apocalypse crash debugging system
 	APOCALYPSE_DEBUG_INIT();
 	
@@ -3717,7 +3720,7 @@ tl::expected<void, std::string> LoadGameLevel(bool firstflag, lvl_entry lvldir)
 bool game_loop(bool bStartup)
 {
 	// 🛡️ GLOBAL PROTECTION SYSTEM - Update frame stats
-	GPS.updateFrameStats();
+	UpdateGlobalProtection();
 	
 	// 🔓 APOCALYPSE PROTECTION - Increment global frame counter
 	// CRITICAL: This must be called exactly once per game frame

@@ -29,6 +29,20 @@ namespace {
     SafetyMetrics g_safetyMetrics;
     std::vector<std::string> g_stressLog;
     EngineCertificationLevel g_certificationLevel = EngineCertificationLevel::UNSTABLE;
+    
+    // Frame time tracking - moved from function scope for proper reset
+    uint32_t g_lastFrameTime = 0;
+    std::vector<uint32_t> g_frameTimes;
+}
+
+// Reset function for new game
+void ResetSafetyMetrics()
+{
+    g_safetyMetrics = SafetyMetrics();
+    g_stressLog.clear();
+    g_certificationLevel = EngineCertificationLevel::UNSTABLE;
+    g_lastFrameTime = 0;
+    g_frameTimes.clear();
 }
 
 // ============================================================================
@@ -60,23 +74,21 @@ void UpdateSafetyMetrics() {
     }
     
     // Actualizar métricas de performance
-    static uint32_t lastFrameTime = SDL_GetTicks();
     uint32_t currentTime = SDL_GetTicks();
-    uint32_t frameTime = currentTime - lastFrameTime;
-    lastFrameTime = currentTime;
+    uint32_t frameTime = currentTime - g_lastFrameTime;
+    g_lastFrameTime = currentTime;
     
     // Calcular promedio móvil simple para frame time
-    static std::vector<uint32_t> frameTimes;
-    frameTimes.push_back(frameTime);
-    if (frameTimes.size() > 60) { // Mantener últimos 60 frames
-        frameTimes.erase(frameTimes.begin());
+    g_frameTimes.push_back(frameTime);
+    if (g_frameTimes.size() > 60) { // Mantener últimos 60 frames
+        g_frameTimes.erase(g_frameTimes.begin());
     }
     
     uint32_t totalFrameTime = 0;
-    for (uint32_t ft : frameTimes) {
+    for (uint32_t ft : g_frameTimes) {
         totalFrameTime += ft;
     }
-    metrics.averageFrameTime = totalFrameTime / frameTimes.size();
+    metrics.averageFrameTime = g_frameTimes.empty() ? 0 : totalFrameTime / g_frameTimes.size();
     metrics.peakFrameTime = std::max(metrics.peakFrameTime, frameTime);
 }
 

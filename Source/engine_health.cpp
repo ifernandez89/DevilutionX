@@ -124,52 +124,60 @@ bool CanSafelyAddMissile(int missileType)
 // Static variables for atomic Apocalypse protection
 static auto lastApocalypseCast = std::chrono::steady_clock::now();
 static bool apocalypseInProgress = false;
-static int frameCounter = 0;
+static int globalFrameCounter = 0;  // GLOBAL: Incremented once per game frame
 static int lastApocalypseFrame = -1;
 static int apocalypseUnlockFrame = -1; // Frame when to unlock
 
+void IncrementGlobalFrameCounter()
+{
+    // CRITICAL: This MUST be called exactly once per game frame
+    // Called from game_loop() in diablo.cpp
+    globalFrameCounter++;
+}
+
 bool CanSafelyCastApocalypse()
 {
-    // ULTRA-RESPONSIVE APOCALYPSE PROTECTION - OPTIMIZED FOR GAMING
-    // "Protección mínima necesaria, responsividad máxima"
+    // DELAYED UNLOCK APOCALYPSE PROTECTION - SENIOR ENGINEER SOLUTION
+    // "El flag atómico debe sobrevivir al frame de procesamiento"
     
-    // Increment frame counter (simple frame tracking)
-    frameCounter++;
+    // DO NOT increment frameCounter here - it's incremented globally once per frame
     
-    // Check if we should unlock the atomic flag (MINIMAL delay)
-    if (apocalypseInProgress && frameCounter >= apocalypseUnlockFrame) {
+    // Check if we should unlock the atomic flag (DELAYED unlock after processing completes)
+    if (apocalypseInProgress && globalFrameCounter >= apocalypseUnlockFrame) {
         apocalypseInProgress = false;
-        // ARCH_LOG_CRASH_PREVENTION("Apocalypse atomic flag UNLOCKED", "CanSafelyCastApocalypse delayed unlock");
+        ARCH_LOG_CRASH_PREVENTION("Apocalypse atomic flag UNLOCKED", "CanSafelyCastApocalypse delayed unlock");
     }
     
     // ATOMIC CHECK: If any Apocalypse is in progress, fail immediately
     if (apocalypseInProgress) {
-        // ARCH_LOG_CRASH_PREVENTION("Apocalypse already in progress", "CanSafelyCastApocalypse atomic check");
+        ARCH_LOG_CRASH_PREVENTION("Apocalypse already in progress", "CanSafelyCastApocalypse atomic check");
         return false;
     }
     
     // FRAME-BASED COOLDOWN: Only 1 Apocalypse per frame (ESSENTIAL for crash prevention)
-    if (lastApocalypseFrame == frameCounter) {
-        // ARCH_LOG_CRASH_PREVENTION("Apocalypse frame cooldown active", "CanSafelyCastApocalypse frame-based");
+    if (lastApocalypseFrame == globalFrameCounter) {
+        ARCH_LOG_CRASH_PREVENTION("Apocalypse frame cooldown active", "CanSafelyCastApocalypse frame-based");
         return false;
     }
     
-    // MINIMAL TIME-BASED COOLDOWN: Only 16ms (1 frame at 60fps) for ultra-responsiveness
+    // MINIMAL TIME-BASED COOLDOWN: Only 16ms (1 frame at 60fps)
+    // ULTRA-RESPONSIVE: Maintains original Diablo feel while preventing crashes
     auto now = std::chrono::steady_clock::now();
     auto timeSinceLastCast = std::chrono::duration_cast<std::chrono::milliseconds>(now - lastApocalypseCast);
     
-    if (timeSinceLastCast.count() < 16) { // MINIMAL 16ms = 1 frame at 60fps
-        // ARCH_LOG_CRASH_PREVENTION("Apocalypse time cooldown active", "CanSafelyCastApocalypse time-based");
+    if (timeSinceLastCast.count() < 16) { // 16ms = 1 frame at 60fps - gaming-grade responsiveness
+        ARCH_LOG_CRASH_PREVENTION("Apocalypse time cooldown active", "CanSafelyCastApocalypse time-based");
         return false;
     }
     
-    // ATOMIC LOCK with MINIMAL DELAY (only 1 frame for ultra-responsiveness)
+    // ATOMIC LOCK with DELAYED UNLOCK (3 frames for safety)
+    // This prevents the immediate unlock bug that was causing crashes
     apocalypseInProgress = true;
     lastApocalypseCast = now;
-    lastApocalypseFrame = frameCounter;
-    apocalypseUnlockFrame = frameCounter + 1; // MINIMAL: Unlock after just 1 frame
+    lastApocalypseFrame = globalFrameCounter;
+    apocalypseUnlockFrame = globalFrameCounter + 3; // DELAYED: Unlock after 3 frames
     
-    // ARCH_LOG_CRASH_PREVENTION("Apocalypse protection ALLOWING cast", "CanSafelyCastApocalypse SUCCESS");
+    ARCH_LOG_CRASH_PREVENTION("Apocalypse protection ALLOWING cast", "CanSafelyCastApocalypse SUCCESS");
     return true;
 }
 
@@ -177,7 +185,8 @@ void ClearApocalypseInProgress()
 {
     // DO NOTHING - Let the delayed unlock handle it
     // This prevents immediate unlocking that was causing the bug
-    // ARCH_LOG_CRASH_PREVENTION("ClearApocalypseInProgress called but IGNORED", "delayed unlock system");
+    // The atomic flag will be cleared automatically after N frames
+    ARCH_LOG_CRASH_PREVENTION("ClearApocalypseInProgress called but IGNORED", "ClearApocalypseInProgress delayed unlock system");
 }
 
 bool CanSafelyCastInferno()

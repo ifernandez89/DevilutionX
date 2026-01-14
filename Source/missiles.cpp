@@ -2813,16 +2813,19 @@ Missile *AddMissile(WorldTilePosition src, WorldTilePosition dst, Direction midi
 	// UNIVERSAL APOCALYPSE PROTECTION - CATCHES ALL SOURCES
 	// Protects against player casts, monster casts, jester casts, etc.
 	if (mitype == MissileID::Apocalypse) {
-		// DEBUG LOGS DISABLED - But system remains active for future debugging
-		// ARCH_LOG_CRASH_PREVENTION("AddMissile Apocalypse detected - checking protection", "AddMissile DEBUG");
+		ARCH_LOG_CRASH_PREVENTION("AddMissile Apocalypse detected - checking protection", "AddMissile DEBUG");
 		
 		if (!CanSafelyCastApocalypse()) {
-			// ARCH_LOG_CRASH_PREVENTION("Universal Apocalypse protection triggered", "AddMissile");
+			ARCH_LOG_CRASH_PREVENTION("Universal Apocalypse protection triggered - BLOCKED", "AddMissile");
 			return nullptr; // fail-soft - no crash, just ignore
 		}
 		
 		// If we reach here, protection passed
-		// ARCH_LOG_CRASH_PREVENTION("Apocalypse protection PASSED - allowing creation", "AddMissile ALLOWED");
+		ARCH_LOG_CRASH_PREVENTION("Apocalypse protection PASSED - allowing creation", "AddMissile ALLOWED");
+		
+		// DO NOT clear the lock here - let delayed unlock handle it
+		// The atomic flag will be cleared automatically after N frames
+		// This prevents the immediate unlock bug that was causing crashes
 	}
 
 	// LÍMITE TONTO - Sin inteligencia, sin coordinación
@@ -3892,16 +3895,32 @@ void ProcessApocalypse(Missile &missile)
 	// SAFETY CHECK: Validate player ID
 	if (id < 0 || id >= MAX_PLRS) {
 		missile._miDelFlag = true;
-		ClearApocalypseInProgress();
 		return;
 	}
 	
 	// ARCHITECTURAL ANALYSIS - Log ProcessApocalypse calls
 	ARCH_LOG_PROCESS_APOCALYPSE(missile.var2, missile.var3, missile.var4, missile.var5, static_cast<int>(Missiles.size()));
 	
-	// ARQUITECTURA ULTRA SIMPLE - SINGLE FRAME PROCESSING
-	// "Diablo no necesita protección inteligente, necesita límites tontos"
-	// FIX: Process entire area in ONE frame to prevent infinite loops
+	// 🚨 CRITICAL PROTECTION: Count active ApocalypseBoom missiles
+	// This prevents exponential boom accumulation that causes crashes
+	int currentBoomCount = 0;
+	for (const auto &m : Missiles) {
+		if (m._mitype == MissileID::ApocalypseBoom) {
+			currentBoomCount++;
+		}
+	}
+	
+	// EMERGENCY BRAKE: If too many booms exist, stop creating more
+	// Limit of 20 booms prevents crash while maintaining spell effectiveness
+	if (currentBoomCount >= 20) {
+		ARCH_LOG_CRASH_PREVENTION("ApocalypseBoom limit reached (20)", "ProcessApocalypse boom limit");
+		missile._miDelFlag = true;
+		return;
+	}
+	
+	// ORIGINAL DIABLO DESIGN - ONE TILE PER FRAME
+	// "Diablo procesa un tile por frame, no todo de golpe"
+	// This prevents missile explosion while maintaining original game feel
 	
 	for (int j = missile.var2; j < missile.var3; j++) {
 		for (int k = missile.var4; k < missile.var5; k++) {
@@ -3913,25 +3932,23 @@ void ProcessApocalypse(Missile &missile)
 					
 					// GUARDIÁN ULTRA SIMPLE - FAIL-SOFT
 					if (!TryAddMissile(WorldTilePosition(k, j), WorldTilePosition(k, j), Players[id]._pdir, MissileID::ApocalypseBoom, TARGET_MONSTERS, id, missile._midam, 0)) {
-						// Límite alcanzado - el resto del spell se cancela limpiamente
-						// Sin crashes, sin corrupción, sin rollbacks
+						// Límite alcanzado - terminar spell limpiamente
 						ARCH_LOG_CRASH_PREVENTION("TryAddMissile failed in ProcessApocalypse", "ProcessApocalypse loop");
 						missile._miDelFlag = true;
-						// ATOMIC UNLOCK: Clear the in-progress flag
-						ClearApocalypseInProgress();
 						return;
 					}
 				}
 			}
-			// CRITICAL FIX: NO early return, NO state updates
-			// Process entire area in single frame
+			// ORIGINAL DESIGN: Update state and return (one tile per frame)
+			missile.var2 = j;
+			missile.var4 = k + 1;
+			return; // Process only ONE tile per frame
 		}
+		missile.var4 = missile.var6; // Reset column for next row
 	}
 	
-	// Spell completado naturalmente - ALWAYS delete after full processing
+	// Spell completado - processed all tiles
 	missile._miDelFlag = true;
-	// ATOMIC UNLOCK: Clear the in-progress flag
-	ClearApocalypseInProgress();
 }
 
 void ProcessFlameWaveControl(Missile &missile)

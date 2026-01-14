@@ -106,6 +106,12 @@ bool CanSafelyCastApocalypse();
 void ClearApocalypseInProgress();
 
 /**
+ * Increment global frame counter - MUST be called once per game frame
+ * This is critical for Apocalypse protection timing
+ */
+void IncrementGlobalFrameCounter();
+
+/**
  * Verifica si es seguro castear Inferno
  * Considera Inferno missiles activos y carga general
  */

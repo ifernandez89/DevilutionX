@@ -3710,6 +3710,10 @@ bool game_loop(bool bStartup)
 	// 🛡️ GLOBAL PROTECTION SYSTEM - Update frame stats
 	GPS.updateFrameStats();
 	
+	// 🔓 APOCALYPSE PROTECTION - Increment global frame counter
+	// CRITICAL: This must be called exactly once per game frame
+	IncrementGlobalFrameCounter();
+	
 	const uint16_t wait = bStartup ? sgGameInitInfo.nTickRate * 3 : 3;
 
 	for (unsigned i = 0; i < wait; i++) {

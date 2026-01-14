@@ -100,6 +100,8 @@
 #include "advanced_debug.h"  // 🎮 Advanced Debug System
 #include "guarantee_apocalypse_book.h"  // 📖 Book of Apocalypse Guarantee
 #include "engine_health.h"  // 🔍 Modern Assist Layer (MAL) - Engine Health Monitoring
+#include "engine/platform/platform.h"  // 🌍 Nightmare Portability Layer
+#include "engine/platform/dynamic_scaling.h"  // 📉 Dynamic Performance Scaling
 #include "apocalypse_crash_debug.h"  // 🚨 Apocalypse Crash Debugging System
 #include "loadsave.h"
 #include "lua/lua_global.hpp"
@@ -225,6 +227,9 @@ void StartGame(interface_mode uMsg)
 	
 	// MAL INTEGRATION: Initialize Modern Assist Layer
 	InitEngineHealth();
+	
+	// Initialize Platform System (Portability Layer)
+	InitPlatformSystem();
 	
 	// Reset Apocalypse cooldowns for new game
 	ResetApocalypseCooldowns();
@@ -3721,6 +3726,10 @@ bool game_loop(bool bStartup)
 {
 	// 🛡️ GLOBAL PROTECTION SYSTEM - Update frame stats
 	UpdateGlobalProtection();
+	
+	// 🌍 PORTABILITY LAYER - Update dynamic scaling
+	// Note: frameTime would need to be calculated, using 16.6ms as default
+	UpdateDynamicScaling(16.6f);
 	
 	// 🔓 APOCALYPSE PROTECTION - Increment global frame counter
 	// CRITICAL: This must be called exactly once per game frame

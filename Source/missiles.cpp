@@ -2823,6 +2823,13 @@ Missile *AddMissile(WorldTilePosition src, WorldTilePosition dst, Direction midi
 		// If we reach here, protection passed
 		ARCH_LOG_CRASH_PREVENTION("Apocalypse protection PASSED - allowing creation", "AddMissile ALLOWED");
 	}
+	
+	// INFERNO PROTECTION - Limit concurrent Inferno spells
+	if (mitype == MissileID::InfernoControl) {
+		if (!CanSafelyCastInferno()) {
+			return nullptr; // fail-soft
+		}
+	}
 
 	// LÍMITE TONTO - Sin inteligencia, sin coordinación
 	if (Missiles.size() >= Missiles.max_size()) {

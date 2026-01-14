@@ -10,9 +10,10 @@
 3. [Arquitectura y Diseño](#arquitectura-y-diseño)
 4. [Sistema de Protección Anti-Crash](#sistema-de-protección-anti-crash)
 5. [Fix de Apocalypse](#fix-de-apocalypse)
-6. [Sistemas Atmosféricos](#sistemas-atmosféricos)
-7. [Guía de Testing](#guía-de-testing)
-8. [Estructura de Archivos](#estructura-de-archivos)
+6. [Nightmare Portability Layer](#nightmare-portability-layer)
+7. [Sistemas Atmosféricos](#sistemas-atmosféricos)
+8. [Guía de Testing](#guía-de-testing)
+9. [Estructura de Archivos](#estructura-de-archivos)
 
 ---
 
@@ -20,7 +21,8 @@
 
 **Nightmare Edition** es una modificación completa de DevilutionX que añade:
 - Atmósfera mejorada con efectos visuales y de iluminación
-- Sistema de protección anti-crash robusto
+- Sistema de protección anti-crash robusto (Apocalypse + Inferno)
+- Nightmare Portability Layer para múltiples plataformas
 - Mejoras de gameplay sutiles que respetan el original
 - Arquitectura limpia y mantenible
 
@@ -152,6 +154,9 @@ enum class AtmosphericLightType {
 │                    CAPA DE PROTECCIÓN                       │
 │  engine_health, global_protection_system, safety/           │
 ├─────────────────────────────────────────────────────────────┤
+│                    CAPA DE PORTABILIDAD                     │
+│  platform.h, dynamic_scaling.h, mobile_safe_mode.h          │
+├─────────────────────────────────────────────────────────────┤
 │                    DEVILUTIONX ORIGINAL                     │
 │  missiles, monster, player, spells, etc.                    │
 └─────────────────────────────────────────────────────────────┘
@@ -160,6 +165,14 @@ enum class AtmosphericLightType {
 ---
 
 # SISTEMA DE PROTECCIÓN ANTI-CRASH
+
+## Spells Protegidos
+
+| Spell | Protección | Límites |
+|-------|------------|---------|
+| **Apocalypse** | ✅ Completa | Cooldown 100ms, max 2 global, max 1 por jugador, max 50 booms |
+| **Inferno** | ✅ Completa | Max 3 simultáneos, bloqueo en estado crítico |
+| **Otros** | ✅ Global | Límite 500 missiles total |
 
 ## Arquitectura de 3 Capas
 
@@ -170,12 +183,13 @@ struct EngineHealth {
     int activeMissiles;      // Missiles activos
     int activeMonsters;      // Monstruos vivos
     int activeApocalypse;    // Apocalypse activos
+    int activeInfernos;      // Inferno activos
     bool isHealthy;          // Estado general
 };
 
 // Funciones principales
 void UpdateEngineHealth();           // Actualizar cada frame
-bool CanSafelyCastApocalypse(int);   // Verificar antes de castear
+bool CanSafelyCastApocalypse(int);   // Verificar Apocalypse
 bool CanSafelyCastInferno();         // Verificar Inferno
 ```
 
@@ -274,6 +288,100 @@ void ProcessApocalypse(Missile &missile) {
 - ✅ **0% crash rate** con protección inteligente
 - ✅ **Imperceptible para el jugador** en uso normal
 - ✅ **Multiplayer safe** con límites por jugador
+
+---
+
+# NIGHTMARE PORTABILITY LAYER
+
+## 🌍 Visión General
+
+Sistema de abstracción de plataforma que permite ejecutar Nightmare Edition en:
+- **Desktop** (PC, Mac, Linux)
+- **Handheld** (Steam Deck, ROG Ally)
+- **Mobile** (Android - futuro)
+
+## 📁 Estructura de Archivos
+
+```
+Source/engine/platform/
+├── platform.h/cpp           # Detección de plataforma
+├── dynamic_scaling.h/cpp    # Escalado dinámico de partículas
+├── mobile_safe_mode.h/cpp   # Modo seguro para mobile
+└── diagnostic_mode.h/cpp    # Diagnósticos de rendimiento
+```
+
+## 🎯 Fase 1: Abstracción de Plataforma
+
+```cpp
+enum class PlatformClass {
+    Desktop,    // PC, Mac, Linux
+    Handheld,   // Steam Deck, ROG Ally
+    Mobile,     // Android, iOS
+    Unknown
+};
+
+struct PlatformCapabilities {
+    PlatformClass platformClass;
+    int maxParticles;        // 50-100%
+    bool hasMouse;
+    bool hasKeyboard;
+    bool hasTouch;
+    bool lowPowerCPU;
+    float uiScale;           // 1.0 - 2.0
+};
+```
+
+## 🎮 Fase 2: Build Presets
+
+| Elemento | PC | Handheld | Mobile |
+|----------|-----|----------|--------|
+| Partículas | 100% | 70% | 50% |
+| Decals | 100% | 70% | 50% |
+| Audio | 100% | 80% | 60% |
+| UI Scale | 1.0x | 1.5x | 2.0x |
+
+## 📉 Fase 3: Escalado Dinámico
+
+```cpp
+// Heurística O(1) - invisible para el jugador
+void UpdateDynamicScaling(float frameTime) {
+    if (frameTime > 16.6ms)
+        particleBudget -= step;  // Reducir
+    else if (stableFrames > N)
+        particleBudget += step;  // Aumentar
+}
+
+// NUNCA afecta:
+// - Hit detection
+// - Lógica de juego
+// - Solo visual
+```
+
+## 📱 Fase 4: Mobile Safe Mode
+
+**Activación automática cuando:**
+- CPU débil detectada
+- Touch-only input
+- Baja RAM
+- Thermal throttling
+
+**Qué hace:**
+- Reduce partículas 50%
+- Simplifica sombras
+- Aumenta contraste UI
+- Agranda zonas clicables
+
+**Todo reversible y transparente.**
+
+## ✅ Criterio de Éxito
+
+```
+mismo gameplay
+mismo seed
+misma run
+diferente hardware
+= misma experiencia
+```
 
 ---
 

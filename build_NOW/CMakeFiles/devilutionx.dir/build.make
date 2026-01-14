@@ -242,7 +242,6 @@ devilutionx_EXTERNAL_OBJECTS = \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/nightmare_visual_effects.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/waiting_enemies.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/water_animation.cpp.obj" \
-"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/organic_lighting.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/nightmare_atmosphere.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/tile_detective.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/control/control_chat.cpp.obj" \
@@ -293,6 +292,10 @@ devilutionx_EXTERNAL_OBJECTS = \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/engine/palette.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/engine/sound_position.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/engine/trn.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/engine/platform/platform.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/engine/platform/dynamic_scaling.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/engine/platform/diagnostic_mode.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/engine/platform/mobile_safe_mode.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/engine/render/automap_render.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/engine/render/scrollrt.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/items/validation.cpp.obj" \
@@ -518,7 +521,6 @@ devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/nightmare_effects_status.c
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/nightmare_visual_effects.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/waiting_enemies.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/water_animation.cpp.obj
-devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/organic_lighting.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/nightmare_atmosphere.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/tile_detective.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/control/control_chat.cpp.obj
@@ -569,6 +571,10 @@ devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/engine/events.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/engine/palette.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/engine/sound_position.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/engine/trn.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/engine/platform/platform.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/engine/platform/dynamic_scaling.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/engine/platform/diagnostic_mode.cpp.obj
+devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/engine/platform/mobile_safe_mode.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/engine/render/automap_render.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/engine/render/scrollrt.cpp.obj
 devilutionx.exe: Source/CMakeFiles/libdevilutionx.dir/items/validation.cpp.obj

@@ -951,12 +951,8 @@ void DiabloDeath(Monster &diablo, bool sendmsg)
 	if (sendmsg)
 		NetSendCmdQuest(true, quest);
 	sgbSaveSoundOn = gbSoundOn;
-<<<<<<< HEAD
 	if (gbIsMultiplayer)
 		gbProcessPlayers = false;
-=======
-	// gbProcessPlayers = false; // Comentado para permitir continuar el juego después de matar a Diablo
->>>>>>> 638fa7402245b4ec24d97eac7ccdae8db4474b78
 	for (size_t i = 0; i < ActiveMonsterCount; i++) {
 		const int monsterId = ActiveMonsters[i];
 		Monster &monster = Monsters[monsterId];
@@ -1622,18 +1618,10 @@ void MonsterDeath(Monster &monster)
 {
 	monster.var1++;
 	if (monster.type().type == MT_DIABLO) {
-<<<<<<< HEAD
 		// CAMERA FIX: Only move camera towards Diablo in multiplayer
 		// In single player, this causes an uncomfortable camera "jerk" effect
 		// since we're not triggering the cinematic ending
 		if (gbIsMultiplayer) {
-=======
-		// NO mover la cámara hacia Diablo mientras muere - mantener en el jugador
-		// Esto corrige el bug donde la cámara se queda fija en la posición de muerte de Diablo
-		// Comentado el código que movía la cámara hacia Diablo:
-		/*
-		if (!gbIsMultiplayer) {
->>>>>>> 638fa7402245b4ec24d97eac7ccdae8db4474b78
 			if (monster.position.tile.x < ViewPosition.x) {
 				ViewPosition.x--;
 			} else if (monster.position.tile.x > ViewPosition.x) {
@@ -1646,7 +1634,6 @@ void MonsterDeath(Monster &monster)
 				ViewPosition.y++;
 			}
 		}
-		*/
 
 		if (monster.var1 == 140 && gbIsMultiplayer)
 			PrepDoEnding();

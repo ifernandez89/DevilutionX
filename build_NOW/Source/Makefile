@@ -3117,6 +3117,102 @@ engine/path.cpp.s:
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_pathfinding.dir\build.make Source/CMakeFiles/libdevilutionx_pathfinding.dir/engine/path.cpp.s
 .PHONY : engine/path.cpp.s
 
+engine/platform/diagnostic_mode.obj: engine/platform/diagnostic_mode.cpp.obj
+.PHONY : engine/platform/diagnostic_mode.obj
+
+# target to build an object file
+engine/platform/diagnostic_mode.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/engine/platform/diagnostic_mode.cpp.obj
+.PHONY : engine/platform/diagnostic_mode.cpp.obj
+
+engine/platform/diagnostic_mode.i: engine/platform/diagnostic_mode.cpp.i
+.PHONY : engine/platform/diagnostic_mode.i
+
+# target to preprocess a source file
+engine/platform/diagnostic_mode.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/engine/platform/diagnostic_mode.cpp.i
+.PHONY : engine/platform/diagnostic_mode.cpp.i
+
+engine/platform/diagnostic_mode.s: engine/platform/diagnostic_mode.cpp.s
+.PHONY : engine/platform/diagnostic_mode.s
+
+# target to generate assembly for a file
+engine/platform/diagnostic_mode.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/engine/platform/diagnostic_mode.cpp.s
+.PHONY : engine/platform/diagnostic_mode.cpp.s
+
+engine/platform/dynamic_scaling.obj: engine/platform/dynamic_scaling.cpp.obj
+.PHONY : engine/platform/dynamic_scaling.obj
+
+# target to build an object file
+engine/platform/dynamic_scaling.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/engine/platform/dynamic_scaling.cpp.obj
+.PHONY : engine/platform/dynamic_scaling.cpp.obj
+
+engine/platform/dynamic_scaling.i: engine/platform/dynamic_scaling.cpp.i
+.PHONY : engine/platform/dynamic_scaling.i
+
+# target to preprocess a source file
+engine/platform/dynamic_scaling.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/engine/platform/dynamic_scaling.cpp.i
+.PHONY : engine/platform/dynamic_scaling.cpp.i
+
+engine/platform/dynamic_scaling.s: engine/platform/dynamic_scaling.cpp.s
+.PHONY : engine/platform/dynamic_scaling.s
+
+# target to generate assembly for a file
+engine/platform/dynamic_scaling.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/engine/platform/dynamic_scaling.cpp.s
+.PHONY : engine/platform/dynamic_scaling.cpp.s
+
+engine/platform/mobile_safe_mode.obj: engine/platform/mobile_safe_mode.cpp.obj
+.PHONY : engine/platform/mobile_safe_mode.obj
+
+# target to build an object file
+engine/platform/mobile_safe_mode.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/engine/platform/mobile_safe_mode.cpp.obj
+.PHONY : engine/platform/mobile_safe_mode.cpp.obj
+
+engine/platform/mobile_safe_mode.i: engine/platform/mobile_safe_mode.cpp.i
+.PHONY : engine/platform/mobile_safe_mode.i
+
+# target to preprocess a source file
+engine/platform/mobile_safe_mode.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/engine/platform/mobile_safe_mode.cpp.i
+.PHONY : engine/platform/mobile_safe_mode.cpp.i
+
+engine/platform/mobile_safe_mode.s: engine/platform/mobile_safe_mode.cpp.s
+.PHONY : engine/platform/mobile_safe_mode.s
+
+# target to generate assembly for a file
+engine/platform/mobile_safe_mode.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/engine/platform/mobile_safe_mode.cpp.s
+.PHONY : engine/platform/mobile_safe_mode.cpp.s
+
+engine/platform/platform.obj: engine/platform/platform.cpp.obj
+.PHONY : engine/platform/platform.obj
+
+# target to build an object file
+engine/platform/platform.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/engine/platform/platform.cpp.obj
+.PHONY : engine/platform/platform.cpp.obj
+
+engine/platform/platform.i: engine/platform/platform.cpp.i
+.PHONY : engine/platform/platform.i
+
+# target to preprocess a source file
+engine/platform/platform.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/engine/platform/platform.cpp.i
+.PHONY : engine/platform/platform.cpp.i
+
+engine/platform/platform.s: engine/platform/platform.cpp.s
+.PHONY : engine/platform/platform.s
+
+# target to generate assembly for a file
+engine/platform/platform.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/engine/platform/platform.cpp.s
+.PHONY : engine/platform/platform.cpp.s
+
 engine/random.obj: engine/random.cpp.obj
 .PHONY : engine/random.obj
 
@@ -5613,30 +5709,6 @@ options.cpp.s:
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_options.dir\build.make Source/CMakeFiles/libdevilutionx_options.dir/options.cpp.s
 .PHONY : options.cpp.s
 
-organic_lighting.obj: organic_lighting.cpp.obj
-.PHONY : organic_lighting.obj
-
-# target to build an object file
-organic_lighting.cpp.obj:
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/organic_lighting.cpp.obj
-.PHONY : organic_lighting.cpp.obj
-
-organic_lighting.i: organic_lighting.cpp.i
-.PHONY : organic_lighting.i
-
-# target to preprocess a source file
-organic_lighting.cpp.i:
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/organic_lighting.cpp.i
-.PHONY : organic_lighting.cpp.i
-
-organic_lighting.s: organic_lighting.cpp.s
-.PHONY : organic_lighting.s
-
-# target to generate assembly for a file
-organic_lighting.cpp.s:
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/organic_lighting.cpp.s
-.PHONY : organic_lighting.cpp.s
-
 pack.obj: pack.cpp.obj
 .PHONY : pack.obj
 
@@ -7916,6 +7988,18 @@ help:
 	@echo ... engine/path.obj
 	@echo ... engine/path.i
 	@echo ... engine/path.s
+	@echo ... engine/platform/diagnostic_mode.obj
+	@echo ... engine/platform/diagnostic_mode.i
+	@echo ... engine/platform/diagnostic_mode.s
+	@echo ... engine/platform/dynamic_scaling.obj
+	@echo ... engine/platform/dynamic_scaling.i
+	@echo ... engine/platform/dynamic_scaling.s
+	@echo ... engine/platform/mobile_safe_mode.obj
+	@echo ... engine/platform/mobile_safe_mode.i
+	@echo ... engine/platform/mobile_safe_mode.s
+	@echo ... engine/platform/platform.obj
+	@echo ... engine/platform/platform.i
+	@echo ... engine/platform/platform.s
 	@echo ... engine/random.obj
 	@echo ... engine/random.i
 	@echo ... engine/random.s
@@ -8228,9 +8312,6 @@ help:
 	@echo ... options.obj
 	@echo ... options.i
 	@echo ... options.s
-	@echo ... organic_lighting.obj
-	@echo ... organic_lighting.i
-	@echo ... organic_lighting.s
 	@echo ... pack.obj
 	@echo ... pack.i
 	@echo ... pack.s

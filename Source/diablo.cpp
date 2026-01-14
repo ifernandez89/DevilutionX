@@ -168,6 +168,9 @@
 
 namespace devilution {
 
+// Forward declaration for EnhanceDecorativeDensity
+void EnhanceDecorativeDensity();
+
 uint32_t DungeonSeeds[NUMLEVELS];
 std::optional<uint32_t> LevelSeeds[NUMLEVELS];
 Point MousePosition;
@@ -3730,10 +3733,6 @@ bool game_loop(bool bStartup)
 	// 🌍 PORTABILITY LAYER - Update dynamic scaling
 	// Note: frameTime would need to be calculated, using 16.6ms as default
 	UpdateDynamicScaling(16.6f);
-	
-	// 🔓 APOCALYPSE PROTECTION - Increment global frame counter
-	// CRITICAL: This must be called exactly once per game frame
-	IncrementGlobalFrameCounter();
 	
 	const uint16_t wait = bStartup ? sgGameInitInfo.nTickRate * 3 : 3;
 

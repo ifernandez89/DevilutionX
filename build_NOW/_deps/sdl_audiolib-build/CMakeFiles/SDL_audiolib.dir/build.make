@@ -76,255 +76,255 @@ _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/DecoderDrmp3.cpp.obj: _
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/DecoderDrmp3.cpp.obj: _deps/sdl_audiolib-src/src/DecoderDrmp3.cpp
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/DecoderDrmp3.cpp.obj: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/DecoderDrmp3.cpp.obj"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/DecoderDrmp3.cpp.obj -MF CMakeFiles\SDL_audiolib.dir\src\DecoderDrmp3.cpp.obj.d -o CMakeFiles\SDL_audiolib.dir\src\DecoderDrmp3.cpp.obj -c "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\DecoderDrmp3.cpp"
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/DecoderDrmp3.cpp.obj -MF CMakeFiles\SDL_audiolib.dir\src\DecoderDrmp3.cpp.obj.d -o CMakeFiles\SDL_audiolib.dir\src\DecoderDrmp3.cpp.obj -c "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\DecoderDrmp3.cpp"
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/DecoderDrmp3.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/SDL_audiolib.dir/src/DecoderDrmp3.cpp.i"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\DecoderDrmp3.cpp" > CMakeFiles\SDL_audiolib.dir\src\DecoderDrmp3.cpp.i
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\DecoderDrmp3.cpp" > CMakeFiles\SDL_audiolib.dir\src\DecoderDrmp3.cpp.i
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/DecoderDrmp3.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/SDL_audiolib.dir/src/DecoderDrmp3.cpp.s"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\DecoderDrmp3.cpp" -o CMakeFiles\SDL_audiolib.dir\src\DecoderDrmp3.cpp.s
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\DecoderDrmp3.cpp" -o CMakeFiles\SDL_audiolib.dir\src\DecoderDrmp3.cpp.s
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/dr_mp3.c.obj: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/flags.make
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/dr_mp3.c.obj: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/includes_C.rsp
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/dr_mp3.c.obj: _deps/sdl_audiolib-src/src/dr_mp3.c
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/dr_mp3.c.obj: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Building C object _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/dr_mp3.c.obj"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && C:\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/dr_mp3.c.obj -MF CMakeFiles\SDL_audiolib.dir\src\dr_mp3.c.obj.d -o CMakeFiles\SDL_audiolib.dir\src\dr_mp3.c.obj -c "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\dr_mp3.c"
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && C:\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/dr_mp3.c.obj -MF CMakeFiles\SDL_audiolib.dir\src\dr_mp3.c.obj.d -o CMakeFiles\SDL_audiolib.dir\src\dr_mp3.c.obj -c "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\dr_mp3.c"
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/dr_mp3.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/SDL_audiolib.dir/src/dr_mp3.c.i"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && C:\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\dr_mp3.c" > CMakeFiles\SDL_audiolib.dir\src\dr_mp3.c.i
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && C:\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\dr_mp3.c" > CMakeFiles\SDL_audiolib.dir\src\dr_mp3.c.i
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/dr_mp3.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/SDL_audiolib.dir/src/dr_mp3.c.s"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && C:\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\dr_mp3.c" -o CMakeFiles\SDL_audiolib.dir\src\dr_mp3.c.s
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && C:\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\dr_mp3.c" -o CMakeFiles\SDL_audiolib.dir\src\dr_mp3.c.s
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/DecoderDrwav.cpp.obj: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/flags.make
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/DecoderDrwav.cpp.obj: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/includes_CXX.rsp
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/DecoderDrwav.cpp.obj: _deps/sdl_audiolib-src/src/DecoderDrwav.cpp
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/DecoderDrwav.cpp.obj: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/DecoderDrwav.cpp.obj"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/DecoderDrwav.cpp.obj -MF CMakeFiles\SDL_audiolib.dir\src\DecoderDrwav.cpp.obj.d -o CMakeFiles\SDL_audiolib.dir\src\DecoderDrwav.cpp.obj -c "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\DecoderDrwav.cpp"
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/DecoderDrwav.cpp.obj -MF CMakeFiles\SDL_audiolib.dir\src\DecoderDrwav.cpp.obj.d -o CMakeFiles\SDL_audiolib.dir\src\DecoderDrwav.cpp.obj -c "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\DecoderDrwav.cpp"
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/DecoderDrwav.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/SDL_audiolib.dir/src/DecoderDrwav.cpp.i"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\DecoderDrwav.cpp" > CMakeFiles\SDL_audiolib.dir\src\DecoderDrwav.cpp.i
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\DecoderDrwav.cpp" > CMakeFiles\SDL_audiolib.dir\src\DecoderDrwav.cpp.i
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/DecoderDrwav.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/SDL_audiolib.dir/src/DecoderDrwav.cpp.s"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\DecoderDrwav.cpp" -o CMakeFiles\SDL_audiolib.dir\src\DecoderDrwav.cpp.s
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\DecoderDrwav.cpp" -o CMakeFiles\SDL_audiolib.dir\src\DecoderDrwav.cpp.s
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/dr_wav.c.obj: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/flags.make
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/dr_wav.c.obj: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/includes_C.rsp
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/dr_wav.c.obj: _deps/sdl_audiolib-src/src/dr_wav.c
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/dr_wav.c.obj: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_4) "Building C object _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/dr_wav.c.obj"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && C:\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/dr_wav.c.obj -MF CMakeFiles\SDL_audiolib.dir\src\dr_wav.c.obj.d -o CMakeFiles\SDL_audiolib.dir\src\dr_wav.c.obj -c "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\dr_wav.c"
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && C:\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/dr_wav.c.obj -MF CMakeFiles\SDL_audiolib.dir\src\dr_wav.c.obj.d -o CMakeFiles\SDL_audiolib.dir\src\dr_wav.c.obj -c "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\dr_wav.c"
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/dr_wav.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/SDL_audiolib.dir/src/dr_wav.c.i"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && C:\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\dr_wav.c" > CMakeFiles\SDL_audiolib.dir\src\dr_wav.c.i
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && C:\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\dr_wav.c" > CMakeFiles\SDL_audiolib.dir\src\dr_wav.c.i
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/dr_wav.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/SDL_audiolib.dir/src/dr_wav.c.s"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && C:\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\dr_wav.c" -o CMakeFiles\SDL_audiolib.dir\src\dr_wav.c.s
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && C:\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\dr_wav.c" -o CMakeFiles\SDL_audiolib.dir\src\dr_wav.c.s
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/Decoder.cpp.obj: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/flags.make
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/Decoder.cpp.obj: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/includes_CXX.rsp
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/Decoder.cpp.obj: _deps/sdl_audiolib-src/src/Decoder.cpp
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/Decoder.cpp.obj: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/Decoder.cpp.obj"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/Decoder.cpp.obj -MF CMakeFiles\SDL_audiolib.dir\src\Decoder.cpp.obj.d -o CMakeFiles\SDL_audiolib.dir\src\Decoder.cpp.obj -c "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\Decoder.cpp"
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/Decoder.cpp.obj -MF CMakeFiles\SDL_audiolib.dir\src\Decoder.cpp.obj.d -o CMakeFiles\SDL_audiolib.dir\src\Decoder.cpp.obj -c "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\Decoder.cpp"
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/Decoder.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/SDL_audiolib.dir/src/Decoder.cpp.i"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\Decoder.cpp" > CMakeFiles\SDL_audiolib.dir\src\Decoder.cpp.i
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\Decoder.cpp" > CMakeFiles\SDL_audiolib.dir\src\Decoder.cpp.i
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/Decoder.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/SDL_audiolib.dir/src/Decoder.cpp.s"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\Decoder.cpp" -o CMakeFiles\SDL_audiolib.dir\src\Decoder.cpp.s
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\Decoder.cpp" -o CMakeFiles\SDL_audiolib.dir\src\Decoder.cpp.s
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/Processor.cpp.obj: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/flags.make
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/Processor.cpp.obj: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/includes_CXX.rsp
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/Processor.cpp.obj: _deps/sdl_audiolib-src/src/Processor.cpp
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/Processor.cpp.obj: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/Processor.cpp.obj"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/Processor.cpp.obj -MF CMakeFiles\SDL_audiolib.dir\src\Processor.cpp.obj.d -o CMakeFiles\SDL_audiolib.dir\src\Processor.cpp.obj -c "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\Processor.cpp"
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/Processor.cpp.obj -MF CMakeFiles\SDL_audiolib.dir\src\Processor.cpp.obj.d -o CMakeFiles\SDL_audiolib.dir\src\Processor.cpp.obj -c "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\Processor.cpp"
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/Processor.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/SDL_audiolib.dir/src/Processor.cpp.i"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\Processor.cpp" > CMakeFiles\SDL_audiolib.dir\src\Processor.cpp.i
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\Processor.cpp" > CMakeFiles\SDL_audiolib.dir\src\Processor.cpp.i
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/Processor.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/SDL_audiolib.dir/src/Processor.cpp.s"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\Processor.cpp" -o CMakeFiles\SDL_audiolib.dir\src\Processor.cpp.s
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\Processor.cpp" -o CMakeFiles\SDL_audiolib.dir\src\Processor.cpp.s
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/Resampler.cpp.obj: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/flags.make
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/Resampler.cpp.obj: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/includes_CXX.rsp
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/Resampler.cpp.obj: _deps/sdl_audiolib-src/src/Resampler.cpp
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/Resampler.cpp.obj: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/Resampler.cpp.obj"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/Resampler.cpp.obj -MF CMakeFiles\SDL_audiolib.dir\src\Resampler.cpp.obj.d -o CMakeFiles\SDL_audiolib.dir\src\Resampler.cpp.obj -c "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\Resampler.cpp"
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/Resampler.cpp.obj -MF CMakeFiles\SDL_audiolib.dir\src\Resampler.cpp.obj.d -o CMakeFiles\SDL_audiolib.dir\src\Resampler.cpp.obj -c "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\Resampler.cpp"
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/Resampler.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/SDL_audiolib.dir/src/Resampler.cpp.i"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\Resampler.cpp" > CMakeFiles\SDL_audiolib.dir\src\Resampler.cpp.i
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\Resampler.cpp" > CMakeFiles\SDL_audiolib.dir\src\Resampler.cpp.i
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/Resampler.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/SDL_audiolib.dir/src/Resampler.cpp.s"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\Resampler.cpp" -o CMakeFiles\SDL_audiolib.dir\src\Resampler.cpp.s
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\Resampler.cpp" -o CMakeFiles\SDL_audiolib.dir\src\Resampler.cpp.s
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/ResamplerSdl.cpp.obj: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/flags.make
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/ResamplerSdl.cpp.obj: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/includes_CXX.rsp
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/ResamplerSdl.cpp.obj: _deps/sdl_audiolib-src/src/ResamplerSdl.cpp
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/ResamplerSdl.cpp.obj: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/ResamplerSdl.cpp.obj"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/ResamplerSdl.cpp.obj -MF CMakeFiles\SDL_audiolib.dir\src\ResamplerSdl.cpp.obj.d -o CMakeFiles\SDL_audiolib.dir\src\ResamplerSdl.cpp.obj -c "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\ResamplerSdl.cpp"
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/ResamplerSdl.cpp.obj -MF CMakeFiles\SDL_audiolib.dir\src\ResamplerSdl.cpp.obj.d -o CMakeFiles\SDL_audiolib.dir\src\ResamplerSdl.cpp.obj -c "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\ResamplerSdl.cpp"
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/ResamplerSdl.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/SDL_audiolib.dir/src/ResamplerSdl.cpp.i"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\ResamplerSdl.cpp" > CMakeFiles\SDL_audiolib.dir\src\ResamplerSdl.cpp.i
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\ResamplerSdl.cpp" > CMakeFiles\SDL_audiolib.dir\src\ResamplerSdl.cpp.i
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/ResamplerSdl.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/SDL_audiolib.dir/src/ResamplerSdl.cpp.s"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\ResamplerSdl.cpp" -o CMakeFiles\SDL_audiolib.dir\src\ResamplerSdl.cpp.s
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\ResamplerSdl.cpp" -o CMakeFiles\SDL_audiolib.dir\src\ResamplerSdl.cpp.s
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/ResamplerSpeex.cpp.obj: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/flags.make
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/ResamplerSpeex.cpp.obj: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/includes_CXX.rsp
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/ResamplerSpeex.cpp.obj: _deps/sdl_audiolib-src/src/ResamplerSpeex.cpp
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/ResamplerSpeex.cpp.obj: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/ResamplerSpeex.cpp.obj"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/ResamplerSpeex.cpp.obj -MF CMakeFiles\SDL_audiolib.dir\src\ResamplerSpeex.cpp.obj.d -o CMakeFiles\SDL_audiolib.dir\src\ResamplerSpeex.cpp.obj -c "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\ResamplerSpeex.cpp"
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/ResamplerSpeex.cpp.obj -MF CMakeFiles\SDL_audiolib.dir\src\ResamplerSpeex.cpp.obj.d -o CMakeFiles\SDL_audiolib.dir\src\ResamplerSpeex.cpp.obj -c "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\ResamplerSpeex.cpp"
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/ResamplerSpeex.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/SDL_audiolib.dir/src/ResamplerSpeex.cpp.i"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\ResamplerSpeex.cpp" > CMakeFiles\SDL_audiolib.dir\src\ResamplerSpeex.cpp.i
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\ResamplerSpeex.cpp" > CMakeFiles\SDL_audiolib.dir\src\ResamplerSpeex.cpp.i
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/ResamplerSpeex.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/SDL_audiolib.dir/src/ResamplerSpeex.cpp.s"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\ResamplerSpeex.cpp" -o CMakeFiles\SDL_audiolib.dir\src\ResamplerSpeex.cpp.s
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\ResamplerSpeex.cpp" -o CMakeFiles\SDL_audiolib.dir\src\ResamplerSpeex.cpp.s
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/SdlMutex.cpp.obj: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/flags.make
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/SdlMutex.cpp.obj: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/includes_CXX.rsp
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/SdlMutex.cpp.obj: _deps/sdl_audiolib-src/src/SdlMutex.cpp
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/SdlMutex.cpp.obj: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/SdlMutex.cpp.obj"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/SdlMutex.cpp.obj -MF CMakeFiles\SDL_audiolib.dir\src\SdlMutex.cpp.obj.d -o CMakeFiles\SDL_audiolib.dir\src\SdlMutex.cpp.obj -c "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\SdlMutex.cpp"
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/SdlMutex.cpp.obj -MF CMakeFiles\SDL_audiolib.dir\src\SdlMutex.cpp.obj.d -o CMakeFiles\SDL_audiolib.dir\src\SdlMutex.cpp.obj -c "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\SdlMutex.cpp"
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/SdlMutex.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/SDL_audiolib.dir/src/SdlMutex.cpp.i"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\SdlMutex.cpp" > CMakeFiles\SDL_audiolib.dir\src\SdlMutex.cpp.i
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\SdlMutex.cpp" > CMakeFiles\SDL_audiolib.dir\src\SdlMutex.cpp.i
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/SdlMutex.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/SDL_audiolib.dir/src/SdlMutex.cpp.s"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\SdlMutex.cpp" -o CMakeFiles\SDL_audiolib.dir\src\SdlMutex.cpp.s
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\SdlMutex.cpp" -o CMakeFiles\SDL_audiolib.dir\src\SdlMutex.cpp.s
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/Stream.cpp.obj: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/flags.make
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/Stream.cpp.obj: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/includes_CXX.rsp
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/Stream.cpp.obj: _deps/sdl_audiolib-src/src/Stream.cpp
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/Stream.cpp.obj: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/Stream.cpp.obj"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/Stream.cpp.obj -MF CMakeFiles\SDL_audiolib.dir\src\Stream.cpp.obj.d -o CMakeFiles\SDL_audiolib.dir\src\Stream.cpp.obj -c "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\Stream.cpp"
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/Stream.cpp.obj -MF CMakeFiles\SDL_audiolib.dir\src\Stream.cpp.obj.d -o CMakeFiles\SDL_audiolib.dir\src\Stream.cpp.obj -c "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\Stream.cpp"
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/Stream.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/SDL_audiolib.dir/src/Stream.cpp.i"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\Stream.cpp" > CMakeFiles\SDL_audiolib.dir\src\Stream.cpp.i
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\Stream.cpp" > CMakeFiles\SDL_audiolib.dir\src\Stream.cpp.i
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/Stream.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/SDL_audiolib.dir/src/Stream.cpp.s"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\Stream.cpp" -o CMakeFiles\SDL_audiolib.dir\src\Stream.cpp.s
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\Stream.cpp" -o CMakeFiles\SDL_audiolib.dir\src\Stream.cpp.s
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/aulib.cpp.obj: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/flags.make
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/aulib.cpp.obj: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/includes_CXX.rsp
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/aulib.cpp.obj: _deps/sdl_audiolib-src/src/aulib.cpp
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/aulib.cpp.obj: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/aulib.cpp.obj"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/aulib.cpp.obj -MF CMakeFiles\SDL_audiolib.dir\src\aulib.cpp.obj.d -o CMakeFiles\SDL_audiolib.dir\src\aulib.cpp.obj -c "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\aulib.cpp"
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/aulib.cpp.obj -MF CMakeFiles\SDL_audiolib.dir\src\aulib.cpp.obj.d -o CMakeFiles\SDL_audiolib.dir\src\aulib.cpp.obj -c "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\aulib.cpp"
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/aulib.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/SDL_audiolib.dir/src/aulib.cpp.i"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\aulib.cpp" > CMakeFiles\SDL_audiolib.dir\src\aulib.cpp.i
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\aulib.cpp" > CMakeFiles\SDL_audiolib.dir\src\aulib.cpp.i
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/aulib.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/SDL_audiolib.dir/src/aulib.cpp.s"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\aulib.cpp" -o CMakeFiles\SDL_audiolib.dir\src\aulib.cpp.s
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\aulib.cpp" -o CMakeFiles\SDL_audiolib.dir\src\aulib.cpp.s
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/sampleconv.cpp.obj: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/flags.make
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/sampleconv.cpp.obj: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/includes_CXX.rsp
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/sampleconv.cpp.obj: _deps/sdl_audiolib-src/src/sampleconv.cpp
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/sampleconv.cpp.obj: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/sampleconv.cpp.obj"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/sampleconv.cpp.obj -MF CMakeFiles\SDL_audiolib.dir\src\sampleconv.cpp.obj.d -o CMakeFiles\SDL_audiolib.dir\src\sampleconv.cpp.obj -c "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\sampleconv.cpp"
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/sampleconv.cpp.obj -MF CMakeFiles\SDL_audiolib.dir\src\sampleconv.cpp.obj.d -o CMakeFiles\SDL_audiolib.dir\src\sampleconv.cpp.obj -c "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\sampleconv.cpp"
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/sampleconv.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/SDL_audiolib.dir/src/sampleconv.cpp.i"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\sampleconv.cpp" > CMakeFiles\SDL_audiolib.dir\src\sampleconv.cpp.i
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\sampleconv.cpp" > CMakeFiles\SDL_audiolib.dir\src\sampleconv.cpp.i
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/sampleconv.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/SDL_audiolib.dir/src/sampleconv.cpp.s"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\sampleconv.cpp" -o CMakeFiles\SDL_audiolib.dir\src\sampleconv.cpp.s
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\sampleconv.cpp" -o CMakeFiles\SDL_audiolib.dir\src\sampleconv.cpp.s
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/stream_p.cpp.obj: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/flags.make
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/stream_p.cpp.obj: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/includes_CXX.rsp
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/stream_p.cpp.obj: _deps/sdl_audiolib-src/src/stream_p.cpp
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/stream_p.cpp.obj: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/stream_p.cpp.obj"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/stream_p.cpp.obj -MF CMakeFiles\SDL_audiolib.dir\src\stream_p.cpp.obj.d -o CMakeFiles\SDL_audiolib.dir\src\stream_p.cpp.obj -c "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\stream_p.cpp"
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/stream_p.cpp.obj -MF CMakeFiles\SDL_audiolib.dir\src\stream_p.cpp.obj.d -o CMakeFiles\SDL_audiolib.dir\src\stream_p.cpp.obj -c "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\stream_p.cpp"
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/stream_p.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/SDL_audiolib.dir/src/stream_p.cpp.i"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\stream_p.cpp" > CMakeFiles\SDL_audiolib.dir\src\stream_p.cpp.i
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\stream_p.cpp" > CMakeFiles\SDL_audiolib.dir\src\stream_p.cpp.i
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/stream_p.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/SDL_audiolib.dir/src/stream_p.cpp.s"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\stream_p.cpp" -o CMakeFiles\SDL_audiolib.dir\src\stream_p.cpp.s
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && C:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\stream_p.cpp" -o CMakeFiles\SDL_audiolib.dir\src\stream_p.cpp.s
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/missing/sdl_load_file_rw.c.obj: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/flags.make
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/missing/sdl_load_file_rw.c.obj: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/includes_C.rsp
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/missing/sdl_load_file_rw.c.obj: _deps/sdl_audiolib-src/src/missing/sdl_load_file_rw.c
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/missing/sdl_load_file_rw.c.obj: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_15) "Building C object _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/missing/sdl_load_file_rw.c.obj"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && C:\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/missing/sdl_load_file_rw.c.obj -MF CMakeFiles\SDL_audiolib.dir\src\missing\sdl_load_file_rw.c.obj.d -o CMakeFiles\SDL_audiolib.dir\src\missing\sdl_load_file_rw.c.obj -c "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\missing\sdl_load_file_rw.c"
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && C:\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/missing/sdl_load_file_rw.c.obj -MF CMakeFiles\SDL_audiolib.dir\src\missing\sdl_load_file_rw.c.obj.d -o CMakeFiles\SDL_audiolib.dir\src\missing\sdl_load_file_rw.c.obj -c "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\missing\sdl_load_file_rw.c"
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/missing/sdl_load_file_rw.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/SDL_audiolib.dir/src/missing/sdl_load_file_rw.c.i"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && C:\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\missing\sdl_load_file_rw.c" > CMakeFiles\SDL_audiolib.dir\src\missing\sdl_load_file_rw.c.i
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && C:\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\missing\sdl_load_file_rw.c" > CMakeFiles\SDL_audiolib.dir\src\missing\sdl_load_file_rw.c.i
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/missing/sdl_load_file_rw.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/SDL_audiolib.dir/src/missing/sdl_load_file_rw.c.s"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && C:\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\missing\sdl_load_file_rw.c" -o CMakeFiles\SDL_audiolib.dir\src\missing\sdl_load_file_rw.c.s
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && C:\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\missing\sdl_load_file_rw.c" -o CMakeFiles\SDL_audiolib.dir\src\missing\sdl_load_file_rw.c.s
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/missing/sdl_rwsize.c.obj: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/flags.make
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/missing/sdl_rwsize.c.obj: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/includes_C.rsp
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/missing/sdl_rwsize.c.obj: _deps/sdl_audiolib-src/src/missing/sdl_rwsize.c
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/missing/sdl_rwsize.c.obj: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_16) "Building C object _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/missing/sdl_rwsize.c.obj"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && C:\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/missing/sdl_rwsize.c.obj -MF CMakeFiles\SDL_audiolib.dir\src\missing\sdl_rwsize.c.obj.d -o CMakeFiles\SDL_audiolib.dir\src\missing\sdl_rwsize.c.obj -c "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\missing\sdl_rwsize.c"
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && C:\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/missing/sdl_rwsize.c.obj -MF CMakeFiles\SDL_audiolib.dir\src\missing\sdl_rwsize.c.obj.d -o CMakeFiles\SDL_audiolib.dir\src\missing\sdl_rwsize.c.obj -c "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\missing\sdl_rwsize.c"
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/missing/sdl_rwsize.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/SDL_audiolib.dir/src/missing/sdl_rwsize.c.i"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && C:\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\missing\sdl_rwsize.c" > CMakeFiles\SDL_audiolib.dir\src\missing\sdl_rwsize.c.i
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && C:\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\missing\sdl_rwsize.c" > CMakeFiles\SDL_audiolib.dir\src\missing\sdl_rwsize.c.i
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/missing/sdl_rwsize.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/SDL_audiolib.dir/src/missing/sdl_rwsize.c.s"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && C:\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\missing\sdl_rwsize.c" -o CMakeFiles\SDL_audiolib.dir\src\missing\sdl_rwsize.c.s
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && C:\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\src\missing\sdl_rwsize.c" -o CMakeFiles\SDL_audiolib.dir\src\missing\sdl_rwsize.c.s
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/3rdparty/speex_resampler/resample.c.obj: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/flags.make
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/3rdparty/speex_resampler/resample.c.obj: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/includes_C.rsp
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/3rdparty/speex_resampler/resample.c.obj: _deps/sdl_audiolib-src/3rdparty/speex_resampler/resample.c
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/3rdparty/speex_resampler/resample.c.obj: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_17) "Building C object _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/3rdparty/speex_resampler/resample.c.obj"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && C:\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/3rdparty/speex_resampler/resample.c.obj -MF CMakeFiles\SDL_audiolib.dir\3rdparty\speex_resampler\resample.c.obj.d -o CMakeFiles\SDL_audiolib.dir\3rdparty\speex_resampler\resample.c.obj -c "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\3rdparty\speex_resampler\resample.c"
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && C:\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/3rdparty/speex_resampler/resample.c.obj -MF CMakeFiles\SDL_audiolib.dir\3rdparty\speex_resampler\resample.c.obj.d -o CMakeFiles\SDL_audiolib.dir\3rdparty\speex_resampler\resample.c.obj -c "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\3rdparty\speex_resampler\resample.c"
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/3rdparty/speex_resampler/resample.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/SDL_audiolib.dir/3rdparty/speex_resampler/resample.c.i"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && C:\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\3rdparty\speex_resampler\resample.c" > CMakeFiles\SDL_audiolib.dir\3rdparty\speex_resampler\resample.c.i
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && C:\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\3rdparty\speex_resampler\resample.c" > CMakeFiles\SDL_audiolib.dir\3rdparty\speex_resampler\resample.c.i
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/3rdparty/speex_resampler/resample.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/SDL_audiolib.dir/3rdparty/speex_resampler/resample.c.s"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && C:\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\3rdparty\speex_resampler\resample.c" -o CMakeFiles\SDL_audiolib.dir\3rdparty\speex_resampler\resample.c.s
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && C:\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "C:\c - c++\DevilutionX\build_NOW\_deps\sdl_audiolib-src\3rdparty\speex_resampler\resample.c" -o CMakeFiles\SDL_audiolib.dir\3rdparty\speex_resampler\resample.c.s
 
 # Object files for target SDL_audiolib
 SDL_audiolib_OBJECTS = \
@@ -369,15 +369,15 @@ _deps/sdl_audiolib-build/libSDL_audiolib.a: _deps/sdl_audiolib-build/CMakeFiles/
 _deps/sdl_audiolib-build/libSDL_audiolib.a: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/build.make
 _deps/sdl_audiolib-build/libSDL_audiolib.a: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_18) "Linking CXX static library libSDL_audiolib.a"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && $(CMAKE_COMMAND) -P CMakeFiles\SDL_audiolib.dir\cmake_clean_target.cmake
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\SDL_audiolib.dir\link.txt --verbose=$(VERBOSE)
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && $(CMAKE_COMMAND) -P CMakeFiles\SDL_audiolib.dir\cmake_clean_target.cmake
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\SDL_audiolib.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/build: _deps/sdl_audiolib-build/libSDL_audiolib.a
 .PHONY : _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/build
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/clean:
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~3 && $(CMAKE_COMMAND) -P CMakeFiles\SDL_audiolib.dir\cmake_clean.cmake
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\SDL_AU~1 && $(CMAKE_COMMAND) -P CMakeFiles\SDL_audiolib.dir\cmake_clean.cmake
 .PHONY : _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/clean
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/depend:

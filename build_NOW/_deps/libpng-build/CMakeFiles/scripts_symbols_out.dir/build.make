@@ -72,7 +72,7 @@ _deps/libpng-build/scripts/symbols.out: _deps/libpng-src/png.h
 _deps/libpng-build/scripts/symbols.out: _deps/libpng-src/pngconf.h
 _deps/libpng-build/scripts/symbols.out: _deps/libpng-src/scripts/pnglibconf.h.prebuilt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Generating scripts/symbols.out"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\LIBPNG~3 && "C:\Program Files\CMake\bin\cmake.exe" "-DINPUT=C:/c - c++/DevilutionX/build_NOW/_deps/libpng-src/scripts/symbols.c" "-DOUTPUT=C:/c - c++/DevilutionX/build_NOW/_deps/libpng-build/scripts/symbols.out" -P "C:/c - c++/DevilutionX/build_NOW/_deps/libpng-build/scripts/genout.cmake"
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\LIBPNG~1 && "C:\Program Files\CMake\bin\cmake.exe" "-DINPUT=C:/c - c++/DevilutionX/build_NOW/_deps/libpng-src/scripts/symbols.c" "-DOUTPUT=C:/c - c++/DevilutionX/build_NOW/_deps/libpng-build/scripts/symbols.out" -P "C:/c - c++/DevilutionX/build_NOW/_deps/libpng-build/scripts/genout.cmake"
 
 _deps/libpng-build/CMakeFiles/scripts_symbols_out.dir/codegen:
 .PHONY : _deps/libpng-build/CMakeFiles/scripts_symbols_out.dir/codegen
@@ -87,7 +87,7 @@ _deps/libpng-build/CMakeFiles/scripts_symbols_out.dir/build: scripts_symbols_out
 .PHONY : _deps/libpng-build/CMakeFiles/scripts_symbols_out.dir/build
 
 _deps/libpng-build/CMakeFiles/scripts_symbols_out.dir/clean:
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\LIBPNG~3 && $(CMAKE_COMMAND) -P CMakeFiles\scripts_symbols_out.dir\cmake_clean.cmake
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\LIBPNG~1 && $(CMAKE_COMMAND) -P CMakeFiles\scripts_symbols_out.dir\cmake_clean.cmake
 .PHONY : _deps/libpng-build/CMakeFiles/scripts_symbols_out.dir/clean
 
 _deps/libpng-build/CMakeFiles/scripts_symbols_out.dir/depend:

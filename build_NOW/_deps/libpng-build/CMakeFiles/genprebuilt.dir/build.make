@@ -66,7 +66,7 @@ include _deps/libpng-build/CMakeFiles/genprebuilt.dir/compiler_depend.make
 include _deps/libpng-build/CMakeFiles/genprebuilt.dir/progress.make
 
 _deps/libpng-build/CMakeFiles/genprebuilt:
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\LIBPNG~3 && "C:\Program Files\CMake\bin\cmake.exe" -DOUTPUT=scripts/pnglibconf.h.prebuilt -P "C:/c - c++/DevilutionX/build_NOW/_deps/libpng-build/scripts/gensrc.cmake"
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\LIBPNG~1 && "C:\Program Files\CMake\bin\cmake.exe" -DOUTPUT=scripts/pnglibconf.h.prebuilt -P "C:/c - c++/DevilutionX/build_NOW/_deps/libpng-build/scripts/gensrc.cmake"
 
 _deps/libpng-build/CMakeFiles/genprebuilt.dir/codegen:
 .PHONY : _deps/libpng-build/CMakeFiles/genprebuilt.dir/codegen
@@ -80,7 +80,7 @@ _deps/libpng-build/CMakeFiles/genprebuilt.dir/build: genprebuilt
 .PHONY : _deps/libpng-build/CMakeFiles/genprebuilt.dir/build
 
 _deps/libpng-build/CMakeFiles/genprebuilt.dir/clean:
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\LIBPNG~3 && $(CMAKE_COMMAND) -P CMakeFiles\genprebuilt.dir\cmake_clean.cmake
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\LIBPNG~1 && $(CMAKE_COMMAND) -P CMakeFiles\genprebuilt.dir\cmake_clean.cmake
 .PHONY : _deps/libpng-build/CMakeFiles/genprebuilt.dir/clean
 
 _deps/libpng-build/CMakeFiles/genprebuilt.dir/depend:

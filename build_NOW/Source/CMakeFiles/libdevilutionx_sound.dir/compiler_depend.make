@@ -484,10 +484,10 @@ Source/CMakeFiles/libdevilutionx_sound.dir/engine/sound.cpp.obj: C:/c\ -\ c++/De
   _deps/libfmt-src/include/fmt/format.h \
   _deps/libfmt-src/include/fmt/ranges.h \
   _deps/magic_enum-src/include/magic_enum/magic_enum.hpp \
+  _deps/sdl_audiolib-build/aulib_export.h \
   _deps/sdl_audiolib-src/include/Aulib/Stream.h \
   _deps/sdl_audiolib-src/include/aulib.h \
   _deps/sdl_audiolib-src/include/aulib_global.h \
-  _deps/sdl_audiolib-build/aulib_export.h \
   _deps/unordered_dense-src/include/ankerl/unordered_dense.h \
   C:/c\ -\ c++/DevilutionX/Source/DiabloUI/ui_flags.hpp \
   C:/c\ -\ c++/DevilutionX/Source/appfat.h \
@@ -994,10 +994,10 @@ Source/CMakeFiles/libdevilutionx_sound.dir/engine/sound.cpp.obj: C:/c\ -\ c++/De
   C:/mingw64/x86_64-w64-mingw32/include/winsdkver.h
 
 Source/CMakeFiles/libdevilutionx_sound.dir/utils/push_aulib_decoder.cpp.obj: C:/c\ -\ c++/DevilutionX/Source/utils/push_aulib_decoder.cpp \
+  _deps/sdl_audiolib-build/aulib_export.h \
   _deps/sdl_audiolib-src/include/Aulib/Decoder.h \
   _deps/sdl_audiolib-src/include/aulib.h \
   _deps/sdl_audiolib-src/include/aulib_global.h \
-  _deps/sdl_audiolib-build/aulib_export.h \
   C:/c\ -\ c++/DevilutionX/Source/appfat.h \
   C:/c\ -\ c++/DevilutionX/Source/utils/attributes.h \
   C:/c\ -\ c++/DevilutionX/Source/utils/sdl2_backports.h \
@@ -1400,6 +1400,7 @@ Source/CMakeFiles/libdevilutionx_sound.dir/utils/soundsample.cpp.obj: C:/c\ -\ c
   _deps/libfmt-src/include/fmt/format.h \
   _deps/libfmt-src/include/fmt/ranges.h \
   _deps/magic_enum-src/include/magic_enum/magic_enum.hpp \
+  _deps/sdl_audiolib-build/aulib_export.h \
   _deps/sdl_audiolib-src/include/Aulib/Decoder.h \
   _deps/sdl_audiolib-src/include/Aulib/DecoderDrmp3.h \
   _deps/sdl_audiolib-src/include/Aulib/DecoderDrwav.h \
@@ -1409,7 +1410,6 @@ Source/CMakeFiles/libdevilutionx_sound.dir/utils/soundsample.cpp.obj: C:/c\ -\ c
   _deps/sdl_audiolib-src/include/Aulib/Stream.h \
   _deps/sdl_audiolib-src/include/aulib.h \
   _deps/sdl_audiolib-src/include/aulib_global.h \
-  _deps/sdl_audiolib-build/aulib_export.h \
   _deps/unordered_dense-src/include/ankerl/unordered_dense.h \
   C:/c\ -\ c++/DevilutionX/Source/DiabloUI/ui_flags.hpp \
   C:/c\ -\ c++/DevilutionX/Source/appfat.h \
@@ -2922,9 +2922,9 @@ C:/c\ -\ c++/DevilutionX/Source/utils/string_or_view.hpp:
 
 C:/c\ -\ c++/DevilutionX/Source/engine/sound.cpp:
 
-_deps/sdl_audiolib-src/include/Aulib/Stream.h:
-
 _deps/sdl_audiolib-build/aulib_export.h:
+
+_deps/sdl_audiolib-src/include/Aulib/Stream.h:
 
 C:/c\ -\ c++/DevilutionX/Source/controls/controller_buttons.h:
 

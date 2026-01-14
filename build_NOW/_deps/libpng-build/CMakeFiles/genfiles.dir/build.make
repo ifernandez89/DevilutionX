@@ -91,7 +91,7 @@ _deps/libpng-build/CMakeFiles/genfiles.dir/build: genfiles
 .PHONY : _deps/libpng-build/CMakeFiles/genfiles.dir/build
 
 _deps/libpng-build/CMakeFiles/genfiles.dir/clean:
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\LIBPNG~3 && $(CMAKE_COMMAND) -P CMakeFiles\genfiles.dir\cmake_clean.cmake
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\LIBPNG~1 && $(CMAKE_COMMAND) -P CMakeFiles\genfiles.dir\cmake_clean.cmake
 .PHONY : _deps/libpng-build/CMakeFiles/genfiles.dir/clean
 
 _deps/libpng-build/CMakeFiles/genfiles.dir/depend:

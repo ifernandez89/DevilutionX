@@ -83,14 +83,14 @@ CMakeFiles/libpng-populate-complete: libpng-populate-prefix/src/libpng-populate-
 
 libpng-populate-prefix/src/libpng-populate-stamp/libpng-populate-build: libpng-populate-prefix/src/libpng-populate-stamp/libpng-populate-configure
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\_deps\libpng-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "No build step for 'libpng-populate'"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\LIBPNG~3 && "C:\Program Files\CMake\bin\cmake.exe" -E echo_append
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\LIBPNG~3 && "C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_NOW/_deps/libpng-subbuild/libpng-populate-prefix/src/libpng-populate-stamp/libpng-populate-build"
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\LIBPNG~1 && "C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\LIBPNG~1 && "C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_NOW/_deps/libpng-subbuild/libpng-populate-prefix/src/libpng-populate-stamp/libpng-populate-build"
 
 libpng-populate-prefix/src/libpng-populate-stamp/libpng-populate-configure: libpng-populate-prefix/tmp/libpng-populate-cfgcmd.txt
 libpng-populate-prefix/src/libpng-populate-stamp/libpng-populate-configure: libpng-populate-prefix/src/libpng-populate-stamp/libpng-populate-patch
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\_deps\libpng-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "No configure step for 'libpng-populate'"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\LIBPNG~3 && "C:\Program Files\CMake\bin\cmake.exe" -E echo_append
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\LIBPNG~3 && "C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_NOW/_deps/libpng-subbuild/libpng-populate-prefix/src/libpng-populate-stamp/libpng-populate-configure"
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\LIBPNG~1 && "C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\LIBPNG~1 && "C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_NOW/_deps/libpng-subbuild/libpng-populate-prefix/src/libpng-populate-stamp/libpng-populate-configure"
 
 libpng-populate-prefix/src/libpng-populate-stamp/libpng-populate-download: libpng-populate-prefix/src/libpng-populate-stamp/download-libpng-populate.cmake
 libpng-populate-prefix/src/libpng-populate-stamp/libpng-populate-download: libpng-populate-prefix/src/libpng-populate-stamp/libpng-populate-urlinfo.txt
@@ -103,8 +103,8 @@ libpng-populate-prefix/src/libpng-populate-stamp/libpng-populate-download: libpn
 
 libpng-populate-prefix/src/libpng-populate-stamp/libpng-populate-install: libpng-populate-prefix/src/libpng-populate-stamp/libpng-populate-build
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\_deps\libpng-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_5) "No install step for 'libpng-populate'"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\LIBPNG~3 && "C:\Program Files\CMake\bin\cmake.exe" -E echo_append
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\LIBPNG~3 && "C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_NOW/_deps/libpng-subbuild/libpng-populate-prefix/src/libpng-populate-stamp/libpng-populate-install"
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\LIBPNG~1 && "C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\LIBPNG~1 && "C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_NOW/_deps/libpng-subbuild/libpng-populate-prefix/src/libpng-populate-stamp/libpng-populate-install"
 
 libpng-populate-prefix/src/libpng-populate-stamp/libpng-populate-mkdir:
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\_deps\libpng-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_6) "Creating directories for 'libpng-populate'"
@@ -119,8 +119,8 @@ libpng-populate-prefix/src/libpng-populate-stamp/libpng-populate-patch: libpng-p
 
 libpng-populate-prefix/src/libpng-populate-stamp/libpng-populate-test: libpng-populate-prefix/src/libpng-populate-stamp/libpng-populate-install
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\_deps\libpng-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_8) "No test step for 'libpng-populate'"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\LIBPNG~3 && "C:\Program Files\CMake\bin\cmake.exe" -E echo_append
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\LIBPNG~3 && "C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_NOW/_deps/libpng-subbuild/libpng-populate-prefix/src/libpng-populate-stamp/libpng-populate-test"
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\LIBPNG~1 && "C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\LIBPNG~1 && "C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_NOW/_deps/libpng-subbuild/libpng-populate-prefix/src/libpng-populate-stamp/libpng-populate-test"
 
 libpng-populate-prefix/src/libpng-populate-stamp/libpng-populate-update: libpng-populate-prefix/src/libpng-populate-stamp/libpng-populate-update-info.txt
 libpng-populate-prefix/src/libpng-populate-stamp/libpng-populate-update: libpng-populate-prefix/src/libpng-populate-stamp/libpng-populate-download

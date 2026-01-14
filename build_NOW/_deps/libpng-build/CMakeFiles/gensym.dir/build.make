@@ -69,8 +69,8 @@ _deps/libpng-build/CMakeFiles/gensym: _deps/libpng-build/libpng.sym
 
 _deps/libpng-build/libpng.sym:
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Generating libpng.sym"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\LIBPNG~3 && "C:\Program Files\CMake\bin\cmake.exe" -E remove "C:/c - c++/DevilutionX/build_NOW/_deps/libpng-build/libpng.sym"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\LIBPNG~3 && "C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/build_NOW/_deps/libpng-build/scripts/sym.out" "C:/c - c++/DevilutionX/build_NOW/_deps/libpng-build/libpng.sym"
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\LIBPNG~1 && "C:\Program Files\CMake\bin\cmake.exe" -E remove "C:/c - c++/DevilutionX/build_NOW/_deps/libpng-build/libpng.sym"
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\LIBPNG~1 && "C:\Program Files\CMake\bin\cmake.exe" -E copy "C:/c - c++/DevilutionX/build_NOW/_deps/libpng-build/scripts/sym.out" "C:/c - c++/DevilutionX/build_NOW/_deps/libpng-build/libpng.sym"
 
 _deps/libpng-build/CMakeFiles/gensym.dir/codegen:
 .PHONY : _deps/libpng-build/CMakeFiles/gensym.dir/codegen
@@ -85,7 +85,7 @@ _deps/libpng-build/CMakeFiles/gensym.dir/build: gensym
 .PHONY : _deps/libpng-build/CMakeFiles/gensym.dir/build
 
 _deps/libpng-build/CMakeFiles/gensym.dir/clean:
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\LIBPNG~3 && $(CMAKE_COMMAND) -P CMakeFiles\gensym.dir\cmake_clean.cmake
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\LIBPNG~1 && $(CMAKE_COMMAND) -P CMakeFiles\gensym.dir\cmake_clean.cmake
 .PHONY : _deps/libpng-build/CMakeFiles/gensym.dir/clean
 
 _deps/libpng-build/CMakeFiles/gensym.dir/depend:

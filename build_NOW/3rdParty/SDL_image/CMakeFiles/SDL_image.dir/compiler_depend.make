@@ -194,9 +194,9 @@
   C:/mingw64/x86_64-w64-mingw32/include/winsdkver.h
 
 3rdParty/SDL_image/CMakeFiles/SDL_image.dir/__/__/_deps/sdl_image-src/IMG_png.c.obj: _deps/sdl_image-src/IMG_png.c \
+  _deps/libpng-build/pnglibconf.h \
   _deps/libpng-src/png.h \
   _deps/libpng-src/pngconf.h \
-  _deps/libpng-build/pnglibconf.h \
   C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL.h \
   C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_assert.h \
   C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_atomic.h \

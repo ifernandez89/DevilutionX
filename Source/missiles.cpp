@@ -2653,6 +2653,12 @@ void AddTrapDisarm(Missile &missile, AddMissileParameter & /*parameter*/)
 
 void AddApocalypse(Missile &missile, AddMissileParameter & /*parameter*/)
 {
+	// SAFETY CHECK: Validate player ID before accessing
+	if (missile._misource < 0 || missile._misource >= MAX_PLRS) {
+		missile._miDelFlag = true;
+		return;
+	}
+	
 	const Player &player = Players[missile._misource];
 
 	missile.var1 = 8;
@@ -3883,6 +3889,13 @@ void ProcessApocalypse(Missile &missile)
 {
 	int id = missile._misource;
 	
+	// SAFETY CHECK: Validate player ID
+	if (id < 0 || id >= MAX_PLRS) {
+		missile._miDelFlag = true;
+		ClearApocalypseInProgress();
+		return;
+	}
+	
 	// ARCHITECTURAL ANALYSIS - Log ProcessApocalypse calls
 	ARCH_LOG_PROCESS_APOCALYPSE(missile.var2, missile.var3, missile.var4, missile.var5, static_cast<int>(Missiles.size()));
 	
@@ -3894,7 +3907,7 @@ void ProcessApocalypse(Missile &missile)
 		for (int k = missile.var4; k < missile.var5; k++) {
 			if (dMonster[k][j] > 0) {
 				int mid = dMonster[k][j] - 1;
-				if (!Monsters[mid].isPlayerMinion()) {
+				if (mid >= 0 && mid < MaxMonsters && !Monsters[mid].isPlayerMinion()) {
 					// ARCHITECTURAL ANALYSIS - Log boom creation attempts
 					ARCH_LOG_BOOM_CREATION(k, j, static_cast<int>(Missiles.size()));
 					

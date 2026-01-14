@@ -1,0 +1,3 @@
+APOCALYPSE CRASH DEBUGGING ENABLED
+This file activates the Apocalypse crash debugging system.
+Debug logs will be saved to: debug_logs/apocalypse_crash_debug_*.txt

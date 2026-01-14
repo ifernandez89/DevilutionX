@@ -83,14 +83,14 @@ CMakeFiles/libfmt-populate-complete: libfmt-populate-prefix/src/libfmt-populate-
 
 libfmt-populate-prefix/src/libfmt-populate-stamp/libfmt-populate-build: libfmt-populate-prefix/src/libfmt-populate-stamp/libfmt-populate-configure
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\_deps\libfmt-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "No build step for 'libfmt-populate'"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\LIBFMT~3 && "C:\Program Files\CMake\bin\cmake.exe" -E echo_append
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\LIBFMT~3 && "C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_NOW/_deps/libfmt-subbuild/libfmt-populate-prefix/src/libfmt-populate-stamp/libfmt-populate-build"
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\LIBFMT~1 && "C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\LIBFMT~1 && "C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_NOW/_deps/libfmt-subbuild/libfmt-populate-prefix/src/libfmt-populate-stamp/libfmt-populate-build"
 
 libfmt-populate-prefix/src/libfmt-populate-stamp/libfmt-populate-configure: libfmt-populate-prefix/tmp/libfmt-populate-cfgcmd.txt
 libfmt-populate-prefix/src/libfmt-populate-stamp/libfmt-populate-configure: libfmt-populate-prefix/src/libfmt-populate-stamp/libfmt-populate-patch
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\_deps\libfmt-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "No configure step for 'libfmt-populate'"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\LIBFMT~3 && "C:\Program Files\CMake\bin\cmake.exe" -E echo_append
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\LIBFMT~3 && "C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_NOW/_deps/libfmt-subbuild/libfmt-populate-prefix/src/libfmt-populate-stamp/libfmt-populate-configure"
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\LIBFMT~1 && "C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\LIBFMT~1 && "C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_NOW/_deps/libfmt-subbuild/libfmt-populate-prefix/src/libfmt-populate-stamp/libfmt-populate-configure"
 
 libfmt-populate-prefix/src/libfmt-populate-stamp/libfmt-populate-download: libfmt-populate-prefix/src/libfmt-populate-stamp/download-libfmt-populate.cmake
 libfmt-populate-prefix/src/libfmt-populate-stamp/libfmt-populate-download: libfmt-populate-prefix/src/libfmt-populate-stamp/libfmt-populate-urlinfo.txt
@@ -103,8 +103,8 @@ libfmt-populate-prefix/src/libfmt-populate-stamp/libfmt-populate-download: libfm
 
 libfmt-populate-prefix/src/libfmt-populate-stamp/libfmt-populate-install: libfmt-populate-prefix/src/libfmt-populate-stamp/libfmt-populate-build
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\_deps\libfmt-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_5) "No install step for 'libfmt-populate'"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\LIBFMT~3 && "C:\Program Files\CMake\bin\cmake.exe" -E echo_append
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\LIBFMT~3 && "C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_NOW/_deps/libfmt-subbuild/libfmt-populate-prefix/src/libfmt-populate-stamp/libfmt-populate-install"
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\LIBFMT~1 && "C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\LIBFMT~1 && "C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_NOW/_deps/libfmt-subbuild/libfmt-populate-prefix/src/libfmt-populate-stamp/libfmt-populate-install"
 
 libfmt-populate-prefix/src/libfmt-populate-stamp/libfmt-populate-mkdir:
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\_deps\libfmt-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_6) "Creating directories for 'libfmt-populate'"
@@ -119,8 +119,8 @@ libfmt-populate-prefix/src/libfmt-populate-stamp/libfmt-populate-patch: libfmt-p
 
 libfmt-populate-prefix/src/libfmt-populate-stamp/libfmt-populate-test: libfmt-populate-prefix/src/libfmt-populate-stamp/libfmt-populate-install
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\_deps\libfmt-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_8) "No test step for 'libfmt-populate'"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\LIBFMT~3 && "C:\Program Files\CMake\bin\cmake.exe" -E echo_append
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\LIBFMT~3 && "C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_NOW/_deps/libfmt-subbuild/libfmt-populate-prefix/src/libfmt-populate-stamp/libfmt-populate-test"
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\LIBFMT~1 && "C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\LIBFMT~1 && "C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_NOW/_deps/libfmt-subbuild/libfmt-populate-prefix/src/libfmt-populate-stamp/libfmt-populate-test"
 
 libfmt-populate-prefix/src/libfmt-populate-stamp/libfmt-populate-update: libfmt-populate-prefix/src/libfmt-populate-stamp/libfmt-populate-update-info.txt
 libfmt-populate-prefix/src/libfmt-populate-stamp/libfmt-populate-update: libfmt-populate-prefix/src/libfmt-populate-stamp/libfmt-populate-download

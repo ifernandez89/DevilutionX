@@ -27,6 +27,8 @@ _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/3rdparty/speex_resampler/re
   _deps/sdl_audiolib-src/3rdparty/speex_resampler/speex_resampler.h
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/Decoder.cpp.obj: _deps/sdl_audiolib-src/src/Decoder.cpp \
+  _deps/sdl_audiolib-build/aulib_config.h \
+  _deps/sdl_audiolib-build/aulib_export.h \
   _deps/sdl_audiolib-src/include/Aulib/Decoder.h \
   _deps/sdl_audiolib-src/include/Aulib/DecoderAdlmidi.h \
   _deps/sdl_audiolib-src/include/Aulib/DecoderBassmidi.h \
@@ -45,8 +47,6 @@ _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/Decoder.cpp.obj: _deps/
   _deps/sdl_audiolib-src/include/Aulib/DecoderXmp.h \
   _deps/sdl_audiolib-src/include/aulib.h \
   _deps/sdl_audiolib-src/include/aulib_global.h \
-  _deps/sdl_audiolib-build/aulib_config.h \
-  _deps/sdl_audiolib-build/aulib_export.h \
   C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_atomic.h \
   C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_audio.h \
   C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_config.h \
@@ -289,11 +289,11 @@ _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/DecoderDrmp3.cpp.obj: _
   _deps/libfmt-src/include/fmt/base.h \
   _deps/libfmt-src/include/fmt/core.h \
   _deps/libfmt-src/include/fmt/format.h \
+  _deps/sdl_audiolib-build/aulib_config.h \
+  _deps/sdl_audiolib-build/aulib_export.h \
   _deps/sdl_audiolib-src/3rdparty/dr_libs/dr_mp3.h \
   _deps/sdl_audiolib-src/include/Aulib/Decoder.h \
   _deps/sdl_audiolib-src/include/Aulib/DecoderDrmp3.h \
-  _deps/sdl_audiolib-build/aulib_config.h \
-  _deps/sdl_audiolib-build/aulib_export.h \
   C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_config.h \
   C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_config_windows.h \
   C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_error.h \
@@ -543,11 +543,11 @@ _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/DecoderDrwav.cpp.obj: _
   _deps/libfmt-src/include/fmt/base.h \
   _deps/libfmt-src/include/fmt/core.h \
   _deps/libfmt-src/include/fmt/format.h \
+  _deps/sdl_audiolib-build/aulib_config.h \
+  _deps/sdl_audiolib-build/aulib_export.h \
   _deps/sdl_audiolib-src/3rdparty/dr_libs/dr_wav.h \
   _deps/sdl_audiolib-src/include/Aulib/Decoder.h \
   _deps/sdl_audiolib-src/include/Aulib/DecoderDrwav.h \
-  _deps/sdl_audiolib-build/aulib_config.h \
-  _deps/sdl_audiolib-build/aulib_export.h \
   C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_config.h \
   C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_config_windows.h \
   C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_error.h \
@@ -794,18 +794,18 @@ _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/DecoderDrwav.cpp.obj: _
   _deps/sdl_audiolib-src/src/missing.h
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/Processor.cpp.obj: _deps/sdl_audiolib-src/src/Processor.cpp \
-  _deps/sdl_audiolib-src/include/Aulib/Processor.h \
-  _deps/sdl_audiolib-build/aulib_export.h
+  _deps/sdl_audiolib-build/aulib_export.h \
+  _deps/sdl_audiolib-src/include/Aulib/Processor.h
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/Resampler.cpp.obj: _deps/sdl_audiolib-src/src/Resampler.cpp \
   _deps/libfmt-src/include/fmt/base.h \
   _deps/libfmt-src/include/fmt/core.h \
   _deps/libfmt-src/include/fmt/format.h \
+  _deps/sdl_audiolib-build/aulib_config.h \
+  _deps/sdl_audiolib-build/aulib_export.h \
   _deps/sdl_audiolib-src/include/Aulib/Decoder.h \
   _deps/sdl_audiolib-src/include/Aulib/Resampler.h \
   _deps/sdl_audiolib-src/include/aulib_global.h \
-  _deps/sdl_audiolib-build/aulib_config.h \
-  _deps/sdl_audiolib-build/aulib_export.h \
   C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_atomic.h \
   C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_audio.h \
   C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_config.h \
@@ -1065,11 +1065,11 @@ _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/ResamplerSdl.cpp.obj: _
   _deps/libfmt-src/include/fmt/base.h \
   _deps/libfmt-src/include/fmt/core.h \
   _deps/libfmt-src/include/fmt/format.h \
+  _deps/sdl_audiolib-build/aulib_config.h \
+  _deps/sdl_audiolib-build/aulib_export.h \
   _deps/sdl_audiolib-src/include/Aulib/Resampler.h \
   _deps/sdl_audiolib-src/include/Aulib/ResamplerSdl.h \
   _deps/sdl_audiolib-src/include/aulib_global.h \
-  _deps/sdl_audiolib-build/aulib_config.h \
-  _deps/sdl_audiolib-build/aulib_export.h \
   C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_atomic.h \
   C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_audio.h \
   C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_config.h \
@@ -1284,12 +1284,12 @@ _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/ResamplerSdl.cpp.obj: _
   _deps/sdl_audiolib-src/src/aulib_log.h
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/ResamplerSpeex.cpp.obj: _deps/sdl_audiolib-src/src/ResamplerSpeex.cpp \
+  _deps/sdl_audiolib-build/aulib_export.h \
   _deps/sdl_audiolib-src/3rdparty/speex_resampler/speex_resampler.h \
   _deps/sdl_audiolib-src/include/Aulib/Decoder.h \
   _deps/sdl_audiolib-src/include/Aulib/Resampler.h \
   _deps/sdl_audiolib-src/include/Aulib/ResamplerSpeex.h \
   _deps/sdl_audiolib-src/include/aulib_global.h \
-  _deps/sdl_audiolib-build/aulib_export.h \
   C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_config.h \
   C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_config_windows.h \
   C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_error.h \
@@ -1655,14 +1655,14 @@ _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/Stream.cpp.obj: _deps/s
   _deps/libfmt-src/include/fmt/base.h \
   _deps/libfmt-src/include/fmt/core.h \
   _deps/libfmt-src/include/fmt/format.h \
+  _deps/sdl_audiolib-build/aulib_config.h \
+  _deps/sdl_audiolib-build/aulib_export.h \
   _deps/sdl_audiolib-src/include/Aulib/Decoder.h \
   _deps/sdl_audiolib-src/include/Aulib/Processor.h \
   _deps/sdl_audiolib-src/include/Aulib/Resampler.h \
   _deps/sdl_audiolib-src/include/Aulib/Stream.h \
   _deps/sdl_audiolib-src/include/aulib.h \
   _deps/sdl_audiolib-src/include/aulib_global.h \
-  _deps/sdl_audiolib-build/aulib_config.h \
-  _deps/sdl_audiolib-build/aulib_export.h \
   C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_atomic.h \
   C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_audio.h \
   C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_config.h \
@@ -1937,12 +1937,12 @@ _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/aulib.cpp.obj: _deps/sd
   _deps/libfmt-src/include/fmt/base.h \
   _deps/libfmt-src/include/fmt/core.h \
   _deps/libfmt-src/include/fmt/format.h \
+  _deps/sdl_audiolib-build/aulib_config.h \
+  _deps/sdl_audiolib-build/aulib_export.h \
   _deps/sdl_audiolib-src/include/Aulib/Processor.h \
   _deps/sdl_audiolib-src/include/Aulib/Stream.h \
   _deps/sdl_audiolib-src/include/aulib.h \
   _deps/sdl_audiolib-src/include/aulib_global.h \
-  _deps/sdl_audiolib-build/aulib_config.h \
-  _deps/sdl_audiolib-build/aulib_export.h \
   C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL.h \
   C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_assert.h \
   C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_atomic.h \
@@ -2458,9 +2458,9 @@ _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/missing/sdl_rwsize.c.ob
   C:/mingw64/x86_64-w64-mingw32/include/winsdkver.h
 
 _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/sampleconv.cpp.obj: _deps/sdl_audiolib-src/src/sampleconv.cpp \
-  _deps/sdl_audiolib-src/include/aulib_global.h \
   _deps/sdl_audiolib-build/aulib_config.h \
   _deps/sdl_audiolib-build/aulib_export.h \
+  _deps/sdl_audiolib-src/include/aulib_global.h \
   C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_config.h \
   C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_config_windows.h \
   C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_endian.h \
@@ -2667,14 +2667,14 @@ _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/src/stream_p.cpp.obj: _deps
   _deps/libfmt-src/include/fmt/base.h \
   _deps/libfmt-src/include/fmt/core.h \
   _deps/libfmt-src/include/fmt/format.h \
+  _deps/sdl_audiolib-build/aulib_config.h \
+  _deps/sdl_audiolib-build/aulib_export.h \
   _deps/sdl_audiolib-src/include/Aulib/Decoder.h \
   _deps/sdl_audiolib-src/include/Aulib/Processor.h \
   _deps/sdl_audiolib-src/include/Aulib/Resampler.h \
   _deps/sdl_audiolib-src/include/Aulib/Stream.h \
   _deps/sdl_audiolib-src/include/aulib.h \
   _deps/sdl_audiolib-src/include/aulib_global.h \
-  _deps/sdl_audiolib-build/aulib_config.h \
-  _deps/sdl_audiolib-build/aulib_export.h \
   C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_atomic.h \
   C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_audio.h \
   C:/c\ -\ c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/include/SDL2/SDL_config.h \
@@ -3062,6 +3062,22 @@ _deps/sdl_audiolib-src/3rdparty/speex_resampler/arch.h:
 
 _deps/sdl_audiolib-src/3rdparty/speex_resampler/speex_resampler.h:
 
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/smmintrin.h:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/tr1/gamma.tcc:
+
+_deps/sdl_audiolib-src/include/Aulib/DecoderOpus.h:
+
+_deps/sdl_audiolib-src/include/Aulib/DecoderMusepack.h:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/hashtable.h:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/hash_bytes.h:
+
+_deps/sdl_audiolib-build/aulib_config.h:
+
+_deps/sdl_audiolib-build/aulib_export.h:
+
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/clwbintrin.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/tr1/poly_laguerre.tcc:
@@ -3104,20 +3120,6 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/sgxintrin.h:
 
 _deps/sdl_audiolib-src/include/Aulib/DecoderMpg123.h:
 
-C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/hashtable.h:
-
-C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/hash_bytes.h:
-
-_deps/sdl_audiolib-build/aulib_config.h:
-
-C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/smmintrin.h:
-
-C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/tr1/gamma.tcc:
-
-_deps/sdl_audiolib-src/include/Aulib/DecoderOpus.h:
-
-_deps/sdl_audiolib-src/include/Aulib/DecoderMusepack.h:
-
 _deps/sdl_audiolib-src/include/Aulib/DecoderOpenmpt.h:
 
 _deps/sdl_audiolib-src/include/Aulib/DecoderSndfile.h:
@@ -3137,8 +3139,6 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/avx5124vnniwintrin.h:
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/shared_ptr_base.h:
 
 _deps/sdl_audiolib-src/include/Aulib/DecoderXmp.h:
-
-_deps/sdl_audiolib-build/aulib_export.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/backward/binders.h:
 

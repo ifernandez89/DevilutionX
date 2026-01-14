@@ -486,10 +486,10 @@ Source/CMakeFiles/libdevilutionx_sound.dir/engine/sound.cpp.obj
  C:/c - c++/DevilutionX/build_NOW/_deps/libfmt-src/include/fmt/format.h
  C:/c - c++/DevilutionX/build_NOW/_deps/libfmt-src/include/fmt/ranges.h
  C:/c - c++/DevilutionX/build_NOW/_deps/magic_enum-src/include/magic_enum/magic_enum.hpp
+ C:/c - c++/DevilutionX/build_NOW/_deps/sdl_audiolib-build/aulib_export.h
  C:/c - c++/DevilutionX/build_NOW/_deps/sdl_audiolib-src/include/Aulib/Stream.h
  C:/c - c++/DevilutionX/build_NOW/_deps/sdl_audiolib-src/include/aulib.h
  C:/c - c++/DevilutionX/build_NOW/_deps/sdl_audiolib-src/include/aulib_global.h
- C:/c - c++/DevilutionX/build_NOW/_deps/sdl_audiolib-build/aulib_export.h
  C:/c - c++/DevilutionX/build_NOW/_deps/unordered_dense-src/include/ankerl/unordered_dense.h
  C:/c - c++/DevilutionX/Source/DiabloUI/ui_flags.hpp
  C:/c - c++/DevilutionX/Source/appfat.h
@@ -997,10 +997,10 @@ Source/CMakeFiles/libdevilutionx_sound.dir/engine/sound.cpp.obj
 
 Source/CMakeFiles/libdevilutionx_sound.dir/utils/push_aulib_decoder.cpp.obj
  C:/c - c++/DevilutionX/Source/utils/push_aulib_decoder.cpp
+ C:/c - c++/DevilutionX/build_NOW/_deps/sdl_audiolib-build/aulib_export.h
  C:/c - c++/DevilutionX/build_NOW/_deps/sdl_audiolib-src/include/Aulib/Decoder.h
  C:/c - c++/DevilutionX/build_NOW/_deps/sdl_audiolib-src/include/aulib.h
  C:/c - c++/DevilutionX/build_NOW/_deps/sdl_audiolib-src/include/aulib_global.h
- C:/c - c++/DevilutionX/build_NOW/_deps/sdl_audiolib-build/aulib_export.h
  C:/c - c++/DevilutionX/Source/appfat.h
  C:/c - c++/DevilutionX/Source/utils/attributes.h
  C:/c - c++/DevilutionX/Source/utils/sdl2_backports.h
@@ -1404,6 +1404,7 @@ Source/CMakeFiles/libdevilutionx_sound.dir/utils/soundsample.cpp.obj
  C:/c - c++/DevilutionX/build_NOW/_deps/libfmt-src/include/fmt/format.h
  C:/c - c++/DevilutionX/build_NOW/_deps/libfmt-src/include/fmt/ranges.h
  C:/c - c++/DevilutionX/build_NOW/_deps/magic_enum-src/include/magic_enum/magic_enum.hpp
+ C:/c - c++/DevilutionX/build_NOW/_deps/sdl_audiolib-build/aulib_export.h
  C:/c - c++/DevilutionX/build_NOW/_deps/sdl_audiolib-src/include/Aulib/Decoder.h
  C:/c - c++/DevilutionX/build_NOW/_deps/sdl_audiolib-src/include/Aulib/DecoderDrmp3.h
  C:/c - c++/DevilutionX/build_NOW/_deps/sdl_audiolib-src/include/Aulib/DecoderDrwav.h
@@ -1413,7 +1414,6 @@ Source/CMakeFiles/libdevilutionx_sound.dir/utils/soundsample.cpp.obj
  C:/c - c++/DevilutionX/build_NOW/_deps/sdl_audiolib-src/include/Aulib/Stream.h
  C:/c - c++/DevilutionX/build_NOW/_deps/sdl_audiolib-src/include/aulib.h
  C:/c - c++/DevilutionX/build_NOW/_deps/sdl_audiolib-src/include/aulib_global.h
- C:/c - c++/DevilutionX/build_NOW/_deps/sdl_audiolib-build/aulib_export.h
  C:/c - c++/DevilutionX/build_NOW/_deps/unordered_dense-src/include/ankerl/unordered_dense.h
  C:/c - c++/DevilutionX/Source/DiabloUI/ui_flags.hpp
  C:/c - c++/DevilutionX/Source/appfat.h

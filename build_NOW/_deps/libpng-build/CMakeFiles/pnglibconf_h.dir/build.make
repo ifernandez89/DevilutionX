@@ -69,7 +69,7 @@ _deps/libpng-build/CMakeFiles/pnglibconf_h: _deps/libpng-build/pnglibconf.h
 
 _deps/libpng-build/pnglibconf.h: _deps/libpng-build/pnglibconf.out
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Generating pnglibconf.h"
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\LIBPNG~3 && "C:\Program Files\CMake\bin\cmake.exe" -DOUTPUT=pnglibconf.h -P "C:/c - c++/DevilutionX/build_NOW/_deps/libpng-build/scripts/gensrc.cmake"
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\LIBPNG~1 && "C:\Program Files\CMake\bin\cmake.exe" -DOUTPUT=pnglibconf.h -P "C:/c - c++/DevilutionX/build_NOW/_deps/libpng-build/scripts/gensrc.cmake"
 
 _deps/libpng-build/CMakeFiles/pnglibconf_h.dir/codegen:
 .PHONY : _deps/libpng-build/CMakeFiles/pnglibconf_h.dir/codegen
@@ -84,7 +84,7 @@ _deps/libpng-build/CMakeFiles/pnglibconf_h.dir/build: pnglibconf_h
 .PHONY : _deps/libpng-build/CMakeFiles/pnglibconf_h.dir/build
 
 _deps/libpng-build/CMakeFiles/pnglibconf_h.dir/clean:
-	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\LIBPNG~3 && $(CMAKE_COMMAND) -P CMakeFiles\pnglibconf_h.dir\cmake_clean.cmake
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1\_deps\LIBPNG~1 && $(CMAKE_COMMAND) -P CMakeFiles\pnglibconf_h.dir\cmake_clean.cmake
 .PHONY : _deps/libpng-build/CMakeFiles/pnglibconf_h.dir/clean
 
 _deps/libpng-build/CMakeFiles/pnglibconf_h.dir/depend:

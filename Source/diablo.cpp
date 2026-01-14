@@ -1384,6 +1384,9 @@ void DiabloInit()
 
 	ui_sound_init();
 
+	// 🚨 APOCALYPSE CRASH DEBUG - Initialize Debugging System
+	InitApocalypseCrashDebug();
+	
 	// 🌙 NIGHTMARE UI - Initialize Nightmare UI Architecture
 	InitNightmareUI();
 	

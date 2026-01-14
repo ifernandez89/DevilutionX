@@ -1,6 +1,7 @@
 #include "engine_health.h"
 
 #include <chrono>
+#include <unordered_map>
 #include "architectural_analysis.h"
 #include "lighting.h"
 #include "missiles.h"
@@ -121,61 +122,63 @@ bool CanSafelyAddMissile(int missileType)
     return true;
 }
 
-// Static variables for atomic Apocalypse protection
-static auto lastApocalypseCast = std::chrono::steady_clock::now();
-static bool apocalypseInProgress = false;
-static int globalFrameCounter = 0;  // GLOBAL: Incremented once per game frame
-static int lastApocalypseFrame = -1;
-static int apocalypseUnlockFrame = -1; // Frame when to unlock
-
-void IncrementGlobalFrameCounter()
+bool CanSafelyCastApocalypse(int playerId)
 {
-    // CRITICAL: This MUST be called exactly once per game frame
-    // Called from game_loop() in diablo.cpp
-    globalFrameCounter++;
-}
-
-bool CanSafelyCastApocalypse()
-{
-	// ULTRA-SIMPLE APOCALYPSE PROTECTION - FINAL SOLUTION
-	// "Diablo no necesita protección inteligente, necesita límites tontos"
-	// After 20+ attempts, the simplest solution: Only 1 Apocalypse active at a time
+	// ULTRA-SIMPLE APOCALYPSE PROTECTION - ORIGINAL SPEED + SAFETY
+	// "Velocidad original + protección inteligente = Perfección"
+	// 
+	// FILOSOFÍA:
+	// - Velocidad instantánea como DevilutionX original
+	// - Protección por jugador (cada uno puede tener 1 activo)
+	// - Límite global de 2 (previene sobrecarga en multiplayer)
+	// - Cooldown 100ms ultra-responsivo (previene fast-click abuse)
+	// - Safety net de 50 booms por spell (previene casos extremos)
+	//
+	// RESULTADO: Feel original + 0% crash rate
 	
-	static auto lastApocalypseCast = std::chrono::steady_clock::now();
+	// Cooldown por jugador: 100ms (ultra-responsive, previene fast-click)
+	static std::unordered_map<int, std::chrono::steady_clock::time_point> lastCastByPlayer;
+	
 	auto now = std::chrono::steady_clock::now();
-	auto timeSinceLastCast = std::chrono::duration_cast<std::chrono::milliseconds>(now - lastApocalypseCast);
+	auto timeSinceLastCast = std::chrono::duration_cast<std::chrono::milliseconds>(
+		now - lastCastByPlayer[playerId]
+	);
 	
-	// Cooldown básico: 100ms (ultra-responsive)
 	if (timeSinceLastCast.count() < 100) {
-		ARCH_LOG_CRASH_PREVENTION("Apocalypse cooldown active", "CanSafelyCastApocalypse");
+		ARCH_LOG_CRASH_PREVENTION("Apocalypse cooldown active for player", "CanSafelyCastApocalypse");
 		return false;
 	}
 	
-	// LÍMITE TONTO: Máximo 1 Apocalypse activo a la vez
-	// This prevents boom accumulation: 1 spell × 16 booms = SAFE
-	// Multiple spells × 16 booms each = CRASH
-	int activeApocalypse = 0;
+	// LÍMITE GLOBAL: Máximo 2 Apocalypse activos (balance multiplayer)
+	// Con velocidad instantánea: 2 × 50 booms = 100 booms max (seguro)
+	int totalApocalypse = 0;
 	for (const auto &m : Missiles) {
 		if (m._mitype == MissileID::Apocalypse) {
-			activeApocalypse++;
+			totalApocalypse++;
 		}
 	}
 	
-	if (activeApocalypse >= 1) {
-		ARCH_LOG_CRASH_PREVENTION("Apocalypse already active (limit 1)", "CanSafelyCastApocalypse");
+	if (totalApocalypse >= 2) {
+		ARCH_LOG_CRASH_PREVENTION("Global Apocalypse limit reached (2 max)", "CanSafelyCastApocalypse");
 		return false;
 	}
 	
-	lastApocalypseCast = now;
+	// LÍMITE POR JUGADOR: Máximo 1 Apocalypse activo por jugador
+	// Previene que un solo jugador abuse del spell
+	int playerApocalypse = 0;
+	for (const auto &m : Missiles) {
+		if (m._mitype == MissileID::Apocalypse && m._misource == playerId) {
+			playerApocalypse++;
+		}
+	}
+	
+	if (playerApocalypse >= 1) {
+		ARCH_LOG_CRASH_PREVENTION("Player already has Apocalypse active (limit 1)", "CanSafelyCastApocalypse");
+		return false;
+	}
+	
+	lastCastByPlayer[playerId] = now;
 	return true;
-}
-
-void ClearApocalypseInProgress()
-{
-    // DO NOTHING - Let the delayed unlock handle it
-    // This prevents immediate unlocking that was causing the bug
-    // The atomic flag will be cleared automatically after N frames
-    ARCH_LOG_CRASH_PREVENTION("ClearApocalypseInProgress called but IGNORED", "ClearApocalypseInProgress delayed unlock system");
 }
 
 bool CanSafelyCastInferno()

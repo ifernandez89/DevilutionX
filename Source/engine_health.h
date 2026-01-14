@@ -96,20 +96,9 @@ bool CanSafelyAddMissile(int missileType = -1);
 /**
  * Verifica si es seguro castear Apocalypse
  * Considera missiles activos, carga del engine y estado general
+ * @param playerId ID del jugador que intenta castear (para límite por jugador)
  */
-bool CanSafelyCastApocalypse();
-
-/**
- * Clears the Apocalypse in-progress flag
- * Called when Apocalypse processing is complete
- */
-void ClearApocalypseInProgress();
-
-/**
- * Increment global frame counter - MUST be called once per game frame
- * This is critical for Apocalypse protection timing
- */
-void IncrementGlobalFrameCounter();
+bool CanSafelyCastApocalypse(int playerId);
 
 /**
  * Verifica si es seguro castear Inferno

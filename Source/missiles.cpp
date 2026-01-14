@@ -2815,17 +2815,13 @@ Missile *AddMissile(WorldTilePosition src, WorldTilePosition dst, Direction midi
 	if (mitype == MissileID::Apocalypse) {
 		ARCH_LOG_CRASH_PREVENTION("AddMissile Apocalypse detected - checking protection", "AddMissile DEBUG");
 		
-		if (!CanSafelyCastApocalypse()) {
+		if (!CanSafelyCastApocalypse(id)) {
 			ARCH_LOG_CRASH_PREVENTION("Universal Apocalypse protection triggered - BLOCKED", "AddMissile");
 			return nullptr; // fail-soft - no crash, just ignore
 		}
 		
 		// If we reach here, protection passed
 		ARCH_LOG_CRASH_PREVENTION("Apocalypse protection PASSED - allowing creation", "AddMissile ALLOWED");
-		
-		// DO NOT clear the lock here - let delayed unlock handle it
-		// The atomic flag will be cleared automatically after N frames
-		// This prevents the immediate unlock bug that was causing crashes
 	}
 
 	// LÍMITE TONTO - Sin inteligencia, sin coordinación
@@ -3901,15 +3897,14 @@ void ProcessApocalypse(Missile &missile)
 	// ARCHITECTURAL ANALYSIS - Log ProcessApocalypse calls
 	ARCH_LOG_PROCESS_APOCALYPSE(missile.var2, missile.var3, missile.var4, missile.var5, static_cast<int>(Missiles.size()));
 	
-	// BALANCED MULTI-TILE PROCESSING - FINAL SOLUTION
-	// "Diablo no necesita protección inteligente, necesita límites tontos y velocidad balanceada"
-	// Process 8 tiles per frame for optimal balance:
-	// - Fast enough: 0.5 seconds per spell (8x faster than 1 tile/frame)
-	// - Safe enough: Max 32 booms with 100ms cooldown (prevents crash)
-	// - Responsive: Maintains original Diablo feel
+	// ORIGINAL DEVILUTIONX SPEED - INSTANTANEOUS PROCESSING
+	// "Velocidad original + protección inteligente = Perfección"
+	// Process ALL tiles in ONE frame for original ultra-responsive feel
+	// Protection handled by CanSafelyCastApocalypse() limiting active spells
+	// Safety net: max 50 booms per Apocalypse prevents extreme cases
 	
-	int tilesProcessed = 0;
-	const int TILES_PER_FRAME = 8;
+	int boomsCreated = 0;
+	const int MAX_BOOMS_PER_APOCALYPSE = 50;  // Safety net for extreme monster density
 	
 	for (int j = missile.var2; j < missile.var3; j++) {
 		for (int k = missile.var4; k < missile.var5; k++) {
@@ -3919,27 +3914,25 @@ void ProcessApocalypse(Missile &missile)
 					// ARCHITECTURAL ANALYSIS - Log boom creation attempts
 					ARCH_LOG_BOOM_CREATION(k, j, static_cast<int>(Missiles.size()));
 					
-					// GUARDIÁN ULTRA SIMPLE - FAIL-SOFT
-					if (!TryAddMissile(WorldTilePosition(k, j), WorldTilePosition(k, j), Players[id]._pdir, MissileID::ApocalypseBoom, TARGET_MONSTERS, id, missile._midam, 0)) {
-						// Límite alcanzado - el resto del spell se cancela limpiamente
-						// Sin crashes, sin corrupción, sin rollbacks
-						ARCH_LOG_CRASH_PREVENTION("TryAddMissile failed in ProcessApocalypse", "ProcessApocalypse loop");
+					// Safety limit: max 50 booms per Apocalypse
+					if (boomsCreated >= MAX_BOOMS_PER_APOCALYPSE) {
+						ARCH_LOG_CRASH_PREVENTION("Max booms per Apocalypse reached (50)", "ProcessApocalypse");
 						missile._miDelFlag = true;
 						return;
 					}
+					
+					// GUARDIÁN ULTRA SIMPLE - FAIL-SOFT
+					if (!TryAddMissile(WorldTilePosition(k, j), WorldTilePosition(k, j), Players[id]._pdir, MissileID::ApocalypseBoom, TARGET_MONSTERS, id, missile._midam, 0)) {
+						// Límite alcanzado - terminar limpiamente
+						ARCH_LOG_CRASH_PREVENTION("TryAddMissile failed in ProcessApocalypse", "ProcessApocalypse");
+						missile._miDelFlag = true;
+						return;
+					}
+					
+					boomsCreated++;
 				}
 			}
-			
-			// BALANCED PROCESSING: Process 8 tiles per frame
-			tilesProcessed++;
-			if (tilesProcessed >= TILES_PER_FRAME) {
-				// Save state and continue next frame
-				missile.var2 = j;
-				missile.var4 = k + 1;
-				return;
-			}
 		}
-		missile.var4 = missile.var6; // Reset column for next row
 	}
 	
 	// Spell completado naturalmente

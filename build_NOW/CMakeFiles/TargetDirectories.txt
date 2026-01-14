@@ -1,4 +1,4 @@
-C:/c - c++/DevilutionX/build_NOW/CMakeFiles/devilutionx.dir
+C:/c - c++/DevilutionX/build_NOW/CMakeFiles/nightmare.dir
 C:/c - c++/DevilutionX/build_NOW/CMakeFiles/devilutionx_trim_assets.dir
 C:/c - c++/DevilutionX/build_NOW/CMakeFiles/devilutionx_copied_assets.dir
 C:/c - c++/DevilutionX/build_NOW/CMakeFiles/hellfire_copied_mod_file.dir

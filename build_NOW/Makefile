@@ -162,17 +162,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named devilutionx
+# Target rules for targets named nightmare
 
 # Build rule for target.
-devilutionx: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 devilutionx
-.PHONY : devilutionx
+nightmare: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 nightmare
+.PHONY : nightmare
 
 # fast build rule for target.
-devilutionx/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\devilutionx.dir\build.make CMakeFiles/devilutionx.dir/build
-.PHONY : devilutionx/fast
+nightmare/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\nightmare.dir\build.make CMakeFiles/nightmare.dir/build
+.PHONY : nightmare/fast
 
 #=============================================================================
 # Target rules for targets named devilutionx_trim_assets
@@ -1349,7 +1349,7 @@ Packaging/windows/devilutionx.obj: Packaging/windows/devilutionx.rc.obj
 
 # target to build an object file
 Packaging/windows/devilutionx.rc.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\devilutionx.dir\build.make CMakeFiles/devilutionx.dir/Packaging/windows/devilutionx.rc.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\nightmare.dir\build.make CMakeFiles/nightmare.dir/Packaging/windows/devilutionx.rc.obj
 .PHONY : Packaging/windows/devilutionx.rc.obj
 
 Source/main.obj: Source/main.cpp.obj
@@ -1357,7 +1357,7 @@ Source/main.obj: Source/main.cpp.obj
 
 # target to build an object file
 Source/main.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\devilutionx.dir\build.make CMakeFiles/devilutionx.dir/Source/main.cpp.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\nightmare.dir\build.make CMakeFiles/nightmare.dir/Source/main.cpp.obj
 .PHONY : Source/main.cpp.obj
 
 Source/main.i: Source/main.cpp.i
@@ -1365,7 +1365,7 @@ Source/main.i: Source/main.cpp.i
 
 # target to preprocess a source file
 Source/main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\devilutionx.dir\build.make CMakeFiles/devilutionx.dir/Source/main.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\nightmare.dir\build.make CMakeFiles/nightmare.dir/Source/main.cpp.i
 .PHONY : Source/main.cpp.i
 
 Source/main.s: Source/main.cpp.s
@@ -1373,7 +1373,7 @@ Source/main.s: Source/main.cpp.s
 
 # target to generate assembly for a file
 Source/main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\devilutionx.dir\build.make CMakeFiles/devilutionx.dir/Source/main.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\nightmare.dir\build.make CMakeFiles/nightmare.dir/Source/main.cpp.s
 .PHONY : Source/main.cpp.s
 
 # Help Target
@@ -1411,7 +1411,6 @@ help:
 	@echo ... SDL_audiolib
 	@echo ... SDL_image
 	@echo ... SheenBidi
-	@echo ... devilutionx
 	@echo ... fmt
 	@echo ... libdevilutionx
 	@echo ... libdevilutionx_assets
@@ -1478,6 +1477,7 @@ help:
 	@echo ... libmpq
 	@echo ... libsmackerdec
 	@echo ... lua_static
+	@echo ... nightmare
 	@echo ... png_static
 	@echo ... Packaging/windows/devilutionx.obj
 	@echo ... Source/main.obj

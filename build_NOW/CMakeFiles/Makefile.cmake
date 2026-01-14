@@ -246,7 +246,7 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/devilutionx.dir/DependInfo.cmake"
+  "CMakeFiles/nightmare.dir/DependInfo.cmake"
   "CMakeFiles/devilutionx_trim_assets.dir/DependInfo.cmake"
   "CMakeFiles/devilutionx_copied_assets.dir/DependInfo.cmake"
   "CMakeFiles/hellfire_copied_mod_file.dir/DependInfo.cmake"

@@ -349,7 +349,7 @@ include(Dependencies)
 
 add_subdirectory(Source)
 
-set(BIN_TARGET devilutionx)
+set(BIN_TARGET nightmare)
 if(NINTENDO_3DS)
   set(BIN_TARGET ${BIN_TARGET}.elf)
 elseif(TARGET_PLATFORM STREQUAL "dos")

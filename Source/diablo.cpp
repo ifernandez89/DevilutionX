@@ -3635,6 +3635,9 @@ tl::expected<void, std::string> LoadGameLevel(bool firstflag, lvl_entry lvldir)
 	InitAutomap();
 
 	if (leveltype != DTYPE_TOWN && lvldir != ENTRY_LOAD) {
+		// 🔥 NIGHTMARE ATMOSPHERIC LIGHTING - Cleanup before reinitializing
+		// This prevents crashes when changing levels via portal
+		CleanupNightmareLighting();
 		InitLighting();
 	}
 	

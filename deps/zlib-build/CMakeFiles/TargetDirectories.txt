@@ -1,0 +1,13 @@
+C:/c - c++/DevilutionX/deps/zlib-build/CMakeFiles/zlib.dir
+C:/c - c++/DevilutionX/deps/zlib-build/CMakeFiles/zlibstatic.dir
+C:/c - c++/DevilutionX/deps/zlib-build/CMakeFiles/example.dir
+C:/c - c++/DevilutionX/deps/zlib-build/CMakeFiles/minigzip.dir
+C:/c - c++/DevilutionX/deps/zlib-build/CMakeFiles/example64.dir
+C:/c - c++/DevilutionX/deps/zlib-build/CMakeFiles/minigzip64.dir
+C:/c - c++/DevilutionX/deps/zlib-build/CMakeFiles/test.dir
+C:/c - c++/DevilutionX/deps/zlib-build/CMakeFiles/edit_cache.dir
+C:/c - c++/DevilutionX/deps/zlib-build/CMakeFiles/rebuild_cache.dir
+C:/c - c++/DevilutionX/deps/zlib-build/CMakeFiles/list_install_components.dir
+C:/c - c++/DevilutionX/deps/zlib-build/CMakeFiles/install.dir
+C:/c - c++/DevilutionX/deps/zlib-build/CMakeFiles/install/local.dir
+C:/c - c++/DevilutionX/deps/zlib-build/CMakeFiles/install/strip.dir

@@ -32,6 +32,14 @@
 ## FEATURES PLANIFICADAS - ANÁLISIS DETALLADO
 
 ### ✅ FEATURE 1 — GARANTIZAR TODAS LAS QUESTS
+**ESTADO**: ✅ COMPLETADA E IMPLEMENTADA
+
+### ✅ FEATURE FOCUS TRACKING — CÁMARA DESPUÉS DE MATAR DIABLO
+**ESTADO**: ✅ COMPLETADA E IMPLEMENTADA
+**ARCHIVO**: Source/monster.cpp líneas 1501-1530
+**DESCRIPCIÓN**: Corregido el bug donde la cámara se quedaba fija en la posición de muerte de Diablo. Ahora la cámara sigue correctamente al jugador después de matar a Diablo.
+
+### 🟡 FEATURE 1 — GARANTIZAR TODAS LAS QUESTS (ORIGINAL)
 **ESTADO**: IMPLEMENTACIÓN SEGURA AL 100%
 
 #### Análisis del Código Actual

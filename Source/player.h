@@ -934,6 +934,7 @@ ClxSprite GetPlayerPortraitSprite(Player &player);
 bool IsPlayerUnarmed(Player &player);
 
 void LoadPlrGFX(Player &player, player_graphic graphic);
+void LoadDarkSorcererGFX(Player &player, player_graphic graphic);
 void InitPlayerGFX(Player &player);
 void ResetPlayerGFX(Player &player);
 

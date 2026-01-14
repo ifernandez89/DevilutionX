@@ -21,6 +21,8 @@
 #include "engine/points_in_rectangle_range.hpp"
 #include "engine/world_tile.hpp"
 #include "levels/tile_properties.hpp"
+#include "nightmare_config.h"
+#include "nightmare_lighting.h"
 #include "objects.h"
 #include "player.h"
 #include "utils/attributes.h"
@@ -46,6 +48,9 @@ bool DisableLighting;
 #endif
 bool UpdateLighting;
 
+// 🎯 FASE D1 - 3D SIMULADO: Configuración global de depth cues
+DepthCuesConfig g_depthCues;
+
 namespace {
 
 /** @brief Number of supported light radiuses (first radius starts with 0) */
@@ -55,6 +60,200 @@ uint8_t LightFalloffs[NumLightRadiuses][128];
 bool UpdateVision;
 /** interpolations of a 32x32 (16x16 mirrored) light circle moving between tiles in steps of 1/8 of a tile */
 uint8_t LightConeInterpolations[8][8][16][16];
+
+// 🎥 FASE V1.4 - FAKE VIGNETTE SYSTEM
+/** @brief Vignette intensity table for peripheral vision darkening */
+float VignetteTable[MAXDUNX][MAXDUNY];
+bool VignetteInitialized = false;
+
+/**
+ * 🎯 FASE V1.4 - Initialize Fake Vignette System
+ * Crea una tabla de intensidad de viñeta para oscurecer la visión periférica
+ * Simula el efecto de túnel visual que ocurre naturalmente en ambientes oscuros
+ */
+void InitializeFakeVignette() {
+	if (VignetteInitialized) return;
+	
+	// Calcular centro de la pantalla/mapa visible
+	const float centerX = MAXDUNX / 2.0f;
+	const float centerY = MAXDUNY / 2.0f;
+	
+	// Radio máximo desde el centro hasta las esquinas
+	const float maxRadius = std::sqrt(centerX * centerX + centerY * centerY);
+	
+	// 🎯 Intensidad de viñeta por tipo de nivel
+	float vignetteIntensity = 0.3f; // Base intensity
+	
+	if (leveltype == DTYPE_TOWN) {
+		vignetteIntensity = 0.15f; // Viñeta sutil en town
+	} else if (leveltype == DTYPE_CATACOMBS) {
+		vignetteIntensity = 0.45f; // Viñeta intensa, atmósfera claustrofóbica
+	} else if (leveltype == DTYPE_CAVES) {
+		vignetteIntensity = 0.40f; // Viñeta media-alta, sensación opresiva
+	} else if (leveltype == DTYPE_HELL) {
+		vignetteIntensity = 0.50f; // Viñeta máxima, dramática y violenta
+	} else {
+		vignetteIntensity = 0.30f; // Cathedral: viñeta clásica
+	}
+	
+	// Generar tabla de viñeta
+	for (int x = 0; x < MAXDUNX; x++) {
+		for (int y = 0; y < MAXDUNY; y++) {
+			// Distancia desde el centro
+			const float dx = x - centerX;
+			const float dy = y - centerY;
+			const float distance = std::sqrt(dx * dx + dy * dy);
+			
+			// Factor de distancia normalizado (0.0 = centro, 1.0 = borde)
+			const float distanceFactor = std::min(distance / maxRadius, 1.0f);
+			
+			// Aplicar curva suave para transición natural
+			// Usar función cuadrática suave para evitar bordes duros
+			const float smoothFactor = distanceFactor * distanceFactor;
+			
+			// Calcular intensidad de viñeta (0.0 = sin efecto, 1.0 = máximo oscurecimiento)
+			VignetteTable[x][y] = smoothFactor * vignetteIntensity;
+		}
+	}
+	
+	VignetteInitialized = true;
+}
+
+/**
+ * 🎯 FASE V1.4 - Apply Fake Vignette Effect
+ * Aplica el efecto de viñeta a un valor de luz específico
+ * 
+ * @param position Posición en el mapa
+ * @param lightValue Valor de luz original (0-15)
+ * @return Valor de luz con viñeta aplicada
+ */
+uint8_t ApplyFakeVignette(Point position, uint8_t lightValue) {
+	if (!VignetteInitialized) {
+		InitializeFakeVignette();
+	}
+	
+	// Verificar bounds
+	if (position.x < 0 || position.x >= MAXDUNX || position.y < 0 || position.y >= MAXDUNY) {
+		return lightValue;
+	}
+	
+	// Obtener intensidad de viñeta para esta posición
+	const float vignetteIntensity = VignetteTable[position.x][position.y];
+	
+	// Aplicar viñeta al valor de luz
+	// Viñeta oscurece, así que aumenta el valor de luz (más alto = más oscuro)
+	const float vignetteEffect = vignetteIntensity * 6.0f; // Máximo 6 niveles de oscurecimiento
+	const float newLightValue = lightValue + vignetteEffect;
+	
+	// Clamp al rango válido
+	return static_cast<uint8_t>(std::min(newLightValue, 15.0f));
+}
+
+// ============================================================================
+// 🎯 FASE D1 - 3D SIMULADO: DEPTH CUES IMPLEMENTATION
+// ============================================================================
+
+/**
+ * D1.1 + D1.2 - Calcula factor de profundidad basado en distancia y bias vertical
+ * 
+ * Implementa dos efectos clave:
+ * - D1.1: Oscurecimiento por distancia al jugador (depth cues)
+ * - D1.2: Bias vertical para reforzar perspectiva isométrica
+ * 
+ * @param x, y Coordenadas del tile a evaluar
+ * @param playerX, playerY Coordenadas del jugador
+ * @return Factor de profundidad (0.3-1.0, donde 1.0 = sin efecto, 0.3 = máximo oscurecimiento)
+ */
+float CalculateDepthCues(int x, int y, int playerX, int playerY) {
+	if (!g_depthCues.enabled) {
+		return 1.0f; // Sin efecto si está deshabilitado
+	}
+	
+	// D1.1 - Calcular distancia Manhattan al jugador (más eficiente que euclidiana)
+	const float dx = static_cast<float>(x - playerX);
+	const float dy = static_cast<float>(y - playerY);
+	const float distance = std::sqrt(dx * dx + dy * dy);
+	
+	// D1.2 - Bias vertical para reforzar perspectiva isométrica
+	// "Hacia arriba" del mapa (Y menor) se ve más lejano
+	const float verticalOffset = (y - playerY) * g_depthCues.verticalBias;
+	
+	// Combinar distancia real + bias vertical
+	const float totalDistance = distance + verticalOffset;
+	
+	// Calcular factor de profundidad (1.0 = cerca del jugador, 0.0 = muy lejos)
+	float depthFactor = 1.0f - (totalDistance / g_depthCues.maxDistance);
+	
+	// Clamp al rango válido (nunca completamente negro)
+	return std::max(g_depthCues.minIntensity, std::min(1.0f, depthFactor));
+}
+
+/**
+ * Aplica depth cues a un nivel de luz específico
+ * 
+ * @param lightLevel Nivel de luz original (0-15, donde 0=brillante, 15=oscuro)
+ * @param x, y Coordenadas del tile
+ * @param playerX, playerY Coordenadas del jugador
+ * @return Nivel de luz modificado con depth cues aplicados
+ */
+uint8_t ApplyDepthCuesToLight(uint8_t lightLevel, int x, int y, int playerX, int playerY) {
+	if (!g_depthCues.enabled) {
+		return lightLevel;
+	}
+	
+	// Calcular factor de profundidad
+	const float depthFactor = CalculateDepthCues(x, y, playerX, playerY);
+	
+	// Aplicar depth cues al nivel de luz
+	// depthFactor bajo = más lejos = más oscuro = lightLevel más alto
+	const float adjustedLight = lightLevel / depthFactor;
+	
+	// Clamp al rango válido de lighting (0-15)
+	return static_cast<uint8_t>(std::min(15.0f, adjustedLight));
+}
+
+} // namespace
+
+/**
+ * 🎯 FASE D1 - DEPTH CUES SYSTEM IMPLEMENTATION
+ * Inicializa el sistema de depth cues con valores por defecto
+ */
+void InitDepthCues() {
+	// Configuración por defecto ya está en la struct
+	// Ajustar parámetros según el tipo de nivel para mejor efecto
+	
+	if (leveltype == DTYPE_TOWN) {
+		g_depthCues.depthFactor = 12.0f;     // Efecto más sutil en town
+		g_depthCues.verticalBias = 0.2f;     // Menos bias vertical
+		g_depthCues.maxDistance = 25.0f;     // Mayor alcance
+	} else if (leveltype == DTYPE_CATACOMBS) {
+		g_depthCues.depthFactor = 6.0f;      // Efecto más intenso, claustrofóbico
+		g_depthCues.verticalBias = 0.4f;     // Más bias vertical
+		g_depthCues.maxDistance = 15.0f;     // Menor alcance, más dramático
+	} else if (leveltype == DTYPE_CAVES) {
+		g_depthCues.depthFactor = 7.0f;      // Efecto medio-alto
+		g_depthCues.verticalBias = 0.35f;    // Bias medio-alto
+		g_depthCues.maxDistance = 18.0f;     // Alcance medio
+	} else if (leveltype == DTYPE_HELL) {
+		g_depthCues.depthFactor = 5.0f;      // Efecto máximo, atmósfera opresiva
+		g_depthCues.verticalBias = 0.5f;     // Máximo bias vertical
+		g_depthCues.maxDistance = 12.0f;     // Menor alcance, máximo drama
+	} else {
+		// Cathedral - valores por defecto
+		g_depthCues.depthFactor = 8.0f;
+		g_depthCues.verticalBias = 0.3f;
+		g_depthCues.maxDistance = 20.0f;
+	}
+}
+
+/**
+ * Habilita/deshabilita el sistema de depth cues
+ */
+void SetDepthCuesEnabled(bool enabled) {
+	g_depthCues.enabled = enabled;
+}
+
+namespace {
 
 void RotateRadius(DisplacementOf<int8_t> &offset, DisplacementOf<int8_t> &dist, DisplacementOf<int8_t> &light, DisplacementOf<int8_t> &block)
 {
@@ -76,6 +275,10 @@ void RotateRadius(DisplacementOf<int8_t> &offset, DisplacementOf<int8_t> &dist, 
 
 DVL_ALWAYS_INLINE void SetLight(Point position, uint8_t v)
 {
+	// 🎥 FASE V1.4 - Apply Fake Vignette Effect
+	// Aplicar viñeta antes de establecer el valor de luz
+	v = ApplyFakeVignette(position, v);
+	
 	if (LoadingMapObjects)
 		dPreLight[position.x][position.y] = v;
 	else
@@ -287,9 +490,37 @@ void MakeLightTable()
 	assert((FullyLitLightTable != nullptr) == (LightTables[0][0] == 0 && std::adjacent_find(LightTables[0].begin(), LightTables[0].end() - 1, [](auto x, auto y) { return (x + 1) != y; }) == LightTables[0].end() - 1));
 	assert((FullyDarkLightTable != nullptr) == (std::all_of(LightTables[LightsMax].begin(), LightTables[LightsMax].end(), [](auto x) { return x == 0; })));
 
-	// Generate light falloffs ranges
+	// 🎥 FASE V1 - INTELLIGENT LIGHTING SYSTEM 🎥
+	// Generate light falloffs ranges with enhanced intelligent lighting
 	const float maxDarkness = 15;
 	const float maxBrightness = 0;
+	
+	// FEATURE: Global Dark Atmosphere Enhancement - Darker ambient lighting
+	float atmosphereMultiplier = 1.0f;
+	
+	// 🎯 FASE V1.1 - ADAPTIVE CONTRAST BY LEVEL
+	// Contraste adaptativo que se intensifica con la profundidad del dungeon
+	float adaptiveContrast = 1.0f;
+	
+	// 🎯 FASE V1.2 - CONTEXTUAL ATMOSPHERE ENHANCEMENT
+	// Variaciones sutiles por tipo de nivel que el jugador siente pero no nota conscientemente
+	if (leveltype == DTYPE_TOWN) {
+		atmosphereMultiplier = 1.15f; // Town: 15% más oscuro, sensación deteriorada
+		adaptiveContrast = 0.9f;      // Contraste suave en town
+	} else if (leveltype == DTYPE_CATACOMBS) {
+		atmosphereMultiplier = 1.30f; // Catacombs: 30% más oscuro, atmósfera más fría y siniestra
+		adaptiveContrast = 1.2f;      // Contraste medio-alto, atmósfera tensa
+	} else if (leveltype == DTYPE_CAVES) {
+		atmosphereMultiplier = 1.25f; // Caves: 25% más oscuro, sensación opresiva
+		adaptiveContrast = 1.1f;      // Contraste medio, sensación claustrofóbica
+	} else if (leveltype == DTYPE_HELL) {
+		atmosphereMultiplier = 1.40f; // Hell: 40% más oscuro, contraste violento y dramático
+		adaptiveContrast = 1.5f;      // Contraste máximo, dramático y violento
+	} else {
+		atmosphereMultiplier = 1.20f; // Cathedral: 20% más oscuro, atmósfera gótica
+		adaptiveContrast = 1.0f;      // Contraste base, atmósfera clásica
+	}
+	
 	for (unsigned radius = 0; radius < NumLightRadiuses; radius++) {
 		const unsigned maxDistance = (radius + 1) * 8;
 		for (unsigned distance = 0; distance < 128; distance++) {
@@ -299,15 +530,31 @@ void MakeLightTable()
 				const float factor = static_cast<float>(distance) / static_cast<float>(maxDistance);
 				float scaled;
 				if (IsAnyOf(leveltype, DTYPE_NEST, DTYPE_CRYPT)) {
-					// quardratic falloff with over exposure
+					// 🎯 FASE V1.3 - QUADRATIC FALLOFF for Hellfire levels with over exposure
 					const float brightness = static_cast<float>(radius) * 1.25F;
-					scaled = factor * factor * brightness + (maxDarkness - brightness);
+					// Quadratic falloff with enhanced contrast
+					scaled = factor * factor * brightness * adaptiveContrast + (maxDarkness - brightness);
 					scaled = std::max(maxBrightness, scaled);
 				} else {
-					// Leaner falloff
-					scaled = factor * maxDarkness;
+					// 🎯 FASE V1.3 - ENHANCED QUADRATIC FALLOFF for all other levels
+					// Combinar falloff cuadrático con contraste adaptativo
+					float quadraticFactor = factor * factor; // Falloff cuadrático base
+					
+					// Aplicar contraste adaptativo de forma inteligente
+					if (adaptiveContrast > 1.0f) {
+						// Para contraste alto, intensificar las sombras
+						quadraticFactor = std::pow(quadraticFactor, 1.0f / adaptiveContrast);
+					} else if (adaptiveContrast < 1.0f) {
+						// Para contraste bajo, suavizar las transiciones
+						quadraticFactor = std::pow(quadraticFactor, adaptiveContrast);
+					}
+					
+					// Aplicar multiplicador de atmósfera con falloff cuadrático mejorado
+					scaled = quadraticFactor * maxDarkness * atmosphereMultiplier;
 				}
 				scaled += 0.5F; // Round up
+				// Clamp to valid light table range
+				scaled = std::min(scaled, maxDarkness);
 				LightFalloffs[radius][distance] = static_cast<uint8_t>(scaled);
 			}
 		}
@@ -358,6 +605,17 @@ void InitLighting()
 	std::iota(ActiveLights.begin(), ActiveLights.end(), uint8_t { 0 });
 	VisionActive = {};
 	TransList = {};
+	
+	// 🎥 FASE V1.4 - Initialize Fake Vignette System
+	VignetteInitialized = false; // Force re-initialization for new level
+	InitializeFakeVignette();
+	
+	// 🎯 FASE D1 - Initialize Depth Cues System
+	InitDepthCues();
+	
+	// 🔥 NIGHTMARE ATMOSPHERIC LIGHTING - Initialize atmospheric lighting system
+	// SIEMPRE habilitado para que veas el parpadeo
+	InitNightmareLighting();
 }
 
 int AddLight(Point position, uint8_t radius)
@@ -379,6 +637,18 @@ int AddLight(Point position, uint8_t radius)
 
 	UpdateLighting = true;
 
+	// 🔥 NIGHTMARE ATMOSPHERIC LIGHTING - Register light for atmospheric effects
+	// SIEMPRE habilitado para efectos visuales
+	// Determine light type based on radius (simple heuristic for now)
+	AtmosphericLightType lightType = AtmosphericLightType::TORCH; // Default to torch
+	if (radius <= 3) {
+		lightType = AtmosphericLightType::CANDLE;
+	} else if (radius >= 8) {
+		lightType = AtmosphericLightType::FIRE;
+	}
+	
+	RegisterAtmosphericLight(lid, lightType, radius);
+
 	return lid;
 }
 
@@ -392,6 +662,18 @@ void AddUnLight(int i)
 		return;
 
 	Lights[i].isInvalid = true;
+	
+	// 🔥 NIGHTMARE ATMOSPHERIC LIGHTING - Unregister atmospheric light
+	// Solo si la feature está habilitada
+	if (NIGHTMARE_LIGHTING_ENABLED()) {
+		// Find and unregister the atmospheric light with this ID
+		for (int j = 0; j < g_nightmareLighting.activeLightCount; j++) {
+			if (g_nightmareLighting.lights[j].lightId == i) {
+				UnregisterAtmosphericLight(j);
+				break;
+			}
+		}
+	}
 
 	UpdateLighting = true;
 }

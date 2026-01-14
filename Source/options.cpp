@@ -876,6 +876,7 @@ GameplayOptions::GameplayOptions()
               { FloatingNumbers::Random, N_("Random Angles") },
               { FloatingNumbers::Vertical, N_("Vertical Only") },
           })
+    , darkSorcererSkin("Dark Sorcerer Skin", OptionEntryFlags::None, N_("Dark Sorcerer Skin"), N_("Use dark cultist appearance for Sorcerer class (Advocate monster skin)."), false)
     , skipLoadingScreenThresholdMs("Skip loading screen threshold, ms", OptionEntryFlags::Invisible, "", "", 0)
 {
 }
@@ -903,6 +904,7 @@ std::vector<OptionEntryBase *> GameplayOptions::GetEntries()
 		&showMonsterType,
 		&showItemLabels,
 		&enableFloatingNumbers,
+		&darkSorcererSkin,
 		&autoRefillBelt,
 		&autoEquipWeapons,
 		&autoEquipArmor,

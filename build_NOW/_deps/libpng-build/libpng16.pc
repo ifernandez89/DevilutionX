@@ -1,0 +1,12 @@
+prefix=C:/Program Files (x86)/DevilutionX
+exec_prefix=C:/Program Files (x86)/DevilutionX
+libdir=C:/Program Files (x86)/DevilutionX/lib
+includedir=C:/Program Files (x86)/DevilutionX/include/libpng16
+
+Name: libpng
+Description: Loads and saves PNG files
+Version: 1.6.38
+Requires.private: zlib
+Libs: -L${libdir} -lpng16
+Libs.private: -lz -lm
+Cflags: -I${includedir}

@@ -1,0 +1,14 @@
+# Target labels
+ sheenbidi-populate
+# Source files and their labels
+C:/c - c++/DevilutionX/build_NOW/_deps/sheenbidi-subbuild/CMakeFiles/sheenbidi-populate
+C:/c - c++/DevilutionX/build_NOW/_deps/sheenbidi-subbuild/CMakeFiles/sheenbidi-populate.rule
+C:/c - c++/DevilutionX/build_NOW/_deps/sheenbidi-subbuild/CMakeFiles/sheenbidi-populate-complete.rule
+C:/c - c++/DevilutionX/build_NOW/_deps/sheenbidi-subbuild/sheenbidi-populate-prefix/src/sheenbidi-populate-stamp/sheenbidi-populate-build.rule
+C:/c - c++/DevilutionX/build_NOW/_deps/sheenbidi-subbuild/sheenbidi-populate-prefix/src/sheenbidi-populate-stamp/sheenbidi-populate-configure.rule
+C:/c - c++/DevilutionX/build_NOW/_deps/sheenbidi-subbuild/sheenbidi-populate-prefix/src/sheenbidi-populate-stamp/sheenbidi-populate-download.rule
+C:/c - c++/DevilutionX/build_NOW/_deps/sheenbidi-subbuild/sheenbidi-populate-prefix/src/sheenbidi-populate-stamp/sheenbidi-populate-install.rule
+C:/c - c++/DevilutionX/build_NOW/_deps/sheenbidi-subbuild/sheenbidi-populate-prefix/src/sheenbidi-populate-stamp/sheenbidi-populate-mkdir.rule
+C:/c - c++/DevilutionX/build_NOW/_deps/sheenbidi-subbuild/sheenbidi-populate-prefix/src/sheenbidi-populate-stamp/sheenbidi-populate-patch.rule
+C:/c - c++/DevilutionX/build_NOW/_deps/sheenbidi-subbuild/sheenbidi-populate-prefix/src/sheenbidi-populate-stamp/sheenbidi-populate-test.rule
+C:/c - c++/DevilutionX/build_NOW/_deps/sheenbidi-subbuild/sheenbidi-populate-prefix/src/sheenbidi-populate-stamp/sheenbidi-populate-update.rule

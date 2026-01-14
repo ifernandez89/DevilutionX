@@ -21,6 +21,9 @@
 #include "levels/dun_tile.hpp"
 #include "options.h"
 #include "utils/attributes.h"
+#include "water_animation.h"
+#include "tile_detective.h"
+#include "diablo.h"
 #ifdef DEBUG_STR
 #include "engine/render/text_render.hpp"
 #endif
@@ -1048,16 +1051,30 @@ std::string_view MaskTypeToString(MaskType maskType)
 DVL_ATTRIBUTE_HOT void RenderTileFrame(const Surface &out, const Lightmap &lightmap, const Point &position, TileType tile, const uint8_t *src, int_fast16_t height,
     MaskType maskType, const uint8_t *tbl)
 {
+	// 🌊 NIGHTMARE WATER ANIMATION - Apply water wave offset
+	Point adjustedPosition = position;
+	
+	// Check if this might be a water tile and apply subtle animation
+	// We use a simple heuristic based on position and tile properties
+	if (leveltype == DTYPE_TOWN) {
+		// Get water wave offset for this tile position
+		int waveOffset = GetWaterWaveOffset(position.x / TILE_WIDTH, position.y / TILE_HEIGHT);
+		if (waveOffset != 0) {
+			// Apply very subtle vertical offset for water animation
+			adjustedPosition.y += waveOffset;
+		}
+	}
+
 #ifdef DEBUG_RENDER_OFFSET_X
-	position.x += DEBUG_RENDER_OFFSET_X;
+	adjustedPosition.x += DEBUG_RENDER_OFFSET_X;
 #endif
 #ifdef DEBUG_RENDER_OFFSET_Y
-	position.y += DEBUG_RENDER_OFFSET_Y;
+	adjustedPosition.y += DEBUG_RENDER_OFFSET_Y;
 #endif
-	const Clip clip = CalculateClip(position.x, position.y, DunFrameWidth, height, out);
+	const Clip clip = CalculateClip(adjustedPosition.x, adjustedPosition.y, DunFrameWidth, height, out);
 	if (clip.width <= 0 || clip.height <= 0) return;
 
-	uint8_t *dst = out.at(static_cast<int>(position.x + clip.left), static_cast<int>(position.y - clip.bottom));
+	uint8_t *dst = out.at(static_cast<int>(adjustedPosition.x + clip.left), static_cast<int>(adjustedPosition.y - clip.bottom));
 	const uint16_t dstPitch = out.pitch();
 
 #ifdef DUN_RENDER_STATS

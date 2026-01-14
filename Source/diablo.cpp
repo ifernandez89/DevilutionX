@@ -226,6 +226,9 @@ void StartGame(interface_mode uMsg)
 	// MAL INTEGRATION: Initialize Modern Assist Layer
 	InitEngineHealth();
 	
+	// Reset Apocalypse cooldowns for new game
+	ResetApocalypseCooldowns();
+	
 	// 🚨 DEBUG: Initialize Apocalypse crash debugging system
 	APOCALYPSE_DEBUG_INIT();
 	

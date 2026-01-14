@@ -101,6 +101,12 @@ bool CanSafelyAddMissile(int missileType = -1);
 bool CanSafelyCastApocalypse(int playerId);
 
 /**
+ * Limpia los cooldowns de Apocalypse
+ * Debe llamarse al iniciar una nueva partida
+ */
+void ResetApocalypseCooldowns();
+
+/**
  * Verifica si es seguro castear Inferno
  * Considera Inferno missiles activos y carga general
  */

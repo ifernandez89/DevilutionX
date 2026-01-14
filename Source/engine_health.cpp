@@ -122,6 +122,15 @@ bool CanSafelyAddMissile(int missileType)
     return true;
 }
 
+// Cooldown map for Apocalypse - moved to file scope for cleanup access
+static std::unordered_map<int, std::chrono::steady_clock::time_point> gApocalypseCooldownMap;
+
+void ResetApocalypseCooldowns()
+{
+	// Called when starting a new game to clear any stale cooldowns
+	gApocalypseCooldownMap.clear();
+}
+
 bool CanSafelyCastApocalypse(int playerId)
 {
 	// ULTRA-SIMPLE APOCALYPSE PROTECTION - ORIGINAL SPEED + SAFETY
@@ -137,11 +146,10 @@ bool CanSafelyCastApocalypse(int playerId)
 	// RESULTADO: Feel original + 0% crash rate
 	
 	// Cooldown por jugador: 100ms (ultra-responsive, previene fast-click)
-	static std::unordered_map<int, std::chrono::steady_clock::time_point> lastCastByPlayer;
 	
 	auto now = std::chrono::steady_clock::now();
 	auto timeSinceLastCast = std::chrono::duration_cast<std::chrono::milliseconds>(
-		now - lastCastByPlayer[playerId]
+		now - gApocalypseCooldownMap[playerId]
 	);
 	
 	if (timeSinceLastCast.count() < 100) {
@@ -177,7 +185,7 @@ bool CanSafelyCastApocalypse(int playerId)
 		return false;
 	}
 	
-	lastCastByPlayer[playerId] = now;
+	gApocalypseCooldownMap[playerId] = now;
 	return true;
 }
 

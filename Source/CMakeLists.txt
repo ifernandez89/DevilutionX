@@ -124,6 +124,8 @@ set(libdevilutionx_SRCS
 
   engine/platform/platform.cpp
   engine/platform/dynamic_scaling.cpp
+  engine/platform/diagnostic_mode.cpp
+  engine/platform/mobile_safe_mode.cpp
 
   engine/render/automap_render.cpp
   engine/render/scrollrt.cpp

@@ -8,7 +8,11 @@
  * - Zero gameplay impact
  * - Fail-soft always
  * 
+ * FIXES APLICADOS (Enero 14, 2026):
+ * - Agregada función InitPlatformSystem() para orden correcto de inicialización
+ * 
  * USAGE:
+ *   InitPlatformSystem();  // Call once at startup
  *   auto caps = GetPlatformCapabilities();
  *   int maxParticles = caps.maxParticles;
  */
@@ -140,5 +144,15 @@ void ApplyBuildPreset(const BuildPreset& preset);
  * Get current build preset name
  */
 const char* GetBuildPresetName();
+
+/**
+ * Initialize the complete platform system
+ * Call this once at startup - handles correct initialization order:
+ * 1. Platform detection
+ * 2. Dynamic scaling
+ * 3. Mobile safe mode
+ * 4. Diagnostic mode
+ */
+void InitPlatformSystem();
 
 } // namespace devilution

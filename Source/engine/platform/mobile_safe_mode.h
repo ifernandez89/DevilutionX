@@ -8,6 +8,10 @@
  * - Maximiza battery life
  * - Todo reversible
  * 
+ * FIXES APLICADOS (Enero 14, 2026):
+ * - Simplificado MobileSafeModeConfig (eliminados campos no usados)
+ * - Agregado throttle level recovery
+ * 
  * USAGE:
  *   InitMobileSafeMode();
  *   if (IsMobileSafeModeActive()) { ... }
@@ -19,28 +23,15 @@ namespace devilution {
 
 /**
  * Mobile safe mode configuration
+ * SIMPLIFIED: Only fields that are actually used
  */
 struct MobileSafeModeConfig {
-	// Quality settings
+	// Quality settings (actively used)
 	int particleReduction = 50;     // Reduce particles by 50%
 	int decalReduction = 50;        // Reduce decals by 50%
-	int shadowQuality = 0;          // 0 = disabled, 1 = low, 2 = medium, 3 = high
-	
-	// UI adjustments
-	float uiScale = 2.0f;           // 2x UI scale
-	int clickTargetSize = 64;       // Larger click targets (pixels)
-	float uiContrast = 1.5f;        // Increased contrast
-	
-	// Performance settings
-	bool simplifyLighting = true;   // Simplify lighting calculations
-	bool reduceShadows = true;      // Reduce shadow quality
 	bool disableParticles = false;  // Completely disable particles (extreme)
 	
-	// Battery optimization
-	bool reduceFPS = false;         // Reduce to 30 FPS (extreme)
-	int targetFPS = 60;             // Target FPS (30 or 60)
-	
-	// Thermal management
+	// Thermal management (actively used)
 	bool thermalThrottling = false; // Detected thermal throttling
 	int throttleLevel = 0;          // 0-3, higher = more aggressive
 };

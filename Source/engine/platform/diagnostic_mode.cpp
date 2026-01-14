@@ -1,12 +1,18 @@
 /**
  * @file diagnostic_mode.cpp
  * @brief Nightmare Diagnostic Mode - Implementation
+ * 
+ * FIXES APLICADOS (Enero 14, 2026):
+ * - Reemplazado snprintf con fmt::format para seguridad
+ * - Simplificados overlays (removidos placeholders vacíos)
  */
 
 #include "engine/platform/diagnostic_mode.h"
 #include "engine/platform/platform.h"
 #include "engine/platform/dynamic_scaling.h"
 #include "utils/log.hpp"
+
+#include <fmt/format.h>
 
 #ifdef _DEBUG
 #include "engine/render/text_render.hpp"
@@ -236,33 +242,31 @@ void DrawLightingCostOverlay()
 void DrawPerformanceOverlay()
 {
 #ifdef _DEBUG
-	// Draw performance stats
+	// Draw performance stats using fmt::format for safety
 	auto caps = GetPlatformCapabilities();
 	auto scalingStats = GetScalingStats();
 	
-	char buffer[256];
-	
 	// Platform info
-	snprintf(buffer, sizeof(buffer), "Platform: %s", caps.platformName.c_str());
-	DrawDiagnosticText(10, 100, buffer, 1);
+	std::string platformInfo = fmt::format("Platform: {}", caps.platformName);
+	DrawDiagnosticText(10, 100, platformInfo.c_str(), 1);
 	
 	// Particle budget
-	snprintf(buffer, sizeof(buffer), "Particle Budget: %d%%", scalingStats.current);
-	DrawDiagnosticText(10, 120, buffer, 1);
+	std::string budgetInfo = fmt::format("Particle Budget: {}%", scalingStats.current);
+	DrawDiagnosticText(10, 120, budgetInfo.c_str(), 1);
 	
 	// Frame time
-	snprintf(buffer, sizeof(buffer), "Avg Frame Time: %.2fms", scalingStats.avgFrameTime);
-	DrawDiagnosticText(10, 140, buffer, 1);
+	std::string frameInfo = fmt::format("Avg Frame Time: {:.2f}ms", scalingStats.avgFrameTime);
+	DrawDiagnosticText(10, 140, frameInfo.c_str(), 1);
 	
 	// Budget adjustments
-	snprintf(buffer, sizeof(buffer), "Reductions: %d | Increases: %d", 
+	std::string adjustInfo = fmt::format("Reductions: {} | Increases: {}", 
 	         scalingStats.reductions, scalingStats.increases);
-	DrawDiagnosticText(10, 160, buffer, 1);
+	DrawDiagnosticText(10, 160, adjustInfo.c_str(), 1);
 	
 	// Performance state
 	const char* state = IsPerformanceStressed() ? "STRESSED" : "GOOD";
-	snprintf(buffer, sizeof(buffer), "Performance: %s", state);
-	DrawDiagnosticText(10, 180, buffer, IsPerformanceStressed() ? 4 : 2);
+	std::string stateInfo = fmt::format("Performance: {}", state);
+	DrawDiagnosticText(10, 180, stateInfo.c_str(), IsPerformanceStressed() ? 4 : 2);
 #endif
 }
 

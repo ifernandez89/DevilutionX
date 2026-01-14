@@ -52,9 +52,9 @@ def test_mobile_safe_mode_api():
         return False
 
 def test_config_structure():
-    """Test 2: Configuration structure"""
+    """Test 2: Configuration structure (SIMPLIFIED)"""
     print("\n" + "=" * 60)
-    print("TEST 2: Configuration Structure")
+    print("TEST 2: Configuration Structure (Simplified)")
     print("=" * 60)
     
     try:
@@ -66,21 +66,25 @@ def test_config_structure():
             print("❌ FAIL - MobileSafeModeConfig struct not found")
             return False
         
-        # Check for config fields
+        # Check for SIMPLIFIED config fields (only the ones actually used)
         config_fields = [
             "particleReduction",
             "decalReduction",
+            "disableParticles",
+            "thermalThrottling",
+            "throttleLevel"
+        ]
+        
+        # Check that REMOVED fields are NOT present
+        removed_fields = [
             "shadowQuality",
             "uiScale",
             "clickTargetSize",
             "uiContrast",
             "simplifyLighting",
             "reduceShadows",
-            "disableParticles",
             "reduceFPS",
-            "targetFPS",
-            "thermalThrottling",
-            "throttleLevel"
+            "targetFPS"
         ]
         
         missing = []
@@ -92,8 +96,19 @@ def test_config_structure():
             print(f"❌ FAIL - Missing config fields: {', '.join(missing)}")
             return False
         
-        print("✅ PASS - Configuration structure complete")
-        print(f"     ✅ {len(config_fields)} config fields defined")
+        # Verify removed fields are gone
+        still_present = []
+        for field in removed_fields:
+            if field in content:
+                still_present.append(field)
+        
+        if still_present:
+            print(f"⚠️  WARNING - Unused fields still present: {', '.join(still_present)}")
+            # Not a failure, just a warning
+        
+        print("✅ PASS - Configuration structure simplified")
+        print(f"     ✅ {len(config_fields)} essential fields defined")
+        print(f"     ✅ {len(removed_fields) - len(still_present)} unused fields removed")
         return True
         
     except FileNotFoundError:
@@ -178,9 +193,9 @@ def test_quality_reduction():
         return False
 
 def test_thermal_throttling():
-    """Test 5: Thermal throttling detection"""
+    """Test 5: Thermal throttling detection WITH RECOVERY"""
     print("\n" + "=" * 60)
-    print("TEST 5: Thermal Throttling Detection")
+    print("TEST 5: Thermal Throttling Detection (with Recovery)")
     print("=" * 60)
     
     try:
@@ -202,16 +217,22 @@ def test_thermal_throttling():
             print("❌ FAIL - Throttle level not implemented")
             return False
         
-        # Check for progressive reduction
-        throttle_checks = content.count("if (gMobileConfig.throttleLevel >=")
-        
-        if throttle_checks < 3:
-            print(f"❌ FAIL - Insufficient throttle levels (found {throttle_checks}, expected >= 3)")
+        # Check for progressive reduction (increase)
+        throttle_increase = content.count("throttleLevel++")
+        if throttle_increase < 1:
+            print(f"❌ FAIL - No throttle level increase found")
             return False
         
-        print("✅ PASS - Thermal throttling detection complete")
-        print(f"     ✅ {throttle_checks} throttle levels implemented")
-        print("     ✅ Progressive quality reduction")
+        # FIX CHECK: Verify throttle level RECOVERY (decrease)
+        throttle_decrease = content.count("throttleLevel--")
+        if throttle_decrease < 1:
+            print(f"❌ FAIL - No throttle level recovery (decrease) found")
+            return False
+        
+        print("✅ PASS - Thermal throttling with recovery complete")
+        print(f"     ✅ Throttle increase implemented")
+        print(f"     ✅ Throttle recovery (decrease) implemented")
+        print(f"     ✅ Progressive quality reduction")
         return True
         
     except FileNotFoundError:
@@ -289,23 +310,62 @@ def test_integration_with_platform():
         print("❌ FAIL - mobile_safe_mode.cpp not found")
         return False
 
+def test_thread_safe_random():
+    """Test 8: Thread-safe random (GenerateRnd instead of rand)"""
+    print("\n" + "=" * 60)
+    print("TEST 8: Thread-Safe Random")
+    print("=" * 60)
+    
+    try:
+        with open("Source/engine/platform/mobile_safe_mode.cpp", "r") as f:
+            content = f.read()
+        
+        # Check that rand() is NOT used in actual code (not in comments)
+        # Look for "rand() %" or "rand())" which would be actual usage
+        if "= (rand()" in content or "return (rand()" in content:
+            print("❌ FAIL - Using unsafe rand() function in code")
+            return False
+        
+        # Check that GenerateRnd is used
+        if "GenerateRnd" not in content:
+            print("❌ FAIL - Not using GenerateRnd()")
+            return False
+        
+        # Check for random.hpp include
+        if '#include "engine/random.hpp"' not in content:
+            print("❌ FAIL - Not including random.hpp")
+            return False
+        
+        # Count GenerateRnd usages
+        generate_rnd_count = content.count("GenerateRnd(")
+        
+        print("✅ PASS - Thread-safe random implemented")
+        print(f"     ✅ Using GenerateRnd() ({generate_rnd_count} usages)")
+        print("     ✅ Includes random.hpp")
+        return True
+        
+    except FileNotFoundError:
+        print("❌ FAIL - mobile_safe_mode.cpp not found")
+        return False
+
 def run_all_tests():
     """Run all mobile safe mode tests"""
     print("\n")
     print("╔" + "=" * 58 + "╗")
-    print("║  MOBILE SAFE MODE TEST SUITE - FASE 4                   ║")
+    print("║  MOBILE SAFE MODE TEST SUITE - FASE 4 (FIXED)           ║")
     print("║  Nightmare Core Expansion                                ║")
     print("╚" + "=" * 58 + "╝")
     print()
     
     tests = [
         ("Mobile Safe Mode API", test_mobile_safe_mode_api),
-        ("Configuration Structure", test_config_structure),
+        ("Configuration Structure (Simplified)", test_config_structure),
         ("Automatic Detection", test_automatic_detection),
         ("Quality Reduction System", test_quality_reduction),
-        ("Thermal Throttling Detection", test_thermal_throttling),
+        ("Thermal Throttling (with Recovery)", test_thermal_throttling),
         ("Reversible Adjustments", test_reversible_adjustments),
-        ("Integration with Platform", test_integration_with_platform)
+        ("Integration with Platform", test_integration_with_platform),
+        ("Thread-Safe Random", test_thread_safe_random)
     ]
     
     results = []

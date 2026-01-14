@@ -1,9 +1,15 @@
 /**
  * @file platform.cpp
  * @brief Nightmare Portability Layer - Implementation
+ * 
+ * FIXES APLICADOS (Enero 14, 2026):
+ * - Agregada función InitPlatformSystem() para orden correcto de inicialización
  */
 
 #include "engine/platform/platform.h"
+#include "engine/platform/dynamic_scaling.h"
+#include "engine/platform/diagnostic_mode.h"
+#include "engine/platform/mobile_safe_mode.h"
 
 #include <SDL.h>
 #include "utils/log.hpp"
@@ -250,6 +256,29 @@ void ApplyBuildPreset(const BuildPreset& preset)
 const char* GetBuildPresetName()
 {
 	return gCurrentPreset->name;
+}
+
+/**
+ * Initialize the complete platform system
+ * Call this once at startup - handles correct initialization order
+ */
+void InitPlatformSystem()
+{
+	LogVerbose("=== Initializing Platform System ===");
+	
+	// Step 1: Detect platform capabilities (must be first)
+	GetPlatformCapabilities();
+	
+	// Step 2: Initialize dynamic scaling (depends on platform caps)
+	InitDynamicScaling();
+	
+	// Step 3: Initialize mobile safe mode (depends on platform caps)
+	InitMobileSafeMode();
+	
+	// Step 4: Initialize diagnostic mode (depends on all above)
+	InitDiagnosticMode();
+	
+	LogVerbose("=== Platform System Initialized ===");
 }
 
 } // namespace devilution

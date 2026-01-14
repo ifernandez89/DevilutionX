@@ -1,6 +1,10 @@
 /**
  * @file dynamic_scaling.cpp
  * @brief Nightmare Dynamic Scaling - Implementation
+ * 
+ * FIXES APLICADOS (Enero 14, 2026):
+ * - Consolidado particle y decal budget (eran idénticos)
+ * - Agregada función de inicialización del sistema completo
  */
 
 #include "engine/platform/dynamic_scaling.h"
@@ -11,9 +15,8 @@ namespace devilution {
 
 namespace {
 
-// Global state
-ParticleBudget gParticleBudget;
-ParticleBudget gDecalBudget;
+// Global state - SIMPLIFIED: Single budget for both particles and decals
+ParticleBudget gBudget;
 bool gDynamicScalingEnabled = true;
 
 // Constants
@@ -100,15 +103,15 @@ void InitDynamicScaling()
 {
 	auto caps = GetPlatformCapabilities();
 	
-	// Initialize particle budget
-	gParticleBudget.current = caps.maxParticles;
-	gParticleBudget.max = caps.maxParticles;
-	gParticleBudget.min = std::max(50, caps.maxParticles / 2);
-	
-	// Initialize decal budget
-	gDecalBudget.current = caps.maxDecals;
-	gDecalBudget.max = caps.maxDecals;
-	gDecalBudget.min = std::max(50, caps.maxDecals / 2);
+	// Initialize unified budget (particles and decals share same budget)
+	gBudget.current = caps.maxParticles;
+	gBudget.max = caps.maxParticles;
+	gBudget.min = std::max(50, caps.maxParticles / 2);
+	gBudget.stableFrames = 0;
+	gBudget.unstableFrames = 0;
+	gBudget.reductions = 0;
+	gBudget.increases = 0;
+	gBudget.avgFrameTime = 16.6f;
 	
 	// Enable by default in release, disable in debug for testing
 #ifdef _DEBUG
@@ -120,10 +123,8 @@ void InitDynamicScaling()
 #endif
 	
 	LogVerbose("Dynamic Scaling initialized:");
-	LogVerbose("  Particle Budget: {}% (min: {}, max: {})", 
-	          gParticleBudget.current, gParticleBudget.min, gParticleBudget.max);
-	LogVerbose("  Decal Budget: {}% (min: {}, max: {})", 
-	          gDecalBudget.current, gDecalBudget.min, gDecalBudget.max);
+	LogVerbose("  Budget: {}% (min: {}, max: {})", 
+	          gBudget.current, gBudget.min, gBudget.max);
 }
 
 /**
@@ -135,9 +136,8 @@ void UpdateDynamicScaling(float frameTime)
 		return;
 	}
 	
-	// Update budgets
-	UpdateBudget(gParticleBudget, frameTime);
-	UpdateBudget(gDecalBudget, frameTime);
+	// Update unified budget
+	UpdateBudget(gBudget, frameTime);
 }
 
 /**
@@ -145,15 +145,16 @@ void UpdateDynamicScaling(float frameTime)
  */
 int GetParticleBudget()
 {
-	return gParticleBudget.current;
+	return gBudget.current;
 }
 
 /**
  * Get current decal budget
+ * NOTE: Returns same as particle budget (consolidated)
  */
 int GetDecalBudget()
 {
-	return gDecalBudget.current;
+	return gBudget.current;
 }
 
 /**
@@ -161,7 +162,7 @@ int GetDecalBudget()
  */
 bool IsPerformanceStressed()
 {
-	return gParticleBudget.avgFrameTime > STRESS_THRESHOLD;
+	return gBudget.avgFrameTime > STRESS_THRESHOLD;
 }
 
 /**
@@ -169,7 +170,7 @@ bool IsPerformanceStressed()
  */
 const ParticleBudget& GetScalingStats()
 {
-	return gParticleBudget;
+	return gBudget;
 }
 
 /**
@@ -179,19 +180,12 @@ void ResetDynamicScaling()
 {
 	auto caps = GetPlatformCapabilities();
 	
-	gParticleBudget.current = caps.maxParticles;
-	gParticleBudget.stableFrames = 0;
-	gParticleBudget.unstableFrames = 0;
-	gParticleBudget.reductions = 0;
-	gParticleBudget.increases = 0;
-	gParticleBudget.avgFrameTime = 16.6f;
-	
-	gDecalBudget.current = caps.maxDecals;
-	gDecalBudget.stableFrames = 0;
-	gDecalBudget.unstableFrames = 0;
-	gDecalBudget.reductions = 0;
-	gDecalBudget.increases = 0;
-	gDecalBudget.avgFrameTime = 16.6f;
+	gBudget.current = caps.maxParticles;
+	gBudget.stableFrames = 0;
+	gBudget.unstableFrames = 0;
+	gBudget.reductions = 0;
+	gBudget.increases = 0;
+	gBudget.avgFrameTime = 16.6f;
 	
 	LogVerbose("Dynamic Scaling reset to defaults");
 }

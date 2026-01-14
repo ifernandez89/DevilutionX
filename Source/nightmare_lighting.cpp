@@ -244,14 +244,23 @@ void CleanupNightmareLighting()
 {
 	LogVerbose("🔥 Cleaning up Nightmare Atmospheric Lighting");
 	
+	// 🛡️ PORTAL CRASH FIX: Complete reset of all nightmare lighting state
 	g_nightmareLighting.initialized = false;
 	g_nightmareLighting.activeLightCount = 0;
+	g_nightmareLighting.lastUpdateTime = 0;
 	
+	// Reset ALL lights, not just active ones
 	for (auto &light : g_nightmareLighting.lights) {
 		light.lightId = -1;
 		light.type = AtmosphericLightType::NONE;
 		light.enabled = false;
+		light.baseRadius = 0;
+		light.currentFlicker = 0;
+		light.lastFlickerTime = 0;
+		light.flickerDelay = 0;
 	}
+	
+	LogVerbose("🔥 Nightmare Lighting cleanup complete - activeLightCount reset to 0");
 }
 
 } // namespace devilution

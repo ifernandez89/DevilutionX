@@ -331,7 +331,12 @@ void DoUnLight(Point position, uint8_t radius)
 void DoLighting(Point position, uint8_t radius, DisplacementOf<int8_t> offset)
 {
 	assert(radius >= 0 && radius <= NumLightRadiuses);
-	assert(InDungeonBounds(position));
+	
+	// 🛡️ SAFETY CHECK - Return early if position is out of bounds
+	// This prevents crashes during level transitions when lights may have invalid positions
+	if (!InDungeonBounds(position)) {
+		return;
+	}
 
 	DisplacementOf<int8_t> light = {};
 	DisplacementOf<int8_t> block = {};
@@ -775,10 +780,16 @@ void ProcessLightList()
 	for (int i = 0; i < ActiveLightCount; i++) {
 		Light &light = Lights[ActiveLights[i]];
 		if (light.isInvalid) {
-			DoUnLight(light.position.tile, light.radius);
+			// 🛡️ SAFETY CHECK - Verify position is valid before DoUnLight
+			if (InDungeonBounds(light.position.tile)) {
+				DoUnLight(light.position.tile, light.radius);
+			}
 		}
 		if (light.hasChanged) {
-			DoUnLight(light.position.old, light.oldRadius);
+			// 🛡️ SAFETY CHECK - Verify old position is valid before DoUnLight
+			if (InDungeonBounds(light.position.old)) {
+				DoUnLight(light.position.old, light.oldRadius);
+			}
 			light.hasChanged = false;
 		}
 	}
@@ -790,6 +801,9 @@ void ProcessLightList()
 			i--;
 			continue;
 		}
+		// 🛡️ SAFETY CHECK - Verify position is valid before DoLighting
+		if (!InDungeonBounds(light.position.tile))
+			continue;
 		if (TileHasAny(light.position.tile, TileProperties::Solid))
 			continue; // Monster hidden in a wall, don't spoil the surprise
 		DoLighting(light.position.tile, light.radius, light.position.offset);

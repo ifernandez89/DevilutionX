@@ -315,6 +315,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/libdevilutionx.dir/plrmsg.cpp.obj.d"
   "CMakeFiles/libdevilutionx.dir/portal.cpp.obj"
   "CMakeFiles/libdevilutionx.dir/portal.cpp.obj.d"
+  "CMakeFiles/libdevilutionx.dir/portal_debug.cpp.obj"
+  "CMakeFiles/libdevilutionx.dir/portal_debug.cpp.obj.d"
   "CMakeFiles/libdevilutionx.dir/portals/validation.cpp.obj"
   "CMakeFiles/libdevilutionx.dir/portals/validation.cpp.obj.d"
   "CMakeFiles/libdevilutionx.dir/qol/autopickup.cpp.obj"

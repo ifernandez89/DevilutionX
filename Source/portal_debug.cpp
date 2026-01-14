@@ -126,6 +126,53 @@ void LogPortalState(const char* state, int currlevel, int leveltype)
 	g_portalDebugLog.flush();
 }
 
+void LogPortalGameLoop(const char* phase)
+{
+	if (!g_portalDebugInitialized) {
+		InitPortalDebug();
+	}
+	
+	if (!g_portalDebugLog.is_open()) {
+		return;
+	}
+	
+	// Solo loguear los primeros 50 eventos del game loop para no saturar
+	static int gameLoopEventCount = 0;
+	if (gameLoopEventCount > 50) {
+		return;
+	}
+	gameLoopEventCount++;
+	
+	auto now = std::chrono::system_clock::now();
+	auto time = std::chrono::system_clock::to_time_t(now);
+	
+	g_portalDebugLog << std::put_time(std::localtime(&time), "%H:%M:%S");
+	g_portalDebugLog << " [GAMELOOP#" << gameLoopEventCount << "] " << phase << std::endl;
+	g_portalDebugLog.flush();
+}
+
+void LogPortalRender(const char* phase)
+{
+	if (!g_portalDebugInitialized) {
+		InitPortalDebug();
+	}
+	
+	if (!g_portalDebugLog.is_open()) {
+		return;
+	}
+	
+	// Loguear todos los eventos de render (sin límite para debugging de portal)
+	static int renderEventCount = 0;
+	renderEventCount++;
+	
+	auto now = std::chrono::system_clock::now();
+	auto time = std::chrono::system_clock::to_time_t(now);
+	
+	g_portalDebugLog << std::put_time(std::localtime(&time), "%H:%M:%S");
+	g_portalDebugLog << " [RENDER#" << renderEventCount << "] " << phase << std::endl;
+	g_portalDebugLog.flush();
+}
+
 void FlushPortalDebugLog()
 {
 	if (g_portalDebugLog.is_open()) {

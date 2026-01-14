@@ -295,7 +295,12 @@ struct Miniset {
 
 [[nodiscard]] DVL_ALWAYS_INLINE bool TileHasAny(Point coords, TileProperties property)
 {
-	return HasAnyOf(SOLData[dPiece[coords.x][coords.y]], property);
+	// 🛡️ PORTAL CRASH FIX: Validate dPiece index before accessing SOLData
+	const uint16_t pieceId = dPiece[coords.x][coords.y];
+	if (pieceId >= MAXTILES) {
+		return false; // Invalid piece, treat as having no properties
+	}
+	return HasAnyOf(SOLData[pieceId], property);
 }
 
 tl::expected<void, std::string> LoadLevelSOLData();

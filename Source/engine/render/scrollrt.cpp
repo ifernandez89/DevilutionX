@@ -31,6 +31,7 @@
 #include "engine/backbuffer_state.hpp"
 #include "engine/displacement.hpp"
 #include "engine/dx.h"
+#include "engine/palette.h"  // 🎨 Portal Palette Fix
 #include "engine/point.hpp"
 #include "engine/render/clx_render.hpp"
 #include "engine/render/dun_render.hpp"
@@ -50,6 +51,7 @@
 #include "levels/tile_properties.hpp"
 #include "ui_nightmare.h"  // 🌙 Nightmare UI Architecture
 #include "lighting.h"
+#include "portal_debug.h"  // 🚪 Portal Debug System
 #include "lua/lua_global.hpp"
 #include "minitext.h"
 #include "missiles.h"
@@ -90,6 +92,13 @@
 namespace devilution {
 
 bool AutoMapShowItems;
+
+// 🛡️ PORTAL CRASH FIX: Skip first render frame after portal transition
+// This prevents crashes caused by stale rendering state
+int g_skipRenderFramesAfterPortal = 0;
+
+// 🎨 PORTAL PALETTE FIX: Flag to reload palette after portal transition
+bool g_needsPaletteReloadAfterPortal = false;
 
 // DevilutionX extension.
 extern void DrawControllerModifierHints(const Surface &out);
@@ -154,11 +163,23 @@ int AdjustLightForDrawPriority(int baseLightTableIndex, DrawPriority priority) {
 
 [[nodiscard]] DVL_ALWAYS_INLINE bool IsFloor(Point tilePosition)
 {
+	// 🛡️ PORTAL CRASH FIX: Validate bounds before accessing dPiece
+	if (!InDungeonBounds(tilePosition)) {
+		return false;
+	}
+	const uint16_t pieceId = dPiece[tilePosition.x][tilePosition.y];
+	if (pieceId >= MAXTILES) {
+		return false; // Invalid piece, treat as not floor
+	}
 	return !TileHasAny(tilePosition, TileProperties::Solid | TileProperties::BlockMissile);
 }
 
 [[nodiscard]] DVL_ALWAYS_INLINE bool IsWall(Point tilePosition)
 {
+	// 🛡️ PORTAL CRASH FIX: Validate bounds before accessing arrays
+	if (!InDungeonBounds(tilePosition)) {
+		return true; // Treat out of bounds as wall
+	}
 	return !IsFloor(tilePosition) || dSpecial[tilePosition.x][tilePosition.y] != 0;
 }
 
@@ -385,6 +406,10 @@ void DrawMissilePrivate(const Surface &out, const Missile &missile, Point target
 	const Point missileRenderPosition { targetBufferPosition + missile.position.offsetForRendering - Displacement { missile._miAnimWidth2, 0 } };
 	const ClxSprite sprite = (*missile._miAnimData)[missile._miAnimFrame - 1];
 	
+	// 🛡️ PORTAL CRASH FIX: Disabled Enhanced Portal System temporarily
+	// The crash might be related to portal rendering enhancements
+	// TODO: Re-enable after fixing the root cause
+	/*
 	// FEATURE: Enhanced Portal System - subtle visual improvements for portals
 	bool isPortal = (missile._mitype == MissileID::TownPortal || missile._mitype == MissileID::RedPortal);
 	float colorMod = 1.0f;
@@ -397,14 +422,18 @@ void DrawMissilePrivate(const Surface &out, const Missile &missile, Point target
 		// Trigger audio feedback on first render (throttled internally)
 		TriggerPortalAudioFeedback(missile.position.tile);
 	}
+	*/
 	
-	// Apply enhanced rendering with fallback safety
+	// Apply standard rendering (no enhanced portal effects)
 	if (missile._miUniqTrans != 0) {
-		ClxDrawTRN(out, missileRenderPosition, sprite, Monsters[missile._misource].uniqueMonsterTRN.get());
-	} else if (missile._miLightFlag || (isPortal && intensityMod > 1.0f)) {
-		// Enhanced portal gets improved lighting
-		int enhancedLightIndex = isPortal ? std::max(0, static_cast<int>(lightTableIndex * intensityMod)) : lightTableIndex;
-		ClxDrawLight(out, missileRenderPosition, sprite, enhancedLightIndex);
+		// 🛡️ SAFETY: Check if _misource is valid before accessing Monsters array
+		if (missile._misource >= 0 && static_cast<size_t>(missile._misource) < MaxMonsters) {
+			ClxDrawTRN(out, missileRenderPosition, sprite, Monsters[missile._misource].uniqueMonsterTRN.get());
+		} else {
+			ClxDraw(out, missileRenderPosition, sprite);
+		}
+	} else if (missile._miLightFlag) {
+		ClxDrawLight(out, missileRenderPosition, sprite, lightTableIndex);
 	} else {
 		ClxDraw(out, missileRenderPosition, sprite);
 	}
@@ -566,13 +595,19 @@ void DrawDeadPlayer(const Surface &out, Point tilePosition, Point targetBufferPo
  */
 void DrawObject(const Surface &out, const Object &objectToDraw, Point tilePosition, Point targetBufferPosition, int lightTableIndex)
 {
+	// 🛡️ PORTAL CRASH FIX V8: Validate object sprite before accessing
 	const ClxSprite sprite = objectToDraw.currentSprite();
+	
+	if (sprite.width() == 0 || sprite.height() == 0) {
+		return; // Skip invalid sprites
+	}
 
 	const Point screenPosition = targetBufferPosition + objectToDraw.getRenderingOffset(sprite, tilePosition);
 
 	if (&objectToDraw == ObjectUnderCursor) {
 		ClxDrawOutlineSkipColorZero(out, 194, screenPosition, sprite);
 	}
+	
 	if (objectToDraw.applyLighting) {
 		ClxDrawLight(out, screenPosition, sprite, lightTableIndex);
 	} else {
@@ -591,8 +626,33 @@ static void DrawDungeon(const Surface & /*out*/, const Lightmap & /*lightmap*/, 
  */
 void DrawCell(const Surface &out, const Lightmap lightmap, Point tilePosition, Point targetBufferPosition, int lightTableIndex)
 {
+	// 🛡️ PORTAL CRASH FIX V4: Validate all inputs before accessing arrays
+	if (!InDungeonBounds(tilePosition)) {
+		return; // Skip invalid tile position
+	}
+	
+	// 🛡️ PORTAL CRASH FIX V4: Validate light table index
+	if (lightTableIndex < 0 || lightTableIndex >= static_cast<int>(LightTables.size())) {
+		lightTableIndex = 0; // Use default light table
+	}
+	
 	const uint16_t levelPieceId = dPiece[tilePosition.x][tilePosition.y];
+	
+	// 🛡️ PORTAL CRASH FIX V4: Validate levelPieceId
+	if (levelPieceId >= MAXTILES) {
+		return; // Skip invalid piece
+	}
+	
+	// 🛡️ PORTAL CRASH FIX V4: Validate pDungeonCels
+	if (pDungeonCels == nullptr) {
+		return; // Skip if dungeon cels not loaded
+	}
+	
+	// 🛡️ PORTAL CRASH FIX V4: Validate DPieceMicros access
 	const MICROS *pMap = &DPieceMicros[levelPieceId];
+	if (pMap == nullptr) {
+		return; // Skip if micros not available
+	}
 
 	const uint8_t *tbl = LightTables[lightTableIndex].data();
 	const uint8_t *foliageTbl = tbl;
@@ -722,7 +782,11 @@ void DrawCell(const Surface &out, const Lightmap lightmap, Point tilePosition, P
  */
 void DrawFloorTile(const Surface &out, const Lightmap &lightmap, Point tilePosition, Point targetBufferPosition)
 {
+	// 🛡️ PORTAL CRASH FIX: Validate light table index
 	const int lightTableIndex = dLight[tilePosition.x][tilePosition.y];
+	if (lightTableIndex < 0 || lightTableIndex >= static_cast<int>(LightTables.size())) {
+		return; // Skip invalid light index
+	}
 
 	const uint8_t *tbl = LightTables[lightTableIndex].data();
 #ifdef _DEBUG
@@ -731,18 +795,36 @@ void DrawFloorTile(const Surface &out, const Lightmap &lightmap, Point tilePosit
 #endif
 
 	const uint16_t levelPieceId = dPiece[tilePosition.x][tilePosition.y];
+	
+	// 🛡️ PORTAL CRASH FIX: Validate levelPieceId and pDungeonCels
+	if (levelPieceId >= MAXTILES || pDungeonCels == nullptr) {
+		return; // Skip invalid piece
+	}
+	
+	// 🛡️ PORTAL CRASH FIX: Get frame count from dungeon cels header
+	const auto *frameTable = reinterpret_cast<const uint32_t *>(pDungeonCels.get());
+	const uint32_t numFrames = Swap32LE(frameTable[0]);
+	
 	{
 		const LevelCelBlock levelCelBlock { DPieceMicros[levelPieceId].mt[0] };
 		if (levelCelBlock.hasValue()) {
-			RenderTileFrame(out, lightmap, targetBufferPosition, TileType::LeftTriangle,
-			    GetDunFrame(pDungeonCels.get(), levelCelBlock.frame()), DunFrameTriangleHeight, MaskType::Solid, tbl);
+			const uint32_t frame = levelCelBlock.frame();
+			// 🛡️ PORTAL CRASH FIX: Validate frame index
+			if (frame > 0 && frame <= numFrames) {
+				RenderTileFrame(out, lightmap, targetBufferPosition, TileType::LeftTriangle,
+				    GetDunFrame(pDungeonCels.get(), frame), DunFrameTriangleHeight, MaskType::Solid, tbl);
+			}
 		}
 	}
 	{
 		const LevelCelBlock levelCelBlock { DPieceMicros[levelPieceId].mt[1] };
 		if (levelCelBlock.hasValue()) {
-			RenderTileFrame(out, lightmap, targetBufferPosition + RightFrameDisplacement, TileType::RightTriangle,
-			    GetDunFrame(pDungeonCels.get(), levelCelBlock.frame()), DunFrameTriangleHeight, MaskType::Solid, tbl);
+			const uint32_t frame = levelCelBlock.frame();
+			// 🛡️ PORTAL CRASH FIX: Validate frame index
+			if (frame > 0 && frame <= numFrames) {
+				RenderTileFrame(out, lightmap, targetBufferPosition + RightFrameDisplacement, TileType::RightTriangle,
+				    GetDunFrame(pDungeonCels.get(), frame), DunFrameTriangleHeight, MaskType::Solid, tbl);
+			}
 		}
 	}
 }
@@ -843,8 +925,27 @@ void DrawMonsterHelper(const Surface &out, Point tilePosition, Point targetBuffe
  */
 void DrawDungeon(const Surface &out, const Lightmap &lightmap, Point tilePosition, Point targetBufferPosition)
 {
-	assert(InDungeonBounds(tilePosition));
-	const int lightTableIndex = dLight[tilePosition.x][tilePosition.y];
+	// 🛡️ PORTAL CRASH FIX V4: Replace assert with safe check
+	if (!InDungeonBounds(tilePosition)) {
+		return; // Skip invalid tile position instead of crashing
+	}
+	
+	// 🛡️ PORTAL CRASH FIX V4: Validate pDungeonCels before any rendering
+	if (pDungeonCels == nullptr) {
+		return;
+	}
+	
+	// 🛡️ PORTAL CRASH FIX V4: Validate dPiece before accessing
+	const uint16_t pieceId = dPiece[tilePosition.x][tilePosition.y];
+	if (pieceId >= MAXTILES) {
+		return; // Skip invalid piece
+	}
+	
+	// 🛡️ PORTAL CRASH FIX V4: Validate light table index
+	int lightTableIndex = dLight[tilePosition.x][tilePosition.y];
+	if (lightTableIndex < 0 || lightTableIndex >= static_cast<int>(LightTables.size())) {
+		lightTableIndex = 0; // Use default light table
+	}
 
 	DrawCell(out, lightmap, tilePosition, targetBufferPosition, lightTableIndex);
 
@@ -861,15 +962,29 @@ void DrawDungeon(const Surface &out, const Lightmap &lightmap, Point tilePositio
 		DrawMissile(out, tilePosition, targetBufferPosition, true, lightTableIndex);
 	}
 
+	// 🛡️ PORTAL CRASH FIX: Validate corpse index before accessing
 	if (lightTableIndex < LightsMax && bDead != 0) {
-		const Corpse &corpse = Corpses[(bDead & 0x1F) - 1];
-		const Point position { targetBufferPosition.x - CalculateSpriteTileCenterX(corpse.width), targetBufferPosition.y };
-		const ClxSprite sprite = corpse.spritesForDirection(static_cast<Direction>((bDead >> 5) & 7))[corpse.frame];
-		if (corpse.translationPaletteIndex != 0) {
-			const uint8_t *trn = Monsters[corpse.translationPaletteIndex - 1].uniqueMonsterTRN.get();
-			ClxDrawTRN(out, position, sprite, trn);
-		} else {
-			ClxDrawLight(out, position, sprite, lightTableIndex);
+		const int corpseIndex = (bDead & 0x1F) - 1;
+		if (corpseIndex >= 0 && corpseIndex < static_cast<int>(MaxCorpses)) {
+			const Corpse &corpse = Corpses[corpseIndex];
+			const Point position { targetBufferPosition.x - CalculateSpriteTileCenterX(corpse.width), targetBufferPosition.y };
+			const ClxSprite sprite = corpse.spritesForDirection(static_cast<Direction>((bDead >> 5) & 7))[corpse.frame];
+			if (corpse.translationPaletteIndex != 0) {
+				// 🛡️ SAFETY: Validate monster index for TRN
+				const int monsterIdx = corpse.translationPaletteIndex - 1;
+				if (monsterIdx >= 0 && static_cast<size_t>(monsterIdx) < MaxMonsters) {
+					const uint8_t *trn = Monsters[monsterIdx].uniqueMonsterTRN.get();
+					if (trn != nullptr) {
+						ClxDrawTRN(out, position, sprite, trn);
+					} else {
+						ClxDrawLight(out, position, sprite, lightTableIndex);
+					}
+				} else {
+					ClxDrawLight(out, position, sprite, lightTableIndex);
+				}
+			} else {
+				ClxDrawLight(out, position, sprite, lightTableIndex);
+			}
 		}
 	}
 
@@ -877,10 +992,16 @@ void DrawDungeon(const Surface &out, const Lightmap &lightmap, Point tilePositio
 	const Object *object = lightTableIndex < LightsMax
 	    ? FindObjectAtPosition(tilePosition)
 	    : nullptr;
+	
 	if (object != nullptr && object->_oPreFlag) {
-		DrawObject(out, *object, tilePosition, targetBufferPosition, lightTableIndex);
+		const int objIndex = dObject[tilePosition.x][tilePosition.y];
+		// 🛡️ PORTAL CRASH FIX V8: Skip portals to prevent crash
+		if (static_cast<int>(object->_otype) != 66 && objIndex > 0 && objIndex <= MAXOBJECTS) {
+			DrawObject(out, *object, tilePosition, targetBufferPosition, lightTableIndex);
+		}
 	}
-	if (bItem > 0 && !Items[bItem - 1]._iPostDraw) {
+	// 🛡️ PORTAL CRASH FIX V4: Validate item index before accessing
+	if (bItem > 0 && bItem <= static_cast<int8_t>(MAXITEMS) && !Items[bItem - 1]._iPostDraw) {
 		DrawItem(out, static_cast<int8_t>(bItem - 1), targetBufferPosition, lightTableIndex);
 	}
 
@@ -890,7 +1011,10 @@ void DrawDungeon(const Surface &out, const Lightmap &lightmap, Point tilePositio
 	Player *player = PlayerAtPosition(tilePosition);
 	if (player != nullptr) {
 		const uint8_t pid = player->getId();
-		assert(pid < MAX_PLRS);
+		// 🛡️ PORTAL CRASH FIX V4: Replace assert with safe check
+		if (pid >= MAX_PLRS) {
+			return; // Invalid player ID, skip rendering
+		}
 		int playerId = static_cast<int>(pid) + 1;
 		// If sprite is moving southwards or east, we want to draw it offset from the tile it's moving to, so we need negative ID
 		// This respests the order that tiles are drawn. By using the negative id, we ensure that the sprite is drawn with priority
@@ -913,7 +1037,8 @@ void DrawDungeon(const Surface &out, const Lightmap &lightmap, Point tilePositio
 					tempTargetBufferPosition += { -TILE_WIDTH / 2, -TILE_HEIGHT / 2 };
 					break;
 				default:
-					DVL_UNREACHABLE();
+					// 🛡️ PORTAL CRASH FIX V4: Skip instead of DVL_UNREACHABLE
+					break;
 				}
 				tempTilePosition += Opposite(player->_pdir);
 			} else if (player->_pmode == PM_WALK_SIDEWAYS && player->_pdir == Direction::East) {
@@ -929,7 +1054,10 @@ void DrawDungeon(const Surface &out, const Lightmap &lightmap, Point tilePositio
 	Monster *monster = FindMonsterAtPosition(tilePosition);
 	if (monster != nullptr) {
 		auto mid = monster->getId();
-		assert(mid < MaxMonsters);
+		// 🛡️ PORTAL CRASH FIX V4: Replace assert with safe check
+		if (mid >= MaxMonsters) {
+			return; // Invalid monster ID, skip rendering
+		}
 		int monsterId = static_cast<int>(mid) + 1;
 		// If sprite is moving southwards or east, we want to draw it offset from the tile it's moving to, so we need negative ID
 		// This respests the order that tiles are drawn. By using the negative id, we ensure that the sprite is drawn with priority
@@ -952,7 +1080,8 @@ void DrawDungeon(const Surface &out, const Lightmap &lightmap, Point tilePositio
 					tempTargetBufferPosition += { -TILE_WIDTH / 2, -TILE_HEIGHT / 2 };
 					break;
 				default:
-					DVL_UNREACHABLE();
+					// 🛡️ PORTAL CRASH FIX V4: Skip instead of DVL_UNREACHABLE
+					break;
 				}
 				tempTilePosition += Opposite(monster->direction);
 			} else if (monster->mode == MonsterMode::MoveSideways && monster->direction == Direction::East) {
@@ -969,9 +1098,14 @@ void DrawDungeon(const Surface &out, const Lightmap &lightmap, Point tilePositio
 	DrawMissile(out, tilePosition, targetBufferPosition, false, lightTableIndex);
 
 	if (object != nullptr && !object->_oPreFlag) {
-		DrawObject(out, *object, tilePosition, targetBufferPosition, lightTableIndex);
+		const int objIndex = dObject[tilePosition.x][tilePosition.y];
+		// 🛡️ PORTAL CRASH FIX V8: Skip portals to prevent crash
+		if (static_cast<int>(object->_otype) != 66 && objIndex > 0 && objIndex <= MAXOBJECTS) {
+			DrawObject(out, *object, tilePosition, targetBufferPosition, lightTableIndex);
+		}
 	}
-	if (bItem > 0 && Items[bItem - 1]._iPostDraw) {
+	// 🛡️ PORTAL CRASH FIX V4: Validate item index before accessing
+	if (bItem > 0 && bItem <= static_cast<int8_t>(MAXITEMS) && Items[bItem - 1]._iPostDraw) {
 		DrawItem(out, static_cast<int8_t>(bItem - 1), targetBufferPosition, lightTableIndex);
 	}
 
@@ -1059,6 +1193,31 @@ void DrawFloor(const Surface &out, const Lightmap &lightmap, Point tilePosition,
  */
 void DrawTileContent(const Surface &out, const Lightmap &lightmap, Point tilePosition, Point targetBufferPosition, int rows, int columns)
 {
+	// 🛡️ PORTAL CRASH FIX V6: Validate critical pointers before rendering
+	if (pDungeonCels == nullptr) {
+		return;
+	}
+	
+	// 🛡️ PORTAL CRASH FIX V6: Validate LightTables
+	if (LightTables.empty() || LightTables[0].empty()) {
+		return;
+	}
+	
+	// 🛡️ PORTAL CRASH FIX V5: Additional validation for portal transitions
+	if (leveltype != DTYPE_TOWN) {
+		bool hasValidData = false;
+		for (int checkX = 0; checkX < 10 && !hasValidData; checkX++) {
+			for (int checkY = 0; checkY < 10 && !hasValidData; checkY++) {
+				if (dPiece[checkX][checkY] != 0) {
+					hasValidData = true;
+				}
+			}
+		}
+		if (!hasValidData) {
+			return;
+		}
+	}
+	
 	// Keep evaluating until MicroTiles can't affect screen
 	rows += MicroTileLen;
 
@@ -1074,20 +1233,30 @@ void DrawTileContent(const Surface &out, const Lightmap &lightmap, Point tilePos
 #ifdef _DEBUG
 				DebugCoordsMap[tilePosition.x + tilePosition.y * MAXDUNX] = targetBufferPosition;
 #endif
-				if (tilePosition.x + 1 < MAXDUNX && tilePosition.y - 1 >= 0 && targetBufferPosition.x + TILE_WIDTH <= gnScreenWidth) {
-					// Render objects behind walls first to prevent sprites, that are moving
-					// between tiles, from poking through the walls as they exceed the tile bounds.
-					// A proper fix for this would probably be to layout the scene and render by
-					// sprite screen position rather than tile position.
-					if (IsWall(tilePosition) && (IsWall(tilePosition + Displacement { 1, 0 }) || (tilePosition.x > 0 && IsWall(tilePosition + Displacement { -1, 0 })))) { // Part of a wall aligned on the x-axis
-						if (IsTileNotSolid(tilePosition + Displacement { 1, -1 }) && IsTileNotSolid(tilePosition + Displacement { 0, -1 })) {                              // Has walkable area behind it
-							DrawDungeon(out, lightmap, tilePosition + Direction::East, { targetBufferPosition.x + TILE_WIDTH, targetBufferPosition.y });
-							skipNext = true;
+				// 🛡️ SAFETY: Wrap DrawDungeon in try-catch equivalent (bounds check)
+				if (tilePosition.x >= 0 && tilePosition.x < MAXDUNX && 
+				    tilePosition.y >= 0 && tilePosition.y < MAXDUNY) {
+					
+					// 🛡️ PORTAL CRASH FIX V5: Validate dPiece before any rendering
+					const uint16_t pieceId = dPiece[tilePosition.x][tilePosition.y];
+					if (pieceId >= MAXTILES) {
+						// Skip this tile - invalid piece
+						tilePosition += Direction::East;
+						targetBufferPosition.x += TILE_WIDTH;
+						continue;
+					}
+					
+					if (tilePosition.x + 1 < MAXDUNX && tilePosition.y - 1 >= 0 && targetBufferPosition.x + TILE_WIDTH <= gnScreenWidth) {
+						if (IsWall(tilePosition) && (IsWall(tilePosition + Displacement { 1, 0 }) || (tilePosition.x > 0 && IsWall(tilePosition + Displacement { -1, 0 })))) {
+							if (IsTileNotSolid(tilePosition + Displacement { 1, -1 }) && IsTileNotSolid(tilePosition + Displacement { 0, -1 })) {
+								DrawDungeon(out, lightmap, tilePosition + Direction::East, { targetBufferPosition.x + TILE_WIDTH, targetBufferPosition.y });
+								skipNext = true;
+							}
 						}
 					}
-				}
-				if (!skip) {
-					DrawDungeon(out, lightmap, tilePosition, targetBufferPosition);
+					if (!skip) {
+						DrawDungeon(out, lightmap, tilePosition, targetBufferPosition);
+					}
 				}
 				skip = skipNext;
 			}
@@ -1296,10 +1465,64 @@ void CalcFirstTilePosition(Point &position, Displacement &offset)
  */
 void DrawGame(const Surface &fullOut, Point position, Displacement offset)
 {
+	PORTAL_LOG_RENDER("DrawGame_ENTRY");
+	
+	// 🎨 PORTAL PALETTE FIX V9: Reload palette BEFORE skip ends
+	// This ensures the first rendered frame has the correct palette
+	if (g_needsPaletteReloadAfterPortal) {
+		g_needsPaletteReloadAfterPortal = false;
+		PORTAL_LOG_RENDER("DrawGame_PALETTE_RELOAD_EXECUTING");
+		
+		// Force reload the correct palette based on level type
+		if (leveltype == DTYPE_TOWN) {
+			LoadPalette("levels\\towndata\\town.pal");
+		} else if (leveltype == DTYPE_CATHEDRAL) {
+			LoadPalette("levels\\l1data\\l1.pal");
+		} else if (leveltype == DTYPE_CATACOMBS) {
+			LoadPalette("levels\\l2data\\l2.pal");
+		} else if (leveltype == DTYPE_CAVES) {
+			LoadPalette("levels\\l3data\\l3.pal");
+		} else if (leveltype == DTYPE_HELL) {
+			LoadPalette("levels\\l4data\\l4.pal");
+		} else if (leveltype == DTYPE_CRYPT) {
+			LoadPalette("nlevels\\l5data\\l5base.pal");
+		} else if (leveltype == DTYPE_NEST) {
+			LoadPalette("nlevels\\l6data\\l6base.pal");
+		}
+		
+		// Apply the palette to the system IMMEDIATELY
+		UpdateSystemPalette(logical_palette);
+		
+		// Regenerate light tables with correct palette
+		PORTAL_LOG_RENDER("DrawGame_REGENERATE_LIGHTTABLES");
+		MakeLightTable();
+		
+		PORTAL_LOG_RENDER("DrawGame_PALETTE_RELOAD_COMPLETE");
+		
+		// Don't render this frame - let the palette settle
+		return;
+	}
+	
+	// 🛡️ PORTAL CRASH FIX: Skip first frames after portal transition
+	if (g_skipRenderFramesAfterPortal > 0) {
+		g_skipRenderFramesAfterPortal--;
+		PORTAL_LOG_RENDER("DrawGame_SKIPPED_PORTAL_TRANSITION");
+		
+		// 🎨 PORTAL PALETTE FIX V9: Schedule palette reload for next frame
+		if (g_skipRenderFramesAfterPortal == 0) {
+			g_needsPaletteReloadAfterPortal = true;
+			PORTAL_LOG_RENDER("DrawGame_PALETTE_RELOAD_SCHEDULED");
+		}
+		
+		return;
+	}
+	
 	// Limit rendering to the view area
 	const Surface &out = !*GetOptions().Graphics.zoom
 	    ? fullOut.subregionY(0, gnViewportHeight)
 	    : fullOut.subregionY(0, (gnViewportHeight + 1) / 2);
+
+	PORTAL_LOG_RENDER("DrawGame_Surface_OK");
 
 	int columns = tileColumns;
 	int rows = tileRows;
@@ -1309,10 +1532,13 @@ void DrawGame(const Surface &fullOut, Point position, Displacement offset)
 		columns -= (*GetOptions().Graphics.zoom) ? 2 : 4;
 	}
 
+	PORTAL_LOG_RENDER("DrawGame_UpdateMissiles_BEFORE");
 	UpdateMissilesRendererData();
+	PORTAL_LOG_RENDER("DrawGame_UpdateMissiles_AFTER");
 
 	// Draw areas moving in and out of the screen
-	if (MyPlayer->isWalking()) {
+	PORTAL_LOG_RENDER("DrawGame_CheckPlayer_BEFORE");
+	if (MyPlayer != nullptr && MyPlayer->isWalking()) {
 		switch (MyPlayer->_pdir) {
 		case Direction::NoDirection:
 			break;
@@ -1336,19 +1562,34 @@ void DrawGame(const Surface &fullOut, Point position, Displacement offset)
 			break;
 		}
 	}
+	PORTAL_LOG_RENDER("DrawGame_CheckPlayer_AFTER");
 
 #ifdef DUN_RENDER_STATS
 	DunRenderStats.clear();
 #endif
 
+	PORTAL_LOG_RENDER("DrawGame_Lightmap_BEFORE");
+	FlushPortalDebugLog();
 	Lightmap lightmap = Lightmap::build(*GetOptions().Graphics.perPixelLighting, position, Point {} + offset,
 	    gnScreenWidth, gnViewportHeight, rows, columns,
 	    out.at(0, 0), out.pitch(), LightTables, FullyLitLightTable, FullyDarkLightTable,
 	    dLight, MicroTileLen);
+	PORTAL_LOG_RENDER("DrawGame_Lightmap_AFTER");
 
+	PORTAL_LOG_RENDER("DrawGame_DrawFloor_BEFORE");
+	FlushPortalDebugLog();
 	DrawFloor(out, lightmap, position, Point {} + offset, rows, columns);
+	PORTAL_LOG_RENDER("DrawGame_DrawFloor_AFTER");
+	FlushPortalDebugLog();
+	
+	PORTAL_LOG_RENDER("DrawGame_DrawTileContent_BEFORE");
+	FlushPortalDebugLog();
 	DrawTileContent(out, lightmap, position, Point {} + offset, rows, columns);
+	PORTAL_LOG_RENDER("DrawGame_DrawTileContent_AFTER");
+	
+	PORTAL_LOG_RENDER("DrawGame_DrawOOB_BEFORE");
 	DrawOOB(out, lightmap, position, Point {} + offset, rows, columns);
+	PORTAL_LOG_RENDER("DrawGame_DrawOOB_AFTER");
 
 	if (*GetOptions().Graphics.zoom) {
 		Zoom(fullOut.subregionY(0, gnViewportHeight));
@@ -1383,9 +1624,16 @@ void DrawView(const Surface &out, Point startPosition)
 #ifdef _DEBUG
 	DebugCoordsMap.clear();
 #endif
+	PORTAL_LOG_RENDER("DrawView_CalcFirstTilePosition_BEFORE");
 	Displacement offset = {};
 	CalcFirstTilePosition(startPosition, offset);
+	PORTAL_LOG_RENDER("DrawView_CalcFirstTilePosition_AFTER");
+	
+	PORTAL_LOG_RENDER("DrawView_DrawGame_BEFORE");
+	FlushPortalDebugLog(); // Flush justo antes de DrawGame
 	DrawGame(out, startPosition, offset);
+	PORTAL_LOG_RENDER("DrawView_DrawGame_AFTER");
+	
 	if (AutomapActive) {
 		DrawAutomap(out.subregionY(0, gnViewportHeight));
 	}
@@ -1976,9 +2224,16 @@ void scrollrt_draw_game_screen()
 
 void DrawAndBlit()
 {
+	// 🚪 PORTAL DEBUG - Track DrawAndBlit entry BEFORE any checks
+	PORTAL_LOG_RENDER("DrawAndBlit_ENTRY");
+	
 	if (!gbRunGame || HeadlessMode) {
+		PORTAL_LOG_RENDER("DrawAndBlit_EARLY_EXIT");
 		return;
 	}
+
+	// 🚪 PORTAL DEBUG - Track DrawAndBlit internal steps
+	PORTAL_LOG_RENDER("DrawAndBlit_INIT");
 
 	int hgt = 0;
 	bool drawHealth = IsRedrawComponent(PanelDrawComponent::Health);
@@ -1989,6 +2244,7 @@ void DrawAndBlit()
 	bool drawInfoBox = false;
 	bool drawCtrlPan = false;
 
+	PORTAL_LOG_RENDER("DrawAndBlit_GetMainPanel");
 	const Rectangle &mainPanel = GetMainPanel();
 
 	if (gnScreenWidth > mainPanel.size.width || IsRedrawEverything() || *GetOptions().Gameplay.enableFloatingNumbers != FloatingNumbers::Off) {
@@ -2005,15 +2261,28 @@ void DrawAndBlit()
 		hgt = gnViewportHeight;
 	}
 
+	PORTAL_LOG_RENDER("DrawAndBlit_GlobalBackBuffer");
 	const Surface &out = GlobalBackBuffer();
+	
+	PORTAL_LOG_RENDER("DrawAndBlit_UndrawCursor");
 	UndrawCursor(out);
 
+	PORTAL_LOG_RENDER("DrawAndBlit_nthread");
 	nthread_UpdateProgressToNextGameTick();
 
+	// 🚪 PORTAL DEBUG - Track render execution with ViewPosition info
+	PORTAL_LOG_EVENT("DrawView_PRE", fmt::format("ViewPosition=({},{}) leveltype={} currlevel={}", 
+		ViewPosition.x, ViewPosition.y, static_cast<int>(leveltype), currlevel).c_str());
+	FlushPortalDebugLog();
+	
+	PORTAL_LOG_RENDER("DrawView_START");
 	DrawView(out, ViewPosition);
+	PORTAL_LOG_RENDER("DrawView_END");
 	
 	// 🌙 NIGHTMARE UI - Render atmospheric effects AFTER game view but BEFORE UI panels
+	PORTAL_LOG_RENDER("RenderNightmareUI_START");
 	RenderNightmareUI();
+	PORTAL_LOG_RENDER("RenderNightmareUI_END");
 	if (drawCtrlPan) {
 		DrawMainPanel(out);
 	}

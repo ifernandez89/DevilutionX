@@ -6069,6 +6069,30 @@ portal.cpp.s:
 	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/portal.cpp.s
 .PHONY : portal.cpp.s
 
+portal_debug.obj: portal_debug.cpp.obj
+.PHONY : portal_debug.obj
+
+# target to build an object file
+portal_debug.cpp.obj:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/portal_debug.cpp.obj
+.PHONY : portal_debug.cpp.obj
+
+portal_debug.i: portal_debug.cpp.i
+.PHONY : portal_debug.i
+
+# target to preprocess a source file
+portal_debug.cpp.i:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/portal_debug.cpp.i
+.PHONY : portal_debug.cpp.i
+
+portal_debug.s: portal_debug.cpp.s
+.PHONY : portal_debug.s
+
+# target to generate assembly for a file
+portal_debug.cpp.s:
+	cd /d C:\C-C__~1\DEVILU~1\BU6925~1 && $(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/portal_debug.cpp.s
+.PHONY : portal_debug.cpp.s
+
 portals/validation.obj: portals/validation.cpp.obj
 .PHONY : portals/validation.obj
 
@@ -8357,6 +8381,9 @@ help:
 	@echo ... portal.obj
 	@echo ... portal.i
 	@echo ... portal.s
+	@echo ... portal_debug.obj
+	@echo ... portal_debug.i
+	@echo ... portal_debug.s
 	@echo ... portals/validation.obj
 	@echo ... portals/validation.i
 	@echo ... portals/validation.s

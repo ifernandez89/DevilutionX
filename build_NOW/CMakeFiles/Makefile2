@@ -828,69 +828,69 @@ CMakeFiles/nightmare.dir/all: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.d
 CMakeFiles/nightmare.dir/all: 3rdParty/libsmackerdec/CMakeFiles/libsmackerdec.dir/all
 CMakeFiles/nightmare.dir/all: 3rdParty/libmpq/CMakeFiles/libmpq.dir/all
 CMakeFiles/nightmare.dir/all: _deps/sheenbidi-build/CMakeFiles/SheenBidi.dir/all
+CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_controller_buttons.dir/all
 CMakeFiles/nightmare.dir/all: 3rdParty/PKWare/CMakeFiles/PKWare.dir/all
-CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_palette_kd_tree.dir/all
-CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_control_mode.dir/all
-CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_clx_render.dir/all
-CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_direction.dir/all
-CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_dun_render.dir/all
-CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_pcx_to_clx.dir/all
-CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_file_util.dir/all
-CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_format_int.dir/all
-CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_surface.dir/all
-CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_cl2_to_clx.dir/all
-CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_codec.dir/all
 CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_assets.dir/all
 CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_cel_to_clx.dir/all
-CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_controller_buttons.dir/all
-CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_paths.dir/all
+CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_cl2_to_clx.dir/all
+CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_clx_render.dir/all
+CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_codec.dir/all
+CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_palette_kd_tree.dir/all
 CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_padmapper.dir/all
+CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_paths.dir/all
 CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_primitive_render.dir/all
+CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_control_mode.dir/all
+CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_pcx_to_clx.dir/all
 CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_crawl.dir/all
-CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_gendung.dir/all
+CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_direction.dir/all
+CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_dun_render.dir/all
 CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_light_render.dir/all
-CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_logged_fstream.dir/all
-CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_load_pcx.dir/all
-CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_mp_discipline.dir/all
-CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_load_cl2.dir/all
-CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_parse_int.dir/all
 CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_contextual_palette.dir/all
-CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_init.dir/all
-CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_town_cinematic.dir/all
-CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_level_objects.dir/all
-CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_ini.dir/all
-CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_visual_feedback.dir/all
-CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_life_volume.dir/all
-CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_parallax_depth.dir/all
-CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_headless_mode.dir/all
+CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_logged_fstream.dir/all
+CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_format_int.dir/all
+CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_file_util.dir/all
 CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_game_mode.dir/all
-CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_load_cel.dir/all
+CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_init.dir/all
+CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_headless_mode.dir/all
+CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_surface.dir/all
 CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_load_clx.dir/all
 CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_lighting.dir/all
-CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_items.dir/all
-CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_monster.dir/all
-CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_palette_blending.dir/all
-CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_multiplayer.dir/all
-CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_quests.dir/all
+CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_life_volume.dir/all
+CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_town_cinematic.dir/all
+CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_mp_discipline.dir/all
+CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_load_cl2.dir/all
+CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_gendung.dir/all
+CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_load_cel.dir/all
+CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_load_pcx.dir/all
+CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_visual_feedback.dir/all
+CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_parallax_depth.dir/all
 CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_pathfinding.dir/all
-CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_spells.dir/all
-CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_random.dir/all
-CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_mpq.dir/all
-CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_options.dir/all
-CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_text_render.dir/all
 CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_pkware_encrypt.dir/all
+CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_quests.dir/all
+CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_ini.dir/all
 CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_quick_messages.dir/all
-CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_ticks.dir/all
-CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_txtdata.dir/all
-CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_utf8.dir/all
+CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_mpq.dir/all
 CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_player.dir/all
+CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_monster.dir/all
+CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_items.dir/all
+CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_level_objects.dir/all
+CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_parse_int.dir/all
+CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_multiplayer.dir/all
+CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_palette_blending.dir/all
+CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_options.dir/all
+CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_spells.dir/all
+CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_text_render.dir/all
+CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_random.dir/all
+CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_utf8.dir/all
+CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_ticks.dir/all
 CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_surface_to_png.dir/all
-CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx.dir/all
 CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_stores.dir/all
 CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_sound.dir/all
+CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx.dir/all
+CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_strings.dir/all
+CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_txtdata.dir/all
 CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_vision.dir/all
 CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_utils_console.dir/all
-CMakeFiles/nightmare.dir/all: Source/CMakeFiles/libdevilutionx_strings.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\nightmare.dir\build.make CMakeFiles/nightmare.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\nightmare.dir\build.make CMakeFiles/nightmare.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=95 "Built target nightmare"
@@ -1210,8 +1210,8 @@ _deps/libpng-build/CMakeFiles/pnglibconf_out.dir/clean:
 # Target rules for target _deps/libpng-build/CMakeFiles/pnglibconf_h.dir
 
 # All Build rule for target.
-_deps/libpng-build/CMakeFiles/pnglibconf_h.dir/all: _deps/libpng-build/CMakeFiles/pnglibconf_out.dir/all
 _deps/libpng-build/CMakeFiles/pnglibconf_h.dir/all: _deps/libpng-build/CMakeFiles/pnglibconf_c.dir/all
+_deps/libpng-build/CMakeFiles/pnglibconf_h.dir/all: _deps/libpng-build/CMakeFiles/pnglibconf_out.dir/all
 	$(MAKE) $(MAKESILENT) -f _deps\libpng-build\CMakeFiles\pnglibconf_h.dir\build.make _deps/libpng-build/CMakeFiles/pnglibconf_h.dir/depend
 	$(MAKE) $(MAKESILENT) -f _deps\libpng-build\CMakeFiles\pnglibconf_h.dir\build.make _deps/libpng-build/CMakeFiles/pnglibconf_h.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num= "Built target pnglibconf_h"
@@ -1229,8 +1229,8 @@ pnglibconf_h: _deps/libpng-build/CMakeFiles/pnglibconf_h.dir/rule
 .PHONY : pnglibconf_h
 
 # codegen rule for target.
-_deps/libpng-build/CMakeFiles/pnglibconf_h.dir/codegen: _deps/libpng-build/CMakeFiles/pnglibconf_out.dir/all
 _deps/libpng-build/CMakeFiles/pnglibconf_h.dir/codegen: _deps/libpng-build/CMakeFiles/pnglibconf_c.dir/all
+_deps/libpng-build/CMakeFiles/pnglibconf_h.dir/codegen: _deps/libpng-build/CMakeFiles/pnglibconf_out.dir/all
 	$(MAKE) $(MAKESILENT) -f _deps\libpng-build\CMakeFiles\pnglibconf_h.dir\build.make _deps/libpng-build/CMakeFiles/pnglibconf_h.dir/codegen
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num= "Finished codegen for target pnglibconf_h"
 .PHONY : _deps/libpng-build/CMakeFiles/pnglibconf_h.dir/codegen
@@ -1244,9 +1244,9 @@ _deps/libpng-build/CMakeFiles/pnglibconf_h.dir/clean:
 # Target rules for target _deps/libpng-build/CMakeFiles/scripts_intprefix_out.dir
 
 # All Build rule for target.
+_deps/libpng-build/CMakeFiles/scripts_intprefix_out.dir/all: _deps/libpng-build/CMakeFiles/pnglibconf_c.dir/all
 _deps/libpng-build/CMakeFiles/scripts_intprefix_out.dir/all: _deps/libpng-build/CMakeFiles/pnglibconf_out.dir/all
 _deps/libpng-build/CMakeFiles/scripts_intprefix_out.dir/all: _deps/libpng-build/CMakeFiles/pnglibconf_h.dir/all
-_deps/libpng-build/CMakeFiles/scripts_intprefix_out.dir/all: _deps/libpng-build/CMakeFiles/pnglibconf_c.dir/all
 	$(MAKE) $(MAKESILENT) -f _deps\libpng-build\CMakeFiles\scripts_intprefix_out.dir\build.make _deps/libpng-build/CMakeFiles/scripts_intprefix_out.dir/depend
 	$(MAKE) $(MAKESILENT) -f _deps\libpng-build\CMakeFiles\scripts_intprefix_out.dir\build.make _deps/libpng-build/CMakeFiles/scripts_intprefix_out.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num= "Built target scripts_intprefix_out"
@@ -1264,9 +1264,9 @@ scripts_intprefix_out: _deps/libpng-build/CMakeFiles/scripts_intprefix_out.dir/r
 .PHONY : scripts_intprefix_out
 
 # codegen rule for target.
+_deps/libpng-build/CMakeFiles/scripts_intprefix_out.dir/codegen: _deps/libpng-build/CMakeFiles/pnglibconf_c.dir/all
 _deps/libpng-build/CMakeFiles/scripts_intprefix_out.dir/codegen: _deps/libpng-build/CMakeFiles/pnglibconf_out.dir/all
 _deps/libpng-build/CMakeFiles/scripts_intprefix_out.dir/codegen: _deps/libpng-build/CMakeFiles/pnglibconf_h.dir/all
-_deps/libpng-build/CMakeFiles/scripts_intprefix_out.dir/codegen: _deps/libpng-build/CMakeFiles/pnglibconf_c.dir/all
 	$(MAKE) $(MAKESILENT) -f _deps\libpng-build\CMakeFiles\scripts_intprefix_out.dir\build.make _deps/libpng-build/CMakeFiles/scripts_intprefix_out.dir/codegen
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num= "Finished codegen for target scripts_intprefix_out"
 .PHONY : _deps/libpng-build/CMakeFiles/scripts_intprefix_out.dir/codegen
@@ -1280,8 +1280,8 @@ _deps/libpng-build/CMakeFiles/scripts_intprefix_out.dir/clean:
 # Target rules for target _deps/libpng-build/CMakeFiles/scripts_prefix_out.dir
 
 # All Build rule for target.
-_deps/libpng-build/CMakeFiles/scripts_prefix_out.dir/all: _deps/libpng-build/CMakeFiles/pnglibconf_out.dir/all
 _deps/libpng-build/CMakeFiles/scripts_prefix_out.dir/all: _deps/libpng-build/CMakeFiles/pnglibconf_c.dir/all
+_deps/libpng-build/CMakeFiles/scripts_prefix_out.dir/all: _deps/libpng-build/CMakeFiles/pnglibconf_out.dir/all
 	$(MAKE) $(MAKESILENT) -f _deps\libpng-build\CMakeFiles\scripts_prefix_out.dir\build.make _deps/libpng-build/CMakeFiles/scripts_prefix_out.dir/depend
 	$(MAKE) $(MAKESILENT) -f _deps\libpng-build\CMakeFiles\scripts_prefix_out.dir\build.make _deps/libpng-build/CMakeFiles/scripts_prefix_out.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num= "Built target scripts_prefix_out"
@@ -1299,8 +1299,8 @@ scripts_prefix_out: _deps/libpng-build/CMakeFiles/scripts_prefix_out.dir/rule
 .PHONY : scripts_prefix_out
 
 # codegen rule for target.
-_deps/libpng-build/CMakeFiles/scripts_prefix_out.dir/codegen: _deps/libpng-build/CMakeFiles/pnglibconf_out.dir/all
 _deps/libpng-build/CMakeFiles/scripts_prefix_out.dir/codegen: _deps/libpng-build/CMakeFiles/pnglibconf_c.dir/all
+_deps/libpng-build/CMakeFiles/scripts_prefix_out.dir/codegen: _deps/libpng-build/CMakeFiles/pnglibconf_out.dir/all
 	$(MAKE) $(MAKESILENT) -f _deps\libpng-build\CMakeFiles\scripts_prefix_out.dir\build.make _deps/libpng-build/CMakeFiles/scripts_prefix_out.dir/codegen
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num= "Finished codegen for target scripts_prefix_out"
 .PHONY : _deps/libpng-build/CMakeFiles/scripts_prefix_out.dir/codegen
@@ -1346,9 +1346,9 @@ _deps/libpng-build/CMakeFiles/pngprefix_h.dir/clean:
 # Target rules for target _deps/libpng-build/CMakeFiles/scripts_sym_out.dir
 
 # All Build rule for target.
+_deps/libpng-build/CMakeFiles/scripts_sym_out.dir/all: _deps/libpng-build/CMakeFiles/pnglibconf_c.dir/all
 _deps/libpng-build/CMakeFiles/scripts_sym_out.dir/all: _deps/libpng-build/CMakeFiles/pnglibconf_out.dir/all
 _deps/libpng-build/CMakeFiles/scripts_sym_out.dir/all: _deps/libpng-build/CMakeFiles/pnglibconf_h.dir/all
-_deps/libpng-build/CMakeFiles/scripts_sym_out.dir/all: _deps/libpng-build/CMakeFiles/pnglibconf_c.dir/all
 	$(MAKE) $(MAKESILENT) -f _deps\libpng-build\CMakeFiles\scripts_sym_out.dir\build.make _deps/libpng-build/CMakeFiles/scripts_sym_out.dir/depend
 	$(MAKE) $(MAKESILENT) -f _deps\libpng-build\CMakeFiles\scripts_sym_out.dir\build.make _deps/libpng-build/CMakeFiles/scripts_sym_out.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num= "Built target scripts_sym_out"
@@ -1366,9 +1366,9 @@ scripts_sym_out: _deps/libpng-build/CMakeFiles/scripts_sym_out.dir/rule
 .PHONY : scripts_sym_out
 
 # codegen rule for target.
+_deps/libpng-build/CMakeFiles/scripts_sym_out.dir/codegen: _deps/libpng-build/CMakeFiles/pnglibconf_c.dir/all
 _deps/libpng-build/CMakeFiles/scripts_sym_out.dir/codegen: _deps/libpng-build/CMakeFiles/pnglibconf_out.dir/all
 _deps/libpng-build/CMakeFiles/scripts_sym_out.dir/codegen: _deps/libpng-build/CMakeFiles/pnglibconf_h.dir/all
-_deps/libpng-build/CMakeFiles/scripts_sym_out.dir/codegen: _deps/libpng-build/CMakeFiles/pnglibconf_c.dir/all
 	$(MAKE) $(MAKESILENT) -f _deps\libpng-build\CMakeFiles\scripts_sym_out.dir\build.make _deps/libpng-build/CMakeFiles/scripts_sym_out.dir/codegen
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num= "Finished codegen for target scripts_sym_out"
 .PHONY : _deps/libpng-build/CMakeFiles/scripts_sym_out.dir/codegen
@@ -1414,9 +1414,9 @@ _deps/libpng-build/CMakeFiles/scripts_symbols_out.dir/clean:
 # Target rules for target _deps/libpng-build/CMakeFiles/scripts_vers_out.dir
 
 # All Build rule for target.
+_deps/libpng-build/CMakeFiles/scripts_vers_out.dir/all: _deps/libpng-build/CMakeFiles/pnglibconf_c.dir/all
 _deps/libpng-build/CMakeFiles/scripts_vers_out.dir/all: _deps/libpng-build/CMakeFiles/pnglibconf_out.dir/all
 _deps/libpng-build/CMakeFiles/scripts_vers_out.dir/all: _deps/libpng-build/CMakeFiles/pnglibconf_h.dir/all
-_deps/libpng-build/CMakeFiles/scripts_vers_out.dir/all: _deps/libpng-build/CMakeFiles/pnglibconf_c.dir/all
 	$(MAKE) $(MAKESILENT) -f _deps\libpng-build\CMakeFiles\scripts_vers_out.dir\build.make _deps/libpng-build/CMakeFiles/scripts_vers_out.dir/depend
 	$(MAKE) $(MAKESILENT) -f _deps\libpng-build\CMakeFiles\scripts_vers_out.dir\build.make _deps/libpng-build/CMakeFiles/scripts_vers_out.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=100 "Built target scripts_vers_out"
@@ -1434,9 +1434,9 @@ scripts_vers_out: _deps/libpng-build/CMakeFiles/scripts_vers_out.dir/rule
 .PHONY : scripts_vers_out
 
 # codegen rule for target.
+_deps/libpng-build/CMakeFiles/scripts_vers_out.dir/codegen: _deps/libpng-build/CMakeFiles/pnglibconf_c.dir/all
 _deps/libpng-build/CMakeFiles/scripts_vers_out.dir/codegen: _deps/libpng-build/CMakeFiles/pnglibconf_out.dir/all
 _deps/libpng-build/CMakeFiles/scripts_vers_out.dir/codegen: _deps/libpng-build/CMakeFiles/pnglibconf_h.dir/all
-_deps/libpng-build/CMakeFiles/scripts_vers_out.dir/codegen: _deps/libpng-build/CMakeFiles/pnglibconf_c.dir/all
 	$(MAKE) $(MAKESILENT) -f _deps\libpng-build\CMakeFiles\scripts_vers_out.dir\build.make _deps/libpng-build/CMakeFiles/scripts_vers_out.dir/codegen
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=100 "Finished codegen for target scripts_vers_out"
 .PHONY : _deps/libpng-build/CMakeFiles/scripts_vers_out.dir/codegen
@@ -1578,19 +1578,19 @@ _deps/libpng-build/CMakeFiles/genprebuilt.dir/clean:
 # Target rules for target _deps/libpng-build/CMakeFiles/genfiles.dir
 
 # All Build rule for target.
-_deps/libpng-build/CMakeFiles/genfiles.dir/all: _deps/libpng-build/CMakeFiles/pnglibconf_out.dir/all
-_deps/libpng-build/CMakeFiles/genfiles.dir/all: _deps/libpng-build/CMakeFiles/scripts_intprefix_out.dir/all
-_deps/libpng-build/CMakeFiles/genfiles.dir/all: _deps/libpng-build/CMakeFiles/scripts_prefix_out.dir/all
-_deps/libpng-build/CMakeFiles/genfiles.dir/all: _deps/libpng-build/CMakeFiles/pnglibconf_h.dir/all
-_deps/libpng-build/CMakeFiles/genfiles.dir/all: _deps/libpng-build/CMakeFiles/scripts_symbols_out.dir/all
-_deps/libpng-build/CMakeFiles/genfiles.dir/all: _deps/libpng-build/CMakeFiles/scripts_pnglibconf_c.dir/all
-_deps/libpng-build/CMakeFiles/genfiles.dir/all: _deps/libpng-build/CMakeFiles/pngprefix_h.dir/all
 _deps/libpng-build/CMakeFiles/genfiles.dir/all: _deps/libpng-build/CMakeFiles/pnglibconf_c.dir/all
-_deps/libpng-build/CMakeFiles/genfiles.dir/all: _deps/libpng-build/CMakeFiles/scripts_sym_out.dir/all
-_deps/libpng-build/CMakeFiles/genfiles.dir/all: _deps/libpng-build/CMakeFiles/scripts_symbols_chk.dir/all
-_deps/libpng-build/CMakeFiles/genfiles.dir/all: _deps/libpng-build/CMakeFiles/genvers.dir/all
+_deps/libpng-build/CMakeFiles/genfiles.dir/all: _deps/libpng-build/CMakeFiles/scripts_intprefix_out.dir/all
+_deps/libpng-build/CMakeFiles/genfiles.dir/all: _deps/libpng-build/CMakeFiles/scripts_pnglibconf_c.dir/all
+_deps/libpng-build/CMakeFiles/genfiles.dir/all: _deps/libpng-build/CMakeFiles/pnglibconf_out.dir/all
+_deps/libpng-build/CMakeFiles/genfiles.dir/all: _deps/libpng-build/CMakeFiles/pnglibconf_h.dir/all
+_deps/libpng-build/CMakeFiles/genfiles.dir/all: _deps/libpng-build/CMakeFiles/scripts_prefix_out.dir/all
+_deps/libpng-build/CMakeFiles/genfiles.dir/all: _deps/libpng-build/CMakeFiles/scripts_symbols_out.dir/all
 _deps/libpng-build/CMakeFiles/genfiles.dir/all: _deps/libpng-build/CMakeFiles/gensym.dir/all
 _deps/libpng-build/CMakeFiles/genfiles.dir/all: _deps/libpng-build/CMakeFiles/scripts_vers_out.dir/all
+_deps/libpng-build/CMakeFiles/genfiles.dir/all: _deps/libpng-build/CMakeFiles/scripts_symbols_chk.dir/all
+_deps/libpng-build/CMakeFiles/genfiles.dir/all: _deps/libpng-build/CMakeFiles/scripts_sym_out.dir/all
+_deps/libpng-build/CMakeFiles/genfiles.dir/all: _deps/libpng-build/CMakeFiles/pngprefix_h.dir/all
+_deps/libpng-build/CMakeFiles/genfiles.dir/all: _deps/libpng-build/CMakeFiles/genvers.dir/all
 	$(MAKE) $(MAKESILENT) -f _deps\libpng-build\CMakeFiles\genfiles.dir\build.make _deps/libpng-build/CMakeFiles/genfiles.dir/depend
 	$(MAKE) $(MAKESILENT) -f _deps\libpng-build\CMakeFiles\genfiles.dir\build.make _deps/libpng-build/CMakeFiles/genfiles.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num= "Built target genfiles"
@@ -1608,19 +1608,19 @@ genfiles: _deps/libpng-build/CMakeFiles/genfiles.dir/rule
 .PHONY : genfiles
 
 # codegen rule for target.
-_deps/libpng-build/CMakeFiles/genfiles.dir/codegen: _deps/libpng-build/CMakeFiles/pnglibconf_out.dir/all
-_deps/libpng-build/CMakeFiles/genfiles.dir/codegen: _deps/libpng-build/CMakeFiles/scripts_intprefix_out.dir/all
-_deps/libpng-build/CMakeFiles/genfiles.dir/codegen: _deps/libpng-build/CMakeFiles/scripts_prefix_out.dir/all
-_deps/libpng-build/CMakeFiles/genfiles.dir/codegen: _deps/libpng-build/CMakeFiles/pnglibconf_h.dir/all
-_deps/libpng-build/CMakeFiles/genfiles.dir/codegen: _deps/libpng-build/CMakeFiles/scripts_symbols_out.dir/all
-_deps/libpng-build/CMakeFiles/genfiles.dir/codegen: _deps/libpng-build/CMakeFiles/scripts_pnglibconf_c.dir/all
-_deps/libpng-build/CMakeFiles/genfiles.dir/codegen: _deps/libpng-build/CMakeFiles/pngprefix_h.dir/all
 _deps/libpng-build/CMakeFiles/genfiles.dir/codegen: _deps/libpng-build/CMakeFiles/pnglibconf_c.dir/all
-_deps/libpng-build/CMakeFiles/genfiles.dir/codegen: _deps/libpng-build/CMakeFiles/scripts_sym_out.dir/all
-_deps/libpng-build/CMakeFiles/genfiles.dir/codegen: _deps/libpng-build/CMakeFiles/scripts_symbols_chk.dir/all
-_deps/libpng-build/CMakeFiles/genfiles.dir/codegen: _deps/libpng-build/CMakeFiles/genvers.dir/all
+_deps/libpng-build/CMakeFiles/genfiles.dir/codegen: _deps/libpng-build/CMakeFiles/scripts_intprefix_out.dir/all
+_deps/libpng-build/CMakeFiles/genfiles.dir/codegen: _deps/libpng-build/CMakeFiles/scripts_pnglibconf_c.dir/all
+_deps/libpng-build/CMakeFiles/genfiles.dir/codegen: _deps/libpng-build/CMakeFiles/pnglibconf_out.dir/all
+_deps/libpng-build/CMakeFiles/genfiles.dir/codegen: _deps/libpng-build/CMakeFiles/pnglibconf_h.dir/all
+_deps/libpng-build/CMakeFiles/genfiles.dir/codegen: _deps/libpng-build/CMakeFiles/scripts_prefix_out.dir/all
+_deps/libpng-build/CMakeFiles/genfiles.dir/codegen: _deps/libpng-build/CMakeFiles/scripts_symbols_out.dir/all
 _deps/libpng-build/CMakeFiles/genfiles.dir/codegen: _deps/libpng-build/CMakeFiles/gensym.dir/all
 _deps/libpng-build/CMakeFiles/genfiles.dir/codegen: _deps/libpng-build/CMakeFiles/scripts_vers_out.dir/all
+_deps/libpng-build/CMakeFiles/genfiles.dir/codegen: _deps/libpng-build/CMakeFiles/scripts_symbols_chk.dir/all
+_deps/libpng-build/CMakeFiles/genfiles.dir/codegen: _deps/libpng-build/CMakeFiles/scripts_sym_out.dir/all
+_deps/libpng-build/CMakeFiles/genfiles.dir/codegen: _deps/libpng-build/CMakeFiles/pngprefix_h.dir/all
+_deps/libpng-build/CMakeFiles/genfiles.dir/codegen: _deps/libpng-build/CMakeFiles/genvers.dir/all
 	$(MAKE) $(MAKESILENT) -f _deps\libpng-build\CMakeFiles\genfiles.dir\build.make _deps/libpng-build/CMakeFiles/genfiles.dir/codegen
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num= "Finished codegen for target genfiles"
 .PHONY : _deps/libpng-build/CMakeFiles/genfiles.dir/codegen
@@ -1634,8 +1634,8 @@ _deps/libpng-build/CMakeFiles/genfiles.dir/clean:
 # Target rules for target _deps/libpng-build/CMakeFiles/png_static.dir
 
 # All Build rule for target.
-_deps/libpng-build/CMakeFiles/png_static.dir/all: _deps/libpng-build/CMakeFiles/pnglibconf_out.dir/all
 _deps/libpng-build/CMakeFiles/png_static.dir/all: _deps/libpng-build/CMakeFiles/pnglibconf_c.dir/all
+_deps/libpng-build/CMakeFiles/png_static.dir/all: _deps/libpng-build/CMakeFiles/pnglibconf_out.dir/all
 _deps/libpng-build/CMakeFiles/png_static.dir/all: _deps/libpng-build/CMakeFiles/genfiles.dir/all
 	$(MAKE) $(MAKESILENT) -f _deps\libpng-build\CMakeFiles\png_static.dir\build.make _deps/libpng-build/CMakeFiles/png_static.dir/depend
 	$(MAKE) $(MAKESILENT) -f _deps\libpng-build\CMakeFiles\png_static.dir\build.make _deps/libpng-build/CMakeFiles/png_static.dir/build
@@ -1654,8 +1654,8 @@ png_static: _deps/libpng-build/CMakeFiles/png_static.dir/rule
 .PHONY : png_static
 
 # codegen rule for target.
-_deps/libpng-build/CMakeFiles/png_static.dir/codegen: _deps/libpng-build/CMakeFiles/pnglibconf_out.dir/all
 _deps/libpng-build/CMakeFiles/png_static.dir/codegen: _deps/libpng-build/CMakeFiles/pnglibconf_c.dir/all
+_deps/libpng-build/CMakeFiles/png_static.dir/codegen: _deps/libpng-build/CMakeFiles/pnglibconf_out.dir/all
 _deps/libpng-build/CMakeFiles/png_static.dir/codegen: _deps/libpng-build/CMakeFiles/genfiles.dir/all
 	$(MAKE) $(MAKESILENT) -f _deps\libpng-build\CMakeFiles\png_static.dir\build.make _deps/libpng-build/CMakeFiles/png_static.dir/codegen
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=96,97,98 "Finished codegen for target png_static"
@@ -1866,19 +1866,19 @@ Source/CMakeFiles/libdevilutionx_assets.dir/all: 3rdParty/bzip2/CMakeFiles/BZip2
 Source/CMakeFiles/libdevilutionx_assets.dir/all: _deps/libfmt-build/CMakeFiles/fmt.dir/all
 Source/CMakeFiles/libdevilutionx_assets.dir/all: 3rdParty/libmpq/CMakeFiles/libmpq.dir/all
 Source/CMakeFiles/libdevilutionx_assets.dir/all: _deps/sheenbidi-build/CMakeFiles/SheenBidi.dir/all
-Source/CMakeFiles/libdevilutionx_assets.dir/all: 3rdParty/PKWare/CMakeFiles/PKWare.dir/all
-Source/CMakeFiles/libdevilutionx_assets.dir/all: Source/CMakeFiles/libdevilutionx_control_mode.dir/all
-Source/CMakeFiles/libdevilutionx_assets.dir/all: Source/CMakeFiles/libdevilutionx_file_util.dir/all
 Source/CMakeFiles/libdevilutionx_assets.dir/all: Source/CMakeFiles/libdevilutionx_controller_buttons.dir/all
+Source/CMakeFiles/libdevilutionx_assets.dir/all: 3rdParty/PKWare/CMakeFiles/PKWare.dir/all
 Source/CMakeFiles/libdevilutionx_assets.dir/all: Source/CMakeFiles/libdevilutionx_paths.dir/all
+Source/CMakeFiles/libdevilutionx_assets.dir/all: Source/CMakeFiles/libdevilutionx_control_mode.dir/all
 Source/CMakeFiles/libdevilutionx_assets.dir/all: Source/CMakeFiles/libdevilutionx_logged_fstream.dir/all
-Source/CMakeFiles/libdevilutionx_assets.dir/all: Source/CMakeFiles/libdevilutionx_ini.dir/all
-Source/CMakeFiles/libdevilutionx_assets.dir/all: Source/CMakeFiles/libdevilutionx_headless_mode.dir/all
+Source/CMakeFiles/libdevilutionx_assets.dir/all: Source/CMakeFiles/libdevilutionx_file_util.dir/all
 Source/CMakeFiles/libdevilutionx_assets.dir/all: Source/CMakeFiles/libdevilutionx_game_mode.dir/all
+Source/CMakeFiles/libdevilutionx_assets.dir/all: Source/CMakeFiles/libdevilutionx_headless_mode.dir/all
+Source/CMakeFiles/libdevilutionx_assets.dir/all: Source/CMakeFiles/libdevilutionx_pkware_encrypt.dir/all
+Source/CMakeFiles/libdevilutionx_assets.dir/all: Source/CMakeFiles/libdevilutionx_ini.dir/all
+Source/CMakeFiles/libdevilutionx_assets.dir/all: Source/CMakeFiles/libdevilutionx_quick_messages.dir/all
 Source/CMakeFiles/libdevilutionx_assets.dir/all: Source/CMakeFiles/libdevilutionx_mpq.dir/all
 Source/CMakeFiles/libdevilutionx_assets.dir/all: Source/CMakeFiles/libdevilutionx_options.dir/all
-Source/CMakeFiles/libdevilutionx_assets.dir/all: Source/CMakeFiles/libdevilutionx_pkware_encrypt.dir/all
-Source/CMakeFiles/libdevilutionx_assets.dir/all: Source/CMakeFiles/libdevilutionx_quick_messages.dir/all
 Source/CMakeFiles/libdevilutionx_assets.dir/all: Source/CMakeFiles/libdevilutionx_utf8.dir/all
 Source/CMakeFiles/libdevilutionx_assets.dir/all: Source/CMakeFiles/libdevilutionx_strings.dir/all
 	$(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_assets.dir\build.make Source/CMakeFiles/libdevilutionx_assets.dir/depend
@@ -2111,13 +2111,13 @@ Source/CMakeFiles/libdevilutionx_control_mode.dir/clean:
 # All Build rule for target.
 Source/CMakeFiles/libdevilutionx_padmapper.dir/all: _deps/libfmt-build/CMakeFiles/fmt.dir/all
 Source/CMakeFiles/libdevilutionx_padmapper.dir/all: _deps/sheenbidi-build/CMakeFiles/SheenBidi.dir/all
-Source/CMakeFiles/libdevilutionx_padmapper.dir/all: Source/CMakeFiles/libdevilutionx_control_mode.dir/all
-Source/CMakeFiles/libdevilutionx_padmapper.dir/all: Source/CMakeFiles/libdevilutionx_file_util.dir/all
 Source/CMakeFiles/libdevilutionx_padmapper.dir/all: Source/CMakeFiles/libdevilutionx_controller_buttons.dir/all
+Source/CMakeFiles/libdevilutionx_padmapper.dir/all: Source/CMakeFiles/libdevilutionx_control_mode.dir/all
 Source/CMakeFiles/libdevilutionx_padmapper.dir/all: Source/CMakeFiles/libdevilutionx_logged_fstream.dir/all
+Source/CMakeFiles/libdevilutionx_padmapper.dir/all: Source/CMakeFiles/libdevilutionx_file_util.dir/all
 Source/CMakeFiles/libdevilutionx_padmapper.dir/all: Source/CMakeFiles/libdevilutionx_ini.dir/all
-Source/CMakeFiles/libdevilutionx_padmapper.dir/all: Source/CMakeFiles/libdevilutionx_options.dir/all
 Source/CMakeFiles/libdevilutionx_padmapper.dir/all: Source/CMakeFiles/libdevilutionx_quick_messages.dir/all
+Source/CMakeFiles/libdevilutionx_padmapper.dir/all: Source/CMakeFiles/libdevilutionx_options.dir/all
 Source/CMakeFiles/libdevilutionx_padmapper.dir/all: Source/CMakeFiles/libdevilutionx_utf8.dir/all
 Source/CMakeFiles/libdevilutionx_padmapper.dir/all: Source/CMakeFiles/libdevilutionx_strings.dir/all
 	$(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_padmapper.dir\build.make Source/CMakeFiles/libdevilutionx_padmapper.dir/depend
@@ -2222,20 +2222,20 @@ Source/CMakeFiles/libdevilutionx_pcx_to_clx.dir/all: 3rdParty/bzip2/CMakeFiles/B
 Source/CMakeFiles/libdevilutionx_pcx_to_clx.dir/all: _deps/libfmt-build/CMakeFiles/fmt.dir/all
 Source/CMakeFiles/libdevilutionx_pcx_to_clx.dir/all: 3rdParty/libmpq/CMakeFiles/libmpq.dir/all
 Source/CMakeFiles/libdevilutionx_pcx_to_clx.dir/all: _deps/sheenbidi-build/CMakeFiles/SheenBidi.dir/all
-Source/CMakeFiles/libdevilutionx_pcx_to_clx.dir/all: 3rdParty/PKWare/CMakeFiles/PKWare.dir/all
-Source/CMakeFiles/libdevilutionx_pcx_to_clx.dir/all: Source/CMakeFiles/libdevilutionx_control_mode.dir/all
-Source/CMakeFiles/libdevilutionx_pcx_to_clx.dir/all: Source/CMakeFiles/libdevilutionx_file_util.dir/all
-Source/CMakeFiles/libdevilutionx_pcx_to_clx.dir/all: Source/CMakeFiles/libdevilutionx_assets.dir/all
 Source/CMakeFiles/libdevilutionx_pcx_to_clx.dir/all: Source/CMakeFiles/libdevilutionx_controller_buttons.dir/all
+Source/CMakeFiles/libdevilutionx_pcx_to_clx.dir/all: 3rdParty/PKWare/CMakeFiles/PKWare.dir/all
+Source/CMakeFiles/libdevilutionx_pcx_to_clx.dir/all: Source/CMakeFiles/libdevilutionx_assets.dir/all
 Source/CMakeFiles/libdevilutionx_pcx_to_clx.dir/all: Source/CMakeFiles/libdevilutionx_paths.dir/all
+Source/CMakeFiles/libdevilutionx_pcx_to_clx.dir/all: Source/CMakeFiles/libdevilutionx_control_mode.dir/all
 Source/CMakeFiles/libdevilutionx_pcx_to_clx.dir/all: Source/CMakeFiles/libdevilutionx_logged_fstream.dir/all
-Source/CMakeFiles/libdevilutionx_pcx_to_clx.dir/all: Source/CMakeFiles/libdevilutionx_ini.dir/all
-Source/CMakeFiles/libdevilutionx_pcx_to_clx.dir/all: Source/CMakeFiles/libdevilutionx_headless_mode.dir/all
+Source/CMakeFiles/libdevilutionx_pcx_to_clx.dir/all: Source/CMakeFiles/libdevilutionx_file_util.dir/all
 Source/CMakeFiles/libdevilutionx_pcx_to_clx.dir/all: Source/CMakeFiles/libdevilutionx_game_mode.dir/all
+Source/CMakeFiles/libdevilutionx_pcx_to_clx.dir/all: Source/CMakeFiles/libdevilutionx_headless_mode.dir/all
+Source/CMakeFiles/libdevilutionx_pcx_to_clx.dir/all: Source/CMakeFiles/libdevilutionx_pkware_encrypt.dir/all
+Source/CMakeFiles/libdevilutionx_pcx_to_clx.dir/all: Source/CMakeFiles/libdevilutionx_ini.dir/all
+Source/CMakeFiles/libdevilutionx_pcx_to_clx.dir/all: Source/CMakeFiles/libdevilutionx_quick_messages.dir/all
 Source/CMakeFiles/libdevilutionx_pcx_to_clx.dir/all: Source/CMakeFiles/libdevilutionx_mpq.dir/all
 Source/CMakeFiles/libdevilutionx_pcx_to_clx.dir/all: Source/CMakeFiles/libdevilutionx_options.dir/all
-Source/CMakeFiles/libdevilutionx_pcx_to_clx.dir/all: Source/CMakeFiles/libdevilutionx_pkware_encrypt.dir/all
-Source/CMakeFiles/libdevilutionx_pcx_to_clx.dir/all: Source/CMakeFiles/libdevilutionx_quick_messages.dir/all
 Source/CMakeFiles/libdevilutionx_pcx_to_clx.dir/all: Source/CMakeFiles/libdevilutionx_utf8.dir/all
 Source/CMakeFiles/libdevilutionx_pcx_to_clx.dir/all: Source/CMakeFiles/libdevilutionx_strings.dir/all
 	$(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_pcx_to_clx.dir\build.make Source/CMakeFiles/libdevilutionx_pcx_to_clx.dir/depend
@@ -2371,15 +2371,15 @@ Source/CMakeFiles/libdevilutionx_direction.dir/clean:
 # All Build rule for target.
 Source/CMakeFiles/libdevilutionx_dun_render.dir/all: _deps/libfmt-build/CMakeFiles/fmt.dir/all
 Source/CMakeFiles/libdevilutionx_dun_render.dir/all: _deps/sheenbidi-build/CMakeFiles/SheenBidi.dir/all
-Source/CMakeFiles/libdevilutionx_dun_render.dir/all: Source/CMakeFiles/libdevilutionx_control_mode.dir/all
-Source/CMakeFiles/libdevilutionx_dun_render.dir/all: Source/CMakeFiles/libdevilutionx_file_util.dir/all
-Source/CMakeFiles/libdevilutionx_dun_render.dir/all: Source/CMakeFiles/libdevilutionx_surface.dir/all
 Source/CMakeFiles/libdevilutionx_dun_render.dir/all: Source/CMakeFiles/libdevilutionx_controller_buttons.dir/all
+Source/CMakeFiles/libdevilutionx_dun_render.dir/all: Source/CMakeFiles/libdevilutionx_control_mode.dir/all
 Source/CMakeFiles/libdevilutionx_dun_render.dir/all: Source/CMakeFiles/libdevilutionx_light_render.dir/all
 Source/CMakeFiles/libdevilutionx_dun_render.dir/all: Source/CMakeFiles/libdevilutionx_logged_fstream.dir/all
+Source/CMakeFiles/libdevilutionx_dun_render.dir/all: Source/CMakeFiles/libdevilutionx_file_util.dir/all
+Source/CMakeFiles/libdevilutionx_dun_render.dir/all: Source/CMakeFiles/libdevilutionx_surface.dir/all
 Source/CMakeFiles/libdevilutionx_dun_render.dir/all: Source/CMakeFiles/libdevilutionx_ini.dir/all
-Source/CMakeFiles/libdevilutionx_dun_render.dir/all: Source/CMakeFiles/libdevilutionx_options.dir/all
 Source/CMakeFiles/libdevilutionx_dun_render.dir/all: Source/CMakeFiles/libdevilutionx_quick_messages.dir/all
+Source/CMakeFiles/libdevilutionx_dun_render.dir/all: Source/CMakeFiles/libdevilutionx_options.dir/all
 Source/CMakeFiles/libdevilutionx_dun_render.dir/all: Source/CMakeFiles/libdevilutionx_utf8.dir/all
 Source/CMakeFiles/libdevilutionx_dun_render.dir/all: Source/CMakeFiles/libdevilutionx_strings.dir/all
 	$(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_dun_render.dir\build.make Source/CMakeFiles/libdevilutionx_dun_render.dir/depend
@@ -2513,13 +2513,13 @@ Source/CMakeFiles/libdevilutionx_format_int.dir/clean:
 # All Build rule for target.
 Source/CMakeFiles/libdevilutionx_game_mode.dir/all: _deps/libfmt-build/CMakeFiles/fmt.dir/all
 Source/CMakeFiles/libdevilutionx_game_mode.dir/all: _deps/sheenbidi-build/CMakeFiles/SheenBidi.dir/all
-Source/CMakeFiles/libdevilutionx_game_mode.dir/all: Source/CMakeFiles/libdevilutionx_control_mode.dir/all
-Source/CMakeFiles/libdevilutionx_game_mode.dir/all: Source/CMakeFiles/libdevilutionx_file_util.dir/all
 Source/CMakeFiles/libdevilutionx_game_mode.dir/all: Source/CMakeFiles/libdevilutionx_controller_buttons.dir/all
+Source/CMakeFiles/libdevilutionx_game_mode.dir/all: Source/CMakeFiles/libdevilutionx_control_mode.dir/all
 Source/CMakeFiles/libdevilutionx_game_mode.dir/all: Source/CMakeFiles/libdevilutionx_logged_fstream.dir/all
+Source/CMakeFiles/libdevilutionx_game_mode.dir/all: Source/CMakeFiles/libdevilutionx_file_util.dir/all
 Source/CMakeFiles/libdevilutionx_game_mode.dir/all: Source/CMakeFiles/libdevilutionx_ini.dir/all
-Source/CMakeFiles/libdevilutionx_game_mode.dir/all: Source/CMakeFiles/libdevilutionx_options.dir/all
 Source/CMakeFiles/libdevilutionx_game_mode.dir/all: Source/CMakeFiles/libdevilutionx_quick_messages.dir/all
+Source/CMakeFiles/libdevilutionx_game_mode.dir/all: Source/CMakeFiles/libdevilutionx_options.dir/all
 Source/CMakeFiles/libdevilutionx_game_mode.dir/all: Source/CMakeFiles/libdevilutionx_utf8.dir/all
 Source/CMakeFiles/libdevilutionx_game_mode.dir/all: Source/CMakeFiles/libdevilutionx_strings.dir/all
 	$(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_game_mode.dir\build.make Source/CMakeFiles/libdevilutionx_game_mode.dir/depend
@@ -2558,37 +2558,37 @@ Source/CMakeFiles/libdevilutionx_gendung.dir/all: _deps/libfmt-build/CMakeFiles/
 Source/CMakeFiles/libdevilutionx_gendung.dir/all: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/all
 Source/CMakeFiles/libdevilutionx_gendung.dir/all: 3rdParty/libmpq/CMakeFiles/libmpq.dir/all
 Source/CMakeFiles/libdevilutionx_gendung.dir/all: _deps/sheenbidi-build/CMakeFiles/SheenBidi.dir/all
-Source/CMakeFiles/libdevilutionx_gendung.dir/all: 3rdParty/PKWare/CMakeFiles/PKWare.dir/all
-Source/CMakeFiles/libdevilutionx_gendung.dir/all: Source/CMakeFiles/libdevilutionx_palette_kd_tree.dir/all
-Source/CMakeFiles/libdevilutionx_gendung.dir/all: Source/CMakeFiles/libdevilutionx_control_mode.dir/all
-Source/CMakeFiles/libdevilutionx_gendung.dir/all: Source/CMakeFiles/libdevilutionx_clx_render.dir/all
-Source/CMakeFiles/libdevilutionx_gendung.dir/all: Source/CMakeFiles/libdevilutionx_file_util.dir/all
-Source/CMakeFiles/libdevilutionx_gendung.dir/all: Source/CMakeFiles/libdevilutionx_cl2_to_clx.dir/all
-Source/CMakeFiles/libdevilutionx_gendung.dir/all: Source/CMakeFiles/libdevilutionx_assets.dir/all
 Source/CMakeFiles/libdevilutionx_gendung.dir/all: Source/CMakeFiles/libdevilutionx_controller_buttons.dir/all
+Source/CMakeFiles/libdevilutionx_gendung.dir/all: 3rdParty/PKWare/CMakeFiles/PKWare.dir/all
+Source/CMakeFiles/libdevilutionx_gendung.dir/all: Source/CMakeFiles/libdevilutionx_assets.dir/all
+Source/CMakeFiles/libdevilutionx_gendung.dir/all: Source/CMakeFiles/libdevilutionx_cl2_to_clx.dir/all
+Source/CMakeFiles/libdevilutionx_gendung.dir/all: Source/CMakeFiles/libdevilutionx_clx_render.dir/all
+Source/CMakeFiles/libdevilutionx_gendung.dir/all: Source/CMakeFiles/libdevilutionx_palette_kd_tree.dir/all
 Source/CMakeFiles/libdevilutionx_gendung.dir/all: Source/CMakeFiles/libdevilutionx_paths.dir/all
+Source/CMakeFiles/libdevilutionx_gendung.dir/all: Source/CMakeFiles/libdevilutionx_control_mode.dir/all
 Source/CMakeFiles/libdevilutionx_gendung.dir/all: Source/CMakeFiles/libdevilutionx_light_render.dir/all
 Source/CMakeFiles/libdevilutionx_gendung.dir/all: Source/CMakeFiles/libdevilutionx_logged_fstream.dir/all
-Source/CMakeFiles/libdevilutionx_gendung.dir/all: Source/CMakeFiles/libdevilutionx_load_cl2.dir/all
-Source/CMakeFiles/libdevilutionx_gendung.dir/all: Source/CMakeFiles/libdevilutionx_parse_int.dir/all
-Source/CMakeFiles/libdevilutionx_gendung.dir/all: Source/CMakeFiles/libdevilutionx_ini.dir/all
-Source/CMakeFiles/libdevilutionx_gendung.dir/all: Source/CMakeFiles/libdevilutionx_headless_mode.dir/all
+Source/CMakeFiles/libdevilutionx_gendung.dir/all: Source/CMakeFiles/libdevilutionx_file_util.dir/all
 Source/CMakeFiles/libdevilutionx_gendung.dir/all: Source/CMakeFiles/libdevilutionx_game_mode.dir/all
-Source/CMakeFiles/libdevilutionx_gendung.dir/all: Source/CMakeFiles/libdevilutionx_items.dir/all
+Source/CMakeFiles/libdevilutionx_gendung.dir/all: Source/CMakeFiles/libdevilutionx_headless_mode.dir/all
+Source/CMakeFiles/libdevilutionx_gendung.dir/all: Source/CMakeFiles/libdevilutionx_load_cl2.dir/all
+Source/CMakeFiles/libdevilutionx_gendung.dir/all: Source/CMakeFiles/libdevilutionx_pkware_encrypt.dir/all
+Source/CMakeFiles/libdevilutionx_gendung.dir/all: Source/CMakeFiles/libdevilutionx_ini.dir/all
+Source/CMakeFiles/libdevilutionx_gendung.dir/all: Source/CMakeFiles/libdevilutionx_quick_messages.dir/all
+Source/CMakeFiles/libdevilutionx_gendung.dir/all: Source/CMakeFiles/libdevilutionx_mpq.dir/all
+Source/CMakeFiles/libdevilutionx_gendung.dir/all: Source/CMakeFiles/libdevilutionx_player.dir/all
 Source/CMakeFiles/libdevilutionx_gendung.dir/all: Source/CMakeFiles/libdevilutionx_monster.dir/all
+Source/CMakeFiles/libdevilutionx_gendung.dir/all: Source/CMakeFiles/libdevilutionx_items.dir/all
+Source/CMakeFiles/libdevilutionx_gendung.dir/all: Source/CMakeFiles/libdevilutionx_parse_int.dir/all
 Source/CMakeFiles/libdevilutionx_gendung.dir/all: Source/CMakeFiles/libdevilutionx_palette_blending.dir/all
+Source/CMakeFiles/libdevilutionx_gendung.dir/all: Source/CMakeFiles/libdevilutionx_options.dir/all
 Source/CMakeFiles/libdevilutionx_gendung.dir/all: Source/CMakeFiles/libdevilutionx_spells.dir/all
 Source/CMakeFiles/libdevilutionx_gendung.dir/all: Source/CMakeFiles/libdevilutionx_random.dir/all
-Source/CMakeFiles/libdevilutionx_gendung.dir/all: Source/CMakeFiles/libdevilutionx_mpq.dir/all
-Source/CMakeFiles/libdevilutionx_gendung.dir/all: Source/CMakeFiles/libdevilutionx_options.dir/all
-Source/CMakeFiles/libdevilutionx_gendung.dir/all: Source/CMakeFiles/libdevilutionx_pkware_encrypt.dir/all
-Source/CMakeFiles/libdevilutionx_gendung.dir/all: Source/CMakeFiles/libdevilutionx_quick_messages.dir/all
-Source/CMakeFiles/libdevilutionx_gendung.dir/all: Source/CMakeFiles/libdevilutionx_txtdata.dir/all
 Source/CMakeFiles/libdevilutionx_gendung.dir/all: Source/CMakeFiles/libdevilutionx_utf8.dir/all
-Source/CMakeFiles/libdevilutionx_gendung.dir/all: Source/CMakeFiles/libdevilutionx_player.dir/all
 Source/CMakeFiles/libdevilutionx_gendung.dir/all: Source/CMakeFiles/libdevilutionx_stores.dir/all
 Source/CMakeFiles/libdevilutionx_gendung.dir/all: Source/CMakeFiles/libdevilutionx_sound.dir/all
 Source/CMakeFiles/libdevilutionx_gendung.dir/all: Source/CMakeFiles/libdevilutionx_strings.dir/all
+Source/CMakeFiles/libdevilutionx_gendung.dir/all: Source/CMakeFiles/libdevilutionx_txtdata.dir/all
 	$(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_gendung.dir\build.make Source/CMakeFiles/libdevilutionx_gendung.dir/depend
 	$(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_gendung.dir\build.make Source/CMakeFiles/libdevilutionx_gendung.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=76 "Built target libdevilutionx_gendung"
@@ -2656,20 +2656,20 @@ Source/CMakeFiles/libdevilutionx_init.dir/all: 3rdParty/bzip2/CMakeFiles/BZip2.d
 Source/CMakeFiles/libdevilutionx_init.dir/all: _deps/libfmt-build/CMakeFiles/fmt.dir/all
 Source/CMakeFiles/libdevilutionx_init.dir/all: 3rdParty/libmpq/CMakeFiles/libmpq.dir/all
 Source/CMakeFiles/libdevilutionx_init.dir/all: _deps/sheenbidi-build/CMakeFiles/SheenBidi.dir/all
-Source/CMakeFiles/libdevilutionx_init.dir/all: 3rdParty/PKWare/CMakeFiles/PKWare.dir/all
-Source/CMakeFiles/libdevilutionx_init.dir/all: Source/CMakeFiles/libdevilutionx_control_mode.dir/all
-Source/CMakeFiles/libdevilutionx_init.dir/all: Source/CMakeFiles/libdevilutionx_file_util.dir/all
-Source/CMakeFiles/libdevilutionx_init.dir/all: Source/CMakeFiles/libdevilutionx_assets.dir/all
 Source/CMakeFiles/libdevilutionx_init.dir/all: Source/CMakeFiles/libdevilutionx_controller_buttons.dir/all
+Source/CMakeFiles/libdevilutionx_init.dir/all: 3rdParty/PKWare/CMakeFiles/PKWare.dir/all
+Source/CMakeFiles/libdevilutionx_init.dir/all: Source/CMakeFiles/libdevilutionx_assets.dir/all
 Source/CMakeFiles/libdevilutionx_init.dir/all: Source/CMakeFiles/libdevilutionx_paths.dir/all
+Source/CMakeFiles/libdevilutionx_init.dir/all: Source/CMakeFiles/libdevilutionx_control_mode.dir/all
 Source/CMakeFiles/libdevilutionx_init.dir/all: Source/CMakeFiles/libdevilutionx_logged_fstream.dir/all
-Source/CMakeFiles/libdevilutionx_init.dir/all: Source/CMakeFiles/libdevilutionx_ini.dir/all
-Source/CMakeFiles/libdevilutionx_init.dir/all: Source/CMakeFiles/libdevilutionx_headless_mode.dir/all
+Source/CMakeFiles/libdevilutionx_init.dir/all: Source/CMakeFiles/libdevilutionx_file_util.dir/all
 Source/CMakeFiles/libdevilutionx_init.dir/all: Source/CMakeFiles/libdevilutionx_game_mode.dir/all
+Source/CMakeFiles/libdevilutionx_init.dir/all: Source/CMakeFiles/libdevilutionx_headless_mode.dir/all
+Source/CMakeFiles/libdevilutionx_init.dir/all: Source/CMakeFiles/libdevilutionx_pkware_encrypt.dir/all
+Source/CMakeFiles/libdevilutionx_init.dir/all: Source/CMakeFiles/libdevilutionx_ini.dir/all
+Source/CMakeFiles/libdevilutionx_init.dir/all: Source/CMakeFiles/libdevilutionx_quick_messages.dir/all
 Source/CMakeFiles/libdevilutionx_init.dir/all: Source/CMakeFiles/libdevilutionx_mpq.dir/all
 Source/CMakeFiles/libdevilutionx_init.dir/all: Source/CMakeFiles/libdevilutionx_options.dir/all
-Source/CMakeFiles/libdevilutionx_init.dir/all: Source/CMakeFiles/libdevilutionx_pkware_encrypt.dir/all
-Source/CMakeFiles/libdevilutionx_init.dir/all: Source/CMakeFiles/libdevilutionx_quick_messages.dir/all
 Source/CMakeFiles/libdevilutionx_init.dir/all: Source/CMakeFiles/libdevilutionx_utf8.dir/all
 Source/CMakeFiles/libdevilutionx_init.dir/all: Source/CMakeFiles/libdevilutionx_strings.dir/all
 	$(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_init.dir\build.make Source/CMakeFiles/libdevilutionx_init.dir/depend
@@ -2707,11 +2707,11 @@ Source/CMakeFiles/libdevilutionx_load_cel.dir/all: 3rdParty/bzip2/CMakeFiles/BZi
 Source/CMakeFiles/libdevilutionx_load_cel.dir/all: _deps/libfmt-build/CMakeFiles/fmt.dir/all
 Source/CMakeFiles/libdevilutionx_load_cel.dir/all: 3rdParty/libmpq/CMakeFiles/libmpq.dir/all
 Source/CMakeFiles/libdevilutionx_load_cel.dir/all: 3rdParty/PKWare/CMakeFiles/PKWare.dir/all
-Source/CMakeFiles/libdevilutionx_load_cel.dir/all: Source/CMakeFiles/libdevilutionx_file_util.dir/all
 Source/CMakeFiles/libdevilutionx_load_cel.dir/all: Source/CMakeFiles/libdevilutionx_cel_to_clx.dir/all
 Source/CMakeFiles/libdevilutionx_load_cel.dir/all: Source/CMakeFiles/libdevilutionx_logged_fstream.dir/all
-Source/CMakeFiles/libdevilutionx_load_cel.dir/all: Source/CMakeFiles/libdevilutionx_mpq.dir/all
+Source/CMakeFiles/libdevilutionx_load_cel.dir/all: Source/CMakeFiles/libdevilutionx_file_util.dir/all
 Source/CMakeFiles/libdevilutionx_load_cel.dir/all: Source/CMakeFiles/libdevilutionx_pkware_encrypt.dir/all
+Source/CMakeFiles/libdevilutionx_load_cel.dir/all: Source/CMakeFiles/libdevilutionx_mpq.dir/all
 Source/CMakeFiles/libdevilutionx_load_cel.dir/all: Source/CMakeFiles/libdevilutionx_strings.dir/all
 	$(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_load_cel.dir\build.make Source/CMakeFiles/libdevilutionx_load_cel.dir/depend
 	$(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_load_cel.dir\build.make Source/CMakeFiles/libdevilutionx_load_cel.dir/build
@@ -2748,11 +2748,11 @@ Source/CMakeFiles/libdevilutionx_load_cl2.dir/all: 3rdParty/bzip2/CMakeFiles/BZi
 Source/CMakeFiles/libdevilutionx_load_cl2.dir/all: _deps/libfmt-build/CMakeFiles/fmt.dir/all
 Source/CMakeFiles/libdevilutionx_load_cl2.dir/all: 3rdParty/libmpq/CMakeFiles/libmpq.dir/all
 Source/CMakeFiles/libdevilutionx_load_cl2.dir/all: 3rdParty/PKWare/CMakeFiles/PKWare.dir/all
-Source/CMakeFiles/libdevilutionx_load_cl2.dir/all: Source/CMakeFiles/libdevilutionx_file_util.dir/all
 Source/CMakeFiles/libdevilutionx_load_cl2.dir/all: Source/CMakeFiles/libdevilutionx_cl2_to_clx.dir/all
 Source/CMakeFiles/libdevilutionx_load_cl2.dir/all: Source/CMakeFiles/libdevilutionx_logged_fstream.dir/all
-Source/CMakeFiles/libdevilutionx_load_cl2.dir/all: Source/CMakeFiles/libdevilutionx_mpq.dir/all
+Source/CMakeFiles/libdevilutionx_load_cl2.dir/all: Source/CMakeFiles/libdevilutionx_file_util.dir/all
 Source/CMakeFiles/libdevilutionx_load_cl2.dir/all: Source/CMakeFiles/libdevilutionx_pkware_encrypt.dir/all
+Source/CMakeFiles/libdevilutionx_load_cl2.dir/all: Source/CMakeFiles/libdevilutionx_mpq.dir/all
 Source/CMakeFiles/libdevilutionx_load_cl2.dir/all: Source/CMakeFiles/libdevilutionx_strings.dir/all
 	$(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_load_cl2.dir\build.make Source/CMakeFiles/libdevilutionx_load_cl2.dir/depend
 	$(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_load_cl2.dir\build.make Source/CMakeFiles/libdevilutionx_load_cl2.dir/build
@@ -2789,30 +2789,30 @@ Source/CMakeFiles/libdevilutionx_load_clx.dir/all: 3rdParty/bzip2/CMakeFiles/BZi
 Source/CMakeFiles/libdevilutionx_load_clx.dir/all: _deps/libfmt-build/CMakeFiles/fmt.dir/all
 Source/CMakeFiles/libdevilutionx_load_clx.dir/all: 3rdParty/libmpq/CMakeFiles/libmpq.dir/all
 Source/CMakeFiles/libdevilutionx_load_clx.dir/all: _deps/sheenbidi-build/CMakeFiles/SheenBidi.dir/all
-Source/CMakeFiles/libdevilutionx_load_clx.dir/all: 3rdParty/PKWare/CMakeFiles/PKWare.dir/all
-Source/CMakeFiles/libdevilutionx_load_clx.dir/all: Source/CMakeFiles/libdevilutionx_control_mode.dir/all
-Source/CMakeFiles/libdevilutionx_load_clx.dir/all: Source/CMakeFiles/libdevilutionx_file_util.dir/all
-Source/CMakeFiles/libdevilutionx_load_clx.dir/all: Source/CMakeFiles/libdevilutionx_assets.dir/all
 Source/CMakeFiles/libdevilutionx_load_clx.dir/all: Source/CMakeFiles/libdevilutionx_controller_buttons.dir/all
+Source/CMakeFiles/libdevilutionx_load_clx.dir/all: 3rdParty/PKWare/CMakeFiles/PKWare.dir/all
+Source/CMakeFiles/libdevilutionx_load_clx.dir/all: Source/CMakeFiles/libdevilutionx_assets.dir/all
 Source/CMakeFiles/libdevilutionx_load_clx.dir/all: Source/CMakeFiles/libdevilutionx_paths.dir/all
+Source/CMakeFiles/libdevilutionx_load_clx.dir/all: Source/CMakeFiles/libdevilutionx_control_mode.dir/all
 Source/CMakeFiles/libdevilutionx_load_clx.dir/all: Source/CMakeFiles/libdevilutionx_logged_fstream.dir/all
-Source/CMakeFiles/libdevilutionx_load_clx.dir/all: Source/CMakeFiles/libdevilutionx_ini.dir/all
-Source/CMakeFiles/libdevilutionx_load_clx.dir/all: Source/CMakeFiles/libdevilutionx_headless_mode.dir/all
+Source/CMakeFiles/libdevilutionx_load_clx.dir/all: Source/CMakeFiles/libdevilutionx_file_util.dir/all
 Source/CMakeFiles/libdevilutionx_load_clx.dir/all: Source/CMakeFiles/libdevilutionx_game_mode.dir/all
+Source/CMakeFiles/libdevilutionx_load_clx.dir/all: Source/CMakeFiles/libdevilutionx_headless_mode.dir/all
+Source/CMakeFiles/libdevilutionx_load_clx.dir/all: Source/CMakeFiles/libdevilutionx_pkware_encrypt.dir/all
+Source/CMakeFiles/libdevilutionx_load_clx.dir/all: Source/CMakeFiles/libdevilutionx_ini.dir/all
+Source/CMakeFiles/libdevilutionx_load_clx.dir/all: Source/CMakeFiles/libdevilutionx_quick_messages.dir/all
 Source/CMakeFiles/libdevilutionx_load_clx.dir/all: Source/CMakeFiles/libdevilutionx_mpq.dir/all
 Source/CMakeFiles/libdevilutionx_load_clx.dir/all: Source/CMakeFiles/libdevilutionx_options.dir/all
-Source/CMakeFiles/libdevilutionx_load_clx.dir/all: Source/CMakeFiles/libdevilutionx_pkware_encrypt.dir/all
-Source/CMakeFiles/libdevilutionx_load_clx.dir/all: Source/CMakeFiles/libdevilutionx_quick_messages.dir/all
 Source/CMakeFiles/libdevilutionx_load_clx.dir/all: Source/CMakeFiles/libdevilutionx_utf8.dir/all
 Source/CMakeFiles/libdevilutionx_load_clx.dir/all: Source/CMakeFiles/libdevilutionx_strings.dir/all
 	$(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_load_clx.dir\build.make Source/CMakeFiles/libdevilutionx_load_clx.dir/depend
 	$(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_load_clx.dir\build.make Source/CMakeFiles/libdevilutionx_load_clx.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num= "Built target libdevilutionx_load_clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=79 "Built target libdevilutionx_load_clx"
 .PHONY : Source/CMakeFiles/libdevilutionx_load_clx.dir/all
 
 # Build rule for subdir invocation for target.
 Source/CMakeFiles/libdevilutionx_load_clx.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "C:\c - c++\DevilutionX\build_NOW\CMakeFiles" 7
+	$(CMAKE_COMMAND) -E cmake_progress_start "C:\c - c++\DevilutionX\build_NOW\CMakeFiles" 8
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 Source/CMakeFiles/libdevilutionx_load_clx.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start "C:\c - c++\DevilutionX\build_NOW\CMakeFiles" 0
 .PHONY : Source/CMakeFiles/libdevilutionx_load_clx.dir/rule
@@ -2824,7 +2824,7 @@ libdevilutionx_load_clx: Source/CMakeFiles/libdevilutionx_load_clx.dir/rule
 # codegen rule for target.
 Source/CMakeFiles/libdevilutionx_load_clx.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_load_clx.dir\build.make Source/CMakeFiles/libdevilutionx_load_clx.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num= "Finished codegen for target libdevilutionx_load_clx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=79 "Finished codegen for target libdevilutionx_load_clx"
 .PHONY : Source/CMakeFiles/libdevilutionx_load_clx.dir/codegen
 
 # clean rule for target.
@@ -2840,31 +2840,31 @@ Source/CMakeFiles/libdevilutionx_load_pcx.dir/all: 3rdParty/bzip2/CMakeFiles/BZi
 Source/CMakeFiles/libdevilutionx_load_pcx.dir/all: _deps/libfmt-build/CMakeFiles/fmt.dir/all
 Source/CMakeFiles/libdevilutionx_load_pcx.dir/all: 3rdParty/libmpq/CMakeFiles/libmpq.dir/all
 Source/CMakeFiles/libdevilutionx_load_pcx.dir/all: _deps/sheenbidi-build/CMakeFiles/SheenBidi.dir/all
+Source/CMakeFiles/libdevilutionx_load_pcx.dir/all: Source/CMakeFiles/libdevilutionx_controller_buttons.dir/all
 Source/CMakeFiles/libdevilutionx_load_pcx.dir/all: 3rdParty/PKWare/CMakeFiles/PKWare.dir/all
+Source/CMakeFiles/libdevilutionx_load_pcx.dir/all: Source/CMakeFiles/libdevilutionx_assets.dir/all
+Source/CMakeFiles/libdevilutionx_load_pcx.dir/all: Source/CMakeFiles/libdevilutionx_paths.dir/all
 Source/CMakeFiles/libdevilutionx_load_pcx.dir/all: Source/CMakeFiles/libdevilutionx_control_mode.dir/all
 Source/CMakeFiles/libdevilutionx_load_pcx.dir/all: Source/CMakeFiles/libdevilutionx_pcx_to_clx.dir/all
-Source/CMakeFiles/libdevilutionx_load_pcx.dir/all: Source/CMakeFiles/libdevilutionx_file_util.dir/all
-Source/CMakeFiles/libdevilutionx_load_pcx.dir/all: Source/CMakeFiles/libdevilutionx_assets.dir/all
-Source/CMakeFiles/libdevilutionx_load_pcx.dir/all: Source/CMakeFiles/libdevilutionx_controller_buttons.dir/all
-Source/CMakeFiles/libdevilutionx_load_pcx.dir/all: Source/CMakeFiles/libdevilutionx_paths.dir/all
 Source/CMakeFiles/libdevilutionx_load_pcx.dir/all: Source/CMakeFiles/libdevilutionx_logged_fstream.dir/all
-Source/CMakeFiles/libdevilutionx_load_pcx.dir/all: Source/CMakeFiles/libdevilutionx_ini.dir/all
-Source/CMakeFiles/libdevilutionx_load_pcx.dir/all: Source/CMakeFiles/libdevilutionx_headless_mode.dir/all
+Source/CMakeFiles/libdevilutionx_load_pcx.dir/all: Source/CMakeFiles/libdevilutionx_file_util.dir/all
 Source/CMakeFiles/libdevilutionx_load_pcx.dir/all: Source/CMakeFiles/libdevilutionx_game_mode.dir/all
+Source/CMakeFiles/libdevilutionx_load_pcx.dir/all: Source/CMakeFiles/libdevilutionx_headless_mode.dir/all
+Source/CMakeFiles/libdevilutionx_load_pcx.dir/all: Source/CMakeFiles/libdevilutionx_pkware_encrypt.dir/all
+Source/CMakeFiles/libdevilutionx_load_pcx.dir/all: Source/CMakeFiles/libdevilutionx_ini.dir/all
+Source/CMakeFiles/libdevilutionx_load_pcx.dir/all: Source/CMakeFiles/libdevilutionx_quick_messages.dir/all
 Source/CMakeFiles/libdevilutionx_load_pcx.dir/all: Source/CMakeFiles/libdevilutionx_mpq.dir/all
 Source/CMakeFiles/libdevilutionx_load_pcx.dir/all: Source/CMakeFiles/libdevilutionx_options.dir/all
-Source/CMakeFiles/libdevilutionx_load_pcx.dir/all: Source/CMakeFiles/libdevilutionx_pkware_encrypt.dir/all
-Source/CMakeFiles/libdevilutionx_load_pcx.dir/all: Source/CMakeFiles/libdevilutionx_quick_messages.dir/all
 Source/CMakeFiles/libdevilutionx_load_pcx.dir/all: Source/CMakeFiles/libdevilutionx_utf8.dir/all
 Source/CMakeFiles/libdevilutionx_load_pcx.dir/all: Source/CMakeFiles/libdevilutionx_strings.dir/all
 	$(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_load_pcx.dir\build.make Source/CMakeFiles/libdevilutionx_load_pcx.dir/depend
 	$(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_load_pcx.dir\build.make Source/CMakeFiles/libdevilutionx_load_pcx.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=79 "Built target libdevilutionx_load_pcx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num= "Built target libdevilutionx_load_pcx"
 .PHONY : Source/CMakeFiles/libdevilutionx_load_pcx.dir/all
 
 # Build rule for subdir invocation for target.
 Source/CMakeFiles/libdevilutionx_load_pcx.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "C:\c - c++\DevilutionX\build_NOW\CMakeFiles" 8
+	$(CMAKE_COMMAND) -E cmake_progress_start "C:\c - c++\DevilutionX\build_NOW\CMakeFiles" 7
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 Source/CMakeFiles/libdevilutionx_load_pcx.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start "C:\c - c++\DevilutionX\build_NOW\CMakeFiles" 0
 .PHONY : Source/CMakeFiles/libdevilutionx_load_pcx.dir/rule
@@ -2876,7 +2876,7 @@ libdevilutionx_load_pcx: Source/CMakeFiles/libdevilutionx_load_pcx.dir/rule
 # codegen rule for target.
 Source/CMakeFiles/libdevilutionx_load_pcx.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_load_pcx.dir\build.make Source/CMakeFiles/libdevilutionx_load_pcx.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=79 "Finished codegen for target libdevilutionx_load_pcx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num= "Finished codegen for target libdevilutionx_load_pcx"
 .PHONY : Source/CMakeFiles/libdevilutionx_load_pcx.dir/codegen
 
 # clean rule for target.
@@ -3055,12 +3055,12 @@ Source/CMakeFiles/libdevilutionx_life_volume.dir/all: _deps/libfmt-build/CMakeFi
 Source/CMakeFiles/libdevilutionx_life_volume.dir/all: Source/CMakeFiles/libdevilutionx_strings.dir/all
 	$(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_life_volume.dir\build.make Source/CMakeFiles/libdevilutionx_life_volume.dir/depend
 	$(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_life_volume.dir\build.make Source/CMakeFiles/libdevilutionx_life_volume.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=78 "Built target libdevilutionx_life_volume"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num= "Built target libdevilutionx_life_volume"
 .PHONY : Source/CMakeFiles/libdevilutionx_life_volume.dir/all
 
 # Build rule for subdir invocation for target.
 Source/CMakeFiles/libdevilutionx_life_volume.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "C:\c - c++\DevilutionX\build_NOW\CMakeFiles" 2
+	$(CMAKE_COMMAND) -E cmake_progress_start "C:\c - c++\DevilutionX\build_NOW\CMakeFiles" 1
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 Source/CMakeFiles/libdevilutionx_life_volume.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start "C:\c - c++\DevilutionX\build_NOW\CMakeFiles" 0
 .PHONY : Source/CMakeFiles/libdevilutionx_life_volume.dir/rule
@@ -3072,7 +3072,7 @@ libdevilutionx_life_volume: Source/CMakeFiles/libdevilutionx_life_volume.dir/rul
 # codegen rule for target.
 Source/CMakeFiles/libdevilutionx_life_volume.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_life_volume.dir\build.make Source/CMakeFiles/libdevilutionx_life_volume.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=78 "Finished codegen for target libdevilutionx_life_volume"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num= "Finished codegen for target libdevilutionx_life_volume"
 .PHONY : Source/CMakeFiles/libdevilutionx_life_volume.dir/codegen
 
 # clean rule for target.
@@ -3190,35 +3190,35 @@ Source/CMakeFiles/libdevilutionx_items.dir/all: _deps/libfmt-build/CMakeFiles/fm
 Source/CMakeFiles/libdevilutionx_items.dir/all: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/all
 Source/CMakeFiles/libdevilutionx_items.dir/all: 3rdParty/libmpq/CMakeFiles/libmpq.dir/all
 Source/CMakeFiles/libdevilutionx_items.dir/all: _deps/sheenbidi-build/CMakeFiles/SheenBidi.dir/all
-Source/CMakeFiles/libdevilutionx_items.dir/all: 3rdParty/PKWare/CMakeFiles/PKWare.dir/all
-Source/CMakeFiles/libdevilutionx_items.dir/all: Source/CMakeFiles/libdevilutionx_palette_kd_tree.dir/all
-Source/CMakeFiles/libdevilutionx_items.dir/all: Source/CMakeFiles/libdevilutionx_control_mode.dir/all
-Source/CMakeFiles/libdevilutionx_items.dir/all: Source/CMakeFiles/libdevilutionx_clx_render.dir/all
-Source/CMakeFiles/libdevilutionx_items.dir/all: Source/CMakeFiles/libdevilutionx_file_util.dir/all
-Source/CMakeFiles/libdevilutionx_items.dir/all: Source/CMakeFiles/libdevilutionx_cl2_to_clx.dir/all
-Source/CMakeFiles/libdevilutionx_items.dir/all: Source/CMakeFiles/libdevilutionx_assets.dir/all
 Source/CMakeFiles/libdevilutionx_items.dir/all: Source/CMakeFiles/libdevilutionx_controller_buttons.dir/all
+Source/CMakeFiles/libdevilutionx_items.dir/all: 3rdParty/PKWare/CMakeFiles/PKWare.dir/all
+Source/CMakeFiles/libdevilutionx_items.dir/all: Source/CMakeFiles/libdevilutionx_assets.dir/all
+Source/CMakeFiles/libdevilutionx_items.dir/all: Source/CMakeFiles/libdevilutionx_cl2_to_clx.dir/all
+Source/CMakeFiles/libdevilutionx_items.dir/all: Source/CMakeFiles/libdevilutionx_clx_render.dir/all
+Source/CMakeFiles/libdevilutionx_items.dir/all: Source/CMakeFiles/libdevilutionx_palette_kd_tree.dir/all
 Source/CMakeFiles/libdevilutionx_items.dir/all: Source/CMakeFiles/libdevilutionx_paths.dir/all
+Source/CMakeFiles/libdevilutionx_items.dir/all: Source/CMakeFiles/libdevilutionx_control_mode.dir/all
 Source/CMakeFiles/libdevilutionx_items.dir/all: Source/CMakeFiles/libdevilutionx_light_render.dir/all
 Source/CMakeFiles/libdevilutionx_items.dir/all: Source/CMakeFiles/libdevilutionx_logged_fstream.dir/all
-Source/CMakeFiles/libdevilutionx_items.dir/all: Source/CMakeFiles/libdevilutionx_load_cl2.dir/all
-Source/CMakeFiles/libdevilutionx_items.dir/all: Source/CMakeFiles/libdevilutionx_parse_int.dir/all
-Source/CMakeFiles/libdevilutionx_items.dir/all: Source/CMakeFiles/libdevilutionx_ini.dir/all
-Source/CMakeFiles/libdevilutionx_items.dir/all: Source/CMakeFiles/libdevilutionx_headless_mode.dir/all
+Source/CMakeFiles/libdevilutionx_items.dir/all: Source/CMakeFiles/libdevilutionx_file_util.dir/all
 Source/CMakeFiles/libdevilutionx_items.dir/all: Source/CMakeFiles/libdevilutionx_game_mode.dir/all
+Source/CMakeFiles/libdevilutionx_items.dir/all: Source/CMakeFiles/libdevilutionx_headless_mode.dir/all
+Source/CMakeFiles/libdevilutionx_items.dir/all: Source/CMakeFiles/libdevilutionx_load_cl2.dir/all
+Source/CMakeFiles/libdevilutionx_items.dir/all: Source/CMakeFiles/libdevilutionx_pkware_encrypt.dir/all
+Source/CMakeFiles/libdevilutionx_items.dir/all: Source/CMakeFiles/libdevilutionx_ini.dir/all
+Source/CMakeFiles/libdevilutionx_items.dir/all: Source/CMakeFiles/libdevilutionx_quick_messages.dir/all
+Source/CMakeFiles/libdevilutionx_items.dir/all: Source/CMakeFiles/libdevilutionx_mpq.dir/all
+Source/CMakeFiles/libdevilutionx_items.dir/all: Source/CMakeFiles/libdevilutionx_player.dir/all
+Source/CMakeFiles/libdevilutionx_items.dir/all: Source/CMakeFiles/libdevilutionx_parse_int.dir/all
 Source/CMakeFiles/libdevilutionx_items.dir/all: Source/CMakeFiles/libdevilutionx_palette_blending.dir/all
+Source/CMakeFiles/libdevilutionx_items.dir/all: Source/CMakeFiles/libdevilutionx_options.dir/all
 Source/CMakeFiles/libdevilutionx_items.dir/all: Source/CMakeFiles/libdevilutionx_spells.dir/all
 Source/CMakeFiles/libdevilutionx_items.dir/all: Source/CMakeFiles/libdevilutionx_random.dir/all
-Source/CMakeFiles/libdevilutionx_items.dir/all: Source/CMakeFiles/libdevilutionx_mpq.dir/all
-Source/CMakeFiles/libdevilutionx_items.dir/all: Source/CMakeFiles/libdevilutionx_options.dir/all
-Source/CMakeFiles/libdevilutionx_items.dir/all: Source/CMakeFiles/libdevilutionx_pkware_encrypt.dir/all
-Source/CMakeFiles/libdevilutionx_items.dir/all: Source/CMakeFiles/libdevilutionx_quick_messages.dir/all
-Source/CMakeFiles/libdevilutionx_items.dir/all: Source/CMakeFiles/libdevilutionx_txtdata.dir/all
 Source/CMakeFiles/libdevilutionx_items.dir/all: Source/CMakeFiles/libdevilutionx_utf8.dir/all
-Source/CMakeFiles/libdevilutionx_items.dir/all: Source/CMakeFiles/libdevilutionx_player.dir/all
 Source/CMakeFiles/libdevilutionx_items.dir/all: Source/CMakeFiles/libdevilutionx_stores.dir/all
 Source/CMakeFiles/libdevilutionx_items.dir/all: Source/CMakeFiles/libdevilutionx_sound.dir/all
 Source/CMakeFiles/libdevilutionx_items.dir/all: Source/CMakeFiles/libdevilutionx_strings.dir/all
+Source/CMakeFiles/libdevilutionx_items.dir/all: Source/CMakeFiles/libdevilutionx_txtdata.dir/all
 	$(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_items.dir\build.make Source/CMakeFiles/libdevilutionx_items.dir/depend
 	$(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_items.dir\build.make Source/CMakeFiles/libdevilutionx_items.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num= "Built target libdevilutionx_items"
@@ -3290,39 +3290,39 @@ Source/CMakeFiles/libdevilutionx_level_objects.dir/all: _deps/libfmt-build/CMake
 Source/CMakeFiles/libdevilutionx_level_objects.dir/all: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/all
 Source/CMakeFiles/libdevilutionx_level_objects.dir/all: 3rdParty/libmpq/CMakeFiles/libmpq.dir/all
 Source/CMakeFiles/libdevilutionx_level_objects.dir/all: _deps/sheenbidi-build/CMakeFiles/SheenBidi.dir/all
+Source/CMakeFiles/libdevilutionx_level_objects.dir/all: Source/CMakeFiles/libdevilutionx_controller_buttons.dir/all
 Source/CMakeFiles/libdevilutionx_level_objects.dir/all: 3rdParty/PKWare/CMakeFiles/PKWare.dir/all
+Source/CMakeFiles/libdevilutionx_level_objects.dir/all: Source/CMakeFiles/libdevilutionx_assets.dir/all
+Source/CMakeFiles/libdevilutionx_level_objects.dir/all: Source/CMakeFiles/libdevilutionx_cl2_to_clx.dir/all
+Source/CMakeFiles/libdevilutionx_level_objects.dir/all: Source/CMakeFiles/libdevilutionx_paths.dir/all
 Source/CMakeFiles/libdevilutionx_level_objects.dir/all: Source/CMakeFiles/libdevilutionx_control_mode.dir/all
 Source/CMakeFiles/libdevilutionx_level_objects.dir/all: Source/CMakeFiles/libdevilutionx_direction.dir/all
-Source/CMakeFiles/libdevilutionx_level_objects.dir/all: Source/CMakeFiles/libdevilutionx_file_util.dir/all
-Source/CMakeFiles/libdevilutionx_level_objects.dir/all: Source/CMakeFiles/libdevilutionx_cl2_to_clx.dir/all
-Source/CMakeFiles/libdevilutionx_level_objects.dir/all: Source/CMakeFiles/libdevilutionx_assets.dir/all
-Source/CMakeFiles/libdevilutionx_level_objects.dir/all: Source/CMakeFiles/libdevilutionx_controller_buttons.dir/all
-Source/CMakeFiles/libdevilutionx_level_objects.dir/all: Source/CMakeFiles/libdevilutionx_paths.dir/all
 Source/CMakeFiles/libdevilutionx_level_objects.dir/all: Source/CMakeFiles/libdevilutionx_logged_fstream.dir/all
-Source/CMakeFiles/libdevilutionx_level_objects.dir/all: Source/CMakeFiles/libdevilutionx_load_cl2.dir/all
-Source/CMakeFiles/libdevilutionx_level_objects.dir/all: Source/CMakeFiles/libdevilutionx_parse_int.dir/all
-Source/CMakeFiles/libdevilutionx_level_objects.dir/all: Source/CMakeFiles/libdevilutionx_ini.dir/all
-Source/CMakeFiles/libdevilutionx_level_objects.dir/all: Source/CMakeFiles/libdevilutionx_headless_mode.dir/all
+Source/CMakeFiles/libdevilutionx_level_objects.dir/all: Source/CMakeFiles/libdevilutionx_file_util.dir/all
 Source/CMakeFiles/libdevilutionx_level_objects.dir/all: Source/CMakeFiles/libdevilutionx_game_mode.dir/all
-Source/CMakeFiles/libdevilutionx_level_objects.dir/all: Source/CMakeFiles/libdevilutionx_monster.dir/all
-Source/CMakeFiles/libdevilutionx_level_objects.dir/all: Source/CMakeFiles/libdevilutionx_random.dir/all
-Source/CMakeFiles/libdevilutionx_level_objects.dir/all: Source/CMakeFiles/libdevilutionx_mpq.dir/all
-Source/CMakeFiles/libdevilutionx_level_objects.dir/all: Source/CMakeFiles/libdevilutionx_options.dir/all
+Source/CMakeFiles/libdevilutionx_level_objects.dir/all: Source/CMakeFiles/libdevilutionx_headless_mode.dir/all
+Source/CMakeFiles/libdevilutionx_level_objects.dir/all: Source/CMakeFiles/libdevilutionx_load_cl2.dir/all
 Source/CMakeFiles/libdevilutionx_level_objects.dir/all: Source/CMakeFiles/libdevilutionx_pkware_encrypt.dir/all
+Source/CMakeFiles/libdevilutionx_level_objects.dir/all: Source/CMakeFiles/libdevilutionx_ini.dir/all
 Source/CMakeFiles/libdevilutionx_level_objects.dir/all: Source/CMakeFiles/libdevilutionx_quick_messages.dir/all
-Source/CMakeFiles/libdevilutionx_level_objects.dir/all: Source/CMakeFiles/libdevilutionx_txtdata.dir/all
-Source/CMakeFiles/libdevilutionx_level_objects.dir/all: Source/CMakeFiles/libdevilutionx_utf8.dir/all
+Source/CMakeFiles/libdevilutionx_level_objects.dir/all: Source/CMakeFiles/libdevilutionx_mpq.dir/all
 Source/CMakeFiles/libdevilutionx_level_objects.dir/all: Source/CMakeFiles/libdevilutionx_player.dir/all
+Source/CMakeFiles/libdevilutionx_level_objects.dir/all: Source/CMakeFiles/libdevilutionx_monster.dir/all
+Source/CMakeFiles/libdevilutionx_level_objects.dir/all: Source/CMakeFiles/libdevilutionx_parse_int.dir/all
+Source/CMakeFiles/libdevilutionx_level_objects.dir/all: Source/CMakeFiles/libdevilutionx_options.dir/all
+Source/CMakeFiles/libdevilutionx_level_objects.dir/all: Source/CMakeFiles/libdevilutionx_random.dir/all
+Source/CMakeFiles/libdevilutionx_level_objects.dir/all: Source/CMakeFiles/libdevilutionx_utf8.dir/all
 Source/CMakeFiles/libdevilutionx_level_objects.dir/all: Source/CMakeFiles/libdevilutionx_sound.dir/all
 Source/CMakeFiles/libdevilutionx_level_objects.dir/all: Source/CMakeFiles/libdevilutionx_strings.dir/all
+Source/CMakeFiles/libdevilutionx_level_objects.dir/all: Source/CMakeFiles/libdevilutionx_txtdata.dir/all
 	$(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_level_objects.dir\build.make Source/CMakeFiles/libdevilutionx_level_objects.dir/depend
 	$(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_level_objects.dir\build.make Source/CMakeFiles/libdevilutionx_level_objects.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num= "Built target libdevilutionx_level_objects"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=78 "Built target libdevilutionx_level_objects"
 .PHONY : Source/CMakeFiles/libdevilutionx_level_objects.dir/all
 
 # Build rule for subdir invocation for target.
 Source/CMakeFiles/libdevilutionx_level_objects.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "C:\c - c++\DevilutionX\build_NOW\CMakeFiles" 13
+	$(CMAKE_COMMAND) -E cmake_progress_start "C:\c - c++\DevilutionX\build_NOW\CMakeFiles" 14
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 Source/CMakeFiles/libdevilutionx_level_objects.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start "C:\c - c++\DevilutionX\build_NOW\CMakeFiles" 0
 .PHONY : Source/CMakeFiles/libdevilutionx_level_objects.dir/rule
@@ -3334,7 +3334,7 @@ libdevilutionx_level_objects: Source/CMakeFiles/libdevilutionx_level_objects.dir
 # codegen rule for target.
 Source/CMakeFiles/libdevilutionx_level_objects.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_level_objects.dir\build.make Source/CMakeFiles/libdevilutionx_level_objects.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num= "Finished codegen for target libdevilutionx_level_objects"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=78 "Finished codegen for target libdevilutionx_level_objects"
 .PHONY : Source/CMakeFiles/libdevilutionx_level_objects.dir/codegen
 
 # clean rule for target.
@@ -3351,27 +3351,27 @@ Source/CMakeFiles/libdevilutionx_monster.dir/all: _deps/libfmt-build/CMakeFiles/
 Source/CMakeFiles/libdevilutionx_monster.dir/all: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/all
 Source/CMakeFiles/libdevilutionx_monster.dir/all: 3rdParty/libmpq/CMakeFiles/libmpq.dir/all
 Source/CMakeFiles/libdevilutionx_monster.dir/all: _deps/sheenbidi-build/CMakeFiles/SheenBidi.dir/all
-Source/CMakeFiles/libdevilutionx_monster.dir/all: 3rdParty/PKWare/CMakeFiles/PKWare.dir/all
-Source/CMakeFiles/libdevilutionx_monster.dir/all: Source/CMakeFiles/libdevilutionx_control_mode.dir/all
-Source/CMakeFiles/libdevilutionx_monster.dir/all: Source/CMakeFiles/libdevilutionx_file_util.dir/all
-Source/CMakeFiles/libdevilutionx_monster.dir/all: Source/CMakeFiles/libdevilutionx_cl2_to_clx.dir/all
-Source/CMakeFiles/libdevilutionx_monster.dir/all: Source/CMakeFiles/libdevilutionx_assets.dir/all
 Source/CMakeFiles/libdevilutionx_monster.dir/all: Source/CMakeFiles/libdevilutionx_controller_buttons.dir/all
+Source/CMakeFiles/libdevilutionx_monster.dir/all: 3rdParty/PKWare/CMakeFiles/PKWare.dir/all
+Source/CMakeFiles/libdevilutionx_monster.dir/all: Source/CMakeFiles/libdevilutionx_assets.dir/all
+Source/CMakeFiles/libdevilutionx_monster.dir/all: Source/CMakeFiles/libdevilutionx_cl2_to_clx.dir/all
 Source/CMakeFiles/libdevilutionx_monster.dir/all: Source/CMakeFiles/libdevilutionx_paths.dir/all
+Source/CMakeFiles/libdevilutionx_monster.dir/all: Source/CMakeFiles/libdevilutionx_control_mode.dir/all
 Source/CMakeFiles/libdevilutionx_monster.dir/all: Source/CMakeFiles/libdevilutionx_logged_fstream.dir/all
-Source/CMakeFiles/libdevilutionx_monster.dir/all: Source/CMakeFiles/libdevilutionx_parse_int.dir/all
-Source/CMakeFiles/libdevilutionx_monster.dir/all: Source/CMakeFiles/libdevilutionx_ini.dir/all
-Source/CMakeFiles/libdevilutionx_monster.dir/all: Source/CMakeFiles/libdevilutionx_headless_mode.dir/all
+Source/CMakeFiles/libdevilutionx_monster.dir/all: Source/CMakeFiles/libdevilutionx_file_util.dir/all
 Source/CMakeFiles/libdevilutionx_monster.dir/all: Source/CMakeFiles/libdevilutionx_game_mode.dir/all
-Source/CMakeFiles/libdevilutionx_monster.dir/all: Source/CMakeFiles/libdevilutionx_random.dir/all
-Source/CMakeFiles/libdevilutionx_monster.dir/all: Source/CMakeFiles/libdevilutionx_mpq.dir/all
-Source/CMakeFiles/libdevilutionx_monster.dir/all: Source/CMakeFiles/libdevilutionx_options.dir/all
+Source/CMakeFiles/libdevilutionx_monster.dir/all: Source/CMakeFiles/libdevilutionx_headless_mode.dir/all
 Source/CMakeFiles/libdevilutionx_monster.dir/all: Source/CMakeFiles/libdevilutionx_pkware_encrypt.dir/all
+Source/CMakeFiles/libdevilutionx_monster.dir/all: Source/CMakeFiles/libdevilutionx_ini.dir/all
 Source/CMakeFiles/libdevilutionx_monster.dir/all: Source/CMakeFiles/libdevilutionx_quick_messages.dir/all
-Source/CMakeFiles/libdevilutionx_monster.dir/all: Source/CMakeFiles/libdevilutionx_txtdata.dir/all
+Source/CMakeFiles/libdevilutionx_monster.dir/all: Source/CMakeFiles/libdevilutionx_mpq.dir/all
+Source/CMakeFiles/libdevilutionx_monster.dir/all: Source/CMakeFiles/libdevilutionx_parse_int.dir/all
+Source/CMakeFiles/libdevilutionx_monster.dir/all: Source/CMakeFiles/libdevilutionx_options.dir/all
+Source/CMakeFiles/libdevilutionx_monster.dir/all: Source/CMakeFiles/libdevilutionx_random.dir/all
 Source/CMakeFiles/libdevilutionx_monster.dir/all: Source/CMakeFiles/libdevilutionx_utf8.dir/all
 Source/CMakeFiles/libdevilutionx_monster.dir/all: Source/CMakeFiles/libdevilutionx_sound.dir/all
 Source/CMakeFiles/libdevilutionx_monster.dir/all: Source/CMakeFiles/libdevilutionx_strings.dir/all
+Source/CMakeFiles/libdevilutionx_monster.dir/all: Source/CMakeFiles/libdevilutionx_txtdata.dir/all
 	$(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_monster.dir\build.make Source/CMakeFiles/libdevilutionx_monster.dir/depend
 	$(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_monster.dir\build.make Source/CMakeFiles/libdevilutionx_monster.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num= "Built target libdevilutionx_monster"
@@ -3473,8 +3473,8 @@ Source/CMakeFiles/libdevilutionx_mpq.dir/all: 3rdParty/bzip2/CMakeFiles/BZip2.di
 Source/CMakeFiles/libdevilutionx_mpq.dir/all: _deps/libfmt-build/CMakeFiles/fmt.dir/all
 Source/CMakeFiles/libdevilutionx_mpq.dir/all: 3rdParty/libmpq/CMakeFiles/libmpq.dir/all
 Source/CMakeFiles/libdevilutionx_mpq.dir/all: 3rdParty/PKWare/CMakeFiles/PKWare.dir/all
-Source/CMakeFiles/libdevilutionx_mpq.dir/all: Source/CMakeFiles/libdevilutionx_file_util.dir/all
 Source/CMakeFiles/libdevilutionx_mpq.dir/all: Source/CMakeFiles/libdevilutionx_logged_fstream.dir/all
+Source/CMakeFiles/libdevilutionx_mpq.dir/all: Source/CMakeFiles/libdevilutionx_file_util.dir/all
 Source/CMakeFiles/libdevilutionx_mpq.dir/all: Source/CMakeFiles/libdevilutionx_pkware_encrypt.dir/all
 Source/CMakeFiles/libdevilutionx_mpq.dir/all: Source/CMakeFiles/libdevilutionx_strings.dir/all
 	$(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_mpq.dir\build.make Source/CMakeFiles/libdevilutionx_mpq.dir/depend
@@ -3513,36 +3513,36 @@ Source/CMakeFiles/libdevilutionx_multiplayer.dir/all: _deps/libfmt-build/CMakeFi
 Source/CMakeFiles/libdevilutionx_multiplayer.dir/all: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/all
 Source/CMakeFiles/libdevilutionx_multiplayer.dir/all: 3rdParty/libmpq/CMakeFiles/libmpq.dir/all
 Source/CMakeFiles/libdevilutionx_multiplayer.dir/all: _deps/sheenbidi-build/CMakeFiles/SheenBidi.dir/all
-Source/CMakeFiles/libdevilutionx_multiplayer.dir/all: 3rdParty/PKWare/CMakeFiles/PKWare.dir/all
-Source/CMakeFiles/libdevilutionx_multiplayer.dir/all: Source/CMakeFiles/libdevilutionx_palette_kd_tree.dir/all
-Source/CMakeFiles/libdevilutionx_multiplayer.dir/all: Source/CMakeFiles/libdevilutionx_control_mode.dir/all
-Source/CMakeFiles/libdevilutionx_multiplayer.dir/all: Source/CMakeFiles/libdevilutionx_clx_render.dir/all
-Source/CMakeFiles/libdevilutionx_multiplayer.dir/all: Source/CMakeFiles/libdevilutionx_file_util.dir/all
-Source/CMakeFiles/libdevilutionx_multiplayer.dir/all: Source/CMakeFiles/libdevilutionx_cl2_to_clx.dir/all
-Source/CMakeFiles/libdevilutionx_multiplayer.dir/all: Source/CMakeFiles/libdevilutionx_assets.dir/all
 Source/CMakeFiles/libdevilutionx_multiplayer.dir/all: Source/CMakeFiles/libdevilutionx_controller_buttons.dir/all
+Source/CMakeFiles/libdevilutionx_multiplayer.dir/all: 3rdParty/PKWare/CMakeFiles/PKWare.dir/all
+Source/CMakeFiles/libdevilutionx_multiplayer.dir/all: Source/CMakeFiles/libdevilutionx_assets.dir/all
+Source/CMakeFiles/libdevilutionx_multiplayer.dir/all: Source/CMakeFiles/libdevilutionx_cl2_to_clx.dir/all
+Source/CMakeFiles/libdevilutionx_multiplayer.dir/all: Source/CMakeFiles/libdevilutionx_clx_render.dir/all
+Source/CMakeFiles/libdevilutionx_multiplayer.dir/all: Source/CMakeFiles/libdevilutionx_palette_kd_tree.dir/all
 Source/CMakeFiles/libdevilutionx_multiplayer.dir/all: Source/CMakeFiles/libdevilutionx_paths.dir/all
+Source/CMakeFiles/libdevilutionx_multiplayer.dir/all: Source/CMakeFiles/libdevilutionx_control_mode.dir/all
 Source/CMakeFiles/libdevilutionx_multiplayer.dir/all: Source/CMakeFiles/libdevilutionx_light_render.dir/all
 Source/CMakeFiles/libdevilutionx_multiplayer.dir/all: Source/CMakeFiles/libdevilutionx_logged_fstream.dir/all
-Source/CMakeFiles/libdevilutionx_multiplayer.dir/all: Source/CMakeFiles/libdevilutionx_load_cl2.dir/all
-Source/CMakeFiles/libdevilutionx_multiplayer.dir/all: Source/CMakeFiles/libdevilutionx_parse_int.dir/all
-Source/CMakeFiles/libdevilutionx_multiplayer.dir/all: Source/CMakeFiles/libdevilutionx_ini.dir/all
-Source/CMakeFiles/libdevilutionx_multiplayer.dir/all: Source/CMakeFiles/libdevilutionx_headless_mode.dir/all
+Source/CMakeFiles/libdevilutionx_multiplayer.dir/all: Source/CMakeFiles/libdevilutionx_file_util.dir/all
 Source/CMakeFiles/libdevilutionx_multiplayer.dir/all: Source/CMakeFiles/libdevilutionx_game_mode.dir/all
+Source/CMakeFiles/libdevilutionx_multiplayer.dir/all: Source/CMakeFiles/libdevilutionx_headless_mode.dir/all
+Source/CMakeFiles/libdevilutionx_multiplayer.dir/all: Source/CMakeFiles/libdevilutionx_load_cl2.dir/all
+Source/CMakeFiles/libdevilutionx_multiplayer.dir/all: Source/CMakeFiles/libdevilutionx_pkware_encrypt.dir/all
+Source/CMakeFiles/libdevilutionx_multiplayer.dir/all: Source/CMakeFiles/libdevilutionx_ini.dir/all
+Source/CMakeFiles/libdevilutionx_multiplayer.dir/all: Source/CMakeFiles/libdevilutionx_quick_messages.dir/all
+Source/CMakeFiles/libdevilutionx_multiplayer.dir/all: Source/CMakeFiles/libdevilutionx_mpq.dir/all
+Source/CMakeFiles/libdevilutionx_multiplayer.dir/all: Source/CMakeFiles/libdevilutionx_player.dir/all
 Source/CMakeFiles/libdevilutionx_multiplayer.dir/all: Source/CMakeFiles/libdevilutionx_items.dir/all
+Source/CMakeFiles/libdevilutionx_multiplayer.dir/all: Source/CMakeFiles/libdevilutionx_parse_int.dir/all
 Source/CMakeFiles/libdevilutionx_multiplayer.dir/all: Source/CMakeFiles/libdevilutionx_palette_blending.dir/all
+Source/CMakeFiles/libdevilutionx_multiplayer.dir/all: Source/CMakeFiles/libdevilutionx_options.dir/all
 Source/CMakeFiles/libdevilutionx_multiplayer.dir/all: Source/CMakeFiles/libdevilutionx_spells.dir/all
 Source/CMakeFiles/libdevilutionx_multiplayer.dir/all: Source/CMakeFiles/libdevilutionx_random.dir/all
-Source/CMakeFiles/libdevilutionx_multiplayer.dir/all: Source/CMakeFiles/libdevilutionx_mpq.dir/all
-Source/CMakeFiles/libdevilutionx_multiplayer.dir/all: Source/CMakeFiles/libdevilutionx_options.dir/all
-Source/CMakeFiles/libdevilutionx_multiplayer.dir/all: Source/CMakeFiles/libdevilutionx_pkware_encrypt.dir/all
-Source/CMakeFiles/libdevilutionx_multiplayer.dir/all: Source/CMakeFiles/libdevilutionx_quick_messages.dir/all
-Source/CMakeFiles/libdevilutionx_multiplayer.dir/all: Source/CMakeFiles/libdevilutionx_txtdata.dir/all
 Source/CMakeFiles/libdevilutionx_multiplayer.dir/all: Source/CMakeFiles/libdevilutionx_utf8.dir/all
-Source/CMakeFiles/libdevilutionx_multiplayer.dir/all: Source/CMakeFiles/libdevilutionx_player.dir/all
 Source/CMakeFiles/libdevilutionx_multiplayer.dir/all: Source/CMakeFiles/libdevilutionx_stores.dir/all
 Source/CMakeFiles/libdevilutionx_multiplayer.dir/all: Source/CMakeFiles/libdevilutionx_sound.dir/all
 Source/CMakeFiles/libdevilutionx_multiplayer.dir/all: Source/CMakeFiles/libdevilutionx_strings.dir/all
+Source/CMakeFiles/libdevilutionx_multiplayer.dir/all: Source/CMakeFiles/libdevilutionx_txtdata.dir/all
 	$(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_multiplayer.dir\build.make Source/CMakeFiles/libdevilutionx_multiplayer.dir/depend
 	$(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_multiplayer.dir\build.make Source/CMakeFiles/libdevilutionx_multiplayer.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num= "Built target libdevilutionx_multiplayer"
@@ -3576,10 +3576,10 @@ Source/CMakeFiles/libdevilutionx_multiplayer.dir/clean:
 # All Build rule for target.
 Source/CMakeFiles/libdevilutionx_options.dir/all: _deps/libfmt-build/CMakeFiles/fmt.dir/all
 Source/CMakeFiles/libdevilutionx_options.dir/all: _deps/sheenbidi-build/CMakeFiles/SheenBidi.dir/all
-Source/CMakeFiles/libdevilutionx_options.dir/all: Source/CMakeFiles/libdevilutionx_control_mode.dir/all
-Source/CMakeFiles/libdevilutionx_options.dir/all: Source/CMakeFiles/libdevilutionx_file_util.dir/all
 Source/CMakeFiles/libdevilutionx_options.dir/all: Source/CMakeFiles/libdevilutionx_controller_buttons.dir/all
+Source/CMakeFiles/libdevilutionx_options.dir/all: Source/CMakeFiles/libdevilutionx_control_mode.dir/all
 Source/CMakeFiles/libdevilutionx_options.dir/all: Source/CMakeFiles/libdevilutionx_logged_fstream.dir/all
+Source/CMakeFiles/libdevilutionx_options.dir/all: Source/CMakeFiles/libdevilutionx_file_util.dir/all
 Source/CMakeFiles/libdevilutionx_options.dir/all: Source/CMakeFiles/libdevilutionx_ini.dir/all
 Source/CMakeFiles/libdevilutionx_options.dir/all: Source/CMakeFiles/libdevilutionx_quick_messages.dir/all
 Source/CMakeFiles/libdevilutionx_options.dir/all: Source/CMakeFiles/libdevilutionx_utf8.dir/all
@@ -3615,8 +3615,8 @@ Source/CMakeFiles/libdevilutionx_options.dir/clean:
 # Target rules for target Source/CMakeFiles/libdevilutionx_pathfinding.dir
 
 # All Build rule for target.
-Source/CMakeFiles/libdevilutionx_pathfinding.dir/all: Source/CMakeFiles/libdevilutionx_direction.dir/all
 Source/CMakeFiles/libdevilutionx_pathfinding.dir/all: Source/CMakeFiles/libdevilutionx_crawl.dir/all
+Source/CMakeFiles/libdevilutionx_pathfinding.dir/all: Source/CMakeFiles/libdevilutionx_direction.dir/all
 	$(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_pathfinding.dir\build.make Source/CMakeFiles/libdevilutionx_pathfinding.dir/depend
 	$(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_pathfinding.dir\build.make Source/CMakeFiles/libdevilutionx_pathfinding.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=82 "Built target libdevilutionx_pathfinding"
@@ -3684,19 +3684,19 @@ Source/CMakeFiles/libdevilutionx_player.dir/all: 3rdParty/bzip2/CMakeFiles/BZip2
 Source/CMakeFiles/libdevilutionx_player.dir/all: _deps/libfmt-build/CMakeFiles/fmt.dir/all
 Source/CMakeFiles/libdevilutionx_player.dir/all: 3rdParty/libmpq/CMakeFiles/libmpq.dir/all
 Source/CMakeFiles/libdevilutionx_player.dir/all: _deps/sheenbidi-build/CMakeFiles/SheenBidi.dir/all
-Source/CMakeFiles/libdevilutionx_player.dir/all: 3rdParty/PKWare/CMakeFiles/PKWare.dir/all
-Source/CMakeFiles/libdevilutionx_player.dir/all: Source/CMakeFiles/libdevilutionx_control_mode.dir/all
-Source/CMakeFiles/libdevilutionx_player.dir/all: Source/CMakeFiles/libdevilutionx_file_util.dir/all
-Source/CMakeFiles/libdevilutionx_player.dir/all: Source/CMakeFiles/libdevilutionx_cl2_to_clx.dir/all
 Source/CMakeFiles/libdevilutionx_player.dir/all: Source/CMakeFiles/libdevilutionx_controller_buttons.dir/all
+Source/CMakeFiles/libdevilutionx_player.dir/all: 3rdParty/PKWare/CMakeFiles/PKWare.dir/all
+Source/CMakeFiles/libdevilutionx_player.dir/all: Source/CMakeFiles/libdevilutionx_cl2_to_clx.dir/all
+Source/CMakeFiles/libdevilutionx_player.dir/all: Source/CMakeFiles/libdevilutionx_control_mode.dir/all
 Source/CMakeFiles/libdevilutionx_player.dir/all: Source/CMakeFiles/libdevilutionx_logged_fstream.dir/all
-Source/CMakeFiles/libdevilutionx_player.dir/all: Source/CMakeFiles/libdevilutionx_load_cl2.dir/all
-Source/CMakeFiles/libdevilutionx_player.dir/all: Source/CMakeFiles/libdevilutionx_ini.dir/all
+Source/CMakeFiles/libdevilutionx_player.dir/all: Source/CMakeFiles/libdevilutionx_file_util.dir/all
 Source/CMakeFiles/libdevilutionx_player.dir/all: Source/CMakeFiles/libdevilutionx_game_mode.dir/all
+Source/CMakeFiles/libdevilutionx_player.dir/all: Source/CMakeFiles/libdevilutionx_load_cl2.dir/all
+Source/CMakeFiles/libdevilutionx_player.dir/all: Source/CMakeFiles/libdevilutionx_pkware_encrypt.dir/all
+Source/CMakeFiles/libdevilutionx_player.dir/all: Source/CMakeFiles/libdevilutionx_ini.dir/all
+Source/CMakeFiles/libdevilutionx_player.dir/all: Source/CMakeFiles/libdevilutionx_quick_messages.dir/all
 Source/CMakeFiles/libdevilutionx_player.dir/all: Source/CMakeFiles/libdevilutionx_mpq.dir/all
 Source/CMakeFiles/libdevilutionx_player.dir/all: Source/CMakeFiles/libdevilutionx_options.dir/all
-Source/CMakeFiles/libdevilutionx_player.dir/all: Source/CMakeFiles/libdevilutionx_pkware_encrypt.dir/all
-Source/CMakeFiles/libdevilutionx_player.dir/all: Source/CMakeFiles/libdevilutionx_quick_messages.dir/all
 Source/CMakeFiles/libdevilutionx_player.dir/all: Source/CMakeFiles/libdevilutionx_utf8.dir/all
 Source/CMakeFiles/libdevilutionx_player.dir/all: Source/CMakeFiles/libdevilutionx_strings.dir/all
 	$(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_player.dir\build.make Source/CMakeFiles/libdevilutionx_player.dir/depend
@@ -3735,39 +3735,39 @@ Source/CMakeFiles/libdevilutionx_quests.dir/all: _deps/libfmt-build/CMakeFiles/f
 Source/CMakeFiles/libdevilutionx_quests.dir/all: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/all
 Source/CMakeFiles/libdevilutionx_quests.dir/all: 3rdParty/libmpq/CMakeFiles/libmpq.dir/all
 Source/CMakeFiles/libdevilutionx_quests.dir/all: _deps/sheenbidi-build/CMakeFiles/SheenBidi.dir/all
-Source/CMakeFiles/libdevilutionx_quests.dir/all: 3rdParty/PKWare/CMakeFiles/PKWare.dir/all
-Source/CMakeFiles/libdevilutionx_quests.dir/all: Source/CMakeFiles/libdevilutionx_palette_kd_tree.dir/all
-Source/CMakeFiles/libdevilutionx_quests.dir/all: Source/CMakeFiles/libdevilutionx_control_mode.dir/all
-Source/CMakeFiles/libdevilutionx_quests.dir/all: Source/CMakeFiles/libdevilutionx_clx_render.dir/all
-Source/CMakeFiles/libdevilutionx_quests.dir/all: Source/CMakeFiles/libdevilutionx_file_util.dir/all
-Source/CMakeFiles/libdevilutionx_quests.dir/all: Source/CMakeFiles/libdevilutionx_surface.dir/all
-Source/CMakeFiles/libdevilutionx_quests.dir/all: Source/CMakeFiles/libdevilutionx_cl2_to_clx.dir/all
-Source/CMakeFiles/libdevilutionx_quests.dir/all: Source/CMakeFiles/libdevilutionx_assets.dir/all
 Source/CMakeFiles/libdevilutionx_quests.dir/all: Source/CMakeFiles/libdevilutionx_controller_buttons.dir/all
+Source/CMakeFiles/libdevilutionx_quests.dir/all: 3rdParty/PKWare/CMakeFiles/PKWare.dir/all
+Source/CMakeFiles/libdevilutionx_quests.dir/all: Source/CMakeFiles/libdevilutionx_assets.dir/all
+Source/CMakeFiles/libdevilutionx_quests.dir/all: Source/CMakeFiles/libdevilutionx_cl2_to_clx.dir/all
+Source/CMakeFiles/libdevilutionx_quests.dir/all: Source/CMakeFiles/libdevilutionx_clx_render.dir/all
+Source/CMakeFiles/libdevilutionx_quests.dir/all: Source/CMakeFiles/libdevilutionx_palette_kd_tree.dir/all
 Source/CMakeFiles/libdevilutionx_quests.dir/all: Source/CMakeFiles/libdevilutionx_paths.dir/all
-Source/CMakeFiles/libdevilutionx_quests.dir/all: Source/CMakeFiles/libdevilutionx_gendung.dir/all
+Source/CMakeFiles/libdevilutionx_quests.dir/all: Source/CMakeFiles/libdevilutionx_control_mode.dir/all
 Source/CMakeFiles/libdevilutionx_quests.dir/all: Source/CMakeFiles/libdevilutionx_light_render.dir/all
 Source/CMakeFiles/libdevilutionx_quests.dir/all: Source/CMakeFiles/libdevilutionx_logged_fstream.dir/all
-Source/CMakeFiles/libdevilutionx_quests.dir/all: Source/CMakeFiles/libdevilutionx_load_cl2.dir/all
-Source/CMakeFiles/libdevilutionx_quests.dir/all: Source/CMakeFiles/libdevilutionx_parse_int.dir/all
-Source/CMakeFiles/libdevilutionx_quests.dir/all: Source/CMakeFiles/libdevilutionx_ini.dir/all
-Source/CMakeFiles/libdevilutionx_quests.dir/all: Source/CMakeFiles/libdevilutionx_headless_mode.dir/all
+Source/CMakeFiles/libdevilutionx_quests.dir/all: Source/CMakeFiles/libdevilutionx_file_util.dir/all
 Source/CMakeFiles/libdevilutionx_quests.dir/all: Source/CMakeFiles/libdevilutionx_game_mode.dir/all
-Source/CMakeFiles/libdevilutionx_quests.dir/all: Source/CMakeFiles/libdevilutionx_items.dir/all
+Source/CMakeFiles/libdevilutionx_quests.dir/all: Source/CMakeFiles/libdevilutionx_headless_mode.dir/all
+Source/CMakeFiles/libdevilutionx_quests.dir/all: Source/CMakeFiles/libdevilutionx_surface.dir/all
+Source/CMakeFiles/libdevilutionx_quests.dir/all: Source/CMakeFiles/libdevilutionx_load_cl2.dir/all
+Source/CMakeFiles/libdevilutionx_quests.dir/all: Source/CMakeFiles/libdevilutionx_gendung.dir/all
+Source/CMakeFiles/libdevilutionx_quests.dir/all: Source/CMakeFiles/libdevilutionx_pkware_encrypt.dir/all
+Source/CMakeFiles/libdevilutionx_quests.dir/all: Source/CMakeFiles/libdevilutionx_ini.dir/all
+Source/CMakeFiles/libdevilutionx_quests.dir/all: Source/CMakeFiles/libdevilutionx_quick_messages.dir/all
+Source/CMakeFiles/libdevilutionx_quests.dir/all: Source/CMakeFiles/libdevilutionx_mpq.dir/all
+Source/CMakeFiles/libdevilutionx_quests.dir/all: Source/CMakeFiles/libdevilutionx_player.dir/all
 Source/CMakeFiles/libdevilutionx_quests.dir/all: Source/CMakeFiles/libdevilutionx_monster.dir/all
+Source/CMakeFiles/libdevilutionx_quests.dir/all: Source/CMakeFiles/libdevilutionx_items.dir/all
+Source/CMakeFiles/libdevilutionx_quests.dir/all: Source/CMakeFiles/libdevilutionx_parse_int.dir/all
 Source/CMakeFiles/libdevilutionx_quests.dir/all: Source/CMakeFiles/libdevilutionx_palette_blending.dir/all
+Source/CMakeFiles/libdevilutionx_quests.dir/all: Source/CMakeFiles/libdevilutionx_options.dir/all
 Source/CMakeFiles/libdevilutionx_quests.dir/all: Source/CMakeFiles/libdevilutionx_spells.dir/all
 Source/CMakeFiles/libdevilutionx_quests.dir/all: Source/CMakeFiles/libdevilutionx_random.dir/all
-Source/CMakeFiles/libdevilutionx_quests.dir/all: Source/CMakeFiles/libdevilutionx_mpq.dir/all
-Source/CMakeFiles/libdevilutionx_quests.dir/all: Source/CMakeFiles/libdevilutionx_options.dir/all
-Source/CMakeFiles/libdevilutionx_quests.dir/all: Source/CMakeFiles/libdevilutionx_pkware_encrypt.dir/all
-Source/CMakeFiles/libdevilutionx_quests.dir/all: Source/CMakeFiles/libdevilutionx_quick_messages.dir/all
-Source/CMakeFiles/libdevilutionx_quests.dir/all: Source/CMakeFiles/libdevilutionx_txtdata.dir/all
 Source/CMakeFiles/libdevilutionx_quests.dir/all: Source/CMakeFiles/libdevilutionx_utf8.dir/all
-Source/CMakeFiles/libdevilutionx_quests.dir/all: Source/CMakeFiles/libdevilutionx_player.dir/all
 Source/CMakeFiles/libdevilutionx_quests.dir/all: Source/CMakeFiles/libdevilutionx_stores.dir/all
 Source/CMakeFiles/libdevilutionx_quests.dir/all: Source/CMakeFiles/libdevilutionx_sound.dir/all
 Source/CMakeFiles/libdevilutionx_quests.dir/all: Source/CMakeFiles/libdevilutionx_strings.dir/all
+Source/CMakeFiles/libdevilutionx_quests.dir/all: Source/CMakeFiles/libdevilutionx_txtdata.dir/all
 	$(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_quests.dir\build.make Source/CMakeFiles/libdevilutionx_quests.dir/depend
 	$(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_quests.dir\build.make Source/CMakeFiles/libdevilutionx_quests.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num= "Built target libdevilutionx_quests"
@@ -3867,27 +3867,27 @@ Source/CMakeFiles/libdevilutionx_spells.dir/all: 3rdParty/bzip2/CMakeFiles/BZip2
 Source/CMakeFiles/libdevilutionx_spells.dir/all: _deps/libfmt-build/CMakeFiles/fmt.dir/all
 Source/CMakeFiles/libdevilutionx_spells.dir/all: 3rdParty/libmpq/CMakeFiles/libmpq.dir/all
 Source/CMakeFiles/libdevilutionx_spells.dir/all: _deps/sheenbidi-build/CMakeFiles/SheenBidi.dir/all
-Source/CMakeFiles/libdevilutionx_spells.dir/all: 3rdParty/PKWare/CMakeFiles/PKWare.dir/all
-Source/CMakeFiles/libdevilutionx_spells.dir/all: Source/CMakeFiles/libdevilutionx_control_mode.dir/all
-Source/CMakeFiles/libdevilutionx_spells.dir/all: Source/CMakeFiles/libdevilutionx_file_util.dir/all
-Source/CMakeFiles/libdevilutionx_spells.dir/all: Source/CMakeFiles/libdevilutionx_cl2_to_clx.dir/all
-Source/CMakeFiles/libdevilutionx_spells.dir/all: Source/CMakeFiles/libdevilutionx_assets.dir/all
 Source/CMakeFiles/libdevilutionx_spells.dir/all: Source/CMakeFiles/libdevilutionx_controller_buttons.dir/all
+Source/CMakeFiles/libdevilutionx_spells.dir/all: 3rdParty/PKWare/CMakeFiles/PKWare.dir/all
+Source/CMakeFiles/libdevilutionx_spells.dir/all: Source/CMakeFiles/libdevilutionx_assets.dir/all
+Source/CMakeFiles/libdevilutionx_spells.dir/all: Source/CMakeFiles/libdevilutionx_cl2_to_clx.dir/all
 Source/CMakeFiles/libdevilutionx_spells.dir/all: Source/CMakeFiles/libdevilutionx_paths.dir/all
+Source/CMakeFiles/libdevilutionx_spells.dir/all: Source/CMakeFiles/libdevilutionx_control_mode.dir/all
 Source/CMakeFiles/libdevilutionx_spells.dir/all: Source/CMakeFiles/libdevilutionx_logged_fstream.dir/all
-Source/CMakeFiles/libdevilutionx_spells.dir/all: Source/CMakeFiles/libdevilutionx_load_cl2.dir/all
-Source/CMakeFiles/libdevilutionx_spells.dir/all: Source/CMakeFiles/libdevilutionx_parse_int.dir/all
-Source/CMakeFiles/libdevilutionx_spells.dir/all: Source/CMakeFiles/libdevilutionx_ini.dir/all
-Source/CMakeFiles/libdevilutionx_spells.dir/all: Source/CMakeFiles/libdevilutionx_headless_mode.dir/all
+Source/CMakeFiles/libdevilutionx_spells.dir/all: Source/CMakeFiles/libdevilutionx_file_util.dir/all
 Source/CMakeFiles/libdevilutionx_spells.dir/all: Source/CMakeFiles/libdevilutionx_game_mode.dir/all
-Source/CMakeFiles/libdevilutionx_spells.dir/all: Source/CMakeFiles/libdevilutionx_mpq.dir/all
-Source/CMakeFiles/libdevilutionx_spells.dir/all: Source/CMakeFiles/libdevilutionx_options.dir/all
+Source/CMakeFiles/libdevilutionx_spells.dir/all: Source/CMakeFiles/libdevilutionx_headless_mode.dir/all
+Source/CMakeFiles/libdevilutionx_spells.dir/all: Source/CMakeFiles/libdevilutionx_load_cl2.dir/all
 Source/CMakeFiles/libdevilutionx_spells.dir/all: Source/CMakeFiles/libdevilutionx_pkware_encrypt.dir/all
+Source/CMakeFiles/libdevilutionx_spells.dir/all: Source/CMakeFiles/libdevilutionx_ini.dir/all
 Source/CMakeFiles/libdevilutionx_spells.dir/all: Source/CMakeFiles/libdevilutionx_quick_messages.dir/all
-Source/CMakeFiles/libdevilutionx_spells.dir/all: Source/CMakeFiles/libdevilutionx_txtdata.dir/all
-Source/CMakeFiles/libdevilutionx_spells.dir/all: Source/CMakeFiles/libdevilutionx_utf8.dir/all
+Source/CMakeFiles/libdevilutionx_spells.dir/all: Source/CMakeFiles/libdevilutionx_mpq.dir/all
 Source/CMakeFiles/libdevilutionx_spells.dir/all: Source/CMakeFiles/libdevilutionx_player.dir/all
+Source/CMakeFiles/libdevilutionx_spells.dir/all: Source/CMakeFiles/libdevilutionx_parse_int.dir/all
+Source/CMakeFiles/libdevilutionx_spells.dir/all: Source/CMakeFiles/libdevilutionx_options.dir/all
+Source/CMakeFiles/libdevilutionx_spells.dir/all: Source/CMakeFiles/libdevilutionx_utf8.dir/all
 Source/CMakeFiles/libdevilutionx_spells.dir/all: Source/CMakeFiles/libdevilutionx_strings.dir/all
+Source/CMakeFiles/libdevilutionx_spells.dir/all: Source/CMakeFiles/libdevilutionx_txtdata.dir/all
 	$(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_spells.dir\build.make Source/CMakeFiles/libdevilutionx_spells.dir/depend
 	$(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_spells.dir\build.make Source/CMakeFiles/libdevilutionx_spells.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num= "Built target libdevilutionx_spells"
@@ -3923,33 +3923,33 @@ Source/CMakeFiles/libdevilutionx_text_render.dir/all: 3rdParty/bzip2/CMakeFiles/
 Source/CMakeFiles/libdevilutionx_text_render.dir/all: _deps/libfmt-build/CMakeFiles/fmt.dir/all
 Source/CMakeFiles/libdevilutionx_text_render.dir/all: 3rdParty/libmpq/CMakeFiles/libmpq.dir/all
 Source/CMakeFiles/libdevilutionx_text_render.dir/all: _deps/sheenbidi-build/CMakeFiles/SheenBidi.dir/all
+Source/CMakeFiles/libdevilutionx_text_render.dir/all: Source/CMakeFiles/libdevilutionx_controller_buttons.dir/all
 Source/CMakeFiles/libdevilutionx_text_render.dir/all: 3rdParty/PKWare/CMakeFiles/PKWare.dir/all
-Source/CMakeFiles/libdevilutionx_text_render.dir/all: Source/CMakeFiles/libdevilutionx_palette_kd_tree.dir/all
-Source/CMakeFiles/libdevilutionx_text_render.dir/all: Source/CMakeFiles/libdevilutionx_control_mode.dir/all
-Source/CMakeFiles/libdevilutionx_text_render.dir/all: Source/CMakeFiles/libdevilutionx_clx_render.dir/all
-Source/CMakeFiles/libdevilutionx_text_render.dir/all: Source/CMakeFiles/libdevilutionx_pcx_to_clx.dir/all
-Source/CMakeFiles/libdevilutionx_text_render.dir/all: Source/CMakeFiles/libdevilutionx_file_util.dir/all
-Source/CMakeFiles/libdevilutionx_text_render.dir/all: Source/CMakeFiles/libdevilutionx_surface.dir/all
 Source/CMakeFiles/libdevilutionx_text_render.dir/all: Source/CMakeFiles/libdevilutionx_assets.dir/all
 Source/CMakeFiles/libdevilutionx_text_render.dir/all: Source/CMakeFiles/libdevilutionx_cel_to_clx.dir/all
-Source/CMakeFiles/libdevilutionx_text_render.dir/all: Source/CMakeFiles/libdevilutionx_controller_buttons.dir/all
+Source/CMakeFiles/libdevilutionx_text_render.dir/all: Source/CMakeFiles/libdevilutionx_clx_render.dir/all
+Source/CMakeFiles/libdevilutionx_text_render.dir/all: Source/CMakeFiles/libdevilutionx_palette_kd_tree.dir/all
 Source/CMakeFiles/libdevilutionx_text_render.dir/all: Source/CMakeFiles/libdevilutionx_paths.dir/all
 Source/CMakeFiles/libdevilutionx_text_render.dir/all: Source/CMakeFiles/libdevilutionx_primitive_render.dir/all
+Source/CMakeFiles/libdevilutionx_text_render.dir/all: Source/CMakeFiles/libdevilutionx_control_mode.dir/all
+Source/CMakeFiles/libdevilutionx_text_render.dir/all: Source/CMakeFiles/libdevilutionx_pcx_to_clx.dir/all
 Source/CMakeFiles/libdevilutionx_text_render.dir/all: Source/CMakeFiles/libdevilutionx_light_render.dir/all
 Source/CMakeFiles/libdevilutionx_text_render.dir/all: Source/CMakeFiles/libdevilutionx_logged_fstream.dir/all
-Source/CMakeFiles/libdevilutionx_text_render.dir/all: Source/CMakeFiles/libdevilutionx_load_pcx.dir/all
-Source/CMakeFiles/libdevilutionx_text_render.dir/all: Source/CMakeFiles/libdevilutionx_ini.dir/all
-Source/CMakeFiles/libdevilutionx_text_render.dir/all: Source/CMakeFiles/libdevilutionx_headless_mode.dir/all
+Source/CMakeFiles/libdevilutionx_text_render.dir/all: Source/CMakeFiles/libdevilutionx_file_util.dir/all
 Source/CMakeFiles/libdevilutionx_text_render.dir/all: Source/CMakeFiles/libdevilutionx_game_mode.dir/all
-Source/CMakeFiles/libdevilutionx_text_render.dir/all: Source/CMakeFiles/libdevilutionx_load_cel.dir/all
+Source/CMakeFiles/libdevilutionx_text_render.dir/all: Source/CMakeFiles/libdevilutionx_headless_mode.dir/all
+Source/CMakeFiles/libdevilutionx_text_render.dir/all: Source/CMakeFiles/libdevilutionx_surface.dir/all
 Source/CMakeFiles/libdevilutionx_text_render.dir/all: Source/CMakeFiles/libdevilutionx_load_clx.dir/all
-Source/CMakeFiles/libdevilutionx_text_render.dir/all: Source/CMakeFiles/libdevilutionx_palette_blending.dir/all
-Source/CMakeFiles/libdevilutionx_text_render.dir/all: Source/CMakeFiles/libdevilutionx_mpq.dir/all
-Source/CMakeFiles/libdevilutionx_text_render.dir/all: Source/CMakeFiles/libdevilutionx_options.dir/all
+Source/CMakeFiles/libdevilutionx_text_render.dir/all: Source/CMakeFiles/libdevilutionx_load_cel.dir/all
+Source/CMakeFiles/libdevilutionx_text_render.dir/all: Source/CMakeFiles/libdevilutionx_load_pcx.dir/all
 Source/CMakeFiles/libdevilutionx_text_render.dir/all: Source/CMakeFiles/libdevilutionx_pkware_encrypt.dir/all
+Source/CMakeFiles/libdevilutionx_text_render.dir/all: Source/CMakeFiles/libdevilutionx_ini.dir/all
 Source/CMakeFiles/libdevilutionx_text_render.dir/all: Source/CMakeFiles/libdevilutionx_quick_messages.dir/all
-Source/CMakeFiles/libdevilutionx_text_render.dir/all: Source/CMakeFiles/libdevilutionx_ticks.dir/all
+Source/CMakeFiles/libdevilutionx_text_render.dir/all: Source/CMakeFiles/libdevilutionx_mpq.dir/all
+Source/CMakeFiles/libdevilutionx_text_render.dir/all: Source/CMakeFiles/libdevilutionx_palette_blending.dir/all
+Source/CMakeFiles/libdevilutionx_text_render.dir/all: Source/CMakeFiles/libdevilutionx_options.dir/all
 Source/CMakeFiles/libdevilutionx_text_render.dir/all: Source/CMakeFiles/libdevilutionx_utf8.dir/all
+Source/CMakeFiles/libdevilutionx_text_render.dir/all: Source/CMakeFiles/libdevilutionx_ticks.dir/all
 Source/CMakeFiles/libdevilutionx_text_render.dir/all: Source/CMakeFiles/libdevilutionx_strings.dir/all
 	$(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_text_render.dir\build.make Source/CMakeFiles/libdevilutionx_text_render.dir/depend
 	$(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_text_render.dir\build.make Source/CMakeFiles/libdevilutionx_text_render.dir/build
@@ -4018,21 +4018,21 @@ Source/CMakeFiles/libdevilutionx_txtdata.dir/all: 3rdParty/bzip2/CMakeFiles/BZip
 Source/CMakeFiles/libdevilutionx_txtdata.dir/all: _deps/libfmt-build/CMakeFiles/fmt.dir/all
 Source/CMakeFiles/libdevilutionx_txtdata.dir/all: 3rdParty/libmpq/CMakeFiles/libmpq.dir/all
 Source/CMakeFiles/libdevilutionx_txtdata.dir/all: _deps/sheenbidi-build/CMakeFiles/SheenBidi.dir/all
-Source/CMakeFiles/libdevilutionx_txtdata.dir/all: 3rdParty/PKWare/CMakeFiles/PKWare.dir/all
-Source/CMakeFiles/libdevilutionx_txtdata.dir/all: Source/CMakeFiles/libdevilutionx_control_mode.dir/all
-Source/CMakeFiles/libdevilutionx_txtdata.dir/all: Source/CMakeFiles/libdevilutionx_file_util.dir/all
-Source/CMakeFiles/libdevilutionx_txtdata.dir/all: Source/CMakeFiles/libdevilutionx_assets.dir/all
 Source/CMakeFiles/libdevilutionx_txtdata.dir/all: Source/CMakeFiles/libdevilutionx_controller_buttons.dir/all
+Source/CMakeFiles/libdevilutionx_txtdata.dir/all: 3rdParty/PKWare/CMakeFiles/PKWare.dir/all
+Source/CMakeFiles/libdevilutionx_txtdata.dir/all: Source/CMakeFiles/libdevilutionx_assets.dir/all
 Source/CMakeFiles/libdevilutionx_txtdata.dir/all: Source/CMakeFiles/libdevilutionx_paths.dir/all
+Source/CMakeFiles/libdevilutionx_txtdata.dir/all: Source/CMakeFiles/libdevilutionx_control_mode.dir/all
 Source/CMakeFiles/libdevilutionx_txtdata.dir/all: Source/CMakeFiles/libdevilutionx_logged_fstream.dir/all
-Source/CMakeFiles/libdevilutionx_txtdata.dir/all: Source/CMakeFiles/libdevilutionx_parse_int.dir/all
-Source/CMakeFiles/libdevilutionx_txtdata.dir/all: Source/CMakeFiles/libdevilutionx_ini.dir/all
-Source/CMakeFiles/libdevilutionx_txtdata.dir/all: Source/CMakeFiles/libdevilutionx_headless_mode.dir/all
+Source/CMakeFiles/libdevilutionx_txtdata.dir/all: Source/CMakeFiles/libdevilutionx_file_util.dir/all
 Source/CMakeFiles/libdevilutionx_txtdata.dir/all: Source/CMakeFiles/libdevilutionx_game_mode.dir/all
-Source/CMakeFiles/libdevilutionx_txtdata.dir/all: Source/CMakeFiles/libdevilutionx_mpq.dir/all
-Source/CMakeFiles/libdevilutionx_txtdata.dir/all: Source/CMakeFiles/libdevilutionx_options.dir/all
+Source/CMakeFiles/libdevilutionx_txtdata.dir/all: Source/CMakeFiles/libdevilutionx_headless_mode.dir/all
 Source/CMakeFiles/libdevilutionx_txtdata.dir/all: Source/CMakeFiles/libdevilutionx_pkware_encrypt.dir/all
+Source/CMakeFiles/libdevilutionx_txtdata.dir/all: Source/CMakeFiles/libdevilutionx_ini.dir/all
 Source/CMakeFiles/libdevilutionx_txtdata.dir/all: Source/CMakeFiles/libdevilutionx_quick_messages.dir/all
+Source/CMakeFiles/libdevilutionx_txtdata.dir/all: Source/CMakeFiles/libdevilutionx_mpq.dir/all
+Source/CMakeFiles/libdevilutionx_txtdata.dir/all: Source/CMakeFiles/libdevilutionx_parse_int.dir/all
+Source/CMakeFiles/libdevilutionx_txtdata.dir/all: Source/CMakeFiles/libdevilutionx_options.dir/all
 Source/CMakeFiles/libdevilutionx_txtdata.dir/all: Source/CMakeFiles/libdevilutionx_utf8.dir/all
 Source/CMakeFiles/libdevilutionx_txtdata.dir/all: Source/CMakeFiles/libdevilutionx_strings.dir/all
 	$(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_txtdata.dir\build.make Source/CMakeFiles/libdevilutionx_txtdata.dir/depend
@@ -4101,14 +4101,14 @@ Source/CMakeFiles/libdevilutionx_utf8.dir/clean:
 Source/CMakeFiles/libdevilutionx_sound.dir/all: _deps/libfmt-build/CMakeFiles/fmt.dir/all
 Source/CMakeFiles/libdevilutionx_sound.dir/all: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/all
 Source/CMakeFiles/libdevilutionx_sound.dir/all: _deps/sheenbidi-build/CMakeFiles/SheenBidi.dir/all
-Source/CMakeFiles/libdevilutionx_sound.dir/all: Source/CMakeFiles/libdevilutionx_control_mode.dir/all
-Source/CMakeFiles/libdevilutionx_sound.dir/all: Source/CMakeFiles/libdevilutionx_file_util.dir/all
 Source/CMakeFiles/libdevilutionx_sound.dir/all: Source/CMakeFiles/libdevilutionx_controller_buttons.dir/all
+Source/CMakeFiles/libdevilutionx_sound.dir/all: Source/CMakeFiles/libdevilutionx_control_mode.dir/all
 Source/CMakeFiles/libdevilutionx_sound.dir/all: Source/CMakeFiles/libdevilutionx_logged_fstream.dir/all
+Source/CMakeFiles/libdevilutionx_sound.dir/all: Source/CMakeFiles/libdevilutionx_file_util.dir/all
 Source/CMakeFiles/libdevilutionx_sound.dir/all: Source/CMakeFiles/libdevilutionx_ini.dir/all
-Source/CMakeFiles/libdevilutionx_sound.dir/all: Source/CMakeFiles/libdevilutionx_random.dir/all
-Source/CMakeFiles/libdevilutionx_sound.dir/all: Source/CMakeFiles/libdevilutionx_options.dir/all
 Source/CMakeFiles/libdevilutionx_sound.dir/all: Source/CMakeFiles/libdevilutionx_quick_messages.dir/all
+Source/CMakeFiles/libdevilutionx_sound.dir/all: Source/CMakeFiles/libdevilutionx_options.dir/all
+Source/CMakeFiles/libdevilutionx_sound.dir/all: Source/CMakeFiles/libdevilutionx_random.dir/all
 Source/CMakeFiles/libdevilutionx_sound.dir/all: Source/CMakeFiles/libdevilutionx_utf8.dir/all
 Source/CMakeFiles/libdevilutionx_sound.dir/all: Source/CMakeFiles/libdevilutionx_strings.dir/all
 	$(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx_sound.dir\build.make Source/CMakeFiles/libdevilutionx_sound.dir/depend
@@ -4145,18 +4145,18 @@ Source/CMakeFiles/libdevilutionx_sound.dir/clean:
 Source/CMakeFiles/libdevilutionx_stores.dir/all: _deps/libfmt-build/CMakeFiles/fmt.dir/all
 Source/CMakeFiles/libdevilutionx_stores.dir/all: _deps/sdl_audiolib-build/CMakeFiles/SDL_audiolib.dir/all
 Source/CMakeFiles/libdevilutionx_stores.dir/all: _deps/sheenbidi-build/CMakeFiles/SheenBidi.dir/all
+Source/CMakeFiles/libdevilutionx_stores.dir/all: Source/CMakeFiles/libdevilutionx_controller_buttons.dir/all
+Source/CMakeFiles/libdevilutionx_stores.dir/all: Source/CMakeFiles/libdevilutionx_clx_render.dir/all
 Source/CMakeFiles/libdevilutionx_stores.dir/all: Source/CMakeFiles/libdevilutionx_palette_kd_tree.dir/all
 Source/CMakeFiles/libdevilutionx_stores.dir/all: Source/CMakeFiles/libdevilutionx_control_mode.dir/all
-Source/CMakeFiles/libdevilutionx_stores.dir/all: Source/CMakeFiles/libdevilutionx_clx_render.dir/all
-Source/CMakeFiles/libdevilutionx_stores.dir/all: Source/CMakeFiles/libdevilutionx_file_util.dir/all
-Source/CMakeFiles/libdevilutionx_stores.dir/all: Source/CMakeFiles/libdevilutionx_controller_buttons.dir/all
 Source/CMakeFiles/libdevilutionx_stores.dir/all: Source/CMakeFiles/libdevilutionx_light_render.dir/all
 Source/CMakeFiles/libdevilutionx_stores.dir/all: Source/CMakeFiles/libdevilutionx_logged_fstream.dir/all
+Source/CMakeFiles/libdevilutionx_stores.dir/all: Source/CMakeFiles/libdevilutionx_file_util.dir/all
 Source/CMakeFiles/libdevilutionx_stores.dir/all: Source/CMakeFiles/libdevilutionx_ini.dir/all
-Source/CMakeFiles/libdevilutionx_stores.dir/all: Source/CMakeFiles/libdevilutionx_palette_blending.dir/all
-Source/CMakeFiles/libdevilutionx_stores.dir/all: Source/CMakeFiles/libdevilutionx_random.dir/all
-Source/CMakeFiles/libdevilutionx_stores.dir/all: Source/CMakeFiles/libdevilutionx_options.dir/all
 Source/CMakeFiles/libdevilutionx_stores.dir/all: Source/CMakeFiles/libdevilutionx_quick_messages.dir/all
+Source/CMakeFiles/libdevilutionx_stores.dir/all: Source/CMakeFiles/libdevilutionx_palette_blending.dir/all
+Source/CMakeFiles/libdevilutionx_stores.dir/all: Source/CMakeFiles/libdevilutionx_options.dir/all
+Source/CMakeFiles/libdevilutionx_stores.dir/all: Source/CMakeFiles/libdevilutionx_random.dir/all
 Source/CMakeFiles/libdevilutionx_stores.dir/all: Source/CMakeFiles/libdevilutionx_utf8.dir/all
 Source/CMakeFiles/libdevilutionx_stores.dir/all: Source/CMakeFiles/libdevilutionx_sound.dir/all
 Source/CMakeFiles/libdevilutionx_stores.dir/all: Source/CMakeFiles/libdevilutionx_strings.dir/all
@@ -4321,9 +4321,9 @@ Source/CMakeFiles/libdevilutionx_surface_to_png.dir/clean:
 # Target rules for target Source/CMakeFiles/libdevilutionx.dir
 
 # All Build rule for target.
+Source/CMakeFiles/libdevilutionx.dir/all: 3rdParty/bzip2/CMakeFiles/BZip2.dir/all
 Source/CMakeFiles/libdevilutionx.dir/all: CMakeFiles/devilutionx_copied_assets.dir/all
 Source/CMakeFiles/libdevilutionx.dir/all: CMakeFiles/hellfire_copied_mod_file.dir/all
-Source/CMakeFiles/libdevilutionx.dir/all: 3rdParty/bzip2/CMakeFiles/BZip2.dir/all
 Source/CMakeFiles/libdevilutionx.dir/all: _deps/lua-build/lua-5.4.7/CMakeFiles/lua_static.dir/all
 Source/CMakeFiles/libdevilutionx.dir/all: 3rdParty/SDL_image/CMakeFiles/SDL_image.dir/all
 Source/CMakeFiles/libdevilutionx.dir/all: _deps/libpng-build/CMakeFiles/png_static.dir/all
@@ -4332,68 +4332,68 @@ Source/CMakeFiles/libdevilutionx.dir/all: _deps/sdl_audiolib-build/CMakeFiles/SD
 Source/CMakeFiles/libdevilutionx.dir/all: 3rdParty/libsmackerdec/CMakeFiles/libsmackerdec.dir/all
 Source/CMakeFiles/libdevilutionx.dir/all: 3rdParty/libmpq/CMakeFiles/libmpq.dir/all
 Source/CMakeFiles/libdevilutionx.dir/all: _deps/sheenbidi-build/CMakeFiles/SheenBidi.dir/all
+Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_controller_buttons.dir/all
 Source/CMakeFiles/libdevilutionx.dir/all: 3rdParty/PKWare/CMakeFiles/PKWare.dir/all
-Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_palette_kd_tree.dir/all
-Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_control_mode.dir/all
-Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_clx_render.dir/all
-Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_direction.dir/all
-Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_dun_render.dir/all
-Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_pcx_to_clx.dir/all
-Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_file_util.dir/all
-Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_format_int.dir/all
-Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_surface.dir/all
-Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_cl2_to_clx.dir/all
-Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_codec.dir/all
 Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_assets.dir/all
 Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_cel_to_clx.dir/all
-Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_controller_buttons.dir/all
-Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_paths.dir/all
+Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_cl2_to_clx.dir/all
+Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_clx_render.dir/all
+Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_codec.dir/all
+Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_palette_kd_tree.dir/all
 Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_padmapper.dir/all
+Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_paths.dir/all
 Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_primitive_render.dir/all
+Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_control_mode.dir/all
+Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_pcx_to_clx.dir/all
 Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_crawl.dir/all
-Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_gendung.dir/all
+Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_direction.dir/all
+Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_dun_render.dir/all
 Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_light_render.dir/all
-Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_logged_fstream.dir/all
-Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_load_pcx.dir/all
-Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_mp_discipline.dir/all
-Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_load_cl2.dir/all
-Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_parse_int.dir/all
 Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_contextual_palette.dir/all
-Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_init.dir/all
-Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_town_cinematic.dir/all
-Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_level_objects.dir/all
-Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_ini.dir/all
-Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_visual_feedback.dir/all
-Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_life_volume.dir/all
-Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_parallax_depth.dir/all
-Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_headless_mode.dir/all
+Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_logged_fstream.dir/all
+Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_format_int.dir/all
+Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_file_util.dir/all
 Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_game_mode.dir/all
-Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_load_cel.dir/all
+Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_init.dir/all
+Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_headless_mode.dir/all
+Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_surface.dir/all
 Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_load_clx.dir/all
 Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_lighting.dir/all
-Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_items.dir/all
-Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_monster.dir/all
-Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_palette_blending.dir/all
-Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_multiplayer.dir/all
-Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_quests.dir/all
+Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_life_volume.dir/all
+Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_town_cinematic.dir/all
+Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_mp_discipline.dir/all
+Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_load_cl2.dir/all
+Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_gendung.dir/all
+Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_load_cel.dir/all
+Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_load_pcx.dir/all
+Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_visual_feedback.dir/all
+Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_parallax_depth.dir/all
 Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_pathfinding.dir/all
-Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_spells.dir/all
-Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_random.dir/all
-Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_mpq.dir/all
-Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_options.dir/all
-Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_text_render.dir/all
 Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_pkware_encrypt.dir/all
+Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_quests.dir/all
+Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_ini.dir/all
 Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_quick_messages.dir/all
-Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_ticks.dir/all
-Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_txtdata.dir/all
-Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_utf8.dir/all
+Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_mpq.dir/all
 Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_player.dir/all
+Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_monster.dir/all
+Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_items.dir/all
+Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_level_objects.dir/all
+Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_parse_int.dir/all
+Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_multiplayer.dir/all
+Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_palette_blending.dir/all
+Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_options.dir/all
+Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_spells.dir/all
+Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_text_render.dir/all
+Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_random.dir/all
+Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_utf8.dir/all
+Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_ticks.dir/all
 Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_surface_to_png.dir/all
 Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_stores.dir/all
 Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_sound.dir/all
+Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_strings.dir/all
+Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_txtdata.dir/all
 Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_vision.dir/all
 Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_utils_console.dir/all
-Source/CMakeFiles/libdevilutionx.dir/all: Source/CMakeFiles/libdevilutionx_strings.dir/all
 	$(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/depend
 	$(MAKE) $(MAKESILENT) -f Source\CMakeFiles\libdevilutionx.dir\build.make Source/CMakeFiles/libdevilutionx.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\c - c++\DevilutionX\build_NOW\CMakeFiles" --progress-num=41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73 "Built target libdevilutionx"

@@ -196,6 +196,7 @@ nightmare_EXTERNAL_OBJECTS = \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/doom.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/architectural_analysis.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/engine_health.cpp.obj" \
+"C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/portal_debug.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/gamemenu.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/global_protection_system.cpp.obj" \
 "C:/c - c++/DevilutionX/build_NOW/Source/CMakeFiles/libdevilutionx.dir/gmenu.cpp.obj" \
@@ -475,6 +476,7 @@ nightmare.exe: Source/CMakeFiles/libdevilutionx.dir/diablo_msg.cpp.obj
 nightmare.exe: Source/CMakeFiles/libdevilutionx.dir/doom.cpp.obj
 nightmare.exe: Source/CMakeFiles/libdevilutionx.dir/architectural_analysis.cpp.obj
 nightmare.exe: Source/CMakeFiles/libdevilutionx.dir/engine_health.cpp.obj
+nightmare.exe: Source/CMakeFiles/libdevilutionx.dir/portal_debug.cpp.obj
 nightmare.exe: Source/CMakeFiles/libdevilutionx.dir/gamemenu.cpp.obj
 nightmare.exe: Source/CMakeFiles/libdevilutionx.dir/global_protection_system.cpp.obj
 nightmare.exe: Source/CMakeFiles/libdevilutionx.dir/gmenu.cpp.obj

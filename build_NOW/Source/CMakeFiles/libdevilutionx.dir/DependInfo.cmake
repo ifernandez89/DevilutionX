@@ -166,6 +166,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "C:/c - c++/DevilutionX/Source/platform/locale.cpp" "Source/CMakeFiles/libdevilutionx.dir/platform/locale.cpp.obj" "gcc" "Source/CMakeFiles/libdevilutionx.dir/platform/locale.cpp.obj.d"
   "C:/c - c++/DevilutionX/Source/plrmsg.cpp" "Source/CMakeFiles/libdevilutionx.dir/plrmsg.cpp.obj" "gcc" "Source/CMakeFiles/libdevilutionx.dir/plrmsg.cpp.obj.d"
   "C:/c - c++/DevilutionX/Source/portal.cpp" "Source/CMakeFiles/libdevilutionx.dir/portal.cpp.obj" "gcc" "Source/CMakeFiles/libdevilutionx.dir/portal.cpp.obj.d"
+  "C:/c - c++/DevilutionX/Source/portal_debug.cpp" "Source/CMakeFiles/libdevilutionx.dir/portal_debug.cpp.obj" "gcc" "Source/CMakeFiles/libdevilutionx.dir/portal_debug.cpp.obj.d"
   "C:/c - c++/DevilutionX/Source/portals/validation.cpp" "Source/CMakeFiles/libdevilutionx.dir/portals/validation.cpp.obj" "gcc" "Source/CMakeFiles/libdevilutionx.dir/portals/validation.cpp.obj.d"
   "C:/c - c++/DevilutionX/Source/qol/autopickup.cpp" "Source/CMakeFiles/libdevilutionx.dir/qol/autopickup.cpp.obj" "gcc" "Source/CMakeFiles/libdevilutionx.dir/qol/autopickup.cpp.obj.d"
   "C:/c - c++/DevilutionX/Source/qol/chatlog.cpp" "Source/CMakeFiles/libdevilutionx.dir/qol/chatlog.cpp.obj" "gcc" "Source/CMakeFiles/libdevilutionx.dir/qol/chatlog.cpp.obj.d"

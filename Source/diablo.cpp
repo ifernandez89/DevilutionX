@@ -825,14 +825,61 @@ void HandleMouseButtonUp(Uint8 button, uint16_t modState)
 void PrepareForFadeIn()
 {
 	if (HeadlessMode) return;
+	
+	// 🚪 PORTAL DEBUG - Log PrepareForFadeIn start
+	PORTAL_LOG_EVENT("PrepareForFadeIn_INTERNAL", "Starting BlackPalette");
+	
 	BlackPalette();
 
+	// 🚪 PORTAL DEBUG - Log before render loop
+	PORTAL_LOG_EVENT("PrepareForFadeIn_INTERNAL", "Starting render loop");
+	
 	// Render the game to the buffer(s) with a fully black palette.
 	// Palette fade-in will gradually make it visible.
 	RedrawEverything();
-	while (IsRedrawEverything()) {
-		DrawAndBlit();
+	
+	// 🚪 PORTAL DEBUG - Log state before entering loop
+	PORTAL_LOG_EVENT("PrepareForFadeIn_STATE", 
+		fmt::format("pDungeonCels={} gbRunGame={} IsRedrawEverything={}", 
+			pDungeonCels != nullptr ? "VALID" : "NULL",
+			gbRunGame ? "TRUE" : "FALSE",
+			IsRedrawEverything() ? "TRUE" : "FALSE").c_str());
+	
+	// 🛡️ PORTAL CRASH FIX V3: Skip render during portal transitions
+	// The crash occurs when DrawAndBlit is called after loading a level via portal (ENTRY_WARPLVL)
+	// The level loads correctly but something in the render state is not ready
+	// SOLUTION: Skip the pre-render loop entirely during portal transitions
+	// This is safe because:
+	// 1. BlackPalette() already made the screen black
+	// 2. PaletteFadeIn will gradually reveal the game
+	// 3. The first frame will be rendered in the main game loop anyway
+	
+	// Check if we're in a portal transition (leveltype != DTYPE_TOWN means we came from town via portal)
+	bool isPortalTransition = (leveltype != DTYPE_TOWN && currlevel != 0);
+	
+	PORTAL_LOG_EVENT("PrepareForFadeIn_CHECK", 
+		fmt::format("leveltype={} currlevel={} isPortalTransition={}", 
+			static_cast<int>(leveltype), currlevel, isPortalTransition ? "YES" : "NO").c_str());
+	
+	if (pDungeonCels != nullptr && gbRunGame && !isPortalTransition) {
+		int maxIterations = 10;
+		while (IsRedrawEverything() && maxIterations > 0) {
+			PORTAL_LOG_EVENT("PrepareForFadeIn_INTERNAL", fmt::format("DrawAndBlit iteration {} - BEFORE", 11 - maxIterations).c_str());
+			FlushPortalDebugLog(); // Flush before the potentially crashing call
+			DrawAndBlit();
+			PORTAL_LOG_EVENT("PrepareForFadeIn_INTERNAL", fmt::format("DrawAndBlit iteration {} - AFTER", 11 - maxIterations).c_str());
+			maxIterations--;
+		}
+	} else {
+		PORTAL_LOG_EVENT("PrepareForFadeIn_INTERNAL", 
+			fmt::format("Skipping render loop - pDungeonCels={} gbRunGame={} isPortalTransition={}", 
+				pDungeonCels != nullptr ? "VALID" : "NULL",
+				gbRunGame ? "TRUE" : "FALSE",
+				isPortalTransition ? "YES" : "NO").c_str());
 	}
+	
+	PORTAL_LOG_EVENT("PrepareForFadeIn_INTERNAL", "Render loop complete");
+	FlushPortalDebugLog();
 }
 
 void GameEventHandler(const SDL_Event &event, uint16_t modState)
@@ -949,14 +996,21 @@ void GameEventHandler(const SDL_Event &event, uint16_t modState)
 			nthread_ignore_mutex(true);
 			PaletteFadeOut(8);
 			sound_stop();
+			PORTAL_LOG_EVENT("ShowProgress", "Starting level load via portal");
 			ShowProgress(GetCustomEvent(event));
 
+			PORTAL_LOG_EVENT("PrepareForFadeIn", "Preparing fade in");
 			PrepareForFadeIn();
+			PORTAL_LOG_EVENT("LoadPWaterPalette", "Loading water palette");
 			LoadPWaterPalette();
+			PORTAL_LOG_EVENT("PaletteFadeIn", "Starting palette fade in");
 			if (gbRunGame)
 				PaletteFadeIn(8);
+			PORTAL_LOG_EVENT("PostFadeIn", "Fade in complete");
 			nthread_ignore_mutex(false);
 			gbGameLoopStartup = true;
+			PORTAL_LOG_EVENT("PostFadeIn", "Returning to game loop - gbGameLoopStartup=true");
+			FlushPortalDebugLog();
 			return;
 		}
 		MainWndProc(event);
@@ -992,6 +1046,13 @@ void RunGameLoop(interface_mode uMsg)
 #endif
 
 	while (gbRunGame) {
+		// 🚪 PORTAL DEBUG - Track game loop iterations after portal
+		static bool portalTransitionLogged = false;
+		if (gbGameLoopStartup && !portalTransitionLogged) {
+			PORTAL_LOG_EVENT("GameLoop", "FIRST iteration after portal transition");
+			FlushPortalDebugLog();
+			portalTransitionLogged = true;
+		}
 
 #ifdef _DEBUG
 		if (!gbGameLoopStartup && !DebugCmdsFromCommandLine.empty()) {
@@ -1005,6 +1066,7 @@ void RunGameLoop(interface_mode uMsg)
 
 		SDL_Event event;
 		uint16_t modState;
+		PORTAL_LOG_EVENT("GameLoop", "FetchMessage loop start");
 		while (FetchMessage(&event, &modState)) {
 			if (event.type == SDL_EVENT_QUIT) {
 				gbRunGameResult = false;
@@ -1013,6 +1075,7 @@ void RunGameLoop(interface_mode uMsg)
 			}
 			HandleMessage(event, modState);
 		}
+		PORTAL_LOG_EVENT("GameLoop", "FetchMessage loop end");
 		if (!gbRunGame)
 			break;
 
@@ -1030,17 +1093,36 @@ void RunGameLoop(interface_mode uMsg)
 			DvlNet_ProcessNetworkPackets();
 			if (!drawGame)
 				continue;
+			PORTAL_LOG_EVENT("GameLoop", "RedrawViewport before");
 			RedrawViewport();
+			PORTAL_LOG_EVENT("GameLoop", "RedrawViewport after");
+			PORTAL_LOG_RENDER("GameLoop_DrawAndBlit_NoRunLoop");
+			FlushPortalDebugLog();
 			DrawAndBlit();
 			continue;
 		}
 
+		PORTAL_LOG_EVENT("GameLoop", "ProcessGameMessagePackets before");
 		ProcessGameMessagePackets();
+		PORTAL_LOG_EVENT("GameLoop", "game_loop before");
+		FlushPortalDebugLog();
 		if (game_loop(gbGameLoopStartup))
 			diablo_color_cyc_logic();
+		PORTAL_LOG_EVENT("GameLoop", "game_loop after");
+		FlushPortalDebugLog();
 		gbGameLoopStartup = false;
-		if (drawGame)
+		PORTAL_LOG_EVENT("GameLoop", fmt::format("About to check drawGame={}", drawGame ? "true" : "false").c_str());
+		FlushPortalDebugLog();
+		if (drawGame) {
+			PORTAL_LOG_EVENT("GameLoop", "INSIDE if(drawGame) - about to call DrawAndBlit");
+			FlushPortalDebugLog();
+			PORTAL_LOG_RENDER("GameLoop_DrawAndBlit_MainLoop");
+			FlushPortalDebugLog();
 			DrawAndBlit();
+			PORTAL_LOG_EVENT("GameLoop", "DrawAndBlit completed");
+		} else {
+			PORTAL_LOG_EVENT("GameLoop", "drawGame=false, skipping DrawAndBlit");
+		}
 #ifdef GPERF_HEAP_FIRST_GAME_ITERATION
 		if (run_game_iteration++ == 0)
 			HeapProfilerDump("first_game_iteration");
@@ -1659,35 +1741,58 @@ void UpdateMonsterLights()
 
 void GameLogic()
 {
+	// 🚪 PORTAL DEBUG - Track game loop execution
+	static bool firstFrameAfterLoad = true;
+	if (firstFrameAfterLoad) {
+		PORTAL_LOG_GAMELOOP("FIRST_FRAME_START");
+		firstFrameAfterLoad = false;
+	}
+	
 	if (!ProcessInput()) {
 		return;
 	}
 	if (gbProcessPlayers) {
 		gGameLogicStep = GameLogicStep::ProcessPlayers;
+		PORTAL_LOG_GAMELOOP("ProcessPlayers_START");
 		ProcessPlayers();
+		PORTAL_LOG_GAMELOOP("ProcessPlayers_END");
 	}
 	if (leveltype != DTYPE_TOWN) {
 		gGameLogicStep = GameLogicStep::ProcessMonsters;
 #ifdef _DEBUG
 		if (!DebugInvisible)
 #endif
+		{
+			PORTAL_LOG_GAMELOOP("ProcessMonsters_START");
 			ProcessMonsters();
+			PORTAL_LOG_GAMELOOP("ProcessMonsters_END");
+		}
 		gGameLogicStep = GameLogicStep::ProcessObjects;
+		PORTAL_LOG_GAMELOOP("ProcessObjects_START");
 		ProcessObjects();
+		PORTAL_LOG_GAMELOOP("ProcessObjects_END");
 		gGameLogicStep = GameLogicStep::ProcessMissiles;
+		PORTAL_LOG_GAMELOOP("ProcessMissiles_START");
 		ProcessMissiles();
+		PORTAL_LOG_GAMELOOP("ProcessMissiles_END");
 		gGameLogicStep = GameLogicStep::ProcessItems;
+		PORTAL_LOG_GAMELOOP("ProcessItems_START");
 		ProcessItems();
+		PORTAL_LOG_GAMELOOP("ProcessItems_END");
+		PORTAL_LOG_GAMELOOP("ProcessLightList_START");
 		ProcessLightList();
+		PORTAL_LOG_GAMELOOP("ProcessLightList_END");
 		
 		// 🔥 NIGHTMARE ATMOSPHERIC LIGHTING - Update atmospheric lighting effects
+		PORTAL_LOG_GAMELOOP("UpdateNightmareLighting_START");
 		UpdateNightmareLighting();
+		PORTAL_LOG_GAMELOOP("UpdateNightmareLighting_END");
 		
 		// 🌙 NIGHTMARE CONFIG - Update configuration system
 		UpdateNightmareConfig();
 		
 		// 🌙 NIGHTMARE AMBIENCE - Update ambience system
-		UpdateNightmareAmbience();
+		UpdateNightmareAmbience();;
 		
 		// 🎵 NIGHTMARE AUDIO - Update enhanced audio system
 		UpdateNightmareAudio();
@@ -3617,6 +3722,14 @@ tl::expected<void, std::string> LoadGameLevel(bool firstflag, lvl_entry lvldir)
 	PORTAL_LOG_STATE("BEFORE_LOAD", currlevel, leveltype);
 	PORTAL_LOG_LIGHTING("BEFORE_LOAD", ActiveLightCount, MAXLIGHTS);
 	
+	// 🛡️ PORTAL CRASH FIX: Skip first render frames after portal transition
+	// This allows the rendering state to stabilize before drawing
+	extern int g_skipRenderFramesAfterPortal;
+	if (lvldir == ENTRY_WARPLVL) {
+		g_skipRenderFramesAfterPortal = 30; // Skip 30 frames to be extra safe
+		PORTAL_LOG_EVENT("SKIP_RENDER_FRAMES", "Set to skip 30 render frames after portal");
+	}
+	
 	const _music_id neededTrack = GetLevelMusic(leveltype);
 
 	ClearFloatingNumbers();
@@ -3655,16 +3768,14 @@ tl::expected<void, std::string> LoadGameLevel(bool firstflag, lvl_entry lvldir)
 
 	InitAutomap();
 
+	// 🛡️ PORTAL CRASH FIX: ALWAYS cleanup nightmare lighting on ANY level transition
+	// This prevents light accumulation that causes memory corruption
+	PORTAL_LOG_EVENT("LIGHTING_CLEANUP", "Before CleanupNightmareLighting (ALWAYS)");
+	PORTAL_LOG_LIGHTING("BEFORE_CLEANUP", ActiveLightCount, MAXLIGHTS);
+	CleanupNightmareLighting();
+
 	if (leveltype != DTYPE_TOWN && lvldir != ENTRY_LOAD) {
-		// 🚪 PORTAL DEBUG - Log before lighting cleanup
-		PORTAL_LOG_EVENT("LIGHTING_CLEANUP", "Before CleanupNightmareLighting");
-		PORTAL_LOG_LIGHTING("BEFORE_CLEANUP", ActiveLightCount, MAXLIGHTS);
-		
-		// 🔥 NIGHTMARE ATMOSPHERIC LIGHTING - Cleanup before reinitializing
-		// This prevents crashes when changing levels via portal
-		CleanupNightmareLighting();
-		
-		// 🚪 PORTAL DEBUG - Log after cleanup, before init
+		// 🚪 PORTAL DEBUG - Log before lighting init
 		PORTAL_LOG_EVENT("LIGHTING_INIT", "Before InitLighting");
 		PORTAL_LOG_LIGHTING("AFTER_CLEANUP", ActiveLightCount, MAXLIGHTS);
 		
@@ -3742,12 +3853,22 @@ tl::expected<void, std::string> LoadGameLevel(bool firstflag, lvl_entry lvldir)
 
 	LoadGameLevelCalculateCursor();
 	
-	// 🎨 FIX: Reload palette after all initialization to prevent color corruption
-	// This fixes the red/magenta color bug when creating new games
-	if (leveltype != DTYPE_TOWN) {
-		LoadPalette("levels\\l1data\\l1.pal");
-	} else {
+	// 🎨 FIX: Reload correct palette based on level type
+	// Each dungeon type has its own palette
+	if (leveltype == DTYPE_TOWN) {
 		LoadPalette("levels\\towndata\\town.pal");
+	} else if (leveltype == DTYPE_CATHEDRAL) {
+		LoadPalette("levels\\l1data\\l1.pal");
+	} else if (leveltype == DTYPE_CATACOMBS) {
+		LoadPalette("levels\\l2data\\l2.pal");
+	} else if (leveltype == DTYPE_CAVES) {
+		LoadPalette("levels\\l3data\\l3.pal");
+	} else if (leveltype == DTYPE_HELL) {
+		LoadPalette("levels\\l4data\\l4.pal");
+	} else if (leveltype == DTYPE_CRYPT) {
+		LoadPalette("nlevels\\l5data\\l5base.pal");
+	} else if (leveltype == DTYPE_NEST) {
+		LoadPalette("nlevels\\l6data\\l6base.pal");
 	}
 	
 	// 💰 INVISIBLE WEAR - Update wear multipliers for new level

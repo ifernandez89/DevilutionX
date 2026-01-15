@@ -124,6 +124,30 @@ void CleanupContextualPalette()
 #endif
 }
 
+void ResetContextualPaletteState()
+{
+    // 🛡️ PALETTE CORRUPTION FIX: Reset internal state for clean transitions
+    // This prevents accumulated tints from corrupting the palette after level changes
+    
+    // Reset current and target tints to neutral (no modification)
+    g_paletteState.currentTint = ContextualTint{}; // All multipliers = 1.0, all boosts = 0.0
+    g_paletteState.targetTint = ContextualTint{};
+    
+    // Reset transition state
+    g_paletteState.transitionProgress = 1.0f; // No transition in progress
+    g_paletteState.transitionStartTime = 0;
+    
+    // Re-detect biome for the new level
+    g_paletteState.currentBiome = DetectCurrentBiome();
+    
+    // Apply the correct tint for the new biome (will be applied gradually)
+    g_paletteState.targetTint = GetBiomeTint(g_paletteState.currentBiome);
+    
+#ifdef _DEBUG
+    std::cout << "Contextual Palette state reset for new level transition" << std::endl;
+#endif
+}
+
 void SetContextualPaletteEnabled(bool enabled)
 {
     g_paletteState.enabled = enabled;

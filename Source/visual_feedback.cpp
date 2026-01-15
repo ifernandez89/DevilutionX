@@ -156,6 +156,32 @@ void CleanupVisualFeedback()
 #endif
 }
 
+void ResetVisualFeedbackState()
+{
+    // 🛡️ PALETTE CORRUPTION FIX: Reset internal state for clean transitions
+    // This prevents accumulated effects from corrupting the palette after level changes
+    
+    // Clear all active effects
+    for (int i = 0; i < g_visualState.activeEffectCount; i++) {
+        g_visualState.activeEffects[i] = VisualEffect{};
+    }
+    g_visualState.activeEffectCount = 0;
+    
+    // Reset player state tracking
+    g_visualState.lastPlayerHealth = 0;
+    g_visualState.lastDamageTime = 0;
+    g_visualState.lowHealthWarning = false;
+    
+    // Keep enabled state and global intensity (user preferences)
+    // g_visualState.enabled stays as-is
+    // g_visualState.globalIntensity stays as-is
+    // g_visualState.contextualEffects stays as-is
+    
+#ifdef _DEBUG
+    std::cout << "Visual Feedback state reset for new level transition" << std::endl;
+#endif
+}
+
 void SetVisualFeedbackEnabled(bool enabled)
 {
     g_visualState.enabled = enabled;

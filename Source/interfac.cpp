@@ -48,6 +48,10 @@
 #include "controls/touch/renderers.h"
 #endif
 
+// 🛡️ PALETTE CORRUPTION FIX: Include reset functions for visual systems
+#include "contextual_palette.h"
+#include "visual_feedback.h"
+
 #ifdef __DJGPP__
 #define LOAD_ON_MAIN_THREAD
 #endif
@@ -556,6 +560,11 @@ void ProgressEventHandler(const SDL_Event &event, uint16_t modState)
 		// All visual/lighting systems can now resume normal processing
 		g_isLevelTransition = false;
 		g_skipContextualPaletteEffects = false;
+		
+		// 🛡️ PALETTE CORRUPTION FIX: Reset visual system states for clean palette
+		// This prevents accumulated tints/effects from corrupting the new level's palette
+		ResetContextualPaletteState();
+		ResetVisualFeedbackState();
 
 		[[maybe_unused]] EventHandler prevHandler = SetEventHandler(ProgressEventHandlerState.prevHandler);
 		assert(prevHandler == ProgressEventHandler);

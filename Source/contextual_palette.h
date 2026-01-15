@@ -89,6 +89,12 @@ void UpdateContextualPalette();
 void CleanupContextualPalette();
 
 /**
+ * Resetea el estado interno del sistema para nueva transición
+ * Mantiene el sistema habilitado pero limpia tints acumulados
+ */
+void ResetContextualPaletteState();
+
+/**
  * Habilita/deshabilita el sistema de paleta contextual
  */
 void SetContextualPaletteEnabled(bool enabled);

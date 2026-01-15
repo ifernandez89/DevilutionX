@@ -107,6 +107,12 @@ void UpdateVisualFeedback();
 void CleanupVisualFeedback();
 
 /**
+ * Resetea el estado interno del sistema para nueva transición
+ * Mantiene el sistema habilitado pero limpia efectos activos
+ */
+void ResetVisualFeedbackState();
+
+/**
  * Habilita/deshabilita el sistema de feedback visual
  */
 void SetVisualFeedbackEnabled(bool enabled);

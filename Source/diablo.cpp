@@ -1689,6 +1689,10 @@ void CreateLevel(lvl_entry entry)
 	}
 	LoadRndLvlPal(leveltype);
 	
+	// 🛡️ PALETTE CORRUPTION FIX: Update system palette after loading level palette
+	// This ensures the correct level palette is applied, not the cutscene palette
+	UpdateSystemPalette(logical_palette);
+	
 	// FEATURE: Dormant Assets Recovery - enhance level with discovered decorative elements
 	EnhanceLevelWithDormantAssets(leveltype, 15); // 15% chance to add decorations
 }

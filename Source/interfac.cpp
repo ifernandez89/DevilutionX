@@ -546,8 +546,8 @@ void ProgressEventHandler(const SDL_Event &event, uint16_t modState)
 		g_isLevelTransition = false;
 		g_skipContextualPaletteEffects = false;
 		
-		// Force a palette update with contextual effects now enabled
-		UpdateSystemPalette(logical_palette);
+		// NOTE: No need to call UpdateSystemPalette here - it was already called
+		// in diablo.cpp after LoadRndLvlPal with the correct level palette
 
 		[[maybe_unused]] EventHandler prevHandler = SetEventHandler(ProgressEventHandlerState.prevHandler);
 		assert(prevHandler == ProgressEventHandler);

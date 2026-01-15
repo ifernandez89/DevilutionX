@@ -543,9 +543,10 @@ void ApplyConservativeVisualPreset()
 
 void ApplyBalancedVisualPreset()
 {
-    g_visualState.enabled = true;
-    g_visualState.globalIntensity = 0.8f;
-    g_visualState.contextualEffects = true;
+    // 🛡️ DISABLED: Visual feedback was causing corruption during transitions
+    g_visualState.enabled = false;
+    g_visualState.globalIntensity = 0.0f;
+    g_visualState.contextualEffects = false;
     
 #ifdef _DEBUG
     std::cout << "Balanced visual preset applied" << std::endl;

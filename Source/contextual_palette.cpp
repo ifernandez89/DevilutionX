@@ -416,15 +416,16 @@ void ApplySubtlePalettePreset()
 
 void ApplyBalancedPalettePreset()
 {
-    g_paletteState.enabled = true;
-    g_paletteState.globalIntensity = 0.7f;
-    g_paletteState.smoothTransitions = true;
-    g_paletteState.transitionDuration = 2000; // 2 segundos
-    g_paletteState.depthDarkening = true;
-    g_paletteState.depthDarkeningFactor = 0.04f; // 4% por nivel
+    // 🛡️ DISABLED: Contextual palette was causing corruption during transitions
+    g_paletteState.enabled = false;
+    g_paletteState.globalIntensity = 0.0f;
+    g_paletteState.smoothTransitions = false;
+    g_paletteState.transitionDuration = 2000;
+    g_paletteState.depthDarkening = false;
+    g_paletteState.depthDarkeningFactor = 0.0f;
     
 #ifdef _DEBUG
-    std::cout << "Balanced palette preset applied" << std::endl;
+    std::cout << "Balanced palette preset applied (DISABLED for stability)" << std::endl;
 #endif
 }
 

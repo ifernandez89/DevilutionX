@@ -29,12 +29,12 @@ namespace devilution {
  * Configuración del sistema de IA
  */
 struct AIConfig {
-    std::string apiKey;
-    std::string baseURL = "https://openrouter.ai/api/v1";
-    std::string model = "mistralai/mistral-7b-instruct:free";
-    int timeoutMs = 400;  // 🔥 TIMEOUT AGRESIVO: 400ms máximo
-    int maxTokens = 128;
-    float temperature = 0.6f;
+    // 🏠 OLLAMA LOCAL: Sin APIs externas
+    std::string ollamaURL = "http://localhost:11434";
+    std::string model = "qwen2.5:3b-instruct";
+    int timeoutMs = 8000;  // 🔥 TIMEOUT: 8s técnico (no bloquear juego)
+    int maxTokens = 24;    // Bajo para respuesta rápida
+    float temperature = 0.3f;  // No tan bajo, evita freeze
     bool enabled = false;
     
     // 🪙 TOKEN BUCKET: Rate limiting mejorado

@@ -75,7 +75,7 @@ std::string ToLower(const std::string& str) {
 }
 
 /**
- * 🌐 SIMPLE JSON BUILDER (sin dependencias externas)
+ * 🌐 SIMPLE JSON BUILDER para Ollama
  * Construye JSON manualmente para el request
  */
 std::string BuildJSONRequest(const std::string& model, const std::string& prompt, 
@@ -95,27 +95,34 @@ std::string BuildJSONRequest(const std::string& model, const std::string& prompt
         pos += 2;
     }
     
+    // Ollama API format con parámetros ajustados para CPU
     return StrCat(
         "{\"model\":\"", model, "\","
-        "\"messages\":[{\"role\":\"user\",\"content\":\"", escapedPrompt, "\"}],"
+        "\"prompt\":\"", escapedPrompt, "\","
+        "\"stream\":false,"
+        "\"options\":{"
         "\"temperature\":", std::to_string(temperature), ","
-        "\"max_tokens\":", std::to_string(maxTokens), "}"
+        "\"top_p\":0.9,"
+        "\"num_predict\":", std::to_string(maxTokens), ","
+        "\"repeat_penalty\":1.05,"
+        "\"stop\":[\"\\n\",\".\",\"!\",\"?\"]"
+        "}}"
     );
 }
 
 /**
- * 🌐 SIMPLE JSON PARSER (sin dependencias externas)
+ * 🌐 SIMPLE JSON PARSER para Ollama
  * Extrae el contenido de la respuesta JSON
  */
 std::optional<std::string> ParseJSONResponse(const std::string& json) {
-    // Buscar: "content":"..."
-    size_t contentPos = json.find("\"content\"");
-    if (contentPos == std::string::npos) {
+    // Ollama format: {"response":"..."}
+    size_t responsePos = json.find("\"response\"");
+    if (responsePos == std::string::npos) {
         return std::nullopt;
     }
     
     // Buscar el inicio del valor (después de ":")
-    size_t valueStart = json.find(':', contentPos);
+    size_t valueStart = json.find(':', responsePos);
     if (valueStart == std::string::npos) {
         return std::nullopt;
     }
@@ -154,21 +161,47 @@ std::optional<std::string> ParseJSONResponse(const std::string& json) {
         pos++;
     }
     
+    // ✂️ POST-PROCESSING OBLIGATORIO: Limpiar ruido estructural
+    
+    // 1. Remover "Sentence:" / "Text:" / "Output:" (case insensitive)
+    std::string lower = ToLower(content);
+    if (lower.find("sentence:") == 0) {
+        content = content.substr(9);
+    } else if (lower.find("text:") == 0) {
+        content = content.substr(5);
+    } else if (lower.find("output:") == 0) {
+        content = content.substr(7);
+    }
+    
+    // 2. Limpiar comillas extras al inicio/final
+    while (!content.empty() && (content.front() == '"' || content.front() == '\'' || content.front() == ' ')) {
+        content.erase(0, 1);
+    }
+    while (!content.empty() && (content.back() == '"' || content.back() == '\'' || content.back() == ' ')) {
+        content.pop_back();
+    }
+    
+    // 3. Trim espacios
+    content.erase(content.begin(), std::find_if(content.begin(), content.end(), 
+        [](unsigned char ch) { return !std::isspace(ch); }));
+    content.erase(std::find_if(content.rbegin(), content.rend(), 
+        [](unsigned char ch) { return !std::isspace(ch); }).base(), content.end());
+    
     return content;
 }
 
 #ifdef _WIN32
 /**
- * 🌐 WINDOWS HTTP CLIENT (WinHTTP)
+ * 🌐 WINDOWS HTTP CLIENT para Ollama Local
  * Implementación nativa para Windows sin dependencias externas
  */
-std::optional<std::string> CallOpenRouterWindows(
+std::optional<std::string> CallOllamaWindows(
     const std::string& jsonBody,
     const AIConfig& config
 ) {
-    // Parse URL
+    // Parse URL (localhost:11434)
     HINTERNET hSession = WinHttpOpen(
-        L"DevilutionX-AI/1.0",
+        L"DevilutionX-AI/2.0",
         WINHTTP_ACCESS_TYPE_DEFAULT_PROXY,
         WINHTTP_NO_PROXY_NAME,
         WINHTTP_NO_PROXY_BYPASS,
@@ -188,31 +221,31 @@ std::optional<std::string> CallOpenRouterWindows(
     WinHttpSetOption(hSession, WINHTTP_OPTION_SEND_TIMEOUT, &timeout, sizeof(timeout));
     WinHttpSetOption(hSession, WINHTTP_OPTION_RECEIVE_TIMEOUT, &timeout, sizeof(timeout));
     
-    // Connect
+    // Connect to localhost:11434
     HINTERNET hConnect = WinHttpConnect(
         hSession,
-        L"openrouter.ai",
-        INTERNET_DEFAULT_HTTPS_PORT,
+        L"localhost",
+        11434,
         0
     );
     
     if (!hConnect) {
 #ifdef _DEBUG
-        LogVerbose("AI: WinHttpConnect failed");
+        LogVerbose("AI: WinHttpConnect failed - Is Ollama running?");
 #endif
         WinHttpCloseHandle(hSession);
         return std::nullopt;
     }
     
-    // Open request
+    // Open request to /api/generate
     HINTERNET hRequest = WinHttpOpenRequest(
         hConnect,
         L"POST",
-        L"/api/v1/chat/completions",
+        L"/api/generate",
         NULL,
         WINHTTP_NO_REFERER,
         WINHTTP_DEFAULT_ACCEPT_TYPES,
-        WINHTTP_FLAG_SECURE
+        0  // HTTP (not HTTPS for localhost)
     );
     
     if (!hRequest) {
@@ -225,11 +258,7 @@ std::optional<std::string> CallOpenRouterWindows(
     }
     
     // Set headers
-    std::wstring authHeader = L"Authorization: Bearer " + 
-        std::wstring(config.apiKey.begin(), config.apiKey.end());
     std::wstring contentType = L"Content-Type: application/json";
-    
-    WinHttpAddRequestHeaders(hRequest, authHeader.c_str(), -1, WINHTTP_ADDREQ_FLAG_ADD);
     WinHttpAddRequestHeaders(hRequest, contentType.c_str(), -1, WINHTTP_ADDREQ_FLAG_ADD);
     
     // Send request
@@ -297,7 +326,7 @@ std::optional<std::string> CallOpenRouterWindows(
     
     if (response.empty()) {
 #ifdef _DEBUG
-        LogVerbose("AI: Empty response");
+        LogVerbose("AI: Empty response from Ollama");
 #endif
         return std::nullopt;
     }
@@ -306,7 +335,7 @@ std::optional<std::string> CallOpenRouterWindows(
 }
 #else
 /**
- * 🌐 LINUX/MAC HTTP CLIENT (libcurl)
+ * 🌐 LINUX/MAC HTTP CLIENT para Ollama Local
  * Implementación con libcurl para plataformas Unix
  */
 #ifdef HAVE_CURL
@@ -315,7 +344,7 @@ static size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* use
     return size * nmemb;
 }
 
-std::optional<std::string> CallOpenRouterCurl(
+std::optional<std::string> CallOllamaCurl(
     const std::string& jsonBody,
     const AIConfig& config
 ) {
@@ -331,19 +360,15 @@ std::optional<std::string> CallOpenRouterCurl(
     struct curl_slist* headers = NULL;
     
     // Set headers
-    std::string authHeader = "Authorization: Bearer " + config.apiKey;
-    headers = curl_slist_append(headers, authHeader.c_str());
     headers = curl_slist_append(headers, "Content-Type: application/json");
     
-    // Set options
-    curl_easy_setopt(curl, CURLOPT_URL, "https://openrouter.ai/api/v1/chat/completions");
+    // Set options for Ollama local
+    curl_easy_setopt(curl, CURLOPT_URL, "http://localhost:11434/api/generate");
     curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
     curl_easy_setopt(curl, CURLOPT_POSTFIELDS, jsonBody.c_str());
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);
     curl_easy_setopt(curl, CURLOPT_TIMEOUT_MS, config.timeoutMs);
-    curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 1L);
-    curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 2L);
     
     // Perform request
     CURLcode res = curl_easy_perform(curl);
@@ -354,14 +379,14 @@ std::optional<std::string> CallOpenRouterCurl(
     
     if (res != CURLE_OK) {
 #ifdef _DEBUG
-        LogVerbose("AI: curl_easy_perform failed: {}", curl_easy_strerror(res));
+        LogVerbose("AI: curl_easy_perform failed: {} - Is Ollama running?", curl_easy_strerror(res));
 #endif
         return std::nullopt;
     }
     
     if (response.empty()) {
 #ifdef _DEBUG
-        LogVerbose("AI: Empty response");
+        LogVerbose("AI: Empty response from Ollama");
 #endif
         return std::nullopt;
     }
@@ -370,7 +395,7 @@ std::optional<std::string> CallOpenRouterCurl(
 }
 #else
 // libcurl no disponible - sistema deshabilitado
-std::optional<std::string> CallOpenRouterCurl(
+std::optional<std::string> CallOllamaCurl(
     const std::string& jsonBody,
     const AIConfig& config
 ) {
@@ -464,50 +489,32 @@ bool CanCallAI() {
 }
 
 /**
- * Construye el prompt para la IA
+ * Construye el prompt para la IA (Ollama optimizado para qwen2.5)
  */
 std::string BuildPrompt(const std::string& text, AITone tone) {
+    // Prompt ULTRACORTO - Evita bloqueo cognitivo en CPU
     return StrCat(
-        "You are a text variation engine for Diablo 1 (1996).\n\n"
-        "GOAL: Create NOTICEABLE variations that feel alive and dynamic while respecting lore.\n\n"
-        "STRICT RULES:\n"
-        "- You MUST NOT invent new lore, facts, places, names, events, or mechanics.\n"
-        "- You MUST NOT add new information.\n"
-        "- You MUST ONLY use words from the ORIGINAL TEXT (you can add common words like: the, a, is, are, but, yet, still, now, here, there).\n"
-        "- You SHOULD create NOTICEABLE variations: reorder words dramatically, change rhythm, add pauses (...), change emphasis.\n"
-        "- You MAY use ellipsis (...), capitalization for EMPHASIS, question marks, exclamation points.\n"
-        "- Make it feel ALIVE and REACTIVE, not robotic.\n"
-        "- Output ONLY the final text, no explanations.\n\n"
-        "STYLE:\n"
-        "- Dark, gothic, medieval\n"
-        "- Diablo 1 tone (1996)\n"
-        "- Dramatic and atmospheric\n"
-        "- No modern slang\n"
-        "- No humor\n\n"
-        "ORIGINAL TEXT: \"", text, "\"\n\n"
-        "TONE MODIFIER: ", ToneToString(tone), "\n\n"
-        "Examples of good variations:\n"
-        "- \"What can I do for you?\" → \"What... can I do for you?\" (weary)\n"
-        "- \"The darkness grows.\" → \"The darkness... it GROWS.\" (cryptic)\n"
-        "- \"Stay awhile and listen.\" → \"Stay. Listen awhile.\" (cold)"
+        "Rewrite the sentence with a very small change. "
+        "Keep the same meaning and tone. Do not add new ideas.\n\n"
+        "Sentence: \"", text, "\""
     );
 }
 
 /**
- * 🌐 LLAMADA HTTP REAL A OPENROUTER
- * Implementación multi-plataforma con timeout agresivo
+ * 🌐 LLAMADA HTTP REAL A OLLAMA LOCAL
+ * Implementación multi-plataforma con timeout
  */
-std::optional<std::string> CallOpenRouter(
+std::optional<std::string> CallOllama(
     const std::string& prompt,
     const AIConfig& config
 ) {
 #ifdef _DEBUG
     if (g_debugLogging) {
-        LogVerbose("AI: Calling OpenRouter API...");
+        LogVerbose("AI: Calling Ollama at localhost:11434...");
     }
 #endif
     
-    // Construir JSON request
+    // Construir JSON request para Ollama
     std::string jsonBody = BuildJSONRequest(
         config.model,
         prompt,
@@ -521,19 +528,19 @@ std::optional<std::string> CallOpenRouter(
     }
 #endif
     
-    // Llamar API según plataforma
+    // Llamar Ollama según plataforma
     std::optional<std::string> response;
     
 #ifdef _WIN32
-    response = CallOpenRouterWindows(jsonBody, config);
+    response = CallOllamaWindows(jsonBody, config);
 #else
-    response = CallOpenRouterCurl(jsonBody, config);
+    response = CallOllamaCurl(jsonBody, config);
 #endif
     
     if (!response.has_value()) {
 #ifdef _DEBUG
         if (g_debugLogging) {
-            LogVerbose("AI: HTTP request failed");
+            LogVerbose("AI: HTTP request failed - Is Ollama running?");
         }
 #endif
         return std::nullopt;
@@ -545,7 +552,7 @@ std::optional<std::string> CallOpenRouter(
     }
 #endif
     
-    // Parsear respuesta JSON
+    // Parsear respuesta JSON de Ollama
     auto content = ParseJSONResponse(*response);
     
     if (!content.has_value()) {
@@ -588,45 +595,23 @@ void InitAITextVariation()
     g_aiStats = AIStats{};
     g_aiCache.clear();
     
-    // 🔧 LEER API KEY AUTOMÁTICAMENTE desde tools/.env.dev
-    // Esto permite que funcione sin configuración manual
-    std::string envPath = "tools/.env.dev";
-    std::ifstream envFile(envPath);
-    if (envFile.is_open()) {
-        std::string line;
-        while (std::getline(envFile, line)) {
-            if (line.find("API_KEY=") == 0) {
-                // Extraer API key (formato: API_KEY="sk-or-v1-...")
-                std::string key = line.substr(8); // Después de "API_KEY="
-                // Remover comillas si existen
-                key.erase(std::remove(key.begin(), key.end(), '"'), key.end());
-                key.erase(std::remove(key.begin(), key.end(), '\''), key.end());
-                
-                if (!key.empty()) {
-                    g_aiConfig.apiKey = key;
-                    g_aiConfig.enabled = true; // ✅ Auto-habilitar si hay API key
-                    
-#ifdef _DEBUG
-                    LogVerbose("AI: API key loaded from tools/.env.dev");
-                    LogVerbose("AI: System auto-enabled");
-#endif
-                }
-                break;
-            }
-        }
-        envFile.close();
-    }
-    
-    // Si no hay API key, sistema deshabilitado
-    if (g_aiConfig.apiKey.empty()) {
-        g_aiConfig.enabled = false;
-#ifdef _DEBUG
-        LogVerbose("AI: No API key found, system disabled");
-#endif
-    }
+    // 🏠 OLLAMA LOCAL: Detectar si está disponible
+    // Intentar conectar a localhost:11434/api/tags
     
 #ifdef _DEBUG
-    LogVerbose("AI Text Variation System initialized");
+    LogVerbose("AI: Checking for Ollama at localhost:11434...");
+#endif
+    
+    // TODO: Implementar detección de Ollama con GET /api/tags
+    // Por ahora, asumimos que está disponible si el usuario lo configuró
+    
+    // Auto-habilitar si Ollama está corriendo
+    g_aiConfig.enabled = true;  // Se deshabilitará si falla la primera llamada
+    
+#ifdef _DEBUG
+    LogVerbose("AI Text Variation System initialized (Ollama local)");
+    LogVerbose("AI: Model: {}", g_aiConfig.model);
+    LogVerbose("AI: Endpoint: {}", g_aiConfig.ollamaURL);
 #endif
 }
 
@@ -648,10 +633,10 @@ std::optional<std::string> TryAITextVariation(
     g_aiStats.totalRequests++;
     
     // Check 1: Sistema habilitado?
-    if (!g_aiConfig.enabled || g_aiConfig.apiKey.empty()) {
+    if (!g_aiConfig.enabled) {
 #ifdef _DEBUG
         if (g_debugLogging) {
-            LogVerbose("AI: System disabled or no API key");
+            LogVerbose("AI: System disabled");
         }
 #endif
         g_aiStats.failedRequests++;
@@ -708,7 +693,7 @@ std::optional<std::string> TryAITextVariation(
     auto startTime = std::chrono::high_resolution_clock::now();
     
     std::string prompt = BuildPrompt(text, tone);
-    auto aiResult = CallOpenRouter(prompt, g_aiConfig);
+    auto aiResult = CallOllama(prompt, g_aiConfig);
     
     auto endTime = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime);
@@ -771,8 +756,8 @@ std::optional<std::string> TryAITextVariation(
 
 bool IsLoreSafe(const std::string& aiText, const std::string& baseText)
 {
-    // 📏 CHECK 1: Longitud relativa (máximo 20% más largo)
-    size_t maxLength = static_cast<size_t>(baseText.length() * g_aiConfig.maxLengthMultiplier);
+    // 📏 CHECK 1: Longitud relativa (máximo 30% más largo - más permisivo)
+    size_t maxLength = static_cast<size_t>(baseText.length() * 1.3f);
     if (aiText.length() > maxLength) {
 #ifdef _DEBUG
         if (g_debugLogging) {
@@ -783,7 +768,36 @@ bool IsLoreSafe(const std::string& aiText, const std::string& baseText)
         return false;
     }
     
-    // Palabras comunes permitidas (artículos, preposiciones, etc.)
+    // 🚫 CHECK 2: Palabras prohibidas (pronombres modernos, asistente, términos meta)
+    static const std::unordered_set<std::string> bannedWords = {
+        "i", "you", "your", "my", "assistant", "ai", "help", "sorry", 
+        "cannot", "can't", "rewrite", "rewritten", "sentence", "text", 
+        "words", "language", "output", "rules", "label"
+    };
+    
+    std::istringstream aiStream(ToLower(aiText));
+    std::string word;
+    while (aiStream >> word) {
+        // Limpiar puntuación
+        word.erase(std::remove_if(word.begin(), word.end(),
+            [](unsigned char c) { return !std::isalnum(c); }), word.end());
+        
+        if (!word.empty() && bannedWords.find(word) != bannedWords.end()) {
+#ifdef _DEBUG
+            if (g_debugLogging) {
+                LogVerbose("AI: Banned word detected: {}", word);
+            }
+#endif
+            g_aiStats.loreSafeRejections++;
+            return false;
+        }
+    }
+    
+    // ✅ CHECK 3: Validación PERMISIVA
+    // Permitir: eliminación, repetición, reordenamiento, sinónimos existentes
+    // Bloquear solo: palabras completamente nuevas (no stopwords)
+    
+    // Palabras comunes permitidas (stopwords + conectores)
     static const std::unordered_set<std::string> commonWords = {
         "a", "an", "the", "is", "are", "was", "were", "be", "been", "being",
         "have", "has", "had", "do", "does", "did", "will", "would", "could",
@@ -794,56 +808,63 @@ bool IsLoreSafe(const std::string& aiText, const std::string& baseText)
         "how", "all", "both", "each", "few", "more", "most", "other", "some",
         "such", "no", "nor", "not", "only", "own", "same", "so", "than",
         "too", "very", "s", "t", "d", "ll", "ve", "re", "m",
-        // 🎭 PAUSAS Y CONECTORES: Permitidos para dramatismo
         "hmm", "ah", "oh", "eh", "uh", "huh",
-        // 🏰 FORMAS ARCAICAS: Tono medieval
         "aye", "nay", "thee", "thy", "thou", "hath", "doth"
     };
     
     // Extraer palabras del texto base
     std::unordered_set<std::string> baseWords;
     std::istringstream baseStream(ToLower(baseText));
-    std::string word;
     
     while (baseStream >> word) {
-        // Limpiar puntuación (pero mantener puntos suspensivos)
         std::string cleanWord;
         for (char c : word) {
-            if (std::isalnum(c) || c == '.') {
+            if (std::isalnum(c)) {
                 cleanWord += c;
             }
         }
-        if (!cleanWord.empty() && cleanWord != "..." && cleanWord != "..") {
+        if (!cleanWord.empty()) {
             baseWords.insert(cleanWord);
         }
     }
     
-    // 📝 CHECK 2: Verificar que todas las palabras IA existen en base o son comunes
-    std::istringstream aiStream(ToLower(aiText));
+    // 📝 CHECK 4: Contar palabras completamente nuevas (MUY PERMISIVO)
+    aiStream = std::istringstream(ToLower(aiText));
+    int newWordCount = 0;
+    int totalWords = 0;
+    
     while (aiStream >> word) {
         std::string cleanWord;
         for (char c : word) {
-            if (std::isalnum(c) || c == '.') {
+            if (std::isalnum(c)) {
                 cleanWord += c;
             }
         }
         
-        // Permitir puntos suspensivos y guiones
-        if (cleanWord.empty() || cleanWord == "..." || cleanWord == ".." || 
-            cleanWord == "—" || cleanWord == "-") {
+        if (cleanWord.empty()) {
             continue;
         }
         
+        totalWords++;
+        
+        // Solo contar como "nueva" si NO está en base Y NO es stopword
         if (baseWords.find(cleanWord) == baseWords.end() &&
             commonWords.find(cleanWord) == commonWords.end()) {
-#ifdef _DEBUG
-            if (g_debugLogging) {
-                LogVerbose("AI: Lore safety violation - new word: {}", cleanWord);
-            }
-#endif
-            g_aiStats.loreSafeRejections++;
-            return false; // Palabra nueva detectada
+            newWordCount++;
         }
+    }
+    
+    // Permitir hasta 40% de palabras nuevas (MUY permisivo)
+    // Esto permite sinónimos y recortes agresivos
+    if (totalWords > 0 && (float)newWordCount / totalWords > 0.4f) {
+#ifdef _DEBUG
+        if (g_debugLogging) {
+            LogVerbose("AI: Too many new words: {}/{} ({}%)", 
+                newWordCount, totalWords, (newWordCount * 100 / totalWords));
+        }
+#endif
+        g_aiStats.loreSafeRejections++;
+        return false;
     }
     
     return true;
@@ -882,7 +903,7 @@ void SetAIEnabled(bool enabled)
 
 bool IsAIAvailable()
 {
-    return g_aiConfig.enabled && !g_aiConfig.apiKey.empty();
+    return g_aiConfig.enabled;
 }
 
 void ClearAICache()

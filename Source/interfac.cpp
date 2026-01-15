@@ -519,8 +519,17 @@ void ProgressEventHandler(const SDL_Event &event, uint16_t modState)
 			if (!HeadlessMode) {
 				assert(ghMainWnd);
 
-				// The loading thread sets `logical_palette`, so we make sure to use
-				// our own palette for drawing the foreground.
+				// 🎨 PALETTE CORRUPTION FIX V2: Don't use cutscene palette in WM_DONE
+				// The problem was applying effects TWICE:
+				// 1. UpdateSystemPalette(cutscene_palette) - applies effects on cutscene palette
+				// 2. PaletteFadeOut(cutscene_palette) - fades from corrupted palette
+				// 3. UpdateSystemPalette(level_palette) - applies effects AGAIN on level palette
+				// This caused visible corruption because effects were applied twice.
+				//
+				// NEW APPROACH: Skip cutscene palette entirely, go straight to level palette
+				// The level palette was already loaded in CreateLevel() with LoadRndLvlPal()
+				
+				// Use cutscene palette ONLY for drawing the progress bar
 				UpdateSystemPalette(ProgressEventHandlerState.palette);
 
 				// Ensure that all back buffers have the full progress bar.
@@ -532,11 +541,13 @@ void ProgressEventHandler(const SDL_Event &event, uint16_t modState)
 					RenderPresent();
 				} while (PalSurface->pixels != initialPixels);
 
-				// The loading thread sets `logical_palette`, so we make sure to use
-				// our own palette for the fade-out.
-				PaletteFadeOut(8, ProgressEventHandlerState.palette);
-
-				// Once the fade-out is done, restore the system palette.
+				// 🎨 FIX: Go straight to black instead of fading from cutscene palette
+				// This prevents the double-application of contextual effects
+				BlackPalette();
+				
+				// 🎨 FIX: Apply level palette ONCE with effects
+				// The level palette is already in logical_palette (loaded by LoadRndLvlPal)
+				// This single call applies all contextual effects correctly
 				UpdateSystemPalette(logical_palette);
 			}
 		}
@@ -545,9 +556,6 @@ void ProgressEventHandler(const SDL_Event &event, uint16_t modState)
 		// All visual/lighting systems can now resume normal processing
 		g_isLevelTransition = false;
 		g_skipContextualPaletteEffects = false;
-		
-		// NOTE: No need to call UpdateSystemPalette here - it was already called
-		// in diablo.cpp after LoadRndLvlPal with the correct level palette
 
 		[[maybe_unused]] EventHandler prevHandler = SetEventHandler(ProgressEventHandlerState.prevHandler);
 		assert(prevHandler == ProgressEventHandler);

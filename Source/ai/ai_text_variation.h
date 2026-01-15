@@ -32,10 +32,13 @@ struct AIConfig {
     std::string apiKey;
     std::string baseURL = "https://openrouter.ai/api/v1";
     std::string model = "mistralai/mistral-7b-instruct:free";
-    int timeoutMs = 600;
+    int timeoutMs = 400;  // 🔥 TIMEOUT AGRESIVO: 400ms máximo
     int maxTokens = 128;
     float temperature = 0.6f;
     bool enabled = false;
+    
+    // 🛡️ RATE LIMITING: Budget controlled
+    int minSecondsBetweenCalls = 15;  // 1 request cada 15 segundos GLOBAL
 };
 
 /**

@@ -62,26 +62,32 @@ def build_prompt(text: str, tone: str = "neutral") -> str:
     """Construye el prompt para la IA"""
     return f"""You are a text variation engine for Diablo 1 (1996).
 
-STRICT RULES (ABSOLUTE):
+GOAL: Create NOTICEABLE variations that feel alive and dynamic while respecting lore.
+
+STRICT RULES:
 - You MUST NOT invent new lore, facts, places, names, events, or mechanics.
 - You MUST NOT add new information.
-- You MUST ONLY use words that already exist in the ORIGINAL TEXT.
-- You MAY remove words, reorder them, or slightly rephrase.
-- You MAY change tone, rhythm, or punctuation.
-- You MUST NOT explain what you are doing.
-- You MUST NOT output multiple options.
-- Output ONLY the final text.
+- You MUST ONLY use words from the ORIGINAL TEXT (you can add common words like: the, a, is, are, but, yet, still, now, here, there).
+- You SHOULD create NOTICEABLE variations: reorder words dramatically, change rhythm, add pauses (...), change emphasis.
+- You MAY use ellipsis (...), capitalization for EMPHASIS, question marks, exclamation points.
+- Make it feel ALIVE and REACTIVE, not robotic.
+- Output ONLY the final text, no explanations.
 
 STYLE:
-- Dark
-- Minimal
-- Diablo 1 tone
-- No modern language
+- Dark, gothic, medieval
+- Diablo 1 tone (1996)
+- Dramatic and atmospheric
+- No modern slang
 - No humor
 
 ORIGINAL TEXT: "{text}"
 
-TONE MODIFIER: {tone}"""
+TONE MODIFIER: {tone}
+
+Examples of good variations:
+- "What can I do for you?" → "What... can I do for you?" (weary)
+- "The darkness grows." → "The darkness... it GROWS." (cryptic)
+- "Stay awhile and listen." → "Stay. Listen awhile." (cold)"""
 
 def call_openrouter(
     prompt: str,

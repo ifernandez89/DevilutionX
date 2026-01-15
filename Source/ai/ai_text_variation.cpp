@@ -41,6 +41,9 @@ AIStats g_aiStats;
 std::unordered_map<std::string, std::string> g_aiCache;
 constexpr size_t MAX_CACHE_SIZE = 100;
 
+// 🛡️ RATE LIMITING: Global cooldown para IA
+uint32_t g_lastAICallTime = 0;
+
 #ifdef _DEBUG
 bool g_debugLogging = false;
 #endif
@@ -71,28 +74,53 @@ std::string ToneToString(AITone tone) {
 }
 
 /**
+ * 🛡️ BUDGET CONTROLLED: Verifica si podemos llamar a la IA
+ * Regla simple: 1 request cada X segundos GLOBAL (no por NPC)
+ */
+bool CanCallAI() {
+    uint32_t currentTime = SDL_GetTicks();
+    uint32_t minInterval = g_aiConfig.minSecondsBetweenCalls * 1000;
+    
+    if (currentTime - g_lastAICallTime < minInterval) {
+#ifdef _DEBUG
+        if (g_debugLogging) {
+            uint32_t remaining = (minInterval - (currentTime - g_lastAICallTime)) / 1000;
+            LogVerbose("AI: Rate limited, wait {}s", remaining);
+        }
+#endif
+        return false;
+    }
+    
+    return true;
+}
+
+/**
  * Construye el prompt para la IA
  */
 std::string BuildPrompt(const std::string& text, AITone tone) {
     return StrCat(
         "You are a text variation engine for Diablo 1 (1996).\n\n"
-        "STRICT RULES (ABSOLUTE):\n"
+        "GOAL: Create NOTICEABLE variations that feel alive and dynamic while respecting lore.\n\n"
+        "STRICT RULES:\n"
         "- You MUST NOT invent new lore, facts, places, names, events, or mechanics.\n"
         "- You MUST NOT add new information.\n"
-        "- You MUST ONLY use words that already exist in the ORIGINAL TEXT.\n"
-        "- You MAY remove words, reorder them, or slightly rephrase.\n"
-        "- You MAY change tone, rhythm, or punctuation.\n"
-        "- You MUST NOT explain what you are doing.\n"
-        "- You MUST NOT output multiple options.\n"
-        "- Output ONLY the final text.\n\n"
+        "- You MUST ONLY use words from the ORIGINAL TEXT (you can add common words like: the, a, is, are, but, yet, still, now, here, there).\n"
+        "- You SHOULD create NOTICEABLE variations: reorder words dramatically, change rhythm, add pauses (...), change emphasis.\n"
+        "- You MAY use ellipsis (...), capitalization for EMPHASIS, question marks, exclamation points.\n"
+        "- Make it feel ALIVE and REACTIVE, not robotic.\n"
+        "- Output ONLY the final text, no explanations.\n\n"
         "STYLE:\n"
-        "- Dark\n"
-        "- Minimal\n"
-        "- Diablo 1 tone\n"
-        "- No modern language\n"
+        "- Dark, gothic, medieval\n"
+        "- Diablo 1 tone (1996)\n"
+        "- Dramatic and atmospheric\n"
+        "- No modern slang\n"
         "- No humor\n\n"
         "ORIGINAL TEXT: \"", text, "\"\n\n"
-        "TONE MODIFIER: ", ToneToString(tone)
+        "TONE MODIFIER: ", ToneToString(tone), "\n\n"
+        "Examples of good variations:\n"
+        "- \"What can I do for you?\" → \"What... can I do for you?\" (weary)\n"
+        "- \"The darkness grows.\" → \"The darkness... it GROWS.\" (cryptic)\n"
+        "- \"Stay awhile and listen.\" → \"Stay. Listen awhile.\" (cold)"
     );
 }
 
@@ -196,6 +224,18 @@ std::optional<std::string> TryAITextVariation(
         return cacheIt->second;
     }
     
+    // 🛡️ Check 4: RATE LIMITING - Budget controlled
+    // 1 request cada X segundos GLOBAL (no por NPC)
+    if (!CanCallAI()) {
+#ifdef _DEBUG
+        if (g_debugLogging) {
+            LogVerbose("AI: Rate limited, using original text");
+        }
+#endif
+        g_aiStats.failedRequests++;
+        return std::nullopt;  // Fallback a texto original
+    }
+    
     // Llamar IA
     auto startTime = std::chrono::high_resolution_clock::now();
     
@@ -204,6 +244,9 @@ std::optional<std::string> TryAITextVariation(
     
     auto endTime = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime);
+    
+    // 🛡️ REGISTRAR TIEMPO DE LLAMADA (para rate limiting)
+    g_lastAICallTime = SDL_GetTicks();
     
     // Actualizar latencia promedio
     g_aiStats.averageLatencyMs = 

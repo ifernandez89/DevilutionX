@@ -444,7 +444,9 @@ Source/CMakeFiles/libdevilutionx_contextual_palette.dir/contextual_palette.cpp.o
   C:/mingw64/x86_64-w64-mingw32/include/winsdkver.h \
   C:/c\ -\ c++/DevilutionX/Source/contextual_palette.h \
   C:/c\ -\ c++/DevilutionX/Source/engine/random.hpp \
-  C:/c\ -\ c++/DevilutionX/Source/levels/gendung.h
+  C:/c\ -\ c++/DevilutionX/Source/interfac.h \
+  C:/c\ -\ c++/DevilutionX/Source/levels/gendung.h \
+  C:/c\ -\ c++/DevilutionX/Source/utils/ui_fwd.h
 
 
 C:/c\ -\ c++/DevilutionX/Source/engine/surface.hpp:
@@ -1333,4 +1335,8 @@ C:/mingw64/x86_64-w64-mingw32/include/winapifamily.h:
 
 C:/c\ -\ c++/DevilutionX/Source/engine/random.hpp:
 
+C:/c\ -\ c++/DevilutionX/Source/interfac.h:
+
 C:/c\ -\ c++/DevilutionX/Source/levels/gendung.h:
+
+C:/c\ -\ c++/DevilutionX/Source/utils/ui_fwd.h:

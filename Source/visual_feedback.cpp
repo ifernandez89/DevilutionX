@@ -23,6 +23,7 @@
 #include "monster.h"
 #include "items.h"
 #include "spells.h"
+#include "interfac.h"  // 🛡️ For g_isLevelTransition
 
 #ifdef _DEBUG
 #include <iostream>
@@ -481,6 +482,11 @@ SDL_Color BlendVisualEffects(SDL_Color baseColor, Point position)
 
 void ApplyVisualFeedbackToPalette(SDL_Color *palette)
 {
+    // 🛡️ TRANSITION SAFETY: Skip during level transitions
+    if (g_isLevelTransition) {
+        return;
+    }
+    
     if (!g_visualState.enabled || g_visualState.activeEffectCount == 0 || palette == nullptr) {
         return;
     }
@@ -543,10 +549,9 @@ void ApplyConservativeVisualPreset()
 
 void ApplyBalancedVisualPreset()
 {
-    // 🛡️ DISABLED: Visual feedback was causing corruption during transitions
-    g_visualState.enabled = false;
-    g_visualState.globalIntensity = 0.0f;
-    g_visualState.contextualEffects = false;
+    g_visualState.enabled = true;
+    g_visualState.globalIntensity = 0.8f;
+    g_visualState.contextualEffects = true;
     
 #ifdef _DEBUG
     std::cout << "Balanced visual preset applied" << std::endl;

@@ -76,4 +76,8 @@ void CompleteProgress();
 void UpdateProgressPalette();
 void ShowProgress(interface_mode uMsg);
 
+// 🛡️ TRANSITION FLAG: Global flag to indicate level transition in progress
+// All visual/lighting systems should check this and skip processing during transitions
+extern bool g_isLevelTransition;
+
 } // namespace devilution

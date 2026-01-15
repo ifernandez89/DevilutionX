@@ -54,6 +54,9 @@
 
 namespace devilution {
 
+// 🛡️ TRANSITION FLAG: Global flag to indicate level transition in progress
+bool g_isLevelTransition = false;
+
 namespace {
 
 constexpr uint32_t MaxProgress = 534;
@@ -538,8 +541,9 @@ void ProgressEventHandler(const SDL_Event &event, uint16_t modState)
 			}
 		}
 		
-		// 🛡️ PALETTE CORRUPTION FIX: Re-enable contextual palette effects after transition
-		// Now that the level is fully loaded and leveltype is valid, we can apply effects
+		// 🛡️ TRANSITION FLAG: Mark that transition is complete
+		// All visual/lighting systems can now resume normal processing
+		g_isLevelTransition = false;
 		g_skipContextualPaletteEffects = false;
 		
 		// Force a palette update with contextual effects now enabled
@@ -651,8 +655,9 @@ void UpdateProgressPalette()
 
 void ShowProgress(interface_mode uMsg)
 {
-	// 🛡️ PALETTE CORRUPTION FIX: Skip contextual palette effects during transitions
-	// This prevents palette corruption when leveltype is in an invalid state
+	// 🛡️ TRANSITION FLAG: Mark that we're in a level transition
+	// All visual/lighting systems should check this and skip processing
+	g_isLevelTransition = true;
 	g_skipContextualPaletteEffects = true;
 	
 	IsProgress = true;

@@ -21,6 +21,7 @@
 
 #include "utils/log.hpp"
 #include "lighting.h"
+#include "interfac.h"  // 🛡️ For g_isLevelTransition
 
 namespace devilution {
 
@@ -59,6 +60,11 @@ void InitNightmareLighting()
 void UpdateNightmareLighting()
 {
 	if (!g_nightmareLighting.initialized) {
+		return;
+	}
+	
+	// 🛡️ TRANSITION SAFETY: Skip ALL processing during level transitions
+	if (g_isLevelTransition) {
 		return;
 	}
 	

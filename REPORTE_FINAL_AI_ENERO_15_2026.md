@@ -72,7 +72,7 @@ El sistema **lee automáticamente** la API key de `tools/.env.dev` y se habilita
 El archivo `tools/.env.dev` ya contiene:
 
 ```bash
-API_KEY="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"
+API_KEY="<YOUR_OPENROUTER_API_KEY>"
 ```
 
 ✅ El sistema detecta esto automáticamente al iniciar el juego.

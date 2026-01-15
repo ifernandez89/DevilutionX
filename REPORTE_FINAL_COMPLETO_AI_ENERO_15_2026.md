@@ -351,7 +351,7 @@ REPORTE_FINAL_COMPLETO_AI_ENERO_15_2026.md  (Este documento)
 cat tools/.env.dev
 
 # Debe contener:
-API_KEY="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"
+API_KEY="<YOUR_OPENROUTER_API_KEY>"
 ```
 
 ### Problema 2: "HTTP request failed"

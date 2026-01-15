@@ -37,8 +37,16 @@ struct AIConfig {
     float temperature = 0.6f;
     bool enabled = false;
     
-    // 🛡️ RATE LIMITING: Budget controlled
-    int minSecondsBetweenCalls = 15;  // 1 request cada 15 segundos GLOBAL
+    // 🪙 TOKEN BUCKET: Rate limiting mejorado
+    int tokensPerDay = 100;           // Tokens disponibles por día
+    int costPerCall = 1;              // Costo por llamada
+    int minSecondsBetweenCalls = 5;   // Cooldown corto entre llamadas
+    
+    // 🔍 TELEMETRY: Modo silencioso para testing
+    bool silentMode = false;          // Procesa pero no muestra variaciones
+    
+    // 📏 LORE-SAFE: Validación mejorada
+    float maxLengthMultiplier = 1.2f; // Máximo 20% más largo que original
 };
 
 /**
@@ -103,6 +111,38 @@ bool IsLoreSafe(const std::string& aiText, const std::string& baseText);
 std::string ProcessChatMessageWithAI(const std::string& input);
 
 // ============================================================================
+// 🪙 TOKEN BUCKET SYSTEM
+// ============================================================================
+
+/**
+ * Obtiene tokens restantes hoy
+ */
+int GetRemainingTokens();
+
+/**
+ * Resetea tokens (llamar al inicio del día)
+ */
+void ResetDailyTokens();
+
+/**
+ * Verifica si hay tokens disponibles
+ */
+bool HasTokensAvailable();
+
+// ============================================================================
+// 📊 TELEMETRY SYSTEM
+// ============================================================================
+
+/**
+ * Registra un evento de IA (invisible para jugador)
+ * 
+ * @param npc NPC o contexto
+ * @param context Estado del mundo (día/noche, etc.)
+ * @param success Si la llamada fue exitosa
+ */
+void LogAIEvent(const std::string& npc, const std::string& context, bool success);
+
+// ============================================================================
 // 🔧 CONFIGURACIÓN Y ESTADO
 // ============================================================================
 
@@ -139,7 +179,20 @@ struct AIStats {
     uint32_t failedRequests = 0;
     uint32_t cachedResponses = 0;
     uint32_t loreSafeRejections = 0;
+    uint32_t lengthRejections = 0;      // 📏 Rechazos por longitud excesiva
     uint32_t averageLatencyMs = 0;
+    uint32_t tokenBucketRejections = 0; // 🪙 Rechazos por falta de tokens
+    uint32_t tokensRemaining = 0;       // 🪙 Tokens restantes hoy
+    
+    // 📊 TELEMETRY: Momentos IA (invisible para jugador)
+    struct AIEvent {
+        std::string npc;
+        std::string context;
+        uint32_t timestamp;
+        bool success;
+    };
+    // Últimos 10 eventos (para análisis)
+    std::vector<AIEvent> recentEvents;
 };
 
 /**

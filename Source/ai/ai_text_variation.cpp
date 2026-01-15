@@ -46,12 +46,19 @@ namespace {
 AIConfig g_aiConfig;
 AIStats g_aiStats;
 
-// Cache de respuestas (key = text + "|" + tone)
+// Cache de respuestas (key = text + "|" + tone + "|" + context)
 std::unordered_map<std::string, std::string> g_aiCache;
 constexpr size_t MAX_CACHE_SIZE = 100;
 
 // 🛡️ RATE LIMITING: Global cooldown para IA
 uint32_t g_lastAICallTime = 0;
+
+// 🪙 TOKEN BUCKET: Sistema de tokens diarios
+int g_tokensRemaining = 100;
+uint32_t g_lastTokenResetDay = 0;  // Día del último reset
+
+// 🚫 SESSION FLAG: Hard-disable hasta reinicio
+bool g_sessionDisabled = false;
 
 #ifdef _DEBUG
 bool g_debugLogging = false;
@@ -391,10 +398,55 @@ std::string ToneToString(AITone tone) {
 }
 
 /**
+ * 🪙 TOKEN BUCKET: Verifica y resetea tokens diarios
+ */
+void CheckAndResetDailyTokens() {
+    // Obtener día actual (timestamp / 86400 = días desde epoch)
+    uint32_t currentDay = SDL_GetTicks() / 86400000;
+    
+    if (currentDay != g_lastTokenResetDay) {
+        g_tokensRemaining = g_aiConfig.tokensPerDay;
+        g_lastTokenResetDay = currentDay;
+        g_sessionDisabled = false;  // Reset session flag
+        
+#ifdef _DEBUG
+        if (g_debugLogging) {
+            LogVerbose("AI: Daily tokens reset to {}", g_tokensRemaining);
+        }
+#endif
+    }
+}
+
+/**
  * 🛡️ BUDGET CONTROLLED: Verifica si podemos llamar a la IA
- * Regla simple: 1 request cada X segundos GLOBAL (no por NPC)
+ * Ahora con token bucket mejorado
  */
 bool CanCallAI() {
+    // Check 1: Session disabled?
+    if (g_sessionDisabled) {
+#ifdef _DEBUG
+        if (g_debugLogging) {
+            LogVerbose("AI: Session disabled until restart");
+        }
+#endif
+        return false;
+    }
+    
+    // Check 2: Tokens disponibles?
+    CheckAndResetDailyTokens();
+    
+    if (g_tokensRemaining < g_aiConfig.costPerCall) {
+#ifdef _DEBUG
+        if (g_debugLogging) {
+            LogVerbose("AI: No tokens remaining (0/{})", g_aiConfig.tokensPerDay);
+        }
+#endif
+        g_aiStats.tokenBucketRejections++;
+        g_sessionDisabled = true;  // 🚫 Hard-disable hasta reinicio
+        return false;
+    }
+    
+    // Check 3: Cooldown corto
     uint32_t currentTime = SDL_GetTicks();
     uint32_t minInterval = g_aiConfig.minSecondsBetweenCalls * 1000;
     
@@ -402,7 +454,7 @@ bool CanCallAI() {
 #ifdef _DEBUG
         if (g_debugLogging) {
             uint32_t remaining = (minInterval - (currentTime - g_lastAICallTime)) / 1000;
-            LogVerbose("AI: Rate limited, wait {}s", remaining);
+            LogVerbose("AI: Cooldown active, wait {}s", remaining);
         }
 #endif
         return false;
@@ -627,20 +679,30 @@ std::optional<std::string> TryAITextVariation(
         }
 #endif
         g_aiStats.cachedResponses++;
+        
+        // 🔍 SILENT MODE: Procesar pero no mostrar
+        if (g_aiConfig.silentMode) {
+            LogAIEvent("cache", "silent_mode", true);
+            return std::nullopt;  // Retornar original en modo silencioso
+        }
+        
         return cacheIt->second;
     }
     
-    // 🛡️ Check 4: RATE LIMITING - Budget controlled
-    // 1 request cada X segundos GLOBAL (no por NPC)
+    // 🛡️ Check 4: RATE LIMITING - Token bucket + cooldown
     if (!CanCallAI()) {
 #ifdef _DEBUG
         if (g_debugLogging) {
-            LogVerbose("AI: Rate limited, using original text");
+            LogVerbose("AI: Rate limited or no tokens, using original text");
         }
 #endif
         g_aiStats.failedRequests++;
         return std::nullopt;  // Fallback a texto original
     }
+    
+    // 🪙 Consumir token
+    g_tokensRemaining -= g_aiConfig.costPerCall;
+    g_aiStats.tokensRemaining = g_tokensRemaining;
     
     // Llamar IA
     auto startTime = std::chrono::high_resolution_clock::now();
@@ -651,7 +713,7 @@ std::optional<std::string> TryAITextVariation(
     auto endTime = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime);
     
-    // 🛡️ REGISTRAR TIEMPO DE LLAMADA (para rate limiting)
+    // 🛡️ REGISTRAR TIEMPO DE LLAMADA (para cooldown)
     g_lastAICallTime = SDL_GetTicks();
     
     // Actualizar latencia promedio
@@ -666,18 +728,19 @@ std::optional<std::string> TryAITextVariation(
         }
 #endif
         g_aiStats.failedRequests++;
+        LogAIEvent("api_call", ToneToString(tone), false);
         return std::nullopt;
     }
     
-    // Validar lore safety
+    // Validar lore safety (ahora con longitud)
     if (!IsLoreSafe(*aiResult, text)) {
 #ifdef _DEBUG
         if (g_debugLogging) {
-            LogVerbose("AI: Lore safety check failed for: {}", *aiResult);
+            LogVerbose("AI: Lore/length safety check failed for: {}", *aiResult);
         }
 #endif
-        g_aiStats.loreSafeRejections++;
         g_aiStats.failedRequests++;
+        LogAIEvent("validation", ToneToString(tone), false);
         return std::nullopt;
     }
     
@@ -689,17 +752,37 @@ std::optional<std::string> TryAITextVariation(
     }
     g_aiCache[cacheKey] = *aiResult;
     
+    LogAIEvent("success", ToneToString(tone), true);
+    
 #ifdef _DEBUG
     if (g_debugLogging) {
         LogVerbose("AI: Success - {} -> {}", text, *aiResult);
+        LogVerbose("AI: Tokens remaining: {}/{}", g_tokensRemaining, g_aiConfig.tokensPerDay);
     }
 #endif
+    
+    // 🔍 SILENT MODE: Procesar pero no mostrar
+    if (g_aiConfig.silentMode) {
+        return std::nullopt;  // Retornar original en modo silencioso
+    }
     
     return *aiResult;
 }
 
 bool IsLoreSafe(const std::string& aiText, const std::string& baseText)
 {
+    // 📏 CHECK 1: Longitud relativa (máximo 20% más largo)
+    size_t maxLength = static_cast<size_t>(baseText.length() * g_aiConfig.maxLengthMultiplier);
+    if (aiText.length() > maxLength) {
+#ifdef _DEBUG
+        if (g_debugLogging) {
+            LogVerbose("AI: Length check failed - {} > {} (max)", aiText.length(), maxLength);
+        }
+#endif
+        g_aiStats.lengthRejections++;
+        return false;
+    }
+    
     // Palabras comunes permitidas (artículos, preposiciones, etc.)
     static const std::unordered_set<std::string> commonWords = {
         "a", "an", "the", "is", "are", "was", "were", "be", "been", "being",
@@ -710,7 +793,11 @@ bool IsLoreSafe(const std::string& aiText, const std::string& baseText)
         "further", "then", "once", "here", "there", "when", "where", "why",
         "how", "all", "both", "each", "few", "more", "most", "other", "some",
         "such", "no", "nor", "not", "only", "own", "same", "so", "than",
-        "too", "very", "s", "t", "d", "ll", "ve", "re", "m"
+        "too", "very", "s", "t", "d", "ll", "ve", "re", "m",
+        // 🎭 PAUSAS Y CONECTORES: Permitidos para dramatismo
+        "hmm", "ah", "oh", "eh", "uh", "huh",
+        // 🏰 FORMAS ARCAICAS: Tono medieval
+        "aye", "nay", "thee", "thy", "thou", "hath", "doth"
     };
     
     // Extraer palabras del texto base
@@ -719,27 +806,42 @@ bool IsLoreSafe(const std::string& aiText, const std::string& baseText)
     std::string word;
     
     while (baseStream >> word) {
-        // Limpiar puntuación
-        word.erase(std::remove_if(word.begin(), word.end(),
-            [](unsigned char c) { return !std::isalnum(c); }), word.end());
-        if (!word.empty()) {
-            baseWords.insert(word);
+        // Limpiar puntuación (pero mantener puntos suspensivos)
+        std::string cleanWord;
+        for (char c : word) {
+            if (std::isalnum(c) || c == '.') {
+                cleanWord += c;
+            }
+        }
+        if (!cleanWord.empty() && cleanWord != "..." && cleanWord != "..") {
+            baseWords.insert(cleanWord);
         }
     }
     
-    // Verificar que todas las palabras IA existen en base o son comunes
+    // 📝 CHECK 2: Verificar que todas las palabras IA existen en base o son comunes
     std::istringstream aiStream(ToLower(aiText));
     while (aiStream >> word) {
-        word.erase(std::remove_if(word.begin(), word.end(),
-            [](unsigned char c) { return !std::isalnum(c); }), word.end());
-        if (!word.empty() && 
-            baseWords.find(word) == baseWords.end() &&
-            commonWords.find(word) == commonWords.end()) {
+        std::string cleanWord;
+        for (char c : word) {
+            if (std::isalnum(c) || c == '.') {
+                cleanWord += c;
+            }
+        }
+        
+        // Permitir puntos suspensivos y guiones
+        if (cleanWord.empty() || cleanWord == "..." || cleanWord == ".." || 
+            cleanWord == "—" || cleanWord == "-") {
+            continue;
+        }
+        
+        if (baseWords.find(cleanWord) == baseWords.end() &&
+            commonWords.find(cleanWord) == commonWords.end()) {
 #ifdef _DEBUG
             if (g_debugLogging) {
-                LogVerbose("AI: Lore safety violation - new word: {}", word);
+                LogVerbose("AI: Lore safety violation - new word: {}", cleanWord);
             }
 #endif
+            g_aiStats.loreSafeRejections++;
             return false; // Palabra nueva detectada
         }
     }
@@ -811,6 +913,61 @@ void ResetAIStats()
 }
 
 // ============================================================================
+// 🪙 TOKEN BUCKET SYSTEM
+// ============================================================================
+
+int GetRemainingTokens()
+{
+    CheckAndResetDailyTokens();
+    return g_tokensRemaining;
+}
+
+void ResetDailyTokens()
+{
+    g_tokensRemaining = g_aiConfig.tokensPerDay;
+    g_lastTokenResetDay = SDL_GetTicks() / 86400000;
+    g_sessionDisabled = false;
+    
+#ifdef _DEBUG
+    LogVerbose("AI: Daily tokens manually reset to {}", g_tokensRemaining);
+#endif
+}
+
+bool HasTokensAvailable()
+{
+    CheckAndResetDailyTokens();
+    return g_tokensRemaining >= g_aiConfig.costPerCall && !g_sessionDisabled;
+}
+
+// ============================================================================
+// 📊 TELEMETRY SYSTEM
+// ============================================================================
+
+void LogAIEvent(const std::string& npc, const std::string& context, bool success)
+{
+    constexpr size_t MAX_EVENTS = 10;
+    
+    AIStats::AIEvent event;
+    event.npc = npc;
+    event.context = context;
+    event.timestamp = SDL_GetTicks();
+    event.success = success;
+    
+    g_aiStats.recentEvents.push_back(event);
+    
+    // Mantener solo los últimos 10 eventos
+    if (g_aiStats.recentEvents.size() > MAX_EVENTS) {
+        g_aiStats.recentEvents.erase(g_aiStats.recentEvents.begin());
+    }
+    
+#ifdef _DEBUG
+    if (g_debugLogging) {
+        LogVerbose("AI Event: {} | {} | {}", npc, context, success ? "SUCCESS" : "FAIL");
+    }
+#endif
+}
+
+// ============================================================================
 // 🔍 DEBUGGING
 // ============================================================================
 
@@ -820,6 +977,14 @@ void DebugPrintAIStats()
     std::cout << "\n=== AI TEXT VARIATION STATISTICS ===" << std::endl;
     std::cout << "System enabled: " << (g_aiConfig.enabled ? "YES" : "NO") << std::endl;
     std::cout << "API key configured: " << (!g_aiConfig.apiKey.empty() ? "YES" : "NO") << std::endl;
+    std::cout << "Silent mode: " << (g_aiConfig.silentMode ? "YES" : "NO") << std::endl;
+    std::cout << "Session disabled: " << (g_sessionDisabled ? "YES" : "NO") << std::endl;
+    
+    std::cout << "\n--- TOKEN BUCKET ---" << std::endl;
+    std::cout << "Tokens remaining: " << g_tokensRemaining << "/" << g_aiConfig.tokensPerDay << std::endl;
+    std::cout << "Cost per call: " << g_aiConfig.costPerCall << std::endl;
+    std::cout << "Cooldown: " << g_aiConfig.minSecondsBetweenCalls << "s" << std::endl;
+    std::cout << "Token rejections: " << g_aiStats.tokenBucketRejections << std::endl;
     
     std::cout << "\n--- REQUESTS ---" << std::endl;
     std::cout << "Total requests: " << g_aiStats.totalRequests << std::endl;
@@ -829,10 +994,18 @@ void DebugPrintAIStats()
     
     std::cout << "\n--- VALIDATION ---" << std::endl;
     std::cout << "Lore-safe rejections: " << g_aiStats.loreSafeRejections << std::endl;
+    std::cout << "Length rejections: " << g_aiStats.lengthRejections << std::endl;
     
     std::cout << "\n--- PERFORMANCE ---" << std::endl;
     std::cout << "Average latency: " << g_aiStats.averageLatencyMs << "ms" << std::endl;
     std::cout << "Cache size: " << g_aiCache.size() << "/" << MAX_CACHE_SIZE << std::endl;
+    
+    std::cout << "\n--- RECENT EVENTS (Last 10) ---" << std::endl;
+    for (const auto& event : g_aiStats.recentEvents) {
+        std::cout << "[" << event.timestamp << "] " 
+                  << event.npc << " | " << event.context << " | "
+                  << (event.success ? "✓" : "✗") << std::endl;
+    }
     
     std::cout << "====================================" << std::endl;
 }

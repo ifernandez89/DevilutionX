@@ -61,20 +61,21 @@ Se implementó **exitosamente** el sistema completo de AI Text Variation con int
 
 ## 🎯 Cómo Probar (Cuando Llegues a Casa)
 
-### Paso 1: Configurar API Key
+### ✅ Configuración Automática
 
-Editar `nightmare_config/ai.ini`:
+El sistema **lee automáticamente** la API key de `tools/.env.dev` y se habilita solo.
 
-```ini
-[AI]
-Enabled=true
-APIKey=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
-Model=mistralai/mistral-7b-instruct:free
-TimeoutMs=400
-MaxTokens=128
-Temperature=0.6
-MinSecondsBetweenCalls=15
+**No necesitas configurar nada manualmente** - ya está listo para funcionar.
+
+### Paso 1: Verificar API Key (Ya está configurada)
+
+El archivo `tools/.env.dev` ya contiene:
+
+```bash
+API_KEY="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"
 ```
+
+✅ El sistema detecta esto automáticamente al iniciar el juego.
 
 ### Paso 2: Compilar
 
@@ -215,11 +216,29 @@ Nunca:         bloquear, crashear, congelar, esperar
 
 ## 🔧 Configuración Óptima
 
-### Para Tier Gratuito (Recomendado)
+### ✅ Configuración Automática (Recomendado)
+
+El sistema **lee automáticamente** la API key de `tools/.env.dev`:
+
+```bash
+# tools/.env.dev
+API_KEY="tu-api-key-aqui"
+```
+
+**Ventajas**:
+- ✅ No requiere configuración manual
+- ✅ Se habilita automáticamente si hay API key
+- ✅ Usa parámetros óptimos por defecto
+- ✅ Funciona inmediatamente
+
+### Configuración Manual (Opcional)
+
+Si quieres personalizar, edita `nightmare_config/ai.ini`:
 
 ```ini
 [AI]
 Enabled=true
+APIKey=tu-api-key-aqui
 TimeoutMs=400
 MinSecondsBetweenCalls=15
 Temperature=0.6

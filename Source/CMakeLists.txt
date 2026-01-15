@@ -1134,6 +1134,19 @@ if(NOT NONET)
   endif()
 endif()
 
+# 🤖 AI TEXT VARIATION: HTTP client dependencies
+if(NOT WIN32)
+  # En Linux/Mac, usar libcurl para HTTP requests
+  find_package(CURL)
+  if(CURL_FOUND)
+    target_link_libraries(libdevilutionx PRIVATE CURL::libcurl)
+    target_compile_definitions(libdevilutionx PRIVATE HAVE_CURL)
+  else()
+    message(STATUS "libcurl not found - AI Text Variation will be disabled on non-Windows platforms")
+  endif()
+endif()
+# En Windows, usamos WinHTTP (nativo, sin dependencias)
+
 if(NOT NOSOUND AND NOT USE_SDL3)
   target_link_libraries(libdevilutionx PUBLIC SDL_audiolib::SDL_audiolib)
 endif()

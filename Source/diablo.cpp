@@ -3853,24 +3853,6 @@ tl::expected<void, std::string> LoadGameLevel(bool firstflag, lvl_entry lvldir)
 
 	LoadGameLevelCalculateCursor();
 	
-	// 🎨 FIX: Reload correct palette based on level type
-	// Each dungeon type has its own palette
-	if (leveltype == DTYPE_TOWN) {
-		LoadPalette("levels\\towndata\\town.pal");
-	} else if (leveltype == DTYPE_CATHEDRAL) {
-		LoadPalette("levels\\l1data\\l1.pal");
-	} else if (leveltype == DTYPE_CATACOMBS) {
-		LoadPalette("levels\\l2data\\l2.pal");
-	} else if (leveltype == DTYPE_CAVES) {
-		LoadPalette("levels\\l3data\\l3.pal");
-	} else if (leveltype == DTYPE_HELL) {
-		LoadPalette("levels\\l4data\\l4.pal");
-	} else if (leveltype == DTYPE_CRYPT) {
-		LoadPalette("nlevels\\l5data\\l5base.pal");
-	} else if (leveltype == DTYPE_NEST) {
-		LoadPalette("nlevels\\l6data\\l6base.pal");
-	}
-	
 	// 💰 INVISIBLE WEAR - Update wear multipliers for new level
 	UpdateInvisibleWear();
 	

@@ -143,6 +143,10 @@ void palette_update_caves();
 void palette_update_crypt();
 void palette_update_hive();
 
+// 🛡️ PALETTE CORRUPTION FIX: Flag to skip contextual effects during transitions
+// Set to true during level transitions to prevent palette corruption
+extern bool g_skipContextualPaletteEffects;
+
 // 🎨 FASE V2 - PALETA CONTEXTUAL AVANZADA 🎨
 /**
  * @brief Aplica ajustes dinámicos de paleta basados en el estado del juego

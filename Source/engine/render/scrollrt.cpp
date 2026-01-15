@@ -1467,53 +1467,10 @@ void DrawGame(const Surface &fullOut, Point position, Displacement offset)
 {
 	PORTAL_LOG_RENDER("DrawGame_ENTRY");
 	
-	// 🎨 PORTAL PALETTE FIX V9: Reload palette BEFORE skip ends
-	// This ensures the first rendered frame has the correct palette
-	if (g_needsPaletteReloadAfterPortal) {
-		g_needsPaletteReloadAfterPortal = false;
-		PORTAL_LOG_RENDER("DrawGame_PALETTE_RELOAD_EXECUTING");
-		
-		// Force reload the correct palette based on level type
-		if (leveltype == DTYPE_TOWN) {
-			LoadPalette("levels\\towndata\\town.pal");
-		} else if (leveltype == DTYPE_CATHEDRAL) {
-			LoadPalette("levels\\l1data\\l1.pal");
-		} else if (leveltype == DTYPE_CATACOMBS) {
-			LoadPalette("levels\\l2data\\l2.pal");
-		} else if (leveltype == DTYPE_CAVES) {
-			LoadPalette("levels\\l3data\\l3.pal");
-		} else if (leveltype == DTYPE_HELL) {
-			LoadPalette("levels\\l4data\\l4.pal");
-		} else if (leveltype == DTYPE_CRYPT) {
-			LoadPalette("nlevels\\l5data\\l5base.pal");
-		} else if (leveltype == DTYPE_NEST) {
-			LoadPalette("nlevels\\l6data\\l6base.pal");
-		}
-		
-		// Apply the palette to the system IMMEDIATELY
-		UpdateSystemPalette(logical_palette);
-		
-		// Regenerate light tables with correct palette
-		PORTAL_LOG_RENDER("DrawGame_REGENERATE_LIGHTTABLES");
-		MakeLightTable();
-		
-		PORTAL_LOG_RENDER("DrawGame_PALETTE_RELOAD_COMPLETE");
-		
-		// Don't render this frame - let the palette settle
-		return;
-	}
-	
 	// 🛡️ PORTAL CRASH FIX: Skip first frames after portal transition
 	if (g_skipRenderFramesAfterPortal > 0) {
 		g_skipRenderFramesAfterPortal--;
 		PORTAL_LOG_RENDER("DrawGame_SKIPPED_PORTAL_TRANSITION");
-		
-		// 🎨 PORTAL PALETTE FIX V9: Schedule palette reload for next frame
-		if (g_skipRenderFramesAfterPortal == 0) {
-			g_needsPaletteReloadAfterPortal = true;
-			PORTAL_LOG_RENDER("DrawGame_PALETTE_RELOAD_SCHEDULED");
-		}
-		
 		return;
 	}
 	

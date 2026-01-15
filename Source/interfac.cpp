@@ -189,9 +189,10 @@ void LoadCutsceneBackground(interface_mode uMsg)
 		progress_id = 1;
 		break;
 	case CutPortal:
-		ArtCutsceneWidescreen = LoadOptionalClx("gendata\\cutportlw.clx");
-		celPath = "gendata\\cutportl";
-		palPath = "gendata\\cutportl.pal";
+		// 🔴 NIGHTMARE EDITION: Portal rojo permanente para atmósfera más oscura
+		ArtCutsceneWidescreen = LoadOptionalClx("gendata\\cutportrw.clx");
+		celPath = "gendata\\cutportr";
+		palPath = "gendata\\cutportr.pal";
 		progress_id = 1;
 		break;
 	case CutPortalRed:
@@ -536,6 +537,13 @@ void ProgressEventHandler(const SDL_Event &event, uint16_t modState)
 				UpdateSystemPalette(logical_palette);
 			}
 		}
+		
+		// 🛡️ PALETTE CORRUPTION FIX: Re-enable contextual palette effects after transition
+		// Now that the level is fully loaded and leveltype is valid, we can apply effects
+		g_skipContextualPaletteEffects = false;
+		
+		// Force a palette update with contextual effects now enabled
+		UpdateSystemPalette(logical_palette);
 
 		[[maybe_unused]] EventHandler prevHandler = SetEventHandler(ProgressEventHandlerState.prevHandler);
 		assert(prevHandler == ProgressEventHandler);
@@ -636,8 +644,17 @@ void CompleteProgress()
 	}
 }
 
+void UpdateProgressPalette()
+{
+	// Not used - kept for compatibility
+}
+
 void ShowProgress(interface_mode uMsg)
 {
+	// 🛡️ PALETTE CORRUPTION FIX: Skip contextual palette effects during transitions
+	// This prevents palette corruption when leveltype is in an invalid state
+	g_skipContextualPaletteEffects = true;
+	
 	IsProgress = true;
 	gbSomebodyWonGameKludge = false;
 

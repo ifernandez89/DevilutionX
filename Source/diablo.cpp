@@ -104,6 +104,7 @@
 #include "engine/platform/dynamic_scaling.h"  // 📉 Dynamic Performance Scaling
 #include "apocalypse_crash_debug.h"  // 🚨 Apocalypse Crash Debugging System
 #include "portal_debug.h"  // 🚪 Portal Debug System
+#include "ai/ai_text_variation.h"  // 🤖 AI Text Variation System
 #include "loadsave.h"
 #include "lua/lua_global.hpp"
 #include "menu.h"
@@ -244,6 +245,9 @@ void StartGame(interface_mode uMsg)
 	// 🚨 DEBUG: Initialize Apocalypse crash debugging system
 	APOCALYPSE_DEBUG_INIT();
 	
+	// 🤖 AI TEXT VARIATION: Initialize AI system
+	InitAITextVariation();
+	
 	ShowProgress(uMsg);
 	gmenu_init_menu();
 	InitLevelCursor();
@@ -273,6 +277,9 @@ void FreeGame()
 	
 	// 🚨 DEBUG: Cleanup Apocalypse crash debugging system
 	APOCALYPSE_DEBUG_CLEANUP();
+	
+	// 🤖 AI TEXT VARIATION: Cleanup AI system
+	CleanupAITextVariation();
 	
 	// MAL INTEGRATION: Cleanup Modern Assist Layer
 	CleanupEngineHealth();

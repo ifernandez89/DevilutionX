@@ -13,6 +13,9 @@
 #include "utils/sdl_compat.h"
 #include "utils/str_cat.hpp"
 
+// 🤖 AI TEXT VARIATION: Integración con chat
+#include "ai/ai_text_variation.h"
+
 namespace devilution {
 
 std::optional<TextInputState> ChatInputState;
@@ -44,6 +47,13 @@ void ResetChatMessage()
 		if (WhisperList[i])
 			pmask |= 1 << i;
 	}
+
+	// 🤖 AI TEXT VARIATION: Procesar mensaje con IA si está disponible
+	// Si falla o no está disponible, usa el texto original (fallback automático)
+	std::string processedMessage = ProcessChatMessageWithAI(TalkMessage);
+	
+	// Copiar resultado procesado de vuelta a TalkMessage
+	CopyUtf8(TalkMessage, processedMessage, sizeof(TalkMessage));
 
 	NetSendCmdString(pmask, TalkMessage);
 }

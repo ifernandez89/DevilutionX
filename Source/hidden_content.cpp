@@ -359,4 +359,42 @@ _speech_id GetRandomHiddenBookText(_speech_id fallback)
 	return fallback;
 }
 
+// ============================================================================
+// 🏛️ ARQUEOLOGÍA DIGITAL ASISTIDA - NPC DIALOGUE INTEGRATION
+// ============================================================================
+
+std::vector<std::string> HiddenContentSystem::GetDormantLinesForNPC(const std::string& npcName) const
+{
+	std::vector<std::string> result;
+	
+	// SAFETY: Check if system is initialized
+	if (!IsInitialized()) {
+		return result;
+	}
+	
+	// 🔍 Buscar diálogos dormidos para este NPC específico
+	// Filtramos por tipo NPC_GOSSIP y por contexto que contenga el nombre del NPC
+	for (const auto& entry : discoveredContent) {
+		if (entry.type == HiddenContentType::NPC_GOSSIP && 
+		    entry.isIntegrated &&
+		    entry.priority >= 6) {  // Solo contenido de alta prioridad
+			
+			// Verificar si el contexto menciona este NPC (case insensitive)
+			std::string contextLower = entry.context;
+			std::string npcNameLower = npcName;
+			
+			std::transform(contextLower.begin(), contextLower.end(), contextLower.begin(),
+			    [](unsigned char c) { return std::tolower(c); });
+			std::transform(npcNameLower.begin(), npcNameLower.end(), npcNameLower.begin(),
+			    [](unsigned char c) { return std::tolower(c); });
+			
+			if (contextLower.find(npcNameLower) != std::string::npos) {
+				result.push_back(entry.content);
+			}
+		}
+	}
+	
+	return result;
+}
+
 } // namespace devilution

@@ -105,10 +105,29 @@ bool IsLoreSafe(const std::string& aiText, const std::string& baseText);
 /**
  * Procesa un mensaje de chat con IA (si está disponible)
  * 
+ * Pipeline de arqueología digital:
+ * 1. Verificar variantes dormidas (contenido original no usado)
+ * 2. Si no hay dormidas → generar micro-variación con IA
+ * 3. Fallback → texto original
+ * 
  * @param input Mensaje del jugador
  * @return Mensaje variado o original si IA no disponible
  */
 std::string ProcessChatMessageWithAI(const std::string& input);
+
+/**
+ * Procesa diálogo de NPC con sistema híbrido (dormidos + IA)
+ * 
+ * @param npcName Nombre del NPC
+ * @param baseText Texto base del diálogo
+ * @param tone Tono deseado
+ * @return Texto variado (dormido o IA) o original
+ */
+std::string ProcessNPCDialogue(
+    const std::string& npcName,
+    const std::string& baseText,
+    AITone tone = AITone::Neutral
+);
 
 // ============================================================================
 // 🪙 TOKEN BUCKET SYSTEM

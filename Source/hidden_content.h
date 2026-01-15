@@ -103,6 +103,13 @@ public:
 	 * @brief Check if system is initialized
 	 */
 	bool IsInitialized() const { return !discoveredContent.empty(); }
+	
+	/**
+	 * @brief Get dormant dialogue lines for a specific NPC
+	 * @param npcName Name of the NPC (e.g., "Griswold", "Adria")
+	 * @return Vector of dormant dialogue strings for this NPC
+	 */
+	std::vector<std::string> GetDormantLinesForNPC(const std::string& npcName) const;
 };
 
 // Global instance

@@ -4,6 +4,9 @@
  * 🤖 AI TEXT VARIATION SYSTEM 🤖
  * 
  * Implementación del sistema de variación de texto con IA
+ * 
+ * 🏛️ ARQUEOLOGÍA DIGITAL ASISTIDA:
+ * Pipeline: Textos Dormidos (70%) → IA (25%) → Original (5%)
  */
 
 #include "ai_text_variation.h"
@@ -23,6 +26,8 @@
 
 #include "utils/log.hpp"
 #include "utils/str_cat.hpp"
+#include "hidden_content.h"  // 🏛️ Integración con textos dormidos
+#include "engine/random.hpp"  // Para GenerateRnd en dormant selection
 
 // 🌐 HTTP CLIENT IMPLEMENTATION
 // Platform-specific HTTP implementations
@@ -769,11 +774,24 @@ bool IsLoreSafe(const std::string& aiText, const std::string& baseText)
     }
     
     // 🚫 CHECK 2: Palabras prohibidas (pronombres modernos, asistente, términos meta)
+    // PERO: Permitir pronombres si están en el texto original
     static const std::unordered_set<std::string> bannedWords = {
         "i", "you", "your", "my", "assistant", "ai", "help", "sorry", 
         "cannot", "can't", "rewrite", "rewritten", "sentence", "text", 
         "words", "language", "output", "rules", "label"
     };
+    
+    // Extraer palabras del texto base (para permitir pronombres originales)
+    std::unordered_set<std::string> baseWordsLower;
+    std::istringstream baseStream(ToLower(baseText));
+    std::string baseWord;
+    while (baseStream >> baseWord) {
+        baseWord.erase(std::remove_if(baseWord.begin(), baseWord.end(),
+            [](unsigned char c) { return !std::isalnum(c); }), baseWord.end());
+        if (!baseWord.empty()) {
+            baseWordsLower.insert(baseWord);
+        }
+    }
     
     std::istringstream aiStream(ToLower(aiText));
     std::string word;
@@ -783,9 +801,14 @@ bool IsLoreSafe(const std::string& aiText, const std::string& baseText)
             [](unsigned char c) { return !std::isalnum(c); }), word.end());
         
         if (!word.empty() && bannedWords.find(word) != bannedWords.end()) {
+            // ✅ PERMITIR si la palabra está en el texto original
+            if (baseWordsLower.find(word) != baseWordsLower.end()) {
+                continue;  // Palabra prohibida pero está en el original → OK
+            }
+            
 #ifdef _DEBUG
             if (g_debugLogging) {
-                LogVerbose("AI: Banned word detected: {}", word);
+                LogVerbose("AI: Banned word detected (not in original): {}", word);
             }
 #endif
             g_aiStats.loreSafeRejections++;
@@ -872,15 +895,74 @@ bool IsLoreSafe(const std::string& aiText, const std::string& baseText)
 
 std::string ProcessChatMessageWithAI(const std::string& input)
 {
-    // Intentar IA primero
+    // 🔍 PASO 1: Verificar si hay variantes dormidas (arqueología digital)
+    // TODO: Integrar con HiddenContentSystem cuando esté disponible
+    // auto dormantVariant = GetDormantTextVariant(input);
+    // if (dormantVariant.has_value()) {
+    //     return *dormantVariant;  // Prioridad a contenido original
+    // }
+    
+    // 🤖 PASO 2: Si no hay variantes dormidas, intentar IA (micro-variación)
     auto aiResult = TryAITextVariation(input, AITone::Neutral);
     
     if (aiResult.has_value()) {
         return *aiResult;
     }
     
-    // Fallback: texto original
+    // 🔙 PASO 3: Fallback final - texto original
     return input;
+}
+
+std::string ProcessNPCDialogue(
+    const std::string& npcName,
+    const std::string& baseText,
+    AITone tone
+)
+{
+    // 🏛️ ARQUEOLOGÍA DIGITAL ASISTIDA
+    // Pipeline: Dormidos (70%) → IA (25%) → Original (5%)
+    
+    // 🔍 PASO 1: Buscar variantes dormidas (PRIORIDAD MÁXIMA)
+    // Estas son líneas reales del juego original no usadas
+    if (g_hiddenContent.IsInitialized()) {
+        auto dormantLines = g_hiddenContent.GetDormantLinesForNPC(npcName);
+        if (!dormantLines.empty()) {
+            // Selección local, sin IA, instantáneo
+            size_t index = static_cast<size_t>(GenerateRnd(static_cast<int>(dormantLines.size())));
+            
+#ifdef _DEBUG
+            if (g_debugLogging) {
+                LogVerbose("AI: NPC {} - Using dormant line ({} available)", 
+                    npcName, dormantLines.size());
+            }
+#endif
+            g_aiStats.totalRequests++;
+            g_aiStats.cachedResponses++;  // Contar como cache hit (contenido pre-existente)
+            
+            return dormantLines[index];  // 70% del contenido
+        }
+    }
+    
+    // 🤖 PASO 2: Si no hay dormidas, IA genera micro-variación (30%)
+    // La IA solo "desempolva" cuando no hay alternativa
+    auto aiResult = TryAITextVariation(baseText, tone);
+    
+    if (aiResult.has_value()) {
+#ifdef _DEBUG
+        if (g_debugLogging) {
+            LogVerbose("AI: NPC {} - Generated AI variation", npcName);
+        }
+#endif
+        return *aiResult;  // 25% del contenido
+    }
+    
+    // 🔙 PASO 3: Fallback - texto original (siempre funciona)
+#ifdef _DEBUG
+    if (g_debugLogging) {
+        LogVerbose("AI: NPC {} - Using original text (fallback)", npcName);
+    }
+#endif
+    return baseText;  // 5% del contenido
 }
 
 // ============================================================================

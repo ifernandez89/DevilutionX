@@ -5,6 +5,7 @@
  */
 
 #include "oracle_system.h"
+#include "oracle_cache.h"
 
 #include <SDL.h>
 
@@ -18,6 +19,7 @@ namespace devilution {
 // ============================================================================
 
 std::optional<PendingQuestion> OracleSystem::pendingQuestion = std::nullopt;
+bool g_oracleCacheInitialized = false;
 
 // ============================================================================
 // 🔮 IMPLEMENTACIÓN
@@ -97,6 +99,12 @@ void OracleSystem::MarkAsProcessed()
 
 void OracleSystem::ShowWelcomeMessage()
 {
+	// Inicializar cache si no se ha hecho
+	if (!g_oracleCacheInitialized) {
+		OracleCache::Initialize();
+		g_oracleCacheInitialized = true;
+	}
+	
 	// Mensajes de bienvenida crípticos del Oráculo
 	// Se elige uno al azar cada vez que se inicia el juego
 	static const char* welcomeMessages[] = {

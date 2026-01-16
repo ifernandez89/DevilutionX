@@ -11,13 +11,20 @@
 #include "oracle_system.h"
 #include "oracle_ollama.h"
 #include "oracle_prompt.h"
+#include "oracle_dormant_texts.h"
+#include "oracle_validator.h"
+#include "oracle_cache.h"
 #include "plrmsg.h"
 #include "utils/log.hpp"
+#include "utils/str_cat.hpp"
 
 namespace devilution {
 
 // Mutex para thread safety (callback de Ollama se ejecuta en otro thread)
 std::mutex g_oracleMutex;
+
+// Textos base usados en el último prompt (para validación)
+std::vector<std::string> g_lastBaseTexts;
 
 } // namespace devilution
 
@@ -62,15 +69,40 @@ void OracleEvents::TriggerEvent(OracleEvent event, const std::string& context)
 		return;
 	}
 	
-	// 5. TODO (Paso 7): Verificar cache
-	// auto cachedResponse = OracleCache::GetResponse(question.text);
-	// if (cachedResponse.has_value()) {
-	//     EventPlrMsg(StrCat("🔮 ", *cachedResponse), UiFlags::ColorRed);
-	//     OracleSystem::ClearPendingQuestion();
-	//     return;
-	// }
+	// 5. Verificar cache primero
+	OracleDormantCategory category = OracleDormantTexts::MapEventToCategory(EventToString(event));
+	std::vector<std::string> baseTexts = OracleDormantTexts::GetAllTexts(category);
 	
-	// 6. Construir prompt
+	// Limitar a 3 textos
+	if (baseTexts.size() > 3) {
+		baseTexts.resize(3);
+	}
+	
+	// Intentar obtener del cache
+	std::string baseTextForCache = baseTexts.empty() ? "" : baseTexts[0];
+	auto cachedResponse = OracleCache::GetResponse(question.text, baseTextForCache);
+	
+	if (cachedResponse.has_value()) {
+		// Cache hit! Respuesta instantánea
+		EventPlrMsg(StrCat("🔮 ", *cachedResponse), UiFlags::ColorRed);
+		
+#ifdef _DEBUG
+		LogVerbose("Oracle: Cache HIT - instant response");
+#endif
+		
+		OracleSystem::ClearPendingQuestion();
+		return;
+	}
+	
+	// 6. Cache miss - obtener textos base para el prompt
+	
+	// Guardar textos base para validación posterior
+	{
+		std::lock_guard<std::mutex> lock(g_oracleMutex);
+		g_lastBaseTexts = baseTexts;
+	}
+	
+	// 7. Construir prompt
 	std::string prompt = OraclePrompt::BuildPrompt(
 		question.text,
 		EventToString(event),
@@ -85,22 +117,49 @@ void OracleEvents::TriggerEvent(OracleEvent event, const std::string& context)
 	// Mostrar indicador visual
 	EventPlrMsg("🔮 El Oráculo medita tu pregunta...", UiFlags::ColorRed);
 	
-	// 7. Query asíncrono a Ollama
+	// 8. Query asíncrono a Ollama
 	OracleOllama::QueryAsync(prompt, [](std::optional<std::string> response) {
 		// IMPORTANTE: Este callback se ejecuta en otro thread
 		// Usar mutex para acceso seguro
 		std::lock_guard<std::mutex> lock(g_oracleMutex);
 		
 		if (response.has_value()) {
-			// Mostrar respuesta del Oráculo
-			EventPlrMsg(StrCat("🔮 ", *response), UiFlags::ColorRed);
+			// PASO 6: Validar respuesta
+			ValidationResult validation = OracleValidator::ValidateResponse(
+				*response,
+				g_lastBaseTexts
+			);
 			
+			if (validation.isValid) {
+				// Mostrar respuesta del Oráculo
+				EventPlrMsg(StrCat("🔮 ", *response), UiFlags::ColorRed);
+				
 #ifdef _DEBUG
-			LogVerbose("Oracle: Response displayed");
+				LogVerbose("Oracle: Response displayed (similarity: {:.2f})", 
+					validation.similarity);
 #endif
-			
-			// TODO (Paso 7): Guardar en cache
-			// OracleCache::SaveResponse(question.text, *response);
+				
+				// PASO 7: Guardar en cache
+				if (!validation.baseTextUsed.empty()) {
+					OracleCache::SaveResponse(
+						OracleSystem::GetPendingQuestion().text,
+						*response,
+						validation.baseTextUsed,
+						validation.similarity
+					);
+				}
+			} else {
+				// Respuesta no válida - usar texto base directamente
+#ifdef _DEBUG
+				LogVerbose("Oracle: Response rejected - {}", validation.reason);
+				LogVerbose("Oracle: Using base text as fallback");
+#endif
+				
+				// Usar el texto base más similar como fallback
+				if (!validation.baseTextUsed.empty()) {
+					EventPlrMsg(StrCat("🔮 ", validation.baseTextUsed), UiFlags::ColorRed);
+				}
+			}
 		} else {
 #ifdef _DEBUG
 			LogVerbose("Oracle: No response from Ollama");

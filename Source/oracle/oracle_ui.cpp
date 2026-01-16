@@ -9,6 +9,7 @@
 #include <SDL.h>
 
 #include "control.h"
+#include "control/control.hpp"
 #include "engine/backbuffer_state.hpp"
 #include "engine/render/text_render.hpp"
 #include "utils/log.hpp"

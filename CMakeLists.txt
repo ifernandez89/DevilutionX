@@ -366,8 +366,8 @@ else()
     WIN32
     MACOSX_BUNDLE
     Source/main.cpp
-    Packaging/windows/devilutionx.exe.manifest
-    Packaging/windows/devilutionx.rc
+    Packaging/windows/nightmare.exe.manifest
+    Packaging/windows/nightmare.rc
     Packaging/apple/LaunchScreen.storyboard)
 
     if(CMAKE_STRIP AND NOT DEVILUTIONX_DISABLE_STRIP)

@@ -6,9 +6,20 @@
 
 #include "oracle_events.h"
 
+#include <mutex>
+
 #include "oracle_system.h"
+#include "oracle_ollama.h"
+#include "oracle_prompt.h"
 #include "plrmsg.h"
 #include "utils/log.hpp"
+
+namespace devilution {
+
+// Mutex para thread safety (callback de Ollama se ejecuta en otro thread)
+std::mutex g_oracleMutex;
+
+} // namespace devilution
 
 namespace devilution {
 
@@ -42,37 +53,63 @@ void OracleEvents::TriggerEvent(OracleEvent event, const std::string& context)
 		EventToString(event), question.text);
 #endif
 	
-	// 4. TODO (Paso 5): Verificar si Ollama está disponible
-	// if (!OllamaClient::IsAvailable()) {
-	//     OracleSystem::ClearPendingQuestion();
-	//     return;
-	// }
+	// 4. Verificar si Ollama está disponible
+	if (!OracleOllama::IsAvailable()) {
+#ifdef _DEBUG
+		LogVerbose("Oracle: Ollama not available, clearing question");
+#endif
+		OracleSystem::ClearPendingQuestion();
+		return;
+	}
 	
-	// 5. TODO (Paso 5): Verificar cache
+	// 5. TODO (Paso 7): Verificar cache
 	// auto cachedResponse = OracleCache::GetResponse(question.text);
 	// if (cachedResponse.has_value()) {
-	//     DisplayOracleResponse(*cachedResponse);
+	//     EventPlrMsg(StrCat("🔮 ", *cachedResponse), UiFlags::ColorRed);
 	//     OracleSystem::ClearPendingQuestion();
 	//     return;
 	// }
 	
-	// 6. TODO (Paso 6): Construir prompt y llamar Ollama
-	// std::string prompt = OraclePrompt::BuildPrompt(
-	//     question.text,
-	//     EventToString(event),
-	//     question.state == PlayerState::FRIENDLY ? "FRIENDLY" : "ATTACK",
-	//     context
-	// );
+	// 6. Construir prompt
+	std::string prompt = OraclePrompt::BuildPrompt(
+		question.text,
+		EventToString(event),
+		question.state,
+		context
+	);
 	
-	// 7. TODO (Paso 6): Query asíncrono a Ollama
-	// OllamaClient::QueryAsync(request, callback);
+#ifdef _DEBUG
+	LogVerbose("Oracle: Querying Ollama...");
+#endif
 	
-	// 8. Por ahora, mostrar mensaje de placeholder
-	EventPlrMsg("🔮 EL ORÁCULO MEDITA TU PREGUNTA...", UiFlags::ColorRed);
-	EventPlrMsg("    (Sistema de respuestas en desarrollo - Paso 5/6)", UiFlags::ColorWhitegold);
+	// Mostrar indicador visual
+	EventPlrMsg("🔮 El Oráculo medita tu pregunta...", UiFlags::ColorRed);
 	
-	// Limpiar pregunta (por ahora)
-	OracleSystem::ClearPendingQuestion();
+	// 7. Query asíncrono a Ollama
+	OracleOllama::QueryAsync(prompt, [](std::optional<std::string> response) {
+		// IMPORTANTE: Este callback se ejecuta en otro thread
+		// Usar mutex para acceso seguro
+		std::lock_guard<std::mutex> lock(g_oracleMutex);
+		
+		if (response.has_value()) {
+			// Mostrar respuesta del Oráculo
+			EventPlrMsg(StrCat("🔮 ", *response), UiFlags::ColorRed);
+			
+#ifdef _DEBUG
+			LogVerbose("Oracle: Response displayed");
+#endif
+			
+			// TODO (Paso 7): Guardar en cache
+			// OracleCache::SaveResponse(question.text, *response);
+		} else {
+#ifdef _DEBUG
+			LogVerbose("Oracle: No response from Ollama");
+#endif
+		}
+		
+		// Limpiar pregunta pendiente
+		OracleSystem::ClearPendingQuestion();
+	});
 }
 
 bool OracleEvents::IsEventSafe(OracleEvent event)

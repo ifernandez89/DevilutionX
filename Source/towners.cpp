@@ -1204,9 +1204,11 @@ bool DebugTalkToTowner(_talker_id type)
 namespace {
 
 // Micro-movement configuration
-constexpr uint32_t MIN_IDLE_TIME = 8000;   // 8 seconds minimum idle
-constexpr uint32_t MAX_IDLE_TIME = 15000;  // 15 seconds maximum idle
-constexpr uint32_t WALK_DURATION = 1500;   // 1.5 seconds walking
+// NOTE: Times are 4x longer than original for subtle, non-intrusive movement
+// Original: 8-15s, Now: 32-60s (much more subtle for users staying in town)
+constexpr uint32_t MIN_IDLE_TIME = 32000;  // 32 seconds minimum idle (was 8s)
+constexpr uint32_t MAX_IDLE_TIME = 60000;  // 60 seconds maximum idle (was 15s)
+constexpr uint32_t WALK_DURATION = 1500;   // 1.5 seconds walking (unchanged)
 constexpr int MIN_PLAYER_DISTANCE = 5;     // Minimum distance from player (tiles)
 
 // Micro-movement states

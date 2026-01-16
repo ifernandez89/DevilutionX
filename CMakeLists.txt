@@ -349,7 +349,8 @@ include(Dependencies)
 
 add_subdirectory(Source)
 
-set(BIN_TARGET devilutionx)
+# 🌑 NIGHTMARE EDITION: Ejecutable se llama "nightmare" en lugar de "devilutionx"
+set(BIN_TARGET nightmare)
 if(NINTENDO_3DS)
   set(BIN_TARGET ${BIN_TARGET}.elf)
 elseif(TARGET_PLATFORM STREQUAL "dos")
@@ -359,7 +360,7 @@ endif()
 if(ANDROID)
   add_library(${BIN_TARGET} SHARED Source/main.cpp)
 elseif(UWP_LIB)
-  set(BIN_TARGET libdevilutionx)
+  set(BIN_TARGET libnightmare)
 else()
   add_executable(${BIN_TARGET}
     WIN32

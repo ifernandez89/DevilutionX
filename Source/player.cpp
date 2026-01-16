@@ -52,6 +52,7 @@
 #include "monster.h"
 #include "nthread.h"
 #include "objects.h"
+#include "oracle/oracle_events.h"  // 🔮 ORÁCULO
 #include "options.h"
 #include "player.h"
 #include "qol/autopickup.h"
@@ -2782,6 +2783,12 @@ StartPlayerKill(Player &player, DeathReason deathReason)
 	if (&player == MyPlayer) {
 		NetSendCmdParam1(true, CMD_PLRDEAD, static_cast<uint16_t>(deathReason));
 		gamemenu_off();
+		
+		// 🔮 ORÁCULO: Trigger evento de muerte
+		OracleEvents::TriggerEvent(
+			OracleEvent::PLAYER_DEATH,
+			StrCat("Level ", setlevel ? "Quest" : std::to_string(currlevel))
+		);
 	}
 
 	const bool dropGold = !gbIsMultiplayer || !(player.isOnLevel(16) || player.isOnArenaLevel());

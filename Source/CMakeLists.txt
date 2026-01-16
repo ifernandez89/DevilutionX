@@ -212,7 +212,8 @@ set(libdevilutionx_SRCS
   utils/surface_to_clx.cpp
   utils/timer.cpp
   
-  oracle/oracle_system.cpp)
+  oracle/oracle_system.cpp
+  oracle/oracle_events.cpp)
 
 # These files are responsible for most of the runtime in Debug mode.
 # Apply some optimizations to them even in Debug mode to get reasonable performance.

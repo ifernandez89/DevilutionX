@@ -9,7 +9,9 @@
 #include <SDL.h>
 
 #include "control.h"
+#include "control/control.hpp"
 #include "engine/backbuffer_state.hpp"
+#include "engine/dx.h"
 #include "engine/render/text_render.hpp"
 #include "utils/log.hpp"
 
@@ -131,11 +133,7 @@ void OracleUI::RenderChatMessage()
 	
 	const Surface &out = GlobalBackBuffer();
 	
-	// Calcular alpha para el color (0-255)
-	const uint8_t alpha = static_cast<uint8_t>(chatMessage.GetAlpha() * 255.0f);
-	
-	// Color gris sutil con alpha
-	// Usar ColorWhite con alpha reducido para efecto gris
+	// Color blanco centrado
 	UiFlags flags = UiFlags::ColorWhite | UiFlags::AlignCenter | UiFlags::FontSize12;
 	
 	// Renderizar el texto centrado
@@ -152,10 +150,7 @@ void OracleUI::RenderDebugMessage()
 	// Posición: esquina superior izquierda, debajo de FPS
 	const Surface &out = GlobalBackBuffer();
 	
-	// Calcular alpha para el color (0-255)
-	const uint8_t alpha = static_cast<uint8_t>(debugMessage.GetAlpha() * 255.0f);
-	
-	// Color blanco con alpha
+	// Color blanco
 	UiFlags flags = UiFlags::ColorWhite | UiFlags::FontSize12;
 	
 	// Renderizar el texto

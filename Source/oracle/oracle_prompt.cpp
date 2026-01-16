@@ -2,41 +2,53 @@
  * @file oracle_prompt.cpp
  * 
  * 🔮 EL ORÁCULO - Implementación del Sistema de Prompts
+ * 
+ * FILOSOFÍA CRÍTICA:
+ * La IA NO genera contenido libre. La IA SOLO hace micro-variaciones
+ * de textos originales/dormidos de Diablo.
  */
 
 #include "oracle_prompt.h"
+#include "oracle_dormant_texts.h"
+
+#include <vector>
 
 #include "utils/str_cat.hpp"
 
 namespace devilution {
 
 // ============================================================================
-// 🔮 PROMPT MAESTRO
+// 🔮 PROMPT MAESTRO CON TEXTOS DORMIDOS
 // ============================================================================
 
-constexpr const char* MASTER_PROMPT = R"(You are an ancient, cryptic entity from Diablo's dark world - the Oracle of the Inferno.
+constexpr const char* MASTER_PROMPT_WITH_DORMANT = R"(You are the Oracle of the Inferno from Diablo's dark world.
 
-The player asks: "{QUESTION}"
+CRITICAL INSTRUCTIONS:
+======================
+You MUST base your response on the EXAMPLE TEXTS below.
+These are authentic texts from Diablo (1996).
+
+STRICT RULES:
+- Select ONE example text as your base
+- Make ONLY slight variations:
+  * Reorder 1-2 phrases
+  * Change 1-3 words maximum
+  * Keep the same dark tone and style
+- Your response must be recognizable as a variation of an example
+- NO creative freedom
+- NO modern language
+- NO explanations or tutorials
+- Maximum 2-3 short lines
+
+EXAMPLE TEXTS (your BASE):
+{DORMANT_EXAMPLES}
 
 Context:
+- Player asks: "{QUESTION}"
 - Event: {EVENT}
 - Mood: {TONE}
-- Location: {CONTEXT}
 
-Respond as the Oracle:
-- Speak in dark, poetic, cryptic language
-- Maximum 3 short lines
-- Use metaphors of darkness, death, and fate
-- No modern terms, no tutorials, no game mechanics
-- Sound like an ancient prophecy or dark whisper
-- Be ominous but not directly helpful
-
-Example style:
-"The shadows know your name, mortal. They whisper of your fall.
-Each death carves your path deeper into the abyss.
-The Inferno watches... and waits."
-
-Now respond to the player's question:)";
+Now respond by varying ONE of the example texts above to address the player's question:)";
 
 // ============================================================================
 // 🔮 IMPLEMENTACIÓN
@@ -52,17 +64,39 @@ std::string OraclePrompt::BuildPrompt(
 	// Obtener tono según estado
 	const char* tone = GetTone(state);
 	
-	// Obtener contexto del evento
-	const char* eventContext = GetEventContext(event);
+	// Mapear evento a categoría de textos dormidos
+	OracleDormantCategory category = OracleDormantTexts::MapEventToCategory(event);
 	
-	// Construir contexto completo
-	std::string fullContext = context.empty() ? eventContext : StrCat(eventContext, " - ", context);
+	// Obtener textos dormidos como ejemplos (3 textos)
+	std::vector<std::string> examples = OracleDormantTexts::GetAllTexts(category);
 	
-	// Reemplazar placeholders en el prompt maestro
-	std::string prompt = MASTER_PROMPT;
+	// Si no hay textos en esa categoría, usar otra
+	if (examples.empty()) {
+		examples = OracleDormantTexts::GetAllTexts(OracleDormantCategory::INFERNO_WHISPERS);
+	}
+	
+	// Limitar a 3 ejemplos
+	if (examples.size() > 3) {
+		examples.resize(3);
+	}
+	
+	// Construir string de ejemplos
+	std::string dormantExamples;
+	for (size_t i = 0; i < examples.size(); ++i) {
+		dormantExamples += StrCat((i + 1), ". \"", examples[i], "\"\n");
+	}
+	
+	// Construir prompt con textos dormidos
+	std::string prompt = MASTER_PROMPT_WITH_DORMANT;
+	
+	// Reemplazar {DORMANT_EXAMPLES}
+	size_t pos = prompt.find("{DORMANT_EXAMPLES}");
+	if (pos != std::string::npos) {
+		prompt.replace(pos, 18, dormantExamples);
+	}
 	
 	// Reemplazar {QUESTION}
-	size_t pos = prompt.find("{QUESTION}");
+	pos = prompt.find("{QUESTION}");
 	if (pos != std::string::npos) {
 		prompt.replace(pos, 10, question);
 	}
@@ -77,12 +111,6 @@ std::string OraclePrompt::BuildPrompt(
 	pos = prompt.find("{TONE}");
 	if (pos != std::string::npos) {
 		prompt.replace(pos, 6, tone);
-	}
-	
-	// Reemplazar {CONTEXT}
-	pos = prompt.find("{CONTEXT}");
-	if (pos != std::string::npos) {
-		prompt.replace(pos, 9, fullContext);
 	}
 	
 	return prompt;

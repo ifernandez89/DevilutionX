@@ -27,6 +27,7 @@
 #include "dead.h"
 #include "diablo_msg.hpp"
 #include "doom.h"
+#include "enhanced_portal.h"
 #include "engine/backbuffer_state.hpp"
 #include "engine/displacement.hpp"
 #include "engine/dx.h"
@@ -47,6 +48,7 @@
 #include "levels/dun_tile.hpp"
 #include "levels/gendung.h"
 #include "levels/tile_properties.hpp"
+#include "ui_nightmare.h"  // 🌙 Nightmare UI Architecture
 #include "lighting.h"
 #include "lua/lua_global.hpp"
 #include "minitext.h"
@@ -97,6 +99,58 @@ bool frameflag;
 namespace {
 
 constexpr auto RightFrameDisplacement = Displacement { DunFrameWidth, 0 };
+
+// ============================================================================
+// 🎯 FASE D1.3 - WRAPPER FUNCTIONS FOR DRAW PRIORITY
+// ============================================================================
+
+/**
+ * Prioridades de dibujado para simular profundidad 3D
+ */
+enum class DrawPriority : int {
+	Background = 0,      // Tiles de fondo
+	Items = 1,          // Items normales
+	Objects = 2,        // Objetos del mundo
+	Monsters = 3,       // Monstruos normales
+	EliteMonsters = 4,  // Monstruos elite (más visibles)
+	Player = 5,         // Jugador (máxima prioridad)
+	Effects = 6         // Efectos visuales
+};
+
+/**
+ * Determina la prioridad de dibujado para un monstruo
+ */
+DrawPriority GetMonsterDrawPriority(const Monster &monster) {
+	// Monstruos elite tienen prioridad más alta para mejor visibilidad
+	if (monster.isUnique() || (monster.flags & MFLAG_ELITE) != 0) {
+		return DrawPriority::EliteMonsters;
+	}
+	return DrawPriority::Monsters;
+}
+
+/**
+ * Ajusta el lightTableIndex basado en la prioridad de dibujado
+ */
+int AdjustLightForDrawPriority(int baseLightTableIndex, DrawPriority priority) {
+	if (!g_depthCues.enabled) {
+		return baseLightTableIndex;
+	}
+	
+	// Ajustar iluminación según prioridad (valores más bajos = más brillante)
+	switch (priority) {
+	case DrawPriority::Player:
+		return std::max(0, baseLightTableIndex - 2); // Jugador más brillante
+	case DrawPriority::EliteMonsters:
+		return std::max(0, baseLightTableIndex - 1); // Elites ligeramente más brillantes
+	case DrawPriority::Monsters:
+		return baseLightTableIndex; // Monstruos normales sin cambio
+	case DrawPriority::Objects:
+	case DrawPriority::Items:
+		return std::min(LightsMax - 1, baseLightTableIndex + 1); // Objetos/items ligeramente más oscuros
+	default:
+		return baseLightTableIndex;
+	}
+}
 
 [[nodiscard]] DVL_ALWAYS_INLINE bool IsFloor(Point tilePosition)
 {
@@ -330,10 +384,27 @@ void DrawMissilePrivate(const Surface &out, const Missile &missile, Point target
 
 	const Point missileRenderPosition { targetBufferPosition + missile.position.offsetForRendering - Displacement { missile._miAnimWidth2, 0 } };
 	const ClxSprite sprite = (*missile._miAnimData)[missile._miAnimFrame - 1];
+	
+	// FEATURE: Enhanced Portal System - subtle visual improvements for portals
+	bool isPortal = (missile._mitype == MissileID::TownPortal || missile._mitype == MissileID::RedPortal);
+	float colorMod = 1.0f;
+	float intensityMod = 1.0f;
+	
+	if (isPortal && g_enhancedPortal.IsEnabled()) {
+		colorMod = GetPortalColorModifier(missile.position.tile);
+		intensityMod = GetPortalIntensityModifier(missile.position.tile);
+		
+		// Trigger audio feedback on first render (throttled internally)
+		TriggerPortalAudioFeedback(missile.position.tile);
+	}
+	
+	// Apply enhanced rendering with fallback safety
 	if (missile._miUniqTrans != 0) {
 		ClxDrawTRN(out, missileRenderPosition, sprite, Monsters[missile._misource].uniqueMonsterTRN.get());
-	} else if (missile._miLightFlag) {
-		ClxDrawLight(out, missileRenderPosition, sprite, lightTableIndex);
+	} else if (missile._miLightFlag || (isPortal && intensityMod > 1.0f)) {
+		// Enhanced portal gets improved lighting
+		int enhancedLightIndex = isPortal ? std::max(0, static_cast<int>(lightTableIndex * intensityMod)) : lightTableIndex;
+		ClxDrawLight(out, missileRenderPosition, sprite, enhancedLightIndex);
 	} else {
 		ClxDraw(out, missileRenderPosition, sprite);
 	}
@@ -688,9 +759,29 @@ void DrawItem(const Surface &out, int8_t itemIndex, Point targetBufferPosition, 
 	const Item &item = Items[itemIndex];
 	const ClxSprite sprite = item.AnimInfo.currentSprite();
 	const Point position = targetBufferPosition + item.getRenderingOffset(sprite);
+	
+	// FEATURE: Subtle Visual UI Feedback - Quest Item Golden Glow
+	bool isQuestItem = IsAnyOf(item._iMiscId, IMISC_BOOK, IMISC_SCROLL, IMISC_NOTE) ||
+	                   IsAnyOf(item._itype, ItemType::Misc) ||
+	                   item._iName == "Mushroom" || item._iName == "Brain" || 
+	                   item._iName == "Fungal Tome" || item._iName == "Spectral Elixir";
+	
 	if (!IsPlayerInStore() && (itemIndex == pcursitem || AutoMapShowItems)) {
 		ClxDrawOutlineSkipColorZero(out, GetOutlineColor(item, false), position, sprite);
 	}
+	
+	// Add golden glow for quest items
+	if (isQuestItem && !IsPlayerInStore()) {
+		// Draw a subtle golden outline for quest items
+		ClxDrawOutlineSkipColorZero(out, PAL16_YELLOW + 2, position, sprite);
+	}
+	
+	// Add special glow for unique items
+	if (item._iMagical == ITEM_QUALITY_UNIQUE && !IsPlayerInStore()) {
+		// Draw a subtle blue outline for unique items
+		ClxDrawOutlineSkipColorZero(out, PAL16_BLUE + 3, position, sprite);
+	}
+	
 	ClxDrawLight(out, position, sprite, lightTableIndex);
 	if (item.AnimInfo.isLastFrame() || item._iCurs == ICURS_MAGIC_ROCK)
 		AddItemToLabelQueue(itemIndex, position);
@@ -829,7 +920,9 @@ void DrawDungeon(const Surface &out, const Lightmap &lightmap, Point tilePositio
 				tempTargetBufferPosition += { -TILE_WIDTH, 0 };
 				tempTilePosition += Opposite(player->_pdir);
 			}
-			DrawPlayer(out, *player, tempTilePosition, tempTargetBufferPosition, lightTableIndex);
+			// 🎯 FASE D1.3 - Aplicar prioridad de dibujado para el jugador
+			int adjustedLightIndex = AdjustLightForDrawPriority(lightTableIndex, DrawPriority::Player);
+			DrawPlayer(out, *player, tempTilePosition, tempTargetBufferPosition, adjustedLightIndex);
 		}
 	}
 
@@ -866,7 +959,10 @@ void DrawDungeon(const Surface &out, const Lightmap &lightmap, Point tilePositio
 				tempTargetBufferPosition += { -TILE_WIDTH, 0 };
 				tempTilePosition += Opposite(monster->direction);
 			}
-			DrawMonsterHelper(out, tempTilePosition, tempTargetBufferPosition, lightTableIndex);
+			// 🎯 FASE D1.3 - Aplicar prioridad de dibujado según tipo de monstruo
+			DrawPriority priority = GetMonsterDrawPriority(*monster);
+			int adjustedLightIndex = AdjustLightForDrawPriority(lightTableIndex, priority);
+			DrawMonsterHelper(out, tempTilePosition, tempTargetBufferPosition, adjustedLightIndex);
 		}
 	}
 
@@ -1453,6 +1549,85 @@ void DrawFPS(const Surface &out)
 }
 
 /**
+ * @brief Draws enhanced HUD information including FPS, level, monsters, etc.
+ * 
+ * FEATURE: Subtle Visual UI Feedback - Enhanced HUD Display
+ * Shows additional useful information in the upper corners of the screen.
+ */
+void DrawEnhancedHUD(const Surface &out)
+{
+	if (!gbActive || !gbRunGame) {
+		return;
+	}
+	
+	// Only show enhanced HUD in game (not in menus)
+	if (gbIsMultiplayer && !MyPlayer->plractive) {
+		return;
+	}
+	
+	int yOffset = 8;
+	const int lineHeight = 16;
+	
+	// Left side information (below FPS if enabled)
+	if (*GetOptions().Graphics.showFPS) {
+		yOffset += lineHeight;
+	}
+	
+	// Current dungeon level
+	if (currlevel > 0) {
+		std::string levelText = StrCat("Nivel: ", currlevel);
+		DrawString(out, levelText, Point { 8, yOffset }, { .flags = UiFlags::ColorGold });
+		yOffset += lineHeight;
+	}
+	
+	// Monster count (only in dungeon) - BUGFIX: Moved to avoid overlap with map
+	if (currlevel > 0 && leveltype != DTYPE_TOWN) {
+		int aliveMonsters = 0;
+		for (size_t i = 0; i < ActiveMonsterCount; i++) {
+			const Monster &monster = Monsters[ActiveMonsters[i]];
+			if (!monster.hasNoLife()) {
+				aliveMonsters++;
+			}
+		}
+		std::string monsterText = StrCat("Monstruos: ", aliveMonsters);
+		// Move monster count to right side to avoid map overlap
+		int monsterTextWidth = GetLineWidth(monsterText, GameFont12);
+		DrawString(out, monsterText, Point { out.w() - monsterTextWidth - 8, yOffset }, { .flags = UiFlags::ColorWhite });
+		// Don't increment yOffset since this is now on the right side
+	}
+	
+	// Right side information
+	int rightX = out.w() - 250; // More space from right edge to avoid overlap
+	int rightY = 8;
+	
+	// Session time (simple implementation)
+	static uint32_t sessionStartTime = SDL_GetTicks();
+	uint32_t sessionTimeMs = SDL_GetTicks() - sessionStartTime;
+	uint32_t sessionTimeSec = sessionTimeMs / 1000;
+	uint32_t hours = sessionTimeSec / 3600;
+	uint32_t minutes = (sessionTimeSec % 3600) / 60;
+	uint32_t seconds = sessionTimeSec % 60;
+	
+	std::string timeText = StrCat("Sesion: ", hours, ":", (minutes < 10 ? "0" : ""), minutes, ":", (seconds < 10 ? "0" : ""), seconds);
+	DrawString(out, timeText, Point { rightX, rightY }, { .flags = UiFlags::ColorWhite });
+	rightY += lineHeight;
+	
+	// Player coordinates (useful for debugging/exploration)
+	if (MyPlayer != nullptr) {
+		std::string coordText = StrCat("Pos: (", MyPlayer->position.tile.x, ",", MyPlayer->position.tile.y, ")");
+		DrawString(out, coordText, Point { rightX, rightY }, { .flags = UiFlags::ColorUiSilver });
+		rightY += lineHeight;
+	}
+	
+	// Gold count (always visible)
+	if (MyPlayer != nullptr) {
+		std::string goldText = StrCat("Oro: ", MyPlayer->_pGold);
+		DrawString(out, goldText, Point { rightX, rightY }, { .flags = UiFlags::ColorGold });
+		rightY += lineHeight;
+	}
+}
+
+/**
  * @brief Update part of the screen from the back buffer
  */
 void DoBlitScreen(Rectangle area)
@@ -1836,6 +2011,9 @@ void DrawAndBlit()
 	nthread_UpdateProgressToNextGameTick();
 
 	DrawView(out, ViewPosition);
+	
+	// 🌙 NIGHTMARE UI - Render atmospheric effects AFTER game view but BEFORE UI panels
+	RenderNightmareUI();
 	if (drawCtrlPan) {
 		DrawMainPanel(out);
 	}
@@ -1872,6 +2050,9 @@ void DrawAndBlit()
 	DrawCursor(out);
 
 	DrawFPS(out);
+	
+	// FEATURE: Subtle Visual UI Feedback - Enhanced HUD Display
+	DrawEnhancedHUD(out);
 
 	LuaEvent("GameDrawComplete");
 

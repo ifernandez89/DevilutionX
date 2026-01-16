@@ -22,6 +22,9 @@
 #include "player.h"
 #include "utils/is_of.hpp"
 
+// 🔊 AUDIO ENHANCEMENT - Integración del sistema mejorado
+#include "audio/enhanced_audio.h"
+
 namespace devilution {
 
 int sfxdelay;
@@ -201,6 +204,17 @@ void stream_stop()
 
 void PlaySFX(SfxID psfx)
 {
+	// 🔒 TEMPORARY DISABLE - Sistema de audio mejorado deshabilitado para debugging
+	// Razón: Crash durante conversaciones con NPCs debido a timing de inicialización
+	// TODO: Rediseñar con arquitectura context-aware en el futuro
+	// if (IsEnhancedAudioEnabled()) {
+	//     if (EnhancedPlaySFX(psfx)) {
+	//         return; // Sistema mejorado procesó el sonido de forma segura
+	//     }
+	//     // Si retorna false, continuar con sistema original (fallback automático)
+	// }
+	
+	// Código original - FUNCIONA PERFECTAMENTE
 	psfx = RndSFX(psfx);
 
 	if (!gbSndInited) return;
@@ -210,6 +224,17 @@ void PlaySFX(SfxID psfx)
 
 void PlaySfxLoc(SfxID psfx, Point position, bool randomizeByCategory)
 {
+	// 🔒 TEMPORARY DISABLE - Sistema de audio mejorado deshabilitado para debugging
+	// Razón: Crash durante conversaciones con NPCs debido a timing de inicialización
+	// TODO: Rediseñar con arquitectura context-aware en el futuro
+	// if (IsEnhancedAudioEnabled()) {
+	//     if (EnhancedPlaySfxLoc(psfx, position, randomizeByCategory)) {
+	//         return; // Sistema mejorado procesó el sonido de forma segura
+	//     }
+	//     // Si retorna false, continuar con sistema original (fallback automático)
+	// }
+	
+	// Código original - FUNCIONA PERFECTAMENTE
 	if (randomizeByCategory) {
 		psfx = RndSFX(psfx);
 	}
@@ -244,6 +269,9 @@ void sound_update()
 	}
 
 	StreamUpdate();
+	
+	// 🔒 TEMPORARY DISABLE - Sistema de audio mejorado deshabilitado para debugging
+	// UpdateEnhancedAudio();
 }
 
 void effects_cleanup_sfx(bool fullUnload)
@@ -295,6 +323,9 @@ void sound_init()
 	}
 
 	PrivSoundInit(mask);
+	
+	// 🔒 TEMPORARY DISABLE - Sistema de audio mejorado deshabilitado para debugging
+	// InitEnhancedAudio();
 }
 
 void ui_sound_init()

@@ -1,0 +1,14 @@
+# Target labels
+ libpng-populate
+# Source files and their labels
+C:/c - c++/DevilutionX/build_final_new/_deps/libpng-subbuild/CMakeFiles/libpng-populate
+C:/c - c++/DevilutionX/build_final_new/_deps/libpng-subbuild/CMakeFiles/libpng-populate.rule
+C:/c - c++/DevilutionX/build_final_new/_deps/libpng-subbuild/CMakeFiles/libpng-populate-complete.rule
+C:/c - c++/DevilutionX/build_final_new/_deps/libpng-subbuild/libpng-populate-prefix/src/libpng-populate-stamp/libpng-populate-build.rule
+C:/c - c++/DevilutionX/build_final_new/_deps/libpng-subbuild/libpng-populate-prefix/src/libpng-populate-stamp/libpng-populate-configure.rule
+C:/c - c++/DevilutionX/build_final_new/_deps/libpng-subbuild/libpng-populate-prefix/src/libpng-populate-stamp/libpng-populate-download.rule
+C:/c - c++/DevilutionX/build_final_new/_deps/libpng-subbuild/libpng-populate-prefix/src/libpng-populate-stamp/libpng-populate-install.rule
+C:/c - c++/DevilutionX/build_final_new/_deps/libpng-subbuild/libpng-populate-prefix/src/libpng-populate-stamp/libpng-populate-mkdir.rule
+C:/c - c++/DevilutionX/build_final_new/_deps/libpng-subbuild/libpng-populate-prefix/src/libpng-populate-stamp/libpng-populate-patch.rule
+C:/c - c++/DevilutionX/build_final_new/_deps/libpng-subbuild/libpng-populate-prefix/src/libpng-populate-stamp/libpng-populate-test.rule
+C:/c - c++/DevilutionX/build_final_new/_deps/libpng-subbuild/libpng-populate-prefix/src/libpng-populate-stamp/libpng-populate-update.rule

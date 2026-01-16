@@ -4,6 +4,7 @@
  * Implementation of item functionality.
  */
 #include "items.h"
+#include "hellfire_book_fix.h"  // 🔥 HELLFIRE BOOK RECOVERY SYSTEM
 
 #include <algorithm>
 #include <array>
@@ -28,6 +29,7 @@
 #include <fmt/core.h>
 
 #include "DiabloUI/ui_flags.hpp"
+#include "invisible_wear.h"  // 💰 Invisible Wear System
 #include "control/control.hpp"
 #include "controls/control_mode.hpp"
 #include "controls/controller_buttons.h"
@@ -3175,6 +3177,9 @@ void GetItemAttrs(Item &item, _item_indexes itemData, int lvl)
 	if (leveltype == DTYPE_HELL)
 		rndv += rndv / 8;
 
+	// 💰 INVISIBLE WEAR: Apply wear to gold drops in deep levels
+	rndv = ApplyGoldDropWear(rndv);
+
 	item._ivalue = std::min(rndv, GOLD_MAX_LIMIT);
 	SetPlrHandGoldCurs(item);
 }
@@ -4892,17 +4897,9 @@ void RechargeItem(Item &item, Player &player)
 	if (item._iCharges == item._iMaxCharges)
 		return;
 
-	const int rechargeStrength = RandomIntBetween(1, player.getCharacterLevel() / GetSpellStaffLevel(item._iSpell));
-
-	do {
-		item._iMaxCharges--;
-		if (item._iMaxCharges == 0) {
-			return;
-		}
-		item._iCharges += rechargeStrength;
-	} while (item._iCharges < item._iMaxCharges);
-
-	item._iCharges = std::min(item._iCharges, item._iMaxCharges);
+	// 🔧 IMPROVED STAFF RECHARGE: Como Adria, sin reducir cargas máximas
+	// Restaurar cargas completamente como lo hace Adria
+	item._iCharges = item._iMaxCharges;
 
 	if (&player != MyPlayer)
 		return;
@@ -5039,6 +5036,14 @@ void UpdateHellfireFlag(Item &item, const char *identifiedItemName)
 	// This ensures that Item::getName() returns the correct translated item name
 	if ((item.dwBuff & CF_HELLFIRE) != 0U)
 		return; // Item is already a hellfire item
+
+	// 🔥 ENHANCED: Usar el sistema robusto de detección de Hellfire
+	ForceHellfireItemDetection(item);
+	
+	// Si ya se detectó como Hellfire, no continuar con el método original
+	if ((item.dwBuff & CF_HELLFIRE) != 0U)
+		return;
+
 	if (item._iMagical != ITEM_QUALITY_MAGIC)
 		return; // Only magic item's name can differ between diablo and hellfire
 	if (gbIsMultiplayer)

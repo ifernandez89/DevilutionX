@@ -48,6 +48,23 @@ extern DVL_API_FOR_TEST uint8_t *FullyDarkLightTable;
 extern std::array<uint8_t, 256> InfravisionTable;
 extern std::array<uint8_t, 256> StoneTable;
 extern std::array<uint8_t, 256> PauseTable;
+
+// ============================================================================
+// 🎯 FASE D1 - 3D SIMULADO: DEPTH CUES VISUALES
+// ============================================================================
+
+/**
+ * Configuración del sistema de depth cues para simular profundidad 3D
+ */
+struct DepthCuesConfig {
+	bool enabled = true;
+	float depthFactor = 8.0f;        // Factor de atenuación por distancia
+	float verticalBias = 0.3f;       // Bias vertical para reforzar isométrica
+	float maxDistance = 20.0f;       // Distancia máxima de efecto
+	float minIntensity = 0.3f;       // Intensidad mínima (nunca completamente negro)
+};
+
+extern DepthCuesConfig g_depthCues;
 #ifdef _DEBUG
 extern bool DisableLighting;
 #endif
@@ -76,6 +93,30 @@ void ChangeVisionRadius(size_t id, int r);
 void ChangeVisionXY(size_t id, Point position);
 void ProcessVisionList();
 void lighting_color_cycling();
+
+// ============================================================================
+// 🎯 FASE D1 - FUNCIONES DE DEPTH CUES
+// ============================================================================
+
+/**
+ * D1.1 + D1.2 - Calcula factor de profundidad basado en distancia y bias vertical
+ */
+float CalculateDepthCues(int x, int y, int playerX, int playerY);
+
+/**
+ * Aplica depth cues a un nivel de luz específico
+ */
+uint8_t ApplyDepthCuesToLight(uint8_t lightLevel, int x, int y, int playerX, int playerY);
+
+/**
+ * Inicializa el sistema de depth cues
+ */
+void InitDepthCues();
+
+/**
+ * Habilita/deshabilita el sistema de depth cues
+ */
+void SetDepthCuesEnabled(bool enabled);
 
 constexpr int MaxCrawlRadius = 18;
 

@@ -1,0 +1,10 @@
+#pragma once
+#define PROJECT_NAME "DevilutionX"
+<<<<<<< HEAD
+#define PROJECT_VERSION "1.6.0-dev-Release-c90081188"
+=======
+#define PROJECT_VERSION "1.6.0-dev-Release-23c6bbc75"
+>>>>>>> develop
+#define PROJECT_VERSION_MAJOR 1
+#define PROJECT_VERSION_MINOR 6
+#define PROJECT_VERSION_PATCH 0

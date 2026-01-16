@@ -1,0 +1,16 @@
+🔍 CRASH DIAGNOSTICS REPORT
+==================================================
+
+Session Duration: 4.97 seconds
+Total Snapshots: 0
+Total Events: 2
+Total Clicks: 5
+Max Missiles Recorded: 0
+Max Monsters Recorded: 0
+Critical State: NO
+
+🚨 RECENT EVENTS:
+------------------------------
+[0.00s ago] CLICK_SPAM: High click frequency detected: 3 clicks/sec
+  Info: Total session clicks: 5
+[4.97s ago] SYSTEM_INIT: Crash diagnostics system initialized

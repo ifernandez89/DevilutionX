@@ -1,0 +1,51 @@
+🔍 CRASH DIAGNOSTICS REPORT
+==================================================
+
+Session Duration: 5.81 seconds
+Total Snapshots: 8
+Total Events: 21
+Total Clicks: 6
+Max Missiles Recorded: 1
+Max Monsters Recorded: 200
+Critical State: YES
+Last Critical Pattern: High monster count: 200; 
+
+🚨 RECENT EVENTS:
+------------------------------
+[0.00s ago] CRITICAL_STATE: Critical state detected
+  Info: Source\diablo.cpp:1592
+[0.02s ago] CLICK_SPAM: High click frequency detected: 5 clicks/sec
+  Info: Total session clicks: 6
+[0.04s ago] CRITICAL_STATE: Critical state detected
+  Info: Source\diablo.cpp:1592
+[0.05s ago] CRITICAL_STATE: Critical state detected
+  Info: Source\diablo.cpp:1592
+[0.09s ago] CRITICAL_STATE: Critical state detected
+  Info: Source\diablo.cpp:1592
+[0.12s ago] CRITICAL_STATE: Critical state detected
+  Info: Source\diablo.cpp:1592
+[0.15s ago] CRITICAL_STATE: Critical state detected
+  Info: Source\diablo.cpp:1592
+[0.18s ago] CRITICAL_STATE: Critical state detected
+  Info: Source\diablo.cpp:1592
+[0.19s ago] CLICK_SPAM: High click frequency detected: 4 clicks/sec
+  Info: Total session clicks: 5
+[0.22s ago] CRITICAL_STATE: Critical state detected
+  Info: Source\diablo.cpp:1592
+
+📊 CURRENT STATE:
+------------------------------
+Level: 9
+Player Position: (66, 55)
+Player Health: 403
+Player Mana: 871
+Total Missiles: 1
+  - Inferno Controls: 0
+  - Infernos: 0
+  - Fireballs: 0
+  - Spitter Projectiles: 1
+Total Monsters: 198
+  - Spitters: 45
+  - Skeletons: 0
+  - Attacking: 1
+Clicks in Last Second: 4

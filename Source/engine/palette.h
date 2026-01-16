@@ -143,4 +143,20 @@ void palette_update_caves();
 void palette_update_crypt();
 void palette_update_hive();
 
+// 🎨 FASE V2 - PALETA CONTEXTUAL AVANZADA 🎨
+/**
+ * @brief Aplica ajustes dinámicos de paleta basados en el estado del juego
+ */
+void ApplyDynamicPaletteAdjustment(SDL_Color *palette);
+
+/**
+ * @brief Aplica mejoras contextuales de paleta para situaciones específicas
+ */
+void ApplyContextualPaletteEnhancement(SDL_Color *palette);
+
+/**
+ * @brief Aplica simulación de profundidad atmosférica para mayor inmersión
+ */
+void ApplyAtmosphericDepthSimulation(SDL_Color *palette);
+
 } // namespace devilution

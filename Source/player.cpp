@@ -4,8 +4,12 @@
  * Implementation of player functionality, leveling, actions, creation, loading, etc.
  */
 #include <algorithm>
+#include <chrono>
 #include <cmath>
 #include <cstdint>
+#include <fstream>
+#include <iomanip>
+#include <unordered_map>
 
 #ifdef USE_SDL3
 #include <SDL3/SDL_events.h>
@@ -26,7 +30,9 @@
 #endif
 #include "engine/backbuffer_state.hpp"
 #include "engine/load_cl2.hpp"
+#include "engine/load_cl2.hpp"
 #include "engine/load_file.hpp"
+#include "apocalypse_crash_debug.h"  // 🚨 Debug system for Apocalypse crashes
 #include "engine/points_in_rectangle_range.hpp"
 #include "engine/random.hpp"
 #include "engine/render/clx_render.hpp"
@@ -51,6 +57,7 @@
 #include "qol/autopickup.h"
 #include "qol/floatingnumbers.h"
 #include "qol/stash.h"
+#include "visual_feedback.h"
 #include "spells.h"
 #include "stores.h"
 #include "towners.h"
@@ -59,6 +66,7 @@
 #include "utils/log.hpp"
 #include "utils/str_cat.hpp"
 #include "utils/utf8.hpp"
+#include "guarantee_inferno_book.h"  // 🔥 GUARANTEE INFERNO BOOK SYSTEM
 
 namespace devilution {
 
@@ -2098,10 +2106,94 @@ bool IsPlayerUnarmed(Player &player)
 	return animWeaponId == PlayerWeaponGraphic::Unarmed;
 }
 
+// 🎭 DARK SORCERER SKIN - Load Advocate sprites for Sorcerer
+void LoadDarkSorcererGFX(Player &player, player_graphic graphic)
+{
+	auto &animationData = player.AnimationData[static_cast<size_t>(graphic)];
+	if (animationData.sprites)
+		return;
+
+	// Map player graphics to monster graphics
+	MonsterGraphic monsterGraphic;
+	switch (graphic) {
+	case player_graphic::Stand:
+		monsterGraphic = MonsterGraphic::Stand;
+		break;
+	case player_graphic::Walk:
+		monsterGraphic = MonsterGraphic::Walk;
+		break;
+	case player_graphic::Attack:
+	case player_graphic::Lightning:
+	case player_graphic::Fire:
+	case player_graphic::Magic:
+		monsterGraphic = MonsterGraphic::Attack;
+		break;
+	case player_graphic::Hit:
+		monsterGraphic = MonsterGraphic::GotHit;
+		break;
+	case player_graphic::Death:
+		monsterGraphic = MonsterGraphic::Death;
+		break;
+	case player_graphic::Block:
+		monsterGraphic = MonsterGraphic::Stand; // Use stand animation for block
+		break;
+	default:
+		// Fallback: disable dark sorcerer for unsupported animations and use normal loading
+		LogVerbose("🎭 Dark Sorcerer: Unsupported animation {}, falling back to normal", static_cast<int>(graphic));
+		// Temporarily disable dark sorcerer to avoid recursion
+		bool originalSetting = *GetOptions().Gameplay.darkSorcererSkin;
+		GetOptions().Gameplay.darkSorcererSkin.SetValue(false);
+		LoadPlrGFX(player, graphic);
+		GetOptions().Gameplay.darkSorcererSkin.SetValue(originalSetting);
+		return;
+	}
+
+	// Get animation letter for monster graphic
+	const char animLetters[] = "nwahds"; // Stand, Walk, Attack, Hit, Death, Special
+	const char animLetter = animLetters[static_cast<size_t>(monsterGraphic)];
+	
+	// Get Advocate monster data
+	const MonsterData &advocateData = MonstersData[MT_ADVOCATE];
+	
+	// 🔧 DEBUG: Log the sprite path being used
+	LogVerbose("🎭 Dark Sorcerer: Advocate sprite path base: {}", advocateData.spritePath());
+	
+	// Load Advocate sprites for this animation
+	char advocateSpritePath[256];
+	*BufCopy(advocateSpritePath, "monsters\\", advocateData.spritePath(), animLetter, DEVILUTIONX_CL2_EXT) = '\0';
+	
+	// 🔧 DEBUG: Log the full path being loaded
+	LogVerbose("🎭 Dark Sorcerer: Attempting to load sprite from: {}", advocateSpritePath);
+	
+	// Load the sprite sheet with appropriate width (use default monster width)
+	const uint16_t animationWidth = 128; // Standard monster width
+	
+	// 🔧 ENHANCED: Try to load the sprite sheet with error handling
+	animationData.sprites = LoadCl2Sheet(advocateSpritePath, animationWidth);
+	
+	if (animationData.sprites) {
+		LogVerbose("🎭 Dark Sorcerer: Successfully loaded {} animation from {}", 
+			static_cast<int>(graphic), advocateSpritePath);
+	} else {
+		LogError("🎭 Dark Sorcerer: Failed to load sprite sheet from {}", advocateSpritePath);
+		// Fallback to normal Sorcerer sprites
+		bool originalSetting = *GetOptions().Gameplay.darkSorcererSkin;
+		GetOptions().Gameplay.darkSorcererSkin.SetValue(false);
+		LoadPlrGFX(player, graphic);
+		GetOptions().Gameplay.darkSorcererSkin.SetValue(originalSetting);
+	}
+}
+
 void LoadPlrGFX(Player &player, player_graphic graphic)
 {
 	if (HeadlessMode)
 		return;
+
+	// 🎭 DARK SORCERER SKIN - Use Advocate sprites for Sorcerer
+	if (player._pClass == HeroClass::Sorcerer && *GetOptions().Gameplay.darkSorcererSkin) {
+		LoadDarkSorcererGFX(player, graphic);
+		return;
+	}
 
 	auto &animationData = player.AnimationData[static_cast<size_t>(graphic)];
 	if (animationData.sprites)
@@ -2333,7 +2425,7 @@ void CreatePlayer(Player &player, HeroClass c)
 
 	player._pExperience = 0;
 	player._pArmorClass = 0;
-	player._pLightRad = 10;
+	player._pLightRad = 12; // Mejora de iluminación: aumentado de 10 a 12 para mejor visibilidad
 	player._pInfraFlag = false;
 
 	for (uint8_t &spellLevel : player._pSplLvl) {
@@ -2384,6 +2476,11 @@ void NextPlrLevel(Player &player)
 	player.setCharacterLevel(player.getCharacterLevel() + 1);
 
 	CalcPlrInv(player, true);
+
+	// 🔥 GUARANTEE INFERNO BOOK: Check if player should get Book of Inferno
+	if (player.getCharacterLevel() >= 2) {
+		GuaranteeInfernoBookAccess(player);
+	}
 
 	if (CalcStatDiff(player) < 5) {
 		player._pStatPts = CalcStatDiff(player);
@@ -2823,6 +2920,12 @@ void ApplyPlrDamage(DamageType damageType, Player &player, int dam, int minHP /*
 	int totalDamage = (dam << 6) + frac;
 	if (&player == MyPlayer && !player.hasNoLife()) {
 		AddFloatingNumber(damageType, player, totalDamage);
+		
+		// 🎮 FASE V3.1 - FLASH DE DAÑO AL JUGADOR
+		// Activar flash visual cuando el jugador recibe daño
+		if (totalDamage > 0) {
+			TriggerPlayerDamageFlash(player, totalDamage >> 6, damageType);
+		}
 	}
 	if (totalDamage > 0 && player.pManaShield && HasNoneOf(player._pIFlags, ItemSpecialEffect::NoMana)) {
 		const uint8_t manaShieldLevel = player._pSplLvl[static_cast<int8_t>(SpellID::ManaShield)];
@@ -2862,7 +2965,15 @@ void ApplyPlrDamage(DamageType damageType, Player &player, int dam, int minHP /*
 		SetPlayerHitPoints(player, minHitPoints);
 	}
 	if (player.hasNoLife()) {
+		// 🎮 FASE V3.7 - FLASH DE MUERTE
+		if (&player == MyPlayer) {
+			TriggerDeathFlash(player);
+		}
 		SyncPlrKill(player, deathReason);
+	} else if (&player == MyPlayer) {
+		// 🎮 FASE V3.4 - PULSE DE VIDA BAJA
+		// Actualizar pulse de vida baja cuando el jugador está vivo
+		UpdateLowHealthPulse(player);
 	}
 }
 

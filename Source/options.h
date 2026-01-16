@@ -646,6 +646,8 @@ struct GameplayOptions : OptionCategoryBase {
 	OptionEntryInt<int> numFullRejuPotionPickup;
 	/** @brief Enable floating numbers. */
 	OptionEntryEnum<FloatingNumbers> enableFloatingNumbers;
+	/** @brief Use dark cultist appearance for Sorcerer class. */
+	OptionEntryBoolean darkSorcererSkin;
 
 	/**
 	 * @brief If loading takes less than this value, skips displaying the loading screen.

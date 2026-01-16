@@ -1,0 +1,2 @@
+"C:/mingw64/bin/gcc-ar.exe" qc liblibdevilutionx_sdl2_to_1_2_backports.a CMakeFiles/libdevilutionx_sdl2_to_1_2_backports.dir/utils/sdl2_to_1_2_backports.cpp.obj CMakeFiles/libdevilutionx_strings.dir/utils/str_cat.cpp.obj CMakeFiles/libdevilutionx_strings.dir/utils/str_case.cpp.obj CMakeFiles/libdevilutionx_utils_console.dir/utils/console.cpp.obj
+"C:/mingw64/bin/gcc-ranlib.exe" liblibdevilutionx_sdl2_to_1_2_backports.a

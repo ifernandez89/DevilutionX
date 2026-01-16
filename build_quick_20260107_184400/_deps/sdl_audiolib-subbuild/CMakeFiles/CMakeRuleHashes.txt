@@ -1,0 +1,11 @@
+# Hashes of file build rules.
+c5b3cb6ac2539648ace9ea032ff4abb2 CMakeFiles/sdl_audiolib-populate
+ec6d65fbb64c735a7087819ef96a70bd CMakeFiles/sdl_audiolib-populate-complete
+048c694fb616ccfa2067f32cd6bd6b62 sdl_audiolib-populate-prefix/src/sdl_audiolib-populate-stamp/sdl_audiolib-populate-build
+5251ebaedb90d8dbc85d66d7ade22f4d sdl_audiolib-populate-prefix/src/sdl_audiolib-populate-stamp/sdl_audiolib-populate-configure
+e40ef55491bf82b5a516383f8cc231ce sdl_audiolib-populate-prefix/src/sdl_audiolib-populate-stamp/sdl_audiolib-populate-download
+999474f9396a3be66086bb09d66b59c4 sdl_audiolib-populate-prefix/src/sdl_audiolib-populate-stamp/sdl_audiolib-populate-install
+1cd30b056feb3ab991586b4199c893b0 sdl_audiolib-populate-prefix/src/sdl_audiolib-populate-stamp/sdl_audiolib-populate-mkdir
+bc6b03120a1c29df793e5825cf6693d5 sdl_audiolib-populate-prefix/src/sdl_audiolib-populate-stamp/sdl_audiolib-populate-patch
+2f2904ff4a4889b986a883f4c27d6164 sdl_audiolib-populate-prefix/src/sdl_audiolib-populate-stamp/sdl_audiolib-populate-test
+ba53ebacda944f1b01402ae2aac916fd sdl_audiolib-populate-prefix/src/sdl_audiolib-populate-stamp/sdl_audiolib-populate-update

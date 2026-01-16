@@ -9,6 +9,7 @@
 #endif
 #include "engine/load_file.hpp"
 #include "lighting.h"
+#include "player.h"
 #include "utils/str_cat.hpp"
 
 namespace devilution {
@@ -34,6 +35,10 @@ std::optional<std::array<uint8_t, 256>> GetClassTRN(Player &player)
 	char path[64];
 
 	const PlayerSpriteData &spriteData = GetPlayerSpriteDataForClass(player._pClass);
+	
+	// REVERTED: Sorcerer back to original red color (Diablo 1 classic)
+	// Custom color transformation removed for stability and classic experience
+	
 	*BufCopy(path, "plrgfx\\", spriteData.trn, ".trn") = '\0';
 
 #ifdef _DEBUG

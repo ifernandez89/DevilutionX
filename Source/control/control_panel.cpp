@@ -449,12 +449,15 @@ void DrawMainPanelButtons(const Surface &out)
 	if (IsChatAvailable()) {
 		RenderClxSprite(out, (*multiButtons)[MainPanelButtons[PanelButtonSendmsg] ? 1 : 0], mainPanelPosition + Displacement { MainPanelButtonRect[PanelButtonSendmsg].position.x, MainPanelButtonRect[PanelButtonSendmsg].position.y });
 
-		const Point friendlyButtonPosition = mainPanelPosition + Displacement { MainPanelButtonRect[PanelButtonFriendly].position.x, MainPanelButtonRect[PanelButtonFriendly].position.y };
+		// NIGHTMARE EDITION: Only show friendly button in multiplayer
+		if (gbIsMultiplayer) {
+			const Point friendlyButtonPosition = mainPanelPosition + Displacement { MainPanelButtonRect[PanelButtonFriendly].position.x, MainPanelButtonRect[PanelButtonFriendly].position.y };
 
-		if (MyPlayer->friendlyMode)
-			RenderClxSprite(out, (*multiButtons)[MainPanelButtons[PanelButtonFriendly] ? 3 : 2], friendlyButtonPosition);
-		else
-			RenderClxSprite(out, (*multiButtons)[MainPanelButtons[PanelButtonFriendly] ? 5 : 4], friendlyButtonPosition);
+			if (MyPlayer->friendlyMode)
+				RenderClxSprite(out, (*multiButtons)[MainPanelButtons[PanelButtonFriendly] ? 3 : 2], friendlyButtonPosition);
+			else
+				RenderClxSprite(out, (*multiButtons)[MainPanelButtons[PanelButtonFriendly] ? 5 : 4], friendlyButtonPosition);
+		}
 	}
 }
 
@@ -610,8 +613,10 @@ void CheckMainPanelButtonUp()
 				TypeChatMessage();
 			break;
 		case PanelButtonFriendly:
-			// Toggle friendly Mode
-			NetSendCmd(true, CMD_FRIENDLYMODE);
+			// NIGHTMARE EDITION: Only allow friendly toggle in multiplayer
+			if (gbIsMultiplayer) {
+				NetSendCmd(true, CMD_FRIENDLYMODE);
+			}
 			break;
 		}
 	}

@@ -115,6 +115,8 @@
 #include "nthread.h"
 #include "objects.h"
 #include "options.h"
+#include "oracle/oracle_system.h"  // 🔮 ORÁCULO
+#include "oracle/oracle_ui.h"      // 🔮 ORÁCULO UI
 #include "panels/console.hpp"
 #include "panels/info_box.hpp"
 #include "panels/partypanel.hpp"
@@ -254,6 +256,9 @@ void StartGame(interface_mode uMsg)
 	sgnTimeoutCurs = CURSOR_NONE;
 	sgbMouseDown = CLICK_NONE;
 	LastPlayerAction = PlayerActionType::None;
+	
+	// 🔮 ORÁCULO: Mostrar mensaje de bienvenida
+	OracleSystem::ShowWelcomeMessage();
 }
 
 void FreeGame()
@@ -1870,6 +1875,9 @@ void GameLogic()
 	
 	// 🌙 NIGHTMARE UI - Update Atmospheric Systems
 	UpdateNightmareUI(0.016f); // Assuming ~60 FPS (16ms per frame)
+	
+	// 🔮 ORACLE UI - Update messages (fade in/out)
+	OracleUI::Update();
 	
 	// 🔍 TILE DETECTIVE - Update tile detection
 	UpdateTileDetective();

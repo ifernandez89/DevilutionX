@@ -1,6 +1,7 @@
 #include "town_cinematic.h"
 #include "utils/log.hpp"
 #include "engine/palette.h"
+#include "oracle/oracle_events.h"  // 🔮 ORÁCULO
 #include <algorithm>
 
 #ifdef USE_SDL3
@@ -56,6 +57,9 @@ void OnEnterTown() {
 	StartTownFade(true, 2000); // 2 second fade in
 	
 	LogVerbose("🏰 Town Cinematográfica: Entering Town with fade-in");
+	
+	// 🔮 ORÁCULO: Trigger evento de entrada a ciudad
+	OracleEvents::TriggerEvent(OracleEvent::ENTERED_TOWN, "Tristram");
 }
 
 void OnExitTown() {

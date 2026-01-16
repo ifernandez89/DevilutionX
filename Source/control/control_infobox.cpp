@@ -288,6 +288,11 @@ void CheckPanelInfo()
 		SetPanelObjectPosition(UiPanels::Main, button);
 
 		if (button.contains(MousePosition)) {
+			// NIGHTMARE EDITION: Skip friendly button (index 7) in single player
+			if (i == 7 && !gbIsMultiplayer) {
+				continue;
+			}
+			
 			if (i != 7) {
 				InfoString = _(PanBtnStr[i]);
 			} else {

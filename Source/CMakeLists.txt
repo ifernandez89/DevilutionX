@@ -214,7 +214,16 @@ set(libdevilutionx_SRCS
   utils/sdl_bilinear_scale.cpp
   utils/sdl_thread.cpp
   utils/surface_to_clx.cpp
-  utils/timer.cpp)
+  utils/timer.cpp
+  
+  oracle/oracle_system.cpp
+  oracle/oracle_events.cpp
+  oracle/oracle_ollama.cpp
+  oracle/oracle_prompt.cpp
+  oracle/oracle_dormant_texts.cpp
+  oracle/oracle_validator.cpp
+  oracle/oracle_cache.cpp
+  oracle/oracle_ui.cpp)
 
 # These files are responsible for most of the runtime in Debug mode.
 # Apply some optimizations to them even in Debug mode to get reasonable performance.
@@ -1179,4 +1188,9 @@ elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   elseif(CMAKE_CXX_COMPILER_VERSION VERSION_LESS 9)
     target_link_libraries(libdevilutionx PUBLIC c++fs)
   endif()
+endif()
+
+# 🔮 Oracle System - WinHTTP for Windows
+if(WIN32)
+  target_link_libraries(libdevilutionx PUBLIC winhttp)
 endif()

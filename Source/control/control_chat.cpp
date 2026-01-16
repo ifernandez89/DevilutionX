@@ -6,8 +6,10 @@
 #include "engine/backbuffer_state.hpp"
 #include "engine/render/clx_render.hpp"
 #include "options.h"
+#include "oracle/oracle_system.h"  // 🔮 ORÁCULO
 #include "panels/console.hpp"
 #include "panels/mainpanel.hpp"
+#include "plrmsg.h"  // Para EventPlrMsg
 #include "quick_messages.hpp"
 #include "utils/display.h"
 #include "utils/sdl_compat.h"
@@ -38,9 +40,42 @@ Rectangle MuteButtonRect { { 172, 69 }, { 61, 16 } };
 
 void ResetChatMessage()
 {
+	// 🔮 ORÁCULO: Capturar CUALQUIER mensaje del chat como pregunta
+	// El Oráculo siempre escucha, siempre responde (cuando puede)
+	
+	if (TalkMessage[0] != 0) {  // Si hay texto
+		std::string question = TalkMessage;
+		
+		// Trim espacios al inicio y final
+		while (!question.empty() && question[0] == ' ') {
+			question.erase(0, 1);
+		}
+		while (!question.empty() && question.back() == ' ') {
+			question.pop_back();
+		}
+		
+		// Verificar que no sea un comando (empiezan con '/')
+		if (!question.empty() && question[0] != '/') {
+			// Guardar pregunta pendiente
+			OracleSystem::AddQuestion(
+				question,
+				"",  // Contexto se añadirá cuando se responda
+				PlayerState::FRIENDLY  // Por defecto, se ajustará en eventos
+			);
+			
+			// Feedback visual al jugador
+			EventPlrMsg("🔮 El Infierno ha escuchado tus palabras...", UiFlags::ColorWhitegold);
+			EventPlrMsg("    El Oráculo responderá en el momento oportuno.", UiFlags::ColorWhitegold);
+			
+			return;  // No enviar como chat normal (single player)
+		}
+	}
+	
+	// Si es un comando, procesarlo normalmente
 	if (CheckChatCommand(TalkMessage))
 		return;
 
+	// Multiplayer (si estuviera habilitado)
 	uint32_t pmask = 0;
 
 	for (size_t i = 0; i < Players.size(); i++) {

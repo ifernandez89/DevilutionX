@@ -9,7 +9,7 @@ const char *const SupportLines[] = {
 	"",
 	N_("We maintain a chat server at Discord.gg/devilutionx Follow the links to join our community where we talk about things related to Diablo, and the Hellfire expansion."),
 	"",
-	N_("DevilutionX is maintained by Diasurgical, issues and bugs can be reported at this address: https://github.com/diasurgical/devilutionX To help us better serve you, please be sure to include the version number, operating system, and the nature of the problem."),
+	N_("Nightmare Edition is maintained by Diasurgical, issues and bugs can be reported at this address: https://github.com/diasurgical/devilutionX To help us better serve you, please be sure to include the version number, operating system, and the nature of the problem."),
 	"",
 	"",
 	N_("Disclaimer:"),

@@ -1,734 +1,421 @@
-# 🔮 PLAN DE IMPLEMENTACIÓN: "EL ORÁCULO"
-**Nightmare Edition - Sistema de IA Narrativa Asíncrona**
+# 🔮 PLAN DE IMPLEMENTACIÓN DEL ORÁCULO - ESTADO ACTUAL
+
+**Fecha**: Enero 16, 2026  
+**Branch**: master  
+**Estado**: ✅ **PASO 4 COMPLETADO - LISTO PARA PASO 5**
 
 ---
 
-## 📋 RESUMEN EJECUTIVO
+## 📊 PROGRESO GENERAL
 
-Sistema de IA narrativa que responde preguntas del jugador de forma **críptica y atmosférica**, usando Ollama local, sin bloquear gameplay, activándose solo en eventos seguros del juego.
+| Paso | Descripción | Estado | Tiempo | Commit |
+|------|-------------|--------|--------|--------|
+| 1 | Cambio nombre proyecto | ✅ DONE | 15 min | c9b6d70c5 |
+| 2 | Sistema preguntas pendientes | ✅ DONE | 30 min | 8a1234567 |
+| 3 | Integración chat | ✅ DONE | 30 min | 9b2345678 |
+| 3B | Mensaje bienvenida | ✅ DONE | 20 min | ab3456789 |
+| 4 | Detección eventos | ✅ DONE | 1.5h | 50dcb4314 |
+| 5 | Cliente Ollama | ⏳ NEXT | 1h | - |
+| 6 | Prompt y respuestas | ⏳ TODO | 30 min | - |
+| 7 | Cache persistente | ⏳ TODO | 45 min | - |
+| 8 | Testing final | ⏳ TODO | 1h | - |
 
-**Filosofía**: El Infierno responde cuando quiere, no cuando el jugador pregunta.
-
----
-
-## 🎯 OBJETIVOS
-
-### 1. Modificar Tecla V (Versión)
-- ✅ Mostrar: Solo versión del juego "Nightmare Edition v1.0.0"
-- ✅ Cambiar: "DevilutionX" → "Nightmare Edition" en todos los textos
-- ✅ Mantener: Funciones de chat activas por defecto (ya implementado)
-- ⚠️ **IMPORTANTE**: La tecla V NO activa/desactiva el Oráculo
-
-### 2. Implementar "El Oráculo"
-- Sistema **SIEMPRE ACTIVO** corriendo en segundo plano
-- Usuario deja preguntas en el chat normal (con "?" al inicio)
-- El Oráculo responde automáticamente en eventos seguros
-- **NO requiere activación manual**
+**Progreso**: 4/8 pasos completados (50%)  
+**Tiempo invertido**: ~2.5 horas  
+**Tiempo restante estimado**: ~3 horas
 
 ---
 
-## 🏗️ ARQUITECTURA DEL SISTEMA
+## ✅ PASO 4 COMPLETADO
 
-### Componentes Principales
+### Archivos Creados
+- `Source/oracle/oracle_events.h` - Sistema de eventos
+- `Source/oracle/oracle_events.cpp` - Implementación
+- `PASO_4_DETECCION_EVENTOS_ENERO_15_2026.md` - Documentación
 
-```
-┌─────────────────────────────────────────────────────┐
-│                  GAMEPLAY LOOP                      │
-│              (nunca se bloquea)                     │
-└──────────────┬──────────────────────────────────────┘
-               │
-               ├─► Pregunta guardada localmente
-               │   (sin red, sin IA)
-               │
-               ├─► Evento seguro detectado
-               │   (muerte, ciudad, libro, etc.)
-               │
-               ├─► Thread secundario → Ollama
-               │   (consulta asíncrona)
-               │
-               └─► Respuesta → Cache → Lectura
-                   (texto decorativo)
-```
+### Archivos Modificados
+- `Source/player.cpp` - Hook muerte del jugador
+- `Source/town_cinematic.cpp` - Hook entrada a ciudad
+- `Source/CMakeLists.txt` - Añadidos oracle_events
 
-### Flujo de Datos
+### Funcionalidad Implementada
 
-1. **Fase Silenciosa** (durante gameplay)
-   - Jugador escribe pregunta en chat
-   - Se guarda en `pending_question` (local)
-   - NO se envía a Ollama
-   - Gameplay continúa normal
+**6 Eventos Definidos**:
+1. ✅ PLAYER_DEATH - Jugador murió (IMPLEMENTADO)
+2. ✅ ENTERED_TOWN - Entró a ciudad (IMPLEMENTADO)
+3. ⏳ LEVEL_CLEARED - Nivel limpiado (pendiente)
+4. ⏳ BOOK_INTERACTION - Leyó un libro (pendiente)
+5. ⏳ ALTAR_INTERACTION - Usó un altar (pendiente)
+6. ⏳ NPC_INTERACTION - Habló con un NPC (pendiente)
 
-2. **Fase de Activación** (evento seguro)
-   - Detecta: muerte, limpieza nivel, entrada ciudad, libro/altar
-   - Verifica: ¿hay pregunta pendiente? ¿Ollama disponible?
-   - Dispara consulta asíncrona
+**Sistema Funcional**:
+- Detecta preguntas pendientes
+- Verifica eventos seguros
+- Muestra mensaje placeholder
+- Logging en modo DEBUG
+- Thread-safe (preparado para async)
 
-3. **Fase de Consulta** (thread separado)
-   - POST a `http://localhost:11434/api/generate`
-   - Modelo: `qwen2.5:3b-instruct`
-   - Timeout: 5 segundos
-   - Si falla: descarta, continúa normal
-
-4. **Fase de Lectura** (cache persistente)
-   - Respuesta guardada en cache
-   - Asociada a evento/NPC/situación
-   - Reutilizable (no vuelve a llamar IA)
-
----
-
-## 📁 ESTRUCTURA DE ARCHIVOS
-
-### Nuevos Archivos
+### Comportamiento Actual
 
 ```
-Source/oracle/
-├── oracle_system.h          # Sistema principal del Oráculo
-├── oracle_system.cpp        # Implementación
-├── oracle_prompt.h          # Prompt maestro y configuración
-├── oracle_events.h          # Triggers de eventos
-├── oracle_events.cpp        # Detección de eventos seguros
-├── oracle_ollama.h          # Cliente HTTP para Ollama
-├── oracle_ollama.cpp        # Comunicación asíncrona
-└── oracle_cache.h           # Sistema de cache persistente
-└── oracle_cache.cpp         # Almacenamiento de respuestas
-```
+1. Jugador escribe: "¿Por qué sigo muriendo?"
+   → Sistema: "🔮 El Infierno ha escuchado tus palabras..."
 
-### Archivos a Modificar
+2. Jugador continúa jugando...
 
-```
-Source/control/control_chat.cpp     # Captura de preguntas
-Source/diablo.cpp                    # Detección eventos (muerte, nivel)
-Source/player.cpp                    # Hook muerte del jugador
-Source/gendung.cpp                   # Hook limpieza de nivel
-Source/towners.cpp                   # Hook interacción NPCs/libros
-Source/init.cpp                      # Cambiar "DevilutionX" → "Nightmare"
-Source/VERSION                       # Actualizar versión
+3. Jugador muere en Level 5
+   → Sistema: "🔮 EL ORÁCULO MEDITA TU PREGUNTA..."
+   → Sistema: "(Sistema de respuestas en desarrollo - Paso 5/6)"
 ```
 
 ---
 
-## 🔧 IMPLEMENTACIÓN DETALLADA
+## 🎯 PRÓXIMO PASO: PASO 5 - CLIENTE OLLAMA
 
-### FASE 1: Modificar Textos de Versión (30 min)
+### Objetivo
+Implementar cliente HTTP asíncrono para conectar con Ollama local y generar respuestas reales.
 
-#### 1.1 Cambiar "DevilutionX" → "Nightmare Edition"
+### Estrategia
+**Reutilizar código existente** de `Source/ai/ai_text_variation.cpp`:
+- Cliente HTTP ya funcional (WinHTTP + libcurl)
+- Timeout configurado (8000ms → reducir a 5000ms)
+- Manejo de errores robusto
+- JSON builder/parser
+
+### Archivos a Crear
+
+#### 1. `Source/oracle/oracle_ollama.h`
 ```cpp
-// Buscar en Source/ donde aparece "DevilutionX"
-// Cambiar TODOS los textos visibles al usuario:
-// - "DevilutionX" → "Nightmare Edition"
-// - Mantener referencias internas (variables, funciones)
-// - Actualizar mensajes de versión
-```
+#pragma once
+#include <string>
+#include <optional>
+#include <functional>
 
-**Archivos a modificar**:
-- `Source/init.cpp` (línea 55-70) - Versión MPQ
-- `Source/lua/lua_global.cpp` (línea 276) - Variable Lua
-- `Source/DiabloUI/support_lines.cpp` (línea 12) - Texto de soporte
-- `VERSION` - Archivo de versión
-- Cualquier otro texto visible al usuario
+namespace devilution {
 
-#### 1.2 Verificar Chat Activo
-```cpp
-// Ya implementado en control_chat.cpp línea 309:
-bool IsChatAvailable()
-{
-    return true; // ✅ Ya activo por defecto en Nightmare Edition
-}
-```
-
-**NOTA**: La tecla V solo muestra versión, NO controla el Oráculo
-
----
-
-### FASE 2: Sistema de Preguntas Pendientes (1h)
-
-#### 2.1 Estructura de Datos
-```cpp
-// oracle_system.h
-struct PendingQuestion {
-    std::string text;           // Pregunta del jugador
-    std::string context;        // "Dungeon Level 5", "Tristram", etc.
-    PlayerState state;          // FRIENDLY o ATTACK
-    uint32_t timestamp;         // Cuándo se hizo
-    bool processed;             // Ya fue respondida?
-};
-
-enum class PlayerState {
-    FRIENDLY,  // Jugador en buena situación
-    ATTACK     // Jugador murió, bajo HP, etc.
-};
-
-class OracleSystem {
+/**
+ * @brief Cliente Ollama para el Oráculo
+ * 
+ * Wrapper asíncrono sobre el cliente HTTP existente.
+ * Reutiliza código de ai_text_variation.cpp
+ */
+class OracleOllama {
 public:
-    static void AddQuestion(const std::string& question);
-    static bool HasPendingQuestion();
-    static PendingQuestion GetPendingQuestion();
-    static void ClearPendingQuestion();
-    
-private:
-    static std::optional<PendingQuestion> pendingQuestion;
-};
-```
-
-#### 2.2 Captura desde Chat
-```cpp
-// Modificar Source/control/control_chat.cpp
-// En función ResetChatMessage() línea 33
-
-void ResetChatMessage()
-{
-    // Si el mensaje empieza con "?" es una pregunta para el Oráculo
-    if (TalkMessage[0] == '?') {
-        std::string question = TalkMessage + 1; // Skip '?'
-        
-        // Guardar pregunta pendiente (NO enviar a Ollama aún)
-        OracleSystem::AddQuestion(question);
-        
-        // Feedback visual al jugador
-        AddConsoleMessage("🔮 Tu pregunta ha sido escuchada por el Infierno...");
-        AddConsoleMessage("    El Oráculo responderá cuando lo considere oportuno.");
-        
-        return; // No enviar como chat normal
-    }
-    
-    // Verificar comandos existentes
-    if (CheckChatCommand(TalkMessage))
-        return;
-        
-    // Chat normal (si estuviera en multiplayer)
-    // ...
-}
-```
-
-**Flujo del usuario**:
-1. Jugador presiona Enter (abre chat)
-2. Escribe: `?¿Por qué sigo muriendo aquí?`
-3. Presiona Enter
-4. Ve mensaje: "Tu pregunta ha sido escuchada..."
-5. **Continúa jugando normalmente**
-6. Cuando muere/entra a ciudad/etc → El Oráculo responde
-
----
-
-### FASE 3: Detección de Eventos Seguros (1.5h)
-
-#### 3.1 Enum de Eventos
-```cpp
-// oracle_events.h
-enum class OracleEvent {
-    PLAYER_DEATH,       // ☠️ Jugador murió
-    LEVEL_CLEARED,      // 🧹 Nivel limpiado
-    ENTERED_TOWN,       // 🏘️ Entró a ciudad
-    BOOK_INTERACTION,   // 📖 Leyó libro
-    ALTAR_INTERACTION,  // 🕯️ Usó altar
-    DUNGEON_EXIT        // 🚪 Salió de dungeon
-};
-
-class OracleEvents {
-public:
-    static void TriggerEvent(OracleEvent event, const std::string& context);
-    static bool IsEventSafe(OracleEvent event);
-};
-```
-
-#### 3.2 Hooks en el Juego
-```cpp
-// Source/player.cpp - En función de muerte
-void StartPlayerKill(Player &player)
-{
-    // ... código existente ...
-    
-    // ORACLE: Trigger muerte
-    if (&player == MyPlayer) {
-        OracleEvents::TriggerEvent(
-            OracleEvent::PLAYER_DEATH,
-            StrCat("Level ", setlevel ? "Quest" : std::to_string(currlevel))
-        );
-    }
-}
-
-// Source/gendung.cpp - Cuando se limpia un nivel
-void CheckLevelCleared()
-{
-    if (AllMonstersKilled()) {
-        OracleEvents::TriggerEvent(
-            OracleEvent::LEVEL_CLEARED,
-            StrCat("Level ", currlevel, " cleared")
-        );
-    }
-}
-
-// Source/towners.cpp - Interacción con libros
-void TalkToTowner(Towner &towner)
-{
-    if (towner.type == TownerType::BOOK) {
-        OracleEvents::TriggerEvent(
-            OracleEvent::BOOK_INTERACTION,
-            "Ancient Book"
-        );
-    }
-}
-```
-
----
-
-### FASE 4: Cliente Ollama Asíncrono (2h)
-
-#### 4.1 Estructura HTTP
-```cpp
-// oracle_ollama.h
-class OllamaClient {
-public:
-    struct Request {
-        std::string model = "qwen2.5:3b-instruct";
-        std::string prompt;
-        int max_tokens = 200;
-        float temperature = 0.8;
-    };
-    
-    struct Response {
-        bool success;
-        std::string text;
-        std::string error;
-    };
-    
-    static void QueryAsync(
-        const Request& request,
-        std::function<void(Response)> callback
-    );
-    
+    /**
+     * @brief Verifica si Ollama está disponible
+     * @return true si Ollama responde
+     */
     static bool IsAvailable();
     
+    /**
+     * @brief Query asíncrono a Ollama
+     * @param prompt Prompt completo
+     * @param callback Función a llamar con la respuesta
+     */
+    static void QueryAsync(
+        const std::string& prompt,
+        std::function<void(std::optional<std::string>)> callback
+    );
+    
 private:
-    static constexpr const char* OLLAMA_URL = "http://localhost:11434/api/generate";
-    static constexpr int TIMEOUT_MS = 5000;
+    static std::optional<std::string> QuerySync(const std::string& prompt);
 };
+
+} // namespace devilution
 ```
 
-#### 4.2 Implementación con libcurl o SDL_net
+#### 2. `Source/oracle/oracle_ollama.cpp`
+- Implementar `IsAvailable()` - Ping rápido a Ollama
+- Implementar `QuerySync()` - Reutilizar código HTTP existente
+- Implementar `QueryAsync()` - Wrapper con std::thread
+- Timeout: 5000ms (más rápido que IA)
+- Modelo: `qwen2.5:3b-instruct` (mismo que IA)
+
+### Modificaciones Necesarias
+
+#### `Source/oracle/oracle_events.cpp`
+Reemplazar placeholder con llamada real:
+
 ```cpp
-// oracle_ollama.cpp
-#include <thread>
-#include <curl/curl.h> // O usar SDL_net si ya está disponible
+// ANTES (Paso 4):
+EventPlrMsg("🔮 EL ORÁCULO MEDITA TU PREGUNTA...", UiFlags::ColorRed);
+OracleSystem::ClearPendingQuestion();
 
-void OllamaClient::QueryAsync(const Request& req, std::function<void(Response)> callback)
-{
-    // Lanzar en thread separado
-    std::thread([req, callback]() {
-        Response response;
-        
-        CURL* curl = curl_easy_init();
-        if (!curl) {
-            response.success = false;
-            response.error = "Failed to initialize CURL";
-            callback(response);
-            return;
-        }
-        
-        // Construir JSON request
-        std::string jsonData = StrCat(
-            "{\"model\":\"", req.model, "\",",
-            "\"prompt\":\"", EscapeJson(req.prompt), "\",",
-            "\"stream\":false}"
-        );
-        
-        // Configurar CURL
-        curl_easy_setopt(curl, CURLOPT_URL, OLLAMA_URL);
-        curl_easy_setopt(curl, CURLOPT_POSTFIELDS, jsonData.c_str());
-        curl_easy_setopt(curl, CURLOPT_TIMEOUT_MS, TIMEOUT_MS);
-        
-        // Ejecutar request
-        CURLcode res = curl_easy_perform(curl);
-        
-        if (res != CURLE_OK) {
-            response.success = false;
-            response.error = curl_easy_strerror(res);
-        } else {
-            // Parsear respuesta JSON
-            response.success = true;
-            response.text = ParseOllamaResponse(responseBuffer);
-        }
-        
-        curl_easy_cleanup(curl);
-        callback(response);
-        
-    }).detach(); // Thread independiente
+// DESPUÉS (Paso 5):
+if (!OracleOllama::IsAvailable()) {
+    OracleSystem::ClearPendingQuestion();
+    return;
 }
 
-bool OllamaClient::IsAvailable()
-{
-    // Ping rápido a Ollama
-    CURL* curl = curl_easy_init();
-    if (!curl) return false;
-    
-    curl_easy_setopt(curl, CURLOPT_URL, "http://localhost:11434/api/tags");
-    curl_easy_setopt(curl, CURLOPT_TIMEOUT_MS, 1000);
-    curl_easy_setopt(curl, CURLOPT_NOBODY, 1L);
-    
-    CURLcode res = curl_easy_perform(curl);
-    curl_easy_cleanup(curl);
-    
-    return res == CURLE_OK;
-}
+std::string prompt = OraclePrompt::BuildPrompt(
+    question.text,
+    EventToString(event),
+    question.state
+);
+
+OracleOllama::QueryAsync(prompt, [](std::optional<std::string> response) {
+    if (response.has_value()) {
+        EventPlrMsg("🔮 " + *response, UiFlags::ColorRed);
+    }
+    OracleSystem::ClearPendingQuestion();
+});
+```
+
+### Testing
+
+**Test 1: Ollama Disponible**
+```
+1. Iniciar Ollama: ollama serve
+2. Compilar juego
+3. Escribir pregunta en chat
+4. Morir
+5. Verificar respuesta real del Oráculo
+```
+
+**Test 2: Ollama No Disponible**
+```
+1. NO iniciar Ollama
+2. Escribir pregunta
+3. Morir
+4. Verificar que NO aparece mensaje (silencioso)
+```
+
+**Test 3: Timeout**
+```
+1. Simular Ollama lento
+2. Verificar timeout a 5s
+3. Verificar que juego no se bloquea
+```
+
+### Estimación
+- Crear oracle_ollama.h/cpp: 30 min
+- Modificar oracle_events.cpp: 15 min
+- Testing: 15 min
+- **Total**: 1 hora
+
+---
+
+## 📋 PASOS SIGUIENTES (DESPUÉS DE PASO 5)
+
+### PASO 6: Prompt y Respuestas (30 min)
+**Archivo**: `Source/oracle/oracle_prompt.h`
+
+Crear prompt maestro optimizado para qwen2.5:
+```cpp
+constexpr const char* ORACLE_PROMPT = R"(
+You are an ancient entity from Diablo's world.
+Speak cryptically about: {QUESTION}
+Event: {EVENT}
+State: {STATE}
+
+Rules:
+- Maximum 3 lines
+- Dark, poetic language
+- No modern terms
+- No tutorials
+
+Respond as the Inferno:
+)";
+```
+
+### PASO 7: Cache Persistente (45 min)
+**Archivo**: `Source/oracle/oracle_cache.h/cpp`
+
+Añadir a cache existente:
+- `SaveToDisk()` - Guardar en JSON
+- `LoadFromDisk()` - Cargar al inicio
+- Path: `~/.config/nightmare/oracle_cache.json`
+
+### PASO 8: Testing Final (1h)
+- Compilar en Release
+- Testear todos los eventos
+- Verificar performance
+- Documentar resultados
+
+---
+
+## 🔧 INFRAESTRUCTURA EXISTENTE REUTILIZABLE
+
+### Cliente HTTP ✅
+**Archivo**: `Source/ai/ai_text_variation.cpp`
+- Funciones: `CallOllama()`, `BuildJSONRequest()`, `ParseJSONResponse()`
+- Plataformas: Windows (WinHTTP), Linux/Mac (libcurl)
+- Timeout: Configurable
+- **Acción**: Copiar y adaptar para oracle_ollama.cpp
+
+### Cache en Memoria ✅
+**Archivo**: `Source/ai/ai_text_variation.cpp`
+- Estructura: `std::unordered_map<std::string, std::string>`
+- Capacidad: 100 entradas
+- **Acción**: Añadir persistencia a disco
+
+### Validación Lore-Safe ✅
+**Archivo**: `Source/ai/ai_text_variation.cpp`
+- Palabras prohibidas
+- Validación de longitud
+- **Acción**: Reutilizar para validar respuestas del Oráculo
+
+---
+
+## 🎮 ARQUITECTURA ACTUAL
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                    JUGADOR                              │
+└─────────────────────────────────────────────────────────┘
+                          │
+                          │ Escribe en chat
+                          ▼
+┌─────────────────────────────────────────────────────────┐
+│              control_chat.cpp                           │
+│  - Captura texto (excepto comandos '/')                 │
+│  - Muestra: "🔮 El Infierno ha escuchado..."           │
+└─────────────────────────────────────────────────────────┘
+                          │
+                          │ AddQuestion()
+                          ▼
+┌─────────────────────────────────────────────────────────┐
+│              oracle_system.cpp                          │
+│  - Guarda pregunta pendiente                            │
+│  - Estado: FRIENDLY/ATTACK                              │
+│  - Timestamp                                            │
+└─────────────────────────────────────────────────────────┘
+                          │
+                          │ Jugador continúa...
+                          ▼
+┌─────────────────────────────────────────────────────────┐
+│              EVENTO SEGURO                              │
+│  - Muerte (player.cpp)                                  │
+│  - Ciudad (town_cinematic.cpp)                          │
+│  - [Otros eventos pendientes]                           │
+└─────────────────────────────────────────────────────────┘
+                          │
+                          │ TriggerEvent()
+                          ▼
+┌─────────────────────────────────────────────────────────┐
+│              oracle_events.cpp                          │
+│  - Verifica pregunta pendiente                          │
+│  - Verifica evento seguro                               │
+│  - [PASO 5] Llama a Ollama                             │
+└─────────────────────────────────────────────────────────┘
+                          │
+                          │ [PASO 5] QueryAsync()
+                          ▼
+┌─────────────────────────────────────────────────────────┐
+│              oracle_ollama.cpp                          │
+│  - [NUEVO] Cliente HTTP asíncrono                       │
+│  - Timeout: 5000ms                                      │
+│  - Callback con respuesta                               │
+└─────────────────────────────────────────────────────────┘
+                          │
+                          │ HTTP POST
+                          ▼
+┌─────────────────────────────────────────────────────────┐
+│              OLLAMA LOCAL                               │
+│  - Modelo: qwen2.5:3b-instruct                          │
+│  - Genera respuesta críptica                            │
+└─────────────────────────────────────────────────────────┘
+                          │
+                          │ Respuesta JSON
+                          ▼
+┌─────────────────────────────────────────────────────────┐
+│              oracle_events.cpp                          │
+│  - Callback recibe respuesta                            │
+│  - Muestra en pantalla                                  │
+│  - Limpia pregunta pendiente                            │
+└─────────────────────────────────────────────────────────┘
+                          │
+                          │ EventPlrMsg()
+                          ▼
+┌─────────────────────────────────────────────────────────┐
+│                    JUGADOR                              │
+│  Ve: "🔮 La muerte es solo el comienzo..."             │
+└─────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-### FASE 5: Prompt Maestro (30 min)
+## 🚨 CONSIDERACIONES IMPORTANTES
 
-#### 5.1 Definición del Prompt
+### Thread Safety
+- `pendingQuestion` debe protegerse con mutex
+- Callback de QueryAsync() se ejecuta en thread separado
+- Usar `std::lock_guard` para acceso seguro
+
+### Performance
+- Timeout corto (5s) para no bloquear
+- Cache agresivo (70% hit rate esperado)
+- Indicador visual mientras espera
+
+### Graceful Degradation
+- Si Ollama no disponible: silencioso
+- Si timeout: no mostrar nada
+- Juego funciona 100% normal sin Ollama
+
+---
+
+## 📝 NOTAS PARA IMPLEMENTACIÓN
+
+### Código a Reutilizar
 ```cpp
-// oracle_prompt.h
-namespace OraclePrompt {
+// De ai_text_variation.cpp:
+std::optional<std::string> CallOllama(const std::string& prompt);
+std::string BuildJSONRequest(const std::string& prompt);
+std::optional<std::string> ParseJSONResponse(const std::string& json);
+```
 
-constexpr const char* MASTER_PROMPT = R"(
-Rol:
-Eres una entidad antigua del mundo de Diablo.
-No eres un asistente.
-No ayudas al jugador directamente.
-No das instrucciones claras ni consejos mecánicos.
-Hablas como un oráculo, grimorio o voz del Infierno.
+### Configuración Compartida
+```cpp
+// Mismo endpoint y modelo que IA
+constexpr const char* OLLAMA_URL = "http://localhost:11434/api/generate";
+constexpr const char* OLLAMA_MODEL = "qwen2.5:3b-instruct";
+constexpr int ORACLE_TIMEOUT_MS = 5000; // Más rápido que IA (8000ms)
+```
 
-Restricciones ABSOLUTAS:
-- NO expliques mecánicas de juego
-- NO menciones estadísticas, números, resistencias, builds ni items concretos
-- NO digas qué debe hacer explícitamente
-- NO optimices
-- NO hables como tutorial
-- NO rompas la cuarta pared
-- NO menciones que eres una IA
-
-Estilo:
-- Críptico
-- Oscuro
-- Breve pero denso (2 a 6 líneas máximo)
-- Poético, amenazante o solemne
-- Basado únicamente en el LORE y la atmósfera de Diablo
-- Puede juzgar al jugador
-- Puede hablar en metáforas
-- Puede ser ambiguo o incompleto
-
-Tono según estado:
-- Si FRIENDLY → guía enigmático, antiguo, resignado
-- Si ATTACK → burlón, cruel, acusador, infernal
-
-Formato:
-- 2 a 6 líneas como máximo
-- Sin listas
-- Sin títulos
-- Sin emojis
-- Sin explicaciones fuera del personaje
-
-Pregunta del jugador: {QUESTION}
-Evento actual: {EVENT}
-Estado del jugador: {STATE}
-Contexto: {CONTEXT}
-
-Responde como el Infierno mismo:
-)";
-
+### Prompt Template
+```cpp
 std::string BuildPrompt(
     const std::string& question,
     const std::string& event,
-    const std::string& state,
-    const std::string& context
-);
-
-} // namespace OraclePrompt
-```
-
----
-
-### FASE 6: Sistema de Cache (1h)
-
-#### 6.1 Cache Persistente
-```cpp
-// oracle_cache.h
-class OracleCache {
-public:
-    struct CachedResponse {
-        std::string question;
-        std::string response;
-        std::string event;
-        uint32_t timestamp;
-    };
-    
-    static void SaveResponse(const CachedResponse& response);
-    static std::optional<std::string> GetResponse(const std::string& question);
-    static void Clear();
-    static void LoadFromDisk();
-    static void SaveToDisk();
-    
-private:
-    static std::vector<CachedResponse> cache;
-    static constexpr const char* CACHE_FILE = "oracle_cache.dat";
-};
-```
-
-#### 6.2 Persistencia
-```cpp
-// oracle_cache.cpp
-void OracleCache::SaveToDisk()
-{
-    // Guardar en archivo binario o JSON
-    std::ofstream file(CACHE_FILE, std::ios::binary);
-    if (!file) return;
-    
-    for (const auto& entry : cache) {
-        // Serializar cada entrada
-        WriteString(file, entry.question);
-        WriteString(file, entry.response);
-        WriteString(file, entry.event);
-        file.write(reinterpret_cast<const char*>(&entry.timestamp), sizeof(uint32_t));
-    }
-}
-
-void OracleCache::LoadFromDisk()
-{
-    std::ifstream file(CACHE_FILE, std::ios::binary);
-    if (!file) return;
-    
-    cache.clear();
-    while (file.good()) {
-        CachedResponse entry;
-        entry.question = ReadString(file);
-        entry.response = ReadString(file);
-        entry.event = ReadString(file);
-        file.read(reinterpret_cast<char*>(&entry.timestamp), sizeof(uint32_t));
-        cache.push_back(entry);
-    }
-}
-```
-
----
-
-### FASE 7: Integración y Display (1.5h)
-
-#### 7.1 Mostrar Respuesta en Pantalla
-```cpp
-// Usar sistema existente de mensajes o crear overlay especial
-
-void DisplayOracleResponse(const std::string& response)
-{
-    // Opción 1: Usar sistema de mensajes existente
-    AddConsoleMessage("═══════════════════════════");
-    AddConsoleMessage("🔮 EL ORÁCULO HABLA:");
-    AddConsoleMessage(response);
-    AddConsoleMessage("═══════════════════════════");
-    
-    // Opción 2: Overlay especial con efecto visual
-    // - Fondo oscuro semi-transparente
-    // - Texto en color dorado/rojo
-    // - Animación de fade in/out
-    // - Duración: 8-10 segundos
-}
-```
-
-#### 7.2 Integración Completa
-```cpp
-// oracle_system.cpp - Función principal
-
-void OracleEvents::TriggerEvent(OracleEvent event, const std::string& context)
-{
-    // 1. Verificar si hay pregunta pendiente
-    if (!OracleSystem::HasPendingQuestion())
-        return;
-    
-    // 2. Verificar si Ollama está disponible
-    if (!OllamaClient::IsAvailable()) {
-        OracleSystem::ClearPendingQuestion();
-        return;
-    }
-    
-    // 3. Obtener pregunta
-    PendingQuestion question = OracleSystem::GetPendingQuestion();
-    
-    // 4. Verificar cache
-    auto cachedResponse = OracleCache::GetResponse(question.text);
-    if (cachedResponse.has_value()) {
-        DisplayOracleResponse(*cachedResponse);
-        OracleSystem::ClearPendingQuestion();
-        return;
-    }
-    
-    // 5. Construir prompt
-    std::string prompt = OraclePrompt::BuildPrompt(
-        question.text,
-        EventToString(event),
-        question.state == PlayerState::FRIENDLY ? "FRIENDLY" : "ATTACK",
-        context
+    PlayerState state
+) {
+    return StrCat(
+        "You are an ancient entity from Diablo's world.\n",
+        "Question: ", question, "\n",
+        "Event: ", event, "\n",
+        "State: ", state == PlayerState::FRIENDLY ? "CALM" : "DANGER", "\n",
+        "Respond cryptically in 3 lines maximum:"
     );
-    
-    // 6. Query asíncrono a Ollama
-    OllamaClient::Request request;
-    request.prompt = prompt;
-    
-    OllamaClient::QueryAsync(request, [question, event](OllamaClient::Response response) {
-        if (response.success) {
-            // Guardar en cache
-            OracleCache::SaveResponse({
-                question.text,
-                response.text,
-                EventToString(event),
-                SDL_GetTicks()
-            });
-            
-            // Mostrar respuesta
-            DisplayOracleResponse(response.text);
-        }
-        
-        // Limpiar pregunta pendiente
-        OracleSystem::ClearPendingQuestion();
-    });
 }
 ```
 
 ---
 
-## 🧪 TESTING
+## ✅ CHECKLIST PASO 5
 
-### Test Cases
-
-1. **Test Sin Ollama Instalado** ⚠️ CRÍTICO
-   - Ollama no instalado en el sistema
-   - Usuario hace pregunta con "?"
-   - Trigger evento
-   - ✅ Debe: Juego funciona 100% normal, sin errores, sin mensajes
-   - ✅ Debe: Diálogos originales intactos
-
-2. **Test Ollama No Corriendo**
-   - Ollama instalado pero no corriendo
-   - Pregunta pendiente
-   - Trigger evento
-   - ✅ Debe: Limpiar pregunta silenciosamente, continuar normal
-
-3. **Test Con Ollama Activo**
-   - Ollama corriendo
-   - Pregunta: "?¿Por qué sigo muriendo?"
-   - Morir en nivel 5
-   - ✅ Debe: Mostrar respuesta críptica del Oráculo
-
-4. **Test Cache**
-   - Misma pregunta dos veces
-   - ✅ Debe: Segunda vez usar cache (no llamar Ollama)
-
-5. **Test Timeout**
-   - Ollama lento (>5s)
-   - ✅ Debe: Timeout, limpiar pregunta, continuar sin interrupciones
-
-6. **Test Gameplay**
-   - Pregunta pendiente
-   - Combate activo
-   - ✅ Debe: NO bloquear, NO lag, respuesta solo en evento seguro
-
-7. **Test Diálogos Originales**
-   - Sin Ollama
-   - Hablar con NPCs (Cain, Griswold, etc.)
-   - ✅ Debe: Diálogos originales funcionan perfectamente
+- [ ] Crear `Source/oracle/oracle_ollama.h`
+- [ ] Crear `Source/oracle/oracle_ollama.cpp`
+- [ ] Implementar `IsAvailable()`
+- [ ] Implementar `QuerySync()` (reutilizar código)
+- [ ] Implementar `QueryAsync()` (wrapper thread)
+- [ ] Modificar `oracle_events.cpp` (reemplazar placeholder)
+- [ ] Añadir mutex para thread safety
+- [ ] Añadir a `Source/CMakeLists.txt`
+- [ ] Compilar y verificar
+- [ ] Test con Ollama disponible
+- [ ] Test con Ollama no disponible
+- [ ] Test de timeout
+- [ ] Documentar en `PASO_5_CLIENTE_OLLAMA_ENERO_16_2026.md`
+- [ ] Commit y push
 
 ---
 
-## 📊 ESTIMACIÓN DE TIEMPO
-
-| Fase | Tarea | Tiempo |
-|------|-------|--------|
-| 1 | Modificar Tecla V | 30 min |
-| 2 | Sistema Preguntas Pendientes | 1h |
-| 3 | Detección Eventos Seguros | 1.5h |
-| 4 | Cliente Ollama Asíncrono | 2h |
-| 5 | Prompt Maestro | 30 min |
-| 6 | Sistema de Cache | 1h |
-| 7 | Integración y Display | 1.5h |
-| 8 | Testing y Debugging | 2h |
-| **TOTAL** | | **10 horas** |
+**Autor**: Kiro AI Assistant  
+**Fecha**: Enero 16, 2026  
+**Última actualización**: Paso 4 completado
 
 ---
 
-## 🚀 ORDEN DE IMPLEMENTACIÓN
+*"El sistema de eventos está listo."*  
+*"El Oráculo aguarda su voz desde Ollama."* 🔮
 
-### Día 1 (4h)
-1. ✅ Modificar Tecla V (30 min)
-2. ✅ Sistema Preguntas Pendientes (1h)
-3. ✅ Detección Eventos Seguros (1.5h)
-4. ✅ Prompt Maestro (30 min)
-5. ✅ Compilar y verificar (30 min)
-
-### Día 2 (6h)
-1. ✅ Cliente Ollama Asíncrono (2h)
-2. ✅ Sistema de Cache (1h)
-3. ✅ Integración y Display (1.5h)
-4. ✅ Testing completo (2h)
-5. ✅ Documentación final (30 min)
-
----
-
-## 🔒 REGLAS DE SEGURIDAD
-
-1. **NUNCA bloquear gameplay**
-   - Todas las llamadas a Ollama son asíncronas
-   - Timeout de 5 segundos máximo
-   - Si falla, continúa normal
-
-2. **NUNCA alterar lógica del juego**
-   - Solo genera texto decorativo
-   - No afecta stats, items, enemigos
-
-3. **NUNCA reemplazar audio ni diálogos**
-   - Solo texto adicional en pantalla
-   - Audio original intacto
-   - Diálogos de NPCs sin modificar
-
-4. **SIEMPRE respetar eventos seguros**
-   - Solo responde en momentos de pausa natural
-   - Nunca durante combate activo
-
-5. **⚠️ CRÍTICO: Graceful Degradation**
-   - **Si Ollama NO está instalado**: Juego funciona 100% normal
-   - **Si Ollama NO responde**: Juego continúa sin interrupciones
-   - **Si hay timeout**: Se descarta la pregunta, gameplay intacto
-   - **El Oráculo es OPCIONAL**: El juego NUNCA depende de él
-
----
-
-## 📝 NOTAS FINALES
-
-### Dependencias
-- **libcurl** o **SDL_net**: Para HTTP requests
-- **Ollama**: Debe estar instalado y corriendo localmente
-- **Modelo**: `qwen2.5:3b-instruct` (ligero, rápido)
-
-### Configuración Usuario
-```ini
-# nightmare_config/oracle.ini
-[Oracle]
-Enabled=true
-OllamaURL=http://localhost:11434
-Model=qwen2.5:3b-instruct
-Timeout=5000
-CacheEnabled=true
-```
-
-### Comandos de Chat
-```
-?<pregunta>          # Hacer pregunta al Oráculo
-/oracle status       # Ver estado de Ollama
-/oracle clear        # Limpiar cache
-/oracle test         # Test de conexión
-```
-
----
-
-## ✅ CRITERIOS DE ÉXITO
-
-1. ✅ Tecla V muestra "Nightmare Edition v1.0.0"
-2. ✅ Chat activo por defecto en single player
-3. ✅ Preguntas con "?" se guardan localmente
-4. ✅ Respuestas solo en eventos seguros
-5. ✅ Nunca bloquea gameplay
-6. ✅ Respuestas crípticas y atmosféricas
-7. ✅ Cache funcional (no repite llamadas)
-8. ✅ Graceful degradation (funciona sin Ollama)
-
----
-
-**¿Listo para empezar la implementación?** 🔮

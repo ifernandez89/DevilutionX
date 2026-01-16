@@ -22,6 +22,7 @@
 #include "game_mode.hpp"
 #include "hidden_content.h"
 #include "inv.h"
+#include "levels/gendung.h"
 #include "minitext.h"
 #include "stores.h"
 #include "tables/textdat.h"
@@ -1242,6 +1243,188 @@ bool CanNPCUseMicroMovement(const Towner &npc)
 	}
 }
 
+/**
+ * @brief Check if a tile is walkable for NPCs
+ * 
+ * A tile is walkable if:
+ * - It's within dungeon bounds
+ * - No monster occupies it
+ * - No player occupies it
+ * - It's not a solid tile
+ */
+bool IsTileWalkableForNPC(Point position)
+{
+	if (!InDungeonBounds(position))
+		return false;
+	
+	// Check if occupied by monster or player
+	if (dMonster[position.x][position.y] != 0)
+		return false;
+	
+	if (dPlayer[position.x][position.y] != 0)
+		return false;
+	
+	// Check if tile is solid (using SOLData)
+	if (TileHasAny(position, TileProperties::Solid))
+		return false;
+	
+	return true;
+}
+
+/**
+ * @brief Check if NPC is too far from home
+ */
+bool IsTooFarFromHome(const Towner &npc)
+{
+	return npc.position.WalkingDistance(npc.home) > npc.homeRadius;
+}
+
+/**
+ * @brief Try to start walking from IDLE state
+ * 
+ * Picks a random adjacent tile and starts walking if valid.
+ */
+void TryStartWalk(Towner &npc)
+{
+	const uint32_t currentTime = SDL_GetTicks();
+	
+	// Check if timer expired
+	if (currentTime < npc.nextMicroMoveTick) {
+		return;
+	}
+	
+	// Pick a random direction (8 directions)
+	const Direction randomDir = static_cast<Direction>(GenerateRnd(8));
+	const Point targetPos = npc.position + randomDir;
+	
+	// Validate target position
+	if (!IsTileWalkableForNPC(targetPos)) {
+		// Can't walk there, try again later
+		npc.nextMicroMoveTick = currentTime + GenerateRnd(3000) + 2000; // 2-5s retry
+		return;
+	}
+	
+	// Check if target is within home radius
+	if (targetPos.WalkingDistance(npc.home) > npc.homeRadius) {
+		// Too far, try again later
+		npc.nextMicroMoveTick = currentTime + GenerateRnd(3000) + 2000;
+		return;
+	}
+	
+	// Start walking
+	npc.microState = static_cast<uint8_t>(NPCMicroState::WALK_SHORT);
+	npc.nextMicroMoveTick = currentTime + WALK_DURATION;
+	
+	// Update position
+	dMonster[npc.position.x][npc.position.y] = 0;
+	npc.position = targetPos;
+	dMonster[npc.position.x][npc.position.y] = 1; // Mark as occupied (non-zero)
+	
+#ifdef _DEBUG
+	LogVerbose("NPC Micro-Movement: {} - Started walk to ({}, {})", 
+		npc.name, targetPos.x, targetPos.y);
+#endif
+}
+
+/**
+ * @brief Update WALK_SHORT state
+ * 
+ * Waits for walk duration to complete, then transitions to RETURN_HOME or IDLE.
+ */
+void UpdateWalk(Towner &npc)
+{
+	const uint32_t currentTime = SDL_GetTicks();
+	
+	// Check if walk duration expired
+	if (currentTime < npc.nextMicroMoveTick) {
+		return;
+	}
+	
+	// Walk complete, decide next state
+	if (IsTooFarFromHome(npc)) {
+		// Too far, return home
+		npc.microState = static_cast<uint8_t>(NPCMicroState::RETURN_HOME);
+		npc.nextMicroMoveTick = currentTime + WALK_DURATION;
+		
+#ifdef _DEBUG
+		LogVerbose("NPC Micro-Movement: {} - Returning home from ({}, {})", 
+			npc.name, npc.position.x, npc.position.y);
+#endif
+	} else {
+		// Close enough, go idle
+		npc.microState = static_cast<uint8_t>(NPCMicroState::IDLE);
+		npc.nextMicroMoveTick = currentTime + GenerateRnd(MAX_IDLE_TIME - MIN_IDLE_TIME) + MIN_IDLE_TIME;
+		
+#ifdef _DEBUG
+		LogVerbose("NPC Micro-Movement: {} - Walk complete, going idle", npc.name);
+#endif
+	}
+}
+
+/**
+ * @brief Return to home position
+ * 
+ * Moves NPC back towards home, then transitions to IDLE.
+ */
+void ReturnHome(Towner &npc)
+{
+	const uint32_t currentTime = SDL_GetTicks();
+	
+	// Check if return duration expired
+	if (currentTime < npc.nextMicroMoveTick) {
+		return;
+	}
+	
+	// Already at home?
+	if (npc.position == npc.home) {
+		npc.microState = static_cast<uint8_t>(NPCMicroState::IDLE);
+		npc.nextMicroMoveTick = currentTime + GenerateRnd(MAX_IDLE_TIME - MIN_IDLE_TIME) + MIN_IDLE_TIME;
+		
+#ifdef _DEBUG
+		LogVerbose("NPC Micro-Movement: {} - Arrived home", npc.name);
+#endif
+		return;
+	}
+	
+	// Move towards home
+	const Direction dirToHome = GetDirection(npc.position, npc.home);
+	const Point targetPos = npc.position + dirToHome;
+	
+	// Validate target
+	if (!IsTileWalkableForNPC(targetPos)) {
+		// Can't move, teleport home as fallback
+		dMonster[npc.position.x][npc.position.y] = 0;
+		npc.position = npc.home;
+		dMonster[npc.position.x][npc.position.y] = 1;
+		
+		npc.microState = static_cast<uint8_t>(NPCMicroState::IDLE);
+		npc.nextMicroMoveTick = currentTime + GenerateRnd(MAX_IDLE_TIME - MIN_IDLE_TIME) + MIN_IDLE_TIME;
+		
+#ifdef _DEBUG
+		LogVerbose("NPC Micro-Movement: {} - Teleported home (blocked)", npc.name);
+#endif
+		return;
+	}
+	
+	// Move one step towards home
+	dMonster[npc.position.x][npc.position.y] = 0;
+	npc.position = targetPos;
+	dMonster[npc.position.x][npc.position.y] = 1;
+	
+	// Schedule next step or idle
+	if (npc.position == npc.home) {
+		npc.microState = static_cast<uint8_t>(NPCMicroState::IDLE);
+		npc.nextMicroMoveTick = currentTime + GenerateRnd(MAX_IDLE_TIME - MIN_IDLE_TIME) + MIN_IDLE_TIME;
+		
+#ifdef _DEBUG
+		LogVerbose("NPC Micro-Movement: {} - Arrived home", npc.name);
+#endif
+	} else {
+		// Continue returning home
+		npc.nextMicroMoveTick = currentTime + WALK_DURATION;
+	}
+}
+
 } // namespace
 
 /**
@@ -1328,18 +1511,15 @@ void UpdateTownerMicro(Towner &npc)
 	
 	switch (state) {
 		case NPCMicroState::IDLE:
-			// Try to start walking (if timer expired)
-			// TODO: Implement in Phase 2
+			TryStartWalk(npc);
 			break;
 			
 		case NPCMicroState::WALK_SHORT:
-			// Update walking state
-			// TODO: Implement in Phase 2
+			UpdateWalk(npc);
 			break;
 			
 		case NPCMicroState::RETURN_HOME:
-			// Return to home position
-			// TODO: Implement in Phase 2
+			ReturnHome(npc);
 			break;
 	}
 }

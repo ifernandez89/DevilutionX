@@ -87,6 +87,8 @@ struct Towner {
 	uint8_t microState;  // 0=IDLE, 1=WALK_SHORT, 2=RETURN_HOME
 	/** Whether micro-movement is enabled for this NPC */
 	bool microEnabled;
+	/** Return home attempt counter (for fallback to teleport) */
+	uint8_t returnAttempts;
 
 	[[nodiscard]] ClxSprite currentSprite() const
 	{

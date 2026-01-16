@@ -1345,6 +1345,7 @@ void UpdateWalk(Towner &npc)
 		// Too far, return home
 		npc.microState = static_cast<uint8_t>(NPCMicroState::RETURN_HOME);
 		npc.nextMicroMoveTick = currentTime + WALK_DURATION;
+		npc.returnAttempts = 0;  // Reset counter when starting return
 		
 #ifdef _DEBUG
 		LogVerbose("NPC Micro-Movement: {} - Returning home from ({}, {})", 
@@ -1379,9 +1380,26 @@ void ReturnHome(Towner &npc)
 	if (npc.position == npc.home) {
 		npc.microState = static_cast<uint8_t>(NPCMicroState::IDLE);
 		npc.nextMicroMoveTick = currentTime + GenerateRnd(MAX_IDLE_TIME - MIN_IDLE_TIME) + MIN_IDLE_TIME;
+		npc.returnAttempts = 0;  // Reset counter
 		
 #ifdef _DEBUG
 		LogVerbose("NPC Micro-Movement: {} - Arrived home", npc.name);
+#endif
+		return;
+	}
+	
+	// SAFETY: Too many attempts? Teleport home immediately
+	if (npc.returnAttempts > 3) {
+		dMonster[npc.position.x][npc.position.y] = 0;
+		npc.position = npc.home;
+		dMonster[npc.position.x][npc.position.y] = 1;
+		
+		npc.microState = static_cast<uint8_t>(NPCMicroState::IDLE);
+		npc.nextMicroMoveTick = currentTime + GenerateRnd(MAX_IDLE_TIME - MIN_IDLE_TIME) + MIN_IDLE_TIME;
+		npc.returnAttempts = 0;  // Reset counter
+		
+#ifdef _DEBUG
+		LogVerbose("NPC Micro-Movement: {} - Teleported home (too many attempts)", npc.name);
 #endif
 		return;
 	}
@@ -1392,16 +1410,13 @@ void ReturnHome(Towner &npc)
 	
 	// Validate target
 	if (!IsTileWalkableForNPC(targetPos)) {
-		// Can't move, teleport home as fallback
-		dMonster[npc.position.x][npc.position.y] = 0;
-		npc.position = npc.home;
-		dMonster[npc.position.x][npc.position.y] = 1;
-		
-		npc.microState = static_cast<uint8_t>(NPCMicroState::IDLE);
-		npc.nextMicroMoveTick = currentTime + GenerateRnd(MAX_IDLE_TIME - MIN_IDLE_TIME) + MIN_IDLE_TIME;
+		// Can't move, increment attempt counter
+		npc.returnAttempts++;
+		npc.nextMicroMoveTick = currentTime + WALK_DURATION;  // Try again next tick
 		
 #ifdef _DEBUG
-		LogVerbose("NPC Micro-Movement: {} - Teleported home (blocked)", npc.name);
+		LogVerbose("NPC Micro-Movement: {} - Blocked returning home (attempt {}/3)", 
+			npc.name, npc.returnAttempts);
 #endif
 		return;
 	}
@@ -1410,6 +1425,9 @@ void ReturnHome(Towner &npc)
 	dMonster[npc.position.x][npc.position.y] = 0;
 	npc.position = targetPos;
 	dMonster[npc.position.x][npc.position.y] = 1;
+	
+	// Successful move, reset attempt counter
+	npc.returnAttempts = 0;
 	
 	// Schedule next step or idle
 	if (npc.position == npc.home) {
@@ -1439,6 +1457,7 @@ void InitNPCMicroMovement(Towner &npc)
 	npc.microState = static_cast<uint8_t>(NPCMicroState::IDLE);
 	npc.nextMicroMoveTick = SDL_GetTicks() + GenerateRnd(MAX_IDLE_TIME - MIN_IDLE_TIME) + MIN_IDLE_TIME;
 	npc.microEnabled = CanNPCUseMicroMovement(npc);
+	npc.returnAttempts = 0;  // Initialize return attempt counter
 	
 #ifdef _DEBUG
 	if (npc.microEnabled) {

@@ -1,0 +1,38 @@
+🔍 CRASH DIAGNOSTICS REPORT
+==================================================
+
+Session Duration: 5.36 seconds
+Total Snapshots: 1
+Total Events: 4
+Total Clicks: 4
+Max Missiles Recorded: 0
+Max Monsters Recorded: 200
+Critical State: YES
+Last Critical Pattern: High monster count: 200; 
+
+🚨 RECENT EVENTS:
+------------------------------
+[0.00s ago] CLICK_SPAM: High click frequency detected: 3 clicks/sec
+  Info: Total session clicks: 4
+[0.03s ago] CRITICAL_STATE: Critical state detected
+  Info: Source\diablo.cpp:1592
+[0.03s ago] CRITICAL_STATE: Critical crash pattern detected
+  Info: High monster count: 200; 
+[5.36s ago] SYSTEM_INIT: Crash diagnostics system initialized
+
+📊 CURRENT STATE:
+------------------------------
+Level: 9
+Player Position: (66, 55)
+Player Health: 403
+Player Mana: 871
+Total Missiles: 0
+  - Inferno Controls: 0
+  - Infernos: 0
+  - Fireballs: 0
+  - Spitter Projectiles: 0
+Total Monsters: 200
+  - Spitters: 47
+  - Skeletons: 0
+  - Attacking: 1
+Clicks in Last Second: 0

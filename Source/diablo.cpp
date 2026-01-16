@@ -1542,18 +1542,14 @@ void DiabloSplash()
 	if (*GetOptions().StartUp.splash == StartUpSplash::LogoAndTitleDialog)
 		play_movie("gendata\\logo.smk", true);
 
-	auto &intro = gbIsHellfire ? GetOptions().StartUp.hellfireIntro : GetOptions().StartUp.diabloIntro;
-
-	if (*intro != StartUpIntro::Off) {
-		if (gbIsHellfire)
-			play_movie("gendata\\Hellfire.smk", true);
-		else
-			play_movie("gendata\\diablo1.smk", true);
-		if (*intro == StartUpIntro::Once) {
-			intro.SetValue(StartUpIntro::Off);
-			if (!demo::IsRunning()) SaveOptions();
-		}
-	}
+	// NIGHTMARE EDITION: Always show the legendary sword intro!
+	// Force intro to play every time for the epic experience
+	if (gbIsHellfire)
+		play_movie("gendata\\Hellfire.smk", true);
+	else
+		play_movie("gendata\\diablo1.smk", true);
+	
+	// Note: Removed the "Once" check to make intro permanent
 
 	if (IsAnyOf(*GetOptions().StartUp.splash, StartUpSplash::TitleDialog, StartUpSplash::LogoAndTitleDialog))
 		UiTitleDialog();

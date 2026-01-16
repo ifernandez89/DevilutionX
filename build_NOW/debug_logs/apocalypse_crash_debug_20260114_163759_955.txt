@@ -1,7 +1,0 @@
-=== APOCALYPSE CRASH DEBUG SYSTEM ===
-Initialized at: 2026-01-14 16:37:59
-Purpose: Capture detailed state information for Apocalypse spell crashes
-System: LATENT MODE - Only active when crashes occur
-Location: This file will be in debug_logs/ directory
-======================================
-

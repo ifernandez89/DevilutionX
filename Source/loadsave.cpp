@@ -4,6 +4,8 @@
  * Implementation of save game functionality.
  */
 #include "loadsave.h"
+#include "hellfire_book_fix.h"  // 🔥 HELLFIRE BOOK RECOVERY SYSTEM
+#include "emergency_diagnostics.h"  // 🚨 EMERGENCY DIAGNOSTICS
 
 #include <climits>
 #include <cstddef>
@@ -2393,17 +2395,81 @@ void SaveHotkeys(SaveWriter &saveWriter, const Player &player)
 
 void LoadHeroItems(Player &player)
 {
+	EMERGENCY_LOG("=== LoadHeroItems START ===");
+	
 	LoadHelper file(OpenSaveArchive(gSaveNumber), "heroitems");
-	if (!file.IsValid())
+	if (!file.IsValid()) {
+		EMERGENCY_CRITICAL("LoadHelper file is INVALID!");
 		return;
+	}
 
 	gbIsHellfireSaveGame = file.NextBool8();
+	
+	EMERGENCY_LOG(fmt::format("gbIsHellfireSaveGame = {}", gbIsHellfireSaveGame ? "TRUE" : "FALSE"));
+	EMERGENCY_LOG(fmt::format("gbIsHellfire = {}", gbIsHellfire ? "TRUE" : "FALSE"));
 
 	LoadMatchingItems(file, player, NUM_INVLOC, player.InvBody);
 	LoadMatchingItems(file, player, InventoryGridCells, player.InvList);
 	LoadMatchingItems(file, player, MaxBeltItems, player.SpdList);
 
 	gbIsHellfireSaveGame = gbIsHellfire;
+	
+	EMERGENCY_LOG("=== INVENTORY SCAN BEFORE RECOVERY ===");
+	EMERGENCY_LOG(fmt::format("Player inventory count: {}", player._pNumInv));
+	
+	bool foundInfernoBook = false;
+	for (int i = 0; i < player._pNumInv && i < InventoryGridCells; i++) {
+		const Item& item = player.InvList[i];
+		if (!item.isEmpty()) {
+			EMERGENCY_LOG(fmt::format("[{}] {} (IDidx={}, Spell={}, dwBuff=0x{:X}, MiscId={})", 
+				   i, item._iIName, static_cast<int>(item.IDidx), 
+				   static_cast<int>(item._iSpell), item.dwBuff,
+				   static_cast<int>(AllItemsList[item.IDidx].iMiscId)));
+			
+			// Verificar si es un libro
+			if (AllItemsList[item.IDidx].iMiscId == IMISC_BOOK) {
+				EMERGENCY_LOG(fmt::format("    📖 BOOK FOUND! Spell: {}, Hellfire flag: {}", 
+					   static_cast<int>(item._iSpell),
+					   (item.dwBuff & CF_HELLFIRE) ? "YES" : "NO"));
+				
+				// Verificar específicamente si es Inferno
+				if (item._iSpell == SpellID::Inferno) {
+					foundInfernoBook = true;
+					EMERGENCY_CRITICAL(fmt::format("🔥 INFERNO BOOK DETECTED! Flag status: {}", 
+						   (item.dwBuff & CF_HELLFIRE) ? "HAS HELLFIRE FLAG" : "MISSING HELLFIRE FLAG"));
+				}
+			}
+		}
+	}
+	
+	if (!foundInfernoBook) {
+		EMERGENCY_CRITICAL("❌ NO INFERNO BOOK FOUND IN INVENTORY!");
+	}
+	
+	EMERGENCY_LOG("=== EXECUTING RECOVERY ===");
+	ScanPlayerInventoryForHellfireItems(player);
+	
+	EMERGENCY_LOG("=== INVENTORY SCAN AFTER RECOVERY ===");
+	foundInfernoBook = false;
+	for (int i = 0; i < player._pNumInv && i < InventoryGridCells; i++) {
+		const Item& item = player.InvList[i];
+		if (!item.isEmpty() && AllItemsList[item.IDidx].iMiscId == IMISC_BOOK) {
+			EMERGENCY_LOG(fmt::format("[{}] {} (Spell={}, dwBuff=0x{:X})", 
+				   i, item._iIName, static_cast<int>(item._iSpell), item.dwBuff));
+			
+			if (item._iSpell == SpellID::Inferno) {
+				foundInfernoBook = true;
+				EMERGENCY_CRITICAL(fmt::format("🔥 INFERNO BOOK AFTER RECOVERY: Flag status: {}", 
+					   (item.dwBuff & CF_HELLFIRE) ? "HAS HELLFIRE FLAG" : "STILL MISSING FLAG"));
+			}
+		}
+	}
+	
+	if (!foundInfernoBook) {
+		EMERGENCY_CRITICAL("❌ INFERNO BOOK STILL NOT FOUND AFTER RECOVERY!");
+	}
+	
+	EMERGENCY_LOG("=== LoadHeroItems END ===");
 }
 
 constexpr uint8_t StashVersion = 0;

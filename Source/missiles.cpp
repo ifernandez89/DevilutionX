@@ -4245,19 +4245,32 @@ void ProcessResurrectBeam(Missile &missile)
 
 void ProcessRedPortal(Missile &missile)
 {
+	// NIGHTMARE EDITION: Red Portal - Copied exactly from ProcessTownPortal (Lazarus quest)
 	const int expLight[17] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 15, 15 };
 
 	if (missile.duration > 1)
 		missile.duration--;
 	if (missile.duration == missile.var1)
 		missile.setFrameGroup<RedPortalFrame>(RedPortalFrame::Idle);
-
 	if (leveltype != DTYPE_TOWN && missile.getFrameGroup<RedPortalFrame>() != RedPortalFrame::Idle && missile.duration != 0) {
 		if (missile.var2 == 0)
 			missile._mlid = AddLight(missile.position.tile, 1);
 		ChangeLight(missile._mlid, missile.position.tile, expLight[missile.var2]);
 		missile.var2++;
 	}
+
+	// Check if player steps on the portal to trigger level change
+	for (Player &player : Players) {
+		if (player.plractive && player.isOnActiveLevel() && !player._pLvlChanging && player._pmode == PM_STAND && player.position.tile == missile.position.tile) {
+			ClrPlrPath(player);
+			if (&player == MyPlayer) {
+				// Warp to the quest location (Lazarus chamber)
+				NetSendCmdParam1(true, CMD_WARP, missile._misource);
+				player._pmode = PM_NEWLVL;
+			}
+		}
+	}
+
 	if (missile.duration == 0) {
 		missile._miDelFlag = true;
 		AddUnLight(missile._mlid);

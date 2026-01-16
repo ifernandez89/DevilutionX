@@ -1,3 +1,0 @@
-"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\devilutionx.dir/objects.a
-C:\mingw64\bin\ar.exe qc CMakeFiles\devilutionx.dir/objects.a @CMakeFiles\devilutionx.dir\objects1.rsp
-C:\mingw64\bin\c++.exe  -fno-rtti -fno-exceptions -O3 -DNDEBUG -flto=auto -fno-fat-lto-objects -mwindows -Wl,--gc-sections,--as-needed -Wl,--undefined=WinMain -Wl,--whole-archive CMakeFiles\devilutionx.dir/objects.a -Wl,--no-whole-archive -o devilutionx.exe -Wl,--out-implib,libdevilutionx.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\devilutionx.dir\linkLibs.rsp

@@ -18,7 +18,7 @@ DoomSerpents	Doom Serpents	CastFire	0	0	0	Lightning	-1	-1	0		0	0	40	80
 BloodRitual	Blood Ritual	CastFire	0	0	0	Magic	-1	-1	0		0	0	40	80
 Nova	Nova	CastLightning	2100	130	60	Magic	14	10	87	Nova	3	35	16	32
 Invisibility	Invisibility	CastFire	0	0	0	Magic	-1	-1	0		0	0	40	80
-Inferno	Inferno	CastFire	200	10	11	Fire,Targeted	3	2	20	InfernoControl	1	6	20	40
+Inferno	Inferno	CastFire	600	10	11	Fire,Targeted	3	2	20	InfernoControl	1	6	20	40
 Golem	Golem	CastFire	1800	110	100	Fire,Targeted	11	9	81	Golem	6	60	16	32
 Rage	Rage	CastHealing	0	0	15	Magic	-1	-1	0	Rage	1	1	0	0
 Teleport	Teleport	CastSkill	2000	125	35	Magic,Targeted	14	12	105	Teleport	3	15	16	32

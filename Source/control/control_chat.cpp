@@ -318,7 +318,8 @@ void DiabloHotkeyMsg(uint32_t dwMsg)
 
 bool IsChatAvailable()
 {
-	return gbIsMultiplayer;
+	// NIGHTMARE EDITION: Enable chat in single player for notes and commands
+	return true; // Previously: gbIsMultiplayer
 }
 
 bool HandleTalkTextInputEvent(const SDL_Event &event)

@@ -66,6 +66,7 @@
 #include "utils/log.hpp"
 #include "utils/str_cat.hpp"
 #include "utils/utf8.hpp"
+#include "guarantee_inferno_book.h"  // 🔥 GUARANTEE INFERNO BOOK SYSTEM
 
 namespace devilution {
 
@@ -2475,6 +2476,11 @@ void NextPlrLevel(Player &player)
 	player.setCharacterLevel(player.getCharacterLevel() + 1);
 
 	CalcPlrInv(player, true);
+
+	// 🔥 GUARANTEE INFERNO BOOK: Check if player should get Book of Inferno
+	if (player.getCharacterLevel() >= 2) {
+		GuaranteeInfernoBookAccess(player);
+	}
 
 	if (CalcStatDiff(player) < 5) {
 		player._pStatPts = CalcStatDiff(player);

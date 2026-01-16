@@ -23,6 +23,8 @@ set(libdevilutionx_SRCS
   global_protection_system.cpp
   gmenu.cpp
   guarantee_apocalypse_book.cpp
+  guarantee_inferno_book.cpp
+  hellfire_book_fix.cpp
   help.cpp
   hwcursor.cpp
   interfac.cpp

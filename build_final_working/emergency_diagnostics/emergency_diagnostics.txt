@@ -1,0 +1,133 @@
+
+=== EMERGENCY DIAGNOSTICS SESSION START ===
+[LOG] === LoadHeroItems START ===
+[LOG] gbIsHellfireSaveGame = FALSE
+[LOG] gbIsHellfire = FALSE
+[LOG] === INVENTORY SCAN BEFORE RECOVERY ===
+[LOG] Player inventory count: 24
+[LOG] [0] Gold (IDidx=0, Spell=0, dwBuff=0x0, MiscId=0)
+[LOG] [1] Potion of Full Mana (IDidx=30, Spell=0, dwBuff=0x1, MiscId=7)
+[LOG] [2] Potion of Full Mana (IDidx=30, Spell=0, dwBuff=0x1, MiscId=7)
+[LOG] [3] Potion of Full Mana (IDidx=30, Spell=0, dwBuff=0x1, MiscId=7)
+[LOG] [4] Potion of Full Mana (IDidx=30, Spell=0, dwBuff=0x1, MiscId=7)
+[LOG] [5] Potion of Full Mana (IDidx=30, Spell=0, dwBuff=0x1, MiscId=7)
+[LOG] [6] Gold (IDidx=0, Spell=0, dwBuff=0x1, MiscId=0)
+[LOG] [7] Potion of Full Mana (IDidx=30, Spell=0, dwBuff=0x1, MiscId=7)
+[LOG] [8] Potion of Full Mana (IDidx=30, Spell=0, dwBuff=0x1, MiscId=7)
+[LOG] [9] Potion of Full Mana (IDidx=30, Spell=0, dwBuff=0x1, MiscId=7)
+[LOG] [10] Potion of Full Mana (IDidx=30, Spell=0, dwBuff=0x1, MiscId=7)
+[LOG] [11] Potion of Full Mana (IDidx=30, Spell=0, dwBuff=0x1, MiscId=7)
+[LOG] [12] Potion of Full Healing (IDidx=29, Spell=0, dwBuff=0x0, MiscId=2)
+[LOG] [13] Potion of Mana (IDidx=25, Spell=0, dwBuff=0x1, MiscId=6)
+[LOG] [14] Gold (IDidx=0, Spell=0, dwBuff=0x0, MiscId=0)
+[LOG] [15] Potion of Rejuvenation (IDidx=81, Spell=0, dwBuff=0x0, MiscId=18)
+[LOG] [16] Scroll of Identify (IDidx=94, Spell=5, dwBuff=0x0, MiscId=21)
+[LOG] [17] Elixir of Dexterity (IDidx=89, Spell=0, dwBuff=0x0, MiscId=12)
+[LOG] [18] Gold (IDidx=0, Spell=0, dwBuff=0x0, MiscId=0)
+[LOG] [19] Scroll of Identify (IDidx=94, Spell=5, dwBuff=0x0, MiscId=21)
+[LOG] [20] Gold (IDidx=0, Spell=0, dwBuff=0x0, MiscId=0)
+[LOG] [21] Gold (IDidx=0, Spell=0, dwBuff=0x0, MiscId=0)
+[LOG] [22] Gold (IDidx=0, Spell=0, dwBuff=0x0, MiscId=0)
+[LOG] [23] Gold (IDidx=0, Spell=0, dwBuff=0x0, MiscId=0)
+[CRITICAL] ❌ NO INFERNO BOOK FOUND IN INVENTORY!
+[LOG] === EXECUTING RECOVERY ===
+[LOG] === INVENTORY SCAN AFTER RECOVERY ===
+[CRITICAL] ❌ INFERNO BOOK STILL NOT FOUND AFTER RECOVERY!
+[LOG] === LoadHeroItems END ===
+[LOG] === LoadHeroItems START ===
+[LOG] gbIsHellfireSaveGame = FALSE
+[LOG] gbIsHellfire = FALSE
+[LOG] === INVENTORY SCAN BEFORE RECOVERY ===
+[LOG] Player inventory count: 11
+[LOG] [0] Potion of Full Mana (IDidx=30, Spell=0, dwBuff=0x1, MiscId=7)
+[LOG] [1] Potion of Full Mana (IDidx=30, Spell=0, dwBuff=0x1, MiscId=7)
+[LOG] [2] Potion of Full Mana (IDidx=30, Spell=0, dwBuff=0x1, MiscId=7)
+[LOG] [3] Potion of Full Mana (IDidx=30, Spell=0, dwBuff=0x1, MiscId=7)
+[LOG] [4] Potion of Full Mana (IDidx=30, Spell=0, dwBuff=0x1, MiscId=7)
+[LOG] [5] Potion of Full Healing (IDidx=29, Spell=0, dwBuff=0x0, MiscId=2)
+[LOG] [6] Potion of Full Mana (IDidx=30, Spell=0, dwBuff=0x1, MiscId=7)
+[LOG] [7] Gold (IDidx=0, Spell=0, dwBuff=0x0, MiscId=0)
+[LOG] [8] Potion of Full Mana (IDidx=30, Spell=0, dwBuff=0x1, MiscId=7)
+[LOG] [9] Potion of Full Mana (IDidx=30, Spell=0, dwBuff=0x1, MiscId=7)
+[LOG] [10] Gold (IDidx=0, Spell=0, dwBuff=0x0, MiscId=0)
+[CRITICAL] ❌ NO INFERNO BOOK FOUND IN INVENTORY!
+[LOG] === EXECUTING RECOVERY ===
+[LOG] === INVENTORY SCAN AFTER RECOVERY ===
+[CRITICAL] ❌ INFERNO BOOK STILL NOT FOUND AFTER RECOVERY!
+[LOG] === LoadHeroItems END ===
+[LOG] === LoadHeroItems START ===
+[LOG] gbIsHellfireSaveGame = FALSE
+[LOG] gbIsHellfire = FALSE
+[LOG] === INVENTORY SCAN BEFORE RECOVERY ===
+[LOG] Player inventory count: 28
+[LOG] [0] Potion of Full Mana (IDidx=30, Spell=0, dwBuff=0x1, MiscId=7)
+[LOG] [1] Scroll of Infravision (IDidx=100, Spell=9, dwBuff=0x1, MiscId=21)
+[LOG] [2] King's Bastard Sword (IDidx=127, Spell=0, dwBuff=0x1, MiscId=0)
+[LOG] [3] Gold (IDidx=0, Spell=0, dwBuff=0x1, MiscId=0)
+[LOG] [4] Potion of Full Mana (IDidx=30, Spell=0, dwBuff=0x1, MiscId=7)
+[LOG] [5] Gold (IDidx=0, Spell=0, dwBuff=0x1, MiscId=0)
+[LOG] [6] Gold (IDidx=0, Spell=0, dwBuff=0x1, MiscId=0)
+[LOG] [7] Gold (IDidx=0, Spell=0, dwBuff=0x0, MiscId=0)
+[LOG] [8] Scroll of Infravision (IDidx=100, Spell=9, dwBuff=0x1, MiscId=21)
+[LOG] [9] Scroll of Infravision (IDidx=100, Spell=9, dwBuff=0x1, MiscId=21)
+[LOG] [10] Dragon's Breach (IDidx=74, Spell=0, dwBuff=0x1, MiscId=0)
+[LOG] [11] Potion of Full Mana (IDidx=30, Spell=0, dwBuff=0x1, MiscId=7)
+[LOG] [12] Potion of Full Mana (IDidx=30, Spell=0, dwBuff=0x1, MiscId=7)
+[LOG] [13] Potion of Full Mana (IDidx=30, Spell=0, dwBuff=0x1, MiscId=7)
+[LOG] [14] Potion of Rejuvenation (IDidx=81, Spell=0, dwBuff=0x0, MiscId=18)
+[LOG] [15] Potion of Full Mana (IDidx=30, Spell=0, dwBuff=0x1, MiscId=7)
+[LOG] [16] Potion of Full Mana (IDidx=30, Spell=0, dwBuff=0x1, MiscId=7)
+[LOG] [17] Potion of Full Mana (IDidx=30, Spell=0, dwBuff=0x1, MiscId=7)
+[LOG] [18] Potion of Full Healing (IDidx=29, Spell=0, dwBuff=0x0, MiscId=2)
+[LOG] [19] Potion of Full Healing (IDidx=29, Spell=0, dwBuff=0x0, MiscId=2)
+[LOG] [20] Potion of Full Healing (IDidx=29, Spell=0, dwBuff=0x0, MiscId=2)
+[LOG] [21] Potion of Full Healing (IDidx=29, Spell=0, dwBuff=0x0, MiscId=2)
+[LOG] [22] Potion of Full Healing (IDidx=29, Spell=0, dwBuff=0x0, MiscId=2)
+[LOG] [23] Potion of Full Healing (IDidx=29, Spell=0, dwBuff=0x0, MiscId=2)
+[LOG] [24] Potion of Full Mana (IDidx=30, Spell=0, dwBuff=0x1, MiscId=7)
+[LOG] [25] Potion of Full Mana (IDidx=30, Spell=0, dwBuff=0x1, MiscId=7)
+[LOG] [26] Potion of Full Mana (IDidx=30, Spell=0, dwBuff=0x1, MiscId=7)
+[LOG] [27] Potion of Full Mana (IDidx=30, Spell=0, dwBuff=0x1, MiscId=7)
+[CRITICAL] ❌ NO INFERNO BOOK FOUND IN INVENTORY!
+[LOG] === EXECUTING RECOVERY ===
+[LOG] === INVENTORY SCAN AFTER RECOVERY ===
+[CRITICAL] ❌ INFERNO BOOK STILL NOT FOUND AFTER RECOVERY!
+[LOG] === LoadHeroItems END ===
+[LOG] === LoadHeroItems START ===
+[LOG] gbIsHellfireSaveGame = FALSE
+[LOG] gbIsHellfire = FALSE
+[LOG] === INVENTORY SCAN BEFORE RECOVERY ===
+[LOG] Player inventory count: 24
+[LOG] [0] Gold (IDidx=0, Spell=0, dwBuff=0x0, MiscId=0)
+[LOG] [1] Potion of Full Mana (IDidx=30, Spell=0, dwBuff=0x1, MiscId=7)
+[LOG] [2] Potion of Full Mana (IDidx=30, Spell=0, dwBuff=0x1, MiscId=7)
+[LOG] [3] Potion of Full Mana (IDidx=30, Spell=0, dwBuff=0x1, MiscId=7)
+[LOG] [4] Potion of Full Mana (IDidx=30, Spell=0, dwBuff=0x1, MiscId=7)
+[LOG] [5] Potion of Full Mana (IDidx=30, Spell=0, dwBuff=0x1, MiscId=7)
+[LOG] [6] Gold (IDidx=0, Spell=0, dwBuff=0x1, MiscId=0)
+[LOG] [7] Potion of Full Mana (IDidx=30, Spell=0, dwBuff=0x1, MiscId=7)
+[LOG] [8] Potion of Full Mana (IDidx=30, Spell=0, dwBuff=0x1, MiscId=7)
+[LOG] [9] Potion of Full Mana (IDidx=30, Spell=0, dwBuff=0x1, MiscId=7)
+[LOG] [10] Potion of Full Mana (IDidx=30, Spell=0, dwBuff=0x1, MiscId=7)
+[LOG] [11] Potion of Full Mana (IDidx=30, Spell=0, dwBuff=0x1, MiscId=7)
+[LOG] [12] Potion of Full Healing (IDidx=29, Spell=0, dwBuff=0x0, MiscId=2)
+[LOG] [13] Potion of Mana (IDidx=25, Spell=0, dwBuff=0x1, MiscId=6)
+[LOG] [14] Gold (IDidx=0, Spell=0, dwBuff=0x0, MiscId=0)
+[LOG] [15] Potion of Rejuvenation (IDidx=81, Spell=0, dwBuff=0x0, MiscId=18)
+[LOG] [16] Scroll of Identify (IDidx=94, Spell=5, dwBuff=0x0, MiscId=21)
+[LOG] [17] Elixir of Dexterity (IDidx=89, Spell=0, dwBuff=0x0, MiscId=12)
+[LOG] [18] Gold (IDidx=0, Spell=0, dwBuff=0x0, MiscId=0)
+[LOG] [19] Scroll of Identify (IDidx=94, Spell=5, dwBuff=0x0, MiscId=21)
+[LOG] [20] Gold (IDidx=0, Spell=0, dwBuff=0x0, MiscId=0)
+[LOG] [21] Gold (IDidx=0, Spell=0, dwBuff=0x0, MiscId=0)
+[LOG] [22] Gold (IDidx=0, Spell=0, dwBuff=0x0, MiscId=0)
+[LOG] [23] Gold (IDidx=0, Spell=0, dwBuff=0x0, MiscId=0)
+[CRITICAL] ❌ NO INFERNO BOOK FOUND IN INVENTORY!
+[LOG] === EXECUTING RECOVERY ===
+[LOG] === INVENTORY SCAN AFTER RECOVERY ===
+[CRITICAL] ❌ INFERNO BOOK STILL NOT FOUND AFTER RECOVERY!
+[LOG] === LoadHeroItems END ===
+[CRITICAL] === GAME STARTING ===
+[LOG] SPELL THROTTLED: 24 for player xiphos
+[LOG] SPELL THROTTLED: 24 for player xiphos
+[LOG] SPELL THROTTLED: 24 for player xiphos

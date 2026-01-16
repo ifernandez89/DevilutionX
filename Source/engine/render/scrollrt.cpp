@@ -387,6 +387,7 @@ void DrawMissilePrivate(const Surface &out, const Missile &missile, Point target
 	
 	// FEATURE: Enhanced Portal System - subtle visual improvements for portals
 	bool isPortal = (missile._mitype == MissileID::TownPortal || missile._mitype == MissileID::RedPortal);
+	bool isRedPortal = (missile._mitype == MissileID::RedPortal);
 	float colorMod = 1.0f;
 	float intensityMod = 1.0f;
 	
@@ -398,11 +399,17 @@ void DrawMissilePrivate(const Surface &out, const Missile &missile, Point target
 		TriggerPortalAudioFeedback(missile.position.tile);
 	}
 	
+	// NIGHTMARE EDITION: Red Portal gets red tint
+	if (isRedPortal) {
+		intensityMod = 1.3f; // Brighter red glow
+	}
+	
 	// Apply enhanced rendering with fallback safety
 	if (missile._miUniqTrans != 0) {
 		ClxDrawTRN(out, missileRenderPosition, sprite, Monsters[missile._misource].uniqueMonsterTRN.get());
 	} else if (missile._miLightFlag || (isPortal && intensityMod > 1.0f)) {
 		// Enhanced portal gets improved lighting
+		// Red portal gets extra intensity for red glow effect
 		int enhancedLightIndex = isPortal ? std::max(0, static_cast<int>(lightTableIndex * intensityMod)) : lightTableIndex;
 		ClxDrawLight(out, missileRenderPosition, sprite, enhancedLightIndex);
 	} else {

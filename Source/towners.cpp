@@ -1282,7 +1282,8 @@ bool IsTooFarFromHome(const Towner &npc)
 /**
  * @brief Try to start walking from IDLE state
  * 
- * Picks a random adjacent tile and starts walking if valid.
+ * Picks a random adjacent tile (ONLY 1 TILE) and starts walking if valid.
+ * NOTE: NPCs don't have walk animations, so this is a subtle position shift.
  */
 void TryStartWalk(Towner &npc)
 {
@@ -1304,25 +1305,32 @@ void TryStartWalk(Towner &npc)
 		return;
 	}
 	
-	// Check if target is within home radius
+	// CRITICAL: Only move 1 tile maximum (homeRadius should be 1)
 	if (targetPos.WalkingDistance(npc.home) > npc.homeRadius) {
 		// Too far, try again later
 		npc.nextMicroMoveTick = currentTime + GenerateRnd(3000) + 2000;
 		return;
 	}
 	
-	// Start walking
+	// Start "walking" (really just a position shift)
 	npc.microState = static_cast<uint8_t>(NPCMicroState::WALK_SHORT);
 	npc.nextMicroMoveTick = currentTime + WALK_DURATION;
 	
-	// Update position
+	// CRITICAL: Preserve NPC ID when moving
+	// dMonster contains the NPC index + 1, not just a boolean
+	const int16_t npcId = dMonster[npc.position.x][npc.position.y];
+	
+	// Update position (subtle shift)
 	dMonster[npc.position.x][npc.position.y] = 0;
 	npc.position = targetPos;
-	dMonster[npc.position.x][npc.position.y] = 1; // Mark as occupied (non-zero)
+	dMonster[npc.position.x][npc.position.y] = npcId; // Restore NPC ID
+	
+	// Update facing direction to match movement
+	UpdateTownerFacing(npc, randomDir);
 	
 #ifdef _DEBUG
-	LogVerbose("NPC Micro-Movement: {} - Started walk to ({}, {})", 
-		npc.name, targetPos.x, targetPos.y);
+	LogVerbose("NPC Micro-Movement: {} - Shifted to ({}, {}) with ID {}", 
+		npc.name, targetPos.x, targetPos.y, npcId);
 #endif
 }
 
@@ -1390,9 +1398,12 @@ void ReturnHome(Towner &npc)
 	
 	// SAFETY: Too many attempts? Teleport home immediately
 	if (npc.returnAttempts > 3) {
+		// CRITICAL: Preserve NPC ID when teleporting
+		const int16_t npcId = dMonster[npc.position.x][npc.position.y];
+		
 		dMonster[npc.position.x][npc.position.y] = 0;
 		npc.position = npc.home;
-		dMonster[npc.position.x][npc.position.y] = 1;
+		dMonster[npc.position.x][npc.position.y] = npcId; // Restore NPC ID
 		
 		npc.microState = static_cast<uint8_t>(NPCMicroState::IDLE);
 		npc.nextMicroMoveTick = currentTime + GenerateRnd(MAX_IDLE_TIME - MIN_IDLE_TIME) + MIN_IDLE_TIME;
@@ -1422,9 +1433,15 @@ void ReturnHome(Towner &npc)
 	}
 	
 	// Move one step towards home
+	// CRITICAL: Preserve NPC ID when moving
+	const int16_t npcId = dMonster[npc.position.x][npc.position.y];
+	
 	dMonster[npc.position.x][npc.position.y] = 0;
 	npc.position = targetPos;
-	dMonster[npc.position.x][npc.position.y] = 1;
+	dMonster[npc.position.x][npc.position.y] = npcId; // Restore NPC ID
+	
+	// Update facing direction to match movement
+	UpdateTownerFacing(npc, dirToHome);
 	
 	// Successful move, reset attempt counter
 	npc.returnAttempts = 0;
@@ -1453,7 +1470,7 @@ void ReturnHome(Towner &npc)
 void InitNPCMicroMovement(Towner &npc)
 {
 	npc.home = npc.position;
-	npc.homeRadius = 2;  // 2 tiles maximum
+	npc.homeRadius = 1;  // ONLY 1 tile maximum (subtle movement)
 	npc.microState = static_cast<uint8_t>(NPCMicroState::IDLE);
 	npc.nextMicroMoveTick = SDL_GetTicks() + GenerateRnd(MAX_IDLE_TIME - MIN_IDLE_TIME) + MIN_IDLE_TIME;
 	npc.microEnabled = CanNPCUseMicroMovement(npc);

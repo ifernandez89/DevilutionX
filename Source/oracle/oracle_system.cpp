@@ -8,6 +8,7 @@
 
 #include <SDL.h>
 
+#include "plrmsg.h"  // Para EventPlrMsg
 #include "utils/log.hpp"
 
 namespace devilution {
@@ -92,6 +93,36 @@ void OracleSystem::MarkAsProcessed()
 		LogVerbose("Oracle: Question marked as processed");
 #endif
 	}
+}
+
+void OracleSystem::ShowWelcomeMessage()
+{
+	// Mensajes de bienvenida crípticos del Oráculo
+	// Se elige uno al azar cada vez que se inicia el juego
+	static const char* welcomeMessages[] = {
+		"🔮 El Infierno te observa, mortal. Tus pasos resuenan en la oscuridad.",
+		"🔮 Bienvenido a la pesadilla. El Oráculo aguarda tus preguntas... y tu caída.",
+		"🔮 Las sombras susurran tu nombre. El destino ya está escrito.",
+		"🔮 Otro alma perdida cruza el umbral. El Infierno no olvida, no perdona.",
+		"🔮 La luz se desvanece. Solo la oscuridad y el Oráculo permanecen.",
+		"🔮 Tus preguntas serán escuchadas. Tus respuestas, temidas.",
+		"🔮 El abismo te contempla. El Oráculo habla cuando la muerte acecha.",
+		"🔮 Bienvenido, viajero. El Infierno tiene mucho que enseñarte.",
+		"🔮 Las runas antiguas brillan. El Oráculo despierta de su letargo.",
+		"🔮 Otro condenado busca respuestas. El Infierno solo ofrece verdades crueles."
+	};
+	
+	// Seleccionar mensaje aleatorio
+	const int messageCount = sizeof(welcomeMessages) / sizeof(welcomeMessages[0]);
+	const int index = SDL_GetTicks() % messageCount;
+	
+	// Mostrar mensaje de bienvenida
+	EventPlrMsg(welcomeMessages[index], UiFlags::ColorRed);
+	EventPlrMsg("    Escribe en el chat y el Oráculo responderá en el momento oportuno.", UiFlags::ColorWhitegold);
+	
+#ifdef _DEBUG
+	LogVerbose("Oracle: Welcome message shown (index: {})", index);
+#endif
 }
 
 } // namespace devilution

@@ -84,6 +84,12 @@ public:
 	 * @brief Marca la pregunta como procesada
 	 */
 	static void MarkAsProcessed();
+	
+	/**
+	 * @brief Muestra mensaje de bienvenida del Oráculo
+	 * Se llama al iniciar el juego
+	 */
+	static void ShowWelcomeMessage();
 };
 
 } // namespace devilution

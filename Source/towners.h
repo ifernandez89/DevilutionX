@@ -75,6 +75,18 @@ struct Towner {
 	int16_t _tIdleFacingTimer;
 	/** Current idle facing direction */
 	Direction _tIdleFacingDirection;
+	
+	// FEATURE: NPC Micro-Movements - Decorative walking system
+	/** Home position (where NPC spawns and returns to) */
+	Point home;
+	/** Maximum distance from home (in tiles) */
+	uint8_t homeRadius;
+	/** Next time NPC can attempt micro-movement */
+	uint32_t nextMicroMoveTick;
+	/** Current micro-movement state */
+	uint8_t microState;  // 0=IDLE, 1=WALK_SHORT, 2=RETURN_HOME
+	/** Whether micro-movement is enabled for this NPC */
+	bool microEnabled;
 
 	[[nodiscard]] ClxSprite currentSprite() const
 	{
@@ -115,6 +127,11 @@ void UpdateFarnhamPosture(Towner &towner);
 void UpdateIdleFacing(Towner &towner);
 void UpdateTownerFacing(Towner &towner, Direction targetDirection);
 void TalkToTowner(Player &player, int t);
+
+// FEATURE: NPC Micro-Movements
+void InitNPCMicroMovement(Towner &npc);
+void UpdateTownerMicro(Towner &npc);
+void CancelMicro(Towner &npc, const char* reason = nullptr);
 
 void UpdateGirlAnimAfterQuestComplete();
 void UpdateCowFarmerAnimAfterQuestComplete();

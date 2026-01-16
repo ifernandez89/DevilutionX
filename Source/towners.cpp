@@ -4,6 +4,16 @@
 #include <cstdint>
 #include <unordered_map>
 
+// FEATURE: NPC Micro-Movements
+// Set to 1 to enable decorative NPC walking
+#define ENABLE_NPC_MICRO_MOVEMENT 1
+
+#ifdef USE_SDL3
+#include <SDL3/SDL_timer.h>
+#else
+#include <SDL.h>
+#endif
+
 #include "cursor.h"
 #include "engine/clx_sprite.hpp"
 #include "engine/load_cel.hpp"
@@ -795,6 +805,11 @@ void InitTowners()
 		InitTownerInfo(Towners.back(), *behaviorIt->second, entry);
 		i++;
 	}
+	
+	// FEATURE: NPC Micro-Movements - Initialize system
+	for (auto &towner : Towners) {
+		InitNPCMicroMovement(towner);
+	}
 }
 
 void FreeTownerGFX()
@@ -818,6 +833,9 @@ void ProcessTowners()
 		
 		// FEATURE: Improved Town NPC Visual Liveliness - Update Farnham's posture
 		UpdateFarnhamPosture(towner);
+		
+		// FEATURE: NPC Micro-Movements - Update decorative walking
+		UpdateTownerMicro(towner);
 
 		towner._tAnimCnt++;
 		if (towner._tAnimCnt < towner._tAnimDelay) {
@@ -1177,5 +1195,153 @@ bool DebugTalkToTowner(_talker_id type)
 	return true;
 }
 #endif
+
+// ============================================================================
+// 🚶 NPC MICRO-MOVEMENTS SYSTEM
+// ============================================================================
+
+namespace {
+
+// Micro-movement configuration
+constexpr uint32_t MIN_IDLE_TIME = 8000;   // 8 seconds minimum idle
+constexpr uint32_t MAX_IDLE_TIME = 15000;  // 15 seconds maximum idle
+constexpr uint32_t WALK_DURATION = 1500;   // 1.5 seconds walking
+constexpr int MIN_PLAYER_DISTANCE = 5;     // Minimum distance from player (tiles)
+
+// Micro-movement states
+enum class NPCMicroState : uint8_t {
+	IDLE = 0,
+	WALK_SHORT = 1,
+	RETURN_HOME = 2
+};
+
+/**
+ * @brief Check if player is near the NPC
+ */
+bool IsPlayerNear(const Towner &npc, int distance)
+{
+	if (MyPlayer == nullptr) return false;
+	return npc.position.WalkingDistance(MyPlayer->position.tile) < distance;
+}
+
+/**
+ * @brief Check if NPC can use micro-movement (whitelist)
+ * 
+ * Only "safe" decorative NPCs are allowed to move.
+ * Quest-critical NPCs are excluded to avoid any potential issues.
+ */
+bool CanNPCUseMicroMovement(const Towner &npc)
+{
+	switch (npc._ttype) {
+		case TOWN_DRUNK:   // Farnham (safe, decorative)
+		case TOWN_WITCH:   // Adria (safe, decorative)
+		case TOWN_BMAID:   // Gillian (safe, decorative)
+			return true;
+		default:
+			return false;  // All others disabled for safety
+	}
+}
+
+} // namespace
+
+/**
+ * @brief Initialize NPC micro-movement system
+ * 
+ * Called when NPC is spawned. Sets up home position and initial state.
+ */
+void InitNPCMicroMovement(Towner &npc)
+{
+	npc.home = npc.position;
+	npc.homeRadius = 2;  // 2 tiles maximum
+	npc.microState = static_cast<uint8_t>(NPCMicroState::IDLE);
+	npc.nextMicroMoveTick = SDL_GetTicks() + GenerateRnd(MAX_IDLE_TIME - MIN_IDLE_TIME) + MIN_IDLE_TIME;
+	npc.microEnabled = CanNPCUseMicroMovement(npc);
+	
+#ifdef _DEBUG
+	if (npc.microEnabled) {
+		LogVerbose("NPC Micro-Movement: Enabled for {} at ({}, {})", 
+			npc.name, npc.home.x, npc.home.y);
+	}
+#endif
+}
+
+/**
+ * @brief Cancel micro-movement and return to idle
+ * 
+ * @param npc The NPC to cancel movement for
+ * @param reason Debug reason for cancellation (optional)
+ */
+void CancelMicro(Towner &npc, const char* reason)
+{
+	npc.microState = static_cast<uint8_t>(NPCMicroState::IDLE);
+	npc.nextMicroMoveTick = SDL_GetTicks() + GenerateRnd(MAX_IDLE_TIME - MIN_IDLE_TIME) + MIN_IDLE_TIME;
+	
+#ifdef _DEBUG
+	if (reason != nullptr) {
+		LogVerbose("NPC Micro-Movement: {} - Canceled: {}", npc.name, reason);
+	}
+#endif
+}
+
+/**
+ * @brief Update NPC micro-movement system
+ * 
+ * Called every frame from ProcessTowners().
+ * Handles decorative micro-movements for NPCs.
+ * 
+ * DESIGN PRINCIPLE: Decorative, not functional.
+ * If anything interferes with gameplay → cancel immediately.
+ */
+void UpdateTownerMicro(Towner &npc)
+{
+	// Feature disabled globally
+#ifndef ENABLE_NPC_MICRO_MOVEMENT
+	return;
+#endif
+	
+	// Not enabled for this NPC
+	if (!npc.microEnabled) {
+		return;
+	}
+	
+	// Dead NPCs don't move
+	if (npc._ttype == TOWN_DEADGUY) {
+		return;
+	}
+	
+	// CANCEL CONDITIONS (priority: gameplay > decoration)
+	
+	// Cancel if talking
+	if (qtextflag) {
+		CancelMicro(npc, "dialog active");
+		return;
+	}
+	
+	// Cancel if player is near
+	if (IsPlayerNear(npc, MIN_PLAYER_DISTANCE)) {
+		CancelMicro(npc, "player nearby");
+		return;
+	}
+	
+	// STATE MACHINE
+	NPCMicroState state = static_cast<NPCMicroState>(npc.microState);
+	
+	switch (state) {
+		case NPCMicroState::IDLE:
+			// Try to start walking (if timer expired)
+			// TODO: Implement in Phase 2
+			break;
+			
+		case NPCMicroState::WALK_SHORT:
+			// Update walking state
+			// TODO: Implement in Phase 2
+			break;
+			
+		case NPCMicroState::RETURN_HOME:
+			// Return to home position
+			// TODO: Implement in Phase 2
+			break;
+	}
+}
 
 } // namespace devilution

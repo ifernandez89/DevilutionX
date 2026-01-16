@@ -218,7 +218,8 @@ set(libdevilutionx_SRCS
   oracle/oracle_prompt.cpp
   oracle/oracle_dormant_texts.cpp
   oracle/oracle_validator.cpp
-  oracle/oracle_cache.cpp)
+  oracle/oracle_cache.cpp
+  oracle/oracle_ui.cpp)
 
 # These files are responsible for most of the runtime in Debug mode.
 # Apply some optimizations to them even in Debug mode to get reasonable performance.

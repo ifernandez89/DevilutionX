@@ -55,6 +55,7 @@
 #include "missiles.h"
 #include "nthread.h"
 #include "options.h"
+#include "oracle/oracle_ui.h"  // 🔮 Oracle UI System
 #include "panels/charpanel.hpp"
 #include "panels/console.hpp"
 #include "panels/partypanel.hpp"
@@ -2050,6 +2051,10 @@ void DrawAndBlit()
 	DrawCursor(out);
 
 	DrawFPS(out);
+	
+	// 🔮 ORACLE UI: Render Oracle messages
+	OracleUI::RenderChatMessage();
+	OracleUI::RenderDebugMessage();
 	
 	// FEATURE: Subtle Visual UI Feedback - Enhanced HUD Display
 	DrawEnhancedHUD(out);

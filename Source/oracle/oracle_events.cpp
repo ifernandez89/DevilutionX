@@ -14,6 +14,8 @@
 #include "oracle_dormant_texts.h"
 #include "oracle_validator.h"
 #include "oracle_cache.h"
+#include "oracle_ui.h"
+#include "engine/random.hpp"
 #include "plrmsg.h"
 #include "utils/log.hpp"
 #include "utils/str_cat.hpp"
@@ -60,31 +62,17 @@ void OracleEvents::TriggerEvent(OracleEvent event, const std::string& context)
 		EventToString(event), question.text);
 #endif
 	
-	// 4. Verificar si Ollama está disponible
-	if (!OracleOllama::IsAvailable()) {
-#ifdef _DEBUG
-		LogVerbose("Oracle: Ollama not available, clearing question");
-#endif
-		OracleSystem::ClearPendingQuestion();
-		return;
-	}
-	
-	// 5. Verificar cache primero
+	// 4. Obtener categoría y textos base
 	OracleDormantCategory category = OracleDormantTexts::MapEventToCategory(EventToString(event));
 	std::vector<std::string> baseTexts = OracleDormantTexts::GetAllTexts(category);
 	
-	// Limitar a 3 textos
-	if (baseTexts.size() > 3) {
-		baseTexts.resize(3);
-	}
-	
-	// Intentar obtener del cache
+	// 5. Verificar cache primero
 	std::string baseTextForCache = baseTexts.empty() ? "" : baseTexts[0];
 	auto cachedResponse = OracleCache::GetResponse(question.text, baseTextForCache);
 	
 	if (cachedResponse.has_value()) {
 		// Cache hit! Respuesta instantánea
-		EventPlrMsg(StrCat("🔮 ", *cachedResponse), UiFlags::ColorRed);
+		OracleUI::ShowMessage(*cachedResponse);
 		
 #ifdef _DEBUG
 		LogVerbose("Oracle: Cache HIT - instant response");
@@ -94,7 +82,40 @@ void OracleEvents::TriggerEvent(OracleEvent event, const std::string& context)
 		return;
 	}
 	
-	// 6. Cache miss - obtener textos base para el prompt
+	// 6. Verificar si Ollama está disponible
+	if (!OracleOllama::IsAvailable()) {
+		// FALLBACK: Usar texto dormido directamente
+#ifdef _DEBUG
+		LogVerbose("Oracle: Ollama not available - using dormant text fallback");
+#endif
+		
+		if (!baseTexts.empty()) {
+			// Seleccionar texto aleatorio
+			int randomIndex = GenerateRnd(static_cast<int>(baseTexts.size()));
+			std::string oracleResponse = baseTexts[randomIndex];
+			
+			// Mostrar y cachear
+			OracleUI::ShowMessage(oracleResponse);
+			OracleCache::SaveResponse(question.text, oracleResponse, oracleResponse, 100.0f);
+			
+#ifdef _DEBUG
+			LogVerbose("Oracle: Dormant text selected: \"{}\"", oracleResponse);
+#endif
+		} else {
+#ifdef _DEBUG
+			LogVerbose("Oracle: No dormant texts available for category");
+#endif
+		}
+		
+		OracleSystem::ClearPendingQuestion();
+		return;
+	}
+	
+	// 7. Ollama disponible - preparar textos base para el prompt
+	// Limitar a 3 textos para el prompt
+	if (baseTexts.size() > 3) {
+		baseTexts.resize(3);
+	}
 	
 	// Guardar textos base para validación posterior
 	{
@@ -102,7 +123,7 @@ void OracleEvents::TriggerEvent(OracleEvent event, const std::string& context)
 		g_lastBaseTexts = baseTexts;
 	}
 	
-	// 7. Construir prompt
+	// 8. Construir prompt
 	std::string prompt = OraclePrompt::BuildPrompt(
 		question.text,
 		EventToString(event),
@@ -115,9 +136,9 @@ void OracleEvents::TriggerEvent(OracleEvent event, const std::string& context)
 #endif
 	
 	// Mostrar indicador visual
-	EventPlrMsg("🔮 El Oráculo medita tu pregunta...", UiFlags::ColorRed);
+	OracleUI::ShowMessage("El Oráculo medita tu pregunta...");
 	
-	// 8. Query asíncrono a Ollama
+	// 9. Query asíncrono a Ollama
 	OracleOllama::QueryAsync(prompt, [](std::optional<std::string> response) {
 		// IMPORTANTE: Este callback se ejecuta en otro thread
 		// Usar mutex para acceso seguro
@@ -132,7 +153,7 @@ void OracleEvents::TriggerEvent(OracleEvent event, const std::string& context)
 			
 			if (validation.isValid) {
 				// Mostrar respuesta del Oráculo
-				EventPlrMsg(StrCat("🔮 ", *response), UiFlags::ColorRed);
+				OracleUI::ShowMessage(*response);
 				
 #ifdef _DEBUG
 				LogVerbose("Oracle: Response displayed (similarity: {:.2f})", 
@@ -157,7 +178,7 @@ void OracleEvents::TriggerEvent(OracleEvent event, const std::string& context)
 				
 				// Usar el texto base más similar como fallback
 				if (!validation.baseTextUsed.empty()) {
-					EventPlrMsg(StrCat("🔮 ", validation.baseTextUsed), UiFlags::ColorRed);
+					OracleUI::ShowMessage(validation.baseTextUsed);
 				}
 			}
 		} else {

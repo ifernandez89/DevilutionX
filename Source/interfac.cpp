@@ -189,9 +189,10 @@ void LoadCutsceneBackground(interface_mode uMsg)
 		progress_id = 1;
 		break;
 	case CutPortal:
-		ArtCutsceneWidescreen = LoadOptionalClx("gendata\\cutportlw.clx");
-		celPath = "gendata\\cutportl";
-		palPath = "gendata\\cutportl.pal";
+		// NIGHTMARE EDITION: Use Red Portal cinematic for all portals
+		ArtCutsceneWidescreen = LoadOptionalClx("gendata\\cutportrw.clx");
+		celPath = "gendata\\cutportr";
+		palPath = "gendata\\cutportr.pal";
 		progress_id = 1;
 		break;
 	case CutPortalRed:

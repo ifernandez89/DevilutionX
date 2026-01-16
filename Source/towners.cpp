@@ -1234,12 +1234,25 @@ bool IsPlayerNear(const Towner &npc, int distance)
 bool CanNPCUseMicroMovement(const Towner &npc)
 {
 	switch (npc._ttype) {
-		case TOWN_DRUNK:   // Farnham (safe, decorative)
-		case TOWN_WITCH:   // Adria (safe, decorative)
-		case TOWN_BMAID:   // Gillian (safe, decorative)
+		// ALL Town NPCs enabled! (1 tile movement = subtle repositioning/turning)
+		case TOWN_SMITH:   // Griswold - Blacksmith
+		case TOWN_HEALER:  // Pepin - Healer
+		case TOWN_TAVERN:  // Ogden - Tavern owner
+		case TOWN_STORY:   // Cain - Elder (NOT sitting, that's Farnham!)
+		case TOWN_DRUNK:   // Farnham - Drunk (sitting/meditating, looks great!)
+		case TOWN_WITCH:   // Adria - Witch
+		case TOWN_BMAID:   // Gillian - Barmaid
+		case TOWN_PEGBOY:  // Wirt - Kid with peg leg (1 tile = just turning)
 			return true;
+		
+		// Excluded: Only special cases
+		case TOWN_COW:     // Cows - Special 4-tile collision handling
+		case TOWN_COWFARM: // Cow farmer - Special quest handling
+		case TOWN_DEADGUY: // Dead townsman - He's dead
+		case TOWN_FARMER:  // Complete Nut - Special quest NPC
+		case TOWN_GIRL:    // Gillian's girl form - Quest transformation
 		default:
-			return false;  // All others disabled for safety
+			return false;
 	}
 }
 

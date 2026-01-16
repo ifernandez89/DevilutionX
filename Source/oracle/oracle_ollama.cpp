@@ -177,16 +177,18 @@ std::string OracleOllama::BuildJSONRequest(const std::string& prompt)
 	}
 	
 	// Construir JSON manualmente (simple y rápido)
+	// Parámetros ajustados para MENOS creatividad y MÁS control
 	return StrCat(
 		"{",
 		"\"model\":\"", OLLAMA_MODEL, "\",",
 		"\"prompt\":\"", escapedPrompt, "\",",
 		"\"stream\":false,",
 		"\"options\":{",
-			"\"temperature\":0.8,",
-			"\"top_p\":0.9,",
+			"\"temperature\":0.2,",      // Reducido de 0.8 para menos creatividad
+			"\"top_p\":0.85,",           // Reducido de 0.9
 			"\"top_k\":40,",
-			"\"num_predict\":150",
+			"\"num_predict\":32,",       // Reducido de 150 para respuestas más cortas
+			"\"repeat_penalty\":1.1",    // Nuevo: evita repeticiones
 		"}",
 		"}"
 	);

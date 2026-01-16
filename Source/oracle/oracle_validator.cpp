@@ -31,7 +31,18 @@ const std::unordered_set<std::string> g_bannedWords = {
 	
 	// Términos demasiado modernos
 	"internet", "computer", "digital", "virtual", "online", "offline",
-	"download", "upload", "server", "client", "database"
+	"download", "upload", "server", "client", "database",
+	
+	// Mecánicas explícitas (consejos directos)
+	"resistance", "armor", "damage", "stats", "points", "experience",
+	"gold", "inventory", "equipment", "weapon", "shield"
+};
+
+// Frases que indican consejo directo (NO permitidas)
+const std::vector<std::string> g_directAdvicePatterns = {
+	"you should", "you must", "you need to", "try to", "make sure",
+	"don't forget", "remember to", "be sure to", "use ", "equip ",
+	"drink ", "cast ", "attack ", "defend ", "run ", "flee "
 };
 
 // Palabras clave del tono dark/cryptic (deben aparecer algunas)
@@ -41,7 +52,8 @@ const std::unordered_set<std::string> g_toneKeywords = {
 	"demon", "demons", "hell", "inferno", "abyss", "void", "eternal", "ancient",
 	"whisper", "whispers", "echo", "echoes", "fate", "destiny", "soul", "souls",
 	"mortal", "mortals", "blood", "suffer", "suffering", "pain", "agony",
-	"corruption", "corrupt", "taint", "tainted", "horror", "terror", "fear"
+	"corruption", "corrupt", "taint", "tainted", "horror", "terror", "fear",
+	"halls", "stones", "depths", "world", "path", "walk", "claim", "claimed"
 };
 
 } // namespace
@@ -67,19 +79,25 @@ ValidationResult OracleValidator::ValidateResponse(
 		return result;
 	}
 	
-	// 2. Verificar palabras prohibidas
+	// 2. Verificar longitud máxima (respuestas cortas)
+	if (response.length() > 200) {
+		result.reason = "Response too long - oracle speaks briefly";
+		return result;
+	}
+	
+	// 3. Verificar palabras prohibidas (modernismos, mecánicas explícitas)
 	if (ContainsBannedWords(response)) {
 		result.reason = "Contains banned words (modernisms or technical terms)";
 		return result;
 	}
 	
-	// 3. Verificar tono consistente
-	if (!HasConsistentTone(response)) {
-		result.reason = "Tone not consistent with dark/cryptic style";
+	// 4. Verificar que NO sea consejo directo (forma, no contenido)
+	if (IsDirectAdvice(response)) {
+		result.reason = "Too direct - oracle speaks in riddles, not instructions";
 		return result;
 	}
 	
-	// 4. Calcular similitud con cada texto base
+	// 5. Calcular similitud con cada texto base
 	float maxSimilarity = 0.0f;
 	std::string bestMatch;
 	
@@ -95,24 +113,26 @@ ValidationResult OracleValidator::ValidateResponse(
 	result.similarity = maxSimilarity;
 	result.baseTextUsed = bestMatch;
 	
-	// 5. Verificar similitud mínima (60%)
-	if (maxSimilarity < 0.6f) {
-		result.reason = "Similarity too low - not a recognizable variation";
+	// 6. INVERTIDO: Similitud BAJA es BUENA (reinterpretación, no paráfrasis)
+	if (maxSimilarity > 0.7f) {
+		result.reason = "Too similar - oracle reinterprets, not echoes";
 		return result;
 	}
 	
-	// 6. Verificar longitud apropiada
-	if (!bestMatch.empty() && !IsLengthAppropriate(response, bestMatch)) {
-		result.reason = "Length differs too much from base text";
-		return result;
+	// 7. Verificar tono dark/cryptic (suave, no hard fail)
+	if (!HasConsistentTone(response)) {
+		// Solo warning, no rechazo
+#ifdef _DEBUG
+		LogVerbose("Oracle Validator: Warning - tone could be darker");
+#endif
 	}
 	
-	// 7. Todo OK
+	// 8. Todo OK - respuesta válida
 	result.isValid = true;
-	result.reason = "Valid micro-variation";
+	result.reason = "Valid oracle interpretation";
 	
 #ifdef _DEBUG
-	LogVerbose("Oracle Validator: Response valid (similarity: {:.2f})", maxSimilarity);
+	LogVerbose("Oracle Validator: Response valid (similarity: {:.2f} - good reinterpretation)", maxSimilarity);
 #endif
 	
 	return result;
@@ -169,6 +189,33 @@ bool OracleValidator::ContainsBannedWords(const std::string& text)
 	return false;
 }
 
+bool OracleValidator::IsDirectAdvice(const std::string& text)
+{
+	std::string normalized = NormalizeText(text);
+	
+	// Verificar patrones de consejo directo
+	for (const auto& pattern : g_directAdvicePatterns) {
+		if (normalized.find(pattern) != std::string::npos) {
+#ifdef _DEBUG
+			LogVerbose("Oracle Validator: Direct advice pattern detected: '{}'", pattern);
+#endif
+			return true;
+		}
+	}
+	
+	// Verificar números (mecánicas explícitas)
+	for (char c : text) {
+		if (std::isdigit(static_cast<unsigned char>(c))) {
+#ifdef _DEBUG
+			LogVerbose("Oracle Validator: Numbers detected (explicit mechanics)");
+#endif
+			return true;
+		}
+	}
+	
+	return false;
+}
+
 bool OracleValidator::IsLengthAppropriate(
 	const std::string& response,
 	const std::string& baseText
@@ -200,9 +247,9 @@ bool OracleValidator::HasConsistentTone(const std::string& text)
 		}
 	}
 	
-	// Debe tener al menos 2 palabras clave del tono dark/cryptic
-	// o al menos 10% de las palabras deben ser palabras clave
-	int minToneWords = std::max(2, static_cast<int>(words.size()) / 10);
+	// Relajado: debe tener al menos 1 palabra clave del tono dark/cryptic
+	// o al menos 5% de las palabras deben ser palabras clave
+	int minToneWords = std::max(1, static_cast<int>(words.size()) / 20);
 	
 	return toneWordCount >= minToneWords;
 }

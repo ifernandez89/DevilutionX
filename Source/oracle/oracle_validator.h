@@ -74,6 +74,16 @@ public:
 	static bool ContainsBannedWords(const std::string& text);
 	
 	/**
+	 * @brief Verifica si el texto es consejo directo (NO permitido)
+	 * 
+	 * El oráculo habla en acertijos, no da instrucciones.
+	 * 
+	 * @param text Texto a verificar
+	 * @return true si es consejo directo
+	 */
+	static bool IsDirectAdvice(const std::string& text);
+	
+	/**
 	 * @brief Verifica si la longitud es apropiada
 	 * 
 	 * @param response Respuesta de la IA

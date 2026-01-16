@@ -21,34 +21,32 @@ namespace devilution {
 // 🔮 PROMPT MAESTRO CON TEXTOS DORMIDOS
 // ============================================================================
 
-constexpr const char* MASTER_PROMPT_WITH_DORMANT = R"(You are the Oracle of the Inferno from Diablo's dark world.
+constexpr const char* MASTER_PROMPT_WITH_DORMANT = R"(You are the voice of the dungeon itself from Diablo (1996).
 
-CRITICAL INSTRUCTIONS:
-======================
-You MUST base your response on the EXAMPLE TEXTS below.
-These are authentic texts from Diablo (1996).
+CRITICAL RULES:
+===============
+- You are NOT a narrator or guide
+- You are the world speaking through darkness
+- ABSORB the meaning from examples below
+- REINTERPRET the idea in your own words
+- Do NOT rephrase or echo original sentences
+- Do NOT give advice or instructions
+- Speak in abstract, fatalistic terms
+- Maximum 1-2 short sentences
 
-STRICT RULES:
-- Select ONE example text as your base
-- Make ONLY slight variations:
-  * Reorder 1-2 phrases
-  * Change 1-3 words maximum
-  * Keep the same dark tone and style
-- Your response must be recognizable as a variation of an example
-- NO creative freedom
-- NO modern language
-- NO explanations or tutorials
-- Maximum 2-3 short lines
+FORBIDDEN:
+- Direct advice ("you should", "try to", "use")
+- Explicit mechanics (numbers, items, stats)
+- Modern language
+- Explanations or tutorials
 
-EXAMPLE TEXTS (your BASE):
+EXAMPLE MEANINGS (absorb, don't copy):
 {DORMANT_EXAMPLES}
 
-Context:
-- Player asks: "{QUESTION}"
-- Event: {EVENT}
-- Mood: {TONE}
+Player asks: "{QUESTION}"
+Event: {EVENT}
 
-Now respond by varying ONE of the example texts above to address the player's question:)";
+Respond as the dungeon's voice, reinterpreting the meaning:)";
 
 // ============================================================================
 // 🔮 IMPLEMENTACIÓN
@@ -67,17 +65,27 @@ std::string OraclePrompt::BuildPrompt(
 	// Mapear evento a categoría de textos dormidos
 	OracleDormantCategory category = OracleDormantTexts::MapEventToCategory(event);
 	
-	// Obtener textos dormidos como ejemplos (3 textos)
+	// Obtener textos dormidos como ejemplos (5-7 textos para más variedad)
 	std::vector<std::string> examples = OracleDormantTexts::GetAllTexts(category);
 	
-	// Si no hay textos en esa categoría, usar otra
-	if (examples.empty()) {
-		examples = OracleDormantTexts::GetAllTexts(OracleDormantCategory::INFERNO_WHISPERS);
+	// Si no hay suficientes textos, mezclar con otra categoría compatible
+	if (examples.size() < 5) {
+		// Categorías compatibles para mezclar
+		OracleDormantCategory secondCategory = OracleDormantCategory::INFERNO_WHISPERS;
+		
+		if (category == OracleDormantCategory::DEATH_WARNINGS) {
+			secondCategory = OracleDormantCategory::FATE_ECHOES;
+		} else if (category == OracleDormantCategory::DARKNESS_LORE) {
+			secondCategory = OracleDormantCategory::INFERNO_WHISPERS;
+		}
+		
+		auto secondExamples = OracleDormantTexts::GetAllTexts(secondCategory);
+		examples.insert(examples.end(), secondExamples.begin(), secondExamples.end());
 	}
 	
-	// Limitar a 3 ejemplos
-	if (examples.size() > 3) {
-		examples.resize(3);
+	// Limitar a 7 ejemplos máximo (más variedad que antes)
+	if (examples.size() > 7) {
+		examples.resize(7);
 	}
 	
 	// Construir string de ejemplos

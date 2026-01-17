@@ -211,4 +211,50 @@ bool ArchitecturalAnalyzer::isRapidFire() {
            (timeSinceLastMissile < 10 && missileCreations > 50);
 }
 
+// 🚨 NUEVOS LOGS PARA SISTEMAS COLATERALES
+
+void ArchitecturalAnalyzer::logBoomProcess(int x, int y, int duration, int var1) {
+    std::string message = "[BOOM_PROCESS] Pos:(" + std::to_string(x) + "," + std::to_string(y) + 
+                         ") Duration:" + std::to_string(duration) + 
+                         " Var1:" + std::to_string(var1);
+    writeLog(message);
+}
+
+void ArchitecturalAnalyzer::logCollision(int missileType, int monsterId, int damage, int hp) {
+    std::string message = "[COLLISION] MissileType:" + std::to_string(missileType) + 
+                         " Monster:" + std::to_string(monsterId) + 
+                         " Damage:" + std::to_string(damage) + 
+                         " HP:" + std::to_string(hp);
+    writeLog(message);
+}
+
+void ArchitecturalAnalyzer::logMonsterDeath(int monsterId, int monsterType, int killCount) {
+    std::string message = "[MONSTER_DEATH] ID:" + std::to_string(monsterId) + 
+                         " Type:" + std::to_string(monsterType) + 
+                         " TotalKills:" + std::to_string(killCount);
+    writeLog(message);
+}
+
+void ArchitecturalAnalyzer::logAudio(int monsterId, int soundType, int volume, int pan) {
+    std::string message = "[AUDIO] Monster:" + std::to_string(monsterId) + 
+                         " Sound:" + std::to_string(soundType) + 
+                         " Vol:" + std::to_string(volume) + 
+                         " Pan:" + std::to_string(pan);
+    writeLog(message);
+}
+
+// 🎯 APOCALYPSE CRASH FIX: Deferred Loot Logging
+void ArchitecturalAnalyzer::logDeferredLoot(const std::string& action, int monsterCount) {
+    std::string message = "[DEFERRED_LOOT] " + action;
+    if (monsterCount > 0) {
+        message += " - Processing " + std::to_string(monsterCount) + " monsters";
+    }
+    writeLog(message);
+}
+
+// 🔍 GAME LOOP DEBUG: Track which system is running
+void ArchitecturalAnalyzer::logGameLoop(const std::string& system) {
+    writeLog("[GAME_LOOP] " + system);
+}
+
 } // namespace devilution

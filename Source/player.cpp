@@ -428,6 +428,7 @@ bool DoWalk(Player &player)
 
 	// We reached the new tile -> update the player's tile position
 	dPlayer[player.position.tile.x][player.position.tile.y] = 0;
+	
 	player.position.tile = player.position.temp;
 	// dPlayer is set here for backwards compatibility; without it, the player would be invisible if loaded from a vanilla save.
 	player.occupyTile(player.position.tile, false);

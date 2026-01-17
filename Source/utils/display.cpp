@@ -548,6 +548,15 @@ bool SpawnWindow(const char *lpWindowName)
 	SDL_SetHint(SDL_HINT_GAMECONTROLLER_USE_BUTTON_LABELS, "0");
 #endif
 
+	// 🌑 NIGHTMARE: Desactivar Windows Game Bar para evitar popups molestos
+#ifdef _WIN32
+	SDL_SetHint("SDL_WINDOWS_DISABLE_THREAD_NAMING", "1");
+	SDL_SetHint(SDL_HINT_WINDOWS_NO_CLOSE_ON_ALT_F4, "0");
+	// Desactivar integración con Xbox Game Bar
+	SDL_SetHint("SDL_HINT_WINDOWS_ENABLE_MESSAGELOOP", "0");
+	SDL_SetHint("SDL_HINT_WINDOWS_DISABLE_THREAD_NAMING", "1");
+#endif
+
 	int initFlags = SDL_INIT_VIDEO | SDL_INIT_JOYSTICK;
 #ifndef NOSOUND
 	initFlags |= SDL_INIT_AUDIO;

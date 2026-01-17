@@ -83,28 +83,28 @@ CMakeFiles/lua-populate-complete: lua-populate-prefix/src/lua-populate-stamp/lua
 
 lua-populate-prefix/src/lua-populate-stamp/lua-populate-build: lua-populate-prefix/src/lua-populate-stamp/lua-populate-configure
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_APOCALYPSE\_deps\lua-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "No build step for 'lua-populate'"
-	cd /d C:\C-C__~1\DEVILU~1\BUA686~1\_deps\LUA-BU~1 && "C:\Program Files\CMake\bin\cmake.exe" -E echo_append
-	cd /d C:\C-C__~1\DEVILU~1\BUA686~1\_deps\LUA-BU~1 && "C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_APOCALYPSE/_deps/lua-subbuild/lua-populate-prefix/src/lua-populate-stamp/lua-populate-build"
+	cd /d C:\C-C__~1\DEVILU~1\BUILD_~2\_deps\LUA-BU~1 && "C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+	cd /d C:\C-C__~1\DEVILU~1\BUILD_~2\_deps\LUA-BU~1 && "C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_APOCALYPSE/_deps/lua-subbuild/lua-populate-prefix/src/lua-populate-stamp/lua-populate-build"
 
 lua-populate-prefix/src/lua-populate-stamp/lua-populate-configure: lua-populate-prefix/tmp/lua-populate-cfgcmd.txt
 lua-populate-prefix/src/lua-populate-stamp/lua-populate-configure: lua-populate-prefix/src/lua-populate-stamp/lua-populate-patch
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_APOCALYPSE\_deps\lua-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "No configure step for 'lua-populate'"
-	cd /d C:\C-C__~1\DEVILU~1\BUA686~1\_deps\LUA-BU~1 && "C:\Program Files\CMake\bin\cmake.exe" -E echo_append
-	cd /d C:\C-C__~1\DEVILU~1\BUA686~1\_deps\LUA-BU~1 && "C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_APOCALYPSE/_deps/lua-subbuild/lua-populate-prefix/src/lua-populate-stamp/lua-populate-configure"
+	cd /d C:\C-C__~1\DEVILU~1\BUILD_~2\_deps\LUA-BU~1 && "C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+	cd /d C:\C-C__~1\DEVILU~1\BUILD_~2\_deps\LUA-BU~1 && "C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_APOCALYPSE/_deps/lua-subbuild/lua-populate-prefix/src/lua-populate-stamp/lua-populate-configure"
 
 lua-populate-prefix/src/lua-populate-stamp/lua-populate-download: lua-populate-prefix/src/lua-populate-stamp/download-lua-populate.cmake
 lua-populate-prefix/src/lua-populate-stamp/lua-populate-download: lua-populate-prefix/src/lua-populate-stamp/lua-populate-urlinfo.txt
 lua-populate-prefix/src/lua-populate-stamp/lua-populate-download: lua-populate-prefix/src/lua-populate-stamp/lua-populate-mkdir
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_APOCALYPSE\_deps\lua-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_4) "Performing download step (download, verify and extract) for 'lua-populate'"
-	cd /d C:\C-C__~1\DEVILU~1\BUA686~1\_deps && "C:\Program Files\CMake\bin\cmake.exe" -DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE -P "C:/c - c++/DevilutionX/build_APOCALYPSE/_deps/lua-subbuild/lua-populate-prefix/src/lua-populate-stamp/download-lua-populate.cmake"
-	cd /d C:\C-C__~1\DEVILU~1\BUA686~1\_deps && "C:\Program Files\CMake\bin\cmake.exe" -DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE -P "C:/c - c++/DevilutionX/build_APOCALYPSE/_deps/lua-subbuild/lua-populate-prefix/src/lua-populate-stamp/verify-lua-populate.cmake"
-	cd /d C:\C-C__~1\DEVILU~1\BUA686~1\_deps && "C:\Program Files\CMake\bin\cmake.exe" -DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE -P "C:/c - c++/DevilutionX/build_APOCALYPSE/_deps/lua-subbuild/lua-populate-prefix/src/lua-populate-stamp/extract-lua-populate.cmake"
-	cd /d C:\C-C__~1\DEVILU~1\BUA686~1\_deps && "C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_APOCALYPSE/_deps/lua-subbuild/lua-populate-prefix/src/lua-populate-stamp/lua-populate-download"
+	cd /d C:\C-C__~1\DEVILU~1\BUILD_~2\_deps && "C:\Program Files\CMake\bin\cmake.exe" -DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE -P "C:/c - c++/DevilutionX/build_APOCALYPSE/_deps/lua-subbuild/lua-populate-prefix/src/lua-populate-stamp/download-lua-populate.cmake"
+	cd /d C:\C-C__~1\DEVILU~1\BUILD_~2\_deps && "C:\Program Files\CMake\bin\cmake.exe" -DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE -P "C:/c - c++/DevilutionX/build_APOCALYPSE/_deps/lua-subbuild/lua-populate-prefix/src/lua-populate-stamp/verify-lua-populate.cmake"
+	cd /d C:\C-C__~1\DEVILU~1\BUILD_~2\_deps && "C:\Program Files\CMake\bin\cmake.exe" -DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE -P "C:/c - c++/DevilutionX/build_APOCALYPSE/_deps/lua-subbuild/lua-populate-prefix/src/lua-populate-stamp/extract-lua-populate.cmake"
+	cd /d C:\C-C__~1\DEVILU~1\BUILD_~2\_deps && "C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_APOCALYPSE/_deps/lua-subbuild/lua-populate-prefix/src/lua-populate-stamp/lua-populate-download"
 
 lua-populate-prefix/src/lua-populate-stamp/lua-populate-install: lua-populate-prefix/src/lua-populate-stamp/lua-populate-build
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_APOCALYPSE\_deps\lua-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_5) "No install step for 'lua-populate'"
-	cd /d C:\C-C__~1\DEVILU~1\BUA686~1\_deps\LUA-BU~1 && "C:\Program Files\CMake\bin\cmake.exe" -E echo_append
-	cd /d C:\C-C__~1\DEVILU~1\BUA686~1\_deps\LUA-BU~1 && "C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_APOCALYPSE/_deps/lua-subbuild/lua-populate-prefix/src/lua-populate-stamp/lua-populate-install"
+	cd /d C:\C-C__~1\DEVILU~1\BUILD_~2\_deps\LUA-BU~1 && "C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+	cd /d C:\C-C__~1\DEVILU~1\BUILD_~2\_deps\LUA-BU~1 && "C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_APOCALYPSE/_deps/lua-subbuild/lua-populate-prefix/src/lua-populate-stamp/lua-populate-install"
 
 lua-populate-prefix/src/lua-populate-stamp/lua-populate-mkdir:
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_APOCALYPSE\_deps\lua-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_6) "Creating directories for 'lua-populate'"
@@ -119,8 +119,8 @@ lua-populate-prefix/src/lua-populate-stamp/lua-populate-patch: lua-populate-pref
 
 lua-populate-prefix/src/lua-populate-stamp/lua-populate-test: lua-populate-prefix/src/lua-populate-stamp/lua-populate-install
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\c - c++\DevilutionX\build_APOCALYPSE\_deps\lua-subbuild\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_8) "No test step for 'lua-populate'"
-	cd /d C:\C-C__~1\DEVILU~1\BUA686~1\_deps\LUA-BU~1 && "C:\Program Files\CMake\bin\cmake.exe" -E echo_append
-	cd /d C:\C-C__~1\DEVILU~1\BUA686~1\_deps\LUA-BU~1 && "C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_APOCALYPSE/_deps/lua-subbuild/lua-populate-prefix/src/lua-populate-stamp/lua-populate-test"
+	cd /d C:\C-C__~1\DEVILU~1\BUILD_~2\_deps\LUA-BU~1 && "C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+	cd /d C:\C-C__~1\DEVILU~1\BUILD_~2\_deps\LUA-BU~1 && "C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/c - c++/DevilutionX/build_APOCALYPSE/_deps/lua-subbuild/lua-populate-prefix/src/lua-populate-stamp/lua-populate-test"
 
 lua-populate-prefix/src/lua-populate-stamp/lua-populate-update: lua-populate-prefix/src/lua-populate-stamp/lua-populate-update-info.txt
 lua-populate-prefix/src/lua-populate-stamp/lua-populate-update: lua-populate-prefix/src/lua-populate-stamp/lua-populate-download

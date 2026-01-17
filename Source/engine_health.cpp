@@ -139,18 +139,18 @@ bool CanSafelyCastApocalypse()
     // Check if we should unlock the atomic flag (MINIMAL delay)
     if (apocalypseInProgress && frameCounter >= apocalypseUnlockFrame) {
         apocalypseInProgress = false;
-        // ARCH_LOG_CRASH_PREVENTION("Apocalypse atomic flag UNLOCKED", "CanSafelyCastApocalypse delayed unlock");
+        ARCH_LOG_CRASH_PREVENTION("Apocalypse atomic flag UNLOCKED", "CanSafelyCastApocalypse delayed unlock");
     }
     
     // ATOMIC CHECK: If any Apocalypse is in progress, fail immediately
     if (apocalypseInProgress) {
-        // ARCH_LOG_CRASH_PREVENTION("Apocalypse already in progress", "CanSafelyCastApocalypse atomic check");
+        ARCH_LOG_CRASH_PREVENTION("Apocalypse already in progress", "CanSafelyCastApocalypse atomic check");
         return false;
     }
     
     // FRAME-BASED COOLDOWN: Only 1 Apocalypse per frame (ESSENTIAL for crash prevention)
     if (lastApocalypseFrame == frameCounter) {
-        // ARCH_LOG_CRASH_PREVENTION("Apocalypse frame cooldown active", "CanSafelyCastApocalypse frame-based");
+        ARCH_LOG_CRASH_PREVENTION("Apocalypse frame cooldown active", "CanSafelyCastApocalypse frame-based");
         return false;
     }
     
@@ -159,7 +159,7 @@ bool CanSafelyCastApocalypse()
     auto timeSinceLastCast = std::chrono::duration_cast<std::chrono::milliseconds>(now - lastApocalypseCast);
     
     if (timeSinceLastCast.count() < 16) { // MINIMAL 16ms = 1 frame at 60fps
-        // ARCH_LOG_CRASH_PREVENTION("Apocalypse time cooldown active", "CanSafelyCastApocalypse time-based");
+        ARCH_LOG_CRASH_PREVENTION("Apocalypse time cooldown active", "CanSafelyCastApocalypse time-based");
         return false;
     }
     
@@ -169,7 +169,7 @@ bool CanSafelyCastApocalypse()
     lastApocalypseFrame = frameCounter;
     apocalypseUnlockFrame = frameCounter + 1; // MINIMAL: Unlock after just 1 frame
     
-    // ARCH_LOG_CRASH_PREVENTION("Apocalypse protection ALLOWING cast", "CanSafelyCastApocalypse SUCCESS");
+    ARCH_LOG_CRASH_PREVENTION("Apocalypse protection ALLOWING cast", "CanSafelyCastApocalypse SUCCESS");
     return true;
 }
 
@@ -177,7 +177,7 @@ void ClearApocalypseInProgress()
 {
     // DO NOTHING - Let the delayed unlock handle it
     // This prevents immediate unlocking that was causing the bug
-    // ARCH_LOG_CRASH_PREVENTION("ClearApocalypseInProgress called but IGNORED", "delayed unlock system");
+    ARCH_LOG_CRASH_PREVENTION("ClearApocalypseInProgress called but IGNORED", "delayed unlock system");
 }
 
 bool CanSafelyCastInferno()

@@ -15705,3 +15705,411 @@ events:
         
       exitCode: 0
 ...
+
+---
+events:
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CheckIPOSupported.cmake:197 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CheckIPOSupported.cmake:320 (_ipo_run_language_check)"
+      - "CMakeLists.txt:307 (check_ipo_supported)"
+    directories:
+      source: "C:/c - c++/DevilutionX/build_NOW/CMakeFiles/_CMakeLTOTest-CXX/src"
+      binary: "C:/c - c++/DevilutionX/build_NOW/CMakeFiles/_CMakeLTOTest-CXX/bin"
+    buildResult:
+      variable: "_IPO_LANGUAGE_CHECK_RESULT"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/c - c++/DevilutionX/build_NOW/CMakeFiles/_CMakeLTOTest-CXX/bin'
+        
+        Run Build Command(s): "C:/Program Files/CMake/bin/cmake.exe" -E env VERBOSE=1 C:/mingw64/bin/mingw32-make.exe -f Makefile
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -S"C:\\c - c++\\DevilutionX\\build_NOW\\CMakeFiles\\_CMakeLTOTest-CXX\\src" -B"C:\\c - c++\\DevilutionX\\build_NOW\\CMakeFiles\\_CMakeLTOTest-CXX\\bin" --check-build-system CMakeFiles\\Makefile.cmake 0
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -E cmake_progress_start "C:\\c - c++\\DevilutionX\\build_NOW\\CMakeFiles\\_CMakeLTOTest-CXX\\bin\\CMakeFiles" "C:\\c - c++\\DevilutionX\\build_NOW\\CMakeFiles\\_CMakeLTOTest-CXX\\bin\\\\CMakeFiles\\progress.marks"
+        C:/mingw64/bin/mingw32-make.exe  -f CMakeFiles\\Makefile2 all
+        mingw32-make[1]: Entering directory 'C:/c - c++/DevilutionX/build_NOW/CMakeFiles/_CMakeLTOTest-CXX/bin'
+        C:/mingw64/bin/mingw32-make.exe  -f CMakeFiles\\foo.dir\\build.make CMakeFiles/foo.dir/depend
+        mingw32-make[2]: Entering directory 'C:/c - c++/DevilutionX/build_NOW/CMakeFiles/_CMakeLTOTest-CXX/bin'
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -E cmake_depends "MinGW Makefiles" "C:\\c - c++\\DevilutionX\\build_NOW\\CMakeFiles\\_CMakeLTOTest-CXX\\src" "C:\\c - c++\\DevilutionX\\build_NOW\\CMakeFiles\\_CMakeLTOTest-CXX\\src" "C:\\c - c++\\DevilutionX\\build_NOW\\CMakeFiles\\_CMakeLTOTest-CXX\\bin" "C:\\c - c++\\DevilutionX\\build_NOW\\CMakeFiles\\_CMakeLTOTest-CXX\\bin" "C:\\c - c++\\DevilutionX\\build_NOW\\CMakeFiles\\_CMakeLTOTest-CXX\\bin\\CMakeFiles\\foo.dir\\DependInfo.cmake" foo
+        Dependee "C:\\c - c++\\DevilutionX\\build_NOW\\CMakeFiles\\_CMakeLTOTest-CXX\\bin\\CMakeFiles\\foo.dir\\DependInfo.cmake" is newer than depender "C:/c - c++/DevilutionX/build_NOW/CMakeFiles/_CMakeLTOTest-CXX/bin/CMakeFiles/foo.dir/depend.internal".
+        Dependee "C:/c - c++/DevilutionX/build_NOW/CMakeFiles/_CMakeLTOTest-CXX/bin/CMakeFiles/CMakeDirectoryInformation.cmake" is newer than depender "C:/c - c++/DevilutionX/build_NOW/CMakeFiles/_CMakeLTOTest-CXX/bin/CMakeFiles/foo.dir/depend.internal".
+        Scanning dependencies of target foo
+        mingw32-make[2]: Leaving directory 'C:/c - c++/DevilutionX/build_NOW/CMakeFiles/_CMakeLTOTest-CXX/bin'
+        C:/mingw64/bin/mingw32-make.exe  -f CMakeFiles\\foo.dir\\build.make CMakeFiles/foo.dir/build
+        mingw32-make[2]: Entering directory 'C:/c - c++/DevilutionX/build_NOW/CMakeFiles/_CMakeLTOTest-CXX/bin'
+        [ 25%] Building CXX object CMakeFiles/foo.dir/foo.cpp.obj
+        C:\\mingw64\\bin\\c++.exe   -flto=auto -fno-fat-lto-objects -o CMakeFiles\\foo.dir\\foo.cpp.obj -c "C:\\c - c++\\DevilutionX\\build_NOW\\CMakeFiles\\_CMakeLTOTest-CXX\\src\\foo.cpp"
+        [ 50%] Linking CXX static library libfoo.a
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -P CMakeFiles\\foo.dir\\cmake_clean_target.cmake
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -E cmake_link_script CMakeFiles\\foo.dir\\link.txt --verbose=1
+        "C:/mingw64/bin/gcc-ar.exe" qc libfoo.a CMakeFiles/foo.dir/foo.cpp.obj
+        "C:/mingw64/bin/gcc-ranlib.exe" libfoo.a
+        mingw32-make[2]: Leaving directory 'C:/c - c++/DevilutionX/build_NOW/CMakeFiles/_CMakeLTOTest-CXX/bin'
+        [ 50%] Built target foo
+        C:/mingw64/bin/mingw32-make.exe  -f CMakeFiles\\boo.dir\\build.make CMakeFiles/boo.dir/depend
+        mingw32-make[2]: Entering directory 'C:/c - c++/DevilutionX/build_NOW/CMakeFiles/_CMakeLTOTest-CXX/bin'
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -E cmake_depends "MinGW Makefiles" "C:\\c - c++\\DevilutionX\\build_NOW\\CMakeFiles\\_CMakeLTOTest-CXX\\src" "C:\\c - c++\\DevilutionX\\build_NOW\\CMakeFiles\\_CMakeLTOTest-CXX\\src" "C:\\c - c++\\DevilutionX\\build_NOW\\CMakeFiles\\_CMakeLTOTest-CXX\\bin" "C:\\c - c++\\DevilutionX\\build_NOW\\CMakeFiles\\_CMakeLTOTest-CXX\\bin" "C:\\c - c++\\DevilutionX\\build_NOW\\CMakeFiles\\_CMakeLTOTest-CXX\\bin\\CMakeFiles\\boo.dir\\DependInfo.cmake" boo
+        Dependee "C:\\c - c++\\DevilutionX\\build_NOW\\CMakeFiles\\_CMakeLTOTest-CXX\\bin\\CMakeFiles\\boo.dir\\DependInfo.cmake" is newer than depender "C:/c - c++/DevilutionX/build_NOW/CMakeFiles/_CMakeLTOTest-CXX/bin/CMakeFiles/boo.dir/depend.internal".
+        Dependee "C:/c - c++/DevilutionX/build_NOW/CMakeFiles/_CMakeLTOTest-CXX/bin/CMakeFiles/CMakeDirectoryInformation.cmake" is newer than depender "C:/c - c++/DevilutionX/build_NOW/CMakeFiles/_CMakeLTOTest-CXX/bin/CMakeFiles/boo.dir/depend.internal".
+        Scanning dependencies of target boo
+        mingw32-make[2]: Leaving directory 'C:/c - c++/DevilutionX/build_NOW/CMakeFiles/_CMakeLTOTest-CXX/bin'
+        C:/mingw64/bin/mingw32-make.exe  -f CMakeFiles\\boo.dir\\build.make CMakeFiles/boo.dir/build
+        mingw32-make[2]: Entering directory 'C:/c - c++/DevilutionX/build_NOW/CMakeFiles/_CMakeLTOTest-CXX/bin'
+        [ 75%] Building CXX object CMakeFiles/boo.dir/main.cpp.obj
+        C:\\mingw64\\bin\\c++.exe   -flto=auto -fno-fat-lto-objects -o CMakeFiles\\boo.dir\\main.cpp.obj -c "C:\\c - c++\\DevilutionX\\build_NOW\\CMakeFiles\\_CMakeLTOTest-CXX\\src\\main.cpp"
+        [100%] Linking CXX executable boo.exe
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -E cmake_link_script CMakeFiles\\boo.dir\\link.txt --verbose=1
+        BFD: CMakeFiles/boo.dir/main.cpp.obj: plugin needed to handle lto object
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -E rm -f CMakeFiles\\boo.dir/objects.a
+        C:\\mingw64\\bin\\ar.exe qc CMakeFiles\\boo.dir/objects.a @CMakeFiles\\boo.dir\\objects1.rsp
+        C:\\mingw64\\bin\\c++.exe -flto=auto -fno-fat-lto-objects -Wl,--whole-archive CMakeFiles\\boo.dir/objects.a -Wl,--no-whole-archive -o boo.exe -Wl,--out-implib,libboo.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\\boo.dir\\linkLibs.rsp
+        mingw32-make[2]: Leaving directory 'C:/c - c++/DevilutionX/build_NOW/CMakeFiles/_CMakeLTOTest-CXX/bin'
+        [100%] Built target boo
+        mingw32-make[1]: Leaving directory 'C:/c - c++/DevilutionX/build_NOW/CMakeFiles/_CMakeLTOTest-CXX/bin'
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -E cmake_progress_start "C:\\c - c++\\DevilutionX\\build_NOW\\CMakeFiles\\_CMakeLTOTest-CXX\\bin\\CMakeFiles" 0
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CheckIPOSupported.cmake:197 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CheckIPOSupported.cmake:320 (_ipo_run_language_check)"
+      - "CMakeLists.txt:307 (check_ipo_supported)"
+    directories:
+      source: "C:/c - c++/DevilutionX/build_NOW/CMakeFiles/_CMakeLTOTest-C/src"
+      binary: "C:/c - c++/DevilutionX/build_NOW/CMakeFiles/_CMakeLTOTest-C/bin"
+    buildResult:
+      variable: "_IPO_LANGUAGE_CHECK_RESULT"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/c - c++/DevilutionX/build_NOW/CMakeFiles/_CMakeLTOTest-C/bin'
+        
+        Run Build Command(s): "C:/Program Files/CMake/bin/cmake.exe" -E env VERBOSE=1 C:/mingw64/bin/mingw32-make.exe -f Makefile
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -S"C:\\c - c++\\DevilutionX\\build_NOW\\CMakeFiles\\_CMakeLTOTest-C\\src" -B"C:\\c - c++\\DevilutionX\\build_NOW\\CMakeFiles\\_CMakeLTOTest-C\\bin" --check-build-system CMakeFiles\\Makefile.cmake 0
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -E cmake_progress_start "C:\\c - c++\\DevilutionX\\build_NOW\\CMakeFiles\\_CMakeLTOTest-C\\bin\\CMakeFiles" "C:\\c - c++\\DevilutionX\\build_NOW\\CMakeFiles\\_CMakeLTOTest-C\\bin\\\\CMakeFiles\\progress.marks"
+        C:/mingw64/bin/mingw32-make.exe  -f CMakeFiles\\Makefile2 all
+        mingw32-make[1]: Entering directory 'C:/c - c++/DevilutionX/build_NOW/CMakeFiles/_CMakeLTOTest-C/bin'
+        C:/mingw64/bin/mingw32-make.exe  -f CMakeFiles\\foo.dir\\build.make CMakeFiles/foo.dir/depend
+        mingw32-make[2]: Entering directory 'C:/c - c++/DevilutionX/build_NOW/CMakeFiles/_CMakeLTOTest-C/bin'
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -E cmake_depends "MinGW Makefiles" "C:\\c - c++\\DevilutionX\\build_NOW\\CMakeFiles\\_CMakeLTOTest-C\\src" "C:\\c - c++\\DevilutionX\\build_NOW\\CMakeFiles\\_CMakeLTOTest-C\\src" "C:\\c - c++\\DevilutionX\\build_NOW\\CMakeFiles\\_CMakeLTOTest-C\\bin" "C:\\c - c++\\DevilutionX\\build_NOW\\CMakeFiles\\_CMakeLTOTest-C\\bin" "C:\\c - c++\\DevilutionX\\build_NOW\\CMakeFiles\\_CMakeLTOTest-C\\bin\\CMakeFiles\\foo.dir\\DependInfo.cmake" foo
+        Dependee "C:\\c - c++\\DevilutionX\\build_NOW\\CMakeFiles\\_CMakeLTOTest-C\\bin\\CMakeFiles\\foo.dir\\DependInfo.cmake" is newer than depender "C:/c - c++/DevilutionX/build_NOW/CMakeFiles/_CMakeLTOTest-C/bin/CMakeFiles/foo.dir/depend.internal".
+        Dependee "C:/c - c++/DevilutionX/build_NOW/CMakeFiles/_CMakeLTOTest-C/bin/CMakeFiles/CMakeDirectoryInformation.cmake" is newer than depender "C:/c - c++/DevilutionX/build_NOW/CMakeFiles/_CMakeLTOTest-C/bin/CMakeFiles/foo.dir/depend.internal".
+        Scanning dependencies of target foo
+        mingw32-make[2]: Leaving directory 'C:/c - c++/DevilutionX/build_NOW/CMakeFiles/_CMakeLTOTest-C/bin'
+        C:/mingw64/bin/mingw32-make.exe  -f CMakeFiles\\foo.dir\\build.make CMakeFiles/foo.dir/build
+        mingw32-make[2]: Entering directory 'C:/c - c++/DevilutionX/build_NOW/CMakeFiles/_CMakeLTOTest-C/bin'
+        [ 25%] Building C object CMakeFiles/foo.dir/foo.c.obj
+        C:\\mingw64\\bin\\gcc.exe   -flto=auto -fno-fat-lto-objects -o CMakeFiles\\foo.dir\\foo.c.obj -c "C:\\c - c++\\DevilutionX\\build_NOW\\CMakeFiles\\_CMakeLTOTest-C\\src\\foo.c"
+        [ 50%] Linking C static library libfoo.a
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -P CMakeFiles\\foo.dir\\cmake_clean_target.cmake
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -E cmake_link_script CMakeFiles\\foo.dir\\link.txt --verbose=1
+        "C:/mingw64/bin/gcc-ar.exe" qc libfoo.a CMakeFiles/foo.dir/foo.c.obj
+        "C:/mingw64/bin/gcc-ranlib.exe" libfoo.a
+        mingw32-make[2]: Leaving directory 'C:/c - c++/DevilutionX/build_NOW/CMakeFiles/_CMakeLTOTest-C/bin'
+        [ 50%] Built target foo
+        C:/mingw64/bin/mingw32-make.exe  -f CMakeFiles\\boo.dir\\build.make CMakeFiles/boo.dir/depend
+        mingw32-make[2]: Entering directory 'C:/c - c++/DevilutionX/build_NOW/CMakeFiles/_CMakeLTOTest-C/bin'
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -E cmake_depends "MinGW Makefiles" "C:\\c - c++\\DevilutionX\\build_NOW\\CMakeFiles\\_CMakeLTOTest-C\\src" "C:\\c - c++\\DevilutionX\\build_NOW\\CMakeFiles\\_CMakeLTOTest-C\\src" "C:\\c - c++\\DevilutionX\\build_NOW\\CMakeFiles\\_CMakeLTOTest-C\\bin" "C:\\c - c++\\DevilutionX\\build_NOW\\CMakeFiles\\_CMakeLTOTest-C\\bin" "C:\\c - c++\\DevilutionX\\build_NOW\\CMakeFiles\\_CMakeLTOTest-C\\bin\\CMakeFiles\\boo.dir\\DependInfo.cmake" boo
+        Dependee "C:\\c - c++\\DevilutionX\\build_NOW\\CMakeFiles\\_CMakeLTOTest-C\\bin\\CMakeFiles\\boo.dir\\DependInfo.cmake" is newer than depender "C:/c - c++/DevilutionX/build_NOW/CMakeFiles/_CMakeLTOTest-C/bin/CMakeFiles/boo.dir/depend.internal".
+        Dependee "C:/c - c++/DevilutionX/build_NOW/CMakeFiles/_CMakeLTOTest-C/bin/CMakeFiles/CMakeDirectoryInformation.cmake" is newer than depender "C:/c - c++/DevilutionX/build_NOW/CMakeFiles/_CMakeLTOTest-C/bin/CMakeFiles/boo.dir/depend.internal".
+        Scanning dependencies of target boo
+        mingw32-make[2]: Leaving directory 'C:/c - c++/DevilutionX/build_NOW/CMakeFiles/_CMakeLTOTest-C/bin'
+        C:/mingw64/bin/mingw32-make.exe  -f CMakeFiles\\boo.dir\\build.make CMakeFiles/boo.dir/build
+        mingw32-make[2]: Entering directory 'C:/c - c++/DevilutionX/build_NOW/CMakeFiles/_CMakeLTOTest-C/bin'
+        [ 75%] Building C object CMakeFiles/boo.dir/main.c.obj
+        C:\\mingw64\\bin\\gcc.exe   -flto=auto -fno-fat-lto-objects -o CMakeFiles\\boo.dir\\main.c.obj -c "C:\\c - c++\\DevilutionX\\build_NOW\\CMakeFiles\\_CMakeLTOTest-C\\src\\main.c"
+        [100%] Linking C executable boo.exe
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -E cmake_link_script CMakeFiles\\boo.dir\\link.txt --verbose=1
+        BFD: CMakeFiles/boo.dir/main.c.obj: plugin needed to handle lto object
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -E rm -f CMakeFiles\\boo.dir/objects.a
+        C:\\mingw64\\bin\\ar.exe qc CMakeFiles\\boo.dir/objects.a @CMakeFiles\\boo.dir\\objects1.rsp
+        C:\\mingw64\\bin\\gcc.exe -flto=auto -fno-fat-lto-objects -Wl,--whole-archive CMakeFiles\\boo.dir/objects.a -Wl,--no-whole-archive -o boo.exe -Wl,--out-implib,libboo.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\\boo.dir\\linkLibs.rsp
+        mingw32-make[2]: Leaving directory 'C:/c - c++/DevilutionX/build_NOW/CMakeFiles/_CMakeLTOTest-C/bin'
+        [100%] Built target boo
+        mingw32-make[1]: Leaving directory 'C:/c - c++/DevilutionX/build_NOW/CMakeFiles/_CMakeLTOTest-C/bin'
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -E cmake_progress_start "C:\\c - c++\\DevilutionX\\build_NOW\\CMakeFiles\\_CMakeLTOTest-C\\bin\\CMakeFiles" 0
+        
+      exitCode: 0
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/FindGit.cmake:111 (find_program)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/FetchContent.cmake:1884 (find_package)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/FetchContent.cmake:1619 (__FetchContent_populateSubbuild)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/FetchContent.cmake:2155:EVAL:2 (__FetchContent_doPopulation)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/FetchContent.cmake:2155 (cmake_language)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/FetchContent.cmake:2394 (__FetchContent_Populate)"
+      - "CMake/functions/FetchContent_ExcludeFromAll_backport.cmake:23 (FetchContent_MakeAvailable)"
+      - "3rdParty/bzip2/CMakeLists.txt:9 (FetchContent_MakeAvailable_ExcludeFromAll)"
+    mode: "program"
+    variable: "GIT_EXECUTABLE"
+    description: "Git command line client"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "git.cmd"
+      - "git"
+    candidate_directories:
+      - "C:/c - c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/bin/"
+      - "C:/c - c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/sbin/"
+      - "C:/c - c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/"
+      - "C:/Python311/Scripts/"
+      - "C:/Python311/"
+      - "C:/Windows/System32/"
+      - "C:/Windows/"
+      - "C:/Windows/System32/wbem/"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/"
+      - "C:/Windows/System32/OpenSSH/"
+      - "C:/Program Files/dotnet/"
+      - "C:/ProgramData/chocolatey/bin/"
+      - "C:/Program Files/nodejs/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Program Files/Git/cmd/"
+      - "C:/Program Files/Git/mingw64/bin/"
+      - "C:/Program Files/Git/usr/bin/"
+      - "C:/mingw64/bin/"
+      - "C:/Users/xiphos-pc1/AppData/Local/Programs/Python/Python313/Scripts/"
+      - "C:/Users/xiphos-pc1/AppData/Local/Programs/Python/Python313/"
+      - "C:/Users/xiphos-pc1/AppData/Local/Microsoft/WindowsApps/"
+      - "C:/Users/xiphos-pc1/AppData/Local/Programs/Microsoft VS Code/bin/"
+      - "C:/Users/xiphos-pc1/AppData/Roaming/npm/"
+      - "C:/Users/xiphos-pc1/AppData/Local/Programs/Ollama/"
+      - "C:/Users/xiphos-pc1/AppData/Local/Programs/Kiro/bin/"
+      - "C:/vcpkg/"
+      - "C:/Program Files/bin/"
+      - "C:/Program Files/sbin/"
+      - "C:/Program Files/"
+      - "C:/Program Files (x86)/bin/"
+      - "C:/Program Files (x86)/sbin/"
+      - "C:/Program Files (x86)/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Program Files/CMake/sbin/"
+      - "C:/Program Files/CMake/"
+      - "C:/Program Files (x86)/DevilutionX/bin/"
+      - "C:/Program Files (x86)/DevilutionX/sbin/"
+      - "C:/Program Files (x86)/DevilutionX/"
+      - "C:/Users/xiphos-pc1/AppData/Local/Atlassian/SourceTree/git_local/bin/"
+    searched_directories:
+      - "C:/c - c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/bin/git.cmd.com"
+      - "C:/c - c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/bin/git.cmd.exe"
+      - "C:/c - c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/bin/git.cmd"
+      - "C:/c - c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/sbin/git.cmd.com"
+      - "C:/c - c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/sbin/git.cmd.exe"
+      - "C:/c - c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/sbin/git.cmd"
+      - "C:/c - c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/git.cmd.com"
+      - "C:/c - c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/git.cmd.exe"
+      - "C:/c - c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/git.cmd"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/git.cmd.com"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/git.cmd.exe"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/git.cmd"
+      - "C:/Python311/Scripts/git.cmd.com"
+      - "C:/Python311/Scripts/git.cmd.exe"
+      - "C:/Python311/Scripts/git.cmd"
+      - "C:/Python311/git.cmd.com"
+      - "C:/Python311/git.cmd.exe"
+      - "C:/Python311/git.cmd"
+      - "C:/Windows/System32/git.cmd.com"
+      - "C:/Windows/System32/git.cmd.exe"
+      - "C:/Windows/System32/git.cmd"
+      - "C:/Windows/git.cmd.com"
+      - "C:/Windows/git.cmd.exe"
+      - "C:/Windows/git.cmd"
+      - "C:/Windows/System32/wbem/git.cmd.com"
+      - "C:/Windows/System32/wbem/git.cmd.exe"
+      - "C:/Windows/System32/wbem/git.cmd"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/git.cmd.com"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/git.cmd.exe"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/git.cmd"
+      - "C:/Windows/System32/OpenSSH/git.cmd.com"
+      - "C:/Windows/System32/OpenSSH/git.cmd.exe"
+      - "C:/Windows/System32/OpenSSH/git.cmd"
+      - "C:/Program Files/dotnet/git.cmd.com"
+      - "C:/Program Files/dotnet/git.cmd.exe"
+      - "C:/Program Files/dotnet/git.cmd"
+      - "C:/ProgramData/chocolatey/bin/git.cmd.com"
+      - "C:/ProgramData/chocolatey/bin/git.cmd.exe"
+      - "C:/ProgramData/chocolatey/bin/git.cmd"
+      - "C:/Program Files/nodejs/git.cmd.com"
+      - "C:/Program Files/nodejs/git.cmd.exe"
+      - "C:/Program Files/nodejs/git.cmd"
+      - "C:/Program Files/CMake/bin/git.cmd.com"
+      - "C:/Program Files/CMake/bin/git.cmd.exe"
+      - "C:/Program Files/CMake/bin/git.cmd"
+      - "C:/Program Files/Git/cmd/git.cmd.com"
+      - "C:/Program Files/Git/cmd/git.cmd.exe"
+      - "C:/Program Files/Git/cmd/git.cmd"
+      - "C:/Program Files/Git/mingw64/bin/git.cmd.com"
+      - "C:/Program Files/Git/mingw64/bin/git.cmd.exe"
+      - "C:/Program Files/Git/mingw64/bin/git.cmd"
+      - "C:/Program Files/Git/usr/bin/git.cmd.com"
+      - "C:/Program Files/Git/usr/bin/git.cmd.exe"
+      - "C:/Program Files/Git/usr/bin/git.cmd"
+      - "C:/mingw64/bin/git.cmd.com"
+      - "C:/mingw64/bin/git.cmd.exe"
+      - "C:/mingw64/bin/git.cmd"
+      - "C:/Users/xiphos-pc1/AppData/Local/Programs/Python/Python313/Scripts/git.cmd.com"
+      - "C:/Users/xiphos-pc1/AppData/Local/Programs/Python/Python313/Scripts/git.cmd.exe"
+      - "C:/Users/xiphos-pc1/AppData/Local/Programs/Python/Python313/Scripts/git.cmd"
+      - "C:/Users/xiphos-pc1/AppData/Local/Programs/Python/Python313/git.cmd.com"
+      - "C:/Users/xiphos-pc1/AppData/Local/Programs/Python/Python313/git.cmd.exe"
+      - "C:/Users/xiphos-pc1/AppData/Local/Programs/Python/Python313/git.cmd"
+      - "C:/Users/xiphos-pc1/AppData/Local/Microsoft/WindowsApps/git.cmd.com"
+      - "C:/Users/xiphos-pc1/AppData/Local/Microsoft/WindowsApps/git.cmd.exe"
+      - "C:/Users/xiphos-pc1/AppData/Local/Microsoft/WindowsApps/git.cmd"
+      - "C:/Users/xiphos-pc1/AppData/Local/Programs/Microsoft VS Code/bin/git.cmd.com"
+      - "C:/Users/xiphos-pc1/AppData/Local/Programs/Microsoft VS Code/bin/git.cmd.exe"
+      - "C:/Users/xiphos-pc1/AppData/Local/Programs/Microsoft VS Code/bin/git.cmd"
+      - "C:/Users/xiphos-pc1/AppData/Roaming/npm/git.cmd.com"
+      - "C:/Users/xiphos-pc1/AppData/Roaming/npm/git.cmd.exe"
+      - "C:/Users/xiphos-pc1/AppData/Roaming/npm/git.cmd"
+      - "C:/Users/xiphos-pc1/AppData/Local/Programs/Ollama/git.cmd.com"
+      - "C:/Users/xiphos-pc1/AppData/Local/Programs/Ollama/git.cmd.exe"
+      - "C:/Users/xiphos-pc1/AppData/Local/Programs/Ollama/git.cmd"
+      - "C:/Users/xiphos-pc1/AppData/Local/Programs/Kiro/bin/git.cmd.com"
+      - "C:/Users/xiphos-pc1/AppData/Local/Programs/Kiro/bin/git.cmd.exe"
+      - "C:/Users/xiphos-pc1/AppData/Local/Programs/Kiro/bin/git.cmd"
+      - "C:/vcpkg/git.cmd.com"
+      - "C:/vcpkg/git.cmd.exe"
+      - "C:/vcpkg/git.cmd"
+      - "C:/Program Files/bin/git.cmd.com"
+      - "C:/Program Files/bin/git.cmd.exe"
+      - "C:/Program Files/bin/git.cmd"
+      - "C:/Program Files/sbin/git.cmd.com"
+      - "C:/Program Files/sbin/git.cmd.exe"
+      - "C:/Program Files/sbin/git.cmd"
+      - "C:/Program Files/git.cmd.com"
+      - "C:/Program Files/git.cmd.exe"
+      - "C:/Program Files/git.cmd"
+      - "C:/Program Files (x86)/bin/git.cmd.com"
+      - "C:/Program Files (x86)/bin/git.cmd.exe"
+      - "C:/Program Files (x86)/bin/git.cmd"
+      - "C:/Program Files (x86)/sbin/git.cmd.com"
+      - "C:/Program Files (x86)/sbin/git.cmd.exe"
+      - "C:/Program Files (x86)/sbin/git.cmd"
+      - "C:/Program Files (x86)/git.cmd.com"
+      - "C:/Program Files (x86)/git.cmd.exe"
+      - "C:/Program Files (x86)/git.cmd"
+      - "C:/Program Files/CMake/bin/git.cmd.com"
+      - "C:/Program Files/CMake/bin/git.cmd.exe"
+      - "C:/Program Files/CMake/bin/git.cmd"
+      - "C:/Program Files/CMake/sbin/git.cmd.com"
+      - "C:/Program Files/CMake/sbin/git.cmd.exe"
+      - "C:/Program Files/CMake/sbin/git.cmd"
+      - "C:/Program Files/CMake/git.cmd.com"
+      - "C:/Program Files/CMake/git.cmd.exe"
+      - "C:/Program Files/CMake/git.cmd"
+      - "C:/Program Files (x86)/DevilutionX/bin/git.cmd.com"
+      - "C:/Program Files (x86)/DevilutionX/bin/git.cmd.exe"
+      - "C:/Program Files (x86)/DevilutionX/bin/git.cmd"
+      - "C:/Program Files (x86)/DevilutionX/sbin/git.cmd.com"
+      - "C:/Program Files (x86)/DevilutionX/sbin/git.cmd.exe"
+      - "C:/Program Files (x86)/DevilutionX/sbin/git.cmd"
+      - "C:/Program Files (x86)/DevilutionX/git.cmd.com"
+      - "C:/Program Files (x86)/DevilutionX/git.cmd.exe"
+      - "C:/Program Files (x86)/DevilutionX/git.cmd"
+      - "C:/Users/xiphos-pc1/AppData/Local/Atlassian/SourceTree/git_local/bin/git.cmd.com"
+      - "C:/Users/xiphos-pc1/AppData/Local/Atlassian/SourceTree/git_local/bin/git.cmd.exe"
+      - "C:/Users/xiphos-pc1/AppData/Local/Atlassian/SourceTree/git_local/bin/git.cmd"
+      - "C:/c - c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/bin/git.com"
+      - "C:/c - c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/bin/git.exe"
+      - "C:/c - c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/bin/git"
+      - "C:/c - c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/sbin/git.com"
+      - "C:/c - c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/sbin/git.exe"
+      - "C:/c - c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/sbin/git"
+      - "C:/c - c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/git.com"
+      - "C:/c - c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/git.exe"
+      - "C:/c - c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32/git"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/git.com"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/git.exe"
+      - "C:/Program Files (x86)/Common Files/Oracle/Java/javapath/git"
+      - "C:/Python311/Scripts/git.com"
+      - "C:/Python311/Scripts/git.exe"
+      - "C:/Python311/Scripts/git"
+      - "C:/Python311/git.com"
+      - "C:/Python311/git.exe"
+      - "C:/Python311/git"
+      - "C:/Windows/System32/git.com"
+      - "C:/Windows/System32/git.exe"
+      - "C:/Windows/System32/git"
+      - "C:/Windows/git.com"
+      - "C:/Windows/git.exe"
+      - "C:/Windows/git"
+      - "C:/Windows/System32/wbem/git.com"
+      - "C:/Windows/System32/wbem/git.exe"
+      - "C:/Windows/System32/wbem/git"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/git.com"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/git.exe"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/git"
+      - "C:/Windows/System32/OpenSSH/git.com"
+      - "C:/Windows/System32/OpenSSH/git.exe"
+      - "C:/Windows/System32/OpenSSH/git"
+      - "C:/Program Files/dotnet/git.com"
+      - "C:/Program Files/dotnet/git.exe"
+      - "C:/Program Files/dotnet/git"
+      - "C:/ProgramData/chocolatey/bin/git.com"
+      - "C:/ProgramData/chocolatey/bin/git.exe"
+      - "C:/ProgramData/chocolatey/bin/git"
+      - "C:/Program Files/nodejs/git.com"
+      - "C:/Program Files/nodejs/git.exe"
+      - "C:/Program Files/nodejs/git"
+      - "C:/Program Files/CMake/bin/git.com"
+      - "C:/Program Files/CMake/bin/git.exe"
+      - "C:/Program Files/CMake/bin/git"
+      - "C:/Program Files/Git/cmd/git.com"
+    found: "C:/Program Files/Git/cmd/git.exe"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "C:/c - c++/DevilutionX/deps/SDL2-dev/SDL2-2.32.10/x86_64-w64-mingw32"
+      ENV{PATH}:
+        - "C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath"
+        - "C:\\Python311\\Scripts\\"
+        - "C:\\Python311\\"
+        - "C:\\Windows\\system32"
+        - "C:\\Windows"
+        - "C:\\Windows\\System32\\Wbem"
+        - "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\Windows\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\dotnet\\"
+        - "C:\\ProgramData\\chocolatey\\bin"
+        - "C:\\Program Files\\nodejs\\"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Program Files\\Git\\mingw64\\bin"
+        - "C:\\Program Files\\Git\\usr\\bin"
+        - "C:\\mingw64\\bin"
+        - "C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath"
+        - "C:\\Python311\\Scripts\\"
+        - "C:\\Python311\\"
+        - "C:\\Windows\\system32"
+        - "C:\\Windows"
+        - "C:\\Windows\\System32\\Wbem"
+        - "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\Windows\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\dotnet\\"
+        - "C:\\ProgramData\\chocolatey\\bin"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Program Files\\Git\\mingw64\\bin"
+        - "C:\\Program Files\\Git\\usr\\bin"
+        - "C:\\Program Files\\nodejs\\"
+        - "C:\\Users\\xiphos-pc1\\AppData\\Local\\Programs\\Python\\Python313\\Scripts\\"
+        - "C:\\Users\\xiphos-pc1\\AppData\\Local\\Programs\\Python\\Python313\\"
+        - "C:\\Users\\xiphos-pc1\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\xiphos-pc1\\AppData\\Local\\Programs\\Microsoft VS Code\\bin"
+        - "C:\\Users\\xiphos-pc1\\AppData\\Roaming\\npm"
+        - "C:\\Users\\xiphos-pc1\\AppData\\Local\\Programs\\Ollama"
+        - "C:\\Users\\xiphos-pc1\\AppData\\Local\\Programs\\Kiro\\bin"
+        - "C:\\vcpkg"
+      CMAKE_INSTALL_PREFIX: "C:/Program Files (x86)/DevilutionX"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "C:/Program Files"
+        - "C:/Program Files (x86)"
+        - "C:/Program Files/CMake"
+        - "C:/Program Files (x86)/DevilutionX"
+...

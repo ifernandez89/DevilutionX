@@ -57,8 +57,8 @@ if(SCREEN_READER_INTEGRATION)
 endif()
 
 if(EMSCRIPTEN)
-  # We use `USE_PTHREADS=1` here to get a version of SDL2 that supports threads.
-  emscripten_system_library("SDL2" SDL2::SDL2 USE_SDL=2 USE_PTHREADS=1)
+  # Use consistent threading disabled to match Lua without atomics
+  emscripten_system_library("SDL2" SDL2::SDL2 USE_SDL=2 USE_PTHREADS=0)
   list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/3rdParty/SDL2/CMake")
 elseif(USE_SDL1)
   find_package(SDL 1.2.10 REQUIRED)

@@ -27,18 +27,10 @@ void EmbeddedVFS::RegisterAsset(const std::string& path, const uint8_t* data, si
 
 void EmbeddedVFS::RegisterAssetsFromManifest()
 {
-    // This function will be populated by the asset generation tool
-    // For now, we'll register some placeholder assets
-    
-    LogVerbose("EmbeddedVFS: Registering assets from manifest...");
-    
-    // TODO: Auto-generated asset registration will go here
-    // Example:
-    // extern const uint8_t asset_levels_l1data_banner1_dun[];
-    // extern const size_t asset_levels_l1data_banner1_dun_size;
-    // RegisterAsset("levels/l1data/banner1.dun", asset_levels_l1data_banner1_dun, asset_levels_l1data_banner1_dun_size);
-    
-    LogVerbose("EmbeddedVFS: Asset registration complete. {} assets registered.", assets.size());
+    // Stub implementation for WebAssembly builds without asset manifest
+    LogInfo("EmbeddedVFS: Asset manifest disabled - using stub implementation");
+    // In a production build, this would register all embedded assets
+    // For now, we just log that the system is ready
 }
 
 std::vector<uint8_t> EmbeddedVFS::LoadFile(const std::string& path)

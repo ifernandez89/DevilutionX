@@ -6,9 +6,14 @@ set(libdevilutionx_SRCS
   advanced_debug.cpp
   apocalypse_crash_debug.cpp
   appfat.cpp
+  architectural_shield.cpp
+  corruption_detector.cpp
+  area_dump.cpp
   automap.cpp
   capture.cpp
   combat_pauses.cpp
+  coordinate_validator.cpp
+  crash_hunter.cpp
   cursor.cpp
   dead.cpp
   debug.cpp

@@ -20,26 +20,18 @@ static DepthVariantsState g_depthVariants;
 void InitDepthVariants()
 {
     g_depthVariants = DepthVariantsState{};
-    g_depthVariants.enabled = true;
+    g_depthVariants.enabled = true;  // ✅ REACTIVADO
     g_depthVariants.currentLevel = currlevel;
     g_depthVariants.lastCalculatedLevel = 0;
     
     // Calculate initial bonuses
     CalculateDepthBonuses();
     
-    LogVerbose("🎯 Depth Variants System initialized for level {}", currlevel);
+    LogVerbose("✅ Depth Variants System REACTIVATED for level {}", currlevel);
 }
 
 void CalculateDepthBonuses()
 {
-    if (!g_depthVariants.enabled) {
-        g_depthVariants.hpBonus = 0;
-        g_depthVariants.damageBonus = 0;
-        g_depthVariants.acBonus = 0;
-        g_depthVariants.depthTier = 0;
-        return;
-    }
-    
     g_depthVariants.currentLevel = currlevel;
     
     // No bonuses before start level
@@ -84,8 +76,6 @@ void CalculateDepthBonuses()
 
 void UpdateDepthVariants()
 {
-    if (!g_depthVariants.enabled) return;
-    
     // Only recalculate if level changed
     if (g_depthVariants.lastCalculatedLevel != currlevel) {
         CalculateDepthBonuses();
@@ -94,7 +84,7 @@ void UpdateDepthVariants()
 
 void ApplyDepthScaling(Monster &monster)
 {
-    if (!g_depthVariants.enabled || !IsDepthVariantsActive()) {
+    if (!IsDepthVariantsActive()) {
         return;
     }
     
@@ -129,7 +119,7 @@ void ApplyDepthScaling(Monster &monster)
 
 bool ApplyEliteTransformation(Monster &monster)
 {
-    if (!g_depthVariants.enabled || !IsDepthVariantsActive()) {
+    if (!IsDepthVariantsActive()) {
         return false;
     }
     
@@ -169,7 +159,7 @@ bool ApplyEliteTransformation(Monster &monster)
 
 bool IsDepthVariantsActive()
 {
-    return g_depthVariants.enabled && currlevel >= DepthVariants::START_LEVEL;
+    return currlevel >= DepthVariants::START_LEVEL;
 }
 
 int GetCurrentDepthTier()

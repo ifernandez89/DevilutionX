@@ -349,8 +349,8 @@ include(Dependencies)
 
 add_subdirectory(Source)
 
-# 🌑 NIGHTMARE EDITION: Ejecutable se llama "nightmare" en lugar de "devilutionx"
-set(BIN_TARGET nightmare)
+# 🌑 NIGHTMARE EDITION: Ejecutable se llama "devilutionx" (revertido por problemas con Windows Game Bar)
+set(BIN_TARGET devilutionx)
 if(NINTENDO_3DS)
   set(BIN_TARGET ${BIN_TARGET}.elf)
 elseif(TARGET_PLATFORM STREQUAL "dos")
@@ -360,14 +360,14 @@ endif()
 if(ANDROID)
   add_library(${BIN_TARGET} SHARED Source/main.cpp)
 elseif(UWP_LIB)
-  set(BIN_TARGET libnightmare)
+  set(BIN_TARGET libdevilutionx)
 else()
   add_executable(${BIN_TARGET}
     WIN32
     MACOSX_BUNDLE
     Source/main.cpp
-    Packaging/windows/nightmare.exe.manifest
-    Packaging/windows/nightmare.rc
+    Packaging/windows/devilutionx.exe.manifest
+    Packaging/windows/devilutionx.rc
     Packaging/apple/LaunchScreen.storyboard)
 
     if(CMAKE_STRIP AND NOT DEVILUTIONX_DISABLE_STRIP)

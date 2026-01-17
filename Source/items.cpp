@@ -5,6 +5,8 @@
  */
 #include "items.h"
 #include "hellfire_book_fix.h"  // 🔥 HELLFIRE BOOK RECOVERY SYSTEM
+#include "architectural_analysis.h"  // 🔍 CRASH DEBUG
+#include "crash_hunter.h"  // 🎯 CRASH HUNTER - Aggressive logging
 
 #include <algorithm>
 #include <array>
@@ -3778,9 +3780,24 @@ void DeleteItem(int i)
 
 void ProcessItems()
 {
+	CRASH_HUNTER_CHECKPOINT("ProcessItems START");
+	
 	for (int i = 0; i < ActiveItemCount; i++) {
 		const int ii = ActiveItems[i];
+		
+		// 🔍 SAFETY: Validar índice de item
+		if (ii < 0 || ii >= MAXITEMS) {
+			ARCH_LOG_CRASH_PREVENTION("Invalid item index in ProcessItems", fmt::format("Index: {}", ii).c_str());
+			continue;
+		}
+		
 		auto &item = Items[ii];
+		
+		// 🔍 SAFETY: Validar que el item tiene datos válidos
+		if (item._itype == ItemType::None) {
+			continue; // Item vacío, skip
+		}
+		
 		if (!item._iAnimFlag)
 			continue;
 		item.AnimInfo.processAnimation();
@@ -3801,6 +3818,8 @@ void ProcessItems()
 		}
 	}
 	ItemDoppel();
+	
+	CRASH_HUNTER_CHECKPOINT("ProcessItems END");
 }
 
 void FreeItemGFX()

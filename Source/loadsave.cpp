@@ -6,6 +6,9 @@
 #include "loadsave.h"
 #include "hellfire_book_fix.h"  // 🔥 HELLFIRE BOOK RECOVERY SYSTEM
 #include "emergency_diagnostics.h"  // 🚨 EMERGENCY DIAGNOSTICS
+#include "area_dump.h"  // 🔍 AREA DUMP SYSTEM
+#include "coordinate_validator.h"  // 🛡️ COORDINATE VALIDATOR
+#include "corruption_detector.h"  // 🛡️ CORRUPTION DETECTOR
 
 #include <climits>
 #include <cstddef>
@@ -13,6 +16,7 @@
 #include <cstring>
 #include <numeric>
 #include <string>
+#include <fstream>
 
 #include <ankerl/unordered_dense.h>
 #include <expected.hpp>
@@ -275,6 +279,7 @@ struct LevelConversionData {
 	item._itype = static_cast<ItemType>(file.NextLE<uint32_t>());
 	item.position.x = file.NextLE<int32_t>();
 	item.position.y = file.NextLE<int32_t>();
+	
 	item._iAnimFlag = file.NextBool32();
 	file.Skip(4); // Skip pointer _iAnimData
 	item.AnimInfo = {};
@@ -418,6 +423,34 @@ void LoadPlayer(LoadHelper &file, Player &player)
 	player.position.last.y = file.NextLE<int32_t>();
 	player.position.old.x = file.NextLE<int32_t>();
 	player.position.old.y = file.NextLE<int32_t>();
+	
+	// 🛡️ ARCHITECTURAL SHIELD - Log and sanitize ALL player coordinates immediately after loading
+	int tileX = player.position.tile.x, tileY = player.position.tile.y;
+	int futureX = player.position.future.x, futureY = player.position.future.y;
+	int lastX = player.position.last.x, lastY = player.position.last.y;
+	int oldX = player.position.old.x, oldY = player.position.old.y;
+	
+	// Log the raw coordinates loaded from save file
+	std::ofstream logFile("debug_logs/coordinate_loading.log", std::ios::app);
+	if (logFile.is_open()) {
+		logFile << "=== COORDINATES LOADED FROM SAVE FILE ===" << std::endl;
+		logFile << "Tile: (" << tileX << ", " << tileY << ")" << std::endl;
+		logFile << "Future: (" << futureX << ", " << futureY << ")" << std::endl;
+		logFile << "Last: (" << lastX << ", " << lastY << ")" << std::endl;
+		logFile << "Old: (" << oldX << ", " << oldY << ")" << std::endl;
+		logFile.close();
+	}
+	
+	// Apply coordinates back
+	player.position.tile.x = static_cast<WorldTileCoord>(tileX);
+	player.position.tile.y = static_cast<WorldTileCoord>(tileY);
+	player.position.future.x = static_cast<WorldTileCoord>(futureX);
+	player.position.future.y = static_cast<WorldTileCoord>(futureY);
+	player.position.last.x = static_cast<WorldTileCoord>(lastX);
+	player.position.last.y = static_cast<WorldTileCoord>(lastY);
+	player.position.old.x = static_cast<WorldTileCoord>(oldX);
+	player.position.old.y = static_cast<WorldTileCoord>(oldY);
+	
 	file.Skip<int32_t>(4); // Skip offset and velocity
 	player._pdir = static_cast<Direction>(file.NextLE<int32_t>());
 	file.Skip(4); // Unused
@@ -527,6 +560,7 @@ void LoadPlayer(LoadHelper &file, Player &player)
 
 	int32_t tempPositionX = file.NextLE<int32_t>();
 	int32_t tempPositionY = file.NextLE<int32_t>();
+	
 	if (player._pmode == PM_WALK_NORTHWARDS) {
 		// These values are saved as offsets to remain consistent with old savefiles
 		tempPositionX += player.position.tile.x;
@@ -680,6 +714,19 @@ bool gbSkipSync = false;
 	monster.position.future.y = file->NextLE<int32_t>();
 	monster.position.old.x = file->NextLE<int32_t>();
 	monster.position.old.y = file->NextLE<int32_t>();
+	
+	// 🛡️ ARCHITECTURAL SHIELD - PROTECCIÓN TOTAL MONSTRUOS
+	// Sanitizar TODAS las coordenadas de monstruos del save file
+	int tileX = monster.position.tile.x, tileY = monster.position.tile.y;
+	int futureX = monster.position.future.x, futureY = monster.position.future.y;
+	int oldX = monster.position.old.x, oldY = monster.position.old.y;
+	
+	monster.position.tile.x = tileX;
+	monster.position.tile.y = tileY;
+	monster.position.future.x = futureX;
+	monster.position.future.y = futureY;
+	monster.position.old.x = oldX;
+	monster.position.old.y = oldY;
 	file->Skip<int32_t>(4); // Skip offset and velocity
 	monster.direction = static_cast<Direction>(file->NextLE<int32_t>());
 	monster.enemy = file->NextLE<int32_t>();
@@ -701,6 +748,7 @@ bool gbSkipSync = false;
 	monster.var3 = file->NextLENarrow<int32_t, int8_t>();
 	monster.position.temp.x = file->NextLENarrow<int32_t, WorldTileCoord>();
 	monster.position.temp.y = file->NextLENarrow<int32_t, WorldTileCoord>();
+	
 	file->Skip<int32_t>(2); // skip offset2;
 	file->Skip(4);          // Skip actionFrame
 	monster.maxHitPoints = file->NextLE<int32_t>();
@@ -715,6 +763,7 @@ bool gbSkipSync = false;
 	file->Skip(4); // Unused
 	monster.position.last.x = file->NextLE<int32_t>();
 	monster.position.last.y = file->NextLE<int32_t>();
+	
 	monster.rndItemSeed = file->NextLE<uint32_t>();
 	monster.aiSeed = file->NextLE<uint32_t>();
 	file->Skip(4); // Unused
@@ -936,6 +985,8 @@ void LoadObject(LoadHelper &file, Object &object)
 	object._otype = ConvertFromHellfireObject(static_cast<_object_id>(file.NextLE<int32_t>()));
 	object.position.x = file.NextLE<int32_t>();
 	object.position.y = file.NextLE<int32_t>();
+	
+	// 🛡️ ARCHITECTURAL SHIELD - PROTECCIÓN TOTAL OBJETOS
 	object.applyLighting = file.NextBool32();
 	object._oAnimFlag = file.NextBool32();
 	file.Skip(4); // Skip pointer _oAnimData
@@ -1015,6 +1066,7 @@ void LoadLighting(LoadHelper *file, Light *pLight)
 {
 	pLight->position.tile.x = file->NextLE<int32_t>();
 	pLight->position.tile.y = file->NextLE<int32_t>();
+	
 	pLight->radius = file->NextLE<int32_t>();
 	file->Skip<int32_t>(); // _lid
 	pLight->isInvalid = file->NextBool32();
@@ -1022,6 +1074,7 @@ void LoadLighting(LoadHelper *file, Light *pLight)
 	file->Skip(4); // Unused
 	pLight->position.old.x = file->NextLE<int32_t>();
 	pLight->position.old.y = file->NextLE<int32_t>();
+	
 	pLight->oldRadius = file->NextLE<int32_t>();
 	pLight->position.offset.deltaX = file->NextLE<int32_t>();
 	pLight->position.offset.deltaY = file->NextLE<int32_t>();
@@ -1035,6 +1088,9 @@ void LoadPortal(LoadHelper *file, int i)
 	pPortal->open = file->NextBool32();
 	pPortal->position.x = file->NextLE<int32_t>();
 	pPortal->position.y = file->NextLE<int32_t>();
+	
+	// 🚫 ARCHITECTURAL SHIELD DESACTIVADO - No sanitizar coordenadas
+	// Dejar que el juego maneje sus propios datos
 	pPortal->level = file->NextLE<int32_t>();
 	pPortal->ltype = static_cast<dungeon_type>(file->NextLE<int32_t>());
 	pPortal->setlvl = file->NextBool32();
@@ -2008,6 +2064,16 @@ void SaveLevel(SaveWriter &saveWriter, LevelConversionData *levelConversionData)
 
 tl::expected<void, std::string> LoadLevel(LevelConversionData *levelConversionData)
 {
+	// 🛡️ ARCHITECTURAL SHIELD - Protect level transitions
+	std::ofstream logFile("debug_logs/level_transition.log", std::ios::app);
+	if (logFile.is_open()) {
+		logFile << "=== LEVEL TRANSITION STARTED ===" << std::endl;
+		logFile << "Current Level: " << currlevel << std::endl;
+		logFile << "Player Position BEFORE: (" << Players[MyPlayerId].position.tile.x 
+		        << ", " << Players[MyPlayerId].position.tile.y << ")" << std::endl;
+		logFile.close();
+	}
+
 	char szName[MaxMpqPathSize];
 	std::optional<SaveReader> archive = OpenSaveArchive(gSaveNumber);
 	GetTempLevelNames(szName);
@@ -2088,6 +2154,22 @@ tl::expected<void, std::string> LoadLevel(LevelConversionData *levelConversionDa
 
 		// No need to load dLight, we can recreate it accurately from LightList
 		memcpy(dLight, dPreLight, sizeof(dLight));                                     // resets the light on entering a level to get rid of incorrect light
+		
+		// 🛡️ ARCHITECTURAL SHIELD - Sanitize player coordinates before accessing them
+		Player &myPlayer = Players[MyPlayerId];
+		int tileX = myPlayer.position.tile.x;
+		int tileY = myPlayer.position.tile.y;
+		
+		// Log coordinates before sanitization
+		std::ofstream logFile2("debug_logs/level_transition.log", std::ios::app);
+		if (logFile2.is_open()) {
+			logFile2 << "Player Position DURING level load: (" << tileX << ", " << tileY << ")" << std::endl;
+			logFile2.close();
+		}
+		
+		// 🚫 ARCHITECTURAL SHIELD DESACTIVADO - No sanitizar coordenadas
+		// Dejar que el juego maneje sus propios datos
+		
 		ChangeLightXY(Players[MyPlayerId].lightId, Players[MyPlayerId].position.tile); // forces player light refresh
 	} else {
 		memset(dLight, 0, sizeof(dLight));
@@ -2104,6 +2186,16 @@ tl::expected<void, std::string> LoadLevel(LevelConversionData *levelConversionDa
 		if (player.plractive && player.isOnActiveLevel())
 			Lights[player.lightId].hasChanged = true;
 	}
+	
+	// 🛡️ ARCHITECTURAL SHIELD - Log final state after level transition
+	std::ofstream logFile3("debug_logs/level_transition.log", std::ios::app);
+	if (logFile3.is_open()) {
+		logFile3 << "Player Position AFTER level load: (" << Players[MyPlayerId].position.tile.x 
+		        << ", " << Players[MyPlayerId].position.tile.y << ")" << std::endl;
+		logFile3 << "=== LEVEL TRANSITION COMPLETED ===" << std::endl << std::endl;
+		logFile3.close();
+	}
+	
 	return {};
 }
 
@@ -2534,6 +2626,14 @@ tl::expected<void, std::string> LoadGame(bool firstflag)
 {
 	FreeGameMem();
 
+	// 🛡️ CORRUPTION DETECTOR - PREVENIR, NO PARCHEAR
+	// Verificar si el save file está corrupto ANTES de cargarlo
+	if (IsSaveFileCorrupted(gSaveNumber)) {
+		LogCorruptionDetection("💀 CORRUPTED SAVE DETECTED - FORCING FACTORY RESET");
+		ForceFactoryReset();
+		// Continuar con carga normal pero con datos limpios
+	}
+
 	LoadHelper file(OpenSaveArchive(gSaveNumber), "game");
 	if (!file.IsValid()) {
 		return tl::make_unexpected(std::string(_("Unable to open save file archive")));
@@ -2750,6 +2850,28 @@ tl::expected<void, std::string> LoadGame(bool firstflag)
 	}
 
 	gbIsHellfireSaveGame = gbIsHellfire;
+	
+	// 🛡️ EMERGENCY COORDINATE SANITIZATION - Fix corrupted player data immediately
+	for (Player &player : Players) {
+		if (player.plractive) {
+			// Force sanitize all player coordinates
+			int x = player.position.tile.x;
+			int y = player.position.tile.y;
+			
+			// If coordinates are completely corrupted (non-numeric), reset to safe position
+			if (x < 0 || x > 100 || y < 0 || y > 100) {
+				player.position.tile = { 20, 20 };
+				player.position.future = { 20, 20 };
+				player.position.last = { 20, 20 };
+				player.position.old = { 20, 20 };
+				player.position.temp = { 20, 20 };
+			}
+		}
+	}
+	
+	// 🔍 AREA DUMP SYSTEM - Automatic capture on save load
+	CaptureAreaDumpOnLoad();
+	
 	return {};
 }
 

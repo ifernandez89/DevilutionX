@@ -84,6 +84,7 @@
 #include "levels/town.h"
 #include "levels/trigs.h"
 #include "lighting.h"
+#include "abstractions/vfs_wrappers.h"  // 🌐 VFS initialization for WebAssembly
 #include "nightmare_ambience.h"
 #include "nightmare_ambient_effects.h"
 #include "nightmare_audio.h"
@@ -1448,6 +1449,9 @@ void ApplicationInit()
 
 void DiabloInit()
 {
+	// 🌐 WEBASSEMBLY: Initialize VFS system first (before any file operations)
+	InitializeVFSForPlatform();
+	
 	if (forceSpawn || *GetOptions().GameMode.shareware)
 		gbIsSpawn = true;
 

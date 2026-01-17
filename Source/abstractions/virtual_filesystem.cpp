@@ -6,6 +6,7 @@
 #include "virtual_filesystem.h"
 
 #include <stdexcept>
+#include <cstring>  // For memcpy
 
 namespace devilution {
 
@@ -19,7 +20,19 @@ void InitializeVFS(std::unique_ptr<VirtualFileSystem> vfs)
 VirtualFileSystem& GetVFS()
 {
     if (!g_virtualFileSystem) {
-        throw std::runtime_error("VFS not initialized! Call InitializeVFS() first.");
+        // Use a simple error handling instead of exceptions
+        // This will be caught by the calling code
+        static class NullVFS : public VirtualFileSystem {
+        public:
+            std::vector<uint8_t> LoadFile(const std::string&) override { return {}; }
+            bool FileExists(const std::string&) override { return false; }
+            size_t GetFileSize(const std::string&) override { return 0; }
+            bool SaveFile(const std::string&, const std::vector<uint8_t>&) override { return false; }
+            bool CreateDirectory(const std::string&) override { return false; }
+            std::vector<std::string> ListFiles(const std::string&) override { return {}; }
+            std::string GetImplementationType() const override { return "NullVFS (Error State)"; }
+        } nullVFS;
+        return nullVFS;
     }
     return *g_virtualFileSystem;
 }

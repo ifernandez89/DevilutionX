@@ -8,6 +8,12 @@ set(libdevilutionx_SRCS
   abstractions/vfs_wrappers.cpp
   platform/native/native_vfs.cpp
   
+  # WebAssembly Browser Edition (conditional compilation)
+  webassembly/browser_edition.cpp
+  
+  # Temporary AI stubs for compilation
+  ai_stubs.cpp
+  
   advanced_debug.cpp
   apocalypse_crash_debug.cpp
   appfat.cpp

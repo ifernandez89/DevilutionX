@@ -70,17 +70,17 @@ bool NativeVFS::SaveFile(const std::string& path, const std::vector<uint8_t>& da
 {
     const std::string absolutePath = GetAbsolutePath(path);
     
-    // Create directory if it doesn't exist
-    try {
-        const std::filesystem::path filePath(absolutePath);
-        const std::filesystem::path directory = filePath.parent_path();
-        
-        if (!directory.empty() && !std::filesystem::exists(directory)) {
-            std::filesystem::create_directories(directory);
+    // Create directory if it doesn't exist (simplified version without exceptions)
+    const std::filesystem::path filePath(absolutePath);
+    const std::filesystem::path directory = filePath.parent_path();
+    
+    if (!directory.empty() && !std::filesystem::exists(directory)) {
+        std::error_code ec;
+        std::filesystem::create_directories(directory, ec);
+        if (ec) {
+            LogError("NativeVFS: Failed to create directory for '{}'", absolutePath);
+            return false;
         }
-    } catch (const std::exception& e) {
-        LogError("NativeVFS: Failed to create directory for '{}': {}", absolutePath, e.what());
-        return false;
     }
     
     std::ofstream file(absolutePath, std::ios::binary);
@@ -103,12 +103,13 @@ bool NativeVFS::CreateDirectory(const std::string& path)
 {
     const std::string absolutePath = GetAbsolutePath(path);
     
-    try {
-        return std::filesystem::create_directories(absolutePath);
-    } catch (const std::exception& e) {
-        LogError("NativeVFS: Failed to create directory '{}': {}", absolutePath, e.what());
+    std::error_code ec;
+    bool result = std::filesystem::create_directories(absolutePath, ec);
+    if (ec) {
+        LogError("NativeVFS: Failed to create directory '{}'", absolutePath);
         return false;
     }
+    return result;
 }
 
 std::vector<std::string> NativeVFS::ListFiles(const std::string& path)
@@ -116,18 +117,20 @@ std::vector<std::string> NativeVFS::ListFiles(const std::string& path)
     const std::string absolutePath = GetAbsolutePath(path);
     std::vector<std::string> files;
     
-    try {
-        if (!std::filesystem::exists(absolutePath) || !std::filesystem::is_directory(absolutePath)) {
-            return files;
+    std::error_code ec;
+    if (!std::filesystem::exists(absolutePath, ec) || !std::filesystem::is_directory(absolutePath, ec)) {
+        return files;
+    }
+    
+    for (const auto& entry : std::filesystem::directory_iterator(absolutePath, ec)) {
+        if (ec) break;
+        if (entry.is_regular_file(ec) && !ec) {
+            files.push_back(entry.path().filename().string());
         }
-        
-        for (const auto& entry : std::filesystem::directory_iterator(absolutePath)) {
-            if (entry.is_regular_file()) {
-                files.push_back(entry.path().filename().string());
-            }
-        }
-    } catch (const std::exception& e) {
-        LogError("NativeVFS: Failed to list files in '{}': {}", absolutePath, e.what());
+    }
+    
+    if (ec) {
+        LogError("NativeVFS: Failed to list files in '{}'", absolutePath);
     }
     
     return files;

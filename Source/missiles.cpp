@@ -2816,7 +2816,7 @@ Missile *AddMissile(WorldTilePosition src, WorldTilePosition dst, Direction midi
 		// 🚨 DEBUG LOGS REACTIVATED FOR TESTING
 		ARCH_LOG_CRASH_PREVENTION("AddMissile Apocalypse detected - checking protection", "AddMissile DEBUG");
 		
-		if (!CanSafelyCastApocalypse()) {
+		if (!CanSafelyCastApocalypse(id)) {
 			ARCH_LOG_CRASH_PREVENTION("Universal Apocalypse protection triggered", "AddMissile");
 			return nullptr; // fail-soft - no crash, just ignore
 		}
@@ -3928,10 +3928,10 @@ void ProcessApocalypse(Missile &missile)
 					if (boomsCreated >= MAX_BOOMS_PER_APOCALYPSE) {
 						ARCH_LOG_CRASH_PREVENTION("Max booms per Apocalypse reached (50)", "ProcessApocalypse");
 						missile._miDelFlag = true;
-						// ATOMIC UNLOCK: Clear the in-progress flag
-						ClearApocalypseInProgress();
+						// ATOMIC UNLOCK: Reset cooldowns
+						ResetApocalypseCooldowns();
 						// 🎯 CRITICAL: Desactivar deferred loot antes de salir
-						// DisableDeferredLoot(); // FIX: NO desactivar aqu� - los booms siguen matando
+						// DisableDeferredLoot(); // FIX: NO desactivar aqu� - los booms siguen matando
 						return;
 					}
 					
@@ -3951,8 +3951,8 @@ void ProcessApocalypse(Missile &missile)
 	
 	// Spell completado naturalmente
 	missile._miDelFlag = true;
-	// ATOMIC UNLOCK: Clear the in-progress flag
-	ClearApocalypseInProgress();
+	// ATOMIC UNLOCK: Reset cooldowns
+	ResetApocalypseCooldowns();
 	
 	// 🎯 APOCALYPSE CRASH FIX: NO procesar loot aquí, se procesará al final de ProcessMissiles
 	// Los booms siguen procesándose y matando monstruos DESPUÉS de que ProcessApocalypse termine

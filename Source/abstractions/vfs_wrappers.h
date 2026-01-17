@@ -11,6 +11,7 @@
 
 #include <memory>
 #include <array>
+#include <cstring>  // For memcpy
 #include <expected.hpp>
 
 #include "abstractions/virtual_filesystem.h"
@@ -38,7 +39,7 @@ std::unique_ptr<T[]> LoadFileInMemVFS(const std::string& path)
     }
     
     auto result = std::make_unique<T[]>(elementCount);
-    std::memcpy(result.get(), data.data(), elementCount * sizeof(T));
+    memcpy(result.get(), data.data(), elementCount * sizeof(T));
     
     return result;
 }
@@ -67,7 +68,7 @@ tl::expected<std::unique_ptr<T[]>, std::string> LoadFileInMemWithStatusVFS(const
     }
     
     auto result = std::make_unique<T[]>(elementCount);
-    std::memcpy(result.get(), data.data(), elementCount * sizeof(T));
+    memcpy(result.get(), data.data(), elementCount * sizeof(T));
     
     return result;
 }
@@ -88,7 +89,7 @@ bool LoadFileInMemVFS(const std::string& path, std::array<T, N>& array)
         return false;
     }
     
-    std::memcpy(array.data(), data.data(), sizeof(array));
+    memcpy(array.data(), data.data(), sizeof(array));
     return true;
 }
 
@@ -112,7 +113,7 @@ tl::expected<void, std::string> LoadFileInMemWithStatusVFS(const std::string& pa
         return tl::unexpected(std::string("File size mismatch for: ") + path);
     }
     
-    std::memcpy(array.data(), data.data(), sizeof(array));
+    memcpy(array.data(), data.data(), sizeof(array));
     return {};
 }
 

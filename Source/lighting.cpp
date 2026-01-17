@@ -13,6 +13,7 @@
 
 #include <expected.hpp>
 
+#include "abstractions/vfs_wrappers.h"  // 🌐 VFS for WebAssembly compatibility
 #include "automap.h"
 #include "engine/displacement.hpp"
 #include "engine/lighting_defs.hpp"
@@ -432,9 +433,10 @@ void DoVision(Point position, uint8_t radius, MapExplorationType doAutomap, bool
 
 tl::expected<void, std::string> LoadTrns()
 {
-	RETURN_IF_ERROR(LoadFileInMemWithStatus("plrgfx\\infra.trn", InfravisionTable));
-	RETURN_IF_ERROR(LoadFileInMemWithStatus("plrgfx\\stone.trn", StoneTable));
-	return LoadFileInMemWithStatus("gendata\\pause.trn", PauseTable);
+	// 🌐 VFS-COMPATIBLE: Use forward slashes and VFS wrappers for WebAssembly compatibility
+	RETURN_IF_ERROR(LoadFileInMemWithStatusVFS("plrgfx/infra.trn", InfravisionTable));
+	RETURN_IF_ERROR(LoadFileInMemWithStatusVFS("plrgfx/stone.trn", StoneTable));
+	return LoadFileInMemWithStatusVFS("gendata/pause.trn", PauseTable);
 }
 
 void MakeLightTable()

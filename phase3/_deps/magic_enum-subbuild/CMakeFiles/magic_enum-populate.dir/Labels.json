@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "C:/c - c++/DevilutionX/phase3/_deps/magic_enum-subbuild/CMakeFiles/magic_enum-populate"
+		},
+		{
+			"file" : "C:/c - c++/DevilutionX/phase3/_deps/magic_enum-subbuild/CMakeFiles/magic_enum-populate.rule"
+		},
+		{
+			"file" : "C:/c - c++/DevilutionX/phase3/_deps/magic_enum-subbuild/CMakeFiles/magic_enum-populate-complete.rule"
+		},
+		{
+			"file" : "C:/c - c++/DevilutionX/phase3/_deps/magic_enum-subbuild/magic_enum-populate-prefix/src/magic_enum-populate-stamp/magic_enum-populate-build.rule"
+		},
+		{
+			"file" : "C:/c - c++/DevilutionX/phase3/_deps/magic_enum-subbuild/magic_enum-populate-prefix/src/magic_enum-populate-stamp/magic_enum-populate-configure.rule"
+		},
+		{
+			"file" : "C:/c - c++/DevilutionX/phase3/_deps/magic_enum-subbuild/magic_enum-populate-prefix/src/magic_enum-populate-stamp/magic_enum-populate-download.rule"
+		},
+		{
+			"file" : "C:/c - c++/DevilutionX/phase3/_deps/magic_enum-subbuild/magic_enum-populate-prefix/src/magic_enum-populate-stamp/magic_enum-populate-install.rule"
+		},
+		{
+			"file" : "C:/c - c++/DevilutionX/phase3/_deps/magic_enum-subbuild/magic_enum-populate-prefix/src/magic_enum-populate-stamp/magic_enum-populate-mkdir.rule"
+		},
+		{
+			"file" : "C:/c - c++/DevilutionX/phase3/_deps/magic_enum-subbuild/magic_enum-populate-prefix/src/magic_enum-populate-stamp/magic_enum-populate-patch.rule"
+		},
+		{
+			"file" : "C:/c - c++/DevilutionX/phase3/_deps/magic_enum-subbuild/magic_enum-populate-prefix/src/magic_enum-populate-stamp/magic_enum-populate-test.rule"
+		},
+		{
+			"file" : "C:/c - c++/DevilutionX/phase3/_deps/magic_enum-subbuild/magic_enum-populate-prefix/src/magic_enum-populate-stamp/magic_enum-populate-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"magic_enum-populate"
+		],
+		"name" : "magic_enum-populate"
+	}
+}

@@ -9,6 +9,7 @@
 
 #include "architectural_analysis.h"
 #include "phase2_logging.h"
+#include "phase3_input_logging.h"
 #include "crash_hunter.h"  // 🎯 CRASH HUNTER - Aggressive logging
 #include "area_dump.h"  // 🔍 Area Dump Debug System
 
@@ -904,11 +905,15 @@ void PrepareForFadeIn()
 
 void GameEventHandler(const SDL_Event &event, uint16_t modState)
 {
+	PHASE3_LOG("GameEventHandler called - Processing SDL event");
+	PHASE3_INPUT_SYSTEM_CHECK("SDL Events", "Active and processing");
+	
 	[[maybe_unused]] const Options &options = GetOptions();
 	StaticVector<ControllerButtonEvent, 4> ctrlEvents = ToControllerButtonEvents(event);
 	for (const ControllerButtonEvent ctrlEvent : ctrlEvents) {
 		GameAction action;
 		if (HandleControllerButtonEvent(event, ctrlEvent, action) && action.type == GameActionType_SEND_KEY) {
+			PHASE3_INPUT_EVENT("Controller Action", "Controller button mapped to game action");
 			if ((action.send_key.vk_code & KeymapperMouseButtonMask) != 0) {
 				const unsigned button = action.send_key.vk_code & ~KeymapperMouseButtonMask;
 				if (!action.send_key.up)
@@ -945,22 +950,32 @@ void GameEventHandler(const SDL_Event &event, uint16_t modState)
 
 	switch (event.type) {
 	case SDL_EVENT_KEY_DOWN:
+		PHASE3_KEYBOARD_EVENT(SDLC_EventKey(event), "Key Down");
+		PHASE3_INPUT_SYSTEM_CHECK("Keyboard System", "Functional - Key press detected");
 		PressKey(SDLC_EventKey(event), modState);
 		return;
 	case SDL_EVENT_KEY_UP:
+		PHASE3_KEYBOARD_EVENT(SDLC_EventKey(event), "Key Up");
+		PHASE3_INPUT_SYSTEM_CHECK("Keyboard System", "Functional - Key release detected");
 		ReleaseKey(SDLC_EventKey(event));
 		return;
 	case SDL_EVENT_MOUSE_MOTION:
+		PHASE3_MOUSE_EVENT(SDLC_EventMotionIntX(event), SDLC_EventMotionIntY(event), -1, "Mouse Move");
+		PHASE3_INPUT_SYSTEM_CHECK("Mouse System", "Functional - Motion tracking active");
 		if (ControlMode == ControlTypes::KeyboardAndMouse && invflag)
 			InvalidateInventorySlot();
 		MousePosition = { SDLC_EventMotionIntX(event), SDLC_EventMotionIntY(event) };
 		gmenu_on_mouse_move();
 		return;
 	case SDL_EVENT_MOUSE_BUTTON_DOWN:
+		PHASE3_MOUSE_EVENT(SDLC_EventButtonIntX(event), SDLC_EventButtonIntY(event), event.button.button, "Mouse Button Down");
+		PHASE3_INPUT_SYSTEM_CHECK("Mouse System", "Functional - Button press detected");
 		MousePosition = { SDLC_EventButtonIntX(event), SDLC_EventButtonIntY(event) };
 		HandleMouseButtonDown(event.button.button, modState);
 		return;
 	case SDL_EVENT_MOUSE_BUTTON_UP:
+		PHASE3_MOUSE_EVENT(SDLC_EventButtonIntX(event), SDLC_EventButtonIntY(event), event.button.button, "Mouse Button Up");
+		PHASE3_INPUT_SYSTEM_CHECK("Mouse System", "Functional - Button release detected");
 		MousePosition = { SDLC_EventButtonIntX(event), SDLC_EventButtonIntY(event) };
 		HandleMouseButtonUp(event.button.button, modState);
 		return;

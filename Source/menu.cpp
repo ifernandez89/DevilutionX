@@ -5,6 +5,7 @@
  */
 
 #include <cstdint>
+#include "phase2_logging.h"
 
 #ifdef USE_SDL3
 #include <SDL3/SDL_surface.h>
@@ -151,10 +152,16 @@ void mainmenu_wait_for_button_sound()
 
 void mainmenu_loop()
 {
+	PHASE2_LOG("mainmenu_loop() started - Main game loop active");
+	PHASE2_ENGINE_STEP("MENU_LOOP_ENTRY", "Main menu loop executing");
+	
 	bool done;
 
 	RefreshMusic();
 	done = false;
+
+	PHASE2_MEMORY_CHECK("mainmenu_loop - Loop initialized");
+	PHASE2_ENGINE_STEP("MENU_LOOP_ACTIVE", "Menu loop running - engine fully operational");
 
 	do {
 		_mainmenu_selections menu = MAINMENU_NONE;
@@ -163,18 +170,23 @@ void mainmenu_loop()
 		else if (!UiMainMenuDialog(gszProductName, &menu, 30))
 			app_fatal(_("Unable to display mainmenu"));
 
+		PHASE2_ENGINE_STEP("MENU_SELECTION", "Processing menu selection");
+
 		switch (menu) {
 		case MAINMENU_NONE:
 			break;
 		case MAINMENU_SINGLE_PLAYER:
+			PHASE2_ENGINE_STEP("SINGLE_PLAYER", "Single player mode selected");
 			if (!InitSinglePlayerMenu())
 				done = true;
 			break;
 		case MAINMENU_MULTIPLAYER:
+			PHASE2_ENGINE_STEP("MULTIPLAYER", "Multiplayer mode selected");
 			if (!InitMultiPlayerMenu())
 				done = true;
 			break;
 		case MAINMENU_ATTRACT_MODE:
+			PHASE2_ENGINE_STEP("ATTRACT_MODE", "Attract mode activated");
 			if (gbIsSpawn && !HaveIntro())
 				done = false;
 			else if (gbActive) {
@@ -185,21 +197,30 @@ void mainmenu_loop()
 			}
 			break;
 		case MAINMENU_SHOW_CREDITS:
+			PHASE2_ENGINE_STEP("CREDITS", "Showing credits");
 			UiCreditsDialog();
 			break;
 		case MAINMENU_SHOW_SUPPORT:
+			PHASE2_ENGINE_STEP("SUPPORT", "Showing support dialog");
 			UiSupportDialog();
 			break;
 		case MAINMENU_EXIT_DIABLO:
+			PHASE2_ENGINE_STEP("EXIT", "Exit selected - terminating loop");
 			mainmenu_wait_for_button_sound();
 			done = true;
 			break;
 		case MAINMENU_SETTINGS:
+			PHASE2_ENGINE_STEP("SETTINGS", "Settings menu selected");
 			UiSettingsMenu();
 			break;
 		}
+
+		PHASE2_MEMORY_CHECK("mainmenu_loop - Loop iteration complete");
 	} while (!done);
 
+	PHASE2_ENGINE_STEP("MENU_LOOP_EXIT", "Main menu loop completed");
+	PHASE2_LOG("mainmenu_loop() finished - Engine loop lifecycle verified");
+	
 	music_stop();
 }
 

@@ -5,6 +5,8 @@
 #include <SDL_main.h>
 #endif
 
+#include "phase2_logging.h"
+
 #ifdef __SWITCH__
 #include "platform/switch/network.h"
 #include "platform/switch/random.hpp"
@@ -35,6 +37,9 @@ extern "C" const char *__asan_default_options() // NOLINT(bugprone-reserved-iden
 
 extern "C" int main(int argc, char **argv)
 {
+	PHASE2_LOG("main() started - WebAssembly runtime active");
+	PHASE2_ENGINE_STEP("MAIN_ENTRY", "C main() function executing");
+	
 #ifdef __SWITCH__
 	switch_romfs_init();
 	switch_enable_network();
@@ -57,7 +62,15 @@ extern "C" int main(int argc, char **argv)
 #ifdef GPERF_HEAP_MAIN
 	HeapProfilerStart("main");
 #endif
+	
+	PHASE2_MEMORY_CHECK("main()");
+	PHASE2_ENGINE_STEP("DIABLO_MAIN_CALL", "Calling DiabloMain()");
+	
 	const int result = devilution::DiabloMain(argc, argv);
+	
+	PHASE2_ENGINE_STEP("DIABLO_MAIN_RETURN", "DiabloMain() returned successfully");
+	PHASE2_LOG("main() completed successfully");
+	
 #ifdef GPERF_HEAP_MAIN
 	HeapProfilerStop();
 #endif

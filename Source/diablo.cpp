@@ -8,6 +8,7 @@
 #include <string_view>
 
 #include "architectural_analysis.h"
+#include "phase2_logging.h"
 #include "crash_hunter.h"  // 🎯 CRASH HUNTER - Aggressive logging
 #include "area_dump.h"  // 🔍 Area Dump Debug System
 
@@ -3058,6 +3059,9 @@ void setOnInitialized(void (*callback)())
 
 int DiabloMain(int argc, char **argv)
 {
+	PHASE2_LOG("DiabloMain() started - Core engine initialization");
+	PHASE2_ENGINE_STEP("DIABLO_MAIN_ENTRY", "Main game initialization beginning");
+	
 #ifdef _DEBUG
 	SDL_SetLogPriorities(SDL_LOG_PRIORITY_DEBUG);
 #endif
@@ -3065,14 +3069,19 @@ int DiabloMain(int argc, char **argv)
 	// ARCHITECTURAL ANALYSIS - Initialize permanent logging system
 	ArchitecturalAnalyzer::getInstance().initialize();
 
+	PHASE2_ENGINE_STEP("FLAGS_PARSE", "Parsing command line arguments");
 	DiabloParseFlags(argc, argv);
 	InitKeymapActions();
 	InitPadmapActions();
 
+	PHASE2_ENGINE_STEP("ARCHIVES_LOAD", "Loading core archives");
 	// Need to ensure devilutionx.mpq (and fonts.mpq if available) are loaded before attempting to read translation settings
 	LoadCoreArchives();
 	was_archives_init = true;
 
+	PHASE2_MEMORY_CHECK("DiabloMain - Archives loaded");
+	
+	PHASE2_ENGINE_STEP("OPTIONS_LOAD", "Loading game options");
 	// Read settings including translation next. This will use the presence of fonts.mpq and look for assets in devilutionx.mpq
 	LoadOptions();
 	if (demo::IsRunning()) demo::OverrideOptions();
@@ -3080,10 +3089,12 @@ int DiabloMain(int argc, char **argv)
 	// Then look for a voice pack file based on the selected translation
 	LoadLanguageArchive();
 
+	PHASE2_ENGINE_STEP("APP_INIT", "Application initialization");
 	ApplicationInit();
 	LuaInitialize();
 	if (!demo::IsRunning()) SaveOptions();
 
+	PHASE2_ENGINE_STEP("GAME_DATA_LOAD", "Loading game data");
 	// Finally load game data
 	LoadGameArchives();
 
@@ -3103,16 +3114,26 @@ int DiabloMain(int argc, char **argv)
 	LoadObjectData();
 	LoadQuestData();
 
+	PHASE2_ENGINE_STEP("DIABLO_INIT", "Core Diablo initialization");
 	DiabloInit();
 #ifdef __UWP__
 	onInitialized();
 #endif
 	if (!demo::IsRunning()) SaveOptions();
 
+	PHASE2_MEMORY_CHECK("DiabloMain - All systems loaded");
+	
+	PHASE2_ENGINE_STEP("SPLASH_SCREEN", "Displaying splash screen");
 	DiabloSplash();
+	
+	PHASE2_ENGINE_STEP("MAIN_MENU_LOOP", "Entering main menu loop");
+	PHASE2_LOG("Starting mainmenu_loop() - Core engine loop active");
 	mainmenu_loop();
+	
+	PHASE2_ENGINE_STEP("CLEANUP", "Cleaning up and shutting down");
 	DiabloDeinit();
 
+	PHASE2_LOG("DiabloMain() completed successfully");
 	return 0;
 }
 

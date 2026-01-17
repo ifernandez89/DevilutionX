@@ -1,0 +1,2 @@
+C:\C-C__~1\DEVILU~1\emsdk\upstream\EMSCRI~2\emar.bat qc libfmtd.a CMakeFiles/fmt.dir/src/format.cc.o
+C:\C-C__~1\DEVILU~1\emsdk\upstream\EMSCRI~2\emranlib.bat libfmtd.a

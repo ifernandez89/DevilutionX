@@ -1,0 +1,14 @@
+# Target labels
+ libfmt-populate
+# Source files and their labels
+C:/DevilutionX/build_NOW/_deps/libfmt-subbuild/CMakeFiles/libfmt-populate
+C:/DevilutionX/build_NOW/_deps/libfmt-subbuild/CMakeFiles/libfmt-populate.rule
+C:/DevilutionX/build_NOW/_deps/libfmt-subbuild/CMakeFiles/libfmt-populate-complete.rule
+C:/DevilutionX/build_NOW/_deps/libfmt-subbuild/libfmt-populate-prefix/src/libfmt-populate-stamp/libfmt-populate-build.rule
+C:/DevilutionX/build_NOW/_deps/libfmt-subbuild/libfmt-populate-prefix/src/libfmt-populate-stamp/libfmt-populate-configure.rule
+C:/DevilutionX/build_NOW/_deps/libfmt-subbuild/libfmt-populate-prefix/src/libfmt-populate-stamp/libfmt-populate-download.rule
+C:/DevilutionX/build_NOW/_deps/libfmt-subbuild/libfmt-populate-prefix/src/libfmt-populate-stamp/libfmt-populate-install.rule
+C:/DevilutionX/build_NOW/_deps/libfmt-subbuild/libfmt-populate-prefix/src/libfmt-populate-stamp/libfmt-populate-mkdir.rule
+C:/DevilutionX/build_NOW/_deps/libfmt-subbuild/libfmt-populate-prefix/src/libfmt-populate-stamp/libfmt-populate-patch.rule
+C:/DevilutionX/build_NOW/_deps/libfmt-subbuild/libfmt-populate-prefix/src/libfmt-populate-stamp/libfmt-populate-test.rule
+C:/DevilutionX/build_NOW/_deps/libfmt-subbuild/libfmt-populate-prefix/src/libfmt-populate-stamp/libfmt-populate-update.rule

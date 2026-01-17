@@ -33,6 +33,7 @@
 #include "advanced_debug.h"   // 🎮 Advanced Debug System
 #include "architectural_analysis.h"  // 🎯 Apocalypse Crash Fix Logging
 #include "crash_hunter.h"  // 🎯 CRASH HUNTER - Aggressive logging
+#include "abstractions/vfs_wrappers.h"  // 🌐 VFS for WebAssembly compatibility
 
 #ifdef USE_SDL3
 #include <SDL3/SDL_timer.h>
@@ -192,9 +193,9 @@ size_t GetNumAnimsWithGraphics(const MonsterData &monsterData)
 void InitMonsterTRN(CMonster &monst)
 {
 	char path[64];
-	*BufCopy(path, "monsters\\", monst.data().trnFile, ".trn") = '\0';
+	*BufCopy(path, "monsters/", monst.data().trnFile, ".trn") = '\0';
 	std::array<uint8_t, 256> colorTranslations;
-	LoadFileInMem(path, colorTranslations);
+	LoadFileInMemVFS(path, colorTranslations);
 	std::replace(colorTranslations.begin(), colorTranslations.end(), 255, 0);
 
 	const size_t numAnims = GetNumAnims(monst.data());
@@ -616,23 +617,23 @@ tl::expected<void, std::string> PlaceQuestMonsters()
 		}
 
 		if (Quests[Q_LTBANNER].IsAvailable()) {
-			auto dunData = LoadFileInMem<uint16_t>("levels\\l1data\\banner1.dun");
+			auto dunData = LoadFileInMemVFS<uint16_t>("levels/l1data/banner1.dun");
 			RETURN_IF_ERROR(SetMapMonsters(dunData.get(), SetPiece.position.megaToWorld()));
 		}
 		if (Quests[Q_BLOOD].IsAvailable()) {
-			auto dunData = LoadFileInMem<uint16_t>("levels\\l2data\\blood2.dun");
+			auto dunData = LoadFileInMemVFS<uint16_t>("levels/l2data/blood2.dun");
 			RETURN_IF_ERROR(SetMapMonsters(dunData.get(), SetPiece.position.megaToWorld()));
 		}
 		if (Quests[Q_BLIND].IsAvailable()) {
-			auto dunData = LoadFileInMem<uint16_t>("levels\\l2data\\blind2.dun");
+			auto dunData = LoadFileInMemVFS<uint16_t>("levels/l2data/blind2.dun");
 			RETURN_IF_ERROR(SetMapMonsters(dunData.get(), SetPiece.position.megaToWorld()));
 		}
 		if (Quests[Q_ANVIL].IsAvailable()) {
-			auto dunData = LoadFileInMem<uint16_t>("levels\\l3data\\anvil.dun");
+			auto dunData = LoadFileInMemVFS<uint16_t>("levels/l3data/anvil.dun");
 			RETURN_IF_ERROR(SetMapMonsters(dunData.get(), SetPiece.position.megaToWorld() + Displacement { 2, 2 }));
 		}
 		if (Quests[Q_WARLORD].IsAvailable()) {
-			auto dunData = LoadFileInMem<uint16_t>("levels\\l4data\\warlord.dun");
+			auto dunData = LoadFileInMemVFS<uint16_t>("levels/l4data/warlord.dun");
 			RETURN_IF_ERROR(SetMapMonsters(dunData.get(), SetPiece.position.megaToWorld()));
 			RETURN_IF_ERROR(AddMonsterType(UniqueMonsterType::WarlordOfBlood, PLACE_SCATTER));
 		}
@@ -649,7 +650,7 @@ tl::expected<void, std::string> PlaceQuestMonsters()
 			RETURN_IF_ERROR(PlaceUniqueMonst(UniqueMonsterType::Lazarus, 0, 0));
 			RETURN_IF_ERROR(PlaceUniqueMonst(UniqueMonsterType::RedVex, 0, 0));
 			RETURN_IF_ERROR(PlaceUniqueMonst(UniqueMonsterType::BlackJade, 0, 0));
-			auto dunData = LoadFileInMem<uint16_t>("levels\\l4data\\vile1.dun");
+			auto dunData = LoadFileInMemVFS<uint16_t>("levels/l4data/vile1.dun");
 			RETURN_IF_ERROR(SetMapMonsters(dunData.get(), SetPiece.position.megaToWorld()));
 		}
 
@@ -684,19 +685,19 @@ tl::expected<void, std::string> PlaceQuestMonsters()
 tl::expected<void, std::string> LoadDiabMonsts()
 {
 	{
-		ASSIGN_OR_RETURN(auto dunData, LoadFileInMemWithStatus<uint16_t>("levels\\l4data\\diab1.dun"));
+		ASSIGN_OR_RETURN(auto dunData, LoadFileInMemWithStatusVFS<uint16_t>("levels/l4data/diab1.dun"));
 		RETURN_IF_ERROR(SetMapMonsters(dunData.get(), DiabloQuad1.megaToWorld()));
 	}
 	{
-		ASSIGN_OR_RETURN(auto dunData, LoadFileInMemWithStatus<uint16_t>("levels\\l4data\\diab2a.dun"));
+		ASSIGN_OR_RETURN(auto dunData, LoadFileInMemWithStatusVFS<uint16_t>("levels/l4data/diab2a.dun"));
 		RETURN_IF_ERROR(SetMapMonsters(dunData.get(), DiabloQuad2.megaToWorld()));
 	}
 	{
-		ASSIGN_OR_RETURN(auto dunData, LoadFileInMemWithStatus<uint16_t>("levels\\l4data\\diab3a.dun"));
+		ASSIGN_OR_RETURN(auto dunData, LoadFileInMemWithStatusVFS<uint16_t>("levels/l4data/diab3a.dun"));
 		RETURN_IF_ERROR(SetMapMonsters(dunData.get(), DiabloQuad3.megaToWorld()));
 	}
 	{
-		ASSIGN_OR_RETURN(auto dunData, LoadFileInMemWithStatus<uint16_t>("levels\\l4data\\diab4a.dun"));
+		ASSIGN_OR_RETURN(auto dunData, LoadFileInMemWithStatusVFS<uint16_t>("levels/l4data/diab4a.dun"));
 		RETURN_IF_ERROR(SetMapMonsters(dunData.get(), DiabloQuad4.megaToWorld()));
 	}
 	return {};
@@ -3462,8 +3463,8 @@ tl::expected<size_t, std::string> AddMonsterType(_monster_id type, placeflag pla
 tl::expected<void, std::string> InitTRNForUniqueMonster(Monster &monster)
 {
 	char filestr[64];
-	*BufCopy(filestr, R"(monsters\monsters\)", UniqueMonstersData[static_cast<size_t>(monster.uniqueType)].mTrnName, ".trn") = '\0';
-	ASSIGN_OR_RETURN(monster.uniqueMonsterTRN, LoadFileInMemWithStatus<uint8_t>(filestr));
+	*BufCopy(filestr, R"(monsters/monsters/)", UniqueMonstersData[static_cast<size_t>(monster.uniqueType)].mTrnName, ".trn") = '\0';
+	ASSIGN_OR_RETURN(monster.uniqueMonsterTRN, LoadFileInMemWithStatusVFS<uint8_t>(filestr));
 	return {};
 }
 

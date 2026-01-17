@@ -1,0 +1,2 @@
+C:\C-C__~1\DEVILU~1\emsdk\upstream\EMSCRI~2\emar.bat qc liblibsmackerdec.a "CMakeFiles/libsmackerdec.dir/__/__/_deps/libsmackerdec-src/src/BitReader.cpp.o" "CMakeFiles/libsmackerdec.dir/__/__/_deps/libsmackerdec-src/src/FileStream.cpp.o" "CMakeFiles/libsmackerdec.dir/__/__/_deps/libsmackerdec-src/src/LogError.cpp.o" "CMakeFiles/libsmackerdec.dir/__/__/_deps/libsmackerdec-src/src/SmackerDecoder.cpp.o"
+C:\C-C__~1\DEVILU~1\emsdk\upstream\EMSCRI~2\emranlib.bat liblibsmackerdec.a

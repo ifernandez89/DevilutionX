@@ -18,6 +18,7 @@
 #include <SDL.h>
 #endif
 
+#include "abstractions/vfs_wrappers.h"  // 🌐 VFS for WebAssembly compatibility
 #include "engine/backbuffer_state.hpp"
 #include "engine/demomode.h"
 #include "engine/dx.h"
@@ -238,7 +239,7 @@ void LoadPalette(const char *path)
 
 	LogVerbose("Loading palette from {}", path);
 	std::array<Color, 256> palData;
-	LoadFileInMem(path, palData);
+	LoadFileInMemVFS(path, palData);
 	for (unsigned i = 0; i < palData.size(); i++) {
 		logical_palette[i] = palData[i].toSDL();
 	}

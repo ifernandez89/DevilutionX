@@ -1,0 +1,2 @@
+"C:/c - c++/DevilutionX/emsdk/upstream/emscripten/emar.bat" qc libfmt.a CMakeFiles/fmt.dir/src/format.cc.o
+"C:/c - c++/DevilutionX/emsdk/upstream/emscripten/emranlib.bat" libfmt.a

@@ -1,0 +1,12 @@
+# This is a generated file and its contents are an internal implementation detail.
+# The download step will be re-executed if anything in this file changes.
+# No other meaning or use of this file is supported.
+
+method=url
+command=C:/Program Files/CMake/bin/cmake.exe;-DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE;-P;C:/c - c++/DevilutionX/build_nightmare_full/_deps/libsmackerdec-subbuild/libsmackerdec-populate-prefix/src/libsmackerdec-populate-stamp/download-libsmackerdec-populate.cmake;COMMAND;C:/Program Files/CMake/bin/cmake.exe;-DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE;-P;C:/c - c++/DevilutionX/build_nightmare_full/_deps/libsmackerdec-subbuild/libsmackerdec-populate-prefix/src/libsmackerdec-populate-stamp/verify-libsmackerdec-populate.cmake;COMMAND;C:/Program Files/CMake/bin/cmake.exe;-DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE;-P;C:/c - c++/DevilutionX/build_nightmare_full/_deps/libsmackerdec-subbuild/libsmackerdec-populate-prefix/src/libsmackerdec-populate-stamp/extract-libsmackerdec-populate.cmake
+source_dir=C:/c - c++/DevilutionX/build_nightmare_full/_deps/libsmackerdec-src
+work_dir=C:/c - c++/DevilutionX/build_nightmare_full/_deps
+url(s)=https://github.com/diasurgical/libsmackerdec/archive/0aaaf8c94a097b009d844db0d44dd7cd0ff81922.tar.gz
+hash=SHA256=c3a7fbc91531eee8989b1d281415adc0209d84ffc0437c6b0b4f677ae7fd3b41
+      no_extract=
+

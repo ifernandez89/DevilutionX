@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "C:/c - c++/DevilutionX/em/_deps/libmpq-subbuild/CMakeFiles/libmpq-populate"
+		},
+		{
+			"file" : "C:/c - c++/DevilutionX/em/_deps/libmpq-subbuild/CMakeFiles/libmpq-populate.rule"
+		},
+		{
+			"file" : "C:/c - c++/DevilutionX/em/_deps/libmpq-subbuild/CMakeFiles/libmpq-populate-complete.rule"
+		},
+		{
+			"file" : "C:/c - c++/DevilutionX/em/_deps/libmpq-subbuild/libmpq-populate-prefix/src/libmpq-populate-stamp/libmpq-populate-build.rule"
+		},
+		{
+			"file" : "C:/c - c++/DevilutionX/em/_deps/libmpq-subbuild/libmpq-populate-prefix/src/libmpq-populate-stamp/libmpq-populate-configure.rule"
+		},
+		{
+			"file" : "C:/c - c++/DevilutionX/em/_deps/libmpq-subbuild/libmpq-populate-prefix/src/libmpq-populate-stamp/libmpq-populate-download.rule"
+		},
+		{
+			"file" : "C:/c - c++/DevilutionX/em/_deps/libmpq-subbuild/libmpq-populate-prefix/src/libmpq-populate-stamp/libmpq-populate-install.rule"
+		},
+		{
+			"file" : "C:/c - c++/DevilutionX/em/_deps/libmpq-subbuild/libmpq-populate-prefix/src/libmpq-populate-stamp/libmpq-populate-mkdir.rule"
+		},
+		{
+			"file" : "C:/c - c++/DevilutionX/em/_deps/libmpq-subbuild/libmpq-populate-prefix/src/libmpq-populate-stamp/libmpq-populate-patch.rule"
+		},
+		{
+			"file" : "C:/c - c++/DevilutionX/em/_deps/libmpq-subbuild/libmpq-populate-prefix/src/libmpq-populate-stamp/libmpq-populate-test.rule"
+		},
+		{
+			"file" : "C:/c - c++/DevilutionX/em/_deps/libmpq-subbuild/libmpq-populate-prefix/src/libmpq-populate-stamp/libmpq-populate-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"libmpq-populate"
+		],
+		"name" : "libmpq-populate"
+	}
+}

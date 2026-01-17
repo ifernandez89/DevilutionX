@@ -1,0 +1,42 @@
+{
+    "version": 3,
+    "configurePresets": [
+        {
+            "name": "webassembly-nightmare",
+            "displayName": "WebAssembly Nightmare Browser Edition",
+            "description": "Build configuration for Nightmare Browser Edition using Emscripten",
+            "generator": "Unix Makefiles",
+            "toolchainFile": "$env{EMSDK}/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_CROSSCOMPILING": "ON",
+                "CMAKE_SYSTEM_NAME": "Emscripten",
+                "WEBASSEMBLY_BUILD": "ON",
+                "NO_SAVE_SYSTEM": "ON",
+                "PERMADEATH_MODE": "ON",
+                "BROWSER_EDITION": "ON",
+                "NONET": "ON",
+                "BUILD_TESTING": "OFF",
+                "USE_SDL1": "OFF",
+                "USE_SDL3": "OFF",
+                "PACKET_ENCRYPTION": "OFF",
+                "CMAKE_CXX_FLAGS": "-s USE_SDL=2 -s DISABLE_EXCEPTION_CATCHING=1 -s ALLOW_MEMORY_GROWTH=1 -s INITIAL_MEMORY=67108864 -s MAXIMUM_MEMORY=134217728 -s STACK_SIZE=1048576",
+                "CMAKE_EXE_LINKER_FLAGS": "-s USE_SDL=2 -s DISABLE_EXCEPTION_CATCHING=1 -s ALLOW_MEMORY_GROWTH=1 --preload-file assets@/ -s EXPORTED_FUNCTIONS=['_main'] -s EXPORTED_RUNTIME_METHODS=['ccall','cwrap']"
+            },
+            "environment": {
+                "CC": "emcc",
+                "CXX": "em++",
+                "AR": "emar",
+                "RANLIB": "emranlib"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "webassembly-nightmare",
+            "configurePreset": "webassembly-nightmare",
+            "displayName": "Build Nightmare Browser Edition",
+            "description": "Build the WebAssembly version of Nightmare Browser Edition"
+        }
+    ]
+}

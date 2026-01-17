@@ -1,0 +1,12 @@
+# This is a generated file and its contents are an internal implementation detail.
+# The download step will be re-executed if anything in this file changes.
+# No other meaning or use of this file is supported.
+
+method=url
+command=C:/Program Files/CMake/bin/cmake.exe;-DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE;-P;C:/c - c++/DevilutionX/build_SAFE/_deps/find_steam_game-subbuild/find_steam_game-populate-prefix/src/find_steam_game-populate-stamp/download-find_steam_game-populate.cmake;COMMAND;C:/Program Files/CMake/bin/cmake.exe;-DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE;-P;C:/c - c++/DevilutionX/build_SAFE/_deps/find_steam_game-subbuild/find_steam_game-populate-prefix/src/find_steam_game-populate-stamp/verify-find_steam_game-populate.cmake;COMMAND;C:/Program Files/CMake/bin/cmake.exe;-DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE;-P;C:/c - c++/DevilutionX/build_SAFE/_deps/find_steam_game-subbuild/find_steam_game-populate-prefix/src/find_steam_game-populate-stamp/extract-find_steam_game-populate.cmake
+source_dir=C:/c - c++/DevilutionX/build_SAFE/_deps/find_steam_game-src
+work_dir=C:/c - c++/DevilutionX/build_SAFE/_deps
+url(s)=https://github.com/cxong/find_steam_game/archive/a2bd6273fc002214052c2ee3bd48d7c1e7d3f366.tar.gz
+hash=MD5=a6950ce5d9ced8a259752bc2dc7f5311
+      no_extract=
+

@@ -1,0 +1,2 @@
+C:\C-C__~1\DEVILU~1\emsdk\upstream\EMSCRI~2\emar.bat qc liblibmpq.a "CMakeFiles/libmpq.dir/__/__/_deps/libmpq-src/libmpq/common.c.o" "CMakeFiles/libmpq.dir/__/__/_deps/libmpq-src/libmpq/explode.c.o" "CMakeFiles/libmpq.dir/__/__/_deps/libmpq-src/libmpq/extract.c.o" "CMakeFiles/libmpq.dir/__/__/_deps/libmpq-src/libmpq/huffman.c.o" "CMakeFiles/libmpq.dir/__/__/_deps/libmpq-src/libmpq/mpq.c.o" "CMakeFiles/libmpq.dir/__/__/_deps/libmpq-src/libmpq/wave.c.o"
+C:\C-C__~1\DEVILU~1\emsdk\upstream\EMSCRI~2\emranlib.bat liblibmpq.a

@@ -1,0 +1,43 @@
+file(REMOVE_RECURSE
+  "CMakeFiles/SDL_audiolib.dir/3rdparty/speex_resampler/resample.c.o"
+  "CMakeFiles/SDL_audiolib.dir/3rdparty/speex_resampler/resample.c.o.d"
+  "CMakeFiles/SDL_audiolib.dir/src/Decoder.cpp.o"
+  "CMakeFiles/SDL_audiolib.dir/src/Decoder.cpp.o.d"
+  "CMakeFiles/SDL_audiolib.dir/src/DecoderDrmp3.cpp.o"
+  "CMakeFiles/SDL_audiolib.dir/src/DecoderDrmp3.cpp.o.d"
+  "CMakeFiles/SDL_audiolib.dir/src/DecoderDrwav.cpp.o"
+  "CMakeFiles/SDL_audiolib.dir/src/DecoderDrwav.cpp.o.d"
+  "CMakeFiles/SDL_audiolib.dir/src/Processor.cpp.o"
+  "CMakeFiles/SDL_audiolib.dir/src/Processor.cpp.o.d"
+  "CMakeFiles/SDL_audiolib.dir/src/Resampler.cpp.o"
+  "CMakeFiles/SDL_audiolib.dir/src/Resampler.cpp.o.d"
+  "CMakeFiles/SDL_audiolib.dir/src/ResamplerSdl.cpp.o"
+  "CMakeFiles/SDL_audiolib.dir/src/ResamplerSdl.cpp.o.d"
+  "CMakeFiles/SDL_audiolib.dir/src/ResamplerSpeex.cpp.o"
+  "CMakeFiles/SDL_audiolib.dir/src/ResamplerSpeex.cpp.o.d"
+  "CMakeFiles/SDL_audiolib.dir/src/SdlMutex.cpp.o"
+  "CMakeFiles/SDL_audiolib.dir/src/SdlMutex.cpp.o.d"
+  "CMakeFiles/SDL_audiolib.dir/src/Stream.cpp.o"
+  "CMakeFiles/SDL_audiolib.dir/src/Stream.cpp.o.d"
+  "CMakeFiles/SDL_audiolib.dir/src/aulib.cpp.o"
+  "CMakeFiles/SDL_audiolib.dir/src/aulib.cpp.o.d"
+  "CMakeFiles/SDL_audiolib.dir/src/dr_mp3.c.o"
+  "CMakeFiles/SDL_audiolib.dir/src/dr_mp3.c.o.d"
+  "CMakeFiles/SDL_audiolib.dir/src/dr_wav.c.o"
+  "CMakeFiles/SDL_audiolib.dir/src/dr_wav.c.o.d"
+  "CMakeFiles/SDL_audiolib.dir/src/missing/sdl_load_file_rw.c.o"
+  "CMakeFiles/SDL_audiolib.dir/src/missing/sdl_load_file_rw.c.o.d"
+  "CMakeFiles/SDL_audiolib.dir/src/missing/sdl_rwsize.c.o"
+  "CMakeFiles/SDL_audiolib.dir/src/missing/sdl_rwsize.c.o.d"
+  "CMakeFiles/SDL_audiolib.dir/src/sampleconv.cpp.o"
+  "CMakeFiles/SDL_audiolib.dir/src/sampleconv.cpp.o.d"
+  "CMakeFiles/SDL_audiolib.dir/src/stream_p.cpp.o"
+  "CMakeFiles/SDL_audiolib.dir/src/stream_p.cpp.o.d"
+  "libSDL_audiolib.a"
+  "libSDL_audiolib.pdb"
+)
+
+# Per-language clean rules from dependency scanning.
+foreach(lang C CXX)
+  include(CMakeFiles/SDL_audiolib.dir/cmake_clean_${lang}.cmake OPTIONAL)
+endforeach()

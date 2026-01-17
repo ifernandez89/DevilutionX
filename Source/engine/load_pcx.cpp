@@ -16,6 +16,7 @@
 #include <SDL.h>
 #endif
 
+#include "abstractions/vfs_wrappers.h"  // 🌐 VFS for WebAssembly compatibility
 #include "mpq/mpq_common.hpp"
 #include "utils/log.hpp"
 #include "utils/str_cat.hpp"
@@ -50,7 +51,7 @@ OptionalOwnedClxSpriteList LoadPcxSpriteList(const char *filename, int numFrames
 	if (outPalette != nullptr) {
 		std::memcpy(pathEnd - 3, "pal", 3);
 		std::array<uint8_t, 256 * 3> palette;
-		LoadFileInMem(path, palette);
+		LoadFileInMemVFS(path, palette);
 		for (unsigned i = 0; i < 256; i++) {
 			outPalette[i].r = palette[i * 3];
 			outPalette[i].g = palette[i * 3 + 1];

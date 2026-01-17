@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "C:/DevilutionX/build_NOW/_deps/libpng-subbuild/CMakeFiles/libpng-populate"
+		},
+		{
+			"file" : "C:/DevilutionX/build_NOW/_deps/libpng-subbuild/CMakeFiles/libpng-populate.rule"
+		},
+		{
+			"file" : "C:/DevilutionX/build_NOW/_deps/libpng-subbuild/CMakeFiles/libpng-populate-complete.rule"
+		},
+		{
+			"file" : "C:/DevilutionX/build_NOW/_deps/libpng-subbuild/libpng-populate-prefix/src/libpng-populate-stamp/libpng-populate-build.rule"
+		},
+		{
+			"file" : "C:/DevilutionX/build_NOW/_deps/libpng-subbuild/libpng-populate-prefix/src/libpng-populate-stamp/libpng-populate-configure.rule"
+		},
+		{
+			"file" : "C:/DevilutionX/build_NOW/_deps/libpng-subbuild/libpng-populate-prefix/src/libpng-populate-stamp/libpng-populate-download.rule"
+		},
+		{
+			"file" : "C:/DevilutionX/build_NOW/_deps/libpng-subbuild/libpng-populate-prefix/src/libpng-populate-stamp/libpng-populate-install.rule"
+		},
+		{
+			"file" : "C:/DevilutionX/build_NOW/_deps/libpng-subbuild/libpng-populate-prefix/src/libpng-populate-stamp/libpng-populate-mkdir.rule"
+		},
+		{
+			"file" : "C:/DevilutionX/build_NOW/_deps/libpng-subbuild/libpng-populate-prefix/src/libpng-populate-stamp/libpng-populate-patch.rule"
+		},
+		{
+			"file" : "C:/DevilutionX/build_NOW/_deps/libpng-subbuild/libpng-populate-prefix/src/libpng-populate-stamp/libpng-populate-test.rule"
+		},
+		{
+			"file" : "C:/DevilutionX/build_NOW/_deps/libpng-subbuild/libpng-populate-prefix/src/libpng-populate-stamp/libpng-populate-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"libpng-populate"
+		],
+		"name" : "libpng-populate"
+	}
+}

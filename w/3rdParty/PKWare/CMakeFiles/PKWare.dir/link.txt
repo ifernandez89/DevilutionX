@@ -1,0 +1,2 @@
+"C:/c - c++/DevilutionX/emsdk/upstream/emscripten/emar.bat" qc libPKWare.a CMakeFiles/PKWare.dir/explode.cpp.o CMakeFiles/PKWare.dir/implode.cpp.o
+"C:/c - c++/DevilutionX/emsdk/upstream/emscripten/emranlib.bat" libPKWare.a

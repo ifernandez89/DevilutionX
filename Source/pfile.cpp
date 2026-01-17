@@ -5,6 +5,10 @@
  */
 #include "pfile.h"
 
+#ifdef __EMSCRIPTEN__
+#include "webassembly/save_disable.h"  // 🌐 Browser Edition save/load overrides
+#endif
+
 #include <cstdint>
 #include <string>
 #include <string_view>
@@ -769,6 +773,9 @@ void pfile_read_player_from_save(uint32_t saveNum, Player &player)
 			app_fatal(_("Unable to load character"));
 
 		gbValidSaveFile = ArchiveContainsGame(*archive);
+#ifdef __EMSCRIPTEN__
+		BROWSER_EDITION_SAVE_EXISTS_OVERRIDE();
+#endif
 		if (gbValidSaveFile)
 			pkplr.bIsHellfire = gbIsHellfireSaveGame ? 1 : 0;
 	}

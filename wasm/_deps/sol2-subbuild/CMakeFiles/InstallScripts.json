@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"C:/c - c++/DevilutionX/wasm/_deps/sol2-subbuild/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

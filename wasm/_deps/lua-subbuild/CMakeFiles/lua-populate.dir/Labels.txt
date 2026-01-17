@@ -1,0 +1,14 @@
+# Target labels
+ lua-populate
+# Source files and their labels
+C:/c - c++/DevilutionX/wasm/_deps/lua-subbuild/CMakeFiles/lua-populate
+C:/c - c++/DevilutionX/wasm/_deps/lua-subbuild/CMakeFiles/lua-populate.rule
+C:/c - c++/DevilutionX/wasm/_deps/lua-subbuild/CMakeFiles/lua-populate-complete.rule
+C:/c - c++/DevilutionX/wasm/_deps/lua-subbuild/lua-populate-prefix/src/lua-populate-stamp/lua-populate-build.rule
+C:/c - c++/DevilutionX/wasm/_deps/lua-subbuild/lua-populate-prefix/src/lua-populate-stamp/lua-populate-configure.rule
+C:/c - c++/DevilutionX/wasm/_deps/lua-subbuild/lua-populate-prefix/src/lua-populate-stamp/lua-populate-download.rule
+C:/c - c++/DevilutionX/wasm/_deps/lua-subbuild/lua-populate-prefix/src/lua-populate-stamp/lua-populate-install.rule
+C:/c - c++/DevilutionX/wasm/_deps/lua-subbuild/lua-populate-prefix/src/lua-populate-stamp/lua-populate-mkdir.rule
+C:/c - c++/DevilutionX/wasm/_deps/lua-subbuild/lua-populate-prefix/src/lua-populate-stamp/lua-populate-patch.rule
+C:/c - c++/DevilutionX/wasm/_deps/lua-subbuild/lua-populate-prefix/src/lua-populate-stamp/lua-populate-test.rule
+C:/c - c++/DevilutionX/wasm/_deps/lua-subbuild/lua-populate-prefix/src/lua-populate-stamp/lua-populate-update.rule

@@ -15,6 +15,7 @@
 #include "data/file.hpp"
 #include "data/record_reader.hpp"
 #include "engine/load_file.hpp"
+#include "abstractions/vfs_wrappers.h"  // 🌐 VFS for WebAssembly compatibility
 #include "engine/random.hpp"
 #include "engine/render/clx_render.hpp"
 #include "engine/render/text_render.hpp"
@@ -98,7 +99,7 @@ void DrawSkelKing(quest_id q, Point position)
 
 void DrawWarLord(Point position)
 {
-	auto dunData = LoadFileInMem<uint16_t>("levels\\l4data\\warlord2.dun");
+	auto dunData = LoadFileInMemVFS<uint16_t>("levels/l4data/warlord2.dun");
 
 	SetPiece = { position, GetDunSize(dunData.get()) };
 
@@ -107,7 +108,7 @@ void DrawWarLord(Point position)
 
 void DrawSChamber(quest_id q, Point position)
 {
-	auto dunData = LoadFileInMem<uint16_t>("levels\\l2data\\bonestr1.dun");
+	auto dunData = LoadFileInMemVFS<uint16_t>("levels/l2data/bonestr1.dun");
 
 	SetPiece = { position, GetDunSize(dunData.get()) };
 
@@ -118,7 +119,7 @@ void DrawSChamber(quest_id q, Point position)
 
 void DrawLTBanner(Point position)
 {
-	auto dunData = LoadFileInMem<uint16_t>("levels\\l1data\\banner1.dun");
+	auto dunData = LoadFileInMemVFS<uint16_t>("levels/l1data/banner1.dun");
 
 	const WorldTileSize size = GetDunSize(dunData.get());
 
@@ -147,7 +148,7 @@ void DrawBlind(Point position)
 
 void DrawBlood(Point position)
 {
-	auto dunData = LoadFileInMem<uint16_t>("levels\\l2data\\blood2.dun");
+	auto dunData = LoadFileInMemVFS<uint16_t>("levels/l2data/blood2.dun");
 
 	SetPiece = { position, GetDunSize(dunData.get()) };
 
@@ -189,7 +190,7 @@ std::array<Color, 32> PureWaterPalette;
 void StartPWaterPurify()
 {
 	PlaySfxLoc(SfxID::QuestDone, MyPlayer->position.tile);
-	LoadFileInMem("levels\\l3data\\l3pwater.pal", PureWaterPalette);
+	LoadFileInMemVFS("levels/l3data/l3pwater.pal", PureWaterPalette);
 	UpdatePWaterPalette();
 	WaterDone = 32;
 }

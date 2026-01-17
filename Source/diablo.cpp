@@ -85,6 +85,9 @@
 #include "levels/trigs.h"
 #include "lighting.h"
 #include "abstractions/vfs_wrappers.h"  // 🌐 VFS initialization for WebAssembly
+#ifdef __EMSCRIPTEN__
+#include "webassembly/browser_edition.h"  // 🌐 Browser Edition permadeath system
+#endif
 #include "nightmare_ambience.h"
 #include "nightmare_ambient_effects.h"
 #include "nightmare_audio.h"
@@ -1451,6 +1454,11 @@ void DiabloInit()
 {
 	// 🌐 WEBASSEMBLY: Initialize VFS system first (before any file operations)
 	InitializeVFSForPlatform();
+	
+#ifdef __EMSCRIPTEN__
+	// 🌐 BROWSER EDITION: Initialize permadeath system
+	InitializeBrowserEdition();
+#endif
 	
 	if (forceSpawn || *GetOptions().GameMode.shareware)
 		gbIsSpawn = true;

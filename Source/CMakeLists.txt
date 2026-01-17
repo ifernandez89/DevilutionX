@@ -1102,8 +1102,29 @@ target_link_dependencies(libdevilutionx PUBLIC
   libdevilutionx_utf8
   libdevilutionx_utils_console
 )
+
 if(NOT TARGET_PLATFORM STREQUAL "dos")
   target_link_dependencies(libdevilutionx PUBLIC Threads::Threads)
+endif()
+
+# Add WebAssembly-specific source files when building for WebAssembly
+if(CMAKE_SYSTEM_NAME STREQUAL "Emscripten")
+  target_sources(libdevilutionx PRIVATE
+    platform/web/embedded_vfs.cpp
+    platform/web/asset_data_stubs.cpp
+  )
+  
+  # Asset manifest temporarily disabled for initial build
+  # if(EXISTS "${CMAKE_SOURCE_DIR}/Source/platform/web/asset_manifest.cpp")
+  #   target_sources(libdevilutionx PRIVATE
+  #     platform/web/asset_manifest.cpp
+  #   )
+  #   message(STATUS "🌐 WebAssembly: Asset manifest included")
+  # else()
+  #   message(WARNING "🌐 WebAssembly: Asset manifest not found - run generate_asset_manifest.py first")
+  # endif()
+  
+  message(STATUS "🌐 WebAssembly: EmbeddedVFS source files added (asset manifest disabled)")
 endif()
 if(DEVILUTIONX_SCREENSHOT_FORMAT STREQUAL DEVILUTIONX_SCREENSHOT_FORMAT_PNG)
   target_link_dependencies(libdevilutionx PUBLIC libdevilutionx_surface_to_png)

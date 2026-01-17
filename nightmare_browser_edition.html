@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nightmare Browser Edition - Diablo in Your Browser</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            color: #fff;
+            font-family: 'Courier New', monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .title {
+            font-size: 2.5em;
+            color: #ff6b6b;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2em;
+            color: #ffd93d;
+            margin-bottom: 5px;
+        }
+        
+        .description {
+            font-size: 0.9em;
+            color: #ccc;
+            max-width: 600px;
+            line-height: 1.4;
+        }
+        
+        .game-container {
+            border: 2px solid #ff6b6b;
+            border-radius: 8px;
+            padding: 10px;
+            background: rgba(255, 107, 107, 0.1);
+        }
+        
+        canvas {
+            display: block;
+            background: #000;
+        }
+        
+        .controls {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 0.8em;
+            color: #aaa;
+        }
+        
+        .warning {
+            background: rgba(255, 193, 7, 0.2);
+            border: 1px solid #ffc107;
+            border-radius: 4px;
+            padding: 10px;
+            margin: 10px 0;
+            max-width: 600px;
+        }
+        
+        .loading {
+            color: #ffd93d;
+            font-size: 1.1em;
+            margin: 20px 0;
+        }
+        
+        .features {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #ccc;
+            text-align: center;
+        }
+        
+        .feature {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="title">💀 NIGHTMARE BROWSER EDITION</div>
+        <div class="subtitle">🌐 Diablo in Your Browser - Permadeath Sessions</div>
+        <div class="description">
+            Experience Diablo like never before: pure permadeath sessions with seed-based worlds. 
+            No saves, no installation, no mercy. Every death is final, every run is unique.
+        </div>
+    </div>
+    
+    <div class="warning">
+        ⚠️ <strong>PERMADEATH MODE:</strong> This is hardcore Diablo. When you die, the game restarts completely. 
+        No save files, no second chances. Each session is a complete run from start to finish.
+    </div>
+    
+    <div class="game-container">
+        <canvas id="canvas" width="640" height="480"></canvas>
+        <div class="loading" id="loading">🔄 Loading Nightmare Browser Edition...</div>
+    </div>
+    
+    <div class="controls">
+        <div><strong>Controls:</strong> Arrow Keys/WASD = Move | Mouse = Interact | Space = Attack</div>
+        <div><strong>Features:</strong> Seed-based worlds | Instant restart | No saves | Pure gameplay</div>
+    </div>
+    
+    <div class="features">
+        <div class="feature">🎲 <strong>Seed-based Runs:</strong> Each game uses a unique seed for reproducible worlds</div>
+        <div class="feature">⚡ <strong>Instant Restart:</strong> Death triggers immediate restart with new seed</div>
+        <div class="feature">🌐 <strong>Browser Native:</strong> No downloads, no installation, just play</div>
+        <div class="feature">📱 <strong>Cross-Platform:</strong> Works on desktop and mobile browsers</div>
+    </div>
+
+    <script>
+        // WebAssembly Module configuration
+        var Module = {
+            canvas: document.getElementById('canvas'),
+            print: function(text) {
+                console.log('[DevilutionX]', text);
+            },
+            printErr: function(text) {
+                console.error('[DevilutionX]', text);
+            },
+            onRuntimeInitialized: function() {
+                document.getElementById('loading').innerHTML = '🎮 Nightmare Browser Edition Ready!';
+                console.log('🌐 DevilutionX WebAssembly initialized');
+                
+                // Hide loading message after a moment
+                setTimeout(() => {
+                    document.getElementById('loading').style.display = 'none';
+                }, 2000);
+            },
+            onAbort: function(what) {
+                document.getElementById('loading').innerHTML = '❌ Failed to load game: ' + what;
+            },
+            totalDependencies: 0,
+            monitorRunDependencies: function(left) {
+                this.totalDependencies = Math.max(this.totalDependencies, left);
+                if (left == 0) {
+                    document.getElementById('loading').innerHTML = '🎯 Almost ready...';
+                } else {
+                    var progress = Math.round((this.totalDependencies - left) / this.totalDependencies * 100);
+                    document.getElementById('loading').innerHTML = `🔄 Loading... ${progress}%`;
+                }
+            }
+        };
+        
+        // Nightmare Browser Edition specific features
+        window.NightmareBrowserEdition = {
+            version: '1.0.0',
+            features: {
+                permadeath: true,
+                seedBased: true,
+                noSaves: true,
+                instantRestart: true
+            },
+            
+            // Statistics tracking
+            stats: {
+                deaths: 0,
+                runs: 0,
+                totalPlayTime: 0,
+                bestRun: 0
+            },
+            
+            // Called when player dies (if implemented)
+            onPlayerDeath: function() {
+                console.log('💀 Player died - preparing restart...');
+                this.stats.deaths++;
+                this.updateStats();
+                this.showDeathScreen();
+            },
+            
+            // Generate new seed for run
+            generateSeed: function() {
+                return Math.floor(Math.random() * 1000000);
+            },
+            
+            // Update statistics display
+            updateStats: function() {
+                console.log('📊 Session Stats:', this.stats);
+                
+                // Update page title with death count
+                if (this.stats.deaths > 0) {
+                    document.title = `💀 Nightmare Browser Edition - Deaths: ${this.stats.deaths}`;
+                }
+            },
+            
+            // Show death screen overlay
+            showDeathScreen: function() {
+                var canvas = document.getElementById('canvas');
+                if (canvas) {
+                    var ctx = canvas.getContext('2d');
+                    
+                    // Semi-transparent red overlay
+                    ctx.fillStyle = 'rgba(255, 0, 0, 0.7)';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    
+                    // Death message
+                    ctx.fillStyle = 'white';
+                    ctx.font = 'bold 32px monospace';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('💀 PERMADEATH', canvas.width/2, canvas.height/2 - 40);
+                    
+                    ctx.font = '18px monospace';
+                    ctx.fillText('Your journey ends here...', canvas.width/2, canvas.height/2);
+                    ctx.fillText('🔄 Restarting with new seed', canvas.width/2, canvas.height/2 + 30);
+                    
+                    // Stats
+                    ctx.font = '14px monospace';
+                    ctx.fillStyle = 'yellow';
+                    ctx.fillText(`Deaths this session: ${this.stats.deaths}`, canvas.width/2, canvas.height/2 + 70);
+                }
+            },
+            
+            // Initialize session
+            initSession: function() {
+                this.stats.runs++;
+                console.log('🎮 Starting new run #' + this.stats.runs);
+                
+                // Reset title
+                document.title = '🌐 Nightmare Browser Edition - Playing';
+            }
+        };
+        
+        console.log('🌐 Nightmare Browser Edition initialized');
+        console.log('🎮 Permadeath mode: ON');
+        console.log('🎲 Seed-based worlds: ON');
+        console.log('💾 Save system: DISABLED');
+    </script>
+    
+    <!-- Load the WebAssembly module -->
+    <script src="devilutionx.js"></script>
+</body>
+</html>

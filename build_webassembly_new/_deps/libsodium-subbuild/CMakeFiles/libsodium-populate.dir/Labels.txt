@@ -1,0 +1,14 @@
+# Target labels
+ libsodium-populate
+# Source files and their labels
+C:/c - c++/DevilutionX/build_webassembly_new/_deps/libsodium-subbuild/CMakeFiles/libsodium-populate
+C:/c - c++/DevilutionX/build_webassembly_new/_deps/libsodium-subbuild/CMakeFiles/libsodium-populate.rule
+C:/c - c++/DevilutionX/build_webassembly_new/_deps/libsodium-subbuild/CMakeFiles/libsodium-populate-complete.rule
+C:/c - c++/DevilutionX/build_webassembly_new/_deps/libsodium-subbuild/libsodium-populate-prefix/src/libsodium-populate-stamp/libsodium-populate-build.rule
+C:/c - c++/DevilutionX/build_webassembly_new/_deps/libsodium-subbuild/libsodium-populate-prefix/src/libsodium-populate-stamp/libsodium-populate-configure.rule
+C:/c - c++/DevilutionX/build_webassembly_new/_deps/libsodium-subbuild/libsodium-populate-prefix/src/libsodium-populate-stamp/libsodium-populate-download.rule
+C:/c - c++/DevilutionX/build_webassembly_new/_deps/libsodium-subbuild/libsodium-populate-prefix/src/libsodium-populate-stamp/libsodium-populate-install.rule
+C:/c - c++/DevilutionX/build_webassembly_new/_deps/libsodium-subbuild/libsodium-populate-prefix/src/libsodium-populate-stamp/libsodium-populate-mkdir.rule
+C:/c - c++/DevilutionX/build_webassembly_new/_deps/libsodium-subbuild/libsodium-populate-prefix/src/libsodium-populate-stamp/libsodium-populate-patch.rule
+C:/c - c++/DevilutionX/build_webassembly_new/_deps/libsodium-subbuild/libsodium-populate-prefix/src/libsodium-populate-stamp/libsodium-populate-test.rule
+C:/c - c++/DevilutionX/build_webassembly_new/_deps/libsodium-subbuild/libsodium-populate-prefix/src/libsodium-populate-stamp/libsodium-populate-update.rule

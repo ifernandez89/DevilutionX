@@ -10,6 +10,10 @@
 #include "coordinate_validator.h"  // 🛡️ COORDINATE VALIDATOR
 #include "corruption_detector.h"  // 🛡️ CORRUPTION DETECTOR
 
+#ifdef __EMSCRIPTEN__
+#include "webassembly/save_disable.h"  // 🌐 Browser Edition save/load overrides
+#endif
+
 #include <climits>
 #include <cstddef>
 #include <cstdint>
@@ -2624,6 +2628,10 @@ void RemoveEmptyInventory(Player &player)
 
 tl::expected<void, std::string> LoadGame(bool firstflag)
 {
+#ifdef __EMSCRIPTEN__
+	BROWSER_EDITION_LOAD_OVERRIDE(firstflag);
+#endif
+	
 	FreeGameMem();
 
 	// 🛡️ CORRUPTION DETECTOR - PREVENIR, NO PARCHEAR
@@ -3116,6 +3124,10 @@ void SaveGameData(SaveWriter &saveWriter)
 
 void SaveGame()
 {
+#ifdef __EMSCRIPTEN__
+	BROWSER_EDITION_SAVE_OVERRIDE();
+#endif
+	
 	gbValidSaveFile = true;
 	pfile_write_hero(/*writeGameData=*/true);
 	sfile_write_stash();

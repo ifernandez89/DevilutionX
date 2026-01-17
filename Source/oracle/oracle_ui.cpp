@@ -8,7 +8,6 @@
 
 #include <SDL.h>
 
-#include "control.h"
 #include "control/control.hpp"
 #include "engine/backbuffer_state.hpp"
 #include "engine/dx.h"

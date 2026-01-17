@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevilutionX - Nightmare Edition (WebAssembly FASE 1)</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #000;
+            color: #fff;
+            font-family: monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        #status {
+            margin-bottom: 20px;
+            padding: 10px;
+            background: #333;
+            border-radius: 5px;
+            min-width: 400px;
+            text-align: center;
+        }
+        
+        #gameCanvas {
+            border: 2px solid #666;
+            background: #000;
+        }
+        
+        .loading {
+            color: #ff0;
+        }
+        
+        .ready {
+            color: #0f0;
+        }
+        
+        .error {
+            color: #f00;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎮 DevilutionX - Nightmare Edition</h1>
+    <h2>WebAssembly Runtime - FASE 1</h2>
+    
+    <div id="status" class="loading">
+        🔄 Initializing WebAssembly runtime...
+    </div>
+    
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
+    
+    <div style="margin-top: 20px; max-width: 600px; text-align: center;">
+        <h3>FASE 1 Goals:</h3>
+        <ul style="text-align: left;">
+            <li>✅ WebAssembly module loads successfully</li>
+            <li>✅ main() function executes</li>
+            <li>✅ Canvas initializes (even if black screen)</li>
+            <li>✅ No crashes during startup</li>
+        </ul>
+        <p><strong>Expected:</strong> Black screen or basic initialization - this is normal for FASE 1!</p>
+    </div>
+
+    <script>
+        const statusDiv = document.getElementById('status');
+        const canvas = document.getElementById('gameCanvas');
+        
+        // Module configuration for Emscripten
+        var Module = {
+            canvas: canvas,
+            print: function(text) {
+                console.log('STDOUT:', text);
+            },
+            printErr: function(text) {
+                console.error('STDERR:', text);
+            },
+            onRuntimeInitialized: function() {
+                statusDiv.textContent = '✅ WebAssembly runtime initialized successfully!';
+                statusDiv.className = 'ready';
+                console.log('🎉 FASE 1 SUCCESS: Runtime is ready!');
+            },
+            onAbort: function(what) {
+                statusDiv.textContent = '❌ Runtime aborted: ' + what;
+                statusDiv.className = 'error';
+                console.error('💥 Runtime aborted:', what);
+            },
+            locateFile: function(path, prefix) {
+                // Ensure files are loaded from the correct path
+                return prefix + path;
+            }
+        };
+        
+        // Update status during loading
+        statusDiv.textContent = '📦 Loading WebAssembly module...';
+        
+        // Load the generated JavaScript file
+        const script = document.createElement('script');
+        script.src = 'devilutionx.js';
+        script.onerror = function() {
+            statusDiv.textContent = '❌ Failed to load devilutionx.js';
+            statusDiv.className = 'error';
+        };
+        document.head.appendChild(script);
+    </script>
+</body>
+</html>

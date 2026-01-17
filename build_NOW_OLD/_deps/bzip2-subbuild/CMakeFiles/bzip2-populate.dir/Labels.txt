@@ -1,0 +1,14 @@
+# Target labels
+ bzip2-populate
+# Source files and their labels
+C:/DevilutionX/build_NOW/_deps/bzip2-subbuild/CMakeFiles/bzip2-populate
+C:/DevilutionX/build_NOW/_deps/bzip2-subbuild/CMakeFiles/bzip2-populate.rule
+C:/DevilutionX/build_NOW/_deps/bzip2-subbuild/CMakeFiles/bzip2-populate-complete.rule
+C:/DevilutionX/build_NOW/_deps/bzip2-subbuild/bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-build.rule
+C:/DevilutionX/build_NOW/_deps/bzip2-subbuild/bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-configure.rule
+C:/DevilutionX/build_NOW/_deps/bzip2-subbuild/bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-download.rule
+C:/DevilutionX/build_NOW/_deps/bzip2-subbuild/bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-install.rule
+C:/DevilutionX/build_NOW/_deps/bzip2-subbuild/bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-mkdir.rule
+C:/DevilutionX/build_NOW/_deps/bzip2-subbuild/bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-patch.rule
+C:/DevilutionX/build_NOW/_deps/bzip2-subbuild/bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-test.rule
+C:/DevilutionX/build_NOW/_deps/bzip2-subbuild/bzip2-populate-prefix/src/bzip2-populate-stamp/bzip2-populate-update.rule

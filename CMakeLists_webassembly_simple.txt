@@ -1,0 +1,68 @@
+# 🌐 Simplified WebAssembly Build Configuration for Nightmare Browser Edition
+cmake_minimum_required(VERSION 3.16)
+
+# Set WebAssembly-specific options
+set(CMAKE_SYSTEM_NAME Emscripten)
+set(CMAKE_CROSSCOMPILING TRUE)
+
+# Project configuration
+project(DevilutionX-WebAssembly
+    VERSION 1.5.0
+    DESCRIPTION "Nightmare Browser Edition - WebAssembly Port"
+    LANGUAGES C CXX
+)
+
+# Set C++ standard
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# WebAssembly-specific compiler flags
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s USE_SDL=2")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s DISABLE_EXCEPTION_CATCHING=1")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s ALLOW_MEMORY_GROWTH=1")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s INITIAL_MEMORY=67108864")  # 64MB initial
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s MAXIMUM_MEMORY=134217728") # 128MB max
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s STACK_SIZE=1048576")       # 1MB stack
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s EXPORTED_FUNCTIONS=['_main']")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s EXPORTED_RUNTIME_METHODS=['ccall','cwrap']")
+
+# Enable WebAssembly build flag
+add_definitions(-DWEBASSEMBLY_BUILD=1)
+add_definitions(-D__EMSCRIPTEN__=1)
+
+# Disable features not needed for browser edition
+add_definitions(-DNO_SAVE_SYSTEM=1)
+add_definitions(-DPERMADEATH_MODE=1)
+add_definitions(-DBROWSER_EDITION=1)
+
+# Simplified source files for testing
+set(SOURCES
+    Source/main.cpp
+    Source/diablo.cpp
+    Source/abstractions/virtual_filesystem.cpp
+    Source/platform/native/native_vfs.cpp
+    Source/platform/web/embedded_vfs.cpp
+    Source/webassembly/browser_edition.cpp
+)
+
+# Create executable
+add_executable(devilutionx ${SOURCES})
+
+# WebAssembly-specific linking options
+set_target_properties(devilutionx PROPERTIES
+    LINK_FLAGS "-s USE_SDL=2 -s DISABLE_EXCEPTION_CATCHING=1 -s ALLOW_MEMORY_GROWTH=1"
+)
+
+# Browser-specific optimizations
+if(CMAKE_BUILD_TYPE STREQUAL "Release")
+    set_target_properties(devilutionx PROPERTIES
+        LINK_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -O3 -s ASSERTIONS=0"
+    )
+else()
+    set_target_properties(devilutionx PROPERTIES
+        LINK_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -O1 -s ASSERTIONS=1"
+    )
+endif()
+
+message(STATUS "🌐 Simplified WebAssembly configuration complete")
+message(STATUS "🎮 Nightmare Browser Edition build ready")

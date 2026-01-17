@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "C:/c - c++/DevilutionX/phase1/_deps/libsmackerdec-subbuild/CMakeFiles/libsmackerdec-populate"
+		},
+		{
+			"file" : "C:/c - c++/DevilutionX/phase1/_deps/libsmackerdec-subbuild/CMakeFiles/libsmackerdec-populate.rule"
+		},
+		{
+			"file" : "C:/c - c++/DevilutionX/phase1/_deps/libsmackerdec-subbuild/CMakeFiles/libsmackerdec-populate-complete.rule"
+		},
+		{
+			"file" : "C:/c - c++/DevilutionX/phase1/_deps/libsmackerdec-subbuild/libsmackerdec-populate-prefix/src/libsmackerdec-populate-stamp/libsmackerdec-populate-build.rule"
+		},
+		{
+			"file" : "C:/c - c++/DevilutionX/phase1/_deps/libsmackerdec-subbuild/libsmackerdec-populate-prefix/src/libsmackerdec-populate-stamp/libsmackerdec-populate-configure.rule"
+		},
+		{
+			"file" : "C:/c - c++/DevilutionX/phase1/_deps/libsmackerdec-subbuild/libsmackerdec-populate-prefix/src/libsmackerdec-populate-stamp/libsmackerdec-populate-download.rule"
+		},
+		{
+			"file" : "C:/c - c++/DevilutionX/phase1/_deps/libsmackerdec-subbuild/libsmackerdec-populate-prefix/src/libsmackerdec-populate-stamp/libsmackerdec-populate-install.rule"
+		},
+		{
+			"file" : "C:/c - c++/DevilutionX/phase1/_deps/libsmackerdec-subbuild/libsmackerdec-populate-prefix/src/libsmackerdec-populate-stamp/libsmackerdec-populate-mkdir.rule"
+		},
+		{
+			"file" : "C:/c - c++/DevilutionX/phase1/_deps/libsmackerdec-subbuild/libsmackerdec-populate-prefix/src/libsmackerdec-populate-stamp/libsmackerdec-populate-patch.rule"
+		},
+		{
+			"file" : "C:/c - c++/DevilutionX/phase1/_deps/libsmackerdec-subbuild/libsmackerdec-populate-prefix/src/libsmackerdec-populate-stamp/libsmackerdec-populate-test.rule"
+		},
+		{
+			"file" : "C:/c - c++/DevilutionX/phase1/_deps/libsmackerdec-subbuild/libsmackerdec-populate-prefix/src/libsmackerdec-populate-stamp/libsmackerdec-populate-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"libsmackerdec-populate"
+		],
+		"name" : "libsmackerdec-populate"
+	}
+}

@@ -13,55 +13,54 @@
 
 namespace devilution {
 
+// External declaration for gbValidSaveFile
+extern bool gbValidSaveFile;
+
 /**
  * @brief Override for SaveGame function in Browser Edition
  * In Browser Edition, this becomes a no-op
  */
 inline void SaveGameBrowserOverride() {
     if (IsBrowserEdition()) {
-        LogVerbose("🚫 SaveGame called in Browser Edition - ignoring (permadeath mode)");
+        LogInfo("🚫 SaveGame blocked in Browser Edition (permadeath mode)");
         return;
     }
-    // If not Browser Edition, call original SaveGame
-    // This will be handled by conditional compilation
 }
 
 /**
  * @brief Override for LoadGame function in Browser Edition
- * In Browser Edition, this becomes a no-op that returns false
+ * In Browser Edition, this returns an error
  */
-inline bool LoadGameBrowserOverride(bool showProgress) {
+inline tl::expected<void, std::string> LoadGameBrowserOverride(bool showProgress) {
     if (IsBrowserEdition()) {
-        LogVerbose("🚫 LoadGame called in Browser Edition - ignoring (no saves available)");
-        return false;
+        LogInfo("🚫 LoadGame blocked in Browser Edition (no saves available)");
+        return tl::make_unexpected(std::string("Load game disabled in Browser Edition"));
     }
-    // If not Browser Edition, call original LoadGame
-    // This will be handled by conditional compilation
-    return true; // Placeholder
+    // This should never be reached due to macro usage
+    return {};
 }
 
 /**
- * @brief Check if save file exists (Browser Edition override)
- * In Browser Edition, always returns false (no saves exist)
+ * @brief Override for save file existence check in Browser Edition
+ * In Browser Edition, always sets gbValidSaveFile to false
  */
-inline bool SaveFileExistsBrowserOverride() {
+inline void SaveFileExistsBrowserOverride() {
     if (IsBrowserEdition()) {
-        return false; // No saves in Browser Edition
+        LogVerbose("🚫 Save file existence check - forcing false in Browser Edition");
+        gbValidSaveFile = false;
+        return;
     }
-    // If not Browser Edition, call original function
-    return true; // Placeholder
 }
 
 /**
- * @brief Override for continue game functionality
+ * @brief Check if continue game is available (Browser Edition override)
  * In Browser Edition, always returns false (no continue available)
  */
 inline bool CanContinueGameBrowserOverride() {
     if (IsBrowserEdition()) {
         return false; // No continue in Browser Edition
     }
-    // If not Browser Edition, call original function
-    return true; // Placeholder
+    return true; // Placeholder for non-browser builds
 }
 
 } // namespace devilution
@@ -82,7 +81,8 @@ inline bool CanContinueGameBrowserOverride() {
     
     #define BROWSER_EDITION_SAVE_EXISTS_OVERRIDE() \
         if (::devilution::IsBrowserEdition()) { \
-            return ::devilution::SaveFileExistsBrowserOverride(); \
+            ::devilution::SaveFileExistsBrowserOverride(); \
+            return; \
         }
     
     #define BROWSER_EDITION_CAN_CONTINUE_OVERRIDE() \

@@ -1,0 +1,14 @@
+# Target labels
+ libmpq-populate
+# Source files and their labels
+C:/c - c++/DevilutionX/build_webassembly_new/_deps/libmpq-subbuild/CMakeFiles/libmpq-populate
+C:/c - c++/DevilutionX/build_webassembly_new/_deps/libmpq-subbuild/CMakeFiles/libmpq-populate.rule
+C:/c - c++/DevilutionX/build_webassembly_new/_deps/libmpq-subbuild/CMakeFiles/libmpq-populate-complete.rule
+C:/c - c++/DevilutionX/build_webassembly_new/_deps/libmpq-subbuild/libmpq-populate-prefix/src/libmpq-populate-stamp/libmpq-populate-build.rule
+C:/c - c++/DevilutionX/build_webassembly_new/_deps/libmpq-subbuild/libmpq-populate-prefix/src/libmpq-populate-stamp/libmpq-populate-configure.rule
+C:/c - c++/DevilutionX/build_webassembly_new/_deps/libmpq-subbuild/libmpq-populate-prefix/src/libmpq-populate-stamp/libmpq-populate-download.rule
+C:/c - c++/DevilutionX/build_webassembly_new/_deps/libmpq-subbuild/libmpq-populate-prefix/src/libmpq-populate-stamp/libmpq-populate-install.rule
+C:/c - c++/DevilutionX/build_webassembly_new/_deps/libmpq-subbuild/libmpq-populate-prefix/src/libmpq-populate-stamp/libmpq-populate-mkdir.rule
+C:/c - c++/DevilutionX/build_webassembly_new/_deps/libmpq-subbuild/libmpq-populate-prefix/src/libmpq-populate-stamp/libmpq-populate-patch.rule
+C:/c - c++/DevilutionX/build_webassembly_new/_deps/libmpq-subbuild/libmpq-populate-prefix/src/libmpq-populate-stamp/libmpq-populate-test.rule
+C:/c - c++/DevilutionX/build_webassembly_new/_deps/libmpq-subbuild/libmpq-populate-prefix/src/libmpq-populate-stamp/libmpq-populate-update.rule

@@ -1,0 +1,27 @@
+{
+	"InstallScripts" : 
+	[
+		"C:/c - c++/DevilutionX/build_nightmare_full/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_nightmare_full/3rdParty/Lua/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_nightmare_full/_deps/lua-build/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_nightmare_full/_deps/lua-build/lua-5.4.7/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_nightmare_full/3rdParty/sol2/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_nightmare_full/_deps/sol2-build/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_nightmare_full/3rdParty/libfmt/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_nightmare_full/_deps/libfmt-build/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_nightmare_full/3rdParty/SDL_audiolib/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_nightmare_full/_deps/sdl_audiolib-build/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_nightmare_full/3rdParty/libsmackerdec/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_nightmare_full/3rdParty/libmpq/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_nightmare_full/3rdParty/tl/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_nightmare_full/3rdParty/SheenBidi/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_nightmare_full/_deps/sheenbidi-build/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_nightmare_full/3rdParty/unordered_dense/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_nightmare_full/_deps/unordered_dense-build/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_nightmare_full/3rdParty/magic_enum/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_nightmare_full/_deps/magic_enum-build/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_nightmare_full/3rdParty/PKWare/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_nightmare_full/Source/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

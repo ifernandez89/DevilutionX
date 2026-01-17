@@ -11,6 +11,10 @@
 #include <iomanip>
 #include <unordered_map>
 
+#ifdef __EMSCRIPTEN__
+#include "webassembly/browser_edition.h"  // 🌐 Browser Edition permadeath system
+#endif
+
 #ifdef USE_SDL3
 #include <SDL3/SDL_events.h>
 #include <SDL3/SDL_timer.h>
@@ -1059,6 +1063,10 @@ bool DoDeath(Player &player)
 			dFlags[player.position.tile.x][player.position.tile.y] |= DungeonFlag::DeadPlayer;
 		} else if (&player == MyPlayer && player.AnimInfo.tickCounterOfCurrentFrame == 30) {
 			MyPlayerIsDead = true;
+#ifdef __EMSCRIPTEN__
+			// 💀 Browser Edition: Handle permadeath
+			HandleBrowserEditionDeath();
+#endif
 		}
 	}
 

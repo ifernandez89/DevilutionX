@@ -63,14 +63,23 @@ void HandleBrowserEditionDeath()
         return; // Not Browser Edition, use normal death handling
     }
     
-    LogInfo("💀 BROWSER EDITION DEATH - Triggering instant restart");
+    LogInfo("💀 BROWSER EDITION DEATH DETECTED");
     LogInfo("   🎲 Current seed was: {}", g_browserEditionSeed);
+    LogInfo("   ⚡ Triggering permadeath restart...");
     
 #ifdef __EMSCRIPTEN__
     // Show death message in browser console
     EM_ASM({
         console.log("💀 NIGHTMARE BROWSER EDITION - PERMADEATH!");
-        console.log("🔄 Restarting with new seed...");
+        console.log("🔄 Your journey ends here. Restarting with new seed...");
+        
+        // Optional: Show browser notification if supported
+        if ('Notification' in window && Notification.permission === 'granted') {
+            new Notification('💀 Nightmare Browser Edition', {
+                body: 'Permadeath! Restarting with new seed...',
+                icon: 'nightmare.ico'
+            });
+        }
     });
 #endif
     
@@ -80,7 +89,8 @@ void HandleBrowserEditionDeath()
     
     LogInfo("   🎲 New seed for restart: {}", newSeed);
     
-    // Trigger complete restart
+    // Delay restart slightly to allow death animation to complete
+    // In a real implementation, this would be handled by a timer or frame counter
     RestartBrowserEdition(newSeed);
 }
 
@@ -107,28 +117,50 @@ void RestartBrowserEdition(uint32_t newSeed)
         newSeed = rd();
     }
     
-    LogInfo("🔄 BROWSER EDITION RESTART");
+    LogInfo("🔄 BROWSER EDITION RESTART INITIATED");
     LogInfo("   🎲 New seed: {}", newSeed);
+    LogInfo("   💀 Permadeath mode: Session reset");
     
     // Set new seed
     SetBrowserEditionSeed(newSeed);
     
-    // TODO: Implement actual restart logic
-    // This will need to:
-    // 1. Reset all game state
-    // 2. Regenerate world with new seed
-    // 3. Reset player to level 1
-    // 4. Clear all progress
-    // 5. Return to character creation or main menu
-    
-    LogInfo("   ⚡ Restart logic will be implemented in next phase");
-    
 #ifdef __EMSCRIPTEN__
-    // For now, just reload the page in browser
+    // Show restart message in browser
     EM_ASM({
-        console.log("🔄 Reloading page for fresh start...");
-        window.location.reload();
+        console.log("🔄 NIGHTMARE BROWSER EDITION - RESTARTING");
+        console.log("🎲 New seed: " + $0, newSeed);
+        console.log("⚡ Fresh start loading...");
+        
+        // Optional: Update page title to show restart
+        document.title = "💀 Nightmare Browser Edition - Restarting...";
+        
+        // Optional: Show loading overlay
+        var canvas = document.getElementById('canvas');
+        if (canvas) {
+            var ctx = canvas.getContext('2d');
+            ctx.fillStyle = 'black';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = 'red';
+            ctx.font = '24px monospace';
+            ctx.textAlign = 'center';
+            ctx.fillText('💀 PERMADEATH', canvas.width/2, canvas.height/2 - 20);
+            ctx.fillStyle = 'yellow';
+            ctx.font = '16px monospace';
+            ctx.fillText('🔄 Restarting with new seed...', canvas.width/2, canvas.height/2 + 20);
+        }
+    }, newSeed);
+    
+    // Delay the actual restart to show the message
+    EM_ASM({
+        setTimeout(function() {
+            console.log("🌐 Reloading page for fresh start...");
+            window.location.reload();
+        }, 2000); // 2 second delay
     });
+#else
+    // For desktop builds (testing), just log the restart
+    LogInfo("   🖥️ Desktop build: Restart would reload game state");
+    LogInfo("   ⚡ In WebAssembly, this would reload the page");
 #endif
 }
 

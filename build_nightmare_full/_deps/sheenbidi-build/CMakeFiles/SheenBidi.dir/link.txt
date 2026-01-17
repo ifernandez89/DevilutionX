@@ -1,0 +1,2 @@
+"C:/c - c++/DevilutionX/emsdk/upstream/emscripten/emar.bat" qc libSheenBidi.a CMakeFiles/SheenBidi.dir/Source/SheenBidi.c.o
+"C:/c - c++/DevilutionX/emsdk/upstream/emscripten/emranlib.bat" libSheenBidi.a

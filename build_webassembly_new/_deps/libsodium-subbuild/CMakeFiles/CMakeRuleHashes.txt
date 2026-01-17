@@ -1,0 +1,11 @@
+# Hashes of file build rules.
+4a11207549fd1ef950914fff8c062b05 CMakeFiles/libsodium-populate
+7d472070fdacc5231ff41126c9d18f36 CMakeFiles/libsodium-populate-complete
+63c4ce920f51741b20075e588c4089a2 libsodium-populate-prefix/src/libsodium-populate-stamp/libsodium-populate-build
+27df3684877a41badb566e742dd7abdd libsodium-populate-prefix/src/libsodium-populate-stamp/libsodium-populate-configure
+fcb4fee5a9861ea2ebec037c021c8494 libsodium-populate-prefix/src/libsodium-populate-stamp/libsodium-populate-download
+e7d163f01fd667c5c31f8565657b052a libsodium-populate-prefix/src/libsodium-populate-stamp/libsodium-populate-install
+a0100a1f63afb9a8210d952b098ae167 libsodium-populate-prefix/src/libsodium-populate-stamp/libsodium-populate-mkdir
+2f6f0695d4eb71967ab212c7c185bb0d libsodium-populate-prefix/src/libsodium-populate-stamp/libsodium-populate-patch
+b1d67c101e3144c426cf9c1f2324d141 libsodium-populate-prefix/src/libsodium-populate-stamp/libsodium-populate-test
+fd7ce291383403677f745fcb39db3213 libsodium-populate-prefix/src/libsodium-populate-stamp/libsodium-populate-update

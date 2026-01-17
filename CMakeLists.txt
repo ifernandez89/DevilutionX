@@ -266,7 +266,8 @@ endif()
 #
 # PS4 toolchain crashes in `create-fself` when linking with these flags, so we exclude it:
 # https://github.com/PacBrew/ps4-openorbis/issues/8
-if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang" AND NOT PS4)
+# Emscripten wasm-ld doesn't support --as-needed flag, so we exclude it too
+if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang" AND NOT PS4 AND NOT EMSCRIPTEN AND NOT CMAKE_SYSTEM_NAME STREQUAL "Emscripten")
   add_compile_options("$<$<NOT:$<CONFIG:Debug>>:-ffunction-sections;-fdata-sections>")
   if(APPLE)
     add_link_options("$<$<NOT:$<CONFIG:Debug>>:LINKER:-dead_strip>")
@@ -280,7 +281,7 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
   add_compile_options("$<$<NOT:$<CONFIG:Debug>>:-fipa-pta;-fdevirtualize-at-ltrans>")
 endif()
 
-if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang" AND NOT CMAKE_SYSTEM_NAME STREQUAL "Emscripten")
   add_compile_options("$<$<BOOL:${DEVILUTIONX_PROFILE_GENERATE}>:-fprofile-generate>")
   add_link_options("$<$<BOOL:${DEVILUTIONX_PROFILE_GENERATE}>:-fprofile-generate>")
   add_compile_options("$<$<BOOL:${DEVILUTIONX_PROFILE_USE}>:-fprofile-use>")
@@ -340,8 +341,11 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON) # for clang-tidy
 set(CMAKE_THREAD_PREFER_PTHREAD ON)
 set(THREADS_PREFER_PTHREAD_FLAG ON)
-if(NOT TARGET_PLATFORM STREQUAL "dos")
+if(NOT TARGET_PLATFORM STREQUAL "dos" AND NOT CMAKE_SYSTEM_NAME STREQUAL "Emscripten")
   find_package(Threads REQUIRED)
+elseif(CMAKE_SYSTEM_NAME STREQUAL "Emscripten")
+  # Create a stub Threads target for Emscripten (uses SDL threads)
+  add_library(Threads::Threads INTERFACE IMPORTED GLOBAL)
 endif()
 
 # Dependencies must be included after Platforms.

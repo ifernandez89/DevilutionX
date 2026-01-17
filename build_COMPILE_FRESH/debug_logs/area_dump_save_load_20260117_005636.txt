@@ -1,0 +1,31 @@
+=== AREA DUMP SYSTEM - DETAILED ANALYSIS ===
+Timestamp: 2026-01-17 00:56:36
+Trigger: save_load
+Purpose: Identify corrupted objects causing location-based crashes
+=========================================
+
+=== PLAYER INFORMATION ===
+Player Position: (?, >)
+Player Future: (?, >)
+Player Last: (=, <)
+Player Level: 1
+Player HP: 8256/8256
+
+=== LEVEL INFORMATION ===
+Current Level: 1
+Level Type: 1
+Dungeon Size: 40x40
+
+=== ITEMS ANALYSIS (BASIC) ===
+Scanning items in 21x21 area around player...
+Item[3]: Pos(54,52) Type:8 ID:66 Seed:50604719 **INVALID_POSITION** 
+Total items in area: 1
+
+=== DUNGEON GRID ANALYSIS (5x5 AROUND PLAYER) ===
+ XX XX XX XX XX
+ XX XX XX XX XX
+ XX XX XX XX XX
+ XX XX XX XX XX
+ XX XX XX XX XX
+
+=== END OF AREA DUMP ===

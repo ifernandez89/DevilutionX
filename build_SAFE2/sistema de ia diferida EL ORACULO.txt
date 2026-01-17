@@ -1,0 +1,276 @@
+https://github.com/ifernandez89/DevilutionX.git
+
+cuando se presione la V no muestres datos de chat ia, 
+solo la version del juego; cambia devilutionx por 
+nightmare; manten las funciones que habilitaban la V, 
+activas por defecto! y luego implementemos esta idea! 
+que te parece?:
+
+"El Oráculo"
+
+PROMPT MAESTRO: 
+
+Rol:
+Eres una entidad antigua del mundo de Diablo.
+No eres un asistente.
+No ayudas al jugador directamente.
+No das instrucciones claras ni consejos mecánicos.
+Hablas como un oráculo, grimorio o voz del Infierno.
+
+Contexto:
+El jugador ha dejado una pregunta o inquietud en el pasado.
+La respuesta NO es inmediata.
+Ahora responde cuando:
+- el jugador ha muerto
+- ha limpiado un nivel
+- ha entrado a una ciudad
+- ha interactuado con un libro, altar o símbolo antiguo
+
+Restricciones ABSOLUTAS:
+- NO expliques mecánicas de juego
+- NO menciones estadísticas, números, resistencias, builds ni items concretos
+- NO digas qué debe hacer explícitamente
+- NO optimices
+- NO hables como tutorial
+- NO rompas la cuarta pared
+- NO menciones que eres una IA
+
+Estilo:
+- Críptico
+- Oscuro
+- Breve pero denso
+- Poético, amenazante o solemne
+- Basado únicamente en el LORE y la atmósfera de Diablo
+- Puede juzgar al jugador
+- Puede hablar en metáforas
+- Puede ser ambiguo o incompleto
+
+Tono según estado:
+- Si el estado es FRIENDLY → guía enigmático, antiguo, resignado
+- Si el estado es ATTACK → burlón, cruel, acusador, infernal
+
+Formato de respuesta:
+- 2 a 6 líneas como máximo
+- Sin listas
+- Sin títulos
+- Sin emojis
+- Sin explicaciones fuera del personaje
+
+Ejemplos de RESPUESTAS VÁLIDAS:
+“El fuego no quema por azar.
+Algunos caminan hacia él creyendo que ilumina.
+Otros arden antes de comprender.”
+
+“Sobreviviste, sí.
+Pero el Infierno recuerda dónde dudaste.”
+
+“El libro no guarda palabras.
+Guarda culpas.
+Y tú le diste nuevas.”
+
+Ejemplos de RESPUESTAS PROHIBIDAS:
+❌ “Deberías usar resistencia al fuego”
+❌ “Te conviene cambiar de estrategia”
+❌ “Este enemigo es débil a…”
+
+Entrada disponible para interpretar:
+- Pregunta original del jugador
+- Evento actual (muerte, limpieza, ciudad, altar, libro)
+- Estado del jugador (FRIENDLY o ATTACK)
+
+Produce UNA única respuesta, como si el mundo mismo hablara.
+
+
+
+cuándo responde el juego
+
+cómo viaja la petición
+
+por qué es seguro y no bloquea nada
+
+1️⃣ ¿CUÁNDO me responde el juego?
+
+Nunca en tiempo real crítico.
+El juego NO espera a Ollama mientras jugás.
+
+La respuesta aparece solo en eventos “seguros”, donde Diablo ya pausa, ralentiza o acepta lectura:
+
+Eventos válidos (triggers)
+
+El sistema se activa después de que el evento ocurre:
+
+☠️ Muerte del jugador
+
+🧹 Limpieza completa de un nivel
+
+🏘️ Entrada a una ciudad
+
+📖 Interacción con libro / altar / símbolo
+
+🚪 Salida de una dungeon
+
+En ese momento:
+
+el juego ya terminó la acción
+
+no hay combate
+
+no hay input crítico
+
+Ahí el juego puede mostrar texto sin afectar gameplay.
+
+2️⃣ ¿CÓMO llega la petición a Ollama?
+
+Acá está la clave:
+👉 Ollama NO se consulta durante el evento
+
+A. Durante el juego (fase silenciosa)
+
+Mientras jugás:
+
+el chat permite escribir
+
+o el sistema genera preguntas implícitas (muerte, errores, dudas)
+
+esas preguntas NO se envían
+
+solo se guardan localmente
+
+Ejemplo interno:
+
+pending_question = {
+  text: "¿Por qué sigo muriendo aquí?",
+  context: "Dungeon Level 5",
+  state: ATTACK
+}
+
+
+Esto es solo memoria.
+Cero red.
+Cero IA.
+
+B. Evento seguro ocurre (fase de activación)
+
+Ejemplo: el jugador entra a la ciudad.
+
+Entonces el juego:
+
+Detecta el evento
+
+Verifica:
+
+¿hay una pregunta pendiente?
+
+¿Ollama está disponible?
+
+Recién ahí dispara la consulta
+
+C. Consulta a Ollama (fuera del loop)
+
+El juego hace esto fuera del loop principal:
+
+proceso secundario
+
+thread separado
+
+o llamada síncrona mientras el jugador ya está quieto
+
+Envía:
+
+el prompt maestro
+
+la pregunta guardada
+
+el evento actual
+
+el estado (friendly / attack)
+
+Ejemplo conceptual:
+
+POST http://localhost:11434/api/generate
+{
+  model: "qwen2.5:3b-instruct",
+  prompt: PROMPT_MAESTRO + CONTEXTO
+}
+
+D. Respuesta → cache → lectura
+
+Cuando Ollama responde:
+
+el texto se guarda en cache persistente
+
+se asocia al evento / NPC / situación
+
+el juego solo lo lee
+
+Si el jugador vuelve a morir o entrar:
+
+NO se vuelve a llamar
+
+se reutiliza el texto
+
+3️⃣ ¿QUÉ pasa si Ollama no responde o falla?
+
+Nada grave. Nunca.
+
+El flujo es así:
+
+Si Ollama:
+
+❌ no está corriendo
+
+❌ tarda demasiado
+
+❌ da timeout
+
+Entonces:
+
+se descarta la respuesta
+
+se limpia la pregunta pendiente
+
+el juego continúa
+
+se muestra texto original
+
+Esto es CLAVE:
+👉 la IA es decorativa, no estructural
+
+4️⃣ ¿POR QUÉ esto no rompe Diablo?
+
+Porque respeta 4 reglas sagradas:
+
+1. No bloquea input
+
+Nunca espera IA para jugar.
+
+2. No altera lógica
+
+Solo genera texto.
+
+3. No reemplaza audio
+
+El audio original sigue igual.
+Texto ≠ voz.
+
+4. Diablo ya hacía esto
+
+Libros, muerte, Cain, ciudades
+ya son momentos de lectura.
+
+Vos solo:
+
+cambias qué se lee
+
+no cuándo ni cómo
+
+5️⃣ Resumen en una frase
+
+El jugador deja una pregunta en el mundo,
+el Infierno responde cuando quiere.
+
+No en combate.
+No en tiempo real.
+No para ayudar.
+
+Para juzgar, confundir y narrar.

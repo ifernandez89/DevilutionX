@@ -1,0 +1,28 @@
+{
+	"InstallScripts" : 
+	[
+		"C:/c - c++/DevilutionX/build_webassembly_new/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_webassembly_new/3rdParty/Lua/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_webassembly_new/_deps/lua-build/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_webassembly_new/_deps/lua-build/lua-5.4.7/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_webassembly_new/3rdParty/sol2/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_webassembly_new/_deps/sol2-build/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_webassembly_new/3rdParty/libfmt/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_webassembly_new/_deps/libfmt-build/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_webassembly_new/3rdParty/libsodium/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_webassembly_new/_deps/libsodium-build/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_webassembly_new/3rdParty/libsmackerdec/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_webassembly_new/3rdParty/libmpq/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_webassembly_new/3rdParty/tl/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_webassembly_new/3rdParty/SheenBidi/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_webassembly_new/_deps/sheenbidi-build/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_webassembly_new/3rdParty/unordered_dense/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_webassembly_new/_deps/unordered_dense-build/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_webassembly_new/3rdParty/magic_enum/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_webassembly_new/_deps/magic_enum-build/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_webassembly_new/3rdParty/PKWare/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_webassembly_new/3rdParty/asio/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_webassembly_new/Source/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

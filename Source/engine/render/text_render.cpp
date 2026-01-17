@@ -17,6 +17,7 @@
 #include <ankerl/unordered_dense.h>
 #include <fmt/core.h>
 
+#include "abstractions/vfs_wrappers.h"  // 🌐 VFS for WebAssembly compatibility
 #include "DiabloUI/ui_flags.hpp"
 #include "engine/clx_sprite.hpp"
 #include "engine/load_cel.hpp"
@@ -189,7 +190,7 @@ FontStack LoadFont(GameFontTables size, text_color color, uint16_t row)
 {
 	if (ColorTranslations[color] != nullptr && !ColorTranslationsData[color]) {
 		ColorTranslationsData[color].emplace();
-		LoadFileInMem(ColorTranslations[color], *ColorTranslationsData[color]);
+		LoadFileInMemVFS(ColorTranslations[color], *ColorTranslationsData[color]);
 	}
 
 	const uint32_t fontId = GetFontId(size, row);

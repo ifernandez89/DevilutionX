@@ -1,0 +1,2 @@
+"C:/c - c++/DevilutionX/emsdk/upstream/emscripten/emar.bat" qc libasio.a CMakeFiles/asio.dir/asio_handle_exception.cpp.o
+"C:/c - c++/DevilutionX/emsdk/upstream/emscripten/emranlib.bat" libasio.a

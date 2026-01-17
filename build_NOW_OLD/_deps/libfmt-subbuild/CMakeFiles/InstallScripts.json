@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"C:/DevilutionX/build_NOW/_deps/libfmt-subbuild/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

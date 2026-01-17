@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevilutionX - Nightmare Browser Edition</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #000;
+            color: #fff;
+            font-family: 'Courier New', monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        #gameContainer {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        #canvas {
+            border: 2px solid #333;
+            background: #000;
+            display: block;
+            margin: 0 auto;
+        }
+        
+        #status {
+            margin: 10px 0;
+            padding: 10px;
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 5px;
+            font-size: 14px;
+            max-width: 800px;
+        }
+        
+        .phase { color: #4CAF50; }
+        .error { color: #f44336; }
+        .info { color: #2196F3; }
+        
+        h1 {
+            color: #ff6b35;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔥 DevilutionX - Nightmare Browser Edition</h1>
+    
+    <div id="status" class="phase">
+        <strong>FASE 1:</strong> Inicializando runtime WebAssembly...
+    </div>
+    
+    <div id="gameContainer">
+        <canvas id="canvas" width="800" height="600"></canvas>
+    </div>
+    
+    <div id="status" class="info">
+        <strong>Estado:</strong> <span id="statusText">Cargando...</span><br>
+        <strong>Logs:</strong> Ver consola del navegador (F12)
+    </div>
+
+    <script>
+        // FASE 1: Configuración mínima del Module
+        console.log('🚀 FASE 1: Inicializando DevilutionX WebAssembly');
+        
+        // Status helper
+        function updateStatus(message, type = 'info') {
+            const statusEl = document.getElementById('statusText');
+            const statusContainer = statusEl.parentElement.parentElement;
+            statusEl.textContent = message;
+            statusContainer.className = type;
+            console.log(`[STATUS] ${message}`);
+        }
+        
+        // Module configuration ANTES de cargar el JS
+        var Module = {
+            canvas: document.getElementById('canvas'),
+            
+            // Callbacks de estado
+            onRuntimeInitialized: function() {
+                console.log('✅ FASE 1 SUCCESS: Runtime WebAssembly inicializado');
+                updateStatus('Runtime inicializado - Llamando main()', 'phase');
+            },
+            
+            print: function(text) {
+                console.log('[STDOUT]', text);
+            },
+            
+            printErr: function(text) {
+                console.error('[STDERR]', text);
+                updateStatus('Error: ' + text, 'error');
+            },
+            
+            setStatus: function(text) {
+                console.log('[MODULE]', text);
+                updateStatus(text, 'info');
+            },
+            
+            // Error handling
+            onAbort: function(what) {
+                console.error('❌ ABORT:', what);
+                updateStatus('Runtime abortado: ' + what, 'error');
+            },
+            
+            // Memory settings
+            INITIAL_MEMORY: 134217728, // 128MB
+            ALLOW_MEMORY_GROWTH: true,
+            
+            // Debug settings para FASE 1
+            ASSERTIONS: 1,
+            SAFE_HEAP: 1
+        };
+        
+        // Pre-run setup
+        Module.preRun = [function() {
+            console.log('🔧 FASE 1: Pre-run setup');
+            updateStatus('Configurando entorno...', 'info');
+        }];
+        
+        // Post-run verification
+        Module.postRun = [function() {
+            console.log('🎯 FASE 1: Post-run - Verificando main()');
+            updateStatus('main() ejecutado - Verificar logs', 'phase');
+        }];
+        
+        console.log('📋 FASE 1: Module configurado, cargando JS...');
+        updateStatus('Module configurado, cargando WebAssembly...', 'info');
+    </script>
+    
+    <!-- El JS se cargará aquí cuando esté generado -->
+    <!-- <script src="phase1/devilutionx.js"></script> -->
+    <script>
+        // Placeholder hasta que tengamos el JS generado
+        setTimeout(() => {
+            updateStatus('Esperando devilutionx.js - ejecutar build_wasm_phase1.bat', 'info');
+        }, 1000);
+    </script>
+</body>
+</html>

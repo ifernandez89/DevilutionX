@@ -1,0 +1,12 @@
+# This is a generated file and its contents are an internal implementation detail.
+# The download step will be re-executed if anything in this file changes.
+# No other meaning or use of this file is supported.
+
+method=url
+command=C:/Program Files/CMake/bin/cmake.exe;-DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE;-P;C:/c - c++/DevilutionX/build_webassembly_new/_deps/asio-subbuild/asio-populate-prefix/src/asio-populate-stamp/download-asio-populate.cmake;COMMAND;C:/Program Files/CMake/bin/cmake.exe;-DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE;-P;C:/c - c++/DevilutionX/build_webassembly_new/_deps/asio-subbuild/asio-populate-prefix/src/asio-populate-stamp/verify-asio-populate.cmake;COMMAND;C:/Program Files/CMake/bin/cmake.exe;-DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE;-P;C:/c - c++/DevilutionX/build_webassembly_new/_deps/asio-subbuild/asio-populate-prefix/src/asio-populate-stamp/extract-asio-populate.cmake
+source_dir=C:/c - c++/DevilutionX/build_webassembly_new/_deps/asio-src
+work_dir=C:/c - c++/DevilutionX/build_webassembly_new/_deps
+url(s)=https://github.com/diasurgical/asio/archive/4bcf552fcea3e1ae555dde2ab33bc9fa6770da4d.tar.gz
+hash=MD5=7ffee993fc21b1115abf485958d03ac8
+      no_extract=
+

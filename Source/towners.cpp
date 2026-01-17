@@ -28,6 +28,7 @@
 #include "tables/textdat.h"
 #include "tables/townerdat.hpp"
 #include "utils/is_of.hpp"
+#include "utils/log.hpp"
 #include "utils/language.h"
 #include "utils/str_case.hpp"
 

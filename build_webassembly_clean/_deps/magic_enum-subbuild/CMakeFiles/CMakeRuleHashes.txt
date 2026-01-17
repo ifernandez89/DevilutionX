@@ -1,0 +1,11 @@
+# Hashes of file build rules.
+906928e5490e3d2956b74118f1d77adb CMakeFiles/magic_enum-populate
+6c94a112702ac6d9d9863d49c826f417 CMakeFiles/magic_enum-populate-complete
+29a815fd81821b7ab71638f249173fbf magic_enum-populate-prefix/src/magic_enum-populate-stamp/magic_enum-populate-build
+109b047c0c37e1bfa42ac135329fdf53 magic_enum-populate-prefix/src/magic_enum-populate-stamp/magic_enum-populate-configure
+08221374ad6ad26f10c3fe780c14b8d1 magic_enum-populate-prefix/src/magic_enum-populate-stamp/magic_enum-populate-download
+3af1834c4fa538ca9b0030b55af1248b magic_enum-populate-prefix/src/magic_enum-populate-stamp/magic_enum-populate-install
+86d03db9db447302f2cc45fa76fc02a6 magic_enum-populate-prefix/src/magic_enum-populate-stamp/magic_enum-populate-mkdir
+509769018284d9a6b65e1f7dbe9708e4 magic_enum-populate-prefix/src/magic_enum-populate-stamp/magic_enum-populate-patch
+26b36474a2387da29dfb8906cef2060c magic_enum-populate-prefix/src/magic_enum-populate-stamp/magic_enum-populate-test
+1320e894bf6a854676d98b8ddc0119c3 magic_enum-populate-prefix/src/magic_enum-populate-stamp/magic_enum-populate-update

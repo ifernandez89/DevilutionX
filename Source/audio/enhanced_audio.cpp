@@ -714,7 +714,7 @@ void RunEnhancedAudioStressTest() {
     // Simular sonidos espaciales
     Point testPos = {10, 10};
     for (int i = 0; i < 50; ++i) {
-        EnhancedPlaySfxLoc(SfxID::MonsterHit, testPos);
+        EnhancedPlaySfxLoc(SfxID::SpellFireHit, testPos);
         testPos.x += 2;
         testPos.y += 1;
     }

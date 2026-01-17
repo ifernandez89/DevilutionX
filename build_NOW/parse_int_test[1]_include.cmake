@@ -1,0 +1,5 @@
+if(EXISTS "C:/Diablo/DevilutionX Repo/DevilutionX/build_final_working/parse_int_test[1]_tests.cmake")
+  include("C:/Diablo/DevilutionX Repo/DevilutionX/build_final_working/parse_int_test[1]_tests.cmake")
+else()
+  add_test(parse_int_test_NOT_BUILT parse_int_test_NOT_BUILT)
+endif()

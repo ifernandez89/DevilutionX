@@ -1,0 +1,32 @@
+{
+	"InstallScripts" : 
+	[
+		"C:/c - c++/DevilutionX/build_SAFE/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_SAFE/3rdParty/bzip2/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_SAFE/3rdParty/Lua/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_SAFE/_deps/lua-build/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_SAFE/_deps/lua-build/lua-5.4.7/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_SAFE/3rdParty/sol2/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_SAFE/_deps/sol2-build/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_SAFE/3rdParty/SDL_image/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_SAFE/3rdParty/SDL_image/libpng/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_SAFE/_deps/libpng-build/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_SAFE/3rdParty/libfmt/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_SAFE/_deps/libfmt-build/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_SAFE/3rdParty/SDL_audiolib/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_SAFE/_deps/sdl_audiolib-build/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_SAFE/3rdParty/libsmackerdec/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_SAFE/3rdParty/find_steam_game/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_SAFE/3rdParty/libmpq/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_SAFE/3rdParty/tl/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_SAFE/3rdParty/SheenBidi/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_SAFE/_deps/sheenbidi-build/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_SAFE/3rdParty/unordered_dense/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_SAFE/_deps/unordered_dense-build/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_SAFE/3rdParty/magic_enum/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_SAFE/_deps/magic_enum-build/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_SAFE/3rdParty/PKWare/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/build_SAFE/Source/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

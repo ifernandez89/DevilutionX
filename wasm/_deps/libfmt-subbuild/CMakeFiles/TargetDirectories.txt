@@ -1,0 +1,3 @@
+C:/c - c++/DevilutionX/wasm/_deps/libfmt-subbuild/CMakeFiles/libfmt-populate.dir
+C:/c - c++/DevilutionX/wasm/_deps/libfmt-subbuild/CMakeFiles/edit_cache.dir
+C:/c - c++/DevilutionX/wasm/_deps/libfmt-subbuild/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,12 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/DevilutionX/Packaging/windows/devilutionx.rc
+winuser.h
+C:/DevilutionX/Packaging/windows/winuser.h
+

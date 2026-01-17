@@ -1,0 +1,12 @@
+prefix=C:/Program Files (x86)/NightmareEdition
+exec_prefix=C:/Program Files (x86)/NightmareEdition
+libdir=C:/Program Files (x86)/NightmareEdition/lib
+includedir=C:/Program Files (x86)/NightmareEdition/include/libpng16
+
+Name: libpng
+Description: Loads and saves PNG files
+Version: 1.6.38
+Requires.private: zlib
+Libs: -L${libdir} -lpng16
+Libs.private: -lz -lm
+Cflags: -I${includedir}

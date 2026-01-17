@@ -555,6 +555,13 @@ void KillGolem(Monster &golem);
 void M_StartKill(Monster &monster, const Player &player);
 void M_SyncStartKill(Monster &monster, Point position, const Player &player);
 void M_UpdateRelations(const Monster &monster);
+
+// 🎯 APOCALYPSE CRASH FIX: Deferred Loot Generation
+extern bool DeferredLootEnabled;
+void EnableDeferredLoot();
+void DisableDeferredLoot();
+void ProcessDeferredLoot();
+
 void DoEnding();
 void PrepDoEnding();
 bool Walk(Monster &monster, Direction md);

@@ -20,20 +20,20 @@ static LightMutationsState g_lightMutations;
 void InitLightMutations()
 {
     g_lightMutations = LightMutationsState{};
-    g_lightMutations.enabled = true;
+    g_lightMutations.enabled = true;  // ✅ REACTIVADO
     g_lightMutations.currentLevel = currlevel;
-    g_lightMutations.mutationChance = CalculateMutationChance();
+    g_lightMutations.mutationChance = CalculateMutationChance();  // ✅ REACTIVADO
     
     // Reset statistics
     ResetMutationStats();
     
-    LogVerbose("🧬 Light Mutations System initialized for level {} with {}% chance",
-              currlevel, g_lightMutations.mutationChance);
+    LogVerbose("✅ Light Mutations System REACTIVATED - {}% chance at level {}", 
+              g_lightMutations.mutationChance, currlevel);
 }
 
 int CalculateMutationChance()
 {
-    if (!g_lightMutations.enabled || currlevel < LightMutations::START_LEVEL) {
+    if (currlevel < LightMutations::START_LEVEL) {
         return 0;
     }
     
@@ -49,8 +49,6 @@ int CalculateMutationChance()
 
 void UpdateLightMutations()
 {
-    if (!g_lightMutations.enabled) return;
-    
     g_lightMutations.currentLevel = currlevel;
     g_lightMutations.mutationChance = CalculateMutationChance();
     
@@ -165,7 +163,7 @@ void ApplyMutationType(Monster &monster, MutationType mutationType)
 
 bool ApplyLightMutations(Monster &monster)
 {
-    if (!g_lightMutations.enabled || !IsMutationsActive()) {
+    if (!IsMutationsActive()) {
         return false;
     }
     
@@ -205,7 +203,7 @@ bool ApplyLightMutations(Monster &monster)
 
 bool IsMutationsActive()
 {
-    return g_lightMutations.enabled && currlevel >= LightMutations::START_LEVEL;
+    return currlevel >= LightMutations::START_LEVEL;
 }
 
 int GetCurrentMutationChance()

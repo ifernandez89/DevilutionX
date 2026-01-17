@@ -4,6 +4,16 @@
 #include <cstdint>
 #include <unordered_map>
 
+// FEATURE: NPC Micro-Movements
+// Set to 1 to enable decorative NPC walking
+#define ENABLE_NPC_MICRO_MOVEMENT 1
+
+#ifdef USE_SDL3
+#include <SDL3/SDL_timer.h>
+#else
+#include <SDL.h>
+#endif
+
 #include "cursor.h"
 #include "engine/clx_sprite.hpp"
 #include "engine/load_cel.hpp"
@@ -12,6 +22,7 @@
 #include "game_mode.hpp"
 #include "hidden_content.h"
 #include "inv.h"
+#include "levels/gendung.h"
 #include "minitext.h"
 #include "stores.h"
 #include "tables/textdat.h"
@@ -795,6 +806,11 @@ void InitTowners()
 		InitTownerInfo(Towners.back(), *behaviorIt->second, entry);
 		i++;
 	}
+	
+	// FEATURE: NPC Micro-Movements - Initialize system
+	for (auto &towner : Towners) {
+		InitNPCMicroMovement(towner);
+	}
 }
 
 void FreeTownerGFX()
@@ -818,6 +834,9 @@ void ProcessTowners()
 		
 		// FEATURE: Improved Town NPC Visual Liveliness - Update Farnham's posture
 		UpdateFarnhamPosture(towner);
+		
+		// FEATURE: NPC Micro-Movements - Update decorative walking
+		UpdateTownerMicro(towner);
 
 		towner._tAnimCnt++;
 		if (towner._tAnimCnt < towner._tAnimDelay) {
@@ -1177,5 +1196,383 @@ bool DebugTalkToTowner(_talker_id type)
 	return true;
 }
 #endif
+
+// ============================================================================
+// 🚶 NPC MICRO-MOVEMENTS SYSTEM
+// ============================================================================
+
+namespace {
+
+// Micro-movement configuration
+// NOTE: Times are 4x longer than original for subtle, non-intrusive movement
+// Original: 8-15s, Now: 32-60s (much more subtle for users staying in town)
+constexpr uint32_t MIN_IDLE_TIME = 32000;  // 32 seconds minimum idle (was 8s)
+constexpr uint32_t MAX_IDLE_TIME = 60000;  // 60 seconds maximum idle (was 15s)
+constexpr uint32_t WALK_DURATION = 1500;   // 1.5 seconds walking (unchanged)
+constexpr int MIN_PLAYER_DISTANCE = 5;     // Minimum distance from player (tiles)
+
+// Micro-movement states
+enum class NPCMicroState : uint8_t {
+	IDLE = 0,
+	WALK_SHORT = 1,
+	RETURN_HOME = 2
+};
+
+/**
+ * @brief Check if player is near the NPC
+ */
+bool IsPlayerNear(const Towner &npc, int distance)
+{
+	if (MyPlayer == nullptr) return false;
+	return npc.position.WalkingDistance(MyPlayer->position.tile) < distance;
+}
+
+/**
+ * @brief Check if NPC can use micro-movement (whitelist)
+ * 
+ * Only "safe" decorative NPCs are allowed to move.
+ * Quest-critical NPCs are excluded to avoid any potential issues.
+ */
+bool CanNPCUseMicroMovement(const Towner &npc)
+{
+	switch (npc._ttype) {
+		// ALL Town NPCs enabled! (1 tile movement = subtle repositioning/turning)
+		case TOWN_SMITH:   // Griswold - Blacksmith
+		case TOWN_HEALER:  // Pepin - Healer
+		case TOWN_TAVERN:  // Ogden - Tavern owner
+		case TOWN_STORY:   // Cain - Elder (NOT sitting, that's Farnham!)
+		case TOWN_DRUNK:   // Farnham - Drunk (sitting/meditating, looks great!)
+		case TOWN_WITCH:   // Adria - Witch
+		case TOWN_BMAID:   // Gillian - Barmaid
+		case TOWN_PEGBOY:  // Wirt - Kid with peg leg (1 tile = just turning)
+			return true;
+		
+		// Excluded: Only special cases
+		case TOWN_COW:     // Cows - Special 4-tile collision handling
+		case TOWN_COWFARM: // Cow farmer - Special quest handling
+		case TOWN_DEADGUY: // Dead townsman - He's dead
+		case TOWN_FARMER:  // Complete Nut - Special quest NPC
+		case TOWN_GIRL:    // Gillian's girl form - Quest transformation
+		default:
+			return false;
+	}
+}
+
+/**
+ * @brief Check if a tile is walkable for NPCs
+ * 
+ * A tile is walkable if:
+ * - It's within dungeon bounds
+ * - No monster occupies it
+ * - No player occupies it
+ * - It's not a solid tile
+ */
+bool IsTileWalkableForNPC(Point position)
+{
+	if (!InDungeonBounds(position))
+		return false;
+	
+	// Check if occupied by monster or player
+	if (dMonster[position.x][position.y] != 0)
+		return false;
+	
+	if (dPlayer[position.x][position.y] != 0)
+		return false;
+	
+	// Check if tile is solid (using SOLData)
+	if (TileHasAny(position, TileProperties::Solid))
+		return false;
+	
+	return true;
+}
+
+/**
+ * @brief Check if NPC is too far from home
+ */
+bool IsTooFarFromHome(const Towner &npc)
+{
+	return npc.position.WalkingDistance(npc.home) > npc.homeRadius;
+}
+
+/**
+ * @brief Try to start walking from IDLE state
+ * 
+ * Picks a random adjacent tile (ONLY 1 TILE) and starts walking if valid.
+ * NOTE: NPCs don't have walk animations, so this is a subtle position shift.
+ */
+void TryStartWalk(Towner &npc)
+{
+	const uint32_t currentTime = SDL_GetTicks();
+	
+	// Check if timer expired
+	if (currentTime < npc.nextMicroMoveTick) {
+		return;
+	}
+	
+	// Pick a random direction (8 directions)
+	const Direction randomDir = static_cast<Direction>(GenerateRnd(8));
+	const Point targetPos = npc.position + randomDir;
+	
+	// Validate target position
+	if (!IsTileWalkableForNPC(targetPos)) {
+		// Can't walk there, try again later
+		npc.nextMicroMoveTick = currentTime + GenerateRnd(3000) + 2000; // 2-5s retry
+		return;
+	}
+	
+	// CRITICAL: Only move 1 tile maximum (homeRadius should be 1)
+	if (targetPos.WalkingDistance(npc.home) > npc.homeRadius) {
+		// Too far, try again later
+		npc.nextMicroMoveTick = currentTime + GenerateRnd(3000) + 2000;
+		return;
+	}
+	
+	// Start "walking" (really just a position shift)
+	npc.microState = static_cast<uint8_t>(NPCMicroState::WALK_SHORT);
+	npc.nextMicroMoveTick = currentTime + WALK_DURATION;
+	
+	// CRITICAL: Preserve NPC ID when moving
+	// dMonster contains the NPC index + 1, not just a boolean
+	const int16_t npcId = dMonster[npc.position.x][npc.position.y];
+	
+	// Update position (subtle shift)
+	dMonster[npc.position.x][npc.position.y] = 0;
+	npc.position = targetPos;
+	dMonster[npc.position.x][npc.position.y] = npcId; // Restore NPC ID
+	
+	// Update facing direction to match movement
+	UpdateTownerFacing(npc, randomDir);
+	
+#ifdef _DEBUG
+	LogVerbose("NPC Micro-Movement: {} - Shifted to ({}, {}) with ID {}", 
+		npc.name, targetPos.x, targetPos.y, npcId);
+#endif
+}
+
+/**
+ * @brief Update WALK_SHORT state
+ * 
+ * Waits for walk duration to complete, then transitions to RETURN_HOME or IDLE.
+ */
+void UpdateWalk(Towner &npc)
+{
+	const uint32_t currentTime = SDL_GetTicks();
+	
+	// Check if walk duration expired
+	if (currentTime < npc.nextMicroMoveTick) {
+		return;
+	}
+	
+	// Walk complete, decide next state
+	if (IsTooFarFromHome(npc)) {
+		// Too far, return home
+		npc.microState = static_cast<uint8_t>(NPCMicroState::RETURN_HOME);
+		npc.nextMicroMoveTick = currentTime + WALK_DURATION;
+		npc.returnAttempts = 0;  // Reset counter when starting return
+		
+#ifdef _DEBUG
+		LogVerbose("NPC Micro-Movement: {} - Returning home from ({}, {})", 
+			npc.name, npc.position.x, npc.position.y);
+#endif
+	} else {
+		// Close enough, go idle
+		npc.microState = static_cast<uint8_t>(NPCMicroState::IDLE);
+		npc.nextMicroMoveTick = currentTime + GenerateRnd(MAX_IDLE_TIME - MIN_IDLE_TIME) + MIN_IDLE_TIME;
+		
+#ifdef _DEBUG
+		LogVerbose("NPC Micro-Movement: {} - Walk complete, going idle", npc.name);
+#endif
+	}
+}
+
+/**
+ * @brief Return to home position
+ * 
+ * Moves NPC back towards home, then transitions to IDLE.
+ */
+void ReturnHome(Towner &npc)
+{
+	const uint32_t currentTime = SDL_GetTicks();
+	
+	// Check if return duration expired
+	if (currentTime < npc.nextMicroMoveTick) {
+		return;
+	}
+	
+	// Already at home?
+	if (npc.position == npc.home) {
+		npc.microState = static_cast<uint8_t>(NPCMicroState::IDLE);
+		npc.nextMicroMoveTick = currentTime + GenerateRnd(MAX_IDLE_TIME - MIN_IDLE_TIME) + MIN_IDLE_TIME;
+		npc.returnAttempts = 0;  // Reset counter
+		
+#ifdef _DEBUG
+		LogVerbose("NPC Micro-Movement: {} - Arrived home", npc.name);
+#endif
+		return;
+	}
+	
+	// SAFETY: Too many attempts? Teleport home immediately
+	if (npc.returnAttempts > 3) {
+		// CRITICAL: Preserve NPC ID when teleporting
+		const int16_t npcId = dMonster[npc.position.x][npc.position.y];
+		
+		dMonster[npc.position.x][npc.position.y] = 0;
+		npc.position = npc.home;
+		dMonster[npc.position.x][npc.position.y] = npcId; // Restore NPC ID
+		
+		npc.microState = static_cast<uint8_t>(NPCMicroState::IDLE);
+		npc.nextMicroMoveTick = currentTime + GenerateRnd(MAX_IDLE_TIME - MIN_IDLE_TIME) + MIN_IDLE_TIME;
+		npc.returnAttempts = 0;  // Reset counter
+		
+#ifdef _DEBUG
+		LogVerbose("NPC Micro-Movement: {} - Teleported home (too many attempts)", npc.name);
+#endif
+		return;
+	}
+	
+	// Move towards home
+	const Direction dirToHome = GetDirection(npc.position, npc.home);
+	const Point targetPos = npc.position + dirToHome;
+	
+	// Validate target
+	if (!IsTileWalkableForNPC(targetPos)) {
+		// Can't move, increment attempt counter
+		npc.returnAttempts++;
+		npc.nextMicroMoveTick = currentTime + WALK_DURATION;  // Try again next tick
+		
+#ifdef _DEBUG
+		LogVerbose("NPC Micro-Movement: {} - Blocked returning home (attempt {}/3)", 
+			npc.name, npc.returnAttempts);
+#endif
+		return;
+	}
+	
+	// Move one step towards home
+	// CRITICAL: Preserve NPC ID when moving
+	const int16_t npcId = dMonster[npc.position.x][npc.position.y];
+	
+	dMonster[npc.position.x][npc.position.y] = 0;
+	npc.position = targetPos;
+	dMonster[npc.position.x][npc.position.y] = npcId; // Restore NPC ID
+	
+	// Update facing direction to match movement
+	UpdateTownerFacing(npc, dirToHome);
+	
+	// Successful move, reset attempt counter
+	npc.returnAttempts = 0;
+	
+	// Schedule next step or idle
+	if (npc.position == npc.home) {
+		npc.microState = static_cast<uint8_t>(NPCMicroState::IDLE);
+		npc.nextMicroMoveTick = currentTime + GenerateRnd(MAX_IDLE_TIME - MIN_IDLE_TIME) + MIN_IDLE_TIME;
+		
+#ifdef _DEBUG
+		LogVerbose("NPC Micro-Movement: {} - Arrived home", npc.name);
+#endif
+	} else {
+		// Continue returning home
+		npc.nextMicroMoveTick = currentTime + WALK_DURATION;
+	}
+}
+
+} // namespace
+
+/**
+ * @brief Initialize NPC micro-movement system
+ * 
+ * Called when NPC is spawned. Sets up home position and initial state.
+ */
+void InitNPCMicroMovement(Towner &npc)
+{
+	npc.home = npc.position;
+	npc.homeRadius = 1;  // ONLY 1 tile maximum (subtle movement)
+	npc.microState = static_cast<uint8_t>(NPCMicroState::IDLE);
+	npc.nextMicroMoveTick = SDL_GetTicks() + GenerateRnd(MAX_IDLE_TIME - MIN_IDLE_TIME) + MIN_IDLE_TIME;
+	npc.microEnabled = CanNPCUseMicroMovement(npc);
+	npc.returnAttempts = 0;  // Initialize return attempt counter
+	
+#ifdef _DEBUG
+	if (npc.microEnabled) {
+		LogVerbose("NPC Micro-Movement: Enabled for {} at ({}, {})", 
+			npc.name, npc.home.x, npc.home.y);
+	}
+#endif
+}
+
+/**
+ * @brief Cancel micro-movement and return to idle
+ * 
+ * @param npc The NPC to cancel movement for
+ * @param reason Debug reason for cancellation (optional)
+ */
+void CancelMicro(Towner &npc, const char* reason)
+{
+	npc.microState = static_cast<uint8_t>(NPCMicroState::IDLE);
+	npc.nextMicroMoveTick = SDL_GetTicks() + GenerateRnd(MAX_IDLE_TIME - MIN_IDLE_TIME) + MIN_IDLE_TIME;
+	
+#ifdef _DEBUG
+	if (reason != nullptr) {
+		LogVerbose("NPC Micro-Movement: {} - Canceled: {}", npc.name, reason);
+	}
+#endif
+}
+
+/**
+ * @brief Update NPC micro-movement system
+ * 
+ * Called every frame from ProcessTowners().
+ * Handles decorative micro-movements for NPCs.
+ * 
+ * DESIGN PRINCIPLE: Decorative, not functional.
+ * If anything interferes with gameplay → cancel immediately.
+ */
+void UpdateTownerMicro(Towner &npc)
+{
+	// Feature disabled globally
+#ifndef ENABLE_NPC_MICRO_MOVEMENT
+	return;
+#endif
+	
+	// Not enabled for this NPC
+	if (!npc.microEnabled) {
+		return;
+	}
+	
+	// Dead NPCs don't move
+	if (npc._ttype == TOWN_DEADGUY) {
+		return;
+	}
+	
+	// CANCEL CONDITIONS (priority: gameplay > decoration)
+	
+	// Cancel if talking
+	if (qtextflag) {
+		CancelMicro(npc, "dialog active");
+		return;
+	}
+	
+	// Cancel if player is near
+	if (IsPlayerNear(npc, MIN_PLAYER_DISTANCE)) {
+		CancelMicro(npc, "player nearby");
+		return;
+	}
+	
+	// STATE MACHINE
+	NPCMicroState state = static_cast<NPCMicroState>(npc.microState);
+	
+	switch (state) {
+		case NPCMicroState::IDLE:
+			TryStartWalk(npc);
+			break;
+			
+		case NPCMicroState::WALK_SHORT:
+			UpdateWalk(npc);
+			break;
+			
+		case NPCMicroState::RETURN_HOME:
+			ReturnHome(npc);
+			break;
+	}
+}
 
 } // namespace devilution

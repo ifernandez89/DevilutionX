@@ -53,6 +53,18 @@ public:
     void logCrashPrevention(const std::string& reason, const std::string& location);
     void logArchitecturalConflict(const std::string& ourSystem, const std::string& originalSystem, const std::string& conflict);
     
+    // 🚨 NUEVOS LOGS PARA SISTEMAS COLATERALES
+    void logBoomProcess(int x, int y, int duration, int var1);
+    void logCollision(int missileType, int monsterId, int damage, int hp);
+    void logMonsterDeath(int monsterId, int monsterType, int killCount);
+    void logAudio(int monsterId, int soundType, int volume, int pan);
+    
+    // 🎯 APOCALYPSE CRASH FIX: Deferred Loot Logging
+    void logDeferredLoot(const std::string& action, int monsterCount = 0);
+    
+    // 🔍 GAME LOOP DEBUG: Track which system is running
+    void logGameLoop(const std::string& system);
+    
     // Análisis de patrones
     void analyzePatterns();
     void generateArchitecturalReport();
@@ -81,5 +93,26 @@ private:
 
 #define ARCH_LOG_CONFLICT(ourSys, origSys, conflict) \
     ArchitecturalAnalyzer::getInstance().logArchitecturalConflict(ourSys, origSys, conflict)
+
+// 🚨 NUEVOS LOGS PARA SISTEMAS COLATERALES
+#define ARCH_LOG_BOOM_PROCESS(x, y, duration, var1) \
+    ArchitecturalAnalyzer::getInstance().logBoomProcess(x, y, duration, var1)
+
+#define ARCH_LOG_COLLISION(missileType, monsterId, damage, hp) \
+    ArchitecturalAnalyzer::getInstance().logCollision(missileType, monsterId, damage, hp)
+
+#define ARCH_LOG_MONSTER_DEATH(monsterId, monsterType, killCount) \
+    ArchitecturalAnalyzer::getInstance().logMonsterDeath(monsterId, monsterType, killCount)
+
+#define ARCH_LOG_AUDIO(monsterId, soundType, volume, pan) \
+    ArchitecturalAnalyzer::getInstance().logAudio(monsterId, soundType, volume, pan)
+
+// 🎯 APOCALYPSE CRASH FIX: Deferred Loot Logging
+#define ARCH_LOG_DEFERRED_LOOT(action, count) \
+    ArchitecturalAnalyzer::getInstance().logDeferredLoot(action, count)
+
+// 🔍 GAME LOOP DEBUG: Track which system is running
+#define ARCH_LOG_GAME_LOOP(system) \
+    ArchitecturalAnalyzer::getInstance().logGameLoop(system)
 
 } // namespace devilution

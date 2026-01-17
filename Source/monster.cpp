@@ -31,6 +31,8 @@
 #include "levels/gendung.h"   // 🩸 For difficulty constants
 #include "multi.h"            // 🩸 For sgGameInitInfo
 #include "advanced_debug.h"   // 🎮 Advanced Debug System
+#include "architectural_analysis.h"  // 🎯 Apocalypse Crash Fix Logging
+#include "crash_hunter.h"  // 🎯 CRASH HUNTER - Aggressive logging
 
 #ifdef USE_SDL3
 #include <SDL3/SDL_timer.h>
@@ -129,6 +131,11 @@ size_t ActiveMonsterCount;
 /** Tracks the total number of monsters killed per monster_id. */
 int MonsterKillCounts[NUM_MAX_MTYPES];
 bool sgbSaveSoundOn;
+
+// 🎯 APOCALYPSE CRASH FIX: Deferred Loot Generation
+// Lista de monstruos que necesitan generar loot al final del frame
+std::vector<int> MonstersNeedingLoot;
+bool DeferredLootEnabled = false;
 
 namespace {
 
@@ -4226,6 +4233,10 @@ void M_StartHit(Monster &monster, const Player &player, int dam)
 
 void MonsterDeath(Monster &monster, Direction md, bool sendmsg)
 {
+	// 🚨 LOG: Muerte de monstruo
+	ARCH_LOG_MONSTER_DEATH(monster.getId(), monster.type().type, 
+	                       MonsterKillCounts[monster.type().type]);
+	
 	if (!monster.isPlayerMinion())
 		AddPlrMonstExper(monster.level(sgGameInitInfo.nDifficulty), monster.exp(sgGameInitInfo.nDifficulty), monster.whoHit);
 
@@ -4243,7 +4254,15 @@ void MonsterDeath(Monster &monster, Direction md, bool sendmsg)
 	monster.flags &= ~MFLAG_HIDDEN;
 	SetRndSeed(monster.rndItemSeed);
 
-	SpawnLoot(monster, sendmsg);
+	// 🎯 APOCALYPSE CRASH FIX: Defer loot generation
+	// Si estamos en modo deferred (durante Apocalypse), no generar loot inmediatamente
+	if (DeferredLootEnabled) {
+		// Guardar el ID del monstruo para generar loot después
+		MonstersNeedingLoot.push_back(monster.getId());
+	} else {
+		// Comportamiento normal: generar loot inmediatamente
+		SpawnLoot(monster, sendmsg);
+	}
 
 	// FEATURE: Enhanced Blood Atmosphere System
 	// Spawn additional blood objects on elite and boss deaths for heavier combat aftermath
@@ -4543,11 +4562,22 @@ void RemoveEnemyReferences(const Player &player)
 
 void ProcessMonsters()
 {
+	CRASH_HUNTER_CHECKPOINT("ProcessMonsters START");
+	
 	DeleteMonsterList();
 
 	assert(ActiveMonsterCount <= MaxMonsters);
 	for (size_t i = 0; i < ActiveMonsterCount; i++) {
 		Monster &monster = Monsters[ActiveMonsters[i]];
+		
+		// 🎯 CRASH HUNTER - Log cada monstruo procesado
+		if (i % 10 == 0) {  // Log cada 10 monstruos para no saturar
+			CRASH_HUNTER_LOG(fmt::format("Processing monster {}/{} - Type:{} HP:{}/{} Pos:({},{})", 
+				i, ActiveMonsterCount, static_cast<int>(monster.type().type), 
+				monster.hitPoints, monster.maxHitPoints,
+				monster.position.tile.x, monster.position.tile.y));
+		}
+		
 		FollowTheLeader(monster);
 		if (gbIsMultiplayer) {
 			SetRndSeed(monster.aiSeed);
@@ -4633,6 +4663,8 @@ void ProcessMonsters()
 	}
 
 	DeleteMonsterList();
+	
+	CRASH_HUNTER_CHECKPOINT("ProcessMonsters END");
 }
 
 void FreeMonsters()
@@ -5409,6 +5441,75 @@ void Monster::occupyTile(Point tile, bool isMoving) const
 {
 	const auto id = static_cast<int16_t>(this->getId() + 1);
 	dMonster[tile.x][tile.y] = isMoving ? -id : id;
+}
+
+// 🎯 APOCALYPSE CRASH FIX: Deferred Loot Generation Functions
+
+void EnableDeferredLoot()
+{
+	ARCH_LOG_DEFERRED_LOOT("Enabled - Apocalypse starting", 0);
+	DeferredLootEnabled = true;
+	MonstersNeedingLoot.clear();
+}
+
+void DisableDeferredLoot()
+{
+	if (!DeferredLootEnabled) {
+		return; // Ya está desactivado, no hacer nada
+	}
+	ARCH_LOG_DEFERRED_LOOT("Disabled - Apocalypse finished", 0);
+	DeferredLootEnabled = false;
+}
+
+void ProcessDeferredLoot()
+{
+	if (!DeferredLootEnabled || MonstersNeedingLoot.empty()) {
+		return;
+	}
+	
+	// 🚨 LOG: Procesando loot deferred
+	ARCH_LOG_DEFERRED_LOOT("Processing", static_cast<int>(MonstersNeedingLoot.size()));
+	
+	// 🎯 SAFETY: Limitar a máximo 5 monstruos por frame para evitar overflow
+	const int maxMonstersPerFrame = 5;
+	int processedCount = 0;
+	
+	// Generar loot para todos los monstruos que murieron este frame
+	for (int monsterId : MonstersNeedingLoot) {
+		// 🎯 SAFETY: Límite de procesamiento
+		if (processedCount >= maxMonstersPerFrame) {
+			ARCH_LOG_DEFERRED_LOOT("LIMIT REACHED - Skipping remaining", static_cast<int>(MonstersNeedingLoot.size()) - processedCount);
+			break;
+		}
+		
+		// 🎯 SAFETY: Validación exhaustiva antes de acceder al monstruo
+		if (monsterId < 0 || monsterId >= static_cast<int>(MaxMonsters)) {
+			continue;
+		}
+		
+		// 🚨 LOG: Qué monstruo estamos procesando
+		ARCH_LOG_DEFERRED_LOOT("SpawnLoot for monster", monsterId);
+		
+		Monster &monster = Monsters[monsterId];
+		
+		// 🎯 SAFETY: Verificar que el monstruo está realmente muerto
+		if (monster.hitPoints != 0) {
+			continue; // Monstruo no está muerto, skip
+		}
+		
+		// Generar loot de forma segura - SIN verificar type() que puede crashear
+		SpawnLoot(monster, true);
+		processedCount++;
+	}
+	
+	// 🚨 LOG: Antes de limpiar
+	ARCH_LOG_DEFERRED_LOOT("Clearing list", 0);
+	
+	// Limpiar la lista para el siguiente frame
+	MonstersNeedingLoot.clear();
+	
+	// 🚨 LOG: Después de limpiar
+	ARCH_LOG_DEFERRED_LOOT("List cleared OK", 0);
 }
 
 } // namespace devilution

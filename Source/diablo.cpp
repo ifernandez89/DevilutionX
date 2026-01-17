@@ -8,6 +8,8 @@
 #include <string_view>
 
 #include "architectural_analysis.h"
+#include "crash_hunter.h"  // 🎯 CRASH HUNTER - Aggressive logging
+#include "area_dump.h"  // 🔍 Area Dump Debug System
 
 #ifdef USE_SDL3
 #include <SDL3/SDL_events.h>
@@ -48,6 +50,7 @@
 #include "engine/backbuffer_state.hpp"
 #include "engine/clx_sprite.hpp"
 #include "engine/demomode.h"
+#include "engine/palette.h"  // 🛡️ Para UpdateSystemPalette
 #include "ui_nightmare.h"
 #include "tile_detective.h"
 #include "nightmare_testing.h"  // 🧪 Para funciones de testing
@@ -1502,6 +1505,10 @@ void DiabloInit()
 	// 🌙 NIGHTMARE CONFIG - Initialize Configuration System
 	InitNightmareConfig();
 	
+	// 🎯 CRASH HUNTER - Initialize aggressive logging system
+	CRASH_HUNTER_INIT();
+	CRASH_HUNTER_LOG("=== GAME INITIALIZATION STARTED ===");
+	
 	// 🌙 NIGHTMARE AMBIENCE - Initialize Ambience System
 	InitNightmareAmbience();
 	
@@ -1753,13 +1760,7 @@ void UpdateMonsterLights()
 
 void GameLogic()
 {
-	// 🚪 PORTAL DEBUG - Track game loop execution
-	static bool firstFrameAfterLoad = true;
-	if (firstFrameAfterLoad) {
-		PORTAL_LOG_GAMELOOP("FIRST_FRAME_START");
-		firstFrameAfterLoad = false;
-	}
-	
+	ARCH_LOG_GAME_LOOP("FRAME_START");
 	if (!ProcessInput()) {
 		return;
 	}
@@ -1774,87 +1775,51 @@ void GameLogic()
 #ifdef _DEBUG
 		if (!DebugInvisible)
 #endif
-		{
-			PORTAL_LOG_GAMELOOP("ProcessMonsters_START");
+			CRASH_HUNTER_CHECKPOINT("Before ProcessMonsters");
 			ProcessMonsters();
-			PORTAL_LOG_GAMELOOP("ProcessMonsters_END");
-		}
+			CRASH_HUNTER_CHECKPOINT("After ProcessMonsters");
 		gGameLogicStep = GameLogicStep::ProcessObjects;
-		PORTAL_LOG_GAMELOOP("ProcessObjects_START");
+		CRASH_HUNTER_CHECKPOINT("Before ProcessObjects");
 		ProcessObjects();
-		PORTAL_LOG_GAMELOOP("ProcessObjects_END");
+		CRASH_HUNTER_CHECKPOINT("After ProcessObjects");
 		gGameLogicStep = GameLogicStep::ProcessMissiles;
-		PORTAL_LOG_GAMELOOP("ProcessMissiles_START");
+		CRASH_HUNTER_CHECKPOINT("Before ProcessMissiles");
 		ProcessMissiles();
-		PORTAL_LOG_GAMELOOP("ProcessMissiles_END");
+		CRASH_HUNTER_CHECKPOINT("After ProcessMissiles");
 		gGameLogicStep = GameLogicStep::ProcessItems;
-		PORTAL_LOG_GAMELOOP("ProcessItems_START");
+		CRASH_HUNTER_CHECKPOINT("Before ProcessItems");
 		ProcessItems();
-		PORTAL_LOG_GAMELOOP("ProcessItems_END");
-		PORTAL_LOG_GAMELOOP("ProcessLightList_START");
+		CRASH_HUNTER_CHECKPOINT("After ProcessItems");
+		CRASH_HUNTER_CHECKPOINT("Before ProcessLightList");
 		ProcessLightList();
-		PORTAL_LOG_GAMELOOP("ProcessLightList_END");
+		CRASH_HUNTER_CHECKPOINT("After ProcessLightList");
 		
-		// 🔥 NIGHTMARE ATMOSPHERIC LIGHTING - Update atmospheric lighting effects
-		PORTAL_LOG_GAMELOOP("UpdateNightmareLighting_START");
+		// 🔥 NIGHTMARE SYSTEMS - TEMPORARILY DISABLED FOR CRASH DEBUG
+		/*
 		UpdateNightmareLighting();
-		PORTAL_LOG_GAMELOOP("UpdateNightmareLighting_END");
-		
-		// 🌙 NIGHTMARE CONFIG - Update configuration system
 		UpdateNightmareConfig();
-		
-		// 🌙 NIGHTMARE AMBIENCE - Update ambience system
-		UpdateNightmareAmbience();;
-		
-		// 🎵 NIGHTMARE AUDIO - Update enhanced audio system
+		UpdateNightmareAmbience();
 		UpdateNightmareAudio();
-		
-		// ✨ NIGHTMARE VISUAL EFFECTS - Update visual effects system
 		UpdateNightmareVisualEffects();
-		
-		// 🗝️ NIGHTMARE POST-DIABLO - Update post-Diablo content system
 		UpdatePostDiabloSystem();
-		
-		// 🎯 NIGHTMARE QUESTS - Update post-Diablo quests system
 		UpdateNightmareQuests();
-		
-		// 🌙 NIGHTMARE AMBIENT EFFECTS - Update ambient effects (FORCED ACTIVE)
 		UpdateNightmareAmbientEffects();
-		
-		// 🎮 FASE V3 - Update Visual Feedback System
 		UpdateVisualFeedback();
-		
-		// 🎨 FASE V2 - Update Contextual Palette System
 		UpdateContextualPalette();
-		
-		// 🏰 FASE D3 - Update Town Cinematográfica System
 		UpdateTownCinematic();
-		
-		// 🎨 FASE D2 - Update Life & Volume System
 		UpdateLifeVolume();
-		
-		// 🌟 FASE D3.2 - Update Parallax Depth System
 		UpdateParallaxDepth();
-		
-		// 🎯 FASE MP1 - Update MP Discipline System
 		UpdateMPDiscipline();
-		
-		// 🌀 ENHANCED PORTAL - Update Portal Enhancement System
 		UpdateEnhancedPortal();
-		
-		// ⚔️ COMBAT PAUSES - Update Combat Pauses System
 		UpdateCombatPauses();
-		
-		// 👁️ WAITING ENEMIES - Update Waiting Enemies System
 		UpdateWaitingEnemies();
-		
-		// 🎮 ADVANCED DEBUG - Update Advanced Debug System
 		UpdateAdvancedDebug();
-		
-		// 📖 BOOK OF APOCALYPSE - Update Guarantee System
 		UpdateApocalypseBookGuarantee();
+		*/
 		
+		ARCH_LOG_GAME_LOOP("Before ProcessVisionList");
 		ProcessVisionList();
+		ARCH_LOG_GAME_LOOP("After ProcessVisionList");
 	} else {
 		gGameLogicStep = GameLogicStep::ProcessTowners;
 		ProcessTowners();
@@ -1871,23 +1836,40 @@ void GameLogic()
 	}
 #endif
 
+	ARCH_LOG_GAME_LOOP("Before sound_update");
 	sound_update();
+	ARCH_LOG_GAME_LOOP("After sound_update");
 	
-	// 🌙 NIGHTMARE UI - Update Atmospheric Systems
-	UpdateNightmareUI(0.016f); // Assuming ~60 FPS (16ms per frame)
+	// 🌙 NIGHTMARE UI - TEMPORARILY DISABLED
+	// UpdateNightmareUI(0.016f);
 	
-	// 🔮 ORACLE UI - Update messages (fade in/out)
-	OracleUI::Update();
+	// 🔮 ORACLE UI - TEMPORARILY DISABLED
+	// OracleUI::Update();
 	
-	// 🔍 TILE DETECTIVE - Update tile detection
-	UpdateTileDetective();
+	// 🔍 TILE DETECTIVE - TEMPORARILY DISABLED
+	// UpdateTileDetective();
 	
+	ARCH_LOG_GAME_LOOP("FRAME_END");
+	
+	ARCH_LOG_GAME_LOOP("Before CheckTriggers");
 	CheckTriggers();
+	ARCH_LOG_GAME_LOOP("After CheckTriggers");
+	
+	ARCH_LOG_GAME_LOOP("Before CheckQuests");
 	CheckQuests();
+	ARCH_LOG_GAME_LOOP("After CheckQuests");
+	
+	ARCH_LOG_GAME_LOOP("Before RedrawViewport");
 	RedrawViewport();
+	ARCH_LOG_GAME_LOOP("After RedrawViewport");
+	
+	ARCH_LOG_GAME_LOOP("Before pfile_update");
 	pfile_update(false);
+	ARCH_LOG_GAME_LOOP("After pfile_update");
 
+	ARCH_LOG_GAME_LOOP("Before plrctrls_after_game_logic");
 	plrctrls_after_game_logic();
+	ARCH_LOG_GAME_LOOP("After plrctrls_after_game_logic");
 }
 
 void TimeoutCursor(bool bTimeout)
@@ -3867,6 +3849,19 @@ tl::expected<void, std::string> LoadGameLevel(bool firstflag, lvl_entry lvldir)
 	}
 
 	LoadGameLevelCalculateCursor();
+	
+	// 🛡️ ARCHITECTURAL SHIELD - PROTECCIÓN TOTAL DE PALETAS
+	// Interceptar y sanitizar datos de paleta ANTES de cargar
+	if (leveltype != DTYPE_TOWN) {
+		LoadPalette("levels\\l1data\\l1.pal");
+		// 🚫 ARCHITECTURAL SHIELD DESACTIVADO - No sanitizar paletas
+	} else {
+		LoadPalette("levels\\towndata\\town.pal");
+		// 🚫 ARCHITECTURAL SHIELD DESACTIVADO - No sanitizar paletas
+	}
+	
+	// Forzar actualización del sistema de paletas
+	UpdateSystemPalette(logical_palette);
 	
 	// 💰 INVISIBLE WEAR - Update wear multipliers for new level
 	UpdateInvisibleWear();

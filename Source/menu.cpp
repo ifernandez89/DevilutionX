@@ -177,8 +177,12 @@ void mainmenu_loop()
 		case MAINMENU_ATTRACT_MODE:
 			if (gbIsSpawn && !HaveIntro())
 				done = false;
-			else if (gbActive)
-				PlayIntro();
+			else if (gbActive) {
+				// 🌑 NIGHTMARE: Reproducir créditos automáticamente después de timeout
+				// Mantener intro de estapada al inicio (se reproduce antes del menú)
+				// Aquí solo reproducimos créditos como "screensaver"
+				UiCreditsDialog();
+			}
 			break;
 		case MAINMENU_SHOW_CREDITS:
 			UiCreditsDialog();

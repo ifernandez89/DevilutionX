@@ -127,66 +127,54 @@ static std::unordered_map<int, std::chrono::steady_clock::time_point> gApocalyps
 
 void ResetApocalypseCooldowns()
 {
-	// Called when starting a new game to clear any stale cooldowns
-	gApocalypseCooldownMap.clear();
+    // ULTRA-RESPONSIVE APOCALYPSE PROTECTION - OPTIMIZED FOR GAMING
+    // "Protección mínima necesaria, responsividad máxima"
+    
+    // Increment frame counter (simple frame tracking)
+    frameCounter++;
+    
+    // Check if we should unlock the atomic flag (MINIMAL delay)
+    if (apocalypseInProgress && frameCounter >= apocalypseUnlockFrame) {
+        apocalypseInProgress = false;
+        ARCH_LOG_CRASH_PREVENTION("Apocalypse atomic flag UNLOCKED", "CanSafelyCastApocalypse delayed unlock");
+    }
+    
+    // ATOMIC CHECK: If any Apocalypse is in progress, fail immediately
+    if (apocalypseInProgress) {
+        ARCH_LOG_CRASH_PREVENTION("Apocalypse already in progress", "CanSafelyCastApocalypse atomic check");
+        return false;
+    }
+    
+    // FRAME-BASED COOLDOWN: Only 1 Apocalypse per frame (ESSENTIAL for crash prevention)
+    if (lastApocalypseFrame == frameCounter) {
+        ARCH_LOG_CRASH_PREVENTION("Apocalypse frame cooldown active", "CanSafelyCastApocalypse frame-based");
+        return false;
+    }
+    
+    // MINIMAL TIME-BASED COOLDOWN: Only 16ms (1 frame at 60fps) for ultra-responsiveness
+    auto now = std::chrono::steady_clock::now();
+    auto timeSinceLastCast = std::chrono::duration_cast<std::chrono::milliseconds>(now - lastApocalypseCast);
+    
+    if (timeSinceLastCast.count() < 16) { // MINIMAL 16ms = 1 frame at 60fps
+        ARCH_LOG_CRASH_PREVENTION("Apocalypse time cooldown active", "CanSafelyCastApocalypse time-based");
+        return false;
+    }
+    
+    // ATOMIC LOCK with MINIMAL DELAY (only 1 frame for ultra-responsiveness)
+    apocalypseInProgress = true;
+    lastApocalypseCast = now;
+    lastApocalypseFrame = frameCounter;
+    apocalypseUnlockFrame = frameCounter + 1; // MINIMAL: Unlock after just 1 frame
+    
+    ARCH_LOG_CRASH_PREVENTION("Apocalypse protection ALLOWING cast", "CanSafelyCastApocalypse SUCCESS");
+    return true;
 }
 
 bool CanSafelyCastApocalypse(int playerId)
 {
-	// ULTRA-SIMPLE APOCALYPSE PROTECTION - ORIGINAL SPEED + SAFETY
-	// "Velocidad original + protección inteligente = Perfección"
-	// 
-	// FILOSOFÍA:
-	// - Velocidad instantánea como DevilutionX original
-	// - Protección por jugador (cada uno puede tener 1 activo)
-	// - Límite global de 2 (previene sobrecarga en multiplayer)
-	// - Cooldown 100ms ultra-responsivo (previene fast-click abuse)
-	// - Safety net de 50 booms por spell (previene casos extremos)
-	//
-	// RESULTADO: Feel original + 0% crash rate
-	
-	// Cooldown por jugador: 100ms (ultra-responsive, previene fast-click)
-	
-	auto now = std::chrono::steady_clock::now();
-	auto timeSinceLastCast = std::chrono::duration_cast<std::chrono::milliseconds>(
-		now - gApocalypseCooldownMap[playerId]
-	);
-	
-	if (timeSinceLastCast.count() < 100) {
-		ARCH_LOG_CRASH_PREVENTION("Apocalypse cooldown active for player", "CanSafelyCastApocalypse");
-		return false;
-	}
-	
-	// LÍMITE GLOBAL: Máximo 2 Apocalypse activos (balance multiplayer)
-	// Con velocidad instantánea: 2 × 50 booms = 100 booms max (seguro)
-	int totalApocalypse = 0;
-	for (const auto &m : Missiles) {
-		if (m._mitype == MissileID::Apocalypse) {
-			totalApocalypse++;
-		}
-	}
-	
-	if (totalApocalypse >= 2) {
-		ARCH_LOG_CRASH_PREVENTION("Global Apocalypse limit reached (2 max)", "CanSafelyCastApocalypse");
-		return false;
-	}
-	
-	// LÍMITE POR JUGADOR: Máximo 1 Apocalypse activo por jugador
-	// Previene que un solo jugador abuse del spell
-	int playerApocalypse = 0;
-	for (const auto &m : Missiles) {
-		if (m._mitype == MissileID::Apocalypse && m._misource == playerId) {
-			playerApocalypse++;
-		}
-	}
-	
-	if (playerApocalypse >= 1) {
-		ARCH_LOG_CRASH_PREVENTION("Player already has Apocalypse active (limit 1)", "CanSafelyCastApocalypse");
-		return false;
-	}
-	
-	gApocalypseCooldownMap[playerId] = now;
-	return true;
+    // DO NOTHING - Let the delayed unlock handle it
+    // This prevents immediate unlocking that was causing the bug
+    ARCH_LOG_CRASH_PREVENTION("ClearApocalypseInProgress called but IGNORED", "delayed unlock system");
 }
 
 bool CanSafelyCastInferno()

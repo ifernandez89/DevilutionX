@@ -2813,22 +2813,16 @@ Missile *AddMissile(WorldTilePosition src, WorldTilePosition dst, Direction midi
 	// UNIVERSAL APOCALYPSE PROTECTION - CATCHES ALL SOURCES
 	// Protects against player casts, monster casts, jester casts, etc.
 	if (mitype == MissileID::Apocalypse) {
+		// 🚨 DEBUG LOGS REACTIVATED FOR TESTING
 		ARCH_LOG_CRASH_PREVENTION("AddMissile Apocalypse detected - checking protection", "AddMissile DEBUG");
 		
-		if (!CanSafelyCastApocalypse(id)) {
-			ARCH_LOG_CRASH_PREVENTION("Universal Apocalypse protection triggered - BLOCKED", "AddMissile");
+		if (!CanSafelyCastApocalypse()) {
+			ARCH_LOG_CRASH_PREVENTION("Universal Apocalypse protection triggered", "AddMissile");
 			return nullptr; // fail-soft - no crash, just ignore
 		}
 		
 		// If we reach here, protection passed
 		ARCH_LOG_CRASH_PREVENTION("Apocalypse protection PASSED - allowing creation", "AddMissile ALLOWED");
-	}
-	
-	// INFERNO PROTECTION - Limit concurrent Inferno spells
-	if (mitype == MissileID::InfernoControl) {
-		if (!CanSafelyCastInferno()) {
-			return nullptr; // fail-soft
-		}
 	}
 
 	// LÍMITE TONTO - Sin inteligencia, sin coordinación
@@ -3766,6 +3760,10 @@ void ProcessStoneCurse(Missile &missile)
 
 void ProcessApocalypseBoom(Missile &missile)
 {
+	// 🚨 LOG: Procesamiento de boom
+	ARCH_LOG_BOOM_PROCESS(missile.position.tile.x, missile.position.tile.y, 
+	                      missile.duration, missile.var1);
+	
 	missile.duration--;
 	if (missile.var1 == 0)
 		CheckMissileCol(missile, GetMissileData(missile._mitype).damageType(), missile._midam, missile._midam, false, missile.position.tile, true);
@@ -3895,11 +3893,8 @@ void ProcessApocalypse(Missile &missile)
 {
 	int id = missile._misource;
 	
-	// SAFETY CHECK: Validate player ID
-	if (id < 0 || id >= MAX_PLRS) {
-		missile._miDelFlag = true;
-		return;
-	}
+	// 🎯 APOCALYPSE CRASH FIX: Habilitar deferred loot
+	EnableDeferredLoot();
 	
 	// ARCHITECTURAL ANALYSIS - Log ProcessApocalypse calls
 	ARCH_LOG_PROCESS_APOCALYPSE(missile.var2, missile.var3, missile.var4, missile.var5, static_cast<int>(Missiles.size()));
@@ -3915,9 +3910,17 @@ void ProcessApocalypse(Missile &missile)
 	
 	for (int j = missile.var2; j < missile.var3; j++) {
 		for (int k = missile.var4; k < missile.var5; k++) {
+			// 🎯 SAFETY: Verificar que las coordenadas están dentro de los límites del mapa
+			if (!InDungeonBounds(Point(k, j))) {
+				continue;
+			}
 			if (dMonster[k][j] > 0) {
 				int mid = dMonster[k][j] - 1;
-				if (mid >= 0 && mid < MaxMonsters && !Monsters[mid].isPlayerMinion()) {
+				// 🎯 SAFETY: Verificar que el ID del monstruo es válido
+				if (mid < 0 || mid >= static_cast<int>(MaxMonsters)) {
+					continue;
+				}
+				if (!Monsters[mid].isPlayerMinion()) {
 					// ARCHITECTURAL ANALYSIS - Log boom creation attempts
 					ARCH_LOG_BOOM_CREATION(k, j, static_cast<int>(Missiles.size()));
 					
@@ -3925,6 +3928,10 @@ void ProcessApocalypse(Missile &missile)
 					if (boomsCreated >= MAX_BOOMS_PER_APOCALYPSE) {
 						ARCH_LOG_CRASH_PREVENTION("Max booms per Apocalypse reached (50)", "ProcessApocalypse");
 						missile._miDelFlag = true;
+						// ATOMIC UNLOCK: Clear the in-progress flag
+						ClearApocalypseInProgress();
+						// 🎯 CRITICAL: Desactivar deferred loot antes de salir
+						// DisableDeferredLoot(); // FIX: NO desactivar aqu� - los booms siguen matando
 						return;
 					}
 					
@@ -3944,6 +3951,12 @@ void ProcessApocalypse(Missile &missile)
 	
 	// Spell completado naturalmente
 	missile._miDelFlag = true;
+	// ATOMIC UNLOCK: Clear the in-progress flag
+	ClearApocalypseInProgress();
+	
+	// 🎯 APOCALYPSE CRASH FIX: NO procesar loot aquí, se procesará al final de ProcessMissiles
+	// Los booms siguen procesándose y matando monstruos DESPUÉS de que ProcessApocalypse termine
+	// Por eso el deferred loot debe permanecer activo hasta el final de ProcessMissiles()
 }
 
 void ProcessFlameWaveControl(Missile &missile)
@@ -4331,6 +4344,13 @@ void ProcessMissiles()
 
 	ProcessManaShield();
 	DeleteMissiles();
+	
+	// 🎯 APOCALYPSE CRASH FIX: Procesar deferred loot AL FINAL de ProcessMissiles
+	// SOLO si hay loot pendiente (para evitar spam de logs y overhead)
+	if (DeferredLootEnabled) {
+		ProcessDeferredLoot();
+		DisableDeferredLoot();
+	}
 }
 
 void SetUpMissileAnimationData()

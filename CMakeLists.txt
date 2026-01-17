@@ -349,7 +349,8 @@ include(Dependencies)
 
 add_subdirectory(Source)
 
-set(BIN_TARGET nightmare)
+# 🌑 NIGHTMARE EDITION: Ejecutable se llama "devilutionx" (revertido por problemas con Windows Game Bar)
+set(BIN_TARGET devilutionx)
 if(NINTENDO_3DS)
   set(BIN_TARGET ${BIN_TARGET}.elf)
 elseif(TARGET_PLATFORM STREQUAL "dos")

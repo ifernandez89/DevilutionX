@@ -22,7 +22,9 @@
 
 #include <expected.hpp>
 
+#include "corruption_detector.h"  // 🛡️ CORRUPTION DETECTOR
 #include "control/control.hpp"
+#include "menu.h"  // Para gSaveNumber
 #include "controls/input.h"
 #include "engine/clx_sprite.hpp"
 #include "engine/dx.h"
@@ -339,6 +341,12 @@ void DoLoad(interface_mode uMsg)
 		IncProgress();
 		pfile_remove_temp_files();
 		IncProgress();
+		
+		// 🛡️ CORRUPTION DETECTOR - Verificar si necesitamos factory reset
+		if (IsSaveFileCorrupted(gSaveNumber)) {
+			ForceFactoryReset();
+		}
+		
 		loadResult = LoadGameLevel(true, ENTRY_MAIN);
 		if (loadResult.has_value()) IncProgress();
 		break;

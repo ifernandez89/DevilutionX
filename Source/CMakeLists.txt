@@ -3,6 +3,11 @@ include(functions/devilutionx_library)
 include(functions/genex)
 
 set(libdevilutionx_SRCS
+  # VFS Abstraction Layer
+  abstractions/virtual_filesystem.cpp
+  abstractions/vfs_wrappers.cpp
+  platform/native/native_vfs.cpp
+  
   advanced_debug.cpp
   apocalypse_crash_debug.cpp
   appfat.cpp

@@ -28,6 +28,7 @@
 #include "hwcursor.hpp"
 #include "options.h"
 #include "utils/display.h"
+#include "phase4_render_logging.h"
 #include "utils/palette_blending.hpp"
 #include "visual_feedback.h"
 #include "contextual_palette.h"
@@ -235,14 +236,20 @@ void palette_init()
 void LoadPalette(const char *path)
 {
 	assert(path != nullptr);
-	if (HeadlessMode) return;
+	if (HeadlessMode) {
+		PHASE4_LOG("🚫 Headless mode - skipping palette load");
+		return;
+	}
 
 	LogVerbose("Loading palette from {}", path);
+	PHASE4_RENDER_PALETTE(path, 256);
+	PHASE4_LOG("🎨 Loading palette: " + std::string(path));
 	std::array<Color, 256> palData;
 	LoadFileInMemVFS(path, palData);
 	for (unsigned i = 0; i < palData.size(); i++) {
 		logical_palette[i] = palData[i].toSDL();
 	}
+	PHASE4_RENDER_SYSTEM_CHECK("Palette System", "Palette loaded successfully");
 }
 
 void LoadPaletteAndInitBlending(const char *path)

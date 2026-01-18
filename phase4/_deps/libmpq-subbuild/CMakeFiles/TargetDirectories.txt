@@ -1,0 +1,3 @@
+C:/c - c++/DevilutionX/phase4/_deps/libmpq-subbuild/CMakeFiles/libmpq-populate.dir
+C:/c - c++/DevilutionX/phase4/_deps/libmpq-subbuild/CMakeFiles/edit_cache.dir
+C:/c - c++/DevilutionX/phase4/_deps/libmpq-subbuild/CMakeFiles/rebuild_cache.dir

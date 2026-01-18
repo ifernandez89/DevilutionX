@@ -6,6 +6,7 @@
 #include <utility>
 
 #include "phase3_input_logging.h"
+#include "phase4_render_logging.h"
 
 #ifdef USE_SDL3
 #include <SDL3/SDL_hints.h>
@@ -562,6 +563,8 @@ bool SpawnWindow(const char *lpWindowName)
 	int initFlags = SDL_INIT_VIDEO | SDL_INIT_JOYSTICK;
 	PHASE3_LOG("Initializing SDL subsystems for input verification");
 	PHASE3_INPUT_SYSTEM_CHECK("SDL Initialization", "Starting video and joystick subsystems");
+	PHASE4_LOG("🎨 FASE 4: Initializing SDL for render system verification");
+	PHASE4_RENDER_INIT("SDL Video Subsystem", "Starting initialization");
 	
 #ifndef NOSOUND
 	initFlags |= SDL_INIT_AUDIO;
@@ -587,6 +590,8 @@ bool SpawnWindow(const char *lpWindowName)
 	
 	PHASE3_INPUT_SYSTEM_CHECK("SDL Initialization", "Successfully initialized - Input systems ready");
 	PHASE3_LOG("SDL input subsystems initialized successfully");
+	PHASE4_RENDER_INIT("SDL Video Subsystem", "Successfully initialized");
+	PHASE4_LOG("🖥️ SDL video subsystem ready for render operations");
 	
 	RegisterCustomEvents();
 

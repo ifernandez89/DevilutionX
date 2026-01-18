@@ -1,0 +1,25 @@
+{
+	"InstallScripts" : 
+	[
+		"C:/c - c++/DevilutionX/phase4/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/phase4/3rdParty/Lua/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/phase4/_deps/lua-build/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/phase4/_deps/lua-build/lua-5.4.7/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/phase4/3rdParty/sol2/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/phase4/_deps/sol2-build/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/phase4/3rdParty/libfmt/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/phase4/_deps/libfmt-build/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/phase4/3rdParty/libsmackerdec/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/phase4/3rdParty/libmpq/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/phase4/3rdParty/tl/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/phase4/3rdParty/SheenBidi/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/phase4/_deps/sheenbidi-build/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/phase4/3rdParty/unordered_dense/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/phase4/_deps/unordered_dense-build/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/phase4/3rdParty/magic_enum/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/phase4/_deps/magic_enum-build/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/phase4/3rdParty/PKWare/cmake_install.cmake",
+		"C:/c - c++/DevilutionX/phase4/Source/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

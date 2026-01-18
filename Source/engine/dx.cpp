@@ -26,6 +26,7 @@
 #include "utils/display.h"
 #include "utils/log.hpp"
 #include "utils/sdl_wrap.h"
+#include "phase4_render_logging.h"
 
 #ifndef USE_SDL1
 #include "controls/touch/renderers.h"
@@ -230,40 +231,68 @@ void Blit(SDL_Surface *src, SDL_Rect *srcRect, SDL_Rect *dstRect)
 
 void RenderPresent()
 {
-	if (HeadlessMode)
+	static int frameCounter = 0;
+	static auto lastFpsTime = std::chrono::steady_clock::now();
+	frameCounter++;
+	
+	auto now = std::chrono::steady_clock::now();
+	auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(now - lastFpsTime);
+	if (elapsed.count() >= 1000) {
+		int fps = frameCounter * 1000 / elapsed.count();
+		PHASE4_RENDER_FRAME(frameCounter, fps);
+		frameCounter = 0;
+		lastFpsTime = now;
+	}
+	
+	if (HeadlessMode) {
+		PHASE4_LOG("🚫 Headless mode - skipping render present");
 		return;
+	}
 
 	SDL_Surface *surface = GetOutputSurface();
+	PHASE4_RENDER_SURFACE("Output Surface", surface->w, surface->h);
 
 	if (!gbActive) {
+		PHASE4_LOG("⏸️ Application not active - limiting frame rate only");
 		LimitFrameRate();
 		return;
 	}
 
 #ifndef USE_SDL1
 	if (renderer != nullptr) {
+		PHASE4_RENDER_SYSTEM_CHECK("SDL2 Renderer", "Active - using hardware acceleration");
 #ifdef USE_SDL3
 		if (!SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255)) ErrSdl();
 		if (!SDL_RenderClear(renderer)) ErrSdl();
+		PHASE4_RENDER_DRAW("Clear Screen", 0, 0, surface->w, surface->h);
 		if (!SDL_UpdateTexture(texture.get(), nullptr, surface->pixels, surface->pitch)) ErrSdl();
+		PHASE4_RENDER_BUFFER("Texture Update", surface->pitch * surface->h);
 		if (!SDL_RenderTexture(renderer, texture.get(), nullptr, nullptr)) ErrSdl();
+		PHASE4_RENDER_DRAW("Render Texture", 0, 0, surface->w, surface->h);
 #else
 		if (SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255) <= -1) ErrSdl();
 		if (SDL_RenderClear(renderer) <= -1) ErrSdl();
+		PHASE4_RENDER_DRAW("Clear Screen", 0, 0, surface->w, surface->h);
 		if (SDL_UpdateTexture(texture.get(), nullptr, surface->pixels, surface->pitch) <= -1) ErrSdl();
+		PHASE4_RENDER_BUFFER("Texture Update", surface->pitch * surface->h);
 		if (SDL_RenderCopy(renderer, texture.get(), nullptr, nullptr) <= -1) ErrSdl();
+		PHASE4_RENDER_DRAW("Render Copy", 0, 0, surface->w, surface->h);
 #endif
 
 		if (ControlMode == ControlTypes::VirtualGamepad) {
+			PHASE4_RENDER_DRAW("Virtual Gamepad", 0, 0, 0, 0);
 			RenderVirtualGamepad(renderer);
 		}
 		SDL_RenderPresent(renderer);
+		PHASE4_LOG("🖼️ Frame presented via SDL2 renderer");
 
 		if (*GetOptions().Graphics.frameRateControl != FrameRateControl::VerticalSync) {
 			LimitFrameRate();
 		}
 	} else {
+		PHASE4_RENDER_SYSTEM_CHECK("SDL2 Window Surface", "Active - using software rendering");
 		if (ControlMode == ControlTypes::VirtualGamepad) {
+			PHASE4_RENDER_DRAW("Virtual Gamepad Surface", 0, 0, 0, 0);
 			RenderVirtualGamepad(surface);
 		}
 
@@ -272,6 +301,7 @@ void RenderPresent()
 #else
 		if (SDL_UpdateWindowSurface(ghMainWnd) <= -1) ErrSdl();
 #endif
+		PHASE4_LOG("🖼️ Frame presented via window surface");
 
 		if (RenderDirectlyToOutputSurface)
 			PalSurface = GetOutputSurface();
@@ -281,6 +311,8 @@ void RenderPresent()
 	if (SDL_Flip(surface) <= -1) {
 		ErrSdl();
 	}
+	PHASE4_RENDER_SYSTEM_CHECK("SDL1 Surface", "Active - using SDL1 flip");
+	PHASE4_LOG("🖼️ Frame presented via SDL1 flip");
 	if (RenderDirectlyToOutputSurface)
 		PalSurface = GetOutputSurface();
 	LimitFrameRate();

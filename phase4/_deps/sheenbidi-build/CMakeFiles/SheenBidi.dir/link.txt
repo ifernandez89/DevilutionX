@@ -1,0 +1,2 @@
+C:\C-C__~1\DEVILU~1\emsdk\upstream\EMSCRI~2\emar.bat qc libSheenBidi.a CMakeFiles/SheenBidi.dir/Source/SheenBidi.c.o
+C:\C-C__~1\DEVILU~1\emsdk\upstream\EMSCRI~2\emranlib.bat libSheenBidi.a

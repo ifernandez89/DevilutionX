@@ -25,6 +25,11 @@
 // 🔊 AUDIO ENHANCEMENT - Integración del sistema mejorado
 #include "audio/enhanced_audio.h"
 
+// 🔊 FASE 5: Audio System Verification
+#ifdef PHASE5_AUDIO_VERIFICATION
+#include "phase5_audio_logging.h"
+#endif
+
 namespace devilution {
 
 int sfxdelay;
@@ -204,6 +209,10 @@ void stream_stop()
 
 void PlaySFX(SfxID psfx)
 {
+#ifdef PHASE5_AUDIO_VERIFICATION
+	PHASE5_AUDIO_PLAY("SFX_" + std::to_string(static_cast<int>(psfx)), 100, 0);
+#endif
+
 	// 🔒 TEMPORARY DISABLE - Sistema de audio mejorado deshabilitado para debugging
 	// Razón: Crash durante conversaciones con NPCs debido a timing de inicialización
 	// TODO: Rediseñar con arquitectura context-aware en el futuro
@@ -219,11 +228,19 @@ void PlaySFX(SfxID psfx)
 
 	if (!gbSndInited) return;
 
+#ifdef PHASE5_AUDIO_VERIFICATION
+	PHASE5_AUDIO_SYSTEM_CHECK("Sound System", "Playing sound effect");
+#endif
+
 	PlaySfxPriv(&sgSFX[static_cast<int16_t>(psfx)], false, { 0, 0 });
 }
 
 void PlaySfxLoc(SfxID psfx, Point position, bool randomizeByCategory)
 {
+#ifdef PHASE5_AUDIO_VERIFICATION
+	PHASE5_AUDIO_PLAY("SFX_LOC_" + std::to_string(static_cast<int>(psfx)), 100, 1);
+#endif
+
 	// 🔒 TEMPORARY DISABLE - Sistema de audio mejorado deshabilitado para debugging
 	// Razón: Crash durante conversaciones con NPCs debido a timing de inicialización
 	// TODO: Rediseñar con arquitectura context-aware en el futuro

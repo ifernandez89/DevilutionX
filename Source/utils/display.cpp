@@ -8,6 +8,11 @@
 #include "phase3_input_logging.h"
 #include "phase4_render_logging.h"
 
+// 🔊 FASE 5: Audio System Verification
+#ifdef PHASE5_AUDIO_VERIFICATION
+#include "../phase5_audio_logging.h"
+#endif
+
 #ifdef USE_SDL3
 #include <SDL3/SDL_hints.h>
 #include <SDL3/SDL_init.h>
@@ -568,6 +573,10 @@ bool SpawnWindow(const char *lpWindowName)
 	
 #ifndef NOSOUND
 	initFlags |= SDL_INIT_AUDIO;
+	#ifdef PHASE5_AUDIO_VERIFICATION
+		PHASE5_LOG("🔊 FASE 5: Initializing SDL for audio system verification");
+		PHASE5_AUDIO_INIT("SDL Audio Subsystem", "Adding to initialization flags");
+	#endif
 #endif
 #ifndef USE_SDL1
 #ifdef USE_SDL3

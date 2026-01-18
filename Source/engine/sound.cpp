@@ -28,6 +28,11 @@
 #include "appfat.h"
 #include "engine/assets.hpp"
 #include "game_mode.hpp"
+
+// 🔊 FASE 5: Audio System Verification
+#ifdef PHASE5_AUDIO_VERIFICATION
+#include "../phase5_audio_logging.h"
+#endif
 #include "options.h"
 #include "utils/log.hpp"
 #include "utils/math.h"
@@ -231,8 +236,22 @@ tl::expected<std::unique_ptr<TSnd>, std::string> SoundFileLoadWithStatus(const c
 
 std::unique_ptr<TSnd> sound_file_load(const char *path, bool stream)
 {
+#ifdef PHASE5_AUDIO_VERIFICATION
+	PHASE5_AUDIO_LOAD(path, 0);
+#endif
+
 	tl::expected<std::unique_ptr<TSnd>, std::string> result = SoundFileLoadWithStatus(path, stream);
-	if (!result.has_value()) app_fatal(result.error());
+	if (!result.has_value()) {
+#ifdef PHASE5_AUDIO_VERIFICATION
+		PHASE5_AUDIO_SYSTEM_CHECK("Sound Loading", "FAILED - " + result.error());
+#endif
+		app_fatal(result.error());
+	}
+
+#ifdef PHASE5_AUDIO_VERIFICATION
+	PHASE5_AUDIO_SYSTEM_CHECK("Sound Loading", "SUCCESS - Sound loaded");
+#endif
+
 	return std::move(result).value();
 }
 
@@ -245,12 +264,21 @@ TSnd::~TSnd()
 
 void snd_init()
 {
+#ifdef PHASE5_AUDIO_VERIFICATION
+	PHASE5_AUDIO_INIT("Sound System", "Initializing audio mixer and volumes");
+#endif
+
 	GetOptions().Audio.soundVolume.SetValue(CapVolume(*GetOptions().Audio.soundVolume));
 	gbSoundOn = *GetOptions().Audio.soundVolume > VOLUME_MIN;
 	sgbSaveSoundOn = gbSoundOn;
 
 	GetOptions().Audio.musicVolume.SetValue(CapVolume(*GetOptions().Audio.musicVolume));
 	gbMusicOn = *GetOptions().Audio.musicVolume > VOLUME_MIN;
+
+#ifdef PHASE5_AUDIO_VERIFICATION
+	PHASE5_AUDIO_MIXER("Initialized", gbSoundOn ? 1 : 0);
+	PHASE5_AUDIO_SYSTEM_CHECK("Audio Mixer", "Ready for sound playback");
+#endif
 
 	// Initialize the SDL_audiolib library. Set the output sample rate to
 	// 22kHz, the audio format to 16-bit signed, use 2 output channels
@@ -261,13 +289,25 @@ void snd_init()
 	specHint.format = SDL_AUDIO_S16LE;
 	specHint.channels = *audioOptions.channels;
 	specHint.freq = static_cast<int>(*audioOptions.sampleRate);
+	
+#ifdef PHASE5_AUDIO_VERIFICATION
+	PHASE5_AUDIO_DEVICE("SDL Audio Device", specHint.channels, specHint.freq);
+#endif
+	
 	const SDL_AudioDeviceID resolvedId = SDL_OpenAudioDevice(audioOptions.device.id(), &specHint);
 	if (resolvedId == 0) {
 		LogError(LogCategory::Audio, "Failed to open audio device: {}", SDL_GetError());
+#ifdef PHASE5_AUDIO_VERIFICATION
+		PHASE5_AUDIO_INIT("SDL Audio Device", "FAILED - Could not open device");
+#endif
 		SDL_ClearError();
 		return;
 	}
 	CurrentAudioDeviceId = resolvedId;
+#ifdef PHASE5_AUDIO_VERIFICATION
+	PHASE5_AUDIO_INIT("SDL Audio Device", "SUCCESS - Device opened");
+	PHASE5_AUDIO_SYSTEM_CHECK("Audio Device", "Active and ready");
+#endif
 #else
 	if (!Aulib::init(*GetOptions().Audio.sampleRate, AUDIO_S16, *GetOptions().Audio.channels, *GetOptions().Audio.bufferSize, *GetOptions().Audio.device)) {
 		LogError(LogCategory::Audio, "Failed to initialize audio (Aulib::init): {}", SDL_GetError());

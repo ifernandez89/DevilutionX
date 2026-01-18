@@ -14,6 +14,15 @@ set(libdevilutionx_SRCS
   # Temporary AI stubs for compilation
   ai_stubs.cpp
   
+  # 🤖 AI System - Phase 7 Complete Implementation
+  ai/ai_engine.cpp
+  ai/quest_generator.cpp
+  ai/difficulty_analyzer.cpp
+  ai/dialogue_generator.cpp
+  ai/item_generator.cpp
+  ai/player_behavior_tracker.cpp
+  ai/contextual_oracle.cpp
+  
   advanced_debug.cpp
   apocalypse_crash_debug.cpp
   appfat.cpp

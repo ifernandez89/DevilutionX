@@ -498,9 +498,12 @@
                             return prefix + path;
                         },
                         
-                        // Memory configuration
-                        INITIAL_MEMORY: 256 * 1024 * 1024, // 256MB
-                        ALLOW_MEMORY_GROWTH: true,
+                        // Memory configuration - Fixed for WebAssembly compatibility
+                        wasmMemory: new WebAssembly.Memory({
+                            initial: 256,  // 256 * 64KB = 16MB initial
+                            maximum: 2048, // 2048 * 64KB = 128MB maximum
+                            shared: false
+                        }),
                         
                         // File system setup
                         preRun: [() => {

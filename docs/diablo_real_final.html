@@ -176,13 +176,17 @@
             <p>Real WebAssembly Compilation</p>
             
             <div id="mpqUpload" class="mpq-upload">
-                <p><strong>Step 1:</strong> Select your DIABDAT.MPQ file</p>
+                <p><strong>🎮 Select your DIABDAT.MPQ file to start playing!</strong></p>
                 <p style="font-size: 12px; color: #ffcccc;">
-                    This file contains the original Diablo 1 game data.<br>
-                    It should be located in your Diablo 1 installation folder.
+                    📁 This file contains the original Diablo 1 game data.<br>
+                    🔒 Your file stays secure on your device - never uploaded.<br>
+                    ⚡ Game will start automatically after validation.
                 </p>
                 <input type="file" id="mpqFile" accept=".mpq,.MPQ" />
-                <button class="control-btn" onclick="loadMPQ()">Load MPQ File</button>
+                <button class="control-btn" onclick="loadMPQ()" style="margin-top: 10px;">🚀 Load & Play</button>
+                <p style="font-size: 10px; color: #999; margin-top: 10px;">
+                    💡 Tip: Game will auto-start when you select a valid DIABDAT.MPQ file
+                </p>
             </div>
             
             <div id="gameLoading" style="display: none;">
@@ -202,6 +206,39 @@
         let gameModule = null;
         let gameRunning = false;
         let mpqLoaded = false;
+
+        // Auto-detect file selection and enhanced validation
+        document.getElementById('mpqFile').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                // Auto-trigger loading when file is selected
+                setTimeout(() => {
+                    loadMPQ();
+                }, 500);
+            }
+        });
+
+        // Enhanced MPQ validation
+        function validateMPQFile(uint8Array) {
+            // Check MPQ signature
+            const mpqSignature = new TextDecoder().decode(uint8Array.slice(0, 4));
+            if (mpqSignature !== 'MPQ\x1A' && mpqSignature !== 'MPQ\x1B') {
+                throw new Error('Invalid MPQ file format. Please select a valid DIABDAT.MPQ file.');
+            }
+            
+            // Check file size (DIABDAT.MPQ should be around 500MB+)
+            if (uint8Array.length < 100 * 1024 * 1024) { // Less than 100MB is suspicious
+                throw new Error('File too small to be DIABDAT.MPQ. Please select the correct file.');
+            }
+            
+            // Check for specific DIABDAT.MPQ markers
+            const fileContent = new TextDecoder().decode(uint8Array.slice(0, 1024));
+            if (!fileContent.includes('levels') && !fileContent.includes('music')) {
+                console.warn('Warning: File may not contain expected Diablo data structures');
+            }
+            
+            return true;
+        }
 
         // Show message function
         function showMessage(text, type = 'info') {
@@ -225,7 +262,7 @@
             document.getElementById('statusText').textContent = status;
         }
 
-        // Load MPQ file
+        // Load MPQ file with enhanced security and auto-start
         async function loadMPQ() {
             const fileInput = document.getElementById('mpqFile');
             const file = fileInput.files[0];
@@ -235,13 +272,15 @@
                 return;
             }
             
-            if (!file.name.toLowerCase().includes('diabdat') || !file.name.toLowerCase().endsWith('.mpq')) {
-                showMessage('Please select the DIABDAT.MPQ file (not other MPQ files).', 'error');
+            // Enhanced filename validation
+            const fileName = file.name.toLowerCase();
+            if (!fileName.includes('diabdat') || !fileName.endsWith('.mpq')) {
+                showMessage('❌ Please select the DIABDAT.MPQ file (not other MPQ files).', 'error');
                 return;
             }
             
             try {
-                showMessage('Loading MPQ file...', 'info');
+                showMessage('🔍 Analyzing MPQ file...', 'info');
                 document.getElementById('mpqUpload').style.display = 'none';
                 document.getElementById('gameLoading').style.display = 'block';
                 
@@ -253,27 +292,24 @@
                 
                 updateProgress(30, 'Validating MPQ structure...');
                 
-                // Basic MPQ validation
-                const mpqSignature = new TextDecoder().decode(uint8Array.slice(0, 4));
-                if (mpqSignature !== 'MPQ\x1A' && mpqSignature !== 'MPQ\x1B') {
-                    throw new Error('Invalid MPQ file format. Please select a valid DIABDAT.MPQ file.');
-                }
+                // Enhanced validation
+                validateMPQFile(uint8Array);
                 
-                updateProgress(50, 'Storing MPQ data...');
+                updateProgress(50, 'MPQ validation passed! Storing data...');
                 
                 // Store MPQ data for the game
                 window.diabdatMPQ = uint8Array;
                 mpqLoaded = true;
                 
-                updateProgress(70, 'MPQ file loaded successfully!');
-                showMessage('✅ DIABDAT.MPQ loaded successfully!', 'success');
+                updateProgress(70, '✅ DIABDAT.MPQ loaded and validated!');
+                showMessage('✅ DIABDAT.MPQ loaded successfully! Starting game...', 'success');
                 
-                // Start loading the game
-                setTimeout(loadGame, 1000);
+                // Auto-start the game after successful validation
+                setTimeout(loadGame, 1500);
                 
             } catch (error) {
                 console.error('MPQ loading error:', error);
-                showMessage('❌ Error loading MPQ file: ' + error.message, 'error');
+                showMessage('❌ Error: ' + error.message, 'error');
                 document.getElementById('mpqUpload').style.display = 'block';
                 document.getElementById('gameLoading').style.display = 'none';
             }

@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔥 Diablo 1 - Fixed Loading 🔥</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #1a0000, #330000, #1a0000);
+            font-family: 'Courier New', monospace;
+            color: #ff6666;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .game-container {
+            position: relative;
+            background: #000;
+            border: 3px solid #ff6666;
+            border-radius: 8px;
+            box-shadow: 0 0 30px rgba(255, 102, 102, 0.5);
+            overflow: hidden;
+            max-width: 100vw;
+            max-height: 100vh;
+        }
+
+        #canvas {
+            display: block;
+            background: #000;
+            image-rendering: pixelated;
+            image-rendering: -moz-crisp-edges;
+            image-rendering: crisp-edges;
+        }
+
+        .controls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+        }
+
+        .control-btn {
+            background: rgba(255, 102, 102, 0.8);
+            color: #000;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .control-btn:hover {
+            background: #ff6666;
+            transform: scale(1.05);
+        }
+
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 30px;
+            border-radius: 10px;
+            border: 2px solid #ff6666;
+            min-width: 400px;
+        }
+
+        .loading h2 {
+            color: #ff6666;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 102, 102, 0.8);
+        }
+
+        .progress-bar {
+            width: 300px;
+            height: 20px;
+            background: #330000;
+            border: 2px solid #ff6666;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 20px auto;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff3333, #ff6666);
+            width: 0%;
+            transition: width 0.3s ease;
+            box-shadow: 0 0 10px rgba(255, 102, 102, 0.5);
+        }
+
+        .status-text {
+            color: #ffcccc;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .mpq-upload {
+            margin: 20px 0;
+            padding: 20px;
+            border: 2px dashed #ff6666;
+            border-radius: 8px;
+            text-align: center;
+            background: rgba(255, 102, 102, 0.1);
+        }
+
+        .mpq-upload input[type="file"] {
+            margin: 10px 0;
+            padding: 8px;
+            background: #330000;
+            color: #ff6666;
+            border: 1px solid #ff6666;
+            border-radius: 4px;
+        }
+
+        .error {
+            color: #ff3333;
+            background: rgba(255, 51, 51, 0.1);
+            padding: 15px;
+            border: 1px solid #ff3333;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+
+        .success {
+            color: #33ff33;
+            background: rgba(51, 255, 51, 0.1);
+            padding: 15px;
+            border: 1px solid #33ff33;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+
+        .debug-log {
+            background: #111;
+            color: #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 11px;
+            max-height: 200px;
+            overflow-y: auto;
+            margin: 10px 0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="controls">
+            <button class="control-btn" onclick="toggleFullscreen()" title="Toggle Fullscreen (F11)">🔳 Fullscreen</button>
+            <button class="control-btn" onclick="resetGame()" title="Reset Game">🔄 Reset</button>
+            <button class="control-btn" onclick="toggleDebug()" title="Toggle Debug">🐛 Debug</button>
+        </div>
+        
+        <div id="loadingScreen" class="loading">
+            <h2>🔥 Diablo 1 - Fixed Loading 🔥</h2>
+            <p><strong>Real DevilutionX WebAssembly Build</strong></p>
+            
+            <div id="mpqUpload" class="mpq-upload">
+                <p><strong>🎮 Select your DIABDAT.MPQ file to start playing!</strong></p>
+                <p style="font-size: 12px; color: #ffcccc;">
+                    📁 This file contains the original Diablo 1 game data.<br>
+                    🔒 Your file stays secure on your device - never uploaded.<br>
+                    ⚡ Game will start automatically after validation.
+                </p>
+                <input type="file" id="mpqFile" accept=".mpq,.MPQ" />
+                <button class="control-btn" onclick="loadMPQ()" style="margin-top: 10px;">🚀 Load & Play</button>
+            </div>
+            
+            <div id="gameLoading" style="display: none;">
+                <div class="progress-bar">
+                    <div id="progressFill" class="progress-fill"></div>
+                </div>
+                <div id="statusText" class="status-text">Initializing WebAssembly...</div>
+            </div>
+            
+            <div id="messages"></div>
+            
+            <div id="debugLog" class="debug-log" style="display: none;">
+                <strong>Debug Log:</strong><br>
+                <div id="debugContent"></div>
+            </div>
+        </div>
+        
+        <canvas id="canvas" width="640" height="480" style="display: none;"></canvas>
+    </div>
+
+    <script>
+        let Module = null;
+        let gameRunning = false;
+        let mpqLoaded = false;
+        let debugMode = false;
+
+        // Debug logging
+        function debugLog(message) {
+            console.log(message);
+            if (debugMode) {
+                const debugContent = document.getElementById('debugContent');
+                debugContent.innerHTML += new Date().toLocaleTimeString() + ': ' + message + '<br>';
+                debugContent.scrollTop = debugContent.scrollHeight;
+            }
+        }
+
+        function toggleDebug() {
+            debugMode = !debugMode;
+            const debugLog = document.getElementById('debugLog');
+            debugLog.style.display = debugMode ? 'block' : 'none';
+        }
+
+        // Auto-detect file selection
+        document.getElementById('mpqFile').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                debugLog('File selected: ' + file.name);
+                setTimeout(() => {
+                    loadMPQ();
+                }, 500);
+            }
+        });
+
+        // Enhanced MPQ validation
+        function validateMPQFile(uint8Array) {
+            debugLog('Validating MPQ file...');
+            
+            // Check MPQ signature
+            const mpqSignature = new TextDecoder().decode(uint8Array.slice(0, 4));
+            debugLog('MPQ signature: ' + JSON.stringify(mpqSignature));
+            
+            if (mpqSignature !== 'MPQ\x1A' && mpqSignature !== 'MPQ\x1B') {
+                throw new Error('Invalid MPQ file format. Please select a valid DIABDAT.MPQ file.');
+            }
+            
+            // Check file size (DIABDAT.MPQ should be around 500MB+)
+            debugLog('File size: ' + (uint8Array.length / 1024 / 1024).toFixed(2) + ' MB');
+            if (uint8Array.length < 100 * 1024 * 1024) {
+                throw new Error('File too small to be DIABDAT.MPQ. Please select the correct file.');
+            }
+            
+            return true;
+        }
+
+        // Show message function
+        function showMessage(text, type = 'info') {
+            debugLog('Message: ' + text + ' (type: ' + type + ')');
+            const messages = document.getElementById('messages');
+            const div = document.createElement('div');
+            div.className = type;
+            div.textContent = text;
+            messages.appendChild(div);
+            
+            setTimeout(() => {
+                if (div.parentNode) {
+                    div.parentNode.removeChild(div);
+                }
+            }, 5000);
+        }
+
+        // Update progress
+        function updateProgress(percent, status) {
+            debugLog('Progress: ' + percent + '% - ' + status);
+            document.getElementById('progressFill').style.width = percent + '%';
+            document.getElementById('statusText').textContent = status;
+        }
+
+        // Load MPQ file
+        async function loadMPQ() {
+            const fileInput = document.getElementById('mpqFile');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                showMessage('Please select a DIABDAT.MPQ file first.', 'error');
+                return;
+            }
+            
+            const fileName = file.name.toLowerCase();
+            debugLog('Processing file: ' + fileName);
+            
+            if (!fileName.includes('diabdat') || !fileName.endsWith('.mpq')) {
+                showMessage('❌ Please select the DIABDAT.MPQ file (not other MPQ files).', 'error');
+                return;
+            }
+            
+            try {
+                showMessage('🔍 Analyzing MPQ file...', 'info');
+                document.getElementById('mpqUpload').style.display = 'none';
+                document.getElementById('gameLoading').style.display = 'block';
+                
+                updateProgress(10, 'Reading MPQ file...');
+                
+                const arrayBuffer = await file.arrayBuffer();
+                const uint8Array = new Uint8Array(arrayBuffer);
+                
+                updateProgress(30, 'Validating MPQ structure...');
+                validateMPQFile(uint8Array);
+                
+                updateProgress(50, 'MPQ validation passed! Storing data...');
+                
+                // Store MPQ data for the game
+                window.diabdatMPQ = uint8Array;
+                mpqLoaded = true;
+                
+                updateProgress(70, '✅ DIABDAT.MPQ loaded and validated!');
+                showMessage('✅ DIABDAT.MPQ loaded successfully! Starting game...', 'success');
+                
+                setTimeout(loadGame, 1500);
+                
+            } catch (error) {
+                debugLog('MPQ loading error: ' + error.message);
+                console.error('MPQ loading error:', error);
+                showMessage('❌ Error: ' + error.message, 'error');
+                document.getElementById('mpqUpload').style.display = 'block';
+                document.getElementById('gameLoading').style.display = 'none';
+            }
+        }
+
+        // Load the WebAssembly game
+        async function loadGame() {
+            if (!mpqLoaded) {
+                showMessage('Please load the MPQ file first.', 'error');
+                return;
+            }
+            
+            try {
+                updateProgress(80, 'Loading WebAssembly engine...');
+                debugLog('Starting WebAssembly loading process...');
+                
+                // First, let's check if the files exist
+                debugLog('Checking if devilutionx.js exists...');
+                
+                const response = await fetch('devilutionx.js');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch devilutionx.js: ' + response.status + ' ' + response.statusText);
+                }
+                debugLog('devilutionx.js found and accessible');
+                
+                // Configure the Emscripten module BEFORE loading the script
+                window.Module = {
+                    canvas: document.getElementById('canvas'),
+                    noInitialRun: false,
+                    
+                    print: function(text) {
+                        debugLog('Game output: ' + text);
+                        console.log('Game:', text);
+                    },
+                    
+                    printErr: function(text) {
+                        debugLog('Game error: ' + text);
+                        console.error('Game Error:', text);
+                    },
+                    
+                    setStatus: function(text) {
+                        debugLog('Game status: ' + text);
+                        console.log('Status:', text);
+                        if (text) {
+                            updateProgress(85, text);
+                        }
+                    },
+                    
+                    preRun: [
+                        function() {
+                            debugLog('PreRun callback executed');
+                            updateProgress(90, 'Preparing game environment...');
+                            
+                            // Mount the MPQ file to the virtual file system
+                            if (window.diabdatMPQ && typeof FS !== 'undefined') {
+                                try {
+                                    debugLog('Mounting MPQ file to virtual filesystem...');
+                                    FS.writeFile('/diabdat.mpq', window.diabdatMPQ);
+                                    debugLog('✅ MPQ file mounted successfully');
+                                } catch (e) {
+                                    debugLog('Failed to mount MPQ: ' + e.message);
+                                    console.error('Failed to mount MPQ:', e);
+                                }
+                            } else {
+                                debugLog('FS not available or MPQ not loaded');
+                            }
+                        }
+                    ],
+                    
+                    onRuntimeInitialized: function() {
+                        debugLog('Runtime initialized callback executed');
+                        updateProgress(95, 'Runtime initialized...');
+                        console.log('✅ WebAssembly runtime initialized');
+                    },
+                    
+                    postRun: [
+                        function() {
+                            debugLog('PostRun callback executed');
+                            updateProgress(100, 'Starting Diablo 1...');
+                            
+                            setTimeout(() => {
+                                debugLog('Hiding loading screen and showing canvas');
+                                document.getElementById('loadingScreen').style.display = 'none';
+                                document.getElementById('canvas').style.display = 'block';
+                                gameRunning = true;
+                                showMessage('🎮 Diablo 1 is now running!', 'success');
+                            }, 1000);
+                        }
+                    ],
+                    
+                    onAbort: function(what) {
+                        debugLog('WebAssembly aborted: ' + what);
+                        showMessage('❌ WebAssembly execution aborted: ' + what, 'error');
+                    }
+                };
+                
+                debugLog('Module configuration set, loading script...');
+                
+                // Load the WebAssembly JavaScript runtime
+                const script = document.createElement('script');
+                script.src = 'devilutionx.js';
+                script.onload = function() {
+                    debugLog('✅ WebAssembly script loaded successfully');
+                    console.log('✅ WebAssembly script loaded');
+                };
+                script.onerror = function(e) {
+                    debugLog('❌ Failed to load WebAssembly script: ' + e.message);
+                    showMessage('❌ Failed to load WebAssembly script', 'error');
+                };
+                document.head.appendChild(script);
+                
+            } catch (error) {
+                debugLog('Game loading error: ' + error.message);
+                console.error('Game loading error:', error);
+                showMessage('❌ Error loading game: ' + error.message, 'error');
+                updateProgress(0, 'Failed to load game');
+            }
+        }
+
+        // Fullscreen functionality
+        function toggleFullscreen() {
+            const container = document.querySelector('.game-container');
+            
+            if (!document.fullscreenElement) {
+                container.requestFullscreen().catch(err => {
+                    console.error('Error attempting to enable fullscreen:', err);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        // Reset game
+        function resetGame() {
+            location.reload();
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'F11') {
+                e.preventDefault();
+                toggleFullscreen();
+            } else if (e.key === 'F5' && e.ctrlKey) {
+                e.preventDefault();
+                resetGame();
+            }
+        });
+
+        // Handle canvas resize for fullscreen
+        function resizeCanvas() {
+            const canvas = document.getElementById('canvas');
+            
+            if (document.fullscreenElement) {
+                canvas.style.width = '100vw';
+                canvas.style.height = '100vh';
+            } else {
+                canvas.style.width = '640px';
+                canvas.style.height = '480px';
+            }
+        }
+
+        document.addEventListener('fullscreenchange', resizeCanvas);
+        window.addEventListener('resize', resizeCanvas);
+
+        // Initialize
+        debugLog('🔥 Diablo 1 - Fixed Loading initialized');
+        console.log('🔥 Diablo 1 - Fixed Loading initialized');
+        console.log('Please select your DIABDAT.MPQ file to begin.');
+        
+        // Check if files exist on page load
+        window.addEventListener('load', async function() {
+            debugLog('Page loaded, checking WebAssembly files...');
+            
+            try {
+                const wasmResponse = await fetch('devilutionx.wasm');
+                const jsResponse = await fetch('devilutionx.js');
+                const dataResponse = await fetch('devilutionx.data');
+                
+                debugLog('WASM file: ' + (wasmResponse.ok ? 'OK' : 'MISSING'));
+                debugLog('JS file: ' + (jsResponse.ok ? 'OK' : 'MISSING'));
+                debugLog('DATA file: ' + (dataResponse.ok ? 'OK' : 'MISSING'));
+                
+                if (!wasmResponse.ok || !jsResponse.ok || !dataResponse.ok) {
+                    showMessage('⚠️ Some WebAssembly files are missing. Check console for details.', 'error');
+                }
+            } catch (e) {
+                debugLog('Error checking files: ' + e.message);
+            }
+        });
+    </script>
+</body>
+</html>

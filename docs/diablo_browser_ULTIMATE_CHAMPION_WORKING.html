@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>💀 Diablo 1 - Browser Edition ULTIMATE CHAMPION WORKING</title>
+    <title>💀 Diablo 1 - Nightmare Edition</title>
     <style>
         body {
             margin: 0;
@@ -214,8 +214,8 @@
     <button class="fullscreen-btn" onclick="toggleFullscreen()">🔳 Fullscreen</button>
     
     <div class="header">
-        <div class="title">💀 DIABLO 1 - ULTIMATE CHAMPION WORKING</div>
-        <div style="font-size: 1.3em; color: #ffd93d;">🌐 Browser Edition - Fixed Critical Issues</div>
+        <div class="title">💀 DIABLO 1 - NIGHTMARE EDITION</div>
+        <div style="font-size: 1.3em; color: #ffd93d;">🌐 Browser Edition - Complete & Fixed</div>
     </div>
     
     <!-- MPQ Selection -->
@@ -256,8 +256,8 @@
     </div>
 
     <script>
-        // Ultimate Champion Working Diablo 1 Browser Handler - Fixed Critical Issues
-        window.DiabloUltimateChampionWorkingHandler = {
+        // Ultimate Champion Working Diablo 1 Browser Handler - Nightmare Edition
+        window.DiabloNightmareEditionHandler = {
             mpqFile: null,
             gameStarted: false,
             isFullscreen: false,
@@ -265,8 +265,8 @@
             runtimeReady: false,
             
             init: function() {
-                console.log('🎮 Diablo 1 Browser Edition - ULTIMATE CHAMPION WORKING initializing...');
-                this.debugLog('Inicializando ULTIMATE CHAMPION WORKING - Problemas críticos corregidos');
+                console.log('🎮 Diablo 1 Nightmare Edition initializing...');
+                this.debugLog('Inicializando Diablo 1 Nightmare Edition - Problemas críticos corregidos');
                 
                 const fileInput = document.getElementById('mpq-file-input');
                 const selectBtn = document.getElementById('select-mpq-btn');
@@ -296,7 +296,7 @@
                     debugDiv.innerHTML += `<div>[${timestamp}] ${message}</div>`;
                     debugDiv.scrollTop = debugDiv.scrollHeight;
                 }
-                console.log('[DIABLO-WORKING]', message);
+                console.log('[DIABLO-NIGHTMARE]', message);
             },
             
             setupFullscreenHandlers: function() {
@@ -550,12 +550,8 @@
                             return prefix + path;
                         },
                         
-                        // Memory configuration
-                        wasmMemory: new WebAssembly.Memory({
-                            initial: 256,  // 16MB initial
-                            maximum: 2048, // 128MB maximum
-                            shared: false
-                        }),
+                        // Memory configuration - FIXED: Remove external wasmMemory
+                        // Let Emscripten handle memory internally
                         
                         // Arguments to pass to main
                         arguments: [],
@@ -736,7 +732,7 @@
                 }
                 
                 this.gameStarted = true;
-                this.debugLog('🚀 Iniciando motor de juego Diablo 1 - FIXED VERSION...');
+                this.debugLog('🚀 Iniciando motor de juego Diablo 1 Nightmare Edition...');
                 
                 document.getElementById('loading').textContent = '🎮 Iniciando Diablo 1...';
                 
@@ -814,7 +810,7 @@
                 ctx.fillStyle = '#ffd93d';
                 ctx.font = '24px serif';
                 ctx.shadowBlur = 10;
-                ctx.fillText('Browser Edition - WORKING', canvas.width/2, 190);
+                ctx.fillText('Nightmare Edition - WORKING', canvas.width/2, 190);
                 
                 // Status
                 ctx.fillStyle = '#4caf50';
@@ -831,7 +827,7 @@
                 ctx.fillText('Click anywhere to interact with the game', canvas.width/2, 350);
                 ctx.fillText('Press F11 for fullscreen mode', canvas.width/2, 370);
                 
-                document.getElementById('loading').textContent = '🎮 Diablo 1 - WORKING VERSION - Click to interact';
+                document.getElementById('loading').textContent = '🎮 Diablo 1 Nightmare Edition - Click to interact';
                 
                 // Add click handler
                 canvas.onclick = () => {
@@ -872,12 +868,12 @@
         
         // Global fullscreen function
         function toggleFullscreen() {
-            window.DiabloUltimateChampionWorkingHandler.toggleFullscreen();
+            window.DiabloNightmareEditionHandler.toggleFullscreen();
         }
         
         // Initialize when page loads
         document.addEventListener('DOMContentLoaded', function() {
-            window.DiabloUltimateChampionWorkingHandler.init();
+            window.DiabloNightmareEditionHandler.init();
         });
     </script>
 </body>

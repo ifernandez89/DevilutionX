@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Test WebAssembly Only</title>
+    <style>
+        body { 
+            background: #000; 
+            color: #ff6666; 
+            font-family: 'Courier New', monospace; 
+            padding: 20px; 
+        }
+        .log { 
+            background: #111; 
+            border: 1px solid #333; 
+            padding: 15px; 
+            margin: 10px 0; 
+            max-height: 400px; 
+            overflow-y: auto; 
+            font-size: 12px; 
+        }
+        canvas { 
+            border: 2px solid #ff6666; 
+            background: #000; 
+        }
+    </style>
+</head>
+<body>
+    <h1>🔧 Test WebAssembly Only 🔧</h1>
+    <p>Testing if WebAssembly loads WITHOUT MPQ file</p>
+    
+    <div class="log" id="log">Starting test...<br></div>
+    <canvas id="canvas" width="640" height="480"></canvas>
+
+    <script>
+        function log(msg) {
+            const logDiv = document.getElementById('log');
+            const time = new Date().toLocaleTimeString();
+            logDiv.innerHTML += `[${time}] ${msg}<br>`;
+            logDiv.scrollTop = logDiv.scrollHeight;
+            console.log(msg);
+        }
+
+        // Minimal Module configuration - NO MPQ mounting
+        var Module = {
+            canvas: document.getElementById('canvas'),
+            
+            print: function(text) {
+                log(`GAME: ${text}`);
+            },
+            
+            printErr: function(text) {
+                log(`ERROR: ${text}`);
+            },
+            
+            setStatus: function(text) {
+                log(`STATUS: ${text}`);
+            },
+            
+            preRun: [
+                function() {
+                    log('PreRun: Starting WITHOUT MPQ file');
+                }
+            ],
+            
+            postRun: [
+                function() {
+                    log('PostRun: WebAssembly initialization complete');
+                }
+            ],
+            
+            onRuntimeInitialized: function() {
+                log('✅ Runtime initialized successfully!');
+                log('🎮 WebAssembly is working!');
+            }
+        };
+
+        log('🔧 Module configured');
+        log('📥 Loading WebAssembly script...');
+
+        // Load the script
+        const script = document.createElement('script');
+        script.src = 'devilutionx.js';
+        script.onload = function() {
+            log('✅ Script loaded');
+        };
+        script.onerror = function() {
+            log('❌ Script failed to load');
+        };
+        document.head.appendChild(script);
+
+        log('📄 Script tag added');
+    </script>
+</body>
+</html>

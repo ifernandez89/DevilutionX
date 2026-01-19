@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diablo 1 - Debug Version</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #000;
+            font-family: 'Courier New', monospace;
+            color: #ff6666;
+            min-height: 100vh;
+        }
+
+        .debug-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border: 2px solid #ff6666;
+            border-radius: 10px;
+        }
+
+        .debug-container h2 {
+            color: #ff6666;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .file-test {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #666;
+            border-radius: 5px;
+            background: rgba(255, 102, 102, 0.1);
+        }
+
+        .status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .success { background: #33ff33; color: #000; }
+        .error { background: #ff3333; color: #fff; }
+        .loading { background: #ffff00; color: #000; }
+
+        .file-info {
+            font-size: 12px;
+            color: #ccc;
+            margin-top: 5px;
+        }
+
+        .test-btn {
+            background: #ff6666;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            margin: 10px 5px;
+        }
+
+        .log {
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 20px 0;
+            max-height: 300px;
+            overflow-y: auto;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="debug-container">
+        <h2>🔍 Diablo 1 WebAssembly Debug</h2>
+        
+        <div class="file-test">
+            <strong>JavaScript File:</strong>
+            <span id="jsStatus" class="status loading">Testing...</span>
+            <div id="jsInfo" class="file-info"></div>
+        </div>
+        
+        <div class="file-test">
+            <strong>WebAssembly File:</strong>
+            <span id="wasmStatus" class="status loading">Testing...</span>
+            <div id="wasmInfo" class="file-info"></div>
+        </div>
+        
+        <div class="file-test">
+            <strong>Data File:</strong>
+            <span id="dataStatus" class="status loading">Testing...</span>
+            <div id="dataInfo" class="file-info"></div>
+        </div>
+        
+        <div style="text-align: center; margin: 30px 0;">
+            <button class="test-btn" onclick="testAllFiles()">🔄 Test All Files</button>
+            <button class="test-btn" onclick="testWebAssembly()">🚀 Test WebAssembly Load</button>
+        </div>
+        
+        <div class="log" id="debugLog">
+            <strong>Debug Log:</strong><br>
+            Initializing tests...<br>
+        </div>
+    </div>
+
+    <script>
+        function log(message) {
+            const logDiv = document.getElementById('debugLog');
+            const timestamp = new Date().toLocaleTimeString();
+            logDiv.innerHTML += `[${timestamp}] ${message}<br>`;
+            logDiv.scrollTop = logDiv.scrollHeight;
+            console.log(message);
+        }
+
+        function setStatus(elementId, status, message, info = '') {
+            const element = document.getElementById(elementId);
+            const infoElement = document.getElementById(elementId.replace('Status', 'Info'));
+            
+            element.className = 'status ' + status;
+            element.textContent = message;
+            infoElement.textContent = info;
+        }
+
+        async function testFile(url, name) {
+            try {
+                log(`Testing ${name}: ${url}`);
+                const startTime = Date.now();
+                
+                const response = await fetch(url);
+                const loadTime = Date.now() - startTime;
+                
+                if (response.ok) {
+                    const size = response.headers.get('content-length');
+                    const sizeText = size ? `${(size / 1024 / 1024).toFixed(2)} MB` : 'Unknown size';
+                    log(`✅ ${name} loaded successfully in ${loadTime}ms (${sizeText})`);
+                    return { success: true, size: size, loadTime: loadTime };
+                } else {
+                    log(`❌ ${name} failed: ${response.status} ${response.statusText}`);
+                    return { success: false, error: `${response.status} ${response.statusText}` };
+                }
+            } catch (error) {
+                log(`❌ ${name} error: ${error.message}`);
+                return { success: false, error: error.message };
+            }
+        }
+
+        async function testAllFiles() {
+            log('🔍 Starting file tests...');
+            
+            // Test JavaScript
+            const jsResult = await testFile('devilutionx_real_original.js', 'JavaScript');
+            if (jsResult.success) {
+                setStatus('jsStatus', 'success', '✅ Available', `Load time: ${jsResult.loadTime}ms`);
+            } else {
+                setStatus('jsStatus', 'error', '❌ Failed', jsResult.error);
+            }
+            
+            // Test WebAssembly
+            const wasmResult = await testFile('devilutionx_real_original.wasm', 'WebAssembly');
+            if (wasmResult.success) {
+                const sizeText = wasmResult.size ? `${(wasmResult.size / 1024 / 1024).toFixed(2)} MB` : 'Unknown';
+                setStatus('wasmStatus', 'success', '✅ Available', `${sizeText}, Load time: ${wasmResult.loadTime}ms`);
+            } else {
+                setStatus('wasmStatus', 'error', '❌ Failed', wasmResult.error);
+            }
+            
+            // Test Data
+            const dataResult = await testFile('devilutionx_real_original.data', 'Data');
+            if (dataResult.success) {
+                const sizeText = dataResult.size ? `${(dataResult.size / 1024 / 1024).toFixed(2)} MB` : 'Unknown';
+                setStatus('dataStatus', 'success', '✅ Available', `${sizeText}, Load time: ${dataResult.loadTime}ms`);
+            } else {
+                setStatus('dataStatus', 'error', '❌ Failed', dataResult.error);
+            }
+            
+            log('🏁 File tests completed');
+        }
+
+        async function testWebAssembly() {
+            log('🚀 Testing WebAssembly instantiation...');
+            
+            try {
+                // Test if WebAssembly is supported
+                if (typeof WebAssembly !== 'object') {
+                    throw new Error('WebAssembly not supported in this browser');
+                }
+                log('✅ WebAssembly is supported');
+                
+                // Try to load the WASM file
+                log('📥 Fetching WebAssembly file...');
+                const wasmResponse = await fetch('devilutionx_real_original.wasm');
+                if (!wasmResponse.ok) {
+                    throw new Error(`Failed to fetch WASM: ${wasmResponse.status}`);
+                }
+                
+                log('📦 Compiling WebAssembly...');
+                const wasmBytes = await wasmResponse.arrayBuffer();
+                log(`📊 WASM size: ${(wasmBytes.byteLength / 1024 / 1024).toFixed(2)} MB`);
+                
+                // Try to compile (but not instantiate yet)
+                const wasmModule = await WebAssembly.compile(wasmBytes);
+                log('✅ WebAssembly compiled successfully!');
+                
+                // Check imports
+                const imports = WebAssembly.Module.imports(wasmModule);
+                log(`📋 WebAssembly imports: ${imports.length} items`);
+                imports.slice(0, 5).forEach((imp, i) => {
+                    log(`  ${i+1}. ${imp.module}.${imp.name} (${imp.kind})`);
+                });
+                if (imports.length > 5) {
+                    log(`  ... and ${imports.length - 5} more`);
+                }
+                
+                log('🎯 WebAssembly test completed successfully!');
+                log('💡 The WASM file is valid and should work with proper imports');
+                
+            } catch (error) {
+                log(`❌ WebAssembly test failed: ${error.message}`);
+            }
+        }
+
+        // Auto-start tests
+        window.addEventListener('load', function() {
+            log('🌐 Page loaded, starting automatic tests...');
+            testAllFiles();
+        });
+    </script>
+</body>
+</html>

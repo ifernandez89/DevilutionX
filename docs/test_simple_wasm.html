@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Test Simple WebAssembly</title>
+    <style>
+        body { 
+            background: #000; 
+            color: #ff6666; 
+            font-family: 'Courier New', monospace; 
+            padding: 20px; 
+        }
+        .test-section { 
+            background: rgba(255, 102, 102, 0.1); 
+            padding: 20px; 
+            border: 1px solid #ff6666; 
+            margin: 10px 0; 
+            border-radius: 5px; 
+        }
+        .log { 
+            background: #111; 
+            border: 1px solid #333; 
+            padding: 15px; 
+            margin: 10px 0; 
+            max-height: 300px; 
+            overflow-y: auto; 
+            font-size: 12px; 
+        }
+        button { 
+            background: #ff6666; 
+            color: #000; 
+            border: none; 
+            padding: 10px 20px; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            font-weight: bold; 
+            margin: 5px; 
+        }
+        .success { color: #33ff33; }
+        .error { color: #ff3333; }
+    </style>
+</head>
+<body>
+    <h1>🧪 WebAssembly Test Suite 🧪</h1>
+    
+    <div class="test-section">
+        <h3>Test 1: WebAssembly Support</h3>
+        <button onclick="testWebAssemblySupport()">Test WebAssembly Support</button>
+        <div id="supportResult"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>Test 2: Simple WebAssembly Module</h3>
+        <button onclick="testSimpleWasm()">Create & Test Simple WASM</button>
+        <div id="simpleResult"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>Test 3: Emscripten-style Module</h3>
+        <button onclick="testEmscriptenStyle()">Test Emscripten Pattern</button>
+        <div id="emscriptenResult"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>Debug Log</h3>
+        <div class="log" id="log">Ready to run tests...<br></div>
+    </div>
+
+    <script>
+        function log(msg, type = 'info') {
+            const logDiv = document.getElementById('log');
+            const time = new Date().toLocaleTimeString();
+            const color = type === 'error' ? '#ff3333' : type === 'success' ? '#33ff33' : '#ff6666';
+            logDiv.innerHTML += `<span style="color: ${color}">[${time}] ${msg}</span><br>`;
+            logDiv.scrollTop = logDiv.scrollHeight;
+            console.log(msg);
+        }
+
+        function setResult(elementId, message, success = true) {
+            const element = document.getElementById(elementId);
+            element.innerHTML = `<span class="${success ? 'success' : 'error'}">${message}</span>`;
+        }
+
+        // Test 1: Basic WebAssembly Support
+        function testWebAssemblySupport() {
+            log('🔍 Testing WebAssembly support...');
+            
+            try {
+                if (typeof WebAssembly === 'object') {
+                    log('✅ WebAssembly object exists', 'success');
+                    
+                    if (typeof WebAssembly.instantiate === 'function') {
+                        log('✅ WebAssembly.instantiate available', 'success');
+                        
+                        if (typeof WebAssembly.compile === 'function') {
+                            log('✅ WebAssembly.compile available', 'success');
+                            setResult('supportResult', '✅ Full WebAssembly support detected!', true);
+                        } else {
+                            log('❌ WebAssembly.compile not available', 'error');
+                            setResult('supportResult', '❌ Partial WebAssembly support', false);
+                        }
+                    } else {
+                        log('❌ WebAssembly.instantiate not available', 'error');
+                        setResult('supportResult', '❌ Limited WebAssembly support', false);
+                    }
+                } else {
+                    log('❌ WebAssembly not supported', 'error');
+                    setResult('supportResult', '❌ WebAssembly not supported in this browser', false);
+                }
+            } catch (error) {
+                log(`❌ Error testing WebAssembly: ${error.message}`, 'error');
+                setResult('supportResult', `❌ Error: ${error.message}`, false);
+            }
+        }
+
+        // Test 2: Create and run a simple WebAssembly module
+        async function testSimpleWasm() {
+            log('🔧 Creating simple WebAssembly module...');
+            
+            try {
+                // Simple WebAssembly module that adds two numbers
+                // (module (func $add (param $a i32) (param $b i32) (result i32) local.get $a local.get $b i32.add) (export "add" (func $add)))
+                const wasmBytes = new Uint8Array([
+                    0x00, 0x61, 0x73, 0x6d, 0x01, 0x00, 0x00, 0x00,
+                    0x01, 0x07, 0x01, 0x60, 0x02, 0x7f, 0x7f, 0x01,
+                    0x7f, 0x03, 0x02, 0x01, 0x00, 0x07, 0x07, 0x01,
+                    0x03, 0x61, 0x64, 0x64, 0x00, 0x00, 0x0a, 0x09,
+                    0x01, 0x07, 0x00, 0x20, 0x00, 0x20, 0x01, 0x6a,
+                    0x0b
+                ]);
+                
+                log('📦 Compiling WebAssembly module...');
+                const wasmModule = await WebAssembly.compile(wasmBytes);
+                log('✅ WebAssembly module compiled successfully', 'success');
+                
+                log('🚀 Instantiating WebAssembly module...');
+                const wasmInstance = await WebAssembly.instantiate(wasmModule);
+                log('✅ WebAssembly module instantiated successfully', 'success');
+                
+                log('🧮 Testing WebAssembly function...');
+                const result = wasmInstance.exports.add(5, 3);
+                log(`✅ WebAssembly function result: 5 + 3 = ${result}`, 'success');
+                
+                if (result === 8) {
+                    setResult('simpleResult', '✅ Simple WebAssembly module works perfectly!', true);
+                } else {
+                    setResult('simpleResult', `❌ Unexpected result: ${result} (expected 8)`, false);
+                }
+                
+            } catch (error) {
+                log(`❌ Error with simple WebAssembly: ${error.message}`, 'error');
+                setResult('simpleResult', `❌ Error: ${error.message}`, false);
+            }
+        }
+
+        // Test 3: Test Emscripten-style pattern
+        async function testEmscriptenStyle() {
+            log('🔧 Testing Emscripten-style WebAssembly pattern...');
+            
+            try {
+                // Create a mock Emscripten-style setup
+                let moduleInitialized = false;
+                let runtimeInitialized = false;
+                
+                const MockModule = {
+                    print: function(text) {
+                        log(`MOCK GAME: ${text}`);
+                    },
+                    
+                    printErr: function(text) {
+                        log(`MOCK ERROR: ${text}`, 'error');
+                    },
+                    
+                    setStatus: function(text) {
+                        log(`MOCK STATUS: ${text}`);
+                    },
+                    
+                    preRun: [
+                        function() {
+                            log('MOCK PreRun: Initializing...');
+                            moduleInitialized = true;
+                        }
+                    ],
+                    
+                    postRun: [
+                        function() {
+                            log('MOCK PostRun: Cleanup...');
+                        }
+                    ],
+                    
+                    onRuntimeInitialized: function() {
+                        log('MOCK Runtime: Initialized!', 'success');
+                        runtimeInitialized = true;
+                    }
+                };
+                
+                log('⚙️ Simulating Emscripten initialization...');
+                
+                // Simulate the Emscripten initialization process
+                MockModule.setStatus('Downloading...');
+                await new Promise(resolve => setTimeout(resolve, 100));
+                
+                MockModule.setStatus('Preparing...');
+                MockModule.preRun.forEach(func => func());
+                await new Promise(resolve => setTimeout(resolve, 100));
+                
+                MockModule.setStatus('Running...');
+                MockModule.onRuntimeInitialized();
+                await new Promise(resolve => setTimeout(resolve, 100));
+                
+                MockModule.postRun.forEach(func => func());
+                MockModule.setStatus('');
+                
+                if (moduleInitialized && runtimeInitialized) {
+                    log('✅ Emscripten-style pattern works correctly', 'success');
+                    setResult('emscriptenResult', '✅ Emscripten pattern simulation successful!', true);
+                } else {
+                    log('❌ Emscripten-style pattern failed', 'error');
+                    setResult('emscriptenResult', '❌ Emscripten pattern simulation failed', false);
+                }
+                
+            } catch (error) {
+                log(`❌ Error with Emscripten pattern: ${error.message}`, 'error');
+                setResult('emscriptenResult', `❌ Error: ${error.message}`, false);
+            }
+        }
+
+        // Auto-run basic support test
+        log('🚀 WebAssembly Test Suite initialized');
+        log('👆 Click buttons above to run tests');
+        
+        // Auto-test support on load
+        setTimeout(testWebAssemblySupport, 500);
+    </script>
+</body>
+</html>

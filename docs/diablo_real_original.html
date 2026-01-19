@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diablo 1 - Real WebAssembly (Original)</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            font-family: 'Courier New', monospace;
+            color: #ff6666;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .game-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, #1a0000, #330000, #1a0000);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .flame-effect {
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 4em;
+            color: #ff3333;
+            text-shadow: 0 0 20px #ff6666, 0 0 40px #ff3333;
+            animation: flicker 2s infinite alternate;
+            z-index: 2;
+        }
+
+        @keyframes flicker {
+            0% { opacity: 0.8; text-shadow: 0 0 20px #ff6666, 0 0 40px #ff3333; }
+            100% { opacity: 1; text-shadow: 0 0 30px #ff6666, 0 0 60px #ff3333, 0 0 80px #ff0000; }
+        }
+
+        .mpq-loader {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 40px;
+            border-radius: 10px;
+            border: 3px solid #ff6666;
+            box-shadow: 0 0 30px rgba(255, 102, 102, 0.5);
+            max-width: 500px;
+        }
+
+        .mpq-loader h2 {
+            color: #ff6666;
+            font-size: 2em;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 102, 102, 0.8);
+        }
+
+        .file-input-container {
+            margin: 30px 0;
+            padding: 20px;
+            border: 2px dashed #ff6666;
+            border-radius: 8px;
+            background: rgba(255, 102, 102, 0.1);
+        }
+
+        .file-input-container input[type="file"] {
+            width: 100%;
+            padding: 15px;
+            background: #330000;
+            color: #ff6666;
+            border: 1px solid #ff6666;
+            border-radius: 4px;
+            font-size: 16px;
+            margin: 10px 0;
+        }
+
+        .load-btn {
+            background: linear-gradient(45deg, #ff3333, #ff6666);
+            color: #000;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            font-size: 18px;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .load-btn:hover {
+            background: linear-gradient(45deg, #ff6666, #ff9999);
+            transform: scale(1.05);
+        }
+
+        .load-btn:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .progress-container {
+            display: none;
+            margin: 20px 0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 25px;
+            background: #330000;
+            border: 2px solid #ff6666;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff3333, #ff6666);
+            width: 0%;
+            transition: width 0.3s ease;
+            box-shadow: 0 0 10px rgba(255, 102, 102, 0.5);
+        }
+
+        .status-text {
+            color: #ffcccc;
+            font-size: 16px;
+            margin: 15px 0;
+        }
+
+        .message {
+            margin: 10px 0;
+            padding: 12px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .success { color: #33ff33; background: rgba(51, 255, 51, 0.1); border: 1px solid #33ff33; }
+        .error { color: #ff3333; background: rgba(255, 51, 51, 0.1); border: 1px solid #ff3333; }
+        .info { color: #ffcccc; background: rgba(255, 204, 204, 0.1); border: 1px solid #ffcccc; }
+
+        #canvas {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+            background: #000;
+        }
+
+        .controls {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 20;
+            display: flex;
+            gap: 10px;
+        }
+
+        .control-btn {
+            background: rgba(255, 102, 102, 0.8);
+            color: #000;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="flame-effect">🔥</div>
+        
+        <div class="controls">
+            <button class="control-btn" onclick="toggleFullscreen()">🔳 Fullscreen</button>
+            <button class="control-btn" onclick="resetGame()">🔄 Reset</button>
+        </div>
+        
+        <div id="mpqLoader" class="mpq-loader">
+            <h2>⚔️ DIABLO 1 ⚔️</h2>
+            <p style="color: #ffcccc; font-size: 18px; margin-bottom: 30px;">
+                Load your game data to enter the world of Sanctuary
+            </p>
+            
+            <div class="file-input-container">
+                <p><strong>🎮 Select DIABDAT.MPQ:</strong></p>
+                <p style="font-size: 14px; color: #ffcccc; margin: 15px 0;">
+                    📁 Original Diablo 1 game data file<br>
+                    🔒 Processed securely on your device
+                </p>
+                <input type="file" id="mpqFile" accept=".mpq,.MPQ" />
+                <button class="load-btn" id="loadBtn" onclick="loadMPQAndStartGame()" disabled>
+                    🚀 Enter Sanctuary
+                </button>
+            </div>
+            
+            <div class="progress-container" id="progressContainer">
+                <div class="progress-bar">
+                    <div id="progressFill" class="progress-fill"></div>
+                </div>
+                <div id="statusText" class="status-text"></div>
+            </div>
+            
+            <div id="messages"></div>
+        </div>
+        
+        <canvas id="canvas"></canvas>
+    </div>
+
+    <script>
+        let gameModule = null;
+        let gameRunning = false;
+        let mpqLoaded = false;
+
+        // Configure the Module for Emscripten
+        var Module = {
+            canvas: document.getElementById('canvas'),
+            print: function(text) {
+                console.log('Game:', text);
+            },
+            printErr: function(text) {
+                console.error('Game Error:', text);
+            },
+            setStatus: function(text) {
+                console.log('Status:', text);
+                if (text.includes('Preparing')) {
+                    updateProgress(90, text);
+                }
+            },
+            preRun: [],
+            postRun: [],
+            onRuntimeInitialized: function() {
+                console.log('WebAssembly runtime initialized');
+                updateProgress(95, 'Game systems ready...');
+                
+                setTimeout(() => {
+                    updateProgress(100, 'Starting Diablo 1...');
+                    
+                    // Hide loader and show game
+                    setTimeout(() => {
+                        document.getElementById('mpqLoader').classList.add('hidden');
+                        document.getElementById('canvas').style.display = 'block';
+                        
+                        gameRunning = true;
+                        console.log('🎮 Diablo 1 is now running!');
+                    }, 1000);
+                }, 500);
+            }
+        };
+
+        // Enable load button when file is selected
+        document.getElementById('mpqFile').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            const loadBtn = document.getElementById('loadBtn');
+            
+            if (file) {
+                loadBtn.disabled = false;
+                loadBtn.textContent = '🚀 Enter Sanctuary';
+                showMessage('File selected: ' + file.name + ' (' + (file.size / 1024 / 1024).toFixed(2) + ' MB)', 'info');
+            } else {
+                loadBtn.disabled = true;
+                loadBtn.textContent = '🚀 Enter Sanctuary';
+            }
+        });
+
+        function showMessage(text, type = 'info') {
+            const messages = document.getElementById('messages');
+            const div = document.createElement('div');
+            div.className = 'message ' + type;
+            div.textContent = text;
+            messages.appendChild(div);
+            
+            setTimeout(() => {
+                if (div.parentNode) {
+                    div.parentNode.removeChild(div);
+                }
+            }, 5000);
+        }
+
+        function updateProgress(percent, status) {
+            const progressContainer = document.getElementById('progressContainer');
+            const progressFill = document.getElementById('progressFill');
+            const statusText = document.getElementById('statusText');
+            
+            progressContainer.style.display = 'block';
+            progressFill.style.width = percent + '%';
+            statusText.textContent = status;
+        }
+
+        function validateMPQFile(uint8Array) {
+            const mpqSignature = new TextDecoder().decode(uint8Array.slice(0, 4));
+            if (mpqSignature !== 'MPQ\x1A' && mpqSignature !== 'MPQ\x1B') {
+                throw new Error('Invalid MPQ file format. Please select a valid DIABDAT.MPQ file.');
+            }
+            
+            if (uint8Array.length < 100 * 1024 * 1024) {
+                throw new Error('File too small to be DIABDAT.MPQ. Please select the correct file.');
+            }
+            
+            return true;
+        }
+
+        async function loadMPQAndStartGame() {
+            const fileInput = document.getElementById('mpqFile');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                showMessage('Please select a DIABDAT.MPQ file first.', 'error');
+                return;
+            }
+            
+            const fileName = file.name.toLowerCase();
+            if (!fileName.includes('diabdat') || !fileName.endsWith('.mpq')) {
+                showMessage('❌ Please select the DIABDAT.MPQ file (not other MPQ files).', 'error');
+                return;
+            }
+            
+            try {
+                showMessage('🔍 Validating game data...', 'info');
+                updateProgress(10, 'Reading MPQ file...');
+                
+                const arrayBuffer = await file.arrayBuffer();
+                const uint8Array = new Uint8Array(arrayBuffer);
+                
+                updateProgress(30, 'Validating MPQ structure...');
+                validateMPQFile(uint8Array);
+                
+                updateProgress(50, 'MPQ validation passed! Preparing game...');
+                window.diabdatMPQ = uint8Array;
+                mpqLoaded = true;
+                
+                updateProgress(70, '✅ Game data loaded successfully!');
+                showMessage('✅ DIABDAT.MPQ validated! Starting Diablo 1...', 'success');
+                
+                // Add MPQ mounting to preRun
+                Module.preRun.push(function() {
+                    if (window.diabdatMPQ && typeof FS !== 'undefined') {
+                        try {
+                            FS.writeFile('/diabdat.mpq', window.diabdatMPQ);
+                            console.log('MPQ file mounted successfully');
+                        } catch (e) {
+                            console.error('Failed to mount MPQ:', e);
+                        }
+                    }
+                });
+                
+                updateProgress(80, 'Loading WebAssembly engine...');
+                
+                // The original Emscripten script will handle the rest
+                showMessage('✅ Loading original Emscripten WebAssembly...', 'success');
+                
+            } catch (error) {
+                console.error('MPQ loading error:', error);
+                showMessage('❌ Error: ' + error.message, 'error');
+                document.getElementById('progressContainer').style.display = 'none';
+            }
+        }
+
+        function toggleFullscreen() {
+            const container = document.querySelector('.game-container');
+            
+            if (!document.fullscreenElement) {
+                container.requestFullscreen().catch(err => {
+                    console.error('Error attempting to enable fullscreen:', err);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        function resetGame() {
+            location.reload();
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'F11') {
+                e.preventDefault();
+                toggleFullscreen();
+            }
+        });
+
+        console.log('🔥 Diablo 1 - Real WebAssembly (Original Emscripten) Ready 🔥');
+        console.log('Select your DIABDAT.MPQ file to begin your journey into Sanctuary.');
+    </script>
+    
+    <!-- Load the ORIGINAL Emscripten-generated JavaScript -->
+    <script>
+        // Override the locateFile function to use our renamed files
+        Module.locateFile = function(path) {
+            if (path === 'devilutionx.wasm') {
+                return 'devilutionx_real_original.wasm';
+            }
+            if (path === 'devilutionx.data') {
+                return 'devilutionx_real_original.data';
+            }
+            return path;
+        };
+    </script>
+    <script src="devilutionx_real_original.js"></script>
+</body>
+</html>

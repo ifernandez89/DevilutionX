@@ -1,0 +1,355 @@
+</script>
+</body>
+</html>ript
+            const script = document.createElement('script');
+            script.async = true;
+            script.src = 'devilutionx_real_original.js';
+            script.onload = function() {
+                console.log('Emscripten script loaded');
+            };
+            script.onerror = function() {
+                console.error('Failed to load Emscripten script');
+                Module.setStatus('Failed to load game engine');
+            };
+            document.head.appendChild(script);
+        }
+    ;
+            
+            Module.setStatus('Downloading...');
+            window.onerror = function (event) {
+                Module.setStatus('Exception thrown, see JavaScript console');
+                spinnerElement.style.display = 'none';
+                Module.setStatus = function (text) {
+                    if (text) console.error('[post-exception status] ' + text);
+                };
+            };
+
+            // Make Module global
+            window.Module = Module;
+
+            // Load Emscripten sc. (' + (this.totalDependencies - left) + '/' + this.totalDependencies + ')' : 'All downloads complete.');
+                },
+                locateFile: function(path) {
+                    if (path === 'devilutionx.wasm') {
+                        return 'devilutionx_real_original.wasm';
+                    }
+                    if (path === 'devilutionx.data') {
+                        return 'devilutionx_real_original.data';
+                    }
+                    return path;
+                }
+            }ll;
+                        progressElement.max = null;
+                        progressElement.hidden = true;
+                        if (!text) spinnerElement.style.display = 'none';
+                    }
+                    statusElement.innerHTML = text;
+                },
+                totalDependencies: 0,
+                monitorRunDependencies: function (left) {
+                    this.totalDependencies = Math.max(this.totalDependencies, left);
+                    Module.setStatus(left ? 'Preparing..30) return;
+                    Module.setStatus.last.time = now;
+                    Module.setStatus.last.text = text;
+                    if (m) {
+                        text = m[1];
+                        progressElement.value = parseInt(m[2]) * 100;
+                        progressElement.max = parseInt(m[4]) * 100;
+                        progressElement.hidden = false;
+                        spinnerElement.hidden = false;
+                    } else {
+                        progressElement.value = nu             e.preventDefault(); 
+                    }, false);
+                    return canvas;
+                })(),
+                setStatus: function (text) {
+                    if (!Module.setStatus.last) Module.setStatus.last = { time: Date.now(), text: '' };
+                    if (text === Module.setStatus.last.text) return;
+                    var m = text.match(/([^(]+)\((\d+(\.\d+)?)\/(\d+)\)/);
+                    var now = Date.now();
+                    if (m && now - Module.setStatus.last.time <            if (element) {
+                            element.value += text + "\n";
+                            element.scrollTop = element.scrollHeight;
+                        }
+                    };
+                })(),
+                canvas: (function () {
+                    var canvas = document.getElementById('canvas');
+                    canvas.addEventListener("webglcontextlost", function (e) { 
+                        alert('WebGL context lost. You will need to reload the page.'); 
+           d to mount MPQ:', e);
+                            }
+                        }
+                    }
+                ],
+                postRun: [],
+                print: (function () {
+                    var element = document.getElementById('output');
+                    if (element) element.value = '';
+                    return function (text) {
+                        if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
+                        console.log(text);
+             mentById('progress');
+            var spinnerElement = document.getElementById('spinner');
+
+            var Module = {
+                preRun: [
+                    function() {
+                        if (mpqData && typeof FS !== 'undefined') {
+                            try {
+                                FS.writeFile('/diabdat.mpq', mpqData);
+                                console.log('MPQ mounted successfully');
+                            } catch (e) {
+                                console.error('Faile       
+                // Hide overlay and start Emscripten
+                setTimeout(() => {
+                    document.getElementById('mpqOverlay').style.display = 'none';
+                    initializeGame();
+                }, 1000);
+
+            } catch (error) {
+                showMPQMessage('Error: ' + error.message, 'error');
+            }
+        }
+
+        function initializeGame() {
+            var statusElement = document.getElementById('status');
+            var progressElement = document.getElearrayBuffer = await file.arrayBuffer();
+                const uint8Array = new Uint8Array(arrayBuffer);
+                
+                // Basic validation
+                const signature = new TextDecoder().decode(uint8Array.slice(0, 4));
+                if (signature !== 'MPQ\x1A' && signature !== 'MPQ\x1B') {
+                    throw new Error('Invalid MPQ file');
+                }
+
+                mpqData = uint8Array;
+                showMPQMessage('MPQ loaded! Starting game...', 'success');
+          fileInput.files[0];
+            
+            if (!file) {
+                showMPQMessage('Please select a file first', 'error');
+                return;
+            }
+
+            if (!file.name.toLowerCase().includes('diabdat') || !file.name.toLowerCase().endsWith('.mpq')) {
+                showMPQMessage('Please select DIABDAT.MPQ file', 'error');
+                return;
+            }
+
+            try {
+                showMPQMessage('Loading MPQ file...', 'success');
+                
+                const ById('mpqMessages');
+            const div = document.createElement('div');
+            div.className = 'message ' + type;
+            div.textContent = text;
+            messages.appendChild(div);
+            
+            setTimeout(() => {
+                if (div.parentNode) {
+                    div.parentNode.removeChild(div);
+                }
+            }, 3000);
+        }
+
+        async function startWithMPQ() {
+            const fileInput = document.getElementById('mpqFile');
+            const file =etElementById('mpqFile').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            const startBtn = document.getElementById('startBtn');
+            
+            if (file) {
+                startBtn.disabled = false;
+                showMPQMessage('File selected: ' + file.name, 'success');
+            } else {
+                startBtn.disabled = true;
+            }
+        });
+
+        function showMPQMessage(text, type) {
+            const messages = document.getElement'></div>
+    <div class="emscripten" id="status">Select MPQ file to begin...</div>
+
+    <div class="emscripten">
+        <progress value="0" max="100" id="progress" hidden=1></progress>
+    </div>
+
+    <div class="emscripten_border">
+        <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" tabindex=-1></canvas>
+    </div>
+    <textarea id="output" rows="8"></textarea>
+
+    <script type='text/javascript'>
+        let mpqData = null;
+
+        // MPQ file selection
+        document.g- MPQ Selection Overlay -->
+    <div id="mpqOverlay" class="mpq-overlay">
+        <div class="mpq-dialog">
+            <h2>⚔️ DIABLO 1 ⚔️</h2>
+            <p>Select your DIABDAT.MPQ file to start the game</p>
+            <input type="file" id="mpqFile" accept=".mpq,.MPQ" />
+            <button id="startBtn" onclick="startWithMPQ()" disabled>🚀 Start Game</button>
+            <div id="mpqMessages"></div>
+        </div>
+    </div>
+
+    <!-- Original Emscripten Interface -->
+    <div class="spinner" id='spinner: 20px;
+            width: 300px;
+        }
+
+        #output {
+            width: 100%;
+            height: 200px;
+            margin: 0 auto;
+            margin-top: 10px;
+            border-left: 0px;
+            border-right: 0px;
+            padding-left: 0px;
+            padding-right: 0px;
+            display: block;
+            background-color: black;
+            color: #ff6666;
+            font-family: 'Courier New', monospace;
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <!-          border-top: 5px solid #ff3333;
+            border-radius: 100%;
+            background-color: #330000;
+        }
+
+        @keyframes rotation {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        #status {
+            display: inline-block;
+            vertical-align: top;
+            margin-top: 30px;
+            margin-left: 20px;
+            font-weight: bold;
+            color: #ff6666;
+        }
+
+        #progress {
+            height       canvas.emscripten {
+            border: 0px none;
+            background-color: black;
+        }
+
+        .spinner {
+            height: 30px;
+            width: 30px;
+            margin: 0;
+            margin-top: 20px;
+            margin-left: 20px;
+            display: inline-block;
+            vertical-align: top;
+            animation: rotation 0.8s linear infinite;
+            border-left: 5px solid #ff6666;
+            border-right: 5px solid #ff6666;
+            border-bottom: 5px solid #ff6666;
+  #ff6666;
+        }
+
+ rror { color: #ff3333; background: rgba(255, 51, 51, 0.1); border: 1px solid #ff3333; }
+        .success { color: #33ff33; background: rgba(51, 255, 51, 0.1); border: 1px solid #33ff33; }
+
+        /* Original Emscripten styles */
+        .emscripten {
+            padding-right: 0;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+        }
+
+        div.emscripten {
+            text-align: center;
+        }
+
+        div.emscripten_border {
+            border: 1px solid px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .mpq-dialog button:disabled {
+            background: #666;
+            cursor: not-allowed;
+        }
+
+        .message {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .etom: 20px;
+            text-shadow: 0 0 10px rgba(255, 102, 102, 0.8);
+        }
+
+        .mpq-dialog input[type="file"] {
+            width: 100%;
+            padding: 15px;
+            background: #330000;
+            color: #ff6666;
+            border: 1px solid #ff6666;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+
+        .mpq-dialog button {
+            background: linear-gradient(45deg, #ff3333, #ff6666);
+            color: #000;
+            border: none;
+            padding: 15px 300, 0, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .mpq-dialog {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 40px;
+            border-radius: 10px;
+            border: 3px solid #ff6666;
+            box-shadow: 0 0 30px rgba(255, 102, 102, 0.5);
+            text-align: center;
+            max-width: 500px;
+        }
+
+        .mpq-dialog h2 {
+            color: #ff6666;
+            margin-botlo 1 - Real WebAssembly</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #1a0000, #330000, #1a0000);
+            color: #ff6666;
+        }
+
+        .mpq-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Diab

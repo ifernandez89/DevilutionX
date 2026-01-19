@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Diablo 1 - Real WebAssembly</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #1a0000, #330000, #1a0000);
+            font-family: 'Courier New', monospace;
+            color: #ff6666;
+            min-height: 100vh;
+        }
+
+        .mpq-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a0000, #330000, #1a0000);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .mpq-content {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 40px;
+            border-radius: 10px;
+            border: 3px solid #ff6666;
+            box-shadow: 0 0 30px rgba(255, 102, 102, 0.5);
+            max-width: 500px;
+        }
+
+        .mpq-content h2 {
+            color: #ff6666;
+            font-size: 2em;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 102, 102, 0.8);
+        }
+
+        .file-input-container {
+            margin: 30px 0;
+            padding: 20px;
+            border: 2px dashed #ff6666;
+            border-radius: 8px;
+            background: rgba(255, 102, 102, 0.1);
+        }
+
+        .file-input-container input[type="file"] {
+            width: 100%;
+            padding: 15px;
+            background: #330000;
+            color: #ff6666;
+            border: 1px solid #ff6666;
+            border-radius: 4px;
+            font-size: 16px;
+            margin: 10px 0;
+        }
+
+        .load-btn {
+            background: linear-gradient(45deg, #ff3333, #ff6666);
+            color: #000;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            font-size: 18px;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .load-btn:hover {
+            background: linear-gradient(45deg, #ff6666, #ff9999);
+            transform: scale(1.05);
+        }
+
+        .load-btn:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .message {
+            margin: 10px 0;
+            padding: 12px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .success { color: #33ff33; background: rgba(51, 255, 51, 0.1); border: 1px solid #33ff33; }
+        .error { color: #ff3333; background: rgba(255, 51, 51, 0.1); border: 1px solid #ff3333; }
+        .info { color: #ffcccc; background: rgba(255, 204, 204, 0.1); border: 1px solid #ffcccc; }
+
+        /* Emscripten original styles */
+        .emscripten {
+            padding-right: 0;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+        }
+
+        div.emscripten {
+            text-align: center;
+        }
+
+        div.emscripten_border {
+            border: 1px solid #ff6666;
+            background: #000;
+        }
+
+        canvas.emscripten {
+            border: 0px none;
+            background-color: black;
+        }
+
+        .spinner {
+            height: 30px;
+            width: 30px;
+            margin: 0;
+            margin-top: 20px;
+            margin-left: 20px;
+            display: inline-block;
+            vertical-align: top;
+            animation: rotation 0.8s linear infinite;
+            border-left: 5px solid #ff6666;
+            border-right: 5px solid #ff6666;
+            border-bottom: 5px solid #ff6666;
+            border-top: 5px solid #ff3333;
+            border-radius: 100%;
+            background-color: #330000;
+        }
+
+        @keyframes rotation {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        #status {
+            display: inline-block;
+            vertical-align: top;
+            margin-top: 30px;
+            margin-left: 20px;
+            font-weight: bold;
+            color: #ff6666;
+        }
+
+        #progress {
+            height: 20px;
+            width: 300px;
+            background: #330000;
+        }
+
+        #output {
+            width: 100%;
+            height: 200px;
+            margin: 0 auto;
+            margin-top: 10px;
+            border: 1px solid #ff6666;
+            padding: 10px;
+            display: block;
+            background-color: black;
+            color: #ff6666;
+            font-family: 'Courier New', monospace;
+            outline: none;
+        }
+
+        .game-container {
+            display: none;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- MPQ Loader Screen -->
+    <div id="mpqLoader" class="mpq-loader">
+        <div class="mpq-content">
+            <h2>⚔️ DIABLO 1 ⚔️</h2>
+            <p style="color: #ffcccc; font-size: 18px; margin-bottom: 30px;">
+                Load your game data to enter the world of Sanctuary
+            </p>
+            
+            <div class="file-input-container">
+                <p><strong>🎮 Select DIABDAT.MPQ:</strong></p>
+                <p style="font-size: 14px; color: #ffcccc; margin: 15px 0;">
+                    📁 Original Diablo 1 game data file<br>
+                    🔒 Processed securely on your device
+                </p>
+                <input type="file" id="mpqFile" accept=".mpq,.MPQ" />
+                <button class="load-btn" id="loadBtn" onclick="startGame()" disabled>
+                    🚀 Enter Sanctuary
+                </button>
+            </div>
+            
+            <div id="messages"></div>
+        </div>
+    </div>
+
+    <!-- Original Emscripten Game Interface -->
+    <div id="gameContainer" class="game-container">
+        <div class="spinner" id='spinner'></div>
+        <div class="emscripten" id="status">Downloading...</div>
+
+        <div class="emscripten">
+            <progress value="0" max="100" id="progress" hidden=1></progress>
+        </div>
+
+        <div class="emscripten_border">
+            <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" tabindex=-1></canvas>
+        </div>
+        <textarea id="output" rows="8"></textarea>
+    </div>
+
+    <script type='text/javascript'>
+        let mpqLoaded = false;
+
+        // Enable load button when file is selected
+        document.getElementById('mpqFile').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            const loadBtn = document.getElementById('loadBtn');
+            
+            if (file) {
+                loadBtn.disabled = false;
+                loadBtn.textContent = '🚀 Enter Sanctuary';
+                showMessage('File selected: ' + file.name + ' (' + (file.size / 1024 / 1024).toFixed(2) + ' MB)', 'info');
+            } else {
+                loadBtn.disabled = true;
+                loadBtn.textContent = '🚀 Enter Sanctuary';
+            }
+        });
+
+        function showMessage(text, type = 'info') {
+            const messages = document.getElementById('messages');
+            const div = document.createElement('div');
+            div.className = 'message ' + type;
+            div.textContent = text;
+            messages.appendChild(div);
+            
+            setTimeout(() => {
+                if (div.parentNode) {
+                    div.parentNode.removeChild(div);
+                }
+            }, 5000);
+        }
+
+        function validateMPQFile(uint8Array) {
+            const mpqSignature = new TextDecoder().decode(uint8Array.slice(0, 4));
+            if (mpqSignature !== 'MPQ\x1A' && mpqSignature !== 'MPQ\x1B') {
+                throw new Error('Invalid MPQ file format. Please select a valid DIABDAT.MPQ file.');
+            }
+            
+            if (uint8Array.length < 100 * 1024 * 1024) {
+                throw new Error('File too small to be DIABDAT.MPQ. Please select the correct file.');
+            }
+            
+            return true;
+        }
+
+        async function startGame() {
+            const fileInput = document.getElementById('mpqFile');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                showMessage('Please select a DIABDAT.MPQ file first.', 'error');
+                return;
+            }
+            
+            const fileName = file.name.toLowerCase();
+            if (!fileName.includes('diabdat') || !fileName.endsWith('.mpq')) {
+                showMessage('❌ Please select the DIABDAT.MPQ file (not other MPQ files).', 'error');
+                return;
+            }
+            
+            try {
+                showMessage('🔍 Validating game data...', 'info');
+                
+                const arrayBuffer = await file.arrayBuffer();
+                const uint8Array = new Uint8Array(arrayBuffer);
+                
+                validateMPQFile(uint8Array);
+                
+                window.diabdatMPQ = uint8Array;
+                mpqLoaded = true;
+                
+                showMessage('✅ DIABDAT.MPQ validated! Starting Diablo 1...', 'success');
+                
+                // Hide MPQ loader and show game
+                document.getElementById('mpqLoader').classList.add('hidden');
+                document.getElementById('gameContainer').style.display = 'block';
+                
+                // Initialize Emscripten
+                initializeEmscripten();
+                
+            } catch (error) {
+                console.error('MPQ loading error:', error);
+                showMessage('❌ Error: ' + error.message, 'error');
+            }
+        }
+
+        function initializeEmscripten() {
+            var statusElement = document.getElementById('status');
+            var progressElement = document.getElementById('progress');
+            var spinnerElement = document.getElementById('spinner');
+
+            var Module = {
+                preRun: [
+                    function() {
+                        // Mount the MPQ file
+                        if (window.diabdatMPQ && typeof FS !== 'undefined') {
+                            try {
+                                FS.writeFile('/diabdat.mpq', window.diabdatMPQ);
+                                console.log('MPQ file mounted successfully');
+                            } catch (e) {
+                                console.error('Failed to mount MPQ:', e);
+                            }
+                        }
+                    }
+                ],
+                postRun: [],
+                print: (function () {
+                    var element = document.getElementById('output');
+                    if (element) element.value = ''; // clear browser cache
+                    return function (text) {
+                        if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
+                        console.log(text);
+                        if (element) {
+                            element.value += text + "\n";
+                            element.scrollTop = element.scrollHeight; // focus on bottom
+                        }
+                    };
+                })(),
+                canvas: (function () {
+                    var canvas = document.getElementById('canvas');
+                    canvas.addEventListener("webglcontextlost", function (e) { 
+                        alert('WebGL context lost. You will need to reload the page.'); 
+                        e.preventDefault(); 
+                    }, false);
+                    return canvas;
+                })(),
+                setStatus: function (text) {
+                    if (!Module.setStatus.last) Module.setStatus.last = { time: Date.now(), text: '' };
+                    if (text === Module.setStatus.last.text) return;
+                    var m = text.match(/([^(]+)\((\d+(\.\d+)?)\/(\d+)\)/);
+                    var now = Date.now();
+                    if (m && now - Module.setStatus.last.time < 30) return; // if this is a progress update, skip it if too soon
+                    Module.setStatus.last.time = now;
+                    Module.setStatus.last.text = text;
+                    if (m) {
+                        text = m[1];
+                        progressElement.value = parseInt(m[2]) * 100;
+                        progressElement.max = parseInt(m[4]) * 100;
+                        progressElement.hidden = false;
+                        spinnerElement.hidden = false;
+                    } else {
+                        progressElement.value = null;
+                        progressElement.max = null;
+                        progressElement.hidden = true;
+                        if (!text) spinnerElement.style.display = 'none';
+                    }
+                    statusElement.innerHTML = text;
+                },
+                totalDependencies: 0,
+                monitorRunDependencies: function (left) {
+                    this.totalDependencies = Math.max(this.totalDependencies, left);
+                    Module.setStatus(left ? 'Preparing... (' + (this.totalDependencies - left) + '/' + this.totalDependencies + ')' : 'All downloads complete.');
+                },
+                locateFile: function(path) {
+                    if (path === 'devilutionx.wasm') {
+                        return 'devilutionx_real_original.wasm';
+                    }
+                    if (path === 'devilutionx.data') {
+                        return 'devilutionx_real_original.data';
+                    }
+                    return path;
+                }
+            };
+            
+            Module.setStatus('Downloading...');
+            window.onerror = function (event) {
+                Module.setStatus('Exception thrown, see JavaScript console');
+                spinnerElement.style.display = 'none';
+                Module.setStatus = function (text) {
+                    if (text) console.error('[post-exception status] ' + text);
+                };
+            };
+
+            // Make Module global so the Emscripten script can use it
+            window.Module = Module;
+
+            // Load the Emscripten script
+            const script = document.createElement('script');
+            script.async = true;
+            script.src = 'devilutionx_real_original.js';
+            document.body.appendChild(script);
+        }
+
+        console.log('🔥 Diablo 1 - Real WebAssembly (Emscripten Style) Ready 🔥');
+        console.log('Select your DIABDAT.MPQ file to begin your journey into Sanctuary.');
+    </script>
+</body>
+</html>

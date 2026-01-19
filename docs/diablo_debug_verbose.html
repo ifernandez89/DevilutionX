@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Diablo 1 - Debug Verbose</title>
+    <style>
+        body { 
+            background: #000; 
+            color: #ff6666; 
+            font-family: 'Courier New', monospace; 
+            padding: 20px; 
+        }
+        .section { 
+            background: rgba(255, 102, 102, 0.1); 
+            padding: 20px; 
+            border: 1px solid #ff6666; 
+            margin: 10px 0; 
+            border-radius: 5px; 
+        }
+        input[type="file"] { 
+            padding: 10px; 
+            background: #330000; 
+            color: #ff6666; 
+            border: 1px solid #ff6666; 
+            margin: 10px; 
+        }
+        button { 
+            background: #ff6666; 
+            color: #000; 
+            border: none; 
+            padding: 10px 20px; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            font-weight: bold; 
+        }
+        button:disabled { 
+            background: #666; 
+            cursor: not-allowed; 
+        }
+        .log { 
+            background: #111; 
+            border: 1px solid #333; 
+            padding: 15px; 
+            margin: 10px 0; 
+            max-height: 300px; 
+            overflow-y: auto; 
+            font-size: 12px; 
+        }
+        canvas { 
+            border: 2px solid #ff6666; 
+            background: #000; 
+            display: none; 
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Diablo 1 - Debug Verbose 🔍</h1>
+    
+    <div class="section">
+        <h3>Step 1: MPQ File</h3>
+        <input type="file" id="mpqFile" accept=".mpq,.MPQ" />
+        <button id="startBtn" onclick="startGame()" disabled>Start Game</button>
+        <div id="mpqStatus">Select DIABDAT.MPQ file</div>
+    </div>
+    
+    <div class="section">
+        <h3>Step 2: WebAssembly Loading</h3>
+        <div id="wasmStatus">Waiting for MPQ...</div>
+        <div id="wasmProgress"></div>
+    </div>
+    
+    <div class="section">
+        <h3>Debug Log</h3>
+        <div class="log" id="debugLog">Initializing...<br></div>
+    </div>
+    
+    <div class="section">
+        <h3>Game Canvas</h3>
+        <canvas id="canvas" width="640" height="480"></canvas>
+    </div>
+
+    <script>
+        function log(message) {
+            const logDiv = document.getElementById('debugLog');
+            const timestamp = new Date().toLocaleTimeString();
+            logDiv.innerHTML += `[${timestamp}] ${message}<br>`;
+            logDiv.scrollTop = logDiv.scrollHeight;
+            console.log(`[${timestamp}] ${message}`);
+        }
+
+        function updateStatus(elementId, message) {
+            document.getElementById(elementId).innerHTML = message;
+            log(`Status Update - ${elementId}: ${message}`);
+        }
+
+        // MPQ file selection
+        document.getElementById('mpqFile').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            const btn = document.getElementById('startBtn');
+            
+            if (file) {
+                btn.disabled = false;
+                updateStatus('mpqStatus', `✅ File selected: ${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)`);
+                log(`File selected: ${file.name}, Size: ${file.size} bytes`);
+            } else {
+                btn.disabled = true;
+                updateStatus('mpqStatus', '❌ No file selected');
+            }
+        });
+
+        async function startGame() {
+            const file = document.getElementById('mpqFile').files[0];
+            if (!file) {
+                log('ERROR: No file selected');
+                return;
+            }
+
+            try {
+                log('=== STARTING GAME PROCESS ===');
+                updateStatus('mpqStatus', '🔄 Loading MPQ...');
+                updateStatus('wasmStatus', 'Waiting for MPQ validation...');
+
+                // Validate file name
+                if (!file.name.toLowerCase().includes('diabdat') || !file.name.toLowerCase().endsWith('.mpq')) {
+                    throw new Error('Please select DIABDAT.MPQ file');
+                }
+                log(`✅ File name validation passed: ${file.name}`);
+
+                // Read file
+                log('📖 Reading file into memory...');
+                const arrayBuffer = await file.arrayBuffer();
+                const uint8Array = new Uint8Array(arrayBuffer);
+                log(`✅ File read successfully: ${uint8Array.length} bytes`);
+
+                // Validate MPQ signature
+                const signature = new TextDecoder().decode(uint8Array.slice(0, 4));
+                log(`🔍 MPQ signature check: "${signature}"`);
+                if (signature !== 'MPQ\x1A' && signature !== 'MPQ\x1B') {
+                    throw new Error(`Invalid MPQ signature: ${signature}`);
+                }
+                log('✅ MPQ signature validation passed');
+
+                // Store MPQ data
+                window.diabdatMPQ = uint8Array;
+                log('✅ MPQ data stored in window.diabdatMPQ');
+                
+                updateStatus('mpqStatus', '✅ MPQ loaded successfully!');
+                updateStatus('wasmStatus', '🚀 Initializing WebAssembly...');
+
+                // Initialize Emscripten
+                log('=== INITIALIZING EMSCRIPTEN ===');
+                await initEmscripten();
+                
+            } catch (error) {
+                log(`❌ ERROR: ${error.message}`);
+                updateStatus('mpqStatus', `❌ Error: ${error.message}`);
+                updateStatus('wasmStatus', '❌ Failed to initialize');
+            }
+        }
+
+        async function initEmscripten() {
+            try {
+                log('🔧 Setting up Emscripten Module configuration...');
+                
+                // Check if files exist first
+                log('🔍 Checking if WebAssembly files exist...');
+                
+                const jsCheck = await fetch('devilutionx.js', { method: 'HEAD' });
+                log(`📄 devilutionx.js: ${jsCheck.ok ? '✅ Found' : '❌ Not found'} (${jsCheck.status})`);
+                
+                const wasmCheck = await fetch('devilutionx.wasm', { method: 'HEAD' });
+                log(`🔧 devilutionx.wasm: ${wasmCheck.ok ? '✅ Found' : '❌ Not found'} (${wasmCheck.status})`);
+                
+                const dataCheck = await fetch('devilutionx.data', { method: 'HEAD' });
+                log(`📦 devilutionx.data: ${dataCheck.ok ? '✅ Found' : '❌ Not found'} (${dataCheck.status})`);
+
+                if (!jsCheck.ok || !wasmCheck.ok || !dataCheck.ok) {
+                    throw new Error('One or more WebAssembly files are missing');
+                }
+
+                // Configure Module
+                log('⚙️ Configuring Emscripten Module...');
+                window.Module = {
+                    canvas: document.getElementById('canvas'),
+                    
+                    print: function(text) {
+                        log(`GAME OUTPUT: ${text}`);
+                    },
+                    
+                    printErr: function(text) {
+                        log(`GAME ERROR: ${text}`);
+                    },
+                    
+                    setStatus: function(text) {
+                        log(`EMSCRIPTEN STATUS: ${text}`);
+                        updateStatus('wasmStatus', text);
+                    },
+                    
+                    preRun: [
+                        function() {
+                            log('🔧 PreRun: Mounting MPQ file...');
+                            if (window.diabdatMPQ && typeof FS !== 'undefined') {
+                                try {
+                                    FS.writeFile('/diabdat.mpq', window.diabdatMPQ);
+                                    log('✅ MPQ file mounted to virtual filesystem at /diabdat.mpq');
+                                } catch (e) {
+                                    log(`❌ Failed to mount MPQ: ${e.message}`);
+                                }
+                            } else {
+                                log('❌ MPQ data or FS not available in preRun');
+                            }
+                        }
+                    ],
+                    
+                    postRun: [
+                        function() {
+                            log('🎮 PostRun: Game initialization complete');
+                            document.getElementById('canvas').style.display = 'block';
+                        }
+                    ],
+                    
+                    onRuntimeInitialized: function() {
+                        log('🚀 Runtime initialized - Game should be starting!');
+                        updateStatus('wasmStatus', '🎮 Game is running!');
+                    }
+                };
+
+                log('✅ Module configuration complete');
+                updateStatus('wasmStatus', '📥 Loading Emscripten script...');
+
+                // Load Emscripten script
+                log('📥 Loading devilutionx.js...');
+                const script = document.createElement('script');
+                script.src = 'devilutionx.js';
+                
+                script.onload = function() {
+                    log('✅ Emscripten script loaded successfully');
+                    updateStatus('wasmStatus', '⚙️ Emscripten script loaded, initializing...');
+                };
+                
+                script.onerror = function(e) {
+                    log(`❌ Failed to load Emscripten script: ${e}`);
+                    updateStatus('wasmStatus', '❌ Failed to load Emscripten script');
+                };
+                
+                document.head.appendChild(script);
+                log('📄 Script tag added to document head');
+
+            } catch (error) {
+                log(`❌ EMSCRIPTEN INIT ERROR: ${error.message}`);
+                updateStatus('wasmStatus', `❌ Init error: ${error.message}`);
+            }
+        }
+
+        // Initialize logging
+        log('🔥 Debug Verbose version initialized');
+        log('📋 Ready to load MPQ file and start game');
+    </script>
+</body>
+</html>

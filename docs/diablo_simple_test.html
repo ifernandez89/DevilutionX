@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Diablo 1 - Simple Test</title>
+    <style>
+        body { 
+            background: #000; 
+            color: #ff6666; 
+            font-family: 'Courier New', monospace; 
+            text-align: center; 
+            padding: 50px; 
+        }
+        .mpq-section { 
+            background: rgba(255, 102, 102, 0.1); 
+            padding: 30px; 
+            border: 2px solid #ff6666; 
+            border-radius: 10px; 
+            margin: 20px auto; 
+            max-width: 500px; 
+        }
+        input[type="file"] { 
+            padding: 10px; 
+            background: #330000; 
+            color: #ff6666; 
+            border: 1px solid #ff6666; 
+            margin: 10px; 
+        }
+        button { 
+            background: #ff6666; 
+            color: #000; 
+            border: none; 
+            padding: 15px 30px; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            font-weight: bold; 
+        }
+        button:disabled { 
+            background: #666; 
+            cursor: not-allowed; 
+        }
+        #gameArea { 
+            display: none; 
+            margin-top: 30px; 
+        }
+        canvas { 
+            border: 2px solid #ff6666; 
+            background: #000; 
+        }
+    </style>
+</head>
+<body>
+    <h1>🔥 Diablo 1 - Simple Test 🔥</h1>
+    
+    <div class="mpq-section">
+        <h3>Select DIABDAT.MPQ:</h3>
+        <input type="file" id="mpqFile" accept=".mpq,.MPQ" />
+        <br>
+        <button id="startBtn" onclick="startGame()" disabled>Start Game</button>
+        <div id="status"></div>
+    </div>
+    
+    <div id="gameArea">
+        <canvas id="canvas" width="640" height="480"></canvas>
+        <div id="output"></div>
+    </div>
+
+    <script>
+        let mpqLoaded = false;
+
+        document.getElementById('mpqFile').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            const btn = document.getElementById('startBtn');
+            
+            if (file && file.name.toLowerCase().includes('diabdat')) {
+                btn.disabled = false;
+                document.getElementById('status').innerHTML = '✅ File ready: ' + file.name;
+            } else {
+                btn.disabled = true;
+                document.getElementById('status').innerHTML = '❌ Please select DIABDAT.MPQ';
+            }
+        });
+
+        async function startGame() {
+            const file = document.getElementById('mpqFile').files[0];
+            if (!file) return;
+
+            try {
+                document.getElementById('status').innerHTML = '🔄 Loading MPQ...';
+                
+                const arrayBuffer = await file.arrayBuffer();
+                const uint8Array = new Uint8Array(arrayBuffer);
+                
+                // Store MPQ data
+                window.diabdatMPQ = uint8Array;
+                mpqLoaded = true;
+                
+                document.getElementById('status').innerHTML = '✅ MPQ loaded! Starting WebAssembly...';
+                
+                // Show game area
+                document.getElementById('gameArea').style.display = 'block';
+                
+                // Initialize Emscripten with minimal config
+                initEmscripten();
+                
+            } catch (error) {
+                document.getElementById('status').innerHTML = '❌ Error: ' + error.message;
+            }
+        }
+
+        function initEmscripten() {
+            // Minimal Emscripten configuration
+            window.Module = {
+                canvas: document.getElementById('canvas'),
+                print: function(text) {
+                    console.log('Game:', text);
+                    document.getElementById('output').innerHTML += text + '<br>';
+                },
+                printErr: function(text) {
+                    console.error('Game Error:', text);
+                    document.getElementById('output').innerHTML += '<span style="color:red">' + text + '</span><br>';
+                },
+                preRun: [
+                    function() {
+                        if (window.diabdatMPQ && typeof FS !== 'undefined') {
+                            try {
+                                FS.writeFile('/diabdat.mpq', window.diabdatMPQ);
+                                console.log('✅ MPQ mounted to virtual filesystem');
+                            } catch (e) {
+                                console.error('❌ Failed to mount MPQ:', e);
+                            }
+                        }
+                    }
+                ],
+                locateFile: function(path) {
+                    // Files are now using original names
+                    return path;
+                }
+            };
+
+            // Load the Emscripten script
+            const script = document.createElement('script');
+            script.src = 'devilutionx.js';
+            script.onload = function() {
+                console.log('✅ Emscripten script loaded');
+                document.getElementById('status').innerHTML = '🎮 Game should be starting...';
+            };
+            script.onerror = function() {
+                console.error('❌ Failed to load Emscripten script');
+                document.getElementById('status').innerHTML = '❌ Failed to load game engine';
+            };
+            document.head.appendChild(script);
+        }
+    </script>
+</body>
+</html>

@@ -193,6 +193,11 @@ private:
     GenerationStats stats_;
     
     // Internal generation methods
+    const QuestTemplate* SelectTemplate(const Player& player, QuestDifficulty targetDifficulty, const std::string& preferredCategory);
+    void LoadDefaultTemplates();
+    void LoadDefaultLore();
+    void GenerateQuestContent(GeneratedQuest& quest, const QuestTemplate& questTemplate, const Player& player);
+    std::string GenerateQuestId();
     std::string GenerateQuestTitle(const QuestTemplate& questTemplate, const Player& player);
     std::string GenerateQuestDescription(const QuestTemplate& questTemplate, const GeneratedQuest& quest);
     std::string GenerateQuestLore(const QuestTemplate& questTemplate, const GeneratedQuest& quest);

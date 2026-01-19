@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <chrono>
 #include <sstream>
+#include <random>
 
 #include "utils/log.hpp"
 #include "utils/str_cat.hpp"
@@ -368,7 +369,7 @@ OracleQueryContext ContextualOracle::BuildQueryContext(const Player& player) {
     
     // Player context
     context.playerId = "player_1"; // Would be actual player ID
-    context.playerLevel = player._pLevel;
+    context.playerLevel = player.getCharacterLevel();
     context.playerClass = "warrior"; // Simplified - would determine actual class
     context.playerPosition = Point{player.position.tile.x, player.position.tile.y};
     context.currentLocation = "tristram"; // Would determine actual location

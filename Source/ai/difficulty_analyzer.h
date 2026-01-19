@@ -193,6 +193,7 @@ private:
     void UpdateHistoricalAverage();
     void PruneOldMetrics();
     float CalculateConfidence(const DifficultyAdjustment& adjustment);
+    std::vector<std::string> GenerateSpecificRecommendations(const DifficultyAdjustment& adjustment, const Player& player);
     std::string GenerateReasoningText(const DifficultyAdjustment& adjustment, const Player& player);
     
     // Constants

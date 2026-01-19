@@ -120,6 +120,7 @@ public:
     // Initialization
     bool Initialize();
     void Reset();
+    void Update(uint32_t deltaTime);
     void StartNewSession();
     void EndCurrentSession();
     
@@ -131,6 +132,16 @@ public:
     void TrackNPCInteraction(const Player& player, const std::string& npcId, const std::string& interactionType);
     void TrackQuestAction(const Player& player, const std::string& questId, const std::string& actionType);
     void TrackDeath(const Player& player, const std::string& cause);
+    
+    // Event recording methods (called by AI engine)
+    void RecordCombatAction(const std::string& actionData);
+    void RecordDeath(const std::string& cause);
+    void RecordLevelCompletion(const std::string& levelData);
+    void RecordQuestCompletion(const std::string& questData);
+    void RecordItemInteraction(const std::string& itemData);
+    void RecordSpellCast(const std::string& spellData);
+    void RecordMovement(const std::string& movementData);
+    void RecordNPCInteraction(const std::string& npcData);
     
     // Analysis and pattern recognition
     std::vector<BehaviorPattern> AnalyzeBehaviorPatterns(int sessionCount = 5);

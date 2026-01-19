@@ -217,6 +217,9 @@ private:
     int CalculateStatValue(const std::string& statName, int itemLevel, int qualityTier, float powerLevel);
     std::string SelectRandomElement(const std::vector<std::string>& elements);
     int GetRandomInRange(int min, int max);
+    std::string GenerateItemId();
+    float CalculateUniquenessScore(const GeneratedItem& item);
+    int CalculateOptimalQualityTier(int playerLevel);
     
     // Default content loading
     void LoadDefaultAffixes();

@@ -72,9 +72,9 @@ void DifficultyAnalyzer::RecordCombatEvent(const Player& player, const Monster* 
         currentMetrics_.damageReceived += damage;
     }
     
-    if (monster && !monster->_mDelFlag) {
+    if (monster && !monster->isInvalid) {
         // Monster was killed by player
-        if (playerDealt && monster->_mhitpoints <= 0) {
+        if (playerDealt && monster->hitPoints <= 0) {
             currentMetrics_.monstersKilled++;
         }
     }
@@ -256,7 +256,6 @@ DifficultyAdjustment DifficultyAnalyzer::AnalyzeDifficulty(const Player& player)
 }
 
 PlayerSkillLevel DifficultyAnalyzer::AssessPlayerSkill(const Player& player) {
-    float skillScore = CalculateSkillScore(currentMetrics_);
     PlayerSkillLevel skillLevel = DetermineSkillFromMetrics(currentMetrics_);
     
     // Update statistics
@@ -269,9 +268,9 @@ float DifficultyAnalyzer::AnalyzeCombatPerformance(const Player& player) {
     float score = 0.5f; // Base score
     
     // Analyze damage output
-    if (currentMetrics_.averageDamagePerSecond > player._pLevel * 10) {
+    if (currentMetrics_.averageDamagePerSecond > player.getCharacterLevel() * 10) {
         score += 0.2f; // Good damage output
-    } else if (currentMetrics_.averageDamagePerSecond < player._pLevel * 5) {
+    } else if (currentMetrics_.averageDamagePerSecond < player.getCharacterLevel() * 5) {
         score -= 0.2f; // Low damage output
     }
     
@@ -285,7 +284,7 @@ float DifficultyAnalyzer::AnalyzeCombatPerformance(const Player& player) {
     }
     
     // Analyze kill efficiency
-    if (currentMetrics_.monstersKilled > player._pLevel * 20) {
+    if (currentMetrics_.monstersKilled > player.getCharacterLevel() * 20) {
         score += 0.1f; // High kill count
     }
     
@@ -304,7 +303,7 @@ float DifficultyAnalyzer::AnalyzeProgressionRate(const Player& player) {
     
     // Analyze level completion time
     if (currentMetrics_.averageLevelCompletionTime > 0) {
-        float expectedTime = player._pLevel * 300.0f; // 5 minutes per level as baseline
+        float expectedTime = player.getCharacterLevel() * 300.0f; // 5 minutes per level as baseline
         if (currentMetrics_.averageLevelCompletionTime < expectedTime * 0.7f) {
             score += 0.2f; // Fast completion
         } else if (currentMetrics_.averageLevelCompletionTime > expectedTime * 1.5f) {

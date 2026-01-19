@@ -191,7 +191,7 @@ std::unique_ptr<GeneratedItem> ItemGenerator::GenerateItem(const ItemGenerationP
     
     // Validate and balance
     if (!ValidateItem(*item, Player{})) { // Simplified validation
-        LogWarning("Generated item failed validation");
+        LogWarn("Generated item failed validation");
         return nullptr;
     }
     
@@ -231,24 +231,24 @@ std::unique_ptr<GeneratedItem> ItemGenerator::GenerateItem(const ItemGenerationP
 
 std::unique_ptr<GeneratedItem> ItemGenerator::GenerateWeapon(const Player& player, const std::string& weaponType) {
     ItemGenerationParams params;
-    params.playerLevel = player._pLevel;
+    params.playerLevel = player.getCharacterLevel();
     params.playerClass = "warrior"; // Simplified
     params.itemCategory = "weapon";
     params.itemType = weaponType.empty() ? SelectRandomElement(ITEM_CATEGORIES.at("weapon")) : weaponType;
-    params.qualityTier = CalculateOptimalQualityTier(player._pLevel);
-    params.powerLevel = 1.0f + (player._pLevel * 0.05f);
+    params.qualityTier = CalculateOptimalQualityTier(player.getCharacterLevel());
+    params.powerLevel = 1.0f + (player.getCharacterLevel() * 0.05f);
     
     return GenerateItem(params);
 }
 
 std::unique_ptr<GeneratedItem> ItemGenerator::GenerateArmor(const Player& player, const std::string& armorSlot) {
     ItemGenerationParams params;
-    params.playerLevel = player._pLevel;
+    params.playerLevel = player.getCharacterLevel();
     params.playerClass = "warrior"; // Simplified
     params.itemCategory = "armor";
     params.itemType = armorSlot.empty() ? SelectRandomElement(ITEM_CATEGORIES.at("armor")) : armorSlot;
-    params.qualityTier = CalculateOptimalQualityTier(player._pLevel);
-    params.powerLevel = 1.0f + (player._pLevel * 0.05f);
+    params.qualityTier = CalculateOptimalQualityTier(player.getCharacterLevel());
+    params.powerLevel = 1.0f + (player.getCharacterLevel() * 0.05f);
     
     return GenerateItem(params);
 }

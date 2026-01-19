@@ -18,69 +18,62 @@ AIEngine& AIEngine::GetInstance() {
 
 bool AIEngine::Initialize() {
     if (initialized_) {
-        LogWarning("AI Engine already initialized");
+        LogWarn("AI Engine already initialized");
         return true;
     }
     
     LogInfo("🤖 Initializing DevilutionX AI Engine...");
     
-    try {
-        // Initialize core AI systems
-        questGenerator_ = std::make_unique<QuestGenerator>();
-        if (!questGenerator_->Initialize()) {
-            LogError("Failed to initialize Quest Generator");
-            return false;
-        }
-        
-        difficultyAnalyzer_ = std::make_unique<DifficultyAnalyzer>();
-        if (!difficultyAnalyzer_->Initialize()) {
-            LogError("Failed to initialize Difficulty Analyzer");
-            return false;
-        }
-        
-        // Initialize advanced AI systems
-        dialogueGenerator_ = std::make_unique<DialogueGenerator>();
-        if (!dialogueGenerator_->Initialize()) {
-            LogError("Failed to initialize Dialogue Generator");
-            return false;
-        }
-        
-        itemGenerator_ = std::make_unique<ItemGenerator>();
-        if (!itemGenerator_->Initialize()) {
-            LogError("Failed to initialize Item Generator");
-            return false;
-        }
-        
-        behaviorTracker_ = std::make_unique<PlayerBehaviorTracker>();
-        if (!behaviorTracker_->Initialize()) {
-            LogError("Failed to initialize Player Behavior Tracker");
-            return false;
-        }
-        
-        contextualOracle_ = std::make_unique<ContextualOracle>();
-        if (!contextualOracle_->Initialize()) {
-            LogError("Failed to initialize Contextual Oracle");
-            return false;
-        }
-        
-        initialized_ = true;
-        lastUpdateTime_ = SDL_GetTicks();
-        
-        LogInfo("✅ AI Engine initialized successfully");
-        LogInfo("   - Quest Generator: Active");
-        LogInfo("   - Difficulty Analyzer: Active");
-        LogInfo("   - Dialogue Generator: Active");
-        LogInfo("   - Item Generator: Active");
-        LogInfo("   - Behavior Tracker: Active");
-        LogInfo("   - Contextual Oracle: Active");
-        
-        return true;
-        
-    } catch (const std::exception& e) {
-        LogError("Exception during AI Engine initialization: {}", e.what());
-        Shutdown();
+    // Initialize core AI systems
+    questGenerator_ = std::make_unique<QuestGenerator>();
+    if (!questGenerator_->Initialize()) {
+        LogError("Failed to initialize Quest Generator");
         return false;
     }
+    
+    difficultyAnalyzer_ = std::make_unique<DifficultyAnalyzer>();
+    if (!difficultyAnalyzer_->Initialize()) {
+        LogError("Failed to initialize Difficulty Analyzer");
+        return false;
+    }
+    
+    // Initialize advanced AI systems
+    dialogueGenerator_ = std::make_unique<DialogueGenerator>();
+    if (!dialogueGenerator_->Initialize()) {
+        LogError("Failed to initialize Dialogue Generator");
+        return false;
+    }
+    
+    itemGenerator_ = std::make_unique<ItemGenerator>();
+    if (!itemGenerator_->Initialize()) {
+        LogError("Failed to initialize Item Generator");
+        return false;
+    }
+    
+    behaviorTracker_ = std::make_unique<PlayerBehaviorTracker>();
+    if (!behaviorTracker_->Initialize()) {
+        LogError("Failed to initialize Player Behavior Tracker");
+        return false;
+    }
+    
+    contextualOracle_ = std::make_unique<ContextualOracle>();
+    if (!contextualOracle_->Initialize()) {
+        LogError("Failed to initialize Contextual Oracle");
+        return false;
+    }
+    
+    initialized_ = true;
+    lastUpdateTime_ = SDL_GetTicks();
+    
+    LogInfo("✅ AI Engine initialized successfully");
+    LogInfo("   - Quest Generator: Active");
+    LogInfo("   - Difficulty Analyzer: Active");
+    LogInfo("   - Dialogue Generator: Active");
+    LogInfo("   - Item Generator: Active");
+    LogInfo("   - Behavior Tracker: Active");
+    LogInfo("   - Contextual Oracle: Active");
+    
+    return true;
 }
 
 void AIEngine::Shutdown() {
@@ -114,7 +107,6 @@ void AIEngine::Update(uint32_t deltaTime) {
     }
     
     uint32_t currentTime = SDL_GetTicks();
-    uint32_t timeSinceLastUpdate = currentTime - lastUpdateTime_;
     
     // Update performance metrics
     UpdatePerformanceMetrics();
@@ -301,7 +293,7 @@ void AIEngine::OptimizePerformance() {
     
     // Adjust AI complexity based on performance
     if (stats_.averageProcessingTime > 10.0f) {
-        LogWarning("AI processing time high ({:.2f}ms), reducing complexity", 
+        LogWarn("AI processing time high ({:.2f}ms), reducing complexity", 
                    stats_.averageProcessingTime);
         
         // Reduce AI complexity

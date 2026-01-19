@@ -4,6 +4,7 @@
 #include <chrono>
 #include <sstream>
 #include <random>
+#include <iomanip>
 
 #include "utils/log.hpp"
 #include "utils/str_cat.hpp"
@@ -159,7 +160,7 @@ std::unique_ptr<GeneratedDialogue> DialogueGenerator::GenerateDialogue(
     
     const NPCPersonality* personality = GetPersonality(context.npcId);
     if (!personality) {
-        LogWarning("No personality found for NPC: {}", context.npcId);
+        LogWarn("No personality found for NPC: {}", context.npcId);
         return nullptr;
     }
     
@@ -307,9 +308,16 @@ std::string DialogueGenerator::DetermineEmotion(
     }
     
     // Determine emotion based on context and personality
-    if (!context.recentDeaths.empty()) {
-        return "sad";
-    } else if (!context.completedQuests.empty()) {
+    if (!context.recentEvents.empty()) {
+        // Check if recent events contain death-related keywords
+        for (const auto& event : context.recentEvents) {
+            if (event.find("death") != std::string::npos || event.find("died") != std::string::npos) {
+                return "sad";
+            }
+        }
+    }
+    
+    if (!context.completedQuests.empty()) {
         return "happy";
     } else if (context.playerLevel < 5) {
         return "concerned";
@@ -388,7 +396,7 @@ float DialogueGenerator::CalculateRelevance(
     }
     
     // Higher relevance for location-specific content
-    if (dialogue.text.find(context.currentLocation) != std::string::npos) {
+    if (dialogue.text.find(context.location) != std::string::npos) {
         relevance += 0.2f;
     }
     
@@ -405,7 +413,7 @@ std::string DialogueGenerator::ProcessDialogueTemplate(
     std::unordered_map<std::string, std::string> replacements = {
         {"{player_name}", "hero"}, // Would get actual player name in real implementation
         {"{player_class}", context.playerClass},
-        {"{location}", context.currentLocation},
+        {"{location}", context.location},
         {"{player_level}", std::to_string(context.playerLevel)},
         {"{quest_type}", "dangerous creature"},
         {"{item_type}", "weapons"},

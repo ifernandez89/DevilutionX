@@ -188,7 +188,7 @@ std::unique_ptr<GeneratedQuest> QuestGenerator::GenerateQuest(
     quest->id = GenerateQuestId();
     quest->primaryObjective = selectedTemplate->baseObjective;
     quest->difficulty = targetDifficulty;
-    quest->recommendedLevel = player._pLevel;
+    quest->recommendedLevel = player.getCharacterLevel();
     
     // Generate quest content
     GenerateQuestContent(*quest, *selectedTemplate, player);
@@ -198,7 +198,7 @@ std::unique_ptr<GeneratedQuest> QuestGenerator::GenerateQuest(
     
     // Validate and balance
     if (!ValidateQuest(*quest, player)) {
-        LogWarning("Generated quest failed validation");
+        LogWarn("Generated quest failed validation");
         stats_.failedValidations++;
         return nullptr;
     }
@@ -247,7 +247,7 @@ const QuestTemplate* QuestGenerator::SelectTemplate(
         
         // Check level requirements
         const auto& scaling = questTemplate.difficultyScaling.at(targetDifficulty);
-        if (player._pLevel < scaling.minLevel || player._pLevel > scaling.maxLevel) {
+        if (player.getCharacterLevel() < scaling.minLevel || player.getCharacterLevel() > scaling.maxLevel) {
             continue;
         }
         
@@ -278,7 +278,7 @@ void QuestGenerator::GenerateQuestContent(
     quest.lore = GenerateQuestLore(questTemplate, quest);
     
     // Set basic properties
-    quest.targetLevel = std::max(1, player._pLevel + static_cast<int>(quest.difficulty) - 2);
+    quest.targetLevel = std::max(1, player.getCharacterLevel() + static_cast<int>(quest.difficulty) - 2);
     quest.isRepeatable = (questTemplate.baseObjective == QuestObjectiveType::KILL_MONSTERS);
     quest.isTimeLimited = false;
 }
@@ -375,8 +375,8 @@ void QuestGenerator::GenerateRewards(GeneratedQuest& quest, const Player& player
                          .difficultyScaling.at(quest.difficulty);
     
     // Base rewards scaled by level and difficulty
-    int baseExp = player._pLevel * 100;
-    int baseGold = player._pLevel * 50;
+    int baseExp = player.getCharacterLevel() * 100;
+    int baseGold = player.getCharacterLevel() * 50;
     
     quest.experienceReward = static_cast<int>(baseExp * scaling.experienceMultiplier);
     quest.goldReward = static_cast<int>(baseGold * scaling.goldMultiplier);
@@ -438,22 +438,22 @@ bool QuestGenerator::ValidateQuest(const GeneratedQuest& quest, const Player& pl
 
 void QuestGenerator::BalanceQuestRewards(GeneratedQuest& quest, const Player& player) {
     // Ensure rewards are reasonable for player level
-    int maxExp = player._pLevel * 500;
-    int maxGold = player._pLevel * 200;
+    int maxExp = player.getCharacterLevel() * 500;
+    int maxGold = player.getCharacterLevel() * 200;
     
     quest.experienceReward = std::min(quest.experienceReward, maxExp);
     quest.goldReward = std::min(quest.goldReward, maxGold);
     
     // Ensure minimum rewards
-    quest.experienceReward = std::max(quest.experienceReward, player._pLevel * 25);
-    quest.goldReward = std::max(quest.goldReward, player._pLevel * 10);
+    quest.experienceReward = std::max(quest.experienceReward, player.getCharacterLevel() * 25);
+    quest.goldReward = std::max(quest.goldReward, player.getCharacterLevel() * 10);
 }
 
 float QuestGenerator::CalculateQuestRelevance(const GeneratedQuest& quest, const Player& player) {
     float relevance = 0.5f; // Base relevance
     
     // Level appropriateness
-    int levelDiff = std::abs(quest.recommendedLevel - player._pLevel);
+    int levelDiff = std::abs(quest.recommendedLevel - player.getCharacterLevel());
     if (levelDiff <= 2) {
         relevance += 0.3f;
     } else if (levelDiff <= 5) {

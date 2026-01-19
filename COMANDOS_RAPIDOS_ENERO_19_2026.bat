@@ -22,6 +22,8 @@ cmake -G "MinGW Makefiles" ^
   -DCMAKE_TOOLCHAIN_FILE="../emsdk/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake" ^
   -DCMAKE_BUILD_TYPE=Release ^
   -DBUILD_TESTING=OFF ^
+  -DNONET=ON ^
+  -DCMAKE_STRIP="" ^
   -DDEVILUTIONX_SYSTEM_LIBFMT=OFF ^
   -DDEVILUTIONX_SYSTEM_LIBSODIUM=OFF ^
   -DDEVILUTIONX_SYSTEM_SIMPLEINI=OFF ^

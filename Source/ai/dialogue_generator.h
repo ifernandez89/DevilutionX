@@ -154,6 +154,7 @@ private:
     std::string DetermineTone(const DialogueContext& context, const NPCPersonality& personality);
     
     // Utility methods
+    std::string GenerateDialogueId();
     std::string ApplyPersonalityToText(const std::string& baseText, const NPCPersonality& personality);
     float CalculateRelevance(const GeneratedDialogue& dialogue, const DialogueContext& context);
     std::string ProcessDialogueTemplate(const std::string& templateStr, const DialogueContext& context);

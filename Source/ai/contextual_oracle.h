@@ -261,6 +261,11 @@ private:
     float CalculateResponseRelevance(const EnhancedOracleResponse& response, const OracleQueryContext& context);
     std::string SelectOptimalResponseStyle(const OracleQueryContext& context);
     bool ShouldProvideProactiveSuggestion(const OracleQueryContext& context);
+    std::string GenerateBasicResponse(const std::string& query, const OracleQueryContext& context);
+    std::string DetermineResponseType(const std::string& query, const OracleQueryContext& context);
+    float CalculateResponseConfidence(const EnhancedOracleResponse& response, const OracleQueryContext& context);
+    std::string SelectRandomElement(const std::vector<std::string>& elements);
+    std::vector<std::string> SelectRandomElements(const std::vector<std::string>& elements, int count = 3);
     
     // Default content loading
     void LoadDefaultContextualHints();

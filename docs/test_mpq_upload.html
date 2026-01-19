@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test MPQ Upload</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #1a0000, #330000, #1a0000);
+            font-family: 'Courier New', monospace;
+            color: #ff6666;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .upload-container {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 40px;
+            border-radius: 10px;
+            border: 2px solid #ff6666;
+            text-align: center;
+            max-width: 500px;
+        }
+
+        .upload-container h2 {
+            color: #ff6666;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 102, 102, 0.8);
+        }
+
+        .file-input {
+            margin: 20px 0;
+            padding: 15px;
+            border: 2px dashed #ff6666;
+            border-radius: 8px;
+            background: rgba(255, 102, 102, 0.1);
+        }
+
+        .file-input input[type="file"] {
+            margin: 10px 0;
+            padding: 10px;
+            background: #330000;
+            color: #ff6666;
+            border: 1px solid #ff6666;
+            border-radius: 4px;
+            width: 100%;
+        }
+
+        .load-btn {
+            background: linear-gradient(45deg, #ff3333, #ff6666);
+            color: #000;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        .load-btn:hover {
+            background: linear-gradient(45deg, #ff6666, #ff9999);
+        }
+
+        .message {
+            margin: 15px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .success {
+            background: rgba(51, 255, 51, 0.1);
+            border: 1px solid #33ff33;
+            color: #33ff33;
+        }
+
+        .error {
+            background: rgba(255, 51, 51, 0.1);
+            border: 1px solid #ff3333;
+            color: #ff3333;
+        }
+    </style>
+</head>
+<body>
+    <div class="upload-container">
+        <h2>🔥 Diablo 1 - MPQ File Test 🔥</h2>
+        <p>Test the MPQ file upload functionality</p>
+        
+        <div class="file-input">
+            <p><strong>Select your DIABDAT.MPQ file:</strong></p>
+            <input type="file" id="mpqFile" accept=".mpq,.MPQ" />
+            <button class="load-btn" onclick="testMPQ()">🚀 Test Load</button>
+        </div>
+        
+        <div id="messages"></div>
+    </div>
+
+    <script>
+        function showMessage(text, type = 'info') {
+            const messages = document.getElementById('messages');
+            const div = document.createElement('div');
+            div.className = 'message ' + type;
+            div.textContent = text;
+            messages.appendChild(div);
+            
+            setTimeout(() => {
+                if (div.parentNode) {
+                    div.parentNode.removeChild(div);
+                }
+            }, 5000);
+        }
+
+        async function testMPQ() {
+            const fileInput = document.getElementById('mpqFile');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                showMessage('Please select a file first.', 'error');
+                return;
+            }
+            
+            showMessage('Testing file: ' + file.name, 'info');
+            showMessage('File size: ' + (file.size / 1024 / 1024).toFixed(2) + ' MB', 'info');
+            
+            try {
+                // Read first few bytes to check signature
+                const arrayBuffer = await file.arrayBuffer();
+                const uint8Array = new Uint8Array(arrayBuffer);
+                const signature = new TextDecoder().decode(uint8Array.slice(0, 4));
+                
+                showMessage('File signature: ' + signature, 'info');
+                
+                if (signature === 'MPQ\x1A' || signature === 'MPQ\x1B') {
+                    showMessage('✅ Valid MPQ file detected!', 'success');
+                    showMessage('✅ File would be loaded successfully!', 'success');
+                } else {
+                    showMessage('❌ Not a valid MPQ file', 'error');
+                }
+                
+            } catch (error) {
+                showMessage('❌ Error reading file: ' + error.message, 'error');
+            }
+        }
+
+        // Auto-detect file selection
+        document.getElementById('mpqFile').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                showMessage('File selected: ' + file.name, 'info');
+            }
+        });
+    </script>
+</body>
+</html>

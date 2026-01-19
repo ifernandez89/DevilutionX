@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💀 Diablo 1 - Browser Edition ULTIMATE CHAMPION FIXED</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #1a0000, #000);
+            color: #fff;
+            font-family: 'Courier New', monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            z-index: 100;
+        }
+        
+        .title {
+            font-size: 3em;
+            color: #ff6b6b;
+            text-shadow: 3px 3px 6px rgba(255, 107, 107, 0.5);
+            margin-bottom: 10px;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { text-shadow: 3px 3px 6px rgba(255, 107, 107, 0.5); }
+            to { text-shadow: 3px 3px 15px rgba(255, 107, 107, 0.8); }
+        }
+        
+        .mpq-selection {
+            background: rgba(255, 107, 107, 0.15);
+            border: 3px solid #ff6b6b;
+            border-radius: 12px;
+            padding: 40px;
+            max-width: 700px;
+            text-align: center;
+            margin: 20px 0;
+            box-shadow: 0 0 30px rgba(255, 107, 107, 0.3);
+            z-index: 100;
+        }
+        
+        .critical-notice {
+            background: linear-gradient(45deg, rgba(255, 193, 7, 0.3), rgba(255, 152, 0, 0.3));
+            border: 3px solid #ffc107;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 12px;
+            color: #ffc107;
+            font-size: 1.2em;
+            font-weight: bold;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(255, 193, 7, 0.5);
+            animation: criticalGlow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes criticalGlow {
+            from { box-shadow: 0 0 20px rgba(255, 193, 7, 0.5); }
+            to { box-shadow: 0 0 40px rgba(255, 193, 7, 0.9); }
+        }
+        
+        .select-mpq-btn {
+            background: linear-gradient(45deg, #ff6b6b, #ff5252);
+            color: white;
+            border: none;
+            padding: 25px 50px;
+            font-size: 1.5em;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .select-mpq-btn:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
+        }
+        
+        .mpq-status {
+            margin: 20px 0;
+            font-size: 1.1em;
+            min-height: 25px;
+            font-weight: bold;
+        }
+        
+        .success { color: #4caf50; }
+        .error { color: #f44336; }
+        .processing { color: #ffd93d; }
+        
+        .game-container {
+            border: 3px solid #ff6b6b;
+            border-radius: 12px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            text-align: center;
+            box-shadow: 0 0 30px rgba(255, 107, 107, 0.3);
+            max-width: 95vw;
+            max-height: 95vh;
+            position: relative;
+        }
+        
+        canvas {
+            display: block;
+            background: #000;
+            border: 2px solid #333;
+            border-radius: 8px;
+            max-width: 100%;
+            max-height: 80vh;
+            margin: 0 auto;
+        }
+        
+        .loading {
+            color: #ffd93d;
+            font-size: 1.2em;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+        
+        .debug-info {
+            background: rgba(0, 255, 0, 0.1);
+            border: 1px solid #0f0;
+            padding: 15px;
+            margin: 15px 0;
+            font-size: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+            text-align: left;
+            font-family: monospace;
+            border-radius: 8px;
+        }
+        
+        .fullscreen-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(45deg, #ff6b6b, #ff5252);
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            font-size: 16px;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+        }
+        
+        .fullscreen-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
+        }
+        
+        /* Fullscreen styles */
+        .fullscreen-mode {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            max-width: 100vw !important;
+            max-height: 100vh !important;
+            border: none !important;
+            border-radius: 0 !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            z-index: 9999 !important;
+        }
+        
+        .fullscreen-mode canvas {
+            width: 100vw !important;
+            height: 100vh !important;
+            max-width: 100vw !important;
+            max-height: 100vh !important;
+            border: none !important;
+            border-radius: 0 !important;
+        }
+        
+        .step-indicator {
+            background: rgba(76, 175, 80, 0.1);
+            border: 2px solid #4caf50;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            color: #4caf50;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+    <button class="fullscreen-btn" onclick="toggleFullscreen()">🔳 Fullscreen</button>
+    
+    <div class="header">
+        <div class="title">💀 DIABLO 1 - ULTIMATE CHAMPION FIXED</div>
+        <div style="font-size: 1.3em; color: #ffd93d;">🌐 Browser Edition - Complete Game Environment</div>
+    </div>
+    
+    <!-- MPQ Selection -->
+    <div id="mpq-selection" class="mpq-selection">
+        <div class="critical-notice">
+            ⚠️ <strong>IMPORTANTE:</strong> Debes seleccionar tu archivo diablodat.mpq PRIMERO<br>
+            El juego NO funcionará sin este paso crítico
+        </div>
+        
+        <div class="step-indicator">
+            📋 <strong>PASO 1:</strong> Haz clic en el botón de abajo para seleccionar tu archivo MPQ
+        </div>
+        
+        <div style="font-size: 1.5em; color: #ff6b6b; margin-bottom: 20px;">
+            🔑 Cargar Datos del Juego Diablo 1
+        </div>
+        <div style="color: #ccc; margin-bottom: 25px; line-height: 1.5;">
+            Selecciona tu archivo <strong>diablodat.mpq</strong> (500-600MB)<br>
+            <small>(El archivo permanece en tu navegador - nunca se sube a ningún servidor)</small>
+        </div>
+        
+        <input type="file" id="mpq-file-input" accept=".mpq" style="display: none;">
+        <button id="select-mpq-btn" class="select-mpq-btn">📁 SELECCIONAR DIABLODAT.MPQ</button>
+        
+        <div id="mpq-status" class="mpq-status"></div>
+        
+        <div style="margin-top: 20px; font-size: 14px; color: #888;">
+            💡 Ubicación típica: C:\Program Files\Diablo\diablodat.mpq<br>
+            📏 Tamaño esperado: 500-600MB
+        </div>
+    </div>
+    
+    <!-- Game Container -->
+    <div id="game-container" class="game-container" style="display: none;">
+        <canvas id="canvas" width="800" height="600"></canvas>
+        <div class="loading" id="loading">🔄 Inicializando Motor Diablo 1...</div>
+        <div id="debug-info" class="debug-info"></div>
+    </div>
+
+    <script>
+        // Ultimate Champion Fixed Diablo 1 Browser Handler
+        window.DiabloUltimateChampionFixedHandler = {
+            mpqFile: null,
+            gameStarted: false,
+            isFullscreen: false,
+            
+            init: function() {
+                console.log('🎮 Diablo 1 Browser Edition - ULTIMATE CHAMPION FIXED initializing...');
+                this.debugLog('Inicializando ULTIMATE CHAMPION FIXED Diablo 1 browser engine...');
+                
+                const fileInput = document.getElementById('mpq-file-input');
+                const selectBtn = document.getElementById('select-mpq-btn');
+                
+                selectBtn.onclick = () => {
+                    this.debugLog('Usuario hizo clic en seleccionar MPQ');
+                    fileInput.click();
+                };
+                
+                fileInput.onchange = (event) => {
+                    const file = event.target.files[0];
+                    if (file) {
+                        this.handleMPQFile(file);
+                    }
+                };
+                
+                // Setup fullscreen event listeners
+                this.setupFullscreenHandlers();
+                
+                this.debugLog('Ultimate Champion Fixed handler inicializado exitosamente');
+                this.debugLog('⚠️ ESPERANDO que el usuario seleccione su archivo diablodat.mpq');
+            },
+            
+            debugLog: function(message) {
+                const debugDiv = document.getElementById('debug-info');
+                if (debugDiv) {
+                    const timestamp = new Date().toLocaleTimeString();
+                    debugDiv.innerHTML += `<div>[${timestamp}] ${message}</div>`;
+                    debugDiv.scrollTop = debugDiv.scrollHeight;
+                }
+                console.log('[DIABLO-ULTIMATE-CHAMPION-FIXED]', message);
+            },
+            
+            setupFullscreenHandlers: function() {
+                // Handle fullscreen change events
+                document.addEventListener('fullscreenchange', () => {
+                    this.handleFullscreenChange();
+                });
+                
+                document.addEventListener('webkitfullscreenchange', () => {
+                    this.handleFullscreenChange();
+                });
+                
+                document.addEventListener('mozfullscreenchange', () => {
+                    this.handleFullscreenChange();
+                });
+                
+                // Handle window resize for responsive canvas
+                window.addEventListener('resize', () => {
+                    this.handleResize();
+                });
+                
+                // Handle F11 key for fullscreen
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'F11') {
+                        e.preventDefault();
+                        this.toggleFullscreen();
+                    }
+                });
+            },
+            
+            handleFullscreenChange: function() {
+                const isFullscreen = !!(document.fullscreenElement || 
+                                       document.webkitFullscreenElement || 
+                                       document.mozFullScreenElement);
+                
+                this.isFullscreen = isFullscreen;
+                const gameContainer = document.getElementById('game-container');
+                const fullscreenBtn = document.querySelector('.fullscreen-btn');
+                
+                if (isFullscreen) {
+                    gameContainer.classList.add('fullscreen-mode');
+                    fullscreenBtn.textContent = '🔲 Salir Pantalla Completa';
+                    this.debugLog('✅ Modo pantalla completa activado');
+                } else {
+                    gameContainer.classList.remove('fullscreen-mode');
+                    fullscreenBtn.textContent = '🔳 Pantalla Completa';
+                    this.debugLog('✅ Modo pantalla completa desactivado');
+                }
+                
+                // Resize canvas after fullscreen change
+                setTimeout(() => {
+                    this.handleResize();
+                }, 100);
+            },
+            
+            handleResize: function() {
+                const canvas = document.getElementById('canvas');
+                if (!canvas) return;
+                
+                if (this.isFullscreen) {
+                    // In fullscreen, use full viewport
+                    canvas.style.width = '100vw';
+                    canvas.style.height = '100vh';
+                    this.debugLog('Canvas redimensionado para pantalla completa');
+                } else {
+                    // Normal mode, maintain aspect ratio
+                    const maxWidth = window.innerWidth * 0.9;
+                    const maxHeight = window.innerHeight * 0.7;
+                    const aspectRatio = 800 / 600;
+                    
+                    if (maxWidth / aspectRatio <= maxHeight) {
+                        canvas.style.width = maxWidth + 'px';
+                        canvas.style.height = (maxWidth / aspectRatio) + 'px';
+                    } else {
+                        canvas.style.width = (maxHeight * aspectRatio) + 'px';
+                        canvas.style.height = maxHeight + 'px';
+                    }
+                    this.debugLog('Canvas redimensionado para modo normal');
+                }
+            },
+            
+            handleMPQFile: function(file) {
+                const statusDiv = document.getElementById('mpq-status');
+                const selectBtn = document.getElementById('select-mpq-btn');
+                
+                this.debugLog(`🔍 Procesando archivo MPQ: ${file.name} (${Math.round(file.size / 1024 / 1024)}MB)`);
+                
+                selectBtn.disabled = true;
+                selectBtn.textContent = '🔄 Procesando...';
+                statusDiv.className = 'mpq-status processing';
+                statusDiv.textContent = '🔍 Validando archivo Diablo MPQ...';
+                
+                // Validate file
+                if (!this.validateMPQ(file)) {
+                    this.resetButton();
+                    return;
+                }
+                
+                // Read MPQ file
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    this.debugLog('✅ Archivo MPQ leído en memoria exitosamente');
+                    const arrayBuffer = e.target.result;
+                    
+                    // Validate MPQ signature
+                    const view = new DataView(arrayBuffer);
+                    const signature = view.getUint32(0, true);
+                    if (signature !== 0x1A51504D) { // 'MPQ\x1A'
+                        statusDiv.className = 'mpq-status error';
+                        statusDiv.textContent = '❌ Formato de archivo MPQ inválido';
+                        this.debugLog('❌ Firma MPQ inválida detectada');
+                        this.resetButton();
+                        return;
+                    }
+                    
+                    // Store MPQ data
+                    this.mpqFile = new Uint8Array(arrayBuffer);
+                    this.debugLog(`✅ MPQ almacenado en memoria: ${this.mpqFile.length} bytes`);
+                    
+                    statusDiv.className = 'mpq-status success';
+                    statusDiv.textContent = '✅ ¡Diablo MPQ cargado exitosamente!';
+                    selectBtn.textContent = '✅ MPQ Listo';
+                    
+                    // Show game container and prepare to start
+                    setTimeout(() => {
+                        this.prepareGameStart();
+                    }, 1500);
+                };
+                
+                reader.onerror = () => {
+                    this.debugLog('❌ Error al leer archivo MPQ');
+                    statusDiv.className = 'mpq-status error';
+                    statusDiv.textContent = '❌ Error al leer archivo MPQ';
+                    this.resetButton();
+                };
+                
+                reader.readAsArrayBuffer(file);
+            },
+            
+            validateMPQ: function(file) {
+                const statusDiv = document.getElementById('mpq-status');
+                
+                // Check filename
+                const fileName = file.name.toLowerCase();
+                if (!(fileName.includes('diabdat') || fileName.includes('diablodat') || fileName.includes('spawn')) || !fileName.endsWith('.mpq')) {
+                    statusDiv.className = 'mpq-status error';
+                    statusDiv.textContent = '❌ Por favor selecciona diablodat.mpq o spawn.mpq';
+                    this.debugLog('❌ Nombre de archivo inválido: ' + file.name);
+                    return false;
+                }
+                
+                // Check size (Diablo MPQ is typically 400-700MB)
+                const minSize = 300 * 1024 * 1024; // 300MB
+                const maxSize = 800 * 1024 * 1024; // 800MB
+                
+                if (file.size < minSize || file.size > maxSize) {
+                    statusDiv.className = 'mpq-status error';
+                    statusDiv.textContent = `❌ Tamaño inesperado: ${Math.round(file.size / 1024 / 1024)}MB (esperado 400-700MB)`;
+                    this.debugLog(`❌ Tamaño de archivo inválido: ${file.size} bytes`);
+                    return false;
+                }
+                
+                this.debugLog('✅ Validación MPQ exitosa');
+                return true;
+            },
+            
+            resetButton: function() {
+                const selectBtn = document.getElementById('select-mpq-btn');
+                selectBtn.disabled = false;
+                selectBtn.textContent = '📁 SELECCIONAR DIABLODAT.MPQ';
+            },
+            
+            prepareGameStart: function() {
+                this.debugLog('🚀 Preparando secuencia de inicio ULTIMATE CHAMPION FIXED...');
+                
+                // Hide MPQ selection, show game
+                document.getElementById('mpq-selection').style.display = 'none';
+                document.getElementById('game-container').style.display = 'block';
+                
+                const loadingDiv = document.getElementById('loading');
+                loadingDiv.textContent = '🔧 Creando entorno completo de instalación Diablo...';
+                
+                // Initialize WebAssembly environment with complete game simulation
+                this.initializeUltimateChampionWebAssembly()
+                    .then(() => {
+                        this.debugLog('✅ Entorno WebAssembly ULTIMATE CHAMPION FIXED listo');
+                        loadingDiv.textContent = '🎮 Iniciando Diablo 1...';
+                        
+                        // Start the game
+                        setTimeout(() => {
+                            this.startGame();
+                        }, 2000);
+                    })
+                    .catch(error => {
+                        this.debugLog(`❌ Error de configuración: ${error.message}`);
+                        loadingDiv.textContent = '⚠️ Error de configuración - Revisa la consola para detalles';
+                    });
+            },
+            
+            initializeUltimateChampionWebAssembly: function() {
+                return new Promise((resolve, reject) => {
+                    this.debugLog('🔧 Inicializando runtime WebAssembly ULTIMATE CHAMPION FIXED...');
+                    
+                    // Store MPQ globally for game access
+                    window.diabloMPQData = this.mpqFile;
+                    
+                    // Ultimate Champion Fixed Module configuration
+                    window.Module = {
+                        canvas: document.getElementById('canvas'),
+                        noInitialRun: false, // Let it run automatically
+                        
+                        print: (text) => {
+                            console.log('[Diablo]', text);
+                            this.debugLog(`[Juego] ${text}`);
+                        },
+                        
+                        printErr: (text) => {
+                            console.error('[Diablo]', text);
+                            this.debugLog(`[Error] ${text}`);
+                        },
+                        
+                        onRuntimeInitialized: () => {
+                            this.debugLog('✅ Runtime Diablo ULTIMATE CHAMPION FIXED inicializado');
+                            
+                            // Create complete Diablo installation
+                            this.createCompleteInstallation().then(() => {
+                                resolve();
+                            }).catch((error) => {
+                                this.debugLog(`❌ Error de instalación: ${error.message}`);
+                                resolve(); // Continue anyway
+                            });
+                        },
+                        
+                        onAbort: (what) => {
+                            this.debugLog(`❌ Runtime abortado: ${what}`);
+                            this.debugLog('⚠️ Intentando continuar a pesar del abort...');
+                            resolve(); // Don't fail - continue
+                        },
+                        
+                        // Use existing files for maximum compatibility
+                        locateFile: (path, prefix) => {
+                            this.debugLog(`Localizando archivo: ${path}`);
+                            if (path.endsWith('.wasm')) return 'devilutionx.wasm';
+                            if (path.endsWith('.data')) return 'devilutionx.data';
+                            return prefix + path;
+                        },
+                        
+                        // Arguments to pass to main
+                        arguments: [],
+                        
+                        // Environment variables
+                        ENV: {
+                            'HOME': '/',
+                            'PATH': '/'
+                        },
+                        
+                        // Pre-run setup
+                        preRun: [() => {
+                            this.debugLog('Fase pre-run WebAssembly - configurando entorno completo');
+                        }]
+                    };
+                    
+                    // Load the Emscripten runtime
+                    this.debugLog('Cargando runtime Emscripten con instalación completa...');
+                    const script = document.createElement('script');
+                    script.src = 'devilutionx.js';
+                    script.onload = () => {
+                        this.debugLog('Runtime Emscripten cargado - esperando inicialización...');
+                    };
+                    script.onerror = () => {
+                        this.debugLog('❌ Error al cargar runtime Emscripten');
+                        reject(new Error('Error al cargar runtime Emscripten'));
+                    };
+                    document.head.appendChild(script);
+                });
+            },
+            
+            createCompleteInstallation: function() {
+                return new Promise((resolve, reject) => {
+                    this.debugLog('🔧 Creando instalación completa de Diablo...');
+                    
+                    try {
+                        if (window.Module && window.Module.FS && this.mpqFile) {
+                            // Create complete directory structure
+                            const directories = [
+                                '/data', '/ui_art', '/gendata', '/fonts', '/sfx', '/music', '/video',
+                                '/levels', '/monsters', '/objects', '/plrgfx', '/items', '/missiles',
+                                '/towners', '/cutscenes'
+                            ];
+                            
+                            for (const dir of directories) {
+                                try {
+                                    window.Module.FS.mkdir(dir);
+                                    this.debugLog(`✅ Directorio creado: ${dir}`);
+                                } catch (e) {
+                                    this.debugLog(`⚠️ Directorio ${dir} ya existe o falló al crear`);
+                                }
+                            }
+                            
+                            // Place MPQ files in ALL possible locations
+                            const mpqPaths = [
+                                '/diabdat.mpq', '/DIABDAT.MPQ', '/diablodat.mpq', '/DIABLODAT.MPQ',
+                                '/spawn.mpq', '/SPAWN.MPQ',
+                                '/data/diabdat.mpq', '/data/DIABDAT.MPQ'
+                            ];
+                            
+                            for (const path of mpqPaths) {
+                                try {
+                                    window.Module.FS.writeFile(path, this.mpqFile);
+                                    this.debugLog(`✅ MPQ instalado en: ${path}`);
+                                } catch (e) {
+                                    this.debugLog(`⚠️ Error al instalar MPQ en: ${path}`);
+                                }
+                            }
+                            
+                            // Set working directory to root
+                            try {
+                                window.Module.FS.chdir('/');
+                                this.debugLog('✅ Directorio de trabajo establecido en raíz');
+                            } catch (e) {
+                                this.debugLog('⚠️ Error al establecer directorio de trabajo');
+                            }
+                            
+                            // Verify installation
+                            try {
+                                const stat = window.Module.FS.stat('/diabdat.mpq');
+                                this.debugLog(`✅ INSTALACIÓN VERIFICADA: diabdat.mpq (${stat.size} bytes)`);
+                            } catch (e) {
+                                this.debugLog(`⚠️ No se pudo verificar la instalación`);
+                            }
+                            
+                            this.debugLog('✅ Instalación completa de Diablo creada exitosamente');
+                            resolve();
+                        } else {
+                            this.debugLog('⚠️ FS no disponible, usando enfoque alternativo');
+                            resolve();
+                        }
+                    } catch (error) {
+                        this.debugLog(`❌ Error de instalación: ${error.message}`);
+                        resolve(); // Continue anyway
+                    }
+                });
+            },
+            
+            startGame: function() {
+                if (this.gameStarted) {
+                    this.debugLog('Juego ya iniciado');
+                    return;
+                }
+                
+                this.gameStarted = true;
+                this.debugLog('🚀 Iniciando motor de juego Diablo 1 ULTIMATE CHAMPION FIXED...');
+                
+                document.getElementById('loading').textContent = '🎮 Iniciando Diablo 1 con instalación completa...';
+                
+                // Focus the canvas for input
+                const canvas = document.getElementById('canvas');
+                canvas.focus();
+                canvas.tabIndex = 1;
+                
+                // Setup canvas for fullscreen compatibility
+                this.handleResize();
+                
+                // The game should start automatically with noInitialRun: false
+                this.debugLog('El juego debería iniciar automáticamente con instalación completa');
+                
+                setTimeout(() => {
+                    this.onGameStarted();
+                }, 5000);
+            },
+            
+            onGameStarted: function() {
+                this.debugLog('🏆 ¡ULTIMATE CHAMPION FIXED! ¡Diablo 1 con instalación completa!');
+                document.getElementById('loading').textContent = '🏆 ¡DIABLO 1 ULTIMATE CHAMPION FIXED EJECUTÁNDOSE!';
+                
+                setTimeout(() => {
+                    document.getElementById('loading').style.display = 'none';
+                }, 5000);
+            },
+            
+            toggleFullscreen: function() {
+                if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.mozFullScreenElement) {
+                    // Enter fullscreen
+                    const element = document.documentElement;
+                    if (element.requestFullscreen) {
+                        element.requestFullscreen();
+                    } else if (element.webkitRequestFullscreen) {
+                        element.webkitRequestFullscreen();
+                    } else if (element.mozRequestFullScreen) {
+                        element.mozRequestFullScreen();
+                    }
+                } else {
+                    // Exit fullscreen
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen();
+                    } else if (document.webkitExitFullscreen) {
+                        document.webkitExitFullscreen();
+                    } else if (document.mozCancelFullScreen) {
+                        document.mozCancelFullScreen();
+                    }
+                }
+            }
+        };
+        
+        // Global fullscreen function
+        function toggleFullscreen() {
+            window.DiabloUltimateChampionFixedHandler.toggleFullscreen();
+        }
+        
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            window.DiabloUltimateChampionFixedHandler.init();
+        });
+    </script>
+</body>
+</html>

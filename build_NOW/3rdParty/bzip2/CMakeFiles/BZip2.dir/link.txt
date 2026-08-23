@@ -1,0 +1,2 @@
+"C:/mingw64/bin/gcc-ar.exe" qc libBZip2.a "CMakeFiles/BZip2.dir/__/__/_deps/bzip2-src/blocksort.c.obj" "CMakeFiles/BZip2.dir/__/__/_deps/bzip2-src/bzlib.c.obj" "CMakeFiles/BZip2.dir/__/__/_deps/bzip2-src/compress.c.obj" "CMakeFiles/BZip2.dir/__/__/_deps/bzip2-src/crctable.c.obj" "CMakeFiles/BZip2.dir/__/__/_deps/bzip2-src/decompress.c.obj" "CMakeFiles/BZip2.dir/__/__/_deps/bzip2-src/huffman.c.obj" "CMakeFiles/BZip2.dir/__/__/_deps/bzip2-src/randtable.c.obj" CMakeFiles/BZip2.dir/bz_internal_error.c.obj
+"C:/mingw64/bin/gcc-ranlib.exe" libBZip2.a

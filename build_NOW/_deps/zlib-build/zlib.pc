@@ -1,0 +1,13 @@
+prefix=C:/Program Files (x86)/DevilutionX
+exec_prefix=C:/Program Files (x86)/DevilutionX
+libdir=C:/Program Files (x86)/DevilutionX/lib
+sharedlibdir=C:/Program Files (x86)/DevilutionX/lib
+includedir=C:/Program Files (x86)/DevilutionX/include
+
+Name: zlib
+Description: zlib compression library
+Version: 1.3
+
+Requires:
+Libs: -L${libdir} -L${sharedlibdir} -lz
+Cflags: -I${includedir}

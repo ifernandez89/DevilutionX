@@ -1,0 +1,3 @@
+C:/DevilutionX/build_NOW/_deps/sdl_audiolib-subbuild/CMakeFiles/sdl_audiolib-populate.dir
+C:/DevilutionX/build_NOW/_deps/sdl_audiolib-subbuild/CMakeFiles/edit_cache.dir
+C:/DevilutionX/build_NOW/_deps/sdl_audiolib-subbuild/CMakeFiles/rebuild_cache.dir

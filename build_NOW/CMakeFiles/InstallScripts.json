@@ -1,0 +1,36 @@
+{
+	"InstallScripts" : 
+	[
+		"C:/DevilutionX/build_NOW/cmake_install.cmake",
+		"C:/DevilutionX/build_NOW/3rdParty/zlib/cmake_install.cmake",
+		"C:/DevilutionX/build_NOW/_deps/zlib-build/cmake_install.cmake",
+		"C:/DevilutionX/build_NOW/3rdParty/bzip2/cmake_install.cmake",
+		"C:/DevilutionX/build_NOW/3rdParty/Lua/cmake_install.cmake",
+		"C:/DevilutionX/build_NOW/_deps/lua-build/cmake_install.cmake",
+		"C:/DevilutionX/build_NOW/_deps/lua-build/lua-5.4.7/cmake_install.cmake",
+		"C:/DevilutionX/build_NOW/3rdParty/sol2/cmake_install.cmake",
+		"C:/DevilutionX/build_NOW/_deps/sol2-build/cmake_install.cmake",
+		"C:/DevilutionX/build_NOW/3rdParty/SDL2/cmake_install.cmake",
+		"C:/DevilutionX/build_NOW/_deps/sdl2-build/cmake_install.cmake",
+		"C:/DevilutionX/build_NOW/3rdParty/SDL_image/cmake_install.cmake",
+		"C:/DevilutionX/build_NOW/3rdParty/SDL_image/libpng/cmake_install.cmake",
+		"C:/DevilutionX/build_NOW/_deps/libpng-build/cmake_install.cmake",
+		"C:/DevilutionX/build_NOW/3rdParty/libfmt/cmake_install.cmake",
+		"C:/DevilutionX/build_NOW/_deps/libfmt-build/cmake_install.cmake",
+		"C:/DevilutionX/build_NOW/3rdParty/SDL_audiolib/cmake_install.cmake",
+		"C:/DevilutionX/build_NOW/_deps/sdl_audiolib-build/cmake_install.cmake",
+		"C:/DevilutionX/build_NOW/3rdParty/libsmackerdec/cmake_install.cmake",
+		"C:/DevilutionX/build_NOW/3rdParty/find_steam_game/cmake_install.cmake",
+		"C:/DevilutionX/build_NOW/3rdParty/libmpq/cmake_install.cmake",
+		"C:/DevilutionX/build_NOW/3rdParty/tl/cmake_install.cmake",
+		"C:/DevilutionX/build_NOW/3rdParty/SheenBidi/cmake_install.cmake",
+		"C:/DevilutionX/build_NOW/_deps/sheenbidi-build/cmake_install.cmake",
+		"C:/DevilutionX/build_NOW/3rdParty/unordered_dense/cmake_install.cmake",
+		"C:/DevilutionX/build_NOW/_deps/unordered_dense-build/cmake_install.cmake",
+		"C:/DevilutionX/build_NOW/3rdParty/magic_enum/cmake_install.cmake",
+		"C:/DevilutionX/build_NOW/_deps/magic_enum-build/cmake_install.cmake",
+		"C:/DevilutionX/build_NOW/3rdParty/PKWare/cmake_install.cmake",
+		"C:/DevilutionX/build_NOW/Source/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

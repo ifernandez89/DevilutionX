@@ -1,0 +1,14 @@
+# Target labels
+ find_steam_game-populate
+# Source files and their labels
+C:/DevilutionX/build_NOW/_deps/find_steam_game-subbuild/CMakeFiles/find_steam_game-populate
+C:/DevilutionX/build_NOW/_deps/find_steam_game-subbuild/CMakeFiles/find_steam_game-populate.rule
+C:/DevilutionX/build_NOW/_deps/find_steam_game-subbuild/CMakeFiles/find_steam_game-populate-complete.rule
+C:/DevilutionX/build_NOW/_deps/find_steam_game-subbuild/find_steam_game-populate-prefix/src/find_steam_game-populate-stamp/find_steam_game-populate-build.rule
+C:/DevilutionX/build_NOW/_deps/find_steam_game-subbuild/find_steam_game-populate-prefix/src/find_steam_game-populate-stamp/find_steam_game-populate-configure.rule
+C:/DevilutionX/build_NOW/_deps/find_steam_game-subbuild/find_steam_game-populate-prefix/src/find_steam_game-populate-stamp/find_steam_game-populate-download.rule
+C:/DevilutionX/build_NOW/_deps/find_steam_game-subbuild/find_steam_game-populate-prefix/src/find_steam_game-populate-stamp/find_steam_game-populate-install.rule
+C:/DevilutionX/build_NOW/_deps/find_steam_game-subbuild/find_steam_game-populate-prefix/src/find_steam_game-populate-stamp/find_steam_game-populate-mkdir.rule
+C:/DevilutionX/build_NOW/_deps/find_steam_game-subbuild/find_steam_game-populate-prefix/src/find_steam_game-populate-stamp/find_steam_game-populate-patch.rule
+C:/DevilutionX/build_NOW/_deps/find_steam_game-subbuild/find_steam_game-populate-prefix/src/find_steam_game-populate-stamp/find_steam_game-populate-test.rule
+C:/DevilutionX/build_NOW/_deps/find_steam_game-subbuild/find_steam_game-populate-prefix/src/find_steam_game-populate-stamp/find_steam_game-populate-update.rule

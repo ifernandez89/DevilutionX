@@ -1,0 +1,2 @@
+"C:/mingw64/bin/gcc-ar.exe" qc libSDL2main.a CMakeFiles/SDL2main.dir/src/main/windows/SDL_windows_main.c.obj
+"C:/mingw64/bin/gcc-ranlib.exe" libSDL2main.a

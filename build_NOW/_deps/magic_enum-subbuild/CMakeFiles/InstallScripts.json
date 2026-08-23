@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"C:/DevilutionX/build_NOW/_deps/magic_enum-subbuild/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

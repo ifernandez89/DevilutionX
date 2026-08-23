@@ -1,0 +1,2 @@
+"C:/mingw64/bin/gcc-ar.exe" qc libSDL_image.a CMakeFiles/SDL_image.dir/IMG.c.obj "CMakeFiles/SDL_image.dir/__/__/_deps/sdl_image-src/IMG_png.c.obj"
+"C:/mingw64/bin/gcc-ranlib.exe" libSDL_image.a

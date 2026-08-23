@@ -1,0 +1,3 @@
+C:/DevilutionX/build_NOW/_deps/sdl_image-subbuild/CMakeFiles/sdl_image-populate.dir
+C:/DevilutionX/build_NOW/_deps/sdl_image-subbuild/CMakeFiles/edit_cache.dir
+C:/DevilutionX/build_NOW/_deps/sdl_image-subbuild/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,3 @@
+C:/DevilutionX/build_NOW/_deps/libpng-subbuild/CMakeFiles/libpng-populate.dir
+C:/DevilutionX/build_NOW/_deps/libpng-subbuild/CMakeFiles/edit_cache.dir
+C:/DevilutionX/build_NOW/_deps/libpng-subbuild/CMakeFiles/rebuild_cache.dir

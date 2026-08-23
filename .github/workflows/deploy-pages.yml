@@ -14,7 +14,7 @@ permissions:
 
 concurrency:
   group: "pages"
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build-and-deploy:
@@ -26,7 +26,6 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
-          submodules: recursive
           fetch-depth: 0
 
       - name: Setup Emscripten
@@ -43,7 +42,6 @@ jobs:
         run: |
           emcmake cmake -B build-web -G Ninja \
             -DCMAKE_BUILD_TYPE=Release \
-            -DTARGET_PLATFORM=emscripten \
             -DBUILD_TESTING=OFF \
             -DDISABLE_ZERO_TIER=ON \
             -DDISABLE_TCP=ON \
@@ -59,12 +57,13 @@ jobs:
       - name: Prepare GitHub Pages Distribution
         run: |
           mkdir -p dist
-          cp build-web/devilutionx.js dist/
-          cp build-web/devilutionx.wasm dist/
-          if [ -f build-web/devilutionx.data ]; then cp build-web/devilutionx.data dist/; fi
-          cp build-web/index.html dist/
-          if [ -f build-web/file-manager.js ]; then cp build-web/file-manager.js dist/; fi
-          if [ -f Packaging/emscripten/file-manager.js ]; then cp Packaging/emscripten/file-manager.js dist/; fi
+          cp -v build-web/devilutionx.js dist/
+          cp -v build-web/devilutionx.wasm dist/
+          if [ -f build-web/devilutionx.data ]; then cp -v build-web/devilutionx.data dist/; fi
+          cp -v Packaging/emscripten/index.html dist/index.html
+          cp -v Packaging/emscripten/file-manager.js dist/file-manager.js
+          echo "Listing dist/ directory:"
+          ls -la dist/
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

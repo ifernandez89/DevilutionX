@@ -184,8 +184,6 @@ TMenuItem *sgpCurrentMenu;
 
 void gmenu_draw_pause(const Surface &out)
 {
-	if (leveltype != DTYPE_TOWN)
-		RedBack(out);
 	if (sgpCurrentMenu == nullptr) {
 		DrawString(out, _("Pause"), { { 0, 0 }, { gnScreenWidth, GetMainPanel().position.y } },
 		    { .flags = UiFlags::FontSize46 | UiFlags::ColorGold | UiFlags::AlignCenter | UiFlags::VerticalCenter, .spacing = 2 });

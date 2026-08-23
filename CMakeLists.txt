@@ -406,6 +406,8 @@ if(EMSCRIPTEN)
     "SHELL:--preload-file mods"
     -sFORCE_FILESYSTEM=1
     -sALLOW_MEMORY_GROWTH=1
+    -sINITIAL_MEMORY=268435456
+    -sMAXIMUM_MEMORY=2147483648
     -sASYNCIFY
     -lidbfs.js
     --shell-file ${CMAKE_CURRENT_SOURCE_DIR}/Packaging/emscripten/index.html

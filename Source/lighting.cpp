@@ -6,6 +6,7 @@
 #include "lighting.h"
 
 #include <algorithm>
+#include <cmath>
 #include <cstdint>
 #include <cstring>
 #include <numeric>
@@ -303,8 +304,11 @@ void MakeLightTable()
 					const float brightness = static_cast<float>(radius) * 1.25F;
 					scaled = factor * factor * brightness + (maxDarkness - brightness);
 					scaled = std::max(maxBrightness, scaled);
+				} else if (leveltype == DTYPE_HELL) {
+					// Smooth curve for Hell: improves mid-range clarity without over-saturating or removing darkness
+					scaled = std::pow(factor, 1.35F) * maxDarkness;
 				} else {
-					// Leaner falloff
+					// Linear falloff
 					scaled = factor * maxDarkness;
 				}
 				scaled += 0.5F; // Round up

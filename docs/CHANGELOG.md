@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Ollama AI Integration**: Dynamic text variation support
 - **Nightmare Balance & Items**: Custom item affixes and Hellfire balancing
 - **Environmental & Ambient Effects**: Rain and contemplative UI in town
+- **Lighting & Visuals**: Smooth falloff lighting curve in Hell levels, base player light radius increased to 12, and removed red screen tint during pause in dungeons
 
 ### Bug Fixes
 
@@ -32,6 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Stability / Performance / System
 
 - Crashes related to player graphics rendering in death state
+- WebAssembly: Fix out-of-memory (OOM) crash when loading large retail `DIABDAT.MPQ` (~500MB) by configuring 256MB initial heap and 2GB maximum memory cap, and disabling sanitizers for Emscripten builds
 
 ## DevilutionX 1.5.2
 

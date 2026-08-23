@@ -2333,7 +2333,7 @@ void CreatePlayer(Player &player, HeroClass c)
 
 	player._pExperience = 0;
 	player._pArmorClass = 0;
-	player._pLightRad = 10;
+	player._pLightRad = 12;
 	player._pInfraFlag = false;
 
 	for (uint8_t &spellLevel : player._pSplLvl) {

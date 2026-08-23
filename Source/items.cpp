@@ -2802,7 +2802,7 @@ void CalcPlrItemVals(Player &player, bool loadgfx)
 	int damMod = 0;
 	int getHit = 0;
 
-	int lightRadius = 10;
+	int lightRadius = 12;
 
 	int life = 0;
 	int mana = 0;

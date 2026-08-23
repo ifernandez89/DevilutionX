@@ -6,8 +6,9 @@ set(DEVILUTIONX_SYSTEM_SDL_AUDIOLIB OFF)
 set(DEVILUTIONX_SYSTEM_LIBSODIUM OFF)
 set(DEVILUTIONX_SYSTEM_LIBFMT OFF)
 set(NOEXIT ON)
-set(ASAN OFF)
-set(UBSAN OFF)
+set(ASAN OFF CACHE BOOL "Enable address sanitizer" FORCE)
+set(UBSAN OFF CACHE BOOL "Enable undefined behaviour sanitizer" FORCE)
+set(TSAN OFF CACHE BOOL "Enable thread sanitizer" FORCE)
 
 # Emscripten ports do have a bzip2 but it fails to link with this error:
 #   warning: _BZ2_bzDecompress may need to be added to EXPORTED_FUNCTIONS if it arrives from a system library

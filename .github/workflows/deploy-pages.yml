@@ -47,6 +47,9 @@ jobs:
           emcmake cmake -B build-web -G Ninja \
             -DCMAKE_BUILD_TYPE=Release \
             -DBUILD_TESTING=OFF \
+            -DASAN=OFF \
+            -DUBSAN=OFF \
+            -DTSAN=OFF \
             -DDISABLE_ZERO_TIER=ON \
             -DDISABLE_TCP=ON \
             -DDEVILUTIONX_SYSTEM_SDL_AUDIOLIB=OFF \

@@ -40,7 +40,7 @@ jobs:
 
       - name: Prebuild Emscripten Ports Cache
         run: |
-          embuilder build zlib bzip2 libpng sdl2 sdl2-mt sdl2_image sdl2_image_png || embuilder build zlib bzip2 libpng sdl2 sdl2_image
+          embuilder build zlib bzip2 libpng sdl2 sdl2_image sdl2_image_png || embuilder build zlib bzip2 libpng sdl2 sdl2_image
 
       - name: Configure CMake with Emscripten
         run: |

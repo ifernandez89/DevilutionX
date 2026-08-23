@@ -116,7 +116,7 @@ Cutscenes PickCutscene(interface_mode uMsg)
 		return GetCutSceneFromLevelType(GetLevelType(lvl));
 	}
 	case WM_DIABWARPLVL:
-		return CutPortal;
+		return CutPortalRed;
 	case WM_DIABSETLVL:
 	case WM_DIABRTNLVL:
 		if (setlvlnum == SL_BONECHAMB)

@@ -654,8 +654,21 @@ void StartSmithRepair()
 	AddItemListBackButton();
 }
 
+void FillManaPlayer()
+{
+	Player &myPlayer = *MyPlayer;
+
+	if (myPlayer._pMana != myPlayer._pMaxMana) {
+		PlaySFX(SfxID::CastHealing);
+	}
+	myPlayer._pMana = myPlayer._pMaxMana;
+	myPlayer._pManaBase = myPlayer._pMaxManaBase;
+	RedrawComponent(PanelDrawComponent::Mana);
+}
+
 void StartWitch()
 {
+	FillManaPlayer();
 	IsTextFullSize = false;
 	HasScrollbar = false;
 	AddSText(0, 2, _("Witch's shack"), UiFlags::ColorWhitegold | UiFlags::AlignCenter, false);

@@ -38,6 +38,10 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y gettext cmake ninja-build
 
+      - name: Prebuild Emscripten Ports Cache
+        run: |
+          embuilder build zlib bzip2 libpng sdl2 sdl2-mt sdl2_image sdl2_image_png || embuilder build zlib bzip2 libpng sdl2 sdl2_image
+
       - name: Configure CMake with Emscripten
         run: |
           emcmake cmake -B build-web -G Ninja \

@@ -1,79 +1,94 @@
-# Guía de Compilación Local en Windows (DevilutionX)
+# 🏆 Guía Maestra de Compilación Funcional en Windows (DevilutionX)
 
-Esta guía documenta todos los requisitos, herramientas y comandos necesarios para recrear desde cero el entorno de compilación de **DevilutionX** en Windows y compilar el binario nativo `devilutionx.exe`.
+Esta guía documenta la configuración **100% probada y funcional** para compilar y ejecutar **DevilutionX** (incluyendo Nightmare Edition / mods) en Windows utilizando **MinGW-w64** y **CMake / Ninja**.
 
 ---
 
 ## 1. Requisitos y Herramientas
 
-Para compilar en Windows de forma nativa con **MinGW-w64** y **CMake / Ninja**, se requieren las siguientes herramientas:
-
-1. **CMake** (Generador de sistemas de construcción): `>= 3.13`
-2. **Ninja** (Sistema de construcción rápido en paralelo): Opcional pero altamente recomendado.
-3. **MinGW-w64 (WinLibs / GCC + UCRT / POSIX threads)**: Compilador `gcc`, `g++`, `c++`.
+1. **CMake** (`>= 3.22`): Generador de proyectos.
+2. **Ninja**: Motor de compilación rápido en paralelo (o `MinGW Makefiles`).
+3. **MinGW-w64** (x86_64 UCRT / POSIX): Compilador `gcc`, `g++`, `c++`.
 4. **Git**: Control de versiones.
 
 ---
 
-## 2. Instalación Rápida con `winget`
+## 2. Configuración Exacta de CMake
 
-Abre una terminal de PowerShell como administrador o usuario estándar y ejecuta:
+Para garantizar que el juego abra correctamente, lea los archivos `.MPQ` y no sufra de fallos de reubicación de memoria en Windows 64-bit, se deben pasar los siguientes parámetros:
 
 ```powershell
-# 1. Instalar CMake
-winget install --id Kitware.CMake -e --accept-source-agreements --accept-package-agreements --silent
-
-# 2. Instalar Ninja
-winget install --id Ninja-build.Ninja -e --accept-source-agreements --accept-package-agreements --silent
-
-# 3. Instalar MinGW-w64 (WinLibs POSIX UCRT)
-winget install --id BrechtSanders.WinLibs.POSIX.UCRT -e --accept-source-agreements --accept-package-agreements --silent
+cmake -S . -B build_COMPILE_FRESH -G "Ninja" `
+  -DCMAKE_BUILD_TYPE=Release `
+  -DNONET=ON `
+  -DNOSOUND=OFF `
+  -DBUILD_TESTING=OFF `
+  -DDISABLE_ZERO_TIER=ON `
+  -DUNPACKED_MPQS=OFF `
+  -DUNPACKED_SAVES=OFF `
+  -DDEVILUTIONX_STATIC_BZIP2=ON `
+  -DDEVILUTIONX_SYSTEM_BZIP2=OFF
 ```
 
-> **Nota:** Tras la instalación, reinicia la terminal o actualiza la variable `PATH` de tu sesión para que los comandos `cmake`, `ninja`, y `g++` estén disponibles.
+### 🎯 Explicación de los Parámetros Críticos:
+
+| Parámetro | Valor | Motivo |
+| :--- | :--- | :--- |
+| `-DDEVILUTIONX_STATIC_BZIP2=ON` | `ON` | **CRÍTICO**: Embebe `bzip2` estáticamente en el binario para descomprimir y leer `DIABDAT.MPQ` sin errores de DLL. |
+| `-DDEVILUTIONX_SYSTEM_BZIP2=OFF`| `OFF` | Evita enlazar versiones externas incompatibles de bzip2 del sistema. |
+| `-DNOSOUND=OFF` | `OFF` | Habilita el subsistema de audio nativo mediante `SDL_audiolib`. |
+| `-DUNPACKED_MPQS=OFF` | `OFF` | Obliga al juego a cargar los datos desde los archivos MPQ empaquetados (`DIABDAT.MPQ`, `hellfire.mpq`, etc.). |
+| `-DNONET=ON` | `ON` | Deshabilita dependencias de red externas complejas para builds locales rápidos y estables. |
+| `-DBUILD_TESTING=OFF` | `OFF` | Acelera la compilación al no generar binarios de prueba innecesarios. |
 
 ---
 
-## 3. Configurar y Compilar
+## 3. Enlazado en MinGW (Prevención de Pseudo-Relocation Errors)
 
-### Opción A: Usando Ninja (Más Rápido)
+En toolchains modernos de 64-bit (GCC 14+ / 16+), Windows ASLR puede cargar librerías fuera del rango de 32-bit (±2GB), provocando el error:
+> `Mingw-w64 runtime failure: 32 bit pseudo relocation ... out of range`
 
-```powershell
-# 1. Posicionarse en la raíz del repositorio
-cd C:\Projects\DevilutionX
-
-# 2. Configurar el proyecto con CMake y Ninja
-cmake -S . -B build -G "Ninja" -DCMAKE_BUILD_TYPE=Release
-
-# 3. Compilar el ejecutable
-cmake --build build -j
-```
-
-### Opción B: Usando MinGW Makefiles
-
-```powershell
-# 1. Configurar
-cmake -S . -B build -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release
-
-# 2. Compilar
-cmake --build build -j
+Para prevenir esto permanentemente, [`CMake/platforms/windows.cmake`](file:///c:/Projects/DevilutionX/CMake/platforms/windows.cmake) incluye:
+```cmake
+list(APPEND DEVILUTIONX_PLATFORM_LINK_LIBRARIES "-Wl,--disable-dynamicbase" "-Wl,--disable-high-entropy-va")
 ```
 
 ---
 
-## 4. Estructura de Salida y Ejecución
+## 4. Compilación del Ejecutable
 
-Una vez finalizada la compilación:
-- El ejecutable generado estará en: `build/devilutionx.exe` (o `build_COMPILE_FRESH/devilutionx.exe`).
-- Para ejecutar el juego, asegúrate de tener el archivo de datos original `DIABDAT.MPQ` en la misma carpeta o en el directorio configurado de DevilutionX (o `devilutionx.mpq`).
+Una vez configurado CMake, compila con:
+
+```powershell
+cmake --build build_COMPILE_FRESH -j 4
+```
+
+El ejecutable resultante se generará en:
+`build_COMPILE_FRESH/devilutionx.exe`
 
 ---
 
-## 5. Regla del Proyecto para Modificaciones
+## 5. Archivos Necesarios en la Carpeta de Ejecución
 
-Cada vez que se modifique código fuente en `Source/` o archivos de configuración:
-1. Recompilar inmediatamente ejecutando:
-   ```powershell
-   cmake --build build -j
-   ```
-2. Registrar los cambios en [`docs/CHANGELOG.md`](file:///c:/Projects/DevilutionX/docs/CHANGELOG.md).
+Para que el juego inicie correctamente al hacer doble clic o ejecutarlo desde la terminal, la carpeta `build_COMPILE_FRESH/` debe contener:
+
+1. **`devilutionx.exe`** (El binario compilado)
+2. **`DIABDAT.MPQ`** (517 MB, datos del juego original)
+3. **Carpeta `assets/`** (Generada automáticamente por el build)
+4. **DLLs de Runtime**:
+   - `SDL2.dll`
+   - `SDL2_image.dll`
+   - `libzlib.dll` (o `zlib1.dll`)
+   - `libstdc++-6.dll`
+   - `libgcc_s_seh-1.dll`
+   - `libwinpthread-1.dll`
+
+---
+
+## 6. Recompilación Rápida tras Cambios de Código
+
+Si editas archivos en `Source/`:
+```powershell
+# Solo requiere ejecutar el build, no es necesario reconfigurar CMake
+cmake --build build_COMPILE_FRESH -j 4
+```

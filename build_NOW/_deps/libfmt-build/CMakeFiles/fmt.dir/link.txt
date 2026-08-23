@@ -1,2 +1,0 @@
-"C:/mingw64/bin/gcc-ar.exe" qc libfmt.a CMakeFiles/fmt.dir/src/format.cc.obj
-"C:/mingw64/bin/gcc-ranlib.exe" libfmt.a

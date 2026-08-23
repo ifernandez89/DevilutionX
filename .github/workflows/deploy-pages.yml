@@ -1,0 +1,79 @@
+name: Deploy Diablo 1 to GitHub Pages (WebAssembly)
+
+on:
+  push:
+    branches:
+      - testing
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Setup Emscripten
+        uses: mymindstorm/setup-emsdk@v14
+        with:
+          version: 3.1.53
+
+      - name: Install Build Tools & Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gettext cmake ninja-build
+
+      - name: Configure CMake with Emscripten
+        run: |
+          emcmake cmake -B build-web -G Ninja \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DTARGET_PLATFORM=emscripten \
+            -DBUILD_TESTING=OFF \
+            -DDISABLE_ZERO_TIER=ON \
+            -DDISABLE_TCP=ON \
+            -DDEVILUTIONX_SYSTEM_SDL_AUDIOLIB=OFF \
+            -DDEVILUTIONX_SYSTEM_LIBSODIUM=OFF \
+            -DDEVILUTIONX_SYSTEM_LIBFMT=OFF \
+            -DDEVILUTIONX_SYSTEM_BZIP2=OFF
+
+      - name: Build DevilutionX WebAssembly
+        run: |
+          cmake --build build-web --target devilutionx
+
+      - name: Prepare GitHub Pages Distribution
+        run: |
+          mkdir -p dist
+          cp build-web/devilutionx.js dist/
+          cp build-web/devilutionx.wasm dist/
+          if [ -f build-web/devilutionx.data ]; then cp build-web/devilutionx.data dist/; fi
+          cp build-web/index.html dist/
+          if [ -f build-web/file-manager.js ]; then cp build-web/file-manager.js dist/; fi
+          if [ -f Packaging/emscripten/file-manager.js ]; then cp Packaging/emscripten/file-manager.js dist/; fi
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: 'dist'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

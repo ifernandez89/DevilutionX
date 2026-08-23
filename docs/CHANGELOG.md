@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Nightmare Edition (WebAssembly & Mod Features)
+
+#### Web & Deployment
+- Automated WebAssembly deployment to GitHub Pages via Emscripten
+- Drag-and-drop / File picker interface to load `DIABDAT.MPQ` into browser IndexedDB
+- Full browser playable build for desktop and mobile web
+
+#### Features & Gameplay
+- **Portal Rojo**: Red portal transition support in Tristram
+- **Cinemática Espada**: Restored initial sequence cinematic
+- **Chat Single Player**: Enabled in-game chat in single player mode
+- **Ollama AI Integration**: Dynamic text variation support
+- **Nightmare Balance & Items**: Custom item affixes and Hellfire balancing
+- **Environmental & Ambient Effects**: Rain and contemplative UI in town
+
 ### Bug Fixes
 
 #### Graphics / Audio

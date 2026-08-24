@@ -57,7 +57,7 @@
 			object-fit: contain;
 			image-rendering: pixelated;
 			image-rendering: crisp-edges;
-			filter: contrast(1.08) brightness(1.03) saturate(1.08);
+			transition: filter 0.25s ease;
 			-webkit-user-select: none;
 			-moz-user-select: none;
 			-ms-user-select: none;
@@ -67,7 +67,12 @@
 			outline: none;
 		}
 
-		/* Subtle Graphics Remaster Atmospheric Vignette */
+		/* Subtle Graphics Remaster Active Presentation */
+		body.remaster-enabled canvas.emscripten {
+			filter: contrast(1.15) saturate(1.22) brightness(1.05);
+		}
+
+		/* Subtle Graphics Remaster Atmospheric Layers */
 		.remaster-vignette-layer {
 			position: absolute;
 			top: 0;
@@ -75,8 +80,76 @@
 			width: 100%;
 			height: 100%;
 			pointer-events: none;
-			background: radial-gradient(circle at center, rgba(0,0,0,0) 62%, rgba(0,0,0,0.38) 100%);
+			background: radial-gradient(circle at center, rgba(0, 0, 0, 0) 48%, rgba(0, 0, 0, 0.52) 100%);
+			opacity: 0;
+			transition: opacity 0.3s ease;
 			z-index: 10;
+		}
+
+		body.remaster-enabled .remaster-vignette-layer {
+			opacity: 1;
+		}
+
+		.remaster-bloom-layer {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			pointer-events: none;
+			background: radial-gradient(ellipse at center, rgba(255, 175, 75, 0.05) 0%, rgba(0, 0, 0, 0) 75%);
+			mix-blend-mode: screen;
+			opacity: 0;
+			transition: opacity 0.3s ease;
+			z-index: 11;
+		}
+
+		body.remaster-enabled .remaster-bloom-layer {
+			opacity: 1;
+		}
+
+		.remaster-scanline-layer {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			pointer-events: none;
+			background: linear-gradient(rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.18) 50%);
+			background-size: 100% 3px;
+			opacity: 0;
+			transition: opacity 0.3s ease;
+			z-index: 12;
+		}
+
+		body.remaster-enabled .remaster-scanline-layer {
+			opacity: 1;
+		}
+
+		/* Toast Notification */
+		#toast {
+			position: fixed;
+			bottom: 30px;
+			left: 50%;
+			transform: translateX(-50%) translateY(20px);
+			background: rgba(20, 16, 12, 0.92);
+			border: 1px solid #d4af37;
+			color: #fff2c8;
+			padding: 9px 20px;
+			border-radius: 6px;
+			font-size: 14px;
+			font-weight: bold;
+			letter-spacing: 0.5px;
+			box-shadow: 0 4px 15px rgba(0, 0, 0, 0.8), 0 0 10px rgba(212, 175, 55, 0.3);
+			opacity: 0;
+			pointer-events: none;
+			transition: all 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+			z-index: 3000;
+		}
+
+		#toast.show {
+			opacity: 1;
+			transform: translateX(-50%) translateY(0);
 		}
 
 		/* Floating Top-Right Action Toolbar */
@@ -342,11 +415,14 @@
 	</style>
 </head>
 
-<body>
+<body class="remaster-enabled">
 	<div class="top-toolbar">
+		<button class="ui-btn" id="remasterToggleBtn" title="Alternar Modo Remaster (F2)">✨ Remaster: ON</button>
 		<button class="ui-btn" id="fileManagerBtn" title="Administrador de Archivos">📁 File Manager</button>
 		<button class="ui-btn" id="fullscreenBtn" title="Pantalla Completa">⛶ Pantalla Completa</button>
 	</div>
+
+	<div id="toast"></div>
 
 	<div id="fileManagerModal">
 		<div class="modal-content">
@@ -397,6 +473,8 @@
 		<div class="emscripten_border">
 			<canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" tabindex="-1"></canvas>
 			<div class="remaster-vignette-layer"></div>
+			<div class="remaster-bloom-layer"></div>
+			<div class="remaster-scanline-layer"></div>
 		</div>
 	</div>
 
@@ -407,6 +485,41 @@
 		var progressElement = document.getElementById('progress');
 		var spinnerElement = document.getElementById('spinner');
 		var loadingOverlay = document.getElementById('loading-overlay');
+
+		// Toast feedback utility
+		function showToast(msg) {
+			var toast = document.getElementById('toast');
+			if (toast) {
+				toast.innerText = msg;
+				toast.classList.add('show');
+				setTimeout(function() { toast.classList.remove('show'); }, 2200);
+			}
+		}
+
+		// Remaster toggle logic
+		var remasterBtn = document.getElementById('remasterToggleBtn');
+		var isRemaster = true;
+		function toggleRemaster() {
+			isRemaster = !isRemaster;
+			if (isRemaster) {
+				document.body.classList.add('remaster-enabled');
+				if (remasterBtn) remasterBtn.innerHTML = '✨ Remaster: ON';
+				showToast('✨ Modo Remaster Activado (Contraste, Viñeteado, Glow)');
+			} else {
+				document.body.classList.remove('remaster-enabled');
+				if (remasterBtn) remasterBtn.innerHTML = '⚔️ Original: 1996';
+				showToast('⚔️ Modo Original 1996 Puro (Sin Mejoras)');
+			}
+		}
+		if (remasterBtn) {
+			remasterBtn.addEventListener('click', toggleRemaster);
+		}
+		window.addEventListener('keydown', function(e) {
+			if (e.key === 'F2') {
+				e.preventDefault();
+				toggleRemaster();
+			}
+		});
 
 		// Fullscreen button logic
 		document.getElementById('fullscreenBtn').addEventListener('click', function () {

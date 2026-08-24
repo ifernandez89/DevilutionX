@@ -20,6 +20,7 @@
 #include "controls/control_mode.hpp"
 #include "controls/plrctrls.h"
 #include "engine/render/primitive_render.hpp"
+#include "engine/render/remaster_render.hpp"
 #include "headless_mode.hpp"
 #include "init.hpp"
 #include "options.h"
@@ -128,6 +129,7 @@ void dx_cleanup()
 	PinnedPalSurface = nullptr;
 	Palette = nullptr;
 	RendererTextureSurface = nullptr;
+	RemasterCleanup();
 #ifndef USE_SDL1
 	texture = nullptr;
 	FreeVirtualGamepadTextures();
@@ -164,6 +166,7 @@ void CreateBackBuffer()
 	// time the global `palette` is changed. No need to do anything here as
 	// the global `palette` doesn't have any colors set yet.
 #endif
+	RemasterInit(gnScreenWidth, gnScreenHeight);
 }
 
 void BltFast(SDL_Rect *srcRect, SDL_Rect *dstRect)
@@ -246,12 +249,16 @@ void RenderPresent()
 		if (!SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255)) ErrSdl();
 		if (!SDL_RenderClear(renderer)) ErrSdl();
 		if (!SDL_UpdateTexture(texture.get(), nullptr, surface->pixels, surface->pitch)) ErrSdl();
-		if (!SDL_RenderTexture(renderer, texture.get(), nullptr, nullptr)) ErrSdl();
+		if (!RemasterProcessAndPresent(renderer, texture.get(), gnScreenWidth, gnScreenHeight)) {
+			if (!SDL_RenderTexture(renderer, texture.get(), nullptr, nullptr)) ErrSdl();
+		}
 #else
 		if (SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255) <= -1) ErrSdl();
 		if (SDL_RenderClear(renderer) <= -1) ErrSdl();
 		if (SDL_UpdateTexture(texture.get(), nullptr, surface->pixels, surface->pitch) <= -1) ErrSdl();
-		if (SDL_RenderCopy(renderer, texture.get(), nullptr, nullptr) <= -1) ErrSdl();
+		if (!RemasterProcessAndPresent(renderer, texture.get(), gnScreenWidth, gnScreenHeight)) {
+			if (SDL_RenderCopy(renderer, texture.get(), nullptr, nullptr) <= -1) ErrSdl();
+		}
 #endif
 
 		if (ControlMode == ControlTypes::VirtualGamepad) {

@@ -241,54 +241,11 @@ void RemasterCleanup()
 
 bool RemasterProcessAndPresent(SDL_Renderer *renderer, SDL_Texture *sourceTexture, int screenWidth, int screenHeight)
 {
-#if defined(__EMSCRIPTEN__)
-    if (!g_remasterAvailable || g_program == 0) {
-        return false;
-    }
-
-    // Lazy initialization if needed
-    if (!g_remasterInitialized) {
-        RemasterInit(screenWidth, screenHeight);
-        if (!g_remasterAvailable) return false;
-    }
-
-    // Bind Shader Program
-    glUseProgram(g_program);
-
-    if (g_uTextureLoc >= 0) {
-        glUniform1i(g_uTextureLoc, 0);
-    }
-    if (g_uTexSizeLoc >= 0) {
-        glUniform2f(g_uTexSizeLoc, static_cast<float>(screenWidth), static_cast<float>(screenHeight));
-    }
-    if (g_uTimeLoc >= 0) {
-        static float s_time = 0.0f;
-        s_time += 0.016f;
-        glUniform1f(g_uTimeLoc, s_time);
-    }
-
-    // Render fullscreen quad
-    glBindBuffer(GL_ARRAY_BUFFER, g_quadVbo);
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), reinterpret_cast<void *>(0));
-    glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), reinterpret_cast<void *>(2 * sizeof(float)));
-
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-
-    glDisableVertexAttribArray(0);
-    glDisableVertexAttribArray(1);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glUseProgram(0);
-
-    return true;
-#else
     (void)renderer;
     (void)sourceTexture;
     (void)screenWidth;
     (void)screenHeight;
     return false;
-#endif
 }
 
 bool RemasterIsEnabled()

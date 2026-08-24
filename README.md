@@ -22,6 +22,17 @@ Check out the [manual](https://github.com/diasurgical/devilutionX/wiki) for avai
 
 For a full list of changes, see our [changelog](docs/CHANGELOG.md).
 
+## 🌐 Play Online in Browser (WebAssembly Live)
+
+¡Puedes jugar Diablo 1 directamente desde tu navegador web sin instalar nada!
+
+- **🔗 Enlace directo:** **[https://ifernandez89.github.io/DevilutionX/](https://ifernandez89.github.io/DevilutionX/)**
+- **Características Web:**
+  - Renderizado OpenGL ES 2.0 nativo acelerado por hardware en WebAssembly.
+  - Administrador de archivos integrado (**File Manager**) para cargar `DIABDAT.MPQ` (juego completo) o `spawn.mpq` (shareware).
+  - Partidas guardadas y configuración persistentes automáticamente en tu navegador (**IndexedDB**).
+  - Modo Pantalla Completa y escalado de píxel perfecto adaptado a cualquier resolución.
+
 # How to Install
 
 Note: You'll need access to the data from the original game. If you don't have an original CD, you can [buy Diablo from GoG.com](https://www.gog.com/game/diablo) or Battle.net. Alternatively, you can use `spawn.mpq` from the [shareware](https://github.com/diasurgical/devilutionx-assets/releases/latest/download/spawn.mpq) [[2]](http://ftp.blizzard.com/pub/demos/diablosw.exe) version, in place of `DIABDAT.MPQ`, to play the shareware portion of the game.

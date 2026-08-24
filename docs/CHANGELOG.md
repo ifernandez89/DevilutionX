@@ -9,10 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Nightmare Edition (WebAssembly & Mod Features)
 
-#### Web & Deployment
-- Automated WebAssembly deployment to GitHub Pages via Emscripten
-- Drag-and-drop / File picker interface to load `DIABDAT.MPQ` into browser IndexedDB
-- Full browser playable build for desktop and mobile web
+#### Web & Deployment (WebAssembly Port)
+- **Live Browser Deployment**: Automated CI/CD WebAssembly deployment to GitHub Pages via Emscripten and Ninja.
+- **Pure Web Port Architecture**: Single-threaded ASYNCIFY execution model without COOP/COEP / `SharedArrayBuffer` requirements, enabling instant playback on any modern desktop or mobile browser.
+- **Immersive Dark & Fullscreen UI**: Black background layout, dynamic aspect-ratio viewport scaling, and 1-click Fullscreen toggle.
+- **In-Browser File Manager**: Drag-and-drop MPQ loader supporting both `DIABDAT.MPQ` (Full Retail) and `spawn.mpq` (Shareware), with auto-persistence via IndexedDB (`IDBFS`).
+- **Memory & Performance Optimizations**: 256MB initial heap with dynamic growth, sanitizers safely stripped to prevent WebAssembly heap exhaustion.
 
 #### Features & Gameplay
 - **Portal Rojo**: Red portal transition support in Tristram

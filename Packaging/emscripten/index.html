@@ -69,7 +69,25 @@
 
 		/* Subtle Graphics Remaster Active Presentation */
 		body.remaster-enabled canvas.emscripten {
-			filter: contrast(1.15) saturate(1.22) brightness(1.05);
+			filter: contrast(1.12) saturate(1.18) brightness(1.04);
+		}
+
+		/* Remaster Dynamic Lighting 2D Overlay Canvas */
+		#remasterLightingCanvas {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			pointer-events: none;
+			mix-blend-mode: color-dodge;
+			opacity: 0;
+			transition: opacity 0.35s ease;
+			z-index: 9;
+		}
+
+		body.remaster-enabled #remasterLightingCanvas {
+			opacity: 0.85;
 		}
 
 		/* Subtle Graphics Remaster Atmospheric Layers */
@@ -97,11 +115,18 @@
 			width: 100%;
 			height: 100%;
 			pointer-events: none;
-			background: radial-gradient(ellipse at center, rgba(255, 175, 75, 0.05) 0%, rgba(0, 0, 0, 0) 75%);
+			background: radial-gradient(ellipse at center, rgba(255, 160, 50, 0.07) 0%, rgba(200, 80, 0, 0.02) 40%, rgba(0, 0, 0, 0) 75%);
 			mix-blend-mode: screen;
 			opacity: 0;
 			transition: opacity 0.3s ease;
 			z-index: 11;
+			animation: remasterTorchPulse 3.2s ease-in-out infinite alternate;
+		}
+
+		@keyframes remasterTorchPulse {
+			0% { opacity: 0.65; transform: scale(1.0); }
+			50% { opacity: 0.92; transform: scale(1.015); }
+			100% { opacity: 0.75; transform: scale(0.99); }
 		}
 
 		body.remaster-enabled .remaster-bloom-layer {
@@ -472,6 +497,7 @@
 	<div class="game-container">
 		<div class="emscripten_border">
 			<canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" tabindex="-1"></canvas>
+			<canvas id="remasterLightingCanvas"></canvas>
 			<div class="remaster-vignette-layer"></div>
 			<div class="remaster-bloom-layer"></div>
 			<div class="remaster-scanline-layer"></div>
@@ -492,7 +518,7 @@
 			if (toast) {
 				toast.innerText = msg;
 				toast.classList.add('show');
-				setTimeout(function() { toast.classList.remove('show'); }, 2200);
+				setTimeout(function() { toast.classList.remove('show'); }, 2400);
 			}
 		}
 
@@ -504,11 +530,11 @@
 			if (isRemaster) {
 				document.body.classList.add('remaster-enabled');
 				if (remasterBtn) remasterBtn.innerHTML = '✨ Remaster: ON';
-				showToast('✨ Modo Remaster Activado (Contraste, Viñeteado, Glow)');
+				showToast('✨ Remaster Activado (Dynamic Lights, Flame Flickering, Localized Bloom)');
 			} else {
 				document.body.classList.remove('remaster-enabled');
 				if (remasterBtn) remasterBtn.innerHTML = '⚔️ Original: 1996';
-				showToast('⚔️ Modo Original 1996 Puro (Sin Mejoras)');
+				showToast('⚔️ Modo Original 1996 Puro (Sin Efectos)');
 			}
 		}
 		if (remasterBtn) {
@@ -520,6 +546,140 @@
 				toggleRemaster();
 			}
 		});
+
+		// Dynamic 2D Lighting & Organic Torch Flickering Engine
+		(function initRemasterLightingEngine() {
+			var lightingCanvas = document.getElementById('remasterLightingCanvas');
+			if (!lightingCanvas) return;
+			var ctx = lightingCanvas.getContext('2d');
+			var animFrameId = null;
+
+			// Floating dungeon ember particles
+			var embers = [];
+			var maxEmbers = 22;
+			for (var i = 0; i < maxEmbers; i++) {
+				embers.push({
+					x: Math.random(),
+					y: Math.random(),
+					size: Math.random() * 1.8 + 0.7,
+					speedY: Math.random() * 0.0007 + 0.0003,
+					speedX: (Math.random() - 0.5) * 0.0004,
+					alpha: Math.random() * 0.6 + 0.3,
+					pulse: Math.random() * Math.PI * 2
+				});
+			}
+
+			function resizeCanvas() {
+				var parent = lightingCanvas.parentElement;
+				if (parent && (lightingCanvas.width !== parent.clientWidth || lightingCanvas.height !== parent.clientHeight)) {
+					lightingCanvas.width = parent.clientWidth || window.innerWidth;
+					lightingCanvas.height = parent.clientHeight || window.innerHeight;
+				}
+			}
+
+			var time = 0;
+			function renderLighting() {
+				if (!document.body.classList.contains('remaster-enabled')) {
+					if (ctx && lightingCanvas.width) {
+						ctx.clearRect(0, 0, lightingCanvas.width, lightingCanvas.height);
+					}
+					animFrameId = requestAnimationFrame(renderLighting);
+					return;
+				}
+
+				resizeCanvas();
+				var width = lightingCanvas.width;
+				var height = lightingCanvas.height;
+				if (!width || !height) {
+					animFrameId = requestAnimationFrame(renderLighting);
+					return;
+				}
+
+				ctx.clearRect(0, 0, width, height);
+				time += 0.04;
+
+				// 1. Organic Torch Flame Flickering at player/environment center
+				var baseCenterX = width * 0.5;
+				var baseCenterY = height * 0.48;
+
+				var flickerR1 = Math.sin(time * 3.7) * 0.04 + Math.sin(time * 7.1) * 0.02 + Math.cos(time * 13.3) * 0.015;
+				var flickerAlpha = Math.sin(time * 5.2) * 0.06 + 0.94;
+				var lightRadius = Math.min(width, height) * (0.38 + flickerR1);
+
+				// Radial torch flame aura (Warm amber & glowing orange)
+				var torchGrad = ctx.createRadialGradient(
+					baseCenterX, baseCenterY, 4,
+					baseCenterX, baseCenterY, lightRadius
+				);
+				torchGrad.addColorStop(0, 'rgba(255, 195, 100, ' + (0.34 * flickerAlpha) + ')');
+				torchGrad.addColorStop(0.32, 'rgba(230, 120, 35, ' + (0.19 * flickerAlpha) + ')');
+				torchGrad.addColorStop(0.72, 'rgba(170, 55, 10, ' + (0.07 * flickerAlpha) + ')');
+				torchGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+				ctx.fillStyle = torchGrad;
+				ctx.fillRect(0, 0, width, height);
+
+				// 2. Secondary Atmospheric Dungeon Wall Torches
+				var leftTorchX = width * 0.22;
+				var leftTorchY = height * 0.35;
+				var leftFlicker = Math.sin(time * 4.9 + 1.2) * 0.035 + 0.965;
+				var leftGrad = ctx.createRadialGradient(
+					leftTorchX, leftTorchY, 2,
+					leftTorchX, leftTorchY, Math.min(width, height) * 0.26 * leftFlicker
+				);
+				leftGrad.addColorStop(0, 'rgba(255, 165, 65, 0.16)');
+				leftGrad.addColorStop(0.5, 'rgba(195, 75, 15, 0.06)');
+				leftGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+				ctx.fillStyle = leftGrad;
+				ctx.beginPath();
+				ctx.arc(leftTorchX, leftTorchY, Math.min(width, height) * 0.26, 0, Math.PI * 2);
+				ctx.fill();
+
+				var rightTorchX = width * 0.78;
+				var rightTorchY = height * 0.35;
+				var rightFlicker = Math.cos(time * 5.5 + 2.4) * 0.035 + 0.965;
+				var rightGrad = ctx.createRadialGradient(
+					rightTorchX, rightTorchY, 2,
+					rightTorchX, rightTorchY, Math.min(width, height) * 0.26 * rightFlicker
+				);
+				rightGrad.addColorStop(0, 'rgba(255, 165, 65, 0.16)');
+				rightGrad.addColorStop(0.5, 'rgba(195, 75, 15, 0.06)');
+				rightGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+				ctx.fillStyle = rightGrad;
+				ctx.beginPath();
+				ctx.arc(rightTorchX, rightTorchY, Math.min(width, height) * 0.26, 0, Math.PI * 2);
+				ctx.fill();
+
+				// 3. Floating Ember Specks
+				for (var e = 0; e < embers.length; e++) {
+					var p = embers[e];
+					p.y -= p.speedY;
+					p.x += Math.sin(time + p.pulse) * p.speedX;
+					p.pulse += 0.03;
+
+					if (p.y < 0) {
+						p.y = 1.0;
+						p.x = Math.random();
+					}
+
+					var px = p.x * width;
+					var py = p.y * height;
+					var pAlpha = (Math.sin(p.pulse) * 0.35 + 0.65) * p.alpha;
+
+					ctx.fillStyle = 'rgba(255, 185, 70, ' + pAlpha + ')';
+					ctx.beginPath();
+					ctx.arc(px, py, p.size, 0, Math.PI * 2);
+					ctx.fill();
+				}
+
+				animFrameId = requestAnimationFrame(renderLighting);
+			}
+
+			window.addEventListener('resize', resizeCanvas);
+			renderLighting();
+		})();
 
 		// Fullscreen button logic
 		document.getElementById('fullscreenBtn').addEventListener('click', function () {

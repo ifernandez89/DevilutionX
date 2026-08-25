@@ -2,7 +2,6 @@
 
 #include <function_ref.hpp>
 
-#include "lua/lua_global.hpp"
 #include "options.h"
 
 namespace devilution {
@@ -21,7 +20,6 @@ void OptionGameModeChanged()
 	} else if (mode == StartUpGameMode::Diablo) {
 		GetOptions().Mods.SetHellfireEnabled(false);
 	}
-	LuaReloadActiveMods();
 }
 const auto OptionChangeHandlerGameMode = (GetOptions().GameMode.gameMode.SetValueChangedCallback(OptionGameModeChanged), true);
 } // namespace

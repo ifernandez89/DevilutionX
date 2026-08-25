@@ -418,6 +418,19 @@
 			color: #ffffff;
 		}
 
+		.btn-export {
+			background: linear-gradient(180deg, #184a5a 0%, #0c2830 100%);
+			border: 1px solid #256f8c;
+			color: #ccf2ff;
+			margin-right: 6px;
+		}
+
+		.btn-export:hover {
+			background: linear-gradient(180deg, #20687c 0%, #103b44 100%);
+			border-color: #4ddbff;
+			color: #ffffff;
+		}
+
 		.btn-reset {
 			background: linear-gradient(180deg, #443622 0%, #201a10 100%);
 			border: 1px solid #73592f;
@@ -452,26 +465,33 @@
 	<div id="fileManagerModal">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h2>Administrador de Archivos MPQ</h2>
+				<h2>Administrador de Archivos y Partidas Guardadas</h2>
 				<button class="close-btn" id="closeModal">&times;</button>
 			</div>
 
 			<div class="section">
-				<h3>Subir Archivo de Datos</h3>
+				<h3>Subir Archivos (Datos MPQ o Partidas .SV / .DSV)</h3>
 				<div class="info-text">
-					Sube tu <strong>DIABDAT.MPQ</strong> (del juego completo) o <strong>SPAWN.MPQ</strong> (versión shareware). Los datos se guardan permanentemente en tu navegador.
+					Sube tu <strong>DIABDAT.MPQ</strong>, <strong>SPAWN.MPQ</strong> o tus partidas guardadas (<strong>.sv</strong> / <strong>.dsv</strong>). Los archivos se guardan permanentemente en tu navegador.
 				</div>
 				<div class="drop-zone" id="dropZone">
-					<p>📁 Arrastra y suelta tu archivo <strong>.MPQ</strong> aquí</p>
+					<p>📁 Arrastra y suelta tu <strong>.MPQ</strong> o partidas <strong>.sv / .dsv</strong> aquí</p>
 					<p>o</p>
-					<p><button class="ui-btn" id="browseBtn" style="display:inline-flex;">Explorar Archivo...</button></p>
+					<p><button class="ui-btn" id="browseBtn" style="display:inline-flex;">Explorar Archivos...</button></p>
 				</div>
-				<input type="file" id="fileInput" accept=".mpq,.MPQ" multiple>
+				<input type="file" id="fileInput" accept=".mpq,.MPQ,.sv,.SV,.dsv,.DSV,.ini,.INI" multiple>
 			</div>
 
 			<div class="section">
 				<div class="file-list">
-					<h3>Archivos Cargados</h3>
+					<h3>Partidas Guardadas (.sv / .dsv)</h3>
+					<div id="saveFilesList"></div>
+				</div>
+			</div>
+
+			<div class="section">
+				<div class="file-list">
+					<h3>Archivos de Datos MPQ</h3>
 					<div id="mpqFilesList"></div>
 				</div>
 			</div>

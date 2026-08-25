@@ -2,6 +2,7 @@
 
 #include <function_ref.hpp>
 
+#include "lua/lua_global.hpp"
 #include "options.h"
 
 namespace devilution {
@@ -11,6 +12,18 @@ void OptionSharewareChanged()
 	gbIsSpawn = *GetOptions().GameMode.shareware;
 }
 const auto OptionChangeHandlerShareware = (GetOptions().GameMode.shareware.SetValueChangedCallback(OptionSharewareChanged), true);
+
+void OptionGameModeChanged()
+{
+	const StartUpGameMode mode = *GetOptions().GameMode.gameMode;
+	if (mode == StartUpGameMode::Hellfire) {
+		GetOptions().Mods.SetHellfireEnabled(true);
+	} else if (mode == StartUpGameMode::Diablo) {
+		GetOptions().Mods.SetHellfireEnabled(false);
+	}
+	LuaReloadActiveMods();
+}
+const auto OptionChangeHandlerGameMode = (GetOptions().GameMode.gameMode.SetValueChangedCallback(OptionGameModeChanged), true);
 } // namespace
 
 bool gbRunGame;

@@ -589,7 +589,31 @@ void SaveWriter::RemoveHashEntries(bool (*fnGetName)(uint8_t, char *))
 
 std::optional<SaveReader> OpenSaveArchive(uint32_t saveNum)
 {
-	return CreateSaveReader(GetSavePath(saveNum));
+	std::string primaryPath = GetSavePath(saveNum);
+	if (FileExists(primaryPath.c_str())) {
+		gbIsHellfireSaveGame = gbIsHellfire;
+		return CreateSaveReader(primaryPath);
+	}
+
+#ifdef UNPACKED_SAVES
+	const std::string primaryExt = gbIsHellfire ? "_hsv" DIRECTORY_SEPARATOR_STR : "_sv" DIRECTORY_SEPARATOR_STR;
+	const std::string altExt = gbIsHellfire ? "_sv" DIRECTORY_SEPARATOR_STR : "_hsv" DIRECTORY_SEPARATOR_STR;
+#else
+	const std::string primaryExt = gbIsHellfire ? ".hsv" : ".sv";
+	const std::string altExt = gbIsHellfire ? ".sv" : ".hsv";
+#endif
+	std::string altPath = primaryPath;
+	const size_t pos = altPath.rfind(primaryExt);
+	if (pos != std::string::npos) {
+		altPath.replace(pos, primaryExt.length(), altExt);
+		if (FileExists(altPath.c_str())) {
+			gbIsHellfireSaveGame = !gbIsHellfire;
+			return CreateSaveReader(altPath);
+		}
+	}
+
+	gbIsHellfireSaveGame = gbIsHellfire;
+	return CreateSaveReader(primaryPath);
 }
 
 std::optional<SaveReader> OpenStashArchive()
@@ -753,7 +777,22 @@ bool pfile_delete_save(_uiheroinfo *heroInfo)
 	const uint32_t saveNum = heroInfo->saveNumber;
 	if (saveNum < MAX_CHARACTERS) {
 		hero_names[saveNum][0] = '\0';
-		RemoveFile(GetSavePath(saveNum).c_str());
+		std::string primaryPath = GetSavePath(saveNum);
+		RemoveFile(primaryPath.c_str());
+
+#ifdef UNPACKED_SAVES
+		const std::string primaryExt = gbIsHellfire ? "_hsv" DIRECTORY_SEPARATOR_STR : "_sv" DIRECTORY_SEPARATOR_STR;
+		const std::string altExt = gbIsHellfire ? "_sv" DIRECTORY_SEPARATOR_STR : "_hsv" DIRECTORY_SEPARATOR_STR;
+#else
+		const std::string primaryExt = gbIsHellfire ? ".hsv" : ".sv";
+		const std::string altExt = gbIsHellfire ? ".sv" : ".hsv";
+#endif
+		std::string altPath = primaryPath;
+		const size_t pos = altPath.rfind(primaryExt);
+		if (pos != std::string::npos) {
+			altPath.replace(pos, primaryExt.length(), altExt);
+			RemoveFile(altPath.c_str());
+		}
 	}
 	return true;
 }

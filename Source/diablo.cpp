@@ -1247,12 +1247,11 @@ void DiabloInit()
 	bool wasHellfireDiscovered = false;
 	if (!forceDiablo && !forceHellfire)
 		wasHellfireDiscovered = (HaveHellfire() && *GetOptions().GameMode.gameMode == StartUpGameMode::Ask);
-	bool enableHellfire = forceHellfire || wasHellfireDiscovered;
-	if (!forceDiablo && *GetOptions().GameMode.gameMode == StartUpGameMode::Hellfire) { // Migrate legacy options
-		GetOptions().GameMode.gameMode.SetValue(StartUpGameMode::Diablo);
-		enableHellfire = true;
-	}
-	if (forceDiablo || enableHellfire) {
+	bool enableHellfire = forceHellfire || (*GetOptions().GameMode.gameMode == StartUpGameMode::Hellfire) || wasHellfireDiscovered;
+	if (forceDiablo)
+		enableHellfire = false;
+
+	if (forceDiablo || enableHellfire || *GetOptions().GameMode.gameMode == StartUpGameMode::Diablo) {
 		GetOptions().Mods.SetHellfireEnabled(enableHellfire);
 	}
 

@@ -89,14 +89,13 @@ void LimitFrameRate()
 {
 	if (*GetOptions().Graphics.frameRateControl != FrameRateControl::CPUSleep)
 		return;
-	static uint32_t frameDeadline;
+	static uint32_t frameDeadline = 0;
 	const uint32_t tc = SDL_GetTicks() * 1000;
-	uint32_t v = 0;
 	if (frameDeadline > tc) {
-		v = tc % refreshDelay;
-		SDL_Delay(v / 1000 + 1); // ceil
+		const uint32_t delayUs = frameDeadline - tc;
+		SDL_Delay(delayUs / 1000 + 1); // ceil
 	}
-	frameDeadline = tc + v + refreshDelay;
+	frameDeadline = SDL_GetTicks() * 1000 + (refreshDelay > 0 ? static_cast<uint32_t>(refreshDelay) : 16666);
 }
 
 } // namespace

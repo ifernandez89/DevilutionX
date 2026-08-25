@@ -55,6 +55,8 @@ struct Towner {
 
 	/** Tile position of NPC */
 	Point position;
+	/** Home tile position of NPC for idle wandering */
+	Point homePosition;
 	/** Randomly chosen topic for discussion (picked when loading into town) */
 	_speech_id gossip;
 	uint16_t _tAnimWidth;

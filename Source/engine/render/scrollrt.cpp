@@ -31,6 +31,7 @@
 #include "engine/displacement.hpp"
 #include "engine/dx.h"
 #include "engine/point.hpp"
+#include "engine/random.hpp"
 #include "engine/render/clx_render.hpp"
 #include "engine/render/dun_render.hpp"
 #include "engine/render/light_render.hpp"
@@ -97,6 +98,96 @@ bool frameflag;
 namespace {
 
 constexpr auto RightFrameDisplacement = Displacement { DunFrameWidth, 0 };
+
+enum RainLayer {
+	RAIN_BACK,
+	RAIN_FRONT,
+};
+
+struct RainDrop {
+	int x;
+	int y;
+	int len;
+	int speed;
+	int wind;
+	uint8_t alpha;
+	RainLayer layer;
+};
+
+constexpr int MAX_RAIN = 220;
+RainDrop Rain[MAX_RAIN];
+bool RainInitialized = false;
+
+void InitRain()
+{
+	for (int i = 0; i < MAX_RAIN; i++) {
+		Rain[i].x = static_cast<int>(GenerateRandomNumber() % 640);
+		Rain[i].y = static_cast<int>(GenerateRandomNumber() % 480);
+		int type = static_cast<int>(GenerateRandomNumber() % 3);
+		if (type == 0) {
+			Rain[i].len = 3;
+			Rain[i].speed = 2;
+			Rain[i].alpha = 70;
+		} else if (type == 1) {
+			Rain[i].len = 6;
+			Rain[i].speed = 4;
+			Rain[i].alpha = 100;
+		} else {
+			Rain[i].len = 10;
+			Rain[i].speed = 6;
+			Rain[i].alpha = 140;
+		}
+		Rain[i].wind = 1;
+		Rain[i].layer = (GenerateRandomNumber() % 2 == 0) ? RAIN_BACK : RAIN_FRONT;
+	}
+	RainInitialized = true;
+}
+
+void UpdateRain()
+{
+	if (!RainInitialized)
+		InitRain();
+
+	const int width = std::max<int>(gnScreenWidth, 640);
+	const int height = std::max<int>(gnScreenHeight, 480);
+
+	for (int i = 0; i < MAX_RAIN; i++) {
+		Rain[i].x += Rain[i].wind;
+		Rain[i].y += Rain[i].speed;
+
+		if (Rain[i].y > height || Rain[i].x < -20 || Rain[i].x > width + 20) {
+			Rain[i].x = static_cast<int>(GenerateRandomNumber() % width);
+			Rain[i].y = -(static_cast<int>(GenerateRandomNumber() % 50));
+		}
+	}
+}
+
+void DrawRainLayer(const Surface &out, RainLayer layer)
+{
+	if (leveltype != DTYPE_TOWN)
+		return;
+
+	UpdateRain();
+
+	for (int i = 0; i < MAX_RAIN; i++) {
+		if (Rain[i].layer != layer)
+			continue;
+
+		int x0 = Rain[i].x;
+		int y0 = Rain[i].y;
+		int x1 = Rain[i].x + Rain[i].wind;
+		int y1 = Rain[i].y + Rain[i].len;
+
+		if (x0 >= 0 && x0 < out.w() && y0 >= 0 && y0 < out.h()) {
+			uint8_t *pixel = out.at(x0, y0);
+			*pixel = static_cast<uint8_t>(std::max(0, static_cast<int>(*pixel) - 20));
+			if (y1 >= 0 && y1 < out.h()) {
+				uint8_t *pixel2 = out.at(x1, y1);
+				*pixel2 = static_cast<uint8_t>(std::max(0, static_cast<int>(*pixel2) - 30));
+			}
+		}
+	}
+}
 
 [[nodiscard]] DVL_ALWAYS_INLINE bool IsFloor(Point tilePosition)
 {
@@ -1251,7 +1342,9 @@ void DrawGame(const Surface &fullOut, Point position, Displacement offset)
 	    dLight, MicroTileLen);
 
 	DrawFloor(out, lightmap, position, Point {} + offset, rows, columns);
+	DrawRainLayer(out, RAIN_BACK);
 	DrawTileContent(out, lightmap, position, Point {} + offset, rows, columns);
+	DrawRainLayer(out, RAIN_FRONT);
 	DrawOOB(out, lightmap, position, Point {} + offset, rows, columns);
 
 	if (*GetOptions().Graphics.zoom) {

@@ -143,7 +143,7 @@ bool cineflag;
 int PauseMode;
 clicktype sgbMouseDown;
 uint16_t gnTickDelay = 50;
-char gszProductName[64] = "DevilutionX vUnknown";
+char gszProductName[64] = "Diablo Nightmare Edition";
 
 #ifdef _DEBUG
 bool DebugDisableNetworkTimeout = false;
@@ -1203,7 +1203,7 @@ void DiabloInitScreen()
 
 void SetApplicationVersions()
 {
-	*BufCopy(gszProductName, PROJECT_NAME, " v", PROJECT_VERSION) = '\0';
+	*BufCopy(gszProductName, "Diablo Nightmare Edition") = '\0';
 	*BufCopy(gszVersionNumber, "version ", PROJECT_VERSION) = '\0';
 }
 
@@ -3483,7 +3483,7 @@ bool IsDiabloAlive(bool playSFX)
 	if (Quests[Q_DIABLO]._qactive == QUEST_DONE && !gbIsMultiplayer) {
 		if (playSFX)
 			PlaySFX(SfxID::DiabloDeath);
-		return false;
+		return true;
 	}
 
 	return true;

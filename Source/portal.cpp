@@ -49,11 +49,11 @@ void SetPortalStats(int i, bool o, Point position, int lvl, dungeon_type lvltype
 
 void AddPortalMissile(const Player &player, Point position, bool sync)
 {
-	auto *missile = AddMissile({ 0, 0 }, position, Direction::South, MissileID::TownPortal, TARGET_MONSTERS, player, 0, 0, /*parent=*/nullptr, SfxID::None);
+	auto *missile = AddMissile({ 0, 0 }, position, Direction::South, MissileID::RedPortal, TARGET_MONSTERS, player, 0, 0, /*parent=*/nullptr, SfxID::None);
 	if (missile != nullptr) {
 		// Don't show portal opening animation if we sync existing portals
 		if (sync)
-			missile->setFrameGroup<PortalFrame>(PortalFrame::Idle);
+			missile->setFrameGroup<RedPortalFrame>(RedPortalFrame::Idle);
 
 		if (leveltype != DTYPE_TOWN)
 			missile->_mlid = AddLight(missile->position.tile, 15);
@@ -62,6 +62,9 @@ void AddPortalMissile(const Player &player, Point position, bool sync)
 
 void SyncPortals()
 {
+	if (!Portals[MyPlayerId].open) {
+		ActivatePortal(Players[MyPlayerId], { 25, 29 }, 1, DTYPE_CATHEDRAL, false);
+	}
 	for (int i = 0; i < MAXPORTAL; i++) {
 		if (!Portals[i].open)
 			continue;

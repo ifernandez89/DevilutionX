@@ -50,7 +50,7 @@ extern UiFlags InfoColor;
 extern StringOrView InfoString;
 extern StringOrView FloatingInfoString;
 
-extern Rectangle MainPanelButtonRect[8];
+extern Rectangle MainPanelButtonRect[9];
 extern Rectangle CharPanelButtonRect[4];
 
 extern bool MainPanelButtonDown;

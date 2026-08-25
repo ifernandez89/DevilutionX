@@ -11,6 +11,7 @@
 #include "engine/random.hpp"
 #include "game_mode.hpp"
 #include "inv.h"
+#include "levels/gendung.h"
 #include "minitext.h"
 #include "stores.h"
 #include "tables/textdat.h"
@@ -94,6 +95,7 @@ void InitTownerInfo(Towner &towner, const TownerData &townerData, const TownerDa
 	auto nameIt = TownerLongNames.find(townerData.type);
 	towner.name = nameIt != TownerLongNames.end() ? _(nameIt->second.c_str()) : std::string_view(entry.name);
 	towner.position = entry.position;
+	towner.homePosition = entry.position;
 	towner.talk = townerData.talk;
 
 	if (townerData.init != nullptr) {
@@ -718,7 +720,7 @@ bool IsTownerPresent(_talker_id npc)
 {
 	switch (npc) {
 	case TOWN_DEADGUY:
-		return Quests[Q_BUTCHER]._qactive != QUEST_NOTAVAIL && Quests[Q_BUTCHER]._qactive != QUEST_DONE;
+		return true; // Always present at cathedral entrance
 	case TOWN_FARMER:
 		return gbIsHellfire && sgGameInitInfo.bCowQuest == 0 && Quests[Q_FARMER]._qactive != QUEST_HIVE_DONE;
 	case TOWN_COWFARM:
@@ -793,9 +795,24 @@ void FreeTownerGFX()
 void ProcessTowners()
 {
 	// BUGFIX: should be `i < numtowners`, was `i < NUM_TOWNERS`
-	for (auto &towner : Towners) {
+	for (size_t i = 0; i < Towners.size(); i++) {
+		auto &towner = Towners[i];
 		if (towner._ttype == TOWN_DEADGUY) {
 			TownDead(towner);
+		}
+
+		// Subtle idle wandering (1-2 steps near home position)
+		if (towner._ttype != TOWN_DEADGUY && towner._ttype != TOWN_COW && (GenerateRandomNumber() % 100) == 0) {
+			int dx = static_cast<int>(GenerateRandomNumber() % 3) - 1;
+			int dy = static_cast<int>(GenerateRandomNumber() % 3) - 1;
+			Point targetPos = towner.homePosition + Displacement { dx, dy };
+			if (targetPos != towner.position && targetPos.x > 0 && targetPos.y > 0 && targetPos.x < MAXDUNX && targetPos.y < MAXDUNY) {
+				if (dMonster[targetPos.x][targetPos.y] == 0 && PosOkPlayer(*MyPlayer, targetPos)) {
+					dMonster[towner.position.x][towner.position.y] = 0;
+					towner.position = targetPos;
+					dMonster[targetPos.x][targetPos.y] = static_cast<int16_t>(i + 1);
+				}
+			}
 		}
 
 		towner._tAnimCnt++;

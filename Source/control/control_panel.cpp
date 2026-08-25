@@ -78,7 +78,7 @@ Rectangle CharPanelButtonRect[4] = {
 constexpr Size WidePanelButtonSize { 71, 20 };
 constexpr Size PanelButtonSize { 33, 32 };
 /** Positions of panel buttons. */
-Rectangle MainPanelButtonRect[8] = {
+Rectangle MainPanelButtonRect[9] = {
 	// clang-format off
 	{ {   9,   9 }, WidePanelButtonSize }, // char button
 	{ {   9,  35 }, WidePanelButtonSize }, // quests button
@@ -86,6 +86,7 @@ Rectangle MainPanelButtonRect[8] = {
 	{ {   9, 101 }, WidePanelButtonSize }, // menu button
 	{ { 560,   9 }, WidePanelButtonSize }, // inv button
 	{ { 560,  35 }, WidePanelButtonSize }, // spells button
+	{ { 560,  75 }, WidePanelButtonSize }, // load game button
 	{ {  87,  91 }, PanelButtonSize     }, // chat button
 	{ { 527,  91 }, PanelButtonSize     }, // friendly fire button
 	// clang-format on
@@ -102,22 +103,23 @@ Rectangle SpellButtonRect { { 565, 64 }, { 56, 56 } };
 int PanelPaddingHeight = 16;
 
 /** Maps from panel_button_id to panel button description. */
-const char *const PanBtnStr[8] = {
+const char *const PanBtnStr[9] = {
 	N_("Character Information"),
 	N_("Quests log"),
 	N_("Automap"),
 	N_("Main Menu"),
 	N_("Inventory"),
 	N_("Spell book"),
+	N_("Load Game"),
 	N_("Send Message"),
 	"" // Player attack
 };
 
 /** Maps from panel_button_id to hotkey name. */
-const char *const PanBtnHotKey[8] = { "'c'", "'q'", N_("Tab"), N_("Esc"), "'i'", "'b'", N_("Enter"), nullptr };
+const char *const PanBtnHotKey[9] = { "'c'", "'q'", N_("Tab"), N_("Esc"), "'i'", "'b'", "F3", N_("Enter"), nullptr };
 
-int TotalSpMainPanelButtons = 6;
-int TotalMpMainPanelButtons = 8;
+int TotalSpMainPanelButtons = 7;
+int TotalMpMainPanelButtons = 9;
 
 namespace {
 
@@ -133,6 +135,7 @@ enum panel_button_id : uint8_t {
 	PanelButtonMainmenu,
 	PanelButtonInventory,
 	PanelButtonSpellbook,
+	PanelButtonLoadGame,
 	PanelButtonSendmsg,
 	PanelButtonFriendly,
 	PanelButtonLast = PanelButtonFriendly,
@@ -437,12 +440,19 @@ void DrawMainPanelButtons(const Surface &out)
 	const Point mainPanelPosition = GetMainPanel().position;
 
 	for (int i = 0; i < TotalSpMainPanelButtons; i++) {
+		const Point position = mainPanelPosition + Displacement { MainPanelButtonRect[i].position.x, MainPanelButtonRect[i].position.y };
 		if (!MainPanelButtons[i]) {
-			DrawPanelBox(out, MakeSdlRect(MainPanelButtonRect[i].position.x, MainPanelButtonRect[i].position.y + PanelPaddingHeight, MainPanelButtonRect[i].size.width, MainPanelButtonRect[i].size.height + 1), mainPanelPosition + Displacement { MainPanelButtonRect[i].position.x, MainPanelButtonRect[i].position.y });
+			DrawPanelBox(out, MakeSdlRect(MainPanelButtonRect[i].position.x, MainPanelButtonRect[i].position.y + PanelPaddingHeight, MainPanelButtonRect[i].size.width, MainPanelButtonRect[i].size.height + 1), position);
 		} else {
-			const Point position = mainPanelPosition + Displacement { MainPanelButtonRect[i].position.x, MainPanelButtonRect[i].position.y };
-			RenderClxSprite(out, (*pMainPanelButtons)[i], position);
-			RenderClxSprite(out, (*PanelButtonDown)[i], position + Displacement { 4, 0 });
+			if (i < 6) {
+				RenderClxSprite(out, (*pMainPanelButtons)[i], position);
+			} else {
+				DrawPanelBox(out, MakeSdlRect(MainPanelButtonRect[i].position.x, MainPanelButtonRect[i].position.y + PanelPaddingHeight, MainPanelButtonRect[i].size.width, MainPanelButtonRect[i].size.height + 1), position);
+			}
+			RenderClxSprite(out, (*PanelButtonDown)[i < 6 ? i : 0], position + Displacement { 4, 0 });
+		}
+		if (i == PanelButtonLoadGame) {
+			DrawString(out, _("LOAD"), { position + Displacement { 0, 4 }, { 71, 14 } }, { .flags = UiFlags::ColorUiGold | UiFlags::AlignCenter });
 		}
 	}
 
@@ -602,6 +612,11 @@ void CheckMainPanelButtonUp()
 			CloseInventory();
 			CloseGoldDrop();
 			SpellbookFlag = !SpellbookFlag;
+			break;
+		case PanelButtonLoadGame:
+			if (!gbIsMultiplayer && gbValidSaveFile) {
+				gamemenu_load_game(false);
+			}
 			break;
 		case PanelButtonSendmsg:
 			if (ChatFlag)

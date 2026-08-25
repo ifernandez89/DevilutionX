@@ -592,7 +592,7 @@ std::optional<SaveReader> OpenSaveArchive(uint32_t saveNum)
 	std::string primaryPath = GetSavePath(saveNum);
 	if (FileExists(primaryPath.c_str())) {
 		gbIsHellfireSaveGame = gbIsHellfire;
-		return CreateSaveReader(primaryPath);
+		return CreateSaveReader(std::move(primaryPath));
 	}
 
 #ifdef UNPACKED_SAVES
@@ -608,12 +608,12 @@ std::optional<SaveReader> OpenSaveArchive(uint32_t saveNum)
 		altPath.replace(pos, primaryExt.length(), altExt);
 		if (FileExists(altPath.c_str())) {
 			gbIsHellfireSaveGame = !gbIsHellfire;
-			return CreateSaveReader(altPath);
+			return CreateSaveReader(std::move(altPath));
 		}
 	}
 
 	gbIsHellfireSaveGame = gbIsHellfire;
-	return CreateSaveReader(primaryPath);
+	return CreateSaveReader(std::move(primaryPath));
 }
 
 std::optional<SaveReader> OpenStashArchive()

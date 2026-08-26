@@ -24,7 +24,6 @@
 #include "pfile.h"
 #include "qol/stash.h"
 #include "stores.h"
-#include "utils/png.h"
 #include "utils/sdl_compat.h"
 
 namespace devilution {
@@ -119,7 +118,7 @@ const char *const PanBtnStr[9] = {
 /** Maps from panel_button_id to hotkey name. */
 const char *const PanBtnHotKey[9] = { "'c'", "'q'", N_("Tab"), N_("Esc"), "'i'", "'b'", "F3", N_("Enter"), nullptr };
 
-int TotalSpMainPanelButtons = 6;
+int TotalSpMainPanelButtons = 7;
 int TotalMpMainPanelButtons = 9;
 
 namespace {
@@ -366,11 +365,6 @@ tl::expected<void, std::string> InitMainPanel()
 		{
 			ASSIGN_OR_RETURN(const OwnedClxSpriteList sprite, LoadCelWithStatus("ctrlpan\\panel8", GetMainPanel().size.width));
 			ClxDraw(*BottomBuffer, { 0, (GetMainPanel().size.height + PanelPaddingHeight) - 1 }, sprite[0]);
-			if (SDL_Surface *gothicPanel = LoadPNG("ui_art\\gothic_panel.png")) {
-				SDL_Rect dstRect = MakeSdlRect(0, PanelPaddingHeight, GetMainPanel().size.width, GetMainPanel().size.height);
-				SDL_BlitSurface(gothicPanel, nullptr, BottomBuffer->surface, &dstRect);
-				SDL_FreeSurface(gothicPanel);
-			}
 		}
 		{
 			const Point bulbsPosition { 0, 87 };

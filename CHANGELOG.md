@@ -13,11 +13,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Unforced Product Title**: Standardized `PROJECT_NAME` and `gszProductName` as `"Diablo Nightmare Edition"` across both Diablo and Hellfire game modes, ensuring consistent main menu, dialog, and window captions across all platforms.
 
 #### Combat QoL & Visual Feedback
-- **Monster Health Bar Enabled by Default**: Configured `enemyHealthBar` option to `true` by default, displaying monster names, type indicators, and resistance tags at the top of the screen when hovering or targeting.
+- **Monster Health Bar & Overhead Floating Bars**: Configured `enemyHealthBar` option to `true` by default and added dynamic overhead health bars (`DrawMonsterOverheadHealthBar`) rendered directly above living monsters in combat, featuring real-time health scaling, critical health indicators, and gold borders for unique champions/bosses.
 - **Floating Damage Numbers**: Integrated dynamic floating damage numbers (`AddFloatingNumber`) in `ApplyMonsterDamage`, displaying red damage popups floating above monsters during combat.
 
 #### Multiplatform Gothic Visual Enhancement & Weather System
-- **Pristine HUD Restoration**: Removed boxy overlay lines over HP/Mana domes and belt slots, keeping the native HUD artwork clean, uncorrupted, and pixel-perfect.
+- **Dark Gothic Slate HUD Aesthetic**: Integrated native palette remapping (`ApplyGothicPalette`) transforming the bottom control panel, buttons, and status frames into dark obsidian/charcoal slate stone, delivering a Diablo II Resurrected / Diablo IV aesthetic with 100% multiplatform stability and zero runtime overhead.
+- **Pristine HUD Geometry & Save Safety**: Restored clean native HUD geometry and singleplayer button count (`TotalSpMainPanelButtons = 7`), ensuring instant, crash-free loading for new and existing save games.
 - **Screen-Space Weather System in Tristram**: Preserved 2D particle rain engine (`weather_overlay.cpp`), rendering 350 translucent falling drops with wind drift in town under UI panels.
 - **Hellfire Save & Character Class Persistence**: Set default game mode to `StartUpGameMode::Hellfire` and updated character unpacker (`pack.cpp`) to preserve Hellfire hero classes (`HeroClass::LAST`), ensuring `.hsv` saves load seamlessly even after resetting `diablo.ini`.
 - **Multiplatform Architecture Plan**: Established zero-risk visual skinning strategy over existing UI geometry (`implementation_plan.md`), preserving touch controls and slot hit-testing for PC, Mobile, and WebAssembly.

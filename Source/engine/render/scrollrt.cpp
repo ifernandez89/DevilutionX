@@ -30,11 +30,13 @@
 #include "engine/backbuffer_state.hpp"
 #include "engine/displacement.hpp"
 #include "engine/dx.h"
+#include "engine/palette.h"
 #include "engine/point.hpp"
 #include "engine/random.hpp"
 #include "engine/render/clx_render.hpp"
 #include "engine/render/dun_render.hpp"
 #include "engine/render/light_render.hpp"
+#include "engine/render/primitive_render.hpp"
 #include "engine/render/text_render.hpp"
 #include "engine/render/weather_overlay.hpp"
 #include "engine/trn.hpp"
@@ -480,6 +482,52 @@ void DrawMonster(const Surface &out, Point tilePosition, Point targetBufferPosit
 		ClxDrawLight(out, targetBufferPosition, sprite, lightTableIndex);
 }
 
+void DrawMonsterOverheadHealthBar(const Surface &out, Point monsterRenderPosition, const ClxSprite &sprite, const Monster &monster, bool isHovered)
+{
+	if (!*GetOptions().Gameplay.enemyHealthBar)
+		return;
+	if (monster.hasNoLife() || monster.mode == MonsterMode::Death || monster.hitPoints <= 0 || monster.maxHitPoints <= 0)
+		return;
+
+	constexpr int BarWidth = 32;
+	constexpr int BarHeight = 5;
+	const int barX = monsterRenderPosition.x + (static_cast<int>(sprite.width()) - BarWidth) / 2;
+	const int barY = monsterRenderPosition.y - static_cast<int>(sprite.height()) - 4;
+
+	if (barX + BarWidth <= 0 || barX >= out.w() || barY + BarHeight <= 0 || barY >= out.h())
+		return;
+
+	// Background
+	DrawHalfTransparentRectTo(out, barX, barY, BarWidth, BarHeight);
+
+	// Outline / Border
+	const uint8_t borderColor = isHovered ? (PAL16_YELLOW + 2) : (PAL16_GRAY + 15);
+	DrawHorizontalLine(out, { barX, barY }, BarWidth, borderColor);
+	DrawHorizontalLine(out, { barX, barY + BarHeight - 1 }, BarWidth, borderColor);
+	DrawVerticalLine(out, { barX, barY }, BarHeight, borderColor);
+	DrawVerticalLine(out, { barX + BarWidth - 1, barY }, BarHeight, borderColor);
+
+	// Health fill
+	const int innerWidth = BarWidth - 2;
+	const int innerHeight = BarHeight - 2;
+	const int curHp = std::max(0, std::min(monster.hitPoints, monster.maxHitPoints));
+	int fillWidth = (innerWidth * curHp) / monster.maxHitPoints;
+	if (curHp > 0 && fillWidth == 0)
+		fillWidth = 1;
+
+	if (fillWidth > 0) {
+		uint8_t hpColor = PAL16_RED + 4;
+		if (monster.isUnique()) {
+			hpColor = PAL16_YELLOW + 5;
+		} else if (curHp <= monster.maxHitPoints / 4) {
+			hpColor = PAL16_RED + 1;
+		}
+		for (int y = 0; y < innerHeight; ++y) {
+			DrawHorizontalLine(out, { barX + 1, barY + 1 + y }, fillWidth, hpColor);
+		}
+	}
+}
+
 /**
  * @brief Helper for rendering a specific player icon (Mana Shield or Reflect)
  */
@@ -833,6 +881,7 @@ void DrawMonsterHelper(const Surface &out, Point tilePosition, Point targetBuffe
 		ClxDrawOutlineSkipColorZero(out, 233, monsterRenderPosition, sprite);
 	}
 	DrawMonster(out, tilePosition, monsterRenderPosition, monster, lightTableIndex);
+	DrawMonsterOverheadHealthBar(out, monsterRenderPosition, sprite, monster, mi == pcursmonst);
 }
 
 /**

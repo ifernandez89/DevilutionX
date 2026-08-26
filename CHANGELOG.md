@@ -16,7 +16,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Monster Health Bar Enabled by Default**: Configured `enemyHealthBar` option to `true` by default, displaying monster names, type indicators, and resistance tags at the top of the screen when hovering or targeting.
 - **Floating Damage Numbers**: Integrated dynamic floating damage numbers (`AddFloatingNumber`) in `ApplyMonsterDamage`, displaying red damage popups floating above monsters during combat.
 
-#### Multiplatform Gothic Visual Enhancement Architecture
+#### Multiplatform Gothic Visual Enhancement & Weather System
+- **Gothic HP & Mana Flask Overlays**: Rendered wrought-iron gothic arch frames and metallic corner studs (`DrawGothicFlaskOverlay`) on Life and Mana domes in `control_flasks.cpp`, enhancing visual depth without altering hit-test geometry.
+- **Gothic Belt Slot Frames**: Applied pixel-perfect wrought iron borders with warm-gold hover highlights (`DrawGothicSlotFrame`) on belt item slots in `inv.cpp`.
+- **Screen-Space Weather System in Tristram**: Built independent 2D particle rain engine (`weather_overlay.cpp`), rendering 350 translucent falling drops with wind drift in town under UI panels.
 - **Multiplatform Architecture Plan**: Established zero-risk visual skinning strategy over existing UI geometry (`implementation_plan.md`), preserving touch controls and slot hit-testing for PC, Mobile, and WebAssembly.
 
 #### Render Loop, CPU Optimization & Focus Management

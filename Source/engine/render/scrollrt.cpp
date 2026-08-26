@@ -36,6 +36,7 @@
 #include "engine/render/dun_render.hpp"
 #include "engine/render/light_render.hpp"
 #include "engine/render/text_render.hpp"
+#include "engine/render/weather_overlay.hpp"
 #include "engine/trn.hpp"
 #include "engine/world_tile.hpp"
 #include "game_mode.hpp"
@@ -1457,6 +1458,7 @@ void DrawView(const Surface &out, Point startPosition)
 	DrawItemNameLabels(out);
 	DrawMonsterHealthBar(out);
 	DrawFloatingNumbers(out, startPosition, offset);
+	RenderWeatherRain(out);
 
 	if (IsPlayerInStore() && !qtextflag)
 		DrawSText(out);

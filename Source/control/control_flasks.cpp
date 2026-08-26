@@ -1,6 +1,7 @@
 #include "control_flasks.hpp"
 #include "control.hpp"
 
+#include "engine/render/primitive_render.hpp"
 #include "engine/surface.hpp"
 #include "utils/str_cat.hpp"
 
@@ -99,16 +100,42 @@ void DrawFlaskLower(const Surface &out, const Surface &sourceBuffer, int offset,
 
 } // namespace
 
+void DrawGothicFlaskOverlay(const Surface &out, int upperOffset, int lowerOffset)
+{
+	const Point mainPos = GetMainPanel().position;
+	const Point upperPos = mainPos + Displacement { upperOffset, -13 };
+	const Point lowerPos = mainPos + Displacement { lowerOffset, 0 };
+
+	// Upper dome gothic iron arch (top & side accents)
+	DrawHorizontalLine(out, upperPos + Displacement { 4, 0 }, 54, 248);
+	DrawHorizontalLine(out, upperPos + Displacement { 6, 1 }, 50, 232);
+	DrawVerticalLine(out, upperPos + Displacement { 4, 0 }, 13, 248);
+	DrawVerticalLine(out, upperPos + Displacement { 57, 0 }, 13, 248);
+
+	// Lower panel gothic iron side columns
+	DrawVerticalLine(out, lowerPos, 69, 248);
+	DrawVerticalLine(out, lowerPos + Displacement { 87, 0 }, 69, 248);
+	DrawHorizontalLine(out, lowerPos + Displacement { 0, 68 }, 88, 248);
+
+	// Decorative corner studs (rivets)
+	out.SetPixel(lowerPos + Displacement { 1, 1 }, 150);
+	out.SetPixel(lowerPos + Displacement { 86, 1 }, 150);
+	out.SetPixel(lowerPos + Displacement { 1, 67 }, 150);
+	out.SetPixel(lowerPos + Displacement { 86, 67 }, 150);
+}
+
 void DrawLifeFlaskUpper(const Surface &out)
 {
 	constexpr int LifeFlaskUpperOffset = 107;
 	DrawFlaskUpper(out, *pLifeBuff, LifeFlaskUpperOffset, MyPlayer->_pHPPer);
+	DrawGothicFlaskOverlay(out, LifeFlaskUpperOffset, 96);
 }
 
 void DrawManaFlaskUpper(const Surface &out)
 {
 	constexpr int ManaFlaskUpperOffset = 475;
 	DrawFlaskUpper(out, *pManaBuff, ManaFlaskUpperOffset, MyPlayer->_pManaPer);
+	DrawGothicFlaskOverlay(out, ManaFlaskUpperOffset, 464);
 }
 
 void DrawLifeFlaskLower(const Surface &out, bool drawFilledPortion)

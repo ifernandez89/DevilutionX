@@ -90,6 +90,7 @@ set(libdevilutionx_SRCS
   engine/render/automap_render.cpp
   engine/render/remaster_render.cpp
   engine/render/scrollrt.cpp
+  engine/render/weather_overlay.cpp
 
   items/validation.cpp
 

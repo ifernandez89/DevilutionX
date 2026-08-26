@@ -5,9 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Unreleased
+## [v1.6.0-nightmare] - Baseline Estacionario Estable (Nightmare WebAssembly Edition)
 
 ### Diablo Nightmare Edition (Fork Release & Mod Features)
+
+#### Visual Remaster & Gothic Architecture Plan
+- **Gothic Visual Enhancement Plan**: Documented and prepared multiplatform visual remastering architecture for PC, Mobile, and WebAssembly (`GOTHIC_VISUAL_ENHANCEMENT_PLAN.md`).
+- **Baseline Stabilization**: Established stable baseline (`uiMejoradaWebAssembly`) with zero regressions on input, controls, touch, inventory matrix, or viewport resolution architecture.
 
 #### Render Loop, CPU Optimization & Focus Management
 - **Inactive CPU Throttle**: Introduced active idle sleep (`SDL_Delay(20)`) when the game window is unfocused, minimized, or hidden (`!gbActive`). Prevents 100% CPU core spinning, high machine strain, fan noise, and application freezing when switching tabs or unfocusing windows.

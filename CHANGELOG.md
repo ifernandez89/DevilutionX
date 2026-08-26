@@ -17,8 +17,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Floating Damage Numbers**: Integrated dynamic floating damage numbers (`AddFloatingNumber`) in `ApplyMonsterDamage`, displaying red damage popups floating above monsters during combat.
 
 #### Multiplatform Gothic Visual Enhancement & Weather System
-- **Dark Gothic Slate HUD Aesthetic**: Integrated native palette remapping (`ApplyGothicPalette`) transforming the bottom control panel, buttons, and status frames into dark obsidian/charcoal slate stone, delivering a Diablo II Resurrected / Diablo IV aesthetic with 100% multiplatform stability and zero runtime overhead.
-- **Pristine HUD Geometry & Save Safety**: Restored clean native HUD geometry and singleplayer button count (`TotalSpMainPanelButtons = 7`), ensuring instant, crash-free loading for new and existing save games.
+- **Silver/Slate Stone Button Typography**: Configured `ColorButtonface` and `ColorButtonpushed` font translation tables to use silver/slate stone shading (`grayui.trn` and `grayuis.trn`), creating a harmonious, elegant stone texture match across all panel buttons (CHAR, QUESTS, MAP, MENU, INV, SPELLS, LOAD).
+- **Pristine Native HUD Geometry & Artwork**: Preserved the original atmospheric stone HUD artwork, domes, and singleplayer button geometry (`TotalSpMainPanelButtons = 7`), ensuring zero artifacts and crash-free loading for new and existing save games.
 - **Screen-Space Weather System in Tristram**: Preserved 2D particle rain engine (`weather_overlay.cpp`), rendering 350 translucent falling drops with wind drift in town under UI panels.
 - **Hellfire Save & Character Class Persistence**: Set default game mode to `StartUpGameMode::Hellfire` and updated character unpacker (`pack.cpp`) to preserve Hellfire hero classes (`HeroClass::LAST`), ensuring `.hsv` saves load seamlessly even after resetting `diablo.ini`.
 - **Multiplatform Architecture Plan**: Established zero-risk visual skinning strategy over existing UI geometry (`implementation_plan.md`), preserving touch controls and slot hit-testing for PC, Mobile, and WebAssembly.

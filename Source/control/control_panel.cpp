@@ -348,34 +348,6 @@ Point GetPanelPosition(UiPanels panel, Point offset)
 	}
 }
 
-namespace {
-
-std::array<uint8_t, 256> CreateGothicStoneTRN()
-{
-	std::array<uint8_t, 256> trn;
-	for (int i = 0; i < 256; ++i) {
-		trn[i] = static_cast<uint8_t>(i);
-	}
-	for (int i = 0; i < 16; ++i) {
-		trn[PAL16_BEIGE + i] = static_cast<uint8_t>(PAL16_GRAY + i);
-		trn[PAL16_ORANGE + i] = static_cast<uint8_t>(PAL16_GRAY + i);
-	}
-	return trn;
-}
-
-void ApplyGothicPalette(Surface &surface)
-{
-	static const auto gothicTrn = CreateGothicStoneTRN();
-	for (int y = 0; y < surface.h(); ++y) {
-		uint8_t *row = surface.at(0, y);
-		for (int x = 0; x < surface.w(); ++x) {
-			row[x] = gothicTrn[row[x]];
-		}
-	}
-}
-
-} // namespace
-
 void DrawPanelBox(const Surface &out, SDL_Rect srcRect, Point targetPosition)
 {
 	out.BlitFrom(*BottomBuffer, srcRect, targetPosition);
@@ -401,9 +373,6 @@ tl::expected<void, std::string> InitMainPanel()
 			ClxDraw(*pLifeBuff, bulbsPosition, statusPanel[0]);
 			ClxDraw(*pManaBuff, bulbsPosition, statusPanel[1]);
 		}
-		ApplyGothicPalette(*BottomBuffer);
-		ApplyGothicPalette(*pLifeBuff);
-		ApplyGothicPalette(*pManaBuff);
 	}
 	ChatFlag = false;
 	ChatInputState = std::nullopt;
@@ -412,18 +381,9 @@ tl::expected<void, std::string> InitMainPanel()
 			{
 				ASSIGN_OR_RETURN(const OwnedClxSpriteList sprite, LoadCelWithStatus("ctrlpan\\talkpanl", GetMainPanel().size.width));
 				ClxDraw(*BottomBuffer, { 0, (GetMainPanel().size.height + PanelPaddingHeight) * 2 - 1 }, sprite[0]);
-				ApplyGothicPalette(*BottomBuffer);
 			}
 			multiButtons = LoadCel("ctrlpan\\p8but2", 33);
-			if (multiButtons) {
-				static const auto gothicTrn = CreateGothicStoneTRN();
-				ClxApplyTrans(*multiButtons, gothicTrn.data());
-			}
 			talkButtons = LoadCel("ctrlpan\\talkbutt", 61);
-			if (talkButtons) {
-				static const auto gothicTrn = CreateGothicStoneTRN();
-				ClxApplyTrans(*talkButtons, gothicTrn.data());
-			}
 		}
 		sgbPlrTalkTbl = 0;
 		TalkMessage[0] = '\0';
@@ -437,12 +397,9 @@ tl::expected<void, std::string> InitMainPanel()
 	if (!HeadlessMode) {
 		RETURN_IF_ERROR(LoadMainPanel());
 		ASSIGN_OR_RETURN(pMainPanelButtons, LoadCelWithStatus("ctrlpan\\panel8bu", 71));
-		static const auto gothicTrn = CreateGothicStoneTRN();
-		ClxApplyTrans(*pMainPanelButtons, gothicTrn.data());
 
 		static const uint16_t CharButtonsFrameWidths[9] { 95, 41, 41, 41, 41, 41, 41, 41, 41 };
 		ASSIGN_OR_RETURN(pChrButtons, LoadCelWithStatus("data\\charbut", CharButtonsFrameWidths));
-		ClxApplyTrans(*pChrButtons, gothicTrn.data());
 	}
 	ResetMainPanelButtons();
 	if (!HeadlessMode)
@@ -496,7 +453,7 @@ void DrawMainPanelButtons(const Surface &out)
 			RenderClxSprite(out, (*PanelButtonDown)[i < 6 ? i : 0], position + Displacement { 4, 0 });
 		}
 		if (i == PanelButtonLoadGame) {
-			DrawString(out, _("LOAD"), { position + Displacement { 0, 4 }, { 71, 14 } }, { .flags = UiFlags::ColorUiGold | UiFlags::AlignCenter });
+			DrawString(out, _("LOAD"), { position + Displacement { 0, 4 }, { 71, 14 } }, { .flags = UiFlags::ColorUiSilver | UiFlags::AlignCenter });
 		}
 	}
 

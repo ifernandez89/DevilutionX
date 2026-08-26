@@ -30,6 +30,7 @@
 #include "engine/render/primitive_render.hpp"
 #include "engine/render/text_render.hpp"
 #include "engine/size.hpp"
+#include "engine/trn.hpp"
 #include "hwcursor.hpp"
 #include "inv_iterators.hpp"
 #include "levels/tile_properties.hpp"
@@ -1175,6 +1176,8 @@ void InitInv()
 		invName = "inv";
 	}
 	pInvCels = LoadCel(StrCat("data\\inv\\", invName).c_str(), static_cast<uint16_t>(SidePanelSize.width));
+	if (pInvCels)
+		ClxApplyTrans(*pInvCels, GetGoldToStoneTRN());
 }
 
 void DrawInv(const Surface &out)

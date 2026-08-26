@@ -17,8 +17,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Floating Damage Numbers**: Integrated dynamic floating damage numbers (`AddFloatingNumber`) in `ApplyMonsterDamage`, displaying red damage popups floating above monsters during combat.
 
 #### Multiplatform Gothic Visual Enhancement & Weather System
-- **Silver/Slate Stone Button Typography**: Configured `ColorButtonface` and `ColorButtonpushed` font translation tables to use silver/slate stone shading (`grayui.trn` and `grayuis.trn`), creating a harmonious, elegant stone texture match across all panel buttons (CHAR, QUESTS, MAP, MENU, INV, SPELLS, LOAD).
-- **Pristine Native HUD Geometry & Artwork**: Preserved the original atmospheric stone HUD artwork, domes, and singleplayer button geometry (`TotalSpMainPanelButtons = 7`), ensuring zero artifacts and crash-free loading for new and existing save games.
+- **Slate Stone Buttons & Window Trims (Angel/Demon Palette)**: Integrated `GetGoldToStoneTRN()` translation table converting golden button bevels, button text, and window borders (Inventory, Stash, Character Panel, Spellbook, and Quest Log) into the matching slate stone gray of the HUD angel and demon statues, delivering a consistent gothic aesthetic without red font artifacts.
+- **Fixed Spell Icon Box & 6-Button Singleplayer HUD**: Corrected `TotalSpMainPanelButtons` to 6 and eliminated the singleplayer 'LOAD' button overlay over the quick spell icon box at bottom-right.
+- **Embedded Web Favicon & Page Title**: Added 32x32 Diablo skull favicon (embedded base64) and updated web title to "Diablo Nightmare Edition" in `Packaging/emscripten/index.html`.
 - **Screen-Space Weather System in Tristram**: Preserved 2D particle rain engine (`weather_overlay.cpp`), rendering 350 translucent falling drops with wind drift in town under UI panels.
 - **Hellfire Save & Character Class Persistence**: Set default game mode to `StartUpGameMode::Hellfire` and updated character unpacker (`pack.cpp`) to preserve Hellfire hero classes (`HeroClass::LAST`), ensuring `.hsv` saves load seamlessly even after resetting `diablo.ini`.
 - **Multiplatform Architecture Plan**: Established zero-risk visual skinning strategy over existing UI geometry (`implementation_plan.md`), preserving touch controls and slot hit-testing for PC, Mobile, and WebAssembly.

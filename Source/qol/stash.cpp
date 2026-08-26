@@ -20,8 +20,10 @@
 #include "engine/load_clx.hpp"
 #include "engine/rectangle.hpp"
 #include "engine/render/clx_render.hpp"
+#include "engine/render/primitive_render.hpp"
 #include "engine/render/text_render.hpp"
 #include "engine/size.hpp"
+#include "engine/trn.hpp"
 #include "headless_mode.hpp"
 #include "hwcursor.hpp"
 #include "inv.h"
@@ -284,6 +286,10 @@ void InitStash()
 	if (!HeadlessMode) {
 		StashPanelArt = LoadClx("data\\stash.clx");
 		StashNavButtonArt = LoadClx("data\\stashnavbtns.clx");
+		if (StashPanelArt)
+			ClxApplyTrans(*StashPanelArt, GetGoldToStoneTRN());
+		if (StashNavButtonArt)
+			ClxApplyTrans(*StashNavButtonArt, GetGoldToStoneTRN());
 	}
 }
 

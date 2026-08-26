@@ -103,8 +103,8 @@ std::array<const char *, 19> ColorTranslations = {
 	"fonts\\blue.trn",
 	"fonts\\orange.trn",
 
-	"fonts\\grayui.trn",
-	"fonts\\grayuis.trn",
+	"fonts\\buttonface.trn",
+	"fonts\\buttonpushed.trn",
 	"fonts\\gamedialogwhite.trn",
 	"fonts\\gamedialogyellow.trn",
 	"fonts\\gamedialogred.trn",

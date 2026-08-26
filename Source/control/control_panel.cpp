@@ -119,7 +119,7 @@ const char *const PanBtnStr[9] = {
 /** Maps from panel_button_id to hotkey name. */
 const char *const PanBtnHotKey[9] = { "'c'", "'q'", N_("Tab"), N_("Esc"), "'i'", "'b'", "F3", N_("Enter"), nullptr };
 
-int TotalSpMainPanelButtons = 7;
+int TotalSpMainPanelButtons = 6;
 int TotalMpMainPanelButtons = 9;
 
 namespace {
@@ -397,9 +397,11 @@ tl::expected<void, std::string> InitMainPanel()
 	if (!HeadlessMode) {
 		RETURN_IF_ERROR(LoadMainPanel());
 		ASSIGN_OR_RETURN(pMainPanelButtons, LoadCelWithStatus("ctrlpan\\panel8bu", 71));
+		ClxApplyTrans(*pMainPanelButtons, GetGoldToStoneTRN());
 
 		static const uint16_t CharButtonsFrameWidths[9] { 95, 41, 41, 41, 41, 41, 41, 41, 41 };
 		ASSIGN_OR_RETURN(pChrButtons, LoadCelWithStatus("data\\charbut", CharButtonsFrameWidths));
+		ClxApplyTrans(*pChrButtons, GetGoldToStoneTRN());
 	}
 	ResetMainPanelButtons();
 	if (!HeadlessMode)
@@ -419,7 +421,9 @@ tl::expected<void, std::string> InitMainPanel()
 	if (!HeadlessMode) {
 		InitSpellBook();
 		ASSIGN_OR_RETURN(pQLogCel, LoadCelWithStatus("data\\quest", static_cast<uint16_t>(SidePanelSize.width)));
+		ClxApplyTrans(*pQLogCel, GetGoldToStoneTRN());
 		ASSIGN_OR_RETURN(GoldBoxBuffer, LoadCelWithStatus("ctrlpan\\golddrop", 261));
+		ClxApplyTrans(*GoldBoxBuffer, GetGoldToStoneTRN());
 	}
 	CloseGoldDrop();
 	CalculatePanelAreas();
@@ -445,15 +449,8 @@ void DrawMainPanelButtons(const Surface &out)
 		if (!MainPanelButtons[i]) {
 			DrawPanelBox(out, MakeSdlRect(MainPanelButtonRect[i].position.x, MainPanelButtonRect[i].position.y + PanelPaddingHeight, MainPanelButtonRect[i].size.width, MainPanelButtonRect[i].size.height + 1), position);
 		} else {
-			if (i < 6) {
-				RenderClxSprite(out, (*pMainPanelButtons)[i], position);
-			} else {
-				DrawPanelBox(out, MakeSdlRect(MainPanelButtonRect[i].position.x, MainPanelButtonRect[i].position.y + PanelPaddingHeight, MainPanelButtonRect[i].size.width, MainPanelButtonRect[i].size.height + 1), position);
-			}
-			RenderClxSprite(out, (*PanelButtonDown)[i < 6 ? i : 0], position + Displacement { 4, 0 });
-		}
-		if (i == PanelButtonLoadGame) {
-			DrawString(out, _("LOAD"), { position + Displacement { 0, 4 }, { 71, 14 } }, { .flags = UiFlags::ColorUiSilver | UiFlags::AlignCenter });
+			RenderClxSprite(out, (*pMainPanelButtons)[i], position);
+			RenderClxSprite(out, (*PanelButtonDown)[i], position + Displacement { 4, 0 });
 		}
 	}
 

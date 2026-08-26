@@ -11,6 +11,7 @@
 #include "engine/load_clx.hpp"
 #include "engine/render/clx_render.hpp"
 #include "engine/render/text_render.hpp"
+#include "engine/trn.hpp"
 #include "utils/display.h"
 #include "utils/language.h"
 #include "utils/sdl_compat.h"
@@ -87,6 +88,12 @@ tl::expected<void, std::string> LoadMainPanel()
 	PanelButton = LoadOptionalClx("data\\panel8buc.clx");
 	PanelButtonGrime = LoadOptionalClx("data\\dirtybuc.clx");
 	PanelButtonDownGrime = LoadOptionalClx("data\\dirtybucp.clx");
+	if (PanelButton)
+		ClxApplyTrans(*PanelButton, GetGoldToStoneTRN());
+	if (PanelButtonGrime)
+		ClxApplyTrans(*PanelButtonGrime, GetGoldToStoneTRN());
+	if (PanelButtonDownGrime)
+		ClxApplyTrans(*PanelButtonDownGrime, GetGoldToStoneTRN());
 
 	RenderMainButton(*out, 0, _("char"), 0);
 	RenderMainButton(*out, 1, _("quests"), 1);
@@ -94,6 +101,30 @@ tl::expected<void, std::string> LoadMainPanel()
 	RenderMainButton(*out, 3, _("menu"), 0);
 	RenderMainButton(*out, 4, _("inv"), 1);
 	RenderMainButton(*out, 5, _("spells"), 0);
+
+	const uint8_t *goldToStone = GetGoldToStoneTRN();
+	for (int i = 0; i < 6; ++i) {
+		const Rectangle &rect = MainPanelButtonRect[i];
+		for (int y = 0; y < rect.size.height + 2; ++y) {
+			uint8_t *row = BottomBuffer->at(rect.position.x, rect.position.y + 16 + y);
+			for (int x = 0; x < rect.size.width; ++x) {
+				row[x] = goldToStone[row[x]];
+			}
+			if (IsChatAvailable()) {
+				uint8_t *chatRow = BottomBuffer->at(rect.position.x, rect.position.y + 16 + GetMainPanel().size.height + 16 + y);
+				for (int x = 0; x < rect.size.width; ++x) {
+					chatRow[x] = goldToStone[chatRow[x]];
+				}
+			}
+		}
+	}
+	for (int y = 0; y < out->h(); ++y) {
+		uint8_t *row = out->at(0, y);
+		for (int x = 0; x < out->w(); ++x) {
+			row[x] = goldToStone[row[x]];
+		}
+	}
+
 	PanelButtonDown = SurfaceToClx(*out, NumButtonSprites);
 	out = std::nullopt;
 

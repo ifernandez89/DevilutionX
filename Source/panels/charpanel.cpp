@@ -13,6 +13,7 @@
 #include "engine/load_clx.hpp"
 #include "engine/render/clx_render.hpp"
 #include "engine/render/text_render.hpp"
+#include "engine/trn.hpp"
 #include "panels/ui_panels.hpp"
 #include "player.h"
 #include "tables/playerdat.hpp"
@@ -294,6 +295,14 @@ tl::expected<void, std::string> LoadCharPanel()
 				DrawPanelField(out, entry.position, entry.length, boxLeft[0], boxMiddle[0], boxRight[0]);
 			}
 			DrawShadowString(out, entry);
+		}
+	}
+
+	const uint8_t *goldToStone = GetGoldToStoneTRN();
+	for (int y = 0; y < out.h(); ++y) {
+		uint8_t *row = out.at(0, y);
+		for (int x = 0; x < out.w(); ++x) {
+			row[x] = goldToStone[row[x]];
 		}
 	}
 

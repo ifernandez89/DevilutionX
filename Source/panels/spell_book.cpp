@@ -15,6 +15,7 @@
 #include "engine/rectangle.hpp"
 #include "engine/render/clx_render.hpp"
 #include "engine/render/text_render.hpp"
+#include "engine/trn.hpp"
 #include "game_mode.hpp"
 #include "missiles.h"
 #include "panels/spell_icons.hpp"
@@ -123,6 +124,8 @@ tl::expected<void, std::string> InitSpellBook()
 {
 	ASSIGN_OR_RETURN(spellBookBackground, LoadCelWithStatus("data\\spellbk", static_cast<uint16_t>(SidePanelSize.width)));
 	ASSIGN_OR_RETURN(spellBookButtons, LoadCelWithStatus("data\\spellbkb", SpellBookButtonWidth()));
+	ClxApplyTrans(*spellBookBackground, GetGoldToStoneTRN());
+	ClxApplyTrans(*spellBookButtons, GetGoldToStoneTRN());
 	return LoadSmallSpellIcons();
 }
 

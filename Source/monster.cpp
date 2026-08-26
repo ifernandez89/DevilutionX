@@ -78,6 +78,7 @@
 #include "objects.h"
 #include "options.h"
 #include "player.h"
+#include "qol/floatingnumbers.h"
 #include "quests.h"
 #include "sound_effect_enums.h"
 #include "storm/storm_net.hpp"
@@ -3782,6 +3783,11 @@ void ApplyMonsterDamage(DamageType damageType, Monster &monster, int damage)
 	LuaEvent("OnMonsterTakeDamage", &monster, damage, static_cast<int>(damageType));
 
 	monster.hitPoints -= damage;
+
+	const int displayDmg = damage >> 6;
+	if (displayDmg > 0) {
+		AddFloatingNumber(monster.position.tile, { 0, -20 }, fmt::format("{:d}", displayDmg), UiFlags::ColorRed);
+	}
 
 	if (monster.hasNoLife()) {
 		delta_kill_monster(monster, monster.position.tile, *MyPlayer);

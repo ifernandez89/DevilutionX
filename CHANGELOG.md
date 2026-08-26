@@ -7,7 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-### Diablo Nightmare Edition (Fork Release & Mod Features)
+### Diablo Nightmare Edition (Gothic Visual Remaster & QoL Features)
+
+#### Unified UI Branding & Mode Synchronization
+- **Unforced Product Title**: Standardized `PROJECT_NAME` and `gszProductName` as `"Diablo Nightmare Edition"` across both Diablo and Hellfire game modes, ensuring consistent main menu, dialog, and window captions across all platforms.
+
+#### Combat QoL & Visual Feedback
+- **Monster Health Bar Enabled by Default**: Configured `enemyHealthBar` option to `true` by default, displaying monster names, type indicators, and resistance tags at the top of the screen when hovering or targeting.
+- **Floating Damage Numbers**: Integrated dynamic floating damage numbers (`AddFloatingNumber`) in `ApplyMonsterDamage`, displaying red damage popups floating above monsters during combat.
+
+#### Multiplatform Gothic Visual Enhancement Architecture
+- **Multiplatform Architecture Plan**: Established zero-risk visual skinning strategy over existing UI geometry (`implementation_plan.md`), preserving touch controls and slot hit-testing for PC, Mobile, and WebAssembly.
 
 #### Render Loop, CPU Optimization & Focus Management
 - **Inactive CPU Throttle**: Introduced active idle sleep (`SDL_Delay(20)`) when the game window is unfocused, minimized, or hidden (`!gbActive`). Prevents 100% CPU core spinning, high machine strain, fan noise, and application freezing when switching tabs or unfocusing windows.

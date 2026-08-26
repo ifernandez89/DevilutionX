@@ -17,7 +17,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Floating Damage Numbers**: Integrated dynamic floating damage numbers (`AddFloatingNumber`) in `ApplyMonsterDamage`, displaying red damage popups floating above monsters during combat.
 
 #### Multiplatform Gothic Visual Enhancement & Weather System
-- **Pristine HUD Restoration**: Removed boxy overlay lines over HP/Mana domes and belt slots, keeping the native HUD artwork clean, uncorrupted, and pixel-perfect.
+- **HD Gothic Panel Overlay Integration**: Integrated `gothic_panel.png` overlay in `control_panel.cpp` with dynamic PNG-32 Alpha transparency masks for HP/Mana globes, belt slots 1..8, and console text area.
+- **Removed Unwanted 'LOAD' Button Overlay**: Reset `TotalSpMainPanelButtons` to 6 in `control_panel.cpp`, eliminating the extra singleplayer 'LOAD' button overlay over the quick spell icon box and restoring original Diablo 1 panel layout.
 - **Screen-Space Weather System in Tristram**: Preserved 2D particle rain engine (`weather_overlay.cpp`), rendering 350 translucent falling drops with wind drift in town under UI panels.
 - **Hellfire Save & Character Class Persistence**: Set default game mode to `StartUpGameMode::Hellfire` and updated character unpacker (`pack.cpp`) to preserve Hellfire hero classes (`HeroClass::LAST`), ensuring `.hsv` saves load seamlessly even after resetting `diablo.ini`.
 - **Multiplatform Architecture Plan**: Established zero-risk visual skinning strategy over existing UI geometry (`implementation_plan.md`), preserving touch controls and slot hit-testing for PC, Mobile, and WebAssembly.

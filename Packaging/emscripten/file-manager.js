@@ -55,7 +55,7 @@
 		handleFiles(e.target.files);
 	});
 
-	// Handle file upload (MPQ data and .sv/.dsv/.ini save files)
+	// Handle file upload (MPQ data and .sv/.hsv/.ini save files)
 	function handleFiles(files) {
 		if (!files || files.length === 0) return;
 
@@ -67,11 +67,11 @@
 
 		const validFiles = Array.from(files).filter(f => {
 			const name = f.name.toLowerCase();
-			return name.endsWith('.mpq') || name.endsWith('.sv') || name.endsWith('.dsv') || name.endsWith('.ini');
+			return name.endsWith('.mpq') || name.endsWith('.sv') || name.endsWith('.hsv') || name.endsWith('.dsv') || name.endsWith('.ini');
 		});
 
 		if (validFiles.length === 0) {
-			alert('Por favor selecciona archivos válidos (.mpq, .sv, .dsv, .ini).');
+			alert('Por favor selecciona archivos válidos (.mpq, .sv, .hsv, .ini).');
 			return;
 		}
 
@@ -138,7 +138,7 @@
 			const mpqFiles = files.filter(f => f.toLowerCase().endsWith('.mpq') && f !== '.' && f !== '..');
 			const saveFiles = files.filter(f => {
 				const name = f.toLowerCase();
-				return (name.endsWith('.sv') || name.endsWith('.dsv') || name.endsWith('.ini')) && f !== '.' && f !== '..';
+				return (name.endsWith('.sv') || name.endsWith('.hsv') || name.endsWith('.dsv') || name.endsWith('.ini')) && f !== '.' && f !== '..';
 			});
 
 			// Render MPQ list
@@ -156,7 +156,7 @@
 			// Render Saves list
 			if (saveFilesList) {
 				if (saveFiles.length === 0) {
-					saveFilesList.innerHTML = '<p class="info-text">No hay partidas guardadas (.sv / .dsv).</p>';
+					saveFilesList.innerHTML = '<p class="info-text">No hay partidas guardadas (.sv / .hsv).</p>';
 				} else {
 					saveFilesList.innerHTML = '';
 					saveFiles.forEach(filename => {

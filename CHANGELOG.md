@@ -17,9 +17,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Floating Damage Numbers**: Integrated dynamic floating damage numbers (`AddFloatingNumber`) in `ApplyMonsterDamage`, displaying red damage popups floating above monsters during combat.
 
 #### Multiplatform Gothic Visual Enhancement & Weather System
-- **Gothic HP & Mana Flask Overlays**: Rendered wrought-iron gothic arch frames and metallic corner studs (`DrawGothicFlaskOverlay`) on Life and Mana domes in `control_flasks.cpp`, enhancing visual depth without altering hit-test geometry.
-- **Gothic Belt Slot Frames**: Applied pixel-perfect wrought iron borders with warm-gold hover highlights (`DrawGothicSlotFrame`) on belt item slots in `inv.cpp`.
-- **Screen-Space Weather System in Tristram**: Built independent 2D particle rain engine (`weather_overlay.cpp`), rendering 350 translucent falling drops with wind drift in town under UI panels.
+- **Pristine HUD Restoration**: Removed boxy overlay lines over HP/Mana domes and belt slots, keeping the native HUD artwork clean, uncorrupted, and pixel-perfect.
+- **Screen-Space Weather System in Tristram**: Preserved 2D particle rain engine (`weather_overlay.cpp`), rendering 350 translucent falling drops with wind drift in town under UI panels.
+- **Hellfire Save & Character Class Persistence**: Set default game mode to `StartUpGameMode::Hellfire` and updated character unpacker (`pack.cpp`) to preserve Hellfire hero classes (`HeroClass::LAST`), ensuring `.hsv` saves load seamlessly even after resetting `diablo.ini`.
 - **Multiplatform Architecture Plan**: Established zero-risk visual skinning strategy over existing UI geometry (`implementation_plan.md`), preserving touch controls and slot hit-testing for PC, Mobile, and WebAssembly.
 
 #### Render Loop, CPU Optimization & Focus Management

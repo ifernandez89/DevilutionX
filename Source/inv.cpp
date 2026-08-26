@@ -1265,15 +1265,6 @@ void DrawInv(const Surface &out)
 	}
 }
 
-void DrawGothicSlotFrame(const Surface &out, Point position, Size size, bool isHover)
-{
-	const uint8_t borderColor = isHover ? 150 : 248; // Warm gold highlight on hover, wrought iron default
-	DrawHorizontalLine(out, position, size.width, borderColor);
-	DrawHorizontalLine(out, position + Displacement { 0, size.height - 1 }, size.width, borderColor);
-	DrawVerticalLine(out, position, size.height, borderColor);
-	DrawVerticalLine(out, position + Displacement { size.width - 1, 0 }, size.height, borderColor);
-}
-
 void DrawInvBelt(const Surface &out)
 {
 	if (ChatFlag) {
@@ -1287,14 +1278,11 @@ void DrawInvBelt(const Surface &out)
 	const Player &myPlayer = *InspectPlayer;
 
 	for (int i = 0; i < MaxBeltItems; i++) {
-		const Point position { InvRect[i + SLOTXY_BELT_FIRST].position.x + mainPanelPosition.x, InvRect[i + SLOTXY_BELT_FIRST].position.y + mainPanelPosition.y + InventorySlotSizeInPixels.height };
-		const bool isHovered = (pcursinvitem == i + INVITEM_BELT_FIRST);
-		DrawGothicSlotFrame(out, position, InventorySlotSizeInPixels, isHovered);
-
 		if (myPlayer.SpdList[i].isEmpty()) {
 			continue;
 		}
 
+		const Point position { InvRect[i + SLOTXY_BELT_FIRST].position.x + mainPanelPosition.x, InvRect[i + SLOTXY_BELT_FIRST].position.y + mainPanelPosition.y + InventorySlotSizeInPixels.height };
 		InvDrawSlotBack(out, position, InventorySlotSizeInPixels, myPlayer.SpdList[i]._iMagical);
 		const int cursId = myPlayer.SpdList[i]._iCurs + CURSOR_FIRSTITEM;
 

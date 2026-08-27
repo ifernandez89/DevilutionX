@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Floating Damage Numbers**: Integrated dynamic floating damage numbers (`AddFloatingNumber`) in `ApplyMonsterDamage`, displaying red damage popups floating above monsters during combat.
 
 #### Multiplatform Gothic Visual Enhancement & Weather System
+- **Nightmare UI Pass (Gothic Slate Stone Architecture)**: Consolidated zero-risk visual skinning strategy over existing UI geometry (`implementation_plan.md`), unifying Inventory, Stash, Character Panel, Spellbook, and HUD buttons with `GetGoldToStoneTRN()` while preserving 100% of C++ game logic, drag-and-drop, and slot hit-testing for PC, Mobile, and WebAssembly.
 - **Slate Stone Buttons & Window Trims (Angel/Demon Palette)**: Integrated `GetGoldToStoneTRN()` translation table converting golden button bevels, button text, and window borders (Inventory, Stash, Character Panel, Spellbook, and Quest Log) into the matching slate stone gray of the HUD angel and demon statues, delivering a consistent gothic aesthetic without red font artifacts.
 - **Fixed Spell Icon Box & 6-Button Singleplayer HUD**: Corrected `TotalSpMainPanelButtons` to 6 and eliminated the singleplayer 'LOAD' button overlay over the quick spell icon box at bottom-right.
 - **Embedded Web Favicon & Page Title**: Added 32x32 Diablo skull favicon (embedded base64) and updated web title to "Diablo Nightmare Edition" in `Packaging/emscripten/index.html`.

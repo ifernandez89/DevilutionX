@@ -92,6 +92,10 @@ set(libdevilutionx_SRCS
   engine/render/scrollrt.cpp
   engine/render/weather_overlay.cpp
 
+  nightmare/restoration/registry.cpp
+  nightmare/npcs/tremain.cpp
+  nightmare/world/ambient_animals.cpp
+
   items/validation.cpp
 
   levels/reencode_dun_cels.cpp

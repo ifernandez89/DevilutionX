@@ -20,6 +20,9 @@
 #include "utils/language.h"
 #include "utils/str_case.hpp"
 
+#include "nightmare/restoration/registry.hpp"
+#include "nightmare/world/ambient_animals.hpp"
+
 namespace devilution {
 namespace {
 
@@ -450,7 +453,11 @@ void TalkToHealer(Player &player, Towner &healer)
 
 void TalkToBoy(Player & /*player*/, Towner & /*boy*/)
 {
-	TownerTalk(TEXT_WIRT1);
+	if (MyPlayer->_pLvlVisited[2] && nightmare::ShouldTriggerWirtReversed50Percent()) {
+		nightmare::PlayNightmareRestorationWav("sfx\\towners\\pegboy21.wav");
+	} else {
+		TownerTalk(TEXT_WIRT1);
+	}
 	StartStore(TalkID::Boy);
 }
 
@@ -794,6 +801,8 @@ void FreeTownerGFX()
 
 void ProcessTowners()
 {
+	nightmare::UpdateTristramAmbientAnimals();
+
 	// BUGFIX: should be `i < numtowners`, was `i < NUM_TOWNERS`
 	for (size_t i = 0; i < Towners.size(); i++) {
 		auto &towner = Towners[i];

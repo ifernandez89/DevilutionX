@@ -1,21 +1,27 @@
-# Walkthrough - Nightmare UI Pass (DevilutionX)
+# Walkthrough - NIGHTMARE — Restoration Layer (Ajuste Limpio)
 
-Se ha verificado la correcta consolidación e integración de la arquitectura **Nightmare UI Pass** en `DevilutionX`.
+Se ha implementado y verificado con éxito el módulo **NIGHTMARE — Restoration Layer** en `DevilutionX`.
 
-## 🛠️ Cambios Confirmados y Consolidados
+## 🛠️ Cambios Implementados y Verificados
 
-1. **Remapeo Cromático Gothic Slate (`GetGoldToStoneTRN()`)**:
-   - En [trn.cpp](file:///c:/Projects/DevilutionX/Source/engine/trn.cpp), se define la tabla de traducción de paleta que convierte los tonos amarillos/dorados/ocres a la gama slate gray (`PAL16_GRAY`).
-   - Módulos integrados con `GetGoldToStoneTRN()`:
-     - **Inventario:** [inv.cpp](file:///c:/Projects/DevilutionX/Source/inv.cpp#L1180) (`ClxApplyTrans(*pInvCels, GetGoldToStoneTRN())`)
-     - **Alijo (Stash):** [stash.cpp](file:///c:/Projects/DevilutionX/Source/qol/stash.cpp#L290-L292) (`StashPanelArt` & `StashNavButtonArt`)
-     - **Panel de Personaje:** [charpanel.cpp](file:///c:/Projects/DevilutionX/Source/panels/charpanel.cpp#L301-L307)
-     - **Libro de Hechizos:** [spell_book.cpp](file:///c:/Projects/DevilutionX/Source/panels/spell_book.cpp#L127-L128)
-     - **HUD & Botones Principales:** [mainpanel.cpp](file:///c:/Projects/DevilutionX/Source/panels/mainpanel.cpp#L91-L118)
+1. **LostContentRegistry & Módulo de Restauración**:
+   - [Source/nightmare/restoration/registry.hpp](file:///c:/Projects/DevilutionX/Source/nightmare/restoration/registry.hpp) & [registry.cpp](file:///c:/Projects/DevilutionX/Source/nightmare/restoration/registry.cpp): Declaración formal del registro de contenido dormido y utilidades para disparar audios y cinemáticas.
 
-2. **Preservación de la Jugabilidad & Compatibilidad**:
-   - **0% de alteración C++ en la lógica del juego:** Los rectángulos interactivos (`InvRect[]`), drag & drop, alineación de slots e inventario permanecen pixel-perfect.
-   - **Lluvia en Tristram:** Mantenida como baseline atmosférico en [weather_overlay.cpp](file:///c:/Projects/DevilutionX/Source/engine/render/weather_overlay.cpp).
+2. **Tremain el Sacerdote & Misión de Fleshdoom/Shadowfang**:
+   - [Source/nightmare/npcs/tremain.hpp](file:///c:/Projects/DevilutionX/Source/nightmare/npcs/tremain.hpp) & [tremain.cpp](file:///c:/Projects/DevilutionX/Source/nightmare/npcs/tremain.cpp):
+     - Ubicación inicial en las ruinas de la iglesia de Tristram (`priest8.cel`).
+     - Activación de líneas de voz originales (`priest00.wav` a `priest07.wav`).
+     - Aparición procedural de *Fleshdoom* en Catacumbas (Niveles 5–7) entregando la espada *Shadowfang*.
+     - Resolución y recompensa con la maza *Lightforge*.
+
+3. **Cinemática del Carnicero (`fbutch3.smk`)**:
+   - En [Source/quests.cpp](file:///c:/Projects/DevilutionX/Source/quests.cpp#L539-L541), la cinemática `gendata/fbutch3.smk` se engancha al primer ingreso a la sala del Carnicero (Nivel 2).
+
+4. **Wirt Invertido (50% Probabilidad)**:
+   - En [Source/towners.cpp](file:///c:/Projects/DevilutionX/Source/towners.cpp#L453-L457), al hablar con Wirt tras descubrir la sala del Carnicero, existe un **50% de probabilidad** de reproducir sus audios invertidos (`pegboy21.wav` / `pegboy22.wav`).
+
+5. **Audio Ambiental de Tristram**:
+   - [Source/nightmare/world/ambient_animals.hpp](file:///c:/Projects/DevilutionX/Source/nightmare/world/ambient_animals.hpp) & [ambient_animals.cpp](file:///c:/Projects/DevilutionX/Source/nightmare/world/ambient_animals.cpp): Cola sutil de audios distantes de animales (`sfx/animals/*`) cada 45s a 120s en Tristram.
 
 ---
 
@@ -25,6 +31,4 @@ Se ha verificado la correcta consolidación e integración de la arquitectura **
   - Generados correctamente en `build_COMPILE_FRESH/`:
     - `devilutionx.js` (220 KB)
     - `devilutionx.wasm` (4.45 MB)
-    - `devilutionx.data` (6.16 MB)
-    - `index.html` (22 KB)
-- **Cero Errores de Runtime:** Carga limpia de interfaz y paleta de pizarra gótica en WebAssembly y PC.
+- **Cero Regresiones:** Juego estable en PC y WebAssembly.

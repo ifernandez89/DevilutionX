@@ -1,76 +1,90 @@
-# Plan de Viabilidad y Ejecución: "Nightmare UI Pass" (DevilutionX)
+# Plan de Implementación: NIGHTMARE — Restoration Layer (Ajuste Limpio)
 
-Este plan establece la arquitectura, diseño por fases y protocolo de verificación para implementar la identidad visual **Nightmare UI** en DevilutionX (PC, Móvil y WebAssembly). Se basa en la transformación cromática no invasiva (*Lluvia atmosférica + Botones Gris Piedra*) garantizando 0% de regresión en la geometría de slots, drag & drop y estabilidad WASM.
+Este documento establece el plan de integración quirúrgico y no invasivo para la **Capa de Restauración (Restoration Layer)** de `DevilutionX`. El objetivo es reactivar el contenido original dormido en los archivos del juego (sprites, audios WAV, cinemáticas SMK y diálogos recortados) sin alterar la arquitectura base, sin modificar mapas ni crear zonas artificiales.
 
 ---
 
-## 🎯 Solución Arquitectónica (Transformación Cromática Cero Riesgo)
+## 🎯 Respuestas Clave de Diseño y Flujo Condicional
+
+### 1. ¿En qué punto se activará cada elemento?
+- **Tremain (El Sacerdote):**
+  - **Tristram:** Aparece en las ruinas de la iglesia utilizando la geometría original existente.
+  - **Disparador:** Se activa cuando el jugador entra al juego y alcanza la etapa adecuada (o nivel 5 de las Catacumbas).
+  - **Quest & Diálogo:** Reproduce `sfx/towners/priest05.wav` (76 segundos originales) al hablar con él, desbloqueando el spawn de *Fleshdoom*.
+- **Fleshdoom & Shadowfang (Catacumbas Niveles 5–7):**
+  - Se genera de forma **procedural como un monstruo único (Unique Boss)** dentro de las Catacumbas estándar (sin subniveles ni mapas nuevos).
+  - Al morir, entrega la espada única dormida `Shadowfang`.
+- **Resolución de Tremain:**
+  - Al regresar a Tristram con `Shadowfang`, Tremain reacciona (`priest07.wav`), desencadenando su desenlace final. En esa partida, el sacerdote no vuelve a aparecer.
+- **Cinemática del Carnicero (`fbutch3.smk`):**
+  - Se engancha directamente al **trigger de entrada a la sala del Carnicero (Nivel 2)**. Se reproduce una sola vez cuando el jugador abre la puerta por primera vez.
+- **Wirt Invertido (`pegboy21.wav` / `pegboy22.wav`):**
+  - Probabilidad baja (5%–10%) de activarse al hablar con Wirt **después** de haber visitado el nivel del Carnicero.
+- **Atmósfera del Pueblo (`sfx/animals/*`):**
+  - Sonidos de animales encolados en el mezclador de audio de Tristram mediante un temporizador aleatorio (cada 45 a 120 segundos).
+
+### 2. ¿Estarán siempre habilitadas y disponibles todo el tiempo?
+- **NO.** Ningún evento está habilitado permanentemente. Todo se rige por un **modelo dinámico guiado por el estado de la partida (Game State Driven)** para preservar la inmersión, evitar colisiones con las misiones originales y mantener la estabilidad del motor.
+
+---
+
+## 📐 Arquitectura de Capas de Restauración
 
 ```
 ┌────────────────────────────────────────────────────────┐
-│               CAPA DE LÓGICA (C++)                     │
-│  • InvGetItem()  • CheckInvSwap()  • Stash pagination  │ ──► [100% INTACTA / CONGELADA]
-└────────────────────────────────────────────────────────┘
-                           │
-┌──────────────────────────▼─────────────────────────────┐
-│          CAPA VISUAL / PRESENTACIÓN (ASSETS)           │
-│  • inv.cel / inventory.pcx  • stash.cel  • panel8bu    │ ──► [REMAPEO DE PALETA TRN]
+│             NIGHTMARE RESTORATION REGISTRY             │
+├────────────────────────────────────────────────────────┤
+│ 1. AUDIO HOOKS (MPQ originals):                        │
+│    - sfx/towners/priest00.wav .. priest07.wav           │
+│    - sfx/towners/pegboy21.wav, pegboy22.wav            │
+│    - sfx/animals/*.wav (cow, dog, pig, sheep)          │
+│                                                        │
+│ 2. SPRITES & ASSETS:                                   │
+│    - towners/priest/priest8.cel (Tremain)              │
+│    - gendata/fbutch3.smk (Butcher Cinematic)           │
+│                                                        │
+│ 3. PROCEDURAL GAMEPLAY:                                │
+│    - Catacombs 5-7: Fleshdoom Unique Boss + Shadowfang │
 └────────────────────────────────────────────────────────┘
 ```
-
----
-
-## 📐 Matriz de Intervención por Fases
-
-| Fase | Componente | Transformación | Impacto Visual | Riesgo Técnico | Decisión |
-| :--- | :--- | :--- | :---: | :---: | :---: |
-| **0** | **Lluvia & Botones Base** | Lluvia en Tristram + Traductores TRN | ⭐⭐⭐⭐⭐ | 🟢 Nulo | **Baseline Activo** |
-| **1** | **Inventario (`inv.cpp`)** | Marco `gold → dark iron` & `warm stone → cold slate` vía `GetGoldToStoneTRN()` | ⭐⭐⭐⭐⭐ | 🟢 Muy Bajo | **Prioridad 1** |
-| **2** | **Stash / Alijo (`stash.cpp`)** | Marco `wood/warm → dark wood/cold iron` vía `GetGoldToStoneTRN()` | ⭐⭐⭐⭐ | 🟢 Muy Bajo | **Prioridad 2** |
-| **3** | **Botones HUD (`mainpanel.cpp`)** | Homogeneizar *Char, Quests, Map, Menu, Inv, Spells* a gris piedra con micro-estados | ⭐⭐⭐⭐ | 🟢 Bajo | **Prioridad 3** |
-| **4** | **Orbes HP / Mana** | Tinte líquido profundo (*Blood Red / Deep Arcane Blue*) aislado vía paleta | ⭐⭐ | 🟡 Medio | **Condicional / Aislado** |
-
----
-
-## 🎨 Matriz de Transformación Cromática ("Gothic Stone")
-
-Se mantendrá la regla de transformación global por tablas de traducción de paleta TRN (`GetGoldToStoneTRN()`), aislando de forma estricta los elementos de información semántica:
-
-### Regla Estructural (UI Frames & Backgrounds)
-- **Bordes Dorados / Cálidos:** Muted Bronze / Aged Iron / Dark Slate (Paleta 240..255).
-- **Fondos de Piedra Cálida:** Cold Dark Slate / Obsidian Charcoal.
-- **Detalles de Madera/Cuero:** Dark Charcoal / Weathered Leather.
-
-### Regla Semántica (Información Intacta)
-- 🔴 **HP / Inválido:** Crimson / Rojo Púrpura Puro.
-- 🔵 **Mana / Magia:** Azul Zafiro Profundo.
-- 🟡 **Oro / Únicos:** Amarillo Oro Ocre.
-- 🟢 **Veneno / Sets:** Verde Esmeralda.
-- ⚪ **Items Normales / Texto:** Blanco Marfil Legible.
 
 ---
 
 ## Proposed Changes
 
-### Layer 1: Engine Palette TRN Translation System
+### Layer 1: Core Restoration Registry & State Manager
 
-#### [MODIFY] [trn.cpp](file:///c:/Projects/DevilutionX/Source/engine/trn.cpp)
-#### [MODIFY] [trn.hpp](file:///c:/Projects/DevilutionX/Source/engine/trn.hpp)
-- Refinar `GetGoldToStoneTRN()` para mapear matices amarillos/dorados y tonos beige/cálidos a la gama slate gray (`PAL16_GRAY`).
+#### [NEW] [Source/nightmare/restoration/registry.hpp](file:///c:/Projects/DevilutionX/Source/nightmare/restoration/registry.hpp)
+#### [NEW] [Source/nightmare/restoration/registry.cpp](file:///c:/Projects/DevilutionX/Source/nightmare/restoration/registry.cpp)
+- Declarar e implementar `LostContentRegistry` para estructurar la activación segura de diálogos, WAVs y cinemáticas dormidas.
 
 ---
 
-### Layer 2: UI Panels Gothic Remap
+### Layer 2: NPC Tremain & Fleshdoom Boss Integration
 
-#### [MODIFY] [inv.cpp](file:///c:/Projects/DevilutionX/Source/inv.cpp)
-- Aplicar `ClxApplyTrans(*pInvCels, GetGoldToStoneTRN())` garantizando que los rectángulos interactivos (`InvRect[]`) permanezcan pixel-perfect.
+#### [NEW] [Source/nightmare/npcs/tremain.hpp](file:///c:/Projects/DevilutionX/Source/nightmare/npcs/tremain.hpp)
+#### [NEW] [Source/nightmare/npcs/tremain.cpp](file:///c:/Projects/DevilutionX/Source/nightmare/npcs/tremain.cpp)
+- Gestionar la aparición condicional del sprite `priest8.cel` en la iglesia de Tristram.
+- Enlazar la interacción de voz de Tremain (`priest00.wav` - `priest07.wav`) y entregar la recompensa `Lightforge` tras el desenlace.
 
-#### [MODIFY] [stash.cpp](file:///c:/Projects/DevilutionX/Source/qol/stash.cpp)
-- Aplicar `ClxApplyTrans` sobre `StashPanelArt` y `StashNavButtonArt` con la tabla `GetGoldToStoneTRN()`.
+#### [MODIFY] [Source/monsters.cpp](file:///c:/Projects/DevilutionX/Source/monsters.cpp)
+#### [MODIFY] [Source/quests.cpp](file:///c:/Projects/DevilutionX/Source/quests.cpp)
+- Registrar el spawn procedural del jefe único `Fleshdoom` en las Catacumbas (niveles 5 a 7) con la caída garantizada de `Shadowfang`.
 
-#### [MODIFY] [mainpanel.cpp](file:///c:/Projects/DevilutionX/Source/panels/mainpanel.cpp)
-#### [MODIFY] [control_panel.cpp](file:///c:/Projects/DevilutionX/Source/control/control_panel.cpp)
-- Aplicar traducción TRN a los botones principales (*Char, Quests, Automap, Menu, Inv, Spells*) y refinar la presentación visual del HUD nativo.
+---
+
+### Layer 3: Audio, Video & Tristram Atmosphere Triggers
+
+#### [MODIFY] [Source/movie.cpp](file:///c:/Projects/DevilutionX/Source/movie.cpp)
+#### [MODIFY] [Source/quests.cpp](file:///c:/Projects/DevilutionX/Source/quests.cpp)
+- Enganchar la reproducción del video `gendata/fbutch3.smk` al trigger de primera apertura de la puerta de la sala del Carnicero.
+
+#### [MODIFY] [Source/towners.cpp](file:///c:/Projects/DevilutionX/Source/towners.cpp)
+- Incorporar la variante con 5%–10% de probabilidad de voz invertida en Wirt (`pegboy21.wav` / `pegboy22.wav`) tras descubrir la sala del Carnicero.
+
+#### [MODIFY] [Source/engine/render/weather_overlay.cpp](file:///c:/Projects/DevilutionX/Source/engine/render/weather_overlay.cpp)
+#### [MODIFY] [Source/sound.cpp](file:///c:/Projects/DevilutionX/Source/sound.cpp)
+- Encolar efectos de audio distantes de animales (`sfx/animals/*`) en Tristram con un temporizador aleatorio no invasivo (45s–120s).
 
 ---
 
@@ -84,9 +98,12 @@ Se mantendrá la regla de transformación global por tablas de traducción de pa
   ```
 
 ### Manual Verification
-1. **Verificación de Inventario & Alijo:**
-   - Abrir el panel de inventario y el alijo (Stash). Confirmar la estética gris piedra fría/slate sin desalineación de casillas ni fallos en drag & drop.
-2. **Verificación de Botones HUD:**
-   - Interactuar con los 6 botones principales del panel (Char, Quests, Map, Menu, Inv, Spells) comprobando los micro-estados visuales.
-3. **Verificación de Jugabilidad:**
-   - Lanzar hechizos, consumir pociones y comprobar la legibilidad del texto de items en el suelo y tooltips.
+1. **Verificación de Tremain & Shadowfang:**
+   - Iniciar una partida, verificar la presencia de Tremain en la iglesia de Tristram con el sprite `priest8.cel` y su audio de diálogo.
+   - Descender a las Catacumbas (niveles 5–7), comprobar el spawn de *Fleshdoom* y la entrega de *Shadowfang*.
+   - Volver a Tristram con *Shadowfang* y validar la secuencia de desenlace (`priest07.wav`).
+2. **Verificación de Cinemática del Carnicero:**
+   - Abrir la puerta de la habitación del Carnicero en el nivel 2 y confirmar la reproducción de `fbutch3.smk`.
+3. **Verificación de Wirt y Audio Ambiental:**
+   - Visitar a Wirt tras el Carnicero y probar la activación condicional de la línea invertida.
+   - Permanecer en Tristram y comprobar la reproducción ambiental sutil de los audios de animales sin interrupciones ni lag.

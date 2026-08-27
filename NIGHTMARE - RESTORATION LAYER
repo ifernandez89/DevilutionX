@@ -1,0 +1,622 @@
+# NIGHTMARE — Restoration Layer
+## Plan de Implementación
+
+> **Versión:** 1.0  
+> **Fork base:** `ifernandez89/DevilutionX`  
+> **Principio fundador:** Ningún contenido original de Diablo/Hellfire debe quedar huérfano.
+
+---
+
+## 0. Principio Fundamental
+
+NIGHTMARE no inventa todavía. NIGHTMARE primero **recupera**.
+
+```
+DIABLO 1 (1996)
+    +
+HELLFIRE (1997)
+    ↓
+Auditoría completa de contenido
+    ↓
+NIGHTMARE — RESTORATION LAYER
+    ↓
+Sólo después → NIGHTMARE — NEW SYSTEMS
+```
+
+El proyecto se construye sobre una distinción que debe ser **permanente e irrevocable**:
+
+```
+┌─────────────────────────────────────────────┐
+│                  NIGHTMARE                  │
+├─────────────────────────────────────────────┤
+│  CAPA 1 — ORIGINAL                          │
+│  Diablo + Hellfire tal como se lanzaron     │
+├─────────────────────────────────────────────┤
+│  CAPA 2 — RESTORED                          │
+│  Contenido original dormido / recortado     │
+│  que NIGHTMARE activa usando assets reales  │
+├─────────────────────────────────────────────┤
+│  CAPA 3 — NIGHTMARE                         │
+│  Sistemas nuevos / cambios atmosféricos     │
+│  marcados explícitamente como creaciones    │
+│  del proyecto                               │
+└─────────────────────────────────────────────┘
+```
+
+**Regla de oro:** Dentro de 5 años se debe poder señalar cualquier elemento
+del juego y decir con precisión: "Esto estaba en Diablo", "Esto estaba dormido
+en los archivos" o "Esto lo creó NIGHTMARE".
+
+> [!IMPORTANT]
+> **Licencias y distribución.** NIGHTMARE no copia ni redistribuye assets
+> originales de Diablo/Hellfire. La arquitectura funciona sobre los datos
+> que el usuario ya posee (MPQ), igual que DevilutionX. El código sabe
+> *qué activar*, no *qué distribuir*.
+
+---
+
+## 1. Reglas de Oro
+
+| Prioridad | Regla |
+|:----------|:------|
+| ❌ | No crear sustitutos si existe el original |
+| ✅ | Si existe sprite original → usarlo |
+| ✅ | Si existe voz original → usarla |
+| ✅ | Si existe diálogo original → usarlo exacto |
+| ⚠️ | Si sólo existe fragmento → reconstruir *alrededor* del fragmento |
+| 📝 | Si no existe nada → crear NIGHTMARE ORIGINAL marcado como tal |
+| 🔒 | Nunca mezclar RESTORED con NIGHTMARE ORIGINAL sin documentarlo |
+
+Filosofía de transiciones:
+```
+original dialogue
+       ↓
+[NIGHTMARE bridge — marcado en código]
+       ↓
+original dialogue
+```
+
+---
+
+## 2. Arquitectura de Archivos
+
+```
+Source/nightmare/
+├── restoration/
+│   ├── registry.h          ← LostContentRegistry (struct + enum)
+│   ├── registry.cpp        ← Tabla completa de contenido
+│   ├── dialogues.h
+│   ├── dialogues.cpp       ← Activación de diálogos dormidos
+│   ├── voices.cpp          ← Hooks a archivos de audio del MPQ
+│   ├── assets.cpp          ← Carga condicional de sprites
+│   └── cinematics.cpp      ← NightmareCinematicRegistry
+│
+├── quests/
+│   ├── fleshdoom.lua       ← Quest de Tremain/Shadowfang
+│   ├── map_of_stars.lua    ← La Strange Map
+│   ├── lost_treasure.lua
+│   ├── worm_infestation.lua
+│   ├── sunless_sea.lua
+│   ├── izual.lua
+│   └── butcher_chamber.lua ← El puzzle original del Carnicero
+│
+├── npcs/
+│   └── tremain.lua         ← NPC completo con ubicación dinámica
+│
+└── world/
+    ├── ambient_animals.lua ← Sonidos dormidos de Tristram
+    ├── world_state.lua     ← Estado global del mundo
+    └── rare_events.lua     ← Eventos raros contextuales
+```
+
+**Principio de capas tecnológicas:**
+```
+C++  = motor del juego (no modificar arquitectura core)
+Lua  = contenido NIGHTMARE (quests, NPCs, eventos)
+MPQ  = assets originales (el usuario los aporta)
+```
+
+---
+
+## 3. LostContentRegistry (C++)
+
+### `Source/nightmare/restoration/registry.h`
+
+```cpp
+enum class ContentLayer {
+    Original,          // Presente y usado en Diablo/Hellfire
+    OriginalUnused,    // Presente en MPQ pero nunca activado
+    HellfireOnly,      // Exclusivo de Hellfire
+    CutContent,        // Documentado pero no en MPQ final
+    NightmareRestored, // Activado por NIGHTMARE con assets originales
+    NightmareOriginal, // Creado por NIGHTMARE (marcado explícitamente)
+};
+
+enum class ContentStatus {
+    Dormant,           // Existe, no activado
+    PartiallyActive,   // Gossip activado, quest no
+    FullyRestored,     // Completamente funcional
+    Reconstructed,     // Reconstruido con evidencia parcial
+};
+
+struct LostContentEntry {
+    const char *id;           // "tremain", "map_of_stars", etc.
+    ContentLayer layer;
+    ContentStatus status;
+
+    bool hasDialogue;
+    bool hasVoice;
+    bool hasSprite;
+    bool hasAnimation;
+    bool hasQuest;
+    bool hasItem;
+    bool hasMonster;
+    bool hasCinematic;
+    bool hasAudio;
+
+    const char *mpqPath;      // Path en el MPQ si existe
+    const char *evidence;     // Fuente de la evidencia (TCRF, audio, sprite)
+    const char *description;
+};
+
+// Registro global
+extern const LostContentEntry NightmareRestorationRegistry[];
+extern const size_t NightmareRestorationRegistrySize;
+```
+
+### Categorías de contenido por tipo de archivo
+
+```
+CONTENT/
+├── dialogues/     TSV de towners + speech IDs
+├── gossip/        Pools de gossip por NPC y quest state
+├── voices/        WAV en /sfx/towners/ del MPQ
+├── sounds/        Efectos de audio dormidos
+├── music/         Tracks sin usar
+├── sprites/       CEL/CLX dormidos (priest8.cel, etc.)
+├── monsters/      Types no usados (worm backing code)
+├── npcs/          Tremain, NPCs secundarios
+├── items/         Shadowfang, Azurewrath, Strange Map
+├── spells/        Sentinel, Blood Boil, Invisibility, etc.
+├── cinematics/    fbutch3.smk y otros SMK sin usar
+├── quests/        7 quests recortadas + variantes
+├── maps/          Áreas de dungeon sin usar (worm lair)
+├── triggers/      Events sin activar
+└── animations/    Walk sequences sin usar (towners)
+```
+
+---
+
+## 4. NightmareQuestRegistry (Lua)
+
+Cada quest recortada tiene una entrada formal:
+
+```lua
+-- nightmare/restoration/quest_registry.lua
+NightmareQuests = {
+    QUEST_FLESHDOOM = {
+        id = "QUEST_FLESHDOOM",
+        name = "Fleshdoom, Wielder of Shadowfang",
+        layer = "NightmareRestored",
+        evidence = "priest05.wav–priest07.wav, TCRF",
+        hasOriginalVoice = true,
+        hasOriginalDialogue = true,
+        hasOriginalSprite = true,  -- Tremain: priest8.cel
+        questGiver = "tremain",
+        states = { "DORMANT","HINT","DISCOVERED","ACTIVE","PROGRESS","COMPLETED","FAILED" },
+        reward = "LIGHTFORGE",     -- priest03.wav lo confirma
+    },
+    QUEST_MAP_OF_STARS = {
+        id = "QUEST_MAP_OF_STARS",
+        name = "Map of the Stars",
+        layer = "NightmareRestored",
+        evidence = "storyt22.wav, witch21.wav, bsmith20.wav",
+        hasOriginalVoice = true,
+        hasOriginalDialogue = true,
+        item = "STRANGE_MAP",
+        questGiver = "cain",
+        note = "Cortado por agregar urgencia. NIGHTMARE la activa sin timer.",
+    },
+    QUEST_WORM_INFESTATION = {
+        id = "QUEST_WORM_INFESTATION",
+        name = "Infestation of Worms",
+        layer = "NightmareRestored",
+        evidence = "healer23.wav, healer24.wav, unused dungeon area",
+        hasOriginalVoice = true,
+        hasOriginalDialogue = true,
+        hasUnusedMap = true,
+        questGiver = "pepin",
+    },
+    QUEST_BUTCHER_CHAMBER = {
+        id = "QUEST_BUTCHER_CHAMBER",
+        name = "The Butcher's Chamber",
+        layer = "NightmareRestored",
+        evidence = "fbutch3.smk, pegboy21.wav (reversed), bsmith11.wav",
+        hasCinematic = true,   -- fbutch3.smk
+        hasEasterEgg = true,   -- Wirt habla al revés
+    },
+    QUEST_LOST_TREASURE = {
+        id = "QUEST_LOST_TREASURE",
+        layer = "Reconstructed",
+        evidence = "diálogos de NPC, referencias documentadas",
+    },
+    QUEST_SUNLESS_SEA = {
+        id = "QUEST_SUNLESS_SEA",
+        layer = "Reconstructed",
+        evidence = "documentación de diseño, nombre en registros",
+    },
+    QUEST_IZUAL = {
+        id = "QUEST_IZUAL",
+        layer = "Reconstructed",
+        evidence = "Azurewrath item data, lore de Tremain, Diablo II backstory",
+        note = "Sin assets propios en D1. NIGHTMARE ORIGINAL si se implementa.",
+    },
+}
+```
+
+### Sistema de estados de quest
+
+```
+DORMANT      → Quest existe en el registro pero el jugador no sabe nada
+HINT         → Un NPC dijo algo. El jugador puede estar oyendo sin entender.
+DISCOVERED   → El jugador claramente encontró un clue
+ACTIVE       → Quest formalmente activa (si aplica)
+PROGRESS     → En curso
+COMPLETED    → Finalizada
+FAILED       → Falló (si el diseño lo permite)
+```
+
+**No hay notificación "QUEST STARTED"** salvo cuando Diablo original lo haría.
+El descubrimiento es silencioso.
+
+---
+
+## 5. Tremain — Vertical Slice (Sprint 1)
+
+Tremain es el **proof of concept**. Si funciona, todo lo demás se construye igual.
+
+### Assets que ya existen en el MPQ
+
+| Asset | Path en MPQ | Estado |
+|:------|:-----------|:-------|
+| Sprite | `/towners/priest/priest8.cel` | ✅ Existe |
+| Saludo | `sfx/towners/priest00.wav` | ✅ Existe |
+| Quest Lazarus | `sfx/towners/priest01.wav` | ✅ 81 segundos |
+| Urgencia | `sfx/towners/priest02.wav` | ✅ Existe |
+| Recompensa Lightforge | `sfx/towners/priest03.wav` | ✅ Existe |
+| Mal final | `sfx/towners/priest04.wav` | ✅ Existe |
+| Quest Shadowfang | `sfx/towners/priest05.wav` | ✅ 76 segundos |
+| Fleshdoom muerto | `sfx/towners/priest06.wav` | ✅ Existe |
+| **Muerte de Tremain** | `sfx/towners/priest07.wav` | ✅ Existe |
+
+### Gossip de NPCs sobre Tremain (todos en el MPQ, ninguno activado)
+
+| NPC | Archivo | Fragmento |
+|:----|:--------|:----------|
+| Adria | `Witch48.wav` | *"He keeps a promise and a charge issued ages ago... He knows much, but not as much as he believes."* |
+| Cain | `Storyt32.wav` | *"It is strange how at times anyone that tries to leave Tristram is hunted down... But we are glad for Tremain's bravery."* |
+| Farnham | `Drunk33.wav` | *"I haven't ever seen a priest around here. Can't even keep a church free of those Hell spawn."* |
+| Gillian | `Bmaid38.wav` | *"He never visits the tavern, preferring to keep to the company of Pepin and Cain."* |
+| Griswold | `Bsmith54.wav` | *"He's a solitary fellow... I respect his passion but I've no time for his prattling."* |
+
+### Comportamiento dinámico de Tremain en Tristram
+
+```lua
+-- nightmare/npcs/tremain.lua
+local Tremain = {
+    sprite = "towners/priest/priest8.cel",
+    
+    -- Su posición varía según el estado de la quest
+    positions = {
+        default    = "church",       -- Iglesia de Tristram
+        hint       = "outskirts",    -- Aparece brevemente en las afueras
+        active     = "church",       -- Vuelve a la iglesia durante la quest
+        completed  = nil,            -- Tristram sin Tremain (murió)
+    },
+    
+    -- No es NPC permanente de plaza. Aparece condicionalmente.
+    spawnChance = {
+        newGame    = 1.0,    -- Siempre disponible (si la quest está activa)
+        afterDeath = 0.0,    -- Nunca más después de su muerte
+    },
+    
+    gossipPool = {},  -- Tremain no tiene gossip, sólo quest dialogue
+    
+    -- Usa EXACTAMENTE sus voces originales
+    voices = {
+        greeting   = "sfx/towners/priest00.wav",
+        questGive  = "sfx/towners/priest05.wav",
+        questUrge  = "sfx/towners/priest06.wav",
+        death      = "sfx/towners/priest07.wav",
+        reward     = "sfx/towners/priest03.wav",
+    },
+}
+```
+
+### Secuencia narrativa de Fleshdoom/Shadowfang
+
+```
+NEW GAME
+    │
+    ▼
+Tremain en iglesia (sprite priest8.cel)
+    │
+    ▼
+Jugador interactúa → priest05.wav (76 seg)
+    │         "un demonio llamado Fleshdoom..."
+    │         "la hoja demoníaca Shadowfang..."
+    │         "no la empuñes, su poder corrompe absolutamente"
+    │
+    ▼
+Fleshdoom aparece en Catacumbas 5–7
+[NO en una boss room. En exploración normal.]
+[Geometría existente. Zona específica de la sala.]
+    │
+    ▼
+Jugador mata a Fleshdoom
+    │
+    ├── sin Shadowfang → Tremain: priest06.wav
+    │                    "Fleshdoom's demise is a great good...
+    │                    Shadowfang remains. Do not wield it."
+    │
+    └── con Shadowfang → Tremain: priest07.wav
+                         "Light be praised! Wait... It burns!
+                         Hellfire, consuming me! You must take
+                         this to the Hellforge... no!"
+                              │
+                              ▼
+                         TREMAIN MUERE
+                         (animación, no texto)
+                              │
+                              ▼
+                         Tristram sin Tremain para siempre
+                         Recompensa: Lightforge (unique mace)
+```
+
+> [!NOTE]
+> Fleshdoom no es una boss room. El jugador llega a través de exploración normal,
+> encuentra algo extraño, y sólo después entiende que estaba ante una quest.
+> *"¿Qué es esto?"* antes que *"Quest: Fleshdoom — ACTIVA".*
+
+---
+
+## 6. Butcher's Chamber — El Easter Egg de Wirt
+
+### Los archivos que ya existen
+
+**`gendata/fbutch3.smk`** — Video Smacker sin reproducir jamás.
+Los SMK en Diablo sólo se activan al entrar a áreas especiales.
+Este video lleva 30 años en el MPQ.
+
+**Wirt hablando al revés** (los audios existen, no se activan):
+
+```
+pegboy21.wav (al revés): 
+  "Cast the town portal spell from the butcher chamber."
+
+pegboy22.wav (al revés):
+  "Haven't you figured it out yet? I tried to make it so simple
+   even you could understand. Cast the town portal spell from
+   the butcher chamber."
+```
+
+Cain contextualiza (audio existente sin usar):
+> *"That poor child was taken into the labyrinth by the demons...
+> he has not been quite sane since. He often speaks in riddles,
+> but his knowledge of the labyrinth may hold some truth."*
+
+### Implementación en NIGHTMARE
+
+- Wirt tiene 5–8% de chance de decir las líneas invertidas
+  después de que el jugador haya visitado la sala del Carnicero.
+- El TSV de towners registra los speech IDs.
+- Los archivos de audio están en el MPQ. Cero assets nuevos.
+- El jugador que los descifre tendrá una experiencia única sin que el
+  juego lo explique nunca.
+
+---
+
+## 7. Ambient Animals — Tristram Vivo
+
+### El audio dormido del MPQ
+
+El MPQ contiene sonidos de animales que nunca formaron parte de Tristram en ningún
+estado oficial del juego. NIGHTMARE los activa como capa ambiental.
+
+```lua
+-- nightmare/world/ambient_animals.lua
+local TristramAmbient = {
+    pools = {
+        default = {
+            { sound = "sfx/animals/cow.wav",     weight = 100 },
+            { sound = "sfx/animals/chicken.wav", weight = 15  },
+            { sound = "sfx/animals/dog.wav",     weight = 10  },
+            { sound = "sfx/animals/pig.wav",     weight = 7   },
+            { sound = "sfx/animals/sheep.wav",   weight = 5   },
+            { sound = "sfx/animals/donkey.wav",  weight = 4   },
+        },
+        rain = {
+            -- Pools diferentes bajo lluvia
+            { sound = "sfx/animals/dog.wav",     weight = 20  },
+            { sound = "sfx/animals/cow.wav",     weight = 60  },
+        },
+    },
+    
+    -- Activación contextual, no constante
+    triggerIntervalSeconds = { min = 45, max = 120 },
+}
+```
+
+No hace falta crear un zoológico. Sólo la *posibilidad* de escuchar un perro
+a lo lejos cambia dramáticamente la percepción de Tristram como lugar vivo.
+
+---
+
+## 8. Map of the Stars — Sin el Timer
+
+La quest original fue cortada porque el timer de alineación estelar rompía el ritmo
+del juego. NIGHTMARE la restaura sin el timer — sólo la historia.
+
+### Audios que sobrevivieron (todos en el MPQ)
+
+| NPC | Archivo | Contenido |
+|:----|:--------|:----------|
+| Adria | `Witch21.wav` | *"This Map of the Stars portends great disaster! But its secrets are not mine to tell. The time has come for you to speak with the storyteller."* |
+| Cain | `Storyt22.wav` | 81 segundos. Cain se revela. *"You are now in a race against time."* |
+| Cain (urgencia) | `Storyt23.wav` | *"Our time is running short! I sense his dark power building."* |
+| Cain (fracaso) | `Storyt24.wav` | *"I'm sure that you tried your best... Diablo is now at the height of his earthly power."* |
+| Pepin | `Healer19.wav` | *"I can see that it is a map of the stars in our sky, but any more than that is beyond my talents."* |
+| Griswold | `Bsmith20.wav` | *"I've never seen a map of this sort before. Cain or Adria may be able to help."* |
+
+### Diferencia con el diseño original
+
+```
+ORIGINAL (cortado)          NIGHTMARE RESTORED
+─────────────────           ─────────────────
+Strange Map → timer         Strange Map → sin timer
+urgencia constante          tensión narrativa
+"¡Apúrate!"                 "las estrellas se acercan..."
+```
+
+La urgencia existe en el lore. No en la mecánica.
+El jugador puede tomarse su tiempo. Cain dice lo que dice.
+El mundo carga con el peso. El jugador no.
+
+---
+
+## 9. Fases de Implementación
+
+### Sprint 1 — Vertical Slice: Tremain (Proof of Concept)
+
+- [ ] Crear `Source/nightmare/restoration/registry.h` + `.cpp`
+- [ ] Registrar todos los assets de Tremain con sus paths de MPQ
+- [ ] Crear `Source/nightmare/npcs/tremain.lua`
+- [ ] Activar gossip de NPCs sobre Tremain via TSV (`Witch48`, `Storyt32`, `Bsmith54`, etc.)
+- [ ] Registrar `priest8.cel` como sprite de Tremain en el engine
+- [ ] Implementar lógica de spawn condicional en Tristram (iglesia)
+- [ ] Crear `Source/nightmare/quests/fleshdoom.lua`
+- [ ] Registrar Fleshdoom como monster en nivel 5–7 (catacombas)
+- [ ] Añadir Shadowfang como quest item (sin `Quest Item` badge)
+- [ ] Implementar secuencia de muerte de Tremain (priest07.wav + animación)
+- [ ] Registrar Lightforge como recompensa (ya existe como unique item)
+- [ ] **Validar:** Tremain aparece, quest completa, Tristram queda sin él
+
+### Sprint 2 — Gossip Dormido: Butcher + Worms + Map of Stars
+
+- [ ] Activar gossip post-Butcher vía TSV (6 NPCs, archivos ya en MPQ)
+- [ ] Activar easter egg de Wirt (pegboy21/22) con 5–8% de chance
+- [ ] Activar gossip de Pepin sobre los gusanos (healer23/24)
+- [ ] Activar gossip de NPC sobre Map of the Stars (witch21, storyt22, etc.)
+- [ ] Crear `NightmareQuestRegistry` completo en Lua
+
+### Sprint 3 — Quests: Map of Stars + Worm Infestation
+
+- [ ] Crear `map_of_stars.lua` con Strange Map como quest item
+- [ ] Registrar pool de gossip condicional (activado al encontrar el ítem)
+- [ ] Crear `worm_infestation.lua` usando el dungeon area sin usar del MPQ
+- [ ] Conectar Pepin como quest giver con sus audios originales
+
+### Sprint 4 — Butcher's Chamber + Video SMK
+
+- [ ] Activar `fbutch3.smk` condicionalmente al entrar desde la sala del Carnicero
+- [ ] Implementar `butcher_chamber.lua` con el puzzle original
+- [ ] Crear `NightmareCinematicRegistry` en C++
+
+### Sprint 5 — Ambient Animals + World State
+
+- [ ] Crear `ambient_animals.lua` con pools y pesos
+- [ ] Integrar con el sistema de lluvia existente
+- [ ] Crear `world_state.lua` (dungeon_tension, tristram_fear)
+- [ ] Conectar world state con pools de gossip
+
+### Sprint 6 — Contenido Reconstruido: Lost Treasure + Sunless Sea + Izual
+
+- [ ] Implementar quests reconstruidas con evidencia parcial
+- [ ] Marcar todo NIGHTMARE ORIGINAL explícitamente en código y documentación
+- [ ] Auditoría final del registro
+
+---
+
+## 10. Restoration Manifest
+
+> Este archivo debe existir en el repositorio y mantenerse actualizado.
+> Es el contrato público de NIGHTMARE con la historia del juego.
+
+```markdown
+# NIGHTMARE_RESTORATION.md
+
+| Contenido              | Evidencia                          | Capa           | Estado      | Implementación                |
+|:-----------------------|:-----------------------------------|:---------------|:------------|:------------------------------|
+| Tremain (sprite)       | priest8.cel en MPQ                 | OriginalUnused | Sprint 1    | Tristram/iglesia              |
+| Tremain (voice)        | priest00–07.wav en MPQ             | OriginalUnused | Sprint 1    | NPC + quest dialogue          |
+| Fleshdoom / Shadowfang | priest05–07.wav, TCRF              | CutContent     | Sprint 1    | Quest Catacombas 5–7          |
+| Gossip sobre Tremain   | Witch48, Storyt32, etc. en MPQ     | OriginalUnused | Sprint 2    | TSV towners                   |
+| Gossip Butcher post    | bmaid09, bsmith11, drunk11, etc.   | OriginalUnused | Sprint 2    | TSV towners (post Q_BUTCHER)  |
+| Wirt al revés          | pegboy21.wav, pegboy22.wav en MPQ  | OriginalUnused | Sprint 2    | Gossip raro (5–8%)            |
+| Map of the Stars       | storyt22.wav, witch21.wav, etc.    | CutContent     | Sprint 3    | Quest item + gossip pool      |
+| Worm Infestation       | healer23.wav, dungeon area MPQ     | CutContent     | Sprint 3    | Quest + área sin usar         |
+| Butcher's Chamber SMK  | fbutch3.smk en MPQ                 | OriginalUnused | Sprint 4    | Trigger en sala del Carnicero |
+| Ambient animals        | sfx/animals/* en MPQ               | OriginalUnused | Sprint 5    | Tristram ambient              |
+| Lost Treasure          | Referencias documentadas           | Reconstructed  | Sprint 6    | NIGHTMARE reconstruction      |
+| Island of Sunless Sea  | Nombre en registros de diseño      | Reconstructed  | Sprint 6    | NIGHTMARE reconstruction      |
+| Izual (lore)           | Azurewrath item, Tremain quest     | Reconstructed  | Sprint 6    | Gossip raro + item desc.      |
+```
+
+---
+
+## 11. Reglas de No Hacer
+
+> [!CAUTION]
+> Estas restricciones protegen la integridad del proyecto.
+
+- ❌ No reproducir cinemáticas como decoración. Sólo en eventos narrativos concretos.
+- ❌ No activar todos los gossip simultáneamente. Todo es contextual y condicional.
+- ❌ No hacer de Fleshdoom una boss room con sala propia. El encuentro emerge del dungeon normal.
+- ❌ No añadir el timer a Map of the Stars. Fue exactamente por eso que lo cortaron.
+- ❌ No distribuir assets originales en el repositorio. El usuario aporta su MPQ.
+- ❌ No mezclar RESTORED y NIGHTMARE ORIGINAL sin documentarlo en código.
+- ❌ No hacer que todas las quests estén activas simultáneamente en cada partida.
+
+---
+
+## 12. El Resultado
+
+```
+Entrás a Tristram.
+Llueve.
+Las vacas están ahí.
+Escuchás un perro a lo lejos.  ← audio dormido, activado
+
+Cain habla.
+Adria dice algo que nunca habías escuchado.  ← gossip de Tremain, 30 años dormido
+
+Entrás a la iglesia.
+Hay un sacerdote que no debería estar ahí.
+Es Tremain.
+Tiene su sprite original.  ← priest8.cel
+Habla con su voz original.  ← priest05.wav, 76 segundos
+
+No te entrega inmediatamente una quest.
+Te cuenta algo.
+
+Bajás al dungeon.
+Horas después encontrás:
+
+    SHADOWFANG
+
+No dice: "Quest Item".
+Volvés. Tremain habla. Ocurre algo.
+
+Tremain muere.  ← priest07.wav: "It burns! Hellfire, consuming me!"
+
+Y Tristram queda ligeramente diferente.
+Para siempre.
+En esa partida.
+```
+
+> Eso es lo que estaba en los archivos.  
+> NIGHTMARE sólo le da una ruta de ejecución.
+
+---
+
+*NIGHTMARE — Reactivate the lost soul of Diablo.*

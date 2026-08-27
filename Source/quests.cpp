@@ -23,6 +23,7 @@
 #include "levels/gendung.h"
 #include "levels/town.h"
 #include "levels/trigs.h"
+#include "nightmare/restoration/registry.hpp"
 #include "minitext.h"
 #include "missiles.h"
 #include "monster.h"
@@ -538,6 +539,7 @@ void ResyncMPQuests()
 	    && currlevel <= butcherQuest._qlevel + 1) {
 		butcherQuest._qactive = QUEST_ACTIVE;
 		NetSendCmdQuest(true, butcherQuest);
+		nightmare::CheckAndTriggerButcherCinematic();
 	}
 
 	auto &betrayerQuest = Quests[Q_BETRAYER];

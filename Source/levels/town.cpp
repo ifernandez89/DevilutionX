@@ -11,6 +11,7 @@
 #include "multi.h"
 #include "player.h"
 #include "quests.h"
+#include "nightmare/world/ambient_animals.hpp"
 #include "utils/endian_swap.hpp"
 
 namespace devilution {
@@ -384,6 +385,7 @@ void CreateTown(lvl_entry entry)
 	}
 
 	DrlgTPass3();
+	nightmare::InitTristramAmbientAnimals();
 }
 
 } // namespace devilution

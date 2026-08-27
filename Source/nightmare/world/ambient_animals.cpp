@@ -25,7 +25,7 @@ const size_t AnimalSoundPoolSize = sizeof(AnimalSoundPool) / sizeof(AnimalSoundP
 
 void InitTristramAmbientAnimals()
 {
-	g_nextAnimalSoundTick = SDL_GetTicks() + (45 + GenerateRnd(75)) * 1000;
+	g_nextAnimalSoundTick = SDL_GetTicks() + (4 + GenerateRnd(5)) * 1000;
 }
 
 void UpdateTristramAmbientAnimals()
@@ -34,10 +34,10 @@ void UpdateTristramAmbientAnimals()
 		return;
 
 	const uint32_t now = SDL_GetTicks();
-	if (now >= g_nextAnimalSoundTick) {
+	if (g_nextAnimalSoundTick != 0 && now >= g_nextAnimalSoundTick) {
 		const int index = GenerateRnd(AnimalSoundPoolSize);
 		PlayNightmareRestorationWav(AnimalSoundPool[index]);
-		g_nextAnimalSoundTick = now + (45 + GenerateRnd(75)) * 1000;
+		g_nextAnimalSoundTick = now + (15 + GenerateRnd(16)) * 1000;
 	}
 }
 

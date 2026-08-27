@@ -64,12 +64,13 @@ const size_t NightmareRestorationRegistrySize = sizeof(NightmareRestorationRegis
 
 namespace {
 bool g_butcherCinematicPlayed = false;
-std::unique_ptr<TSnd> g_restorationSnd;
+std::vector<std::unique_ptr<TSnd>> g_restorationSnds;
 } // namespace
 
 void InitNightmareRestoration()
 {
 	g_butcherCinematicPlayed = false;
+	g_restorationSnds.clear();
 }
 
 void UpdateNightmareRestoration()
@@ -89,11 +90,20 @@ void PlayNightmareRestorationWav(const char *wavPath)
 		return;
 
 #ifndef NOSOUND
+	for (auto it = g_restorationSnds.begin(); it != g_restorationSnds.end();) {
+		if (!*it || !(*it)->DSB.IsPlaying()) {
+			it = g_restorationSnds.erase(it);
+		} else {
+			++it;
+		}
+	}
+
 	auto sndRes = SoundFileLoadWithStatus(wavPath, /*stream=*/false);
 	if (sndRes.has_value() && *sndRes != nullptr) {
-		g_restorationSnd = std::move(*sndRes);
-		if (g_restorationSnd) {
-			g_restorationSnd->DSB.Play(*GetOptions().Audio.soundVolume);
+		auto snd = std::move(*sndRes);
+		if (snd) {
+			snd->DSB.Play(*GetOptions().Audio.soundVolume);
+			g_restorationSnds.push_back(std::move(snd));
 		}
 	}
 #endif

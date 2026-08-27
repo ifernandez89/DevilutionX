@@ -20,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Tremain the Priest & Shadowfang Quest**: Integrated dormant towner Tremain (`TOWN_PRIEST`, `priest8.cel`) into Tristram church ruins (`{62, 23}`) via `towners.tsv` and `Source/towners.cpp`, with full original voice lines (`priest00.wav` - `priest07.wav`), spawning procedural unique boss *Fleshdoom* in Catacombs (levels 5-7), dropping *Shadowfang*, and rewarding `Lightforge` mace upon resolution.
 - **Butcher Chamber Video Cinematic**: Hooked `gendata/fbutch3.smk` video trigger directly to the first entrance of the Butcher's Chamber (Level 2).
 - **Wirt Reversed Speech Riddle (50% Chance)**: Integrated conditional 50% probability trigger for Wirt's reversed audio lines (`pegboy21.wav` / `pegboy22.wav`) upon interaction after visiting the Butcher's level.
-- **Tristram Ambient Animal Sound Queue**: Enqueued dormant animal audio effects (`sfx/animals/*`) in Tristram mixer with a non-intrusive random timer (45s to 120s).
+- **Tristram Ambient Animal Sound Queue**: Hooked `InitTristramAmbientAnimals()` to town map creation (`CreateTown`) and tuned playback intervals (first trigger at 4-8s, recurring every 15-30s) with active vector retention for dormant animal sound effects (`sfx/animals/*`).
 
 #### Multiplatform Gothic Visual Enhancement & Weather System
 - **Nightmare UI Pass (Gothic Slate Stone Architecture)**: Consolidated zero-risk visual skinning strategy over existing UI geometry (`implementation_plan.md`), unifying Inventory, Stash, Character Panel, Spellbook, and HUD buttons with `GetGoldToStoneTRN()` while preserving 100% of C++ game logic, drag-and-drop, and slot hit-testing for PC, Mobile, and WebAssembly.

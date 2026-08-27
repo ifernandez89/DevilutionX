@@ -4,6 +4,7 @@
 
 #include "diablo_msg.hpp"
 #include "engine/clx_sprite.hpp"
+#include "engine/load_cel.hpp"
 #include "engine/load_clx.hpp"
 #include "engine/sound.h"
 #include "items.h"
@@ -28,9 +29,12 @@ void InitTremainNPC()
 	g_tremainPosition = { 62, 23 };
 
 	if (!g_tremainSprites) {
-		g_tremainSprites = LoadClx("towners\\priest8.clx");
+		g_tremainSprites = LoadOptionalCel("towners\\priest\\priest8", 96);
 		if (!g_tremainSprites) {
-			g_tremainSprites = LoadClx("towners\\priest\\priest8.clx");
+			g_tremainSprites = LoadOptionalCel("towners\\priest8", 96);
+		}
+		if (!g_tremainSprites) {
+			g_tremainSprites = LoadOptionalClx("towners\\priest\\priest8.clx");
 		}
 	}
 }

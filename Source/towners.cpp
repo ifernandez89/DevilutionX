@@ -112,8 +112,10 @@ void InitTownerInfo(Towner &towner, const TownerData &townerData, const TownerDa
 void LoadTownerAnimations(Towner &towner, const char *path, int frames, int delay)
 {
 	towner.ownedAnim = std::nullopt;
-	towner.ownedAnim = LoadCel(path, towner._tAnimWidth);
-	NewTownerAnim(towner, *towner.ownedAnim, frames, delay);
+	towner.ownedAnim = LoadOptionalCel(path, towner._tAnimWidth);
+	if (towner.ownedAnim) {
+		NewTownerAnim(towner, *towner.ownedAnim, frames, delay);
+	}
 }
 
 /**
@@ -689,8 +691,9 @@ void TalkToGirl(Player &player, Towner &girl)
 	}
 }
 
-void InitPriest(Towner & /*towner*/, const TownerDataEntry & /*entry*/)
+void InitPriest(Towner &towner, const TownerDataEntry &entry)
 {
+	InitTownerFromData(towner, entry);
 	nightmare::InitTremainNPC();
 }
 

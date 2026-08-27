@@ -850,12 +850,14 @@ void DrawMonsterHelper(const Surface &out, Point tilePosition, Point targetBuffe
 
 	if (leveltype == DTYPE_TOWN) {
 		auto &towner = Towners[mi];
-		const Point position = targetBufferPosition + towner.getRenderingOffset();
-		const ClxSprite sprite = towner.currentSprite();
-		if (mi == pcursmonst) {
-			ClxDrawOutlineSkipColorZero(out, 166, position, sprite);
+		const OptionalClxSprite sprite = towner.currentSprite();
+		if (sprite) {
+			const Point position = targetBufferPosition + towner.getRenderingOffset();
+			if (mi == pcursmonst) {
+				ClxDrawOutlineSkipColorZero(out, 166, position, *sprite);
+			}
+			ClxDraw(out, position, *sprite);
 		}
-		ClxDraw(out, position, sprite);
 		return;
 	}
 

@@ -72,8 +72,10 @@ struct Towner {
 	uint8_t _tAnimFrameCnt;
 	_talker_id _ttype;
 
-	[[nodiscard]] ClxSprite currentSprite() const
+	[[nodiscard]] OptionalClxSprite currentSprite() const
 	{
+		if (!anim)
+			return std::nullopt;
 		return (*anim)[_tAnimFrame];
 	}
 	[[nodiscard]] Displacement getRenderingOffset() const

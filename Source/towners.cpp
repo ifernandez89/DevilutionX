@@ -20,6 +20,7 @@
 #include "utils/language.h"
 #include "utils/str_case.hpp"
 
+#include "nightmare/npcs/tremain.hpp"
 #include "nightmare/restoration/registry.hpp"
 #include "nightmare/world/ambient_animals.hpp"
 
@@ -688,6 +689,16 @@ void TalkToGirl(Player &player, Towner &girl)
 	}
 }
 
+void InitPriest(Towner & /*towner*/, const TownerDataEntry & /*entry*/)
+{
+	nightmare::InitTremainNPC();
+}
+
+void TalkToPriest(Player &player, Towner & /*priest*/)
+{
+	nightmare::InteractWithTremain(player);
+}
+
 const TownerData TownersData[] = {
 	// clang-format off
 	// type          init (nullptr = default)  talk
@@ -704,6 +715,7 @@ const TownerData TownersData[] = {
 	{ TOWN_COWFARM, InitCowFarmer, TalkToCowFarmer   },
 	{ TOWN_FARMER,  nullptr,       TalkToFarmer      },
 	{ TOWN_GIRL,    nullptr,       TalkToGirl        },
+	{ TOWN_PRIEST,  InitPriest,    TalkToPriest      },
 	// clang-format on
 };
 
@@ -734,6 +746,8 @@ bool IsTownerPresent(_talker_id npc)
 		return gbIsHellfire && sgGameInitInfo.bCowQuest != 0;
 	case TOWN_GIRL:
 		return gbIsHellfire && sgGameInitInfo.bTheoQuest != 0 && MyPlayer->_pLvlVisited[17] && Quests[Q_GIRL]._qactive != QUEST_DONE;
+	case TOWN_PRIEST:
+		return nightmare::g_tremainState != nightmare::TremainState::CompletedAndDead;
 	default:
 		return true;
 	}

@@ -23,6 +23,8 @@
 #include "levels/gendung.h"
 #include "levels/town.h"
 #include "levels/trigs.h"
+#include "items.h"
+#include "nightmare/npcs/tremain.hpp"
 #include "nightmare/restoration/registry.hpp"
 #include "minitext.h"
 #include "missiles.h"
@@ -424,6 +426,10 @@ void CheckQuestKill(const Monster &monster, bool sendmsg)
 		Quests[Q_WARLORD]._qactive = QUEST_DONE;
 		NetSendCmdQuest(true, Quests[Q_WARLORD]);
 		myPlayer.Say(HeroSpeech::YourReignOfPainHasEnded, 30);
+	} else if (monster.uniqueType == UniqueMonsterType::Fleshdoom) {
+		nightmare::g_tremainState = nightmare::TremainState::FleshdoomKilled;
+		SpawnUnique(UITEM_SHADHAWK, monster.position.tile);
+		myPlayer.Say(HeroSpeech::TheSpiritsOfTheDeadAreNowAvenged, 30);
 	}
 }
 

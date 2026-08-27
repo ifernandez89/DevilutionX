@@ -74,6 +74,7 @@ void InteractWithTremain(Player &player)
 		// Resolution: priest07.wav
 		PlayNightmareRestorationWav("sfx\\towners\\priest07.wav");
 		g_tremainState = TremainState::CompletedAndDead;
+		SpawnUnique(UITEM_BOVINE, player.position.tile);
 		InitDiabloMsg(_("Tremain: Light be praised! Wait... It burns! Hellfire, consuming me!"));
 	} else if (g_tremainState == TremainState::ActiveInTown) {
 		// Initial Quest monologue: priest05.wav (76s)

@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Floating Damage Numbers**: Integrated dynamic floating damage numbers (`AddFloatingNumber`) in `ApplyMonsterDamage`, displaying red damage popups floating above monsters during combat.
 
 #### NIGHTMARE — Restoration Layer (Dormant Content Activation)
-- **Tremain the Priest & Shadowfang Quest**: Reactivated dormant towner Tremain (`priest8.cel`) in Tristram church ruins with full original voice lines (`priest00.wav` - `priest07.wav`), spawning procedural unique boss *Fleshdoom* in Catacombs (levels 5-7), rewarding `Lightforge` mace upon resolution.
+- **Tremain the Priest & Shadowfang Quest**: Integrated dormant towner Tremain (`TOWN_PRIEST`, `priest8.cel`) into Tristram church ruins (`{62, 23}`) via `towners.tsv` and `Source/towners.cpp`, with full original voice lines (`priest00.wav` - `priest07.wav`), spawning procedural unique boss *Fleshdoom* in Catacombs (levels 5-7), dropping *Shadowfang*, and rewarding `Lightforge` mace upon resolution.
 - **Butcher Chamber Video Cinematic**: Hooked `gendata/fbutch3.smk` video trigger directly to the first entrance of the Butcher's Chamber (Level 2).
 - **Wirt Reversed Speech Riddle (50% Chance)**: Integrated conditional 50% probability trigger for Wirt's reversed audio lines (`pegboy21.wav` / `pegboy22.wav`) upon interaction after visiting the Butcher's level.
 - **Tristram Ambient Animal Sound Queue**: Enqueued dormant animal audio effects (`sfx/animals/*`) in Tristram mixer with a non-intrusive random timer (45s to 120s).

@@ -34,6 +34,7 @@
 #include <fmt/core.h>
 
 #include "automap.h"
+#include "nightmare/npcs/tremain.hpp"
 #include "control/control.hpp"
 #include "crawl.hpp"
 #include "cursor.h"
@@ -565,6 +566,10 @@ tl::expected<void, std::string> PlaceQuestMonsters()
 		}
 		if (Quests[Q_ZHAR].IsAvailable() && zharlib == -1) {
 			Quests[Q_ZHAR]._qactive = QUEST_NOTAVAIL;
+		}
+
+		if (currlevel >= 5 && currlevel <= 7 && nightmare::g_tremainState == nightmare::TremainState::QuestGiven) {
+			RETURN_IF_ERROR(PlaceUniqueMonst(UniqueMonsterType::Fleshdoom, 0, 0));
 		}
 
 		if (currlevel == Quests[Q_BETRAYER]._qlevel && UseMultiplayerQuests()) {

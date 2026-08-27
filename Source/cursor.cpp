@@ -303,12 +303,14 @@ bool TrySelectPixelBased(Point tile)
 			monsterId = std::abs(monsterId) - 1;
 			if (leveltype == DTYPE_TOWN) {
 				const Towner &towner = Towners[monsterId];
-				const ClxSprite sprite = towner.currentSprite();
-				const Displacement renderingOffset = towner.getRenderingOffset();
-				if (checkSprite(adjacentTile, sprite, renderingOffset)) {
-					cursPosition = adjacentTile;
-					pcursmonst = monsterId;
-					return true;
+				const OptionalClxSprite sprite = towner.currentSprite();
+				if (sprite) {
+					const Displacement renderingOffset = towner.getRenderingOffset();
+					if (checkSprite(adjacentTile, *sprite, renderingOffset)) {
+						cursPosition = adjacentTile;
+						pcursmonst = monsterId;
+						return true;
+					}
 				}
 			} else {
 				const Monster &monster = Monsters[monsterId];

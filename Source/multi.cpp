@@ -566,8 +566,8 @@ void InitGameInfo()
 	const Options &options = GetOptions();
 	sgGameInitInfo.nTickRate = *options.Gameplay.tickRate;
 	sgGameInitInfo.bRunInTown = *options.Gameplay.runInTown ? 1 : 0;
-	sgGameInitInfo.bTheoQuest = *options.Gameplay.theoQuest ? 1 : 0;
-	sgGameInitInfo.bCowQuest = *options.Gameplay.cowQuest ? 1 : 0;
+	sgGameInitInfo.bTheoQuest = (gbIsHellfire || *options.Gameplay.theoQuest) ? 1 : 0;
+	sgGameInitInfo.bCowQuest = (gbIsHellfire || *options.Gameplay.cowQuest) ? 1 : 0;
 	sgGameInitInfo.bFriendlyFire = *options.Gameplay.friendlyFire ? 1 : 0;
 	sgGameInitInfo.fullQuests = (!gbIsMultiplayer || *options.Gameplay.multiplayerFullQuests) ? 1 : 0;
 }

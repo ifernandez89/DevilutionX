@@ -744,11 +744,11 @@ bool IsTownerPresent(_talker_id npc)
 	case TOWN_DEADGUY:
 		return true; // Always present at cathedral entrance
 	case TOWN_FARMER:
-		return gbIsHellfire && sgGameInitInfo.bCowQuest == 0 && Quests[Q_FARMER]._qactive != QUEST_HIVE_DONE;
+		return gbIsHellfire && Quests[Q_FARMER]._qactive != QUEST_HIVE_DONE;
 	case TOWN_COWFARM:
-		return gbIsHellfire && sgGameInitInfo.bCowQuest != 0;
+		return gbIsHellfire && Quests[Q_JERSEY]._qactive != QUEST_DONE;
 	case TOWN_GIRL:
-		return gbIsHellfire && sgGameInitInfo.bTheoQuest != 0 && MyPlayer->_pLvlVisited[17] && Quests[Q_GIRL]._qactive != QUEST_DONE;
+		return gbIsHellfire && Quests[Q_GIRL]._qactive != QUEST_DONE;
 	case TOWN_PRIEST:
 		return nightmare::g_tremainState != nightmare::TremainState::CompletedAndDead;
 	default:
@@ -890,6 +890,8 @@ void UpdateGirlAnimAfterQuestComplete()
 void UpdateCowFarmerAnimAfterQuestComplete()
 {
 	Towner *cowFarmer = GetTowner(TOWN_COWFARM);
+	if (cowFarmer == nullptr || !cowFarmer->ownedAnim)
+		return;
 	auto curFrame = cowFarmer->_tAnimFrame;
 	LoadTownerAnimations(*cowFarmer, "towners\\farmer\\mfrmrn2", 15, 3);
 	cowFarmer->_tAnimFrame = std::min<uint8_t>(curFrame, cowFarmer->_tAnimLen - 1);

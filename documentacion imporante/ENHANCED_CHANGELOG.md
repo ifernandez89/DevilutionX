@@ -51,6 +51,12 @@
 - ✅ Efectos de impacto dinámicos en combate
 - ✅ Señales visuales para eventos importantes
 
+#### 🗡️ **Store Item Graphics Permanent Display**
+- ✅ **Miniaturas de items activadas por defecto** en tiendas para Diablo y Hellfire
+- ✅ **Soporte visual completo** en listas de compra/venta de Griswold, Pepin, Adria, Wirt, etc.
+- ✅ **Renderizado mejorado** en cuadros de confirmación y en la identificación de Cain
+
+
 #### 🏰 **Town Cinematic System (Fase D3)**
 - ✅ Atmósfera cinematográfica en Tristram
 - ✅ Efectos de profundidad y paralaje en el pueblo

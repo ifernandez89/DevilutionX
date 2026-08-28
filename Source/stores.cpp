@@ -917,9 +917,9 @@ void StoreConfirm(Item &item)
 	ClearSText(5, 23);
 
 	const UiFlags itemColor = item.getTextColorWithStatCheck();
-	AddSText(20, 8, item.getName(), itemColor, false);
+	AddSText(20, 8, item.getName(), itemColor, false, item._iCurs, true);
 	AddSTextVal(8, item._iIvalue);
-	PrintStoreItem(item, 9, itemColor);
+	PrintStoreItem(item, 9, itemColor, true);
 
 	std::string_view prompt;
 
@@ -1182,8 +1182,8 @@ void StartStorytellerIdentifyShow(Item &item)
 	const UiFlags itemColor = item.getTextColorWithStatCheck();
 
 	AddSText(0, 7, _("This item is:"), UiFlags::ColorWhite | UiFlags::AlignCenter, false);
-	AddSText(20, 11, item.getName(), itemColor, false);
-	PrintStoreItem(item, 12, itemColor);
+	AddSText(20, 11, item.getName(), itemColor, false, item._iCurs, true);
+	PrintStoreItem(item, 12, itemColor, true);
 	AddSText(0, 18, _("Done"), UiFlags::ColorWhite | UiFlags::AlignCenter, true);
 }
 

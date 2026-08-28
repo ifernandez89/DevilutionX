@@ -11,13 +11,14 @@
 #include "nightmare/restoration/registry.hpp"
 #include "options.h"
 #include "player.h"
+#include "quests.h"
 #include "utils/language.h"
 
 namespace devilution {
 namespace nightmare {
 
 TremainState g_tremainState = TremainState::ActiveInTown;
-Point g_tremainPosition = { 62, 23 }; // Original Church Ruins position in Tristram
+Point g_tremainPosition = { 65, 24 }; // Relocated to Church Courtyard to prevent NPC collisions
 
 namespace {
 OptionalOwnedClxSpriteList g_tremainSprites;
@@ -26,7 +27,7 @@ OptionalOwnedClxSpriteList g_tremainSprites;
 void InitTremainNPC()
 {
 	g_tremainState = TremainState::ActiveInTown;
-	g_tremainPosition = { 62, 23 };
+	g_tremainPosition = { 65, 24 };
 
 	if (!g_tremainSprites) {
 		g_tremainSprites = LoadOptionalCel("towners\\priest\\priest8", 96);
@@ -78,16 +79,22 @@ void InteractWithTremain(Player &player)
 		// Resolution: priest07.wav
 		PlayNightmareRestorationWav("sfx\\towners\\priest07.wav");
 		g_tremainState = TremainState::CompletedAndDead;
+		Quests[Q_TREMAIN]._qactive = QUEST_DONE;
+		Quests[Q_TREMAIN]._qlog = true;
 		SpawnUnique(UITEM_BOVINE, player.position.tile);
 		InitDiabloMsg(_("Tremain: Light be praised! Wait... It burns! Hellfire, consuming me!"));
 	} else if (g_tremainState == TremainState::ActiveInTown) {
 		// Initial Quest monologue: priest05.wav (76s)
 		PlayNightmareRestorationWav("sfx\\towners\\priest05.wav");
 		g_tremainState = TremainState::QuestGiven;
+		Quests[Q_TREMAIN]._qactive = QUEST_ACTIVE;
+		Quests[Q_TREMAIN]._qlog = true;
 		InitDiabloMsg(_("Tremain: A demon named Fleshdoom wields Shadowfang... Do not succumb to its curse."));
 	} else {
 		// Urge: priest06.wav
 		PlayNightmareRestorationWav("sfx\\towners\\priest06.wav");
+		Quests[Q_TREMAIN]._qactive = QUEST_ACTIVE;
+		Quests[Q_TREMAIN]._qlog = true;
 		InitDiabloMsg(_("Tremain: Fleshdoom remains in the Catacombs. Destroy him, but do not wield Shadowfang."));
 	}
 }

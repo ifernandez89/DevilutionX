@@ -19,7 +19,7 @@
 
 namespace devilution {
 
-#define MAXQUESTS 24
+#define MAXQUESTS 25
 
 /** States of the mushroom quest */
 enum {

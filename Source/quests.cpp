@@ -428,6 +428,8 @@ void CheckQuestKill(const Monster &monster, bool sendmsg)
 		myPlayer.Say(HeroSpeech::YourReignOfPainHasEnded, 30);
 	} else if (monster.uniqueType == UniqueMonsterType::Fleshdoom) {
 		nightmare::g_tremainState = nightmare::TremainState::FleshdoomKilled;
+		Quests[Q_TREMAIN]._qactive = QUEST_ACTIVE;
+		Quests[Q_TREMAIN]._qlog = true;
 		SpawnUnique(UITEM_SHADHAWK, monster.position.tile);
 		myPlayer.Say(HeroSpeech::TheSpiritsOfTheDeadAreNowAvenged, 30);
 	}

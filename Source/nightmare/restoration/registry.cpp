@@ -90,19 +90,17 @@ void PlayNightmareRestorationWav(const char *wavPath)
 		return;
 
 #ifndef NOSOUND
-	for (auto it = g_restorationSnds.begin(); it != g_restorationSnds.end();) {
-		if (!*it || !(*it)->DSB.IsPlaying()) {
-			it = g_restorationSnds.erase(it);
-		} else {
-			++it;
-		}
+	for (auto &snd : g_restorationSnds) {
+		if (snd && snd->DSB.IsLoaded())
+			snd->DSB.Stop();
 	}
+	g_restorationSnds.clear();
 
 	auto sndRes = SoundFileLoadWithStatus(wavPath, /*stream=*/false);
 	if (sndRes.has_value() && *sndRes != nullptr) {
 		auto snd = std::move(*sndRes);
 		if (snd) {
-			snd->DSB.Play(*GetOptions().Audio.soundVolume);
+			snd_play_snd(snd.get(), 0, 0);
 			g_restorationSnds.push_back(std::move(snd));
 		}
 	}

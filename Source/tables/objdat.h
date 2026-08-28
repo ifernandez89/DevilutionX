@@ -178,6 +178,7 @@ enum quest_id : int8_t {
 	Q_NAKRUL,
 	Q_CORNSTN,
 	Q_JERSEY,
+	Q_TREMAIN,
 	Q_INVALID = -1,
 };
 

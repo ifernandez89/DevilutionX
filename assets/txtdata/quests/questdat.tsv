@@ -23,3 +23,4 @@ qdlvl	qdmultlvl	qlvlt	bookOrder	qdrnd	qslvl	isSinglePlayerOnly	qdmsg	qlstr
 21	21		19	100	SL_NONE	false	TEXT_NAKRUL1	Na-Krul
 21	-1		18	100	SL_NONE	true	TEXT_CORNSTN	Cornerstone of the World
 9	9		13	100	SL_NONE	false	TEXT_JERSEY4	The Jersey's Jersey
+5	5		100	100	SL_NONE	false	TEXT_NONE	Tremain the Priest

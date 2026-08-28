@@ -189,18 +189,16 @@
 		actionsDiv.style.display = 'flex';
 		actionsDiv.style.alignItems = 'center';
 
-		if (isSaveFile) {
-			const exportBtn = document.createElement('button');
-			exportBtn.className = 'btn btn-export';
-			exportBtn.textContent = '💾 Descargar';
-			exportBtn.title = 'Descargar copia de seguridad a tu PC';
-			exportBtn.addEventListener('click', () => exportFile(filename));
-			actionsDiv.appendChild(exportBtn);
-		}
+		const exportBtn = document.createElement('button');
+		exportBtn.className = 'btn btn-export';
+		exportBtn.textContent = '💾 Descargar';
+		exportBtn.title = 'Descargar copia de este archivo a tu PC';
+		exportBtn.addEventListener('click', () => exportFile(filename));
+		actionsDiv.appendChild(exportBtn);
 
 		const deleteBtn = document.createElement('button');
 		deleteBtn.className = 'btn btn-delete';
-		deleteBtn.textContent = 'Eliminar';
+		deleteBtn.textContent = '🗑️ Eliminar';
 		deleteBtn.addEventListener('click', () => window.deleteFile(filename));
 		actionsDiv.appendChild(deleteBtn);
 
@@ -224,9 +222,12 @@
 			a.click();
 			document.body.removeChild(a);
 			URL.revokeObjectURL(url);
+			if (typeof showToast === 'function') {
+				showToast('¡Descargando ' + filename + '!');
+			}
 		} catch (err) {
 			console.error('Error exporting file:', err);
-			alert('Error exportando partida: ' + filename);
+			alert('Error exportando archivo: ' + filename);
 		}
 	}
 

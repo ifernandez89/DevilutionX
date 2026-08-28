@@ -135,6 +135,9 @@ void InitQuestText()
 
 void InitQTextMsg(_speech_id m)
 {
+	if (m == TEXT_NONE || m < 0 || static_cast<size_t>(m) >= Speeches.size())
+		return;
+
 	SfxID sfxnr = Speeches[m].sfxnr;
 	switch (sfxnr) {
 	case SfxID::Warrior1:

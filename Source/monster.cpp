@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <array>
 #include <bitset>
+#include "nightmare/restoration/layer2.hpp"
 #include <cassert>
 #include <climits>
 #include <cmath>
@@ -3020,6 +3021,21 @@ void ActivateSpawn(Monster &monster, Point position, Direction dir)
 	StartSpecialStand(monster, dir);
 }
 
+void FireManAi(Monster &monster)
+{
+	if (monster.mode != MonsterMode::Stand || monster.activeForTicks == 0)
+		return;
+
+	const unsigned distanceToEnemy = monster.distanceToEnemy();
+	if (distanceToEnemy >= 3 && distanceToEnemy <= 6 && FlipCoin() && monster.data().hasAnim(4)) {
+		const Direction md = GetDirection(monster.position.tile, monster.enemyPosition);
+		StartSpecialStand(monster, md);
+		return;
+	}
+
+	AiRangedAvoidance(monster);
+}
+
 /** Maps from monster AI ID to monster AI function. */
 void (*AiProc[])(Monster &monster) = {
 	/*MonsterAIID::Zombie         */ &ZombieAi,
@@ -3039,7 +3055,7 @@ void (*AiProc[])(Monster &monster) = {
 	/*MonsterAIID::Succubus       */ &AiRanged,
 	/*MonsterAIID::Sneak          */ &SneakAi,
 	/*MonsterAIID::Storm          */ &AiRangedAvoidance,
-	/*MonsterAIID::FireMan        */ nullptr,
+	/*MonsterAIID::FireMan        */ &FireManAi,
 	/*MonsterAIID::Gharbad        */ &GharbadAi,
 	/*MonsterAIID::Acid           */ &AiRangedAvoidance,
 	/*MonsterAIID::AcidUnique     */ &AiRanged,
@@ -3058,7 +3074,7 @@ void (*AiProc[])(Monster &monster) = {
 	/*MonsterAIID::Torchant       */ &AiRanged,
 	/*MonsterAIID::HorkDemon      */ &HorkDemonAi,
 	/*MonsterAIID::Lich           */ &AiRanged,
-	/*MonsterAIID::ArchLich       */ &AiRanged,
+	/*MonsterAIID::ArchLich       */ &CounselorAi,
 	/*MonsterAIID::Psychorb       */ &AiRanged,
 	/*MonsterAIID::Necromorb      */ &AiRanged,
 	/*MonsterAIID::BoneDemon      */ &AiRangedAvoidance
@@ -3091,6 +3107,12 @@ bool IsMonsterAvailable(const MonsterData &monsterData)
 		return false;
 
 	if (gbIsSpawn && monsterData.availability == MonsterAvailability::Retail)
+		return false;
+
+	if (monsterData.ai == MonsterAIID::FireMan && !nightmare::IsIncineratorAssetAvailable())
+		return false;
+
+	if (monsterData.ai == MonsterAIID::ArchLich && !nightmare::IsDarkMageAssetAvailable())
 		return false;
 
 	return currlevel >= monsterData.minDunLvl && currlevel <= monsterData.maxDunLvl;

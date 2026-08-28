@@ -17,6 +17,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Floating Damage Numbers**: Integrated dynamic floating damage numbers (`AddFloatingNumber`) in `ApplyMonsterDamage`, displaying red damage popups floating above monsters during combat.
 
 #### NIGHTMARE — Restoration Layer (Dormant Content Activation)
+- **Restoration Layer 2 (Prophecy of the Stars, Cut Gossip Library & Monster Restorations)**:
+  - **Map of the Stars Prophecy**: Integrated Deckard Cain's dormant prophecy dialogue (`Cain22.wav` / `TEXT_DOOM1` - `TEXT_DOOM10`) with defensive sound loading (`PlayLayer2WavDefensive`) and text banner rendering when inspecting the Map of the Stars.
+  - **Extended Tristram Gossip & Lore**: Reactivated sleeping town gossip pools (`TEXT_FARNHAM16-22`, `TEXT_GILLIAN11-26`, `TEXT_PEPIN12-30`, `TEXT_GRISWOLD14-37`) with 30% random selection probability (`GetLayer2GossipDefensive`) when speaking to Tristram NPCs.
+  - **Incinerator (`MT_INCIN`) AI & Unique Bosses**: Implemented `FireManAi` handling ranged fireball attacks and rolling fireball transformation (`Special` animation), spawning in Caves (levels 11-12) and Hell (levels 13-15) alongside unique bosses *Wrathfire the Doomed* and *Warpfire Hellspawn*.
+  - **Arch-Lich Malignus (`MT_DARKMAGE`) AI & Level 15/16 Spawns**: Configured Arch-Lich Malignus with `CounselorAi` (evasive teleportation and arcane conjuration) in Hell levels 15 and 16.
+  - **Anti-Crash VFS/MPQ Asset Guards**: Added runtime asset checks (`IsIncineratorAssetAvailable`, `IsDarkMageAssetAvailable`, `IsLayer2AssetAvailable`) in `IsMonsterAvailable` and audio playback to prevent `app_fatal` crashes when custom or vanilla MPQs lack Layer 2 assets.
 - **Tremain the Priest & Shadowfang Quest**: Integrated dormant towner Tremain (`TOWN_PRIEST`, `priest8.cel`) into Tristram church courtyard (`{65, 24}`) via `towners.tsv` (Diablo & Hellfire) and `Source/towners.cpp`, with full original voice lines (`priest00.wav` - `priest07.wav`), procedural unique boss *Fleshdoom* in Catacombs (levels 5-7), dropping *Shadowfang*, and rewarding `Lightforge` mace upon resolution.
 - **Tremain Audio & Quest Log Bug Fixes**:
   - **Single Dialogue Playback**: Fixed dialogue audio looping continuously across town and dungeons by updating sound player invocation (`PlayNightmareRestorationWav`) to stop prior samples and issue single-instance playback (`numIterations = 1`).

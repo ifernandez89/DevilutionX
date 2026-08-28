@@ -8,10 +8,13 @@
 #include <optional>
 
 #include "control/control.hpp"
+#include "diablo_msg.hpp"
 #include "engine/clx_sprite.hpp"
 #include "engine/load_cel.hpp"
 #include "engine/render/clx_render.hpp"
 #include "engine/render/primitive_render.hpp"
+#include "nightmare/restoration/layer2.hpp"
+#include "utils/language.h"
 
 namespace devilution {
 namespace {
@@ -24,6 +27,10 @@ void doom_init()
 {
 	DoomSprite = LoadCel("items\\map\\mapztown", 640);
 	DoomFlag = true;
+
+	// Layer 2: Trigger Map of the Stars prophecy speech defensively
+	nightmare::PlayLayer2WavDefensive("sfx\\towners\\cain22.wav");
+	InitDiabloMsg(_("Deckard Cain: The stars align in darkness... Diablo's hour of power is at hand!"));
 }
 
 void doom_close()

@@ -1,0 +1,106 @@
+# Plan de Implementación: Recuperación de Contenido Cortado Original (Layer 2)
+
+Este plan detalla la arquitectura, cambios de código y datos necesarios para restaurar el contenido canónico no utilizado de Diablo I en **DevilutionX NIGHTMARE**, respetando la regla estricta de no duplicar lo que Hellfire ya utilizó y preservando intactos los elementos de Layer 1 ya operativos (*Tremain the Priest, Cinemática de Butcher, Acertijo de Wirt y Paisaje Sonoro Animal*).
+
+---
+
+## Componentes a Implementar
+
+### 1. 🌌 Profecía de las Estrellas (*Map of the Stars*) & Diálogos Towners
+Restauración de las líneas de diálogo grabadas en el MPQ original (`TEXT_DOOM1` a `TEXT_DOOM10`) correspondientes a la revelación de Deckard Cain como el último Horadrim y las reacciones de los habitantes del pueblo.
+
+* **Audio / Textos:**
+  * `TEXT_DOOM1` (`Cain22.wav`): Revelación de Deckard Cain el Anciano y la profecía de alineación estelar de Diablo.
+  * `TEXT_DOOM2` (`Cain23.wav`): Recordatorio de urgencia ("Our time is running short!").
+  * `TEXT_DOOM3` (`Cain24.wav`): Diablo en el cenit de su poder terrenal.
+  * `TEXT_DOOM4` (`Ogden20.wav`), `TEXT_DOOM5` (`Pepin19.wav`), `TEXT_DOOM6` (`Gillian20.wav`), `TEXT_DOOM7` (`Griswold20.wav`), `TEXT_DOOM8` (`Farnham21.wav`), `TEXT_DOOM9` (`Adria21.wav`), `TEXT_DOOM10` (`Wirt20.wav`).
+* **Mecánica de activación:** Al inspeccionar el pedestal/mapa estelar en el Laberinto o mediante opción contextual de conversación en Tristram.
+
+---
+
+### 2. 📜 Gossip y Lore Oculto de Tristram
+Reactivación de la biblioteca de líneas de voz y textos dormidos en `textdat.tsv` para el sistema de cotilleo/gossip de los NPCs de Tristram:
+* `TEXT_FARNHAM16` a `TEXT_FARNHAM22`: Memorias del descenso a la Catedral y la locura de Leoric.
+* `TEXT_PEPIN12` a `TEXT_PEPIN30`: Diagnósticos médicos sobre las víctimas de los demonios y la plaga.
+* `TEXT_GRISWOLD14` a `TEXT_GRISWOLD37`: Historias sobre forja de armas malditas y leyendas antiguas.
+* `TEXT_GILLIAN11` a `TEXT_GILLIAN26`: Recuerdos de su abuela y el terror del pueblo.
+* Integración probabilística en `Source/towners.cpp` y `Source/hidden_content.cpp` sin saturar el flujo de juego normal.
+
+---
+
+### 3. 🔥 Incinerator (`MT_INCIN` / `fireman\firem`) — Monstruo & Bosses
+Implementación de la IA original y reactivación en las tablas de generación de mazmorra.
+
+* **Gráficos & Animaciones:**
+  * Carpeta MPQ: `monsters\fireman\firem`
+  * Frames: Stand (14), Walk (19), Attack (20), Hit (8), Death (14), Special (23).
+* **Comportamiento de IA (`FireManAi`):**
+  1. **Ataque a Distancia:** Proyectiles ígneos a media/larga distancia usando animación `Attack`.
+  2. **Modo Especial (Bola de Fuego Rodante):** Al cerrar distancias o reposicionarse, ejecuta la animación `Special` (23 frames) para rodar a alta velocidad.
+  3. **Muerte:** Animación `Death` (14 frames) colapsando en brasas y cenizas.
+* **Integración en Tablas:**
+  * Modificar `monstdat.tsv`: Habilitar disponibilidad (`Retail`), niveles 11-15 (Caves/Hell) para:
+    * `MT_INCIN` (Incinerator)
+    * `MT_FLAMLRD` (Flame Lord)
+    * `MT_DOOMFIRE` (Doom Fire)
+    * `MT_HELLBURN` (Hell Burner)
+  * Modificar `unique_monstdat.tsv`:
+    * *Wrathfire the Doomed* (`MT_INCIN`)
+    * *Warpfire Hellspawn* (`MT_HELLBURN`)
+
+---
+
+### 4. 💀 The Arch-Lich Malignus (`MT_DARKMAGE` / `darkmage\dmage`)
+Recuperación del Arch-Lich Malignus como boss supremo de Nivel 16 o sala previa a Diablo.
+
+* **Gráficos & Sonidos:**
+  * Assets: `monsters\darkmage\dmage` con sonido nativo `sfx\darkmage\dmag*.wav`.
+  * Frames: Stand (6), Walk (1), Attack (21), Hit (6), Death (23), Special (18).
+* **Corrección Gráfica de Offsets:**
+  * Ajuste de compensación de bounding box y centroide de frames en el renderizador CLX/CEL de DevilutionX para evitar el desfase en la animación de teleport (`Special`) y conjuración (`Attack`).
+* **Comportamiento:**
+  * Enlazar a `CounselorAi` (comportamiento ceremonial con teleportación de evasión y descarga arcana / fuego infernal).
+  * Registrarlo en `unique_monstdat.tsv` para nivel 15/16.
+
+---
+
+## Archivos a Modificar
+
+```
+Source/
+├── monster.cpp                        # Implementar FireManAi y mapear en AiProc[]
+├── monster.h                          # Declaración de FireManAi
+├── monsters/
+│   └── validation.cpp                 # Validaciones de animación de DarkMage e Incinerator
+├── towners.cpp                        # Expansión del pool de gossip con audios TEXT_DOOM y Lore
+├── doom.cpp / doom.h                  # Integración del trigger de audio para la profecía estelar
+└── tables/
+    └── monstdat.cpp                   # Verificación de punteros de IA
+
+assets/
+└── txtdata/
+    └── monsters/
+        ├── monstdat.tsv               # Disponibilidad Retail de Incinerator y DarkMage
+        └── unique_monstdat.tsv        # Bosses únicos: Wrathfire, Warpfire y Malignus
+```
+
+---
+
+## Plan de Verificación
+
+### Pruebas de Compilación y Sintaxis
+1. Compilar el proyecto en limpio con CMake / MSVC o GCC.
+2. Verificar que no haya warnings ni enlaces rotos en `AiProc` o tablas TSV.
+
+### Verificación en Juego
+1. **Incinerator:**
+   * Generar niveles 11-15 en Hell / Caves.
+   * Verificar ataque a distancia, animación de transformación a bola rodante (`Special`) y colapso de muerte (`Death`).
+   * Confirmar la aparición de los bosses *Wrathfire the Doomed* y *Warpfire Hellspawn*.
+2. **Arch-Lich Malignus:**
+   * Spawnearlo en nivel 15/16.
+   * Comprobar que no haya glitches visuales ni saltos de frame durante el casteo y la teleportación.
+   * Verificar que se reproduzcan sus efectos de sonido propios `dmag*.wav`.
+3. **Map of the Stars & Gossip:**
+   * Hablar con Deckard Cain en Tristram y verificar la reproducción completa del audio `Cain22.wav` / `TEXT_DOOM1`.
+   * Conversar con Adria, Gillian, Pepin, Farnham, Griswold y Wirt para confirmar las nuevas líneas de gossip de lore.

@@ -21,6 +21,7 @@
 #include "utils/str_case.hpp"
 
 #include "nightmare/npcs/tremain.hpp"
+#include "nightmare/restoration/layer2.hpp"
 #include "nightmare/restoration/registry.hpp"
 #include "nightmare/world/ambient_animals.hpp"
 
@@ -341,7 +342,7 @@ void TalkToBlackSmith(Player &player, Towner &blackSmith)
 		}
 	}
 
-	TownerTalk(TEXT_GRISWOLD1);
+	TownerTalk(nightmare::GetLayer2GossipDefensive(TEXT_GRISWOLD1, TEXT_GRISWOLD14, TEXT_GRISWOLD37));
 	StartStore(TalkID::Smith);
 }
 
@@ -406,13 +407,13 @@ void TalkToBarmaid(Player &player, Towner & /*barmaid*/)
 		return;
 	}
 
-	TownerTalk(TEXT_GILLIAN1);
+	TownerTalk(nightmare::GetLayer2GossipDefensive(TEXT_GILLIAN1, TEXT_GILLIAN11, TEXT_GILLIAN26));
 	StartStore(TalkID::Barmaid);
 }
 
 void TalkToDrunk(Player & /*player*/, Towner & /*drunk*/)
 {
-	TownerTalk(TEXT_FARNHAM1);
+	TownerTalk(nightmare::GetLayer2GossipDefensive(TEXT_FARNHAM1, TEXT_FARNHAM16, TEXT_FARNHAM22));
 	StartStore(TalkID::Drunk);
 }
 
@@ -450,7 +451,7 @@ void TalkToHealer(Player &player, Towner &healer)
 		}
 	}
 
-	TownerTalk(TEXT_PEPIN1);
+	TownerTalk(nightmare::GetLayer2GossipDefensive(TEXT_PEPIN1, TEXT_PEPIN12, TEXT_PEPIN30));
 	StartStore(TalkID::Healer);
 }
 

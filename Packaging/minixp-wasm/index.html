@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Windows XP — WebAssembly Edition</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="libv86.js"></script>
+</head>
+<body>
+    <!-- Top Header -->
+    <header class="app-header">
+        <div class="logo-area">
+            <span class="logo-badge">WASM x86</span>
+            <h1 class="logo-title">Mini Windows <span>XP</span> Live Edition</h1>
+        </div>
+
+        <div class="toolbar">
+            <div class="status-badge">
+                <span class="status-dot" id="status_dot"></span>
+                <span id="status_text">Listo para iniciar</span>
+            </div>
+
+            <button class="btn btn-primary" id="btn_start" title="Iniciar Emulador">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Iniciar
+            </button>
+            <button class="btn" id="btn_pause" title="Pausar / Reanudar Emulación" disabled>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+                Pausar
+            </button>
+            <button class="btn btn-danger" id="btn_reset" title="Reiniciar Máquina Virtual" disabled>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.65 6.35A7.958 7.958 0 0 0 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0 1 12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"></path></svg>
+                Reiniciar
+            </button>
+
+            <button class="btn" id="btn_save_state" title="Guardar estado de la RAM a archivo" disabled>
+                💾 Guardar Estado
+            </button>
+            <button class="btn" id="btn_load_state_trigger" title="Cargar archivo de estado guardado">
+                📂 Cargar Estado
+            </button>
+            <input type="file" id="input_load_state" accept=".bin">
+
+            <button class="btn" id="btn_custom_iso_trigger" title="Cargar otra ISO de arranque">
+                💿 Cargar ISO
+            </button>
+            <input type="file" id="input_custom_iso" accept=".iso,.img">
+
+            <button class="btn" id="btn_fullscreen" title="Pantalla Completa">
+                ⛶ Pantalla Completa
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Viewport -->
+    <main class="main-viewport">
+        <div class="screen-wrapper" id="screen_wrapper">
+            <div id="screen_container">
+                <div style="white-space: pre; font: 14px monospace; line-height: 14px"></div>
+                <canvas style="display: none"></canvas>
+            </div>
+            <div class="hint-overlay" id="hint_overlay">
+                🖱️ Haz clic en la pantalla para capturar el ratón (Presiona <strong>ESC</strong> para liberarlo)
+            </div>
+        </div>
+
+        <!-- System Diagnostic & Specs Panel -->
+        <section class="info-panel">
+            <div class="info-card">
+                <h4>⚡ Especificaciones Virtuales</h4>
+                <ul>
+                    <li><strong>CPU:</strong> x86 32-bit (v86 WASM JIT)</li>
+                    <li><strong>Memoria RAM:</strong> 256 MB (RAMDisk WinPE)</li>
+                    <li><strong>BIOS:</strong> SeaBIOS + VGABIOS estándar</li>
+                    <li><strong>Almacenamiento:</strong> IDE ATAPI (minixp.iso 107 MB)</li>
+                </ul>
+            </div>
+
+            <div class="info-card">
+                <h4>🛠️ Herramientas & Capacidades</h4>
+                <ul>
+                    <li><strong>Live Session:</strong> Carga 100% en RAM sin tocar disco físico.</li>
+                    <li><strong>Persistencia:</strong> Guarda y reanuda snapshots en 1 segundo.</li>
+                    <li><strong>Compatibilidad:</strong> Ejecuta apps Win32, scripts y utilidades XP.</li>
+                    <li><strong>Aislamiento:</strong> Sandbox seguro dentro de WebAssembly.</li>
+                </ul>
+            </div>
+
+            <div class="info-card">
+                <h4>💡 Controles & Atajos</h4>
+                <ul>
+                    <li><strong>Captura de Ratón:</strong> Clic sobre la ventana del emulador.</li>
+                    <li><strong>Liberar Ratón:</strong> Presiona tecla <code>ESC</code>.</li>
+                    <li><strong>Drag & Drop:</strong> Arrastra cualquier archivo <code>.iso</code> sobre la pantalla.</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<Schema name="http://www.microsoft.com/provisioning/Register.xdr" 
+        xmlns="urn:schemas-microsoft-com:xml-data"
+        xmlns:dt="urn:schemas-microsoft-com:datatypes"
+	xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+
+    <ElementType name="signup"          content="textOnly" dt:type="string" />
+    <ElementType name="renewal"         content="textOnly" dt:type="string" />
+    <ElementType name="passwordExpired" content="textOnly" dt:type="string" />
+
+    <ElementType name="register"        content="eltOnly" model="closed" order="seq">
+        <element type="signup"          minOccurs="1" maxOccurs="1" />
+        <element type="renewal"         minOccurs="0" maxOccurs="1" />
+        <element type="passwordExpired" minOccurs="0" maxOccurs="1" />
+    </ElementType>
+
+    <ElementType name="registerFile" content="eltOnly" model="closed" msdata:IsDataSet="true" msdata:EnforceConstraints="False">
+        <element type="register"        minOccurs="1" maxOccurs="1"/>
+    </ElementType>
+
+</Schema>

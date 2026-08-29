@@ -1,0 +1,81 @@
+<?xml version="1.0" ?>
+<xs:schema
+     targetNamespace="http://www.microsoft.com/provisioning/EapTlsConnectionPropertiesV1" 
+     elementFormDefault="qualified" 
+     xmlns="http://www.microsoft.com/provisioning/EapTlsConnectionPropertiesV1" 
+     xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+     xmlns:baseEap="http://www.microsoft.com/provisioning/BaseEapConnectionPropertiesV1"
+     version="1.0"
+   >
+   <xs:import 
+         namespace="http://www.microsoft.com/provisioning/BaseEapConnectionPropertiesV1" 
+         schemaLocation="BaseEapConnectionPropertiesV1.xsd" 
+   />
+
+   <xs:element name="EapType" substitutionGroup="baseEap:EapType">
+      <xs:complexType>
+         <xs:complexContent>
+            <xs:extension base="baseEap:BaseEapTypeParameters">
+               <xs:sequence>
+                  <xs:element
+                        name="CredentialsSource"
+                        type="CredentialsSourceParameters"
+                        minOccurs="0"
+                  />
+                  <xs:element 
+                        name="ServerValidation" 
+                        type="ServerValidationParameters" 
+                        minOccurs="0"
+                  />
+                  <xs:element
+                        name="DifferentUsername"
+                        type="xs:boolean"
+                        minOccurs="0"
+                  />
+                  <!-- extension point for other namespaces -->
+                  <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" namespace="##other"/>
+               </xs:sequence>
+            </xs:extension>
+         </xs:complexContent>
+      </xs:complexType>
+   </xs:element>   
+   <xs:complexType name="CredentialsSourceParameters">
+       <xs:choice>
+           <xs:element name="SmartCard" type="emptyString"/>
+           <xs:element name="CertificateStore" type="CertSelection"/>
+       </xs:choice>
+  </xs:complexType>   
+   <xs:complexType name="ServerValidationParameters">
+      <xs:sequence>
+         <xs:element 
+               name="DisableUserPromptForServerValidation" 
+               type="xs:boolean" 
+               minOccurs="0"
+         />
+         <!-- A set of server names delimited by semicolons -->
+         <!-- each server name can be represented by regular -->
+         <!-- expressions -->
+         <xs:element name="ServerNames" type="xs:string" minOccurs="0" />
+         <!-- The thumbprint of a trusted root CA is -->
+         <!-- a hexadecimal string that contains -->
+         <!-- the SHA-1 hash of the certificate. -->
+         <xs:element 
+               name="TrustedRootCA" 
+               type="xs:hexBinary" 
+               minOccurs="0" 
+               maxOccurs="unbounded" 
+         />
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="CertSelection">
+      <xs:sequence>
+      <xs:element name="SimpleCertSelection" type="xs:boolean" minOccurs="0" />
+      </xs:sequence>
+   </xs:complexType>
+   <xs:simpleType name="emptyString">
+      <xs:restriction base="xs:string">
+      <xs:maxLength value="0"/>
+      </xs:restriction>
+   </xs:simpleType>
+</xs:schema>
+

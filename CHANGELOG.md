@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### WebAssembly Virtualization Platform & Mini Windows XP Tools
+- **Mini Windows XP WebAssembly Environment (`Packaging/minixp-wasm/`)**: Added an isolated in-browser x86 virtualization runtime powered by `v86` and WebAssembly (WASM). Features 256 MB emulated RAM, SeaBIOS/VGABIOS standard support, pointer lock mouse capture, responsive modern UI, drag-and-drop ISO loading, snapshot saving/restoration to `.bin` files, and local streaming server (`server.py`).
+- **ISO Builder Utility (`tools/build_minixp_iso.py`)**: Added an automated Python packaging script using `pycdlib` with ISO9660/Joliet Level 3 sanitization to build bootable Live PE ISO images (`minixp.iso`) from the local `MiniXp/` directory.
+
 ### Diablo Nightmare Edition (Gothic Visual Remaster & QoL Features)
 
 #### Unified UI Branding & Mode Synchronization

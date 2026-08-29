@@ -16,6 +16,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Monster Health Bar & Overhead Floating Bars**: Configured `enemyHealthBar` option to `true` by default and added dynamic overhead health bars (`DrawMonsterOverheadHealthBar`) rendered directly above living monsters in combat, featuring real-time health scaling, critical health indicators, and gold borders for unique champions/bosses.
 - **Floating Damage Numbers**: Integrated dynamic floating damage numbers (`AddFloatingNumber`) in `ApplyMonsterDamage`, displaying red damage popups floating above monsters during combat.
 
+#### NIGHTMARE — Arcane Runes (+2 Spell Level Consumables)
+- **Empowered Spell Runic Inscriptions**: Completely overhauled the dormant 1997 Hellfire single-use ground trap rune mechanic into valuable ancient runic inscriptions (`Source/items.cpp`, `Source/inv.cpp`, `Source/qol/stash.cpp`). Right-clicking a rune now directly and permanently consumes it from the inventory (usable in both town and dungeons with book-reading audio and visual feedback), increasing the associated spell level by **+2** up to the maximum spell cap (`MaxSpellLevel = 15`).
+  - **Rune of Fire** (`IMISC_RUNEF`): Permanently increases *Fireball* by +2 spell levels.
+  - **Rune of Lightning** (`IMISC_RUNEL`): Permanently increases *Lightning* by +2 spell levels.
+  - **Greater Rune of Lightning** (`IMISC_GR_RUNEL`): Permanently increases *Chain Lightning* by +2 spell levels.
+  - **Greater Rune of Fire** (`IMISC_GR_RUNEF`): Permanently increases *Flame Wave* by +2 spell levels.
+  - **Rune of Stone** (`IMISC_RUNES`): Permanently increases *Stone Curse* by +2 spell levels.
+- **Rune Tooltips & Info Box**: Updated item descriptions (`PrintItemOil` in `Source/items.cpp`) to clearly state the exact +2 spell level benefits, eliminating legacy trap text while keeping original code commented for reference.
+
 #### NIGHTMARE — Atmospheric Floor Reconfiguration (24 Dungeon Levels)
 - **Dynamic Floor Light Radii**: Implemented `GetNightmareBaseLightRadius(currlevel)` in `Source/nightmare/world/level_atmosphere.cpp` and `Source/items.cpp` replacing static base radius (12) with per-floor atmospheric depths (ranging from claustrophobic darkness of 3-4 tiles in deep Hell and bone crypts to 10 in open cavern and chamber floors).
 - **Procedural Floor Music Orchestration**: Integrated `GetNightmareLevelMusic(dungeonType, currlevel, setlevel)` in `Source/engine/sound.cpp` breaking biome auditory predictability (e.g. Cathedral Threshold playing haunting Crypt tracks, Catacombs Lords playing Hell music, and Crypt Treasure Chamber playing Cathedral solemn themes).

@@ -1685,17 +1685,19 @@ void PrintItemOil(char iDidx)
 		AddItemInfoBoxString(_("class of armor and shields"));
 		break;
 	case IMISC_RUNEF:
-		AddItemInfoBoxString(_("sets fire trap"));
+		AddItemInfoBoxString(_("increases Fireball by +2"));
 		break;
 	case IMISC_RUNEL:
+		AddItemInfoBoxString(_("increases Lightning by +2"));
+		break;
 	case IMISC_GR_RUNEL:
-		AddItemInfoBoxString(_("sets lightning trap"));
+		AddItemInfoBoxString(_("increases Chain Lightning by +2"));
 		break;
 	case IMISC_GR_RUNEF:
-		AddItemInfoBoxString(_("sets fire trap"));
+		AddItemInfoBoxString(_("increases Flame Wave by +2"));
 		break;
 	case IMISC_RUNES:
-		AddItemInfoBoxString(_("sets petrification trap"));
+		AddItemInfoBoxString(_("increases Stone Curse by +2"));
 		break;
 	case IMISC_FULLHEAL:
 		AddItemInfoBoxString(_("restore all life"));
@@ -4329,6 +4331,8 @@ void UseItem(Player &player, item_misc_id mid, SpellID spellID, int spellFrom)
 		ModifyPlrDex(player, 3);
 		ModifyPlrVit(player, 3);
 		break;
+	// Vanilla rune trap targeting (commented for reference):
+	/*
 	case IMISC_RUNEF:
 		prepareSpellID = SpellID::RuneOfFire;
 		break;
@@ -4344,6 +4348,57 @@ void UseItem(Player &player, item_misc_id mid, SpellID spellID, int spellFrom)
 	case IMISC_RUNES:
 		prepareSpellID = SpellID::RuneOfStone;
 		break;
+	*/
+	case IMISC_RUNEF:
+	case IMISC_RUNEL:
+	case IMISC_GR_RUNEL:
+	case IMISC_GR_RUNEF:
+	case IMISC_RUNES: {
+		SpellID targetSpell = SpellID::Null;
+		switch (mid) {
+		case IMISC_RUNEF:
+			targetSpell = SpellID::Fireball;
+			break;
+		case IMISC_RUNEL:
+			targetSpell = SpellID::Lightning;
+			break;
+		case IMISC_GR_RUNEL:
+			targetSpell = SpellID::ChainLightning;
+			break;
+		case IMISC_GR_RUNEF:
+			targetSpell = SpellID::FlameWave;
+			break;
+		case IMISC_RUNES:
+			targetSpell = SpellID::StoneCurse;
+			break;
+		default:
+			break;
+		}
+
+		if (targetSpell != SpellID::Null) {
+			const uint8_t currentLevel = player._pSplLvl[static_cast<int8_t>(targetSpell)];
+			const uint8_t newSpellLevel = std::min<uint8_t>(currentLevel + 2, MaxSpellLevel);
+			if (newSpellLevel > currentLevel) {
+				player._pSplLvl[static_cast<int8_t>(targetSpell)] = newSpellLevel;
+				NetSendCmdParam2(true, CMD_CHANGE_SPELL_LEVEL, static_cast<uint16_t>(targetSpell), newSpellLevel);
+			}
+			if (HasNoneOf(player._pIFlags, ItemSpecialEffect::NoMana)) {
+				player._pMana += GetSpellData(targetSpell).sManaCost << 6;
+				player._pMana = std::min(player._pMana, player._pMaxMana);
+				player._pManaBase += GetSpellData(targetSpell).sManaCost << 6;
+				player._pManaBase = std::min(player._pManaBase, player._pMaxManaBase);
+			}
+			if (&player == MyPlayer) {
+				for (Item &item : InventoryPlayerItemsRange { player }) {
+					item.updateRequiredStatsCacheForPlayer(player);
+				}
+				if (IsStashOpen) {
+					Stash.RefreshItemStatFlags();
+				}
+			}
+			RedrawComponent(PanelDrawComponent::Mana);
+		}
+	} break;
 	default:
 		break;
 	}

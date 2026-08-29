@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Monster Health Bar & Overhead Floating Bars**: Configured `enemyHealthBar` option to `true` by default and added dynamic overhead health bars (`DrawMonsterOverheadHealthBar`) rendered directly above living monsters in combat, featuring real-time health scaling, critical health indicators, and gold borders for unique champions/bosses.
 - **Floating Damage Numbers**: Integrated dynamic floating damage numbers (`AddFloatingNumber`) in `ApplyMonsterDamage`, displaying red damage popups floating above monsters during combat.
 
+#### NIGHTMARE — Atmospheric Floor Reconfiguration (24 Dungeon Levels)
+- **Dynamic Floor Light Radii**: Implemented `GetNightmareBaseLightRadius(currlevel)` in `Source/nightmare/world/level_atmosphere.cpp` and `Source/items.cpp` replacing static base radius (12) with per-floor atmospheric depths (ranging from claustrophobic darkness of 3-4 tiles in deep Hell and bone crypts to 10 in open cavern and chamber floors).
+- **Procedural Floor Music Orchestration**: Integrated `GetNightmareLevelMusic(dungeonType, currlevel, setlevel)` in `Source/engine/sound.cpp` breaking biome auditory predictability (e.g. Cathedral Threshold playing haunting Crypt tracks, Catacombs Lords playing Hell music, and Crypt Treasure Chamber playing Cathedral solemn themes).
+- **Floor Economy & Chest Density Overrides**: Added `GetNightmareChestCounts(currlevel)` in `Source/objects.cpp` tuning chest distributions per floor archetype (extreme scarcity in Hunger/Silence levels, high rewards in Lords/Treasure chambers).
+- **Monster Depth Distribution Overrides**: Integrated `ApplyNightmareMonsterLevelOverrides()` in `Source/tables/monstdat.cpp` allowing early shock spawns (Hidden/Sneaks and Flesh Clan in lower Cathedral floors, earlier Acid beasts, and deep dungeon Succubi/Casters) while keeping all original engine tables documented and commented.
+
 #### NIGHTMARE — Restoration Layer (Dormant Content Activation)
 - **Restoration Layer 2 (Prophecy of the Stars, Cut Gossip Library & Monster Restorations)**:
   - **Map of the Stars Prophecy**: Integrated Deckard Cain's dormant prophecy dialogue (`Cain22.wav` / `TEXT_DOOM1` - `TEXT_DOOM10`) with defensive sound loading (`PlayLayer2WavDefensive`) and text banner rendering when inspecting the Map of the Stars.

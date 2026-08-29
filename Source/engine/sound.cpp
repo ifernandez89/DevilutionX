@@ -28,6 +28,8 @@
 #include "appfat.h"
 #include "engine/assets.hpp"
 #include "game_mode.hpp"
+#include "levels/gendung.h"
+#include "nightmare/world/level_atmosphere.hpp"
 #include "options.h"
 #include "utils/log.hpp"
 #include "utils/math.h"
@@ -298,6 +300,8 @@ void snd_deinit()
 
 _music_id GetLevelMusic(dungeon_type dungeonType)
 {
+	// Vanilla original implementation:
+	/*
 	switch (dungeonType) {
 	case DTYPE_TOWN:
 		return TMUSIC_TOWN;
@@ -316,6 +320,10 @@ _music_id GetLevelMusic(dungeon_type dungeonType)
 	default:
 		return TMUSIC_INTRO;
 	}
+	*/
+
+	// NIGHTMARE: Procedural atmosphere per floor
+	return nightmare::GetNightmareLevelMusic(dungeonType, currlevel, setlevel);
 }
 
 void music_stop()

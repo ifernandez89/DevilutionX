@@ -96,6 +96,7 @@ set(libdevilutionx_SRCS
   nightmare/restoration/layer2.cpp
   nightmare/npcs/tremain.cpp
   nightmare/world/ambient_animals.cpp
+  nightmare/world/level_atmosphere.cpp
 
   items/validation.cpp
 

@@ -58,6 +58,7 @@
 #include "levels/tile_properties.hpp"
 #include "levels/town.h"
 #include "lighting.h"
+#include "nightmare/world/level_atmosphere.hpp"
 #include "minitext.h"
 #include "monster.h"
 #include "msg.h"
@@ -2802,7 +2803,8 @@ void CalcPlrItemVals(Player &player, bool loadgfx)
 	int damMod = 0;
 	int getHit = 0;
 
-	int lightRadius = 12;
+	// int lightRadius = 12; // Original vanilla static base radius
+	int lightRadius = nightmare::GetNightmareBaseLightRadius(currlevel);
 
 	int life = 0;
 	int mana = 0;

@@ -38,6 +38,7 @@
 #include "minitext.h"
 #include "missiles.h"
 #include "monster.h"
+#include "nightmare/world/level_atmosphere.hpp"
 #include "options.h"
 #include "qol/stash.h"
 #include "stores.h"
@@ -3958,9 +3959,17 @@ void InitObjects()
 			AddCryptObjects(0, 0, MAXDUNX, MAXDUNY);
 			InitRndBarrels();
 		}
-		InitRndLocObj(5, 10, OBJ_CHEST1);
-		InitRndLocObj(3, 6, OBJ_CHEST2);
-		InitRndLocObj(1, 5, OBJ_CHEST3);
+		// Vanilla baseline chest counts:
+		// InitRndLocObj(5, 10, OBJ_CHEST1);
+		// InitRndLocObj(3, 6, OBJ_CHEST2);
+		// InitRndLocObj(1, 5, OBJ_CHEST3);
+
+		// NIGHTMARE: Dynamic floor economy & object density
+		int c1min, c1max, c2min, c2max, c3min, c3max;
+		nightmare::GetNightmareChestCounts(currlevel, c1min, c1max, c2min, c2max, c3min, c3max);
+		InitRndLocObj(c1min, c1max, OBJ_CHEST1);
+		InitRndLocObj(c2min, c2max, OBJ_CHEST2);
+		InitRndLocObj(c3min, c3max, OBJ_CHEST3);
 		if (leveltype != DTYPE_HELL)
 			AddObjTraps();
 		if (IsAnyOf(leveltype, DTYPE_CATACOMBS, DTYPE_CAVES, DTYPE_HELL, DTYPE_NEST))

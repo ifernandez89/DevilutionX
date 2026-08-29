@@ -26,6 +26,7 @@
 #include "items.h"
 #include "lua/lua_global.hpp"
 #include "monster.h"
+#include "nightmare/world/level_atmosphere.hpp"
 #include "tables/textdat.h"
 #include "utils/language.h"
 
@@ -406,6 +407,9 @@ void LoadMonstDat()
 	AdditionalMonsterIdStringsToIndices.clear();
 	MonstersData.resize(NUM_DEFAULT_MTYPES); // ensure the hardcoded monster type slots are filled
 	LoadMonstDatFromFile(dataFile, filename, false);
+
+	// NIGHTMARE: Apply atmospheric monster depth distribution overrides
+	nightmare::ApplyNightmareMonsterLevelOverrides();
 
 	LuaEvent("MonsterDataLoaded");
 

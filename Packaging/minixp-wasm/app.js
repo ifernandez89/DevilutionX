@@ -56,10 +56,8 @@ function initEmulator(customCdromBuffer = null) {
     if (customCdromBuffer) {
         config.cdrom = { buffer: customCdromBuffer };
     } else {
-        // Si estamos en localhost busca minixp.iso local, en GitHub Pages usa el Release automático
-        const isLocalHost = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" || window.location.protocol === "file:";
-        const isoUrl = isLocalHost ? "minixp.iso" : "https://github.com/ifernandez89/DevilutionX/releases/download/v1.0-minixp/minixp.iso";
-        config.cdrom = { url: isoUrl };
+        // En local y en GitHub Pages la ISO se sirve desde el mismo origen (/minixp/minixp.iso) sin problemas de CORS
+        config.cdrom = { url: "minixp.iso" };
     }
 
     try {

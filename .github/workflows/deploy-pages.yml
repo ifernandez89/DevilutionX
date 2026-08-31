@@ -61,6 +61,11 @@ jobs:
         run: |
           cmake --build build-web --target devilutionx
 
+      - name: Build Mini Windows XP ISO
+        run: |
+          pip install pycdlib
+          python3 tools/build_minixp_iso.py MiniXp Packaging/minixp-wasm/minixp.iso
+
       - name: Prepare GitHub Pages Distribution
         run: |
           mkdir -p dist
@@ -70,8 +75,9 @@ jobs:
           cp -v Packaging/emscripten/index.html dist/index.html
           cp -v Packaging/emscripten/file-manager.js dist/file-manager.js
           if [ -d Packaging/minixp-wasm ]; then cp -rv Packaging/minixp-wasm dist/minixp; fi
-          echo "Listing dist/ directory:"
+          echo "Listing dist/ and dist/minixp/ directory:"
           ls -la dist/
+          ls -la dist/minixp/
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

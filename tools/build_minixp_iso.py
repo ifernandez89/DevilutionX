@@ -1,93 +1,24 @@
 #!/usr/bin/env python3
 """
 build_minixp_iso.py
-Genera una imagen ISO booteable de Mini Windows XP para WebAssembly (v86 / SeaBIOS).
-Configura HBCD/ISOLINUX.BIN como sector de arranque El Torito (boot_load_size = 4)
-para que ISOLINUX cargue CHAIN.C32 y NTLDR (XP.BIN) limpiamente en SeaBIOS.
+Wrapper en Python que invoca la herramienta de empaquetado ISO en Node.js (tools/build_minixp_iso.js)
+con el cargador directo de 16-bits de NTLDR sin dependencias de ISOLINUX.
 """
 
 import os
 import sys
-import pycdlib
+import subprocess
 
 def build_iso(source_dir, output_iso):
-    source_dir = os.path.abspath(source_dir)
-    output_iso = os.path.abspath(output_iso)
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    js_builder = os.path.join(base_dir, "tools", "build_minixp_iso.js")
 
-    print("=" * 65)
-    print("[*] Empaquetando Mini Windows XP Live ISO (Full XP.BIN Bootload)")
-    print(f"[*] Origen:  {source_dir}")
-    print(f"[*] Destino: {output_iso}")
-    print("=" * 65)
-
-    os.makedirs(os.path.dirname(output_iso), exist_ok=True)
-
-    boot_file = os.path.join(source_dir, "HBCD", "ISOLINUX.BIN")
-    if not os.path.isfile(boot_file):
-        print(f"[!] Error: No se encontro {boot_file}")
-        sys.exit(1)
-
-    print(f"[+] ISOLINUX.BIN detectado como sector de arranque El Torito (2048 bytes / 4 sectores)")
-
-    iso = pycdlib.PyCdlib()
-    iso.new(interchange_level=3, joliet=3, vol_ident="MINIXP")
-
-    # 1. Crear directorios principales
-    for d in ["/HBCD", "/HBCD/XP", "/HBCD/BOOT"]:
-        try:
-            iso.add_directory(d, joliet_path=d)
-        except Exception:
-            pass
-
-    # 2. Registrar sector de arranque El Torito con ISOLINUX.BIN
-    iso.add_file(
-        boot_file,
-        iso_path="/HBCD/ISOLINUX.BIN;1",
-        joliet_path="/HBCD/ISOLINUX.BIN"
-    )
-    iso.add_eltorito(
-        "/HBCD/ISOLINUX.BIN;1",
-        boot_load_size=4,
-        media_name='noemul',
-        bootable=True
-    )
-    print(f"[+] Sector de arranque El Torito registrado (boot_load_size=4)")
-
-    # 3. Agregar todos los demas archivos
-    added_count = 1
-    for root, dirs, files in os.walk(source_dir):
-        rel_root = os.path.relpath(root, source_dir).replace('\\', '/')
-        if rel_root != '.':
-            iso_dir = "/" + rel_root.upper()
-            joliet_dir = "/" + rel_root
-            try:
-                iso.add_directory(iso_path=iso_dir, joliet_path=joliet_dir)
-            except Exception:
-                pass
-
-        for f in files:
-            fp = os.path.join(root, f)
-            rel_f = os.path.relpath(fp, source_dir).replace('\\', '/')
-            if rel_f.upper() == "HBCD/ISOLINUX.BIN":
-                continue # Ya agregado como bootloader
-
-            iso_f = "/" + rel_f.upper() + ";1"
-            joliet_f = "/" + rel_f
-            try:
-                iso.add_file(fp, iso_path=iso_f, joliet_path=joliet_f)
-                added_count += 1
-                print(f"  [+] Empaquetado: {rel_f} ({os.path.getsize(fp)} bytes)")
-            except Exception as e:
-                print(f"  [!] Error en {rel_f}: {e}")
-
-    print(f"[*] Escribiendo imagen ISO ({added_count} archivos)...")
-    iso.write(output_iso)
-    iso.close()
-
-    size_mb = os.path.getsize(output_iso) / (1024 * 1024)
-    print("=" * 65)
-    print(f"[OK] ISO generada exitosamente: {output_iso} ({size_mb:.2f} MB)")
-    print("=" * 65)
+    cmd = ["node", js_builder, source_dir, output_iso]
+    print(f"[*] Ejecutando cargador ISO de Node.js: {' '.join(cmd)}")
+    result = subprocess.run(cmd)
+    if result.returncode != 0:
+        print("[!] Error en la generación de la ISO.")
+        sys.exit(result.returncode)
 
 if __name__ == "__main__":
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

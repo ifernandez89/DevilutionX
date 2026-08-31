@@ -7,11 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-### WebAssembly Virtualization Platform & Mini Windows XP Tools
+### WebAssembly Virtualization Platform & Mini Windows XP Integration
 - **Mini Windows XP WebAssembly Environment (`Packaging/minixp-wasm/`)**: Added an isolated in-browser x86 virtualization runtime powered by `v86` and WebAssembly (WASM). Features 256 MB emulated RAM, SeaBIOS/VGABIOS standard support, pointer lock mouse capture, responsive modern UI, drag-and-drop ISO loading, snapshot saving/restoration to `.bin` files, and local streaming server (`server.py`).
-- **ISO Builder Utility (`tools/build_minixp_iso.py`)**: Added an automated Python packaging script using `pycdlib` with ISO9660/Joliet Level 3 sanitization and El Torito boot catalog configuration to build bootable Live PE ISO images (`minixp.iso`) from the local `MiniXp/` directory.
+- **Instant Bootloader & WinPE Subsystem (`MiniXp/HBCD/`)**: Integrated ISOLINUX bootloader (`ISOLINUX.BIN`), Syslinux chainloader (`CHAIN.C32`), and Windows XP NTLDR loader (`XP.BIN`) booting the compressed WinPE system RAMDisk (`XP.WIM`) instantly with `TIMEOUT 0` directly to the desktop without manual menus.
+- **ISO Builder Utility (`tools/build_minixp_iso.py`)**: Automated ISO packaging script with El Torito Boot Info Table configuration, ISO9660/Joliet Level 3 sanitization, and dual `genisoimage` / `pycdlib` backend support.
 - **UI Quick Launcher & File Manager Integration**: Added top toolbar `🪟 Mini XP` launcher button and dedicated visual card in the Web File Manager modal (`Packaging/emscripten/index.html`) to launch the Windows XP WebAssembly environment in a new tab.
-- **GitHub Pages Deployment Support**: Updated `.github/workflows/deploy-pages.yml` to automatically bundle and publish the Mini XP WASM suite (`dist/minixp/`) along with the web build.
+- **Same-Origin GitHub Pages CI/CD Deployment**: Updated `.github/workflows/deploy-pages.yml` with `genisoimage` to automatically build and bundle `minixp.iso` into `dist/minixp/`, enabling zero-CORS on-demand HTTP Range (206) streaming directly on GitHub Pages.
 
 ### Diablo Nightmare Edition (Gothic Visual Remaster & QoL Features)
 

@@ -36,7 +36,7 @@ jobs:
       - name: Install Build Tools & Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y gettext cmake ninja-build
+          sudo apt-get install -y gettext cmake ninja-build genisoimage
 
       - name: Prebuild Emscripten Ports Cache
         run: |
@@ -63,8 +63,8 @@ jobs:
 
       - name: Build Mini Windows XP ISO
         run: |
-          pip install pycdlib
-          python3 tools/build_minixp_iso.py MiniXp Packaging/minixp-wasm/minixp.iso
+          mkdir -p Packaging/minixp-wasm
+          genisoimage -b HBCD/ISOLINUX.BIN -c HBCD/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -J -R -V "MINIXP" -o Packaging/minixp-wasm/minixp.iso MiniXp || (pip install pycdlib && python3 tools/build_minixp_iso.py MiniXp Packaging/minixp-wasm/minixp.iso)
 
       - name: Prepare GitHub Pages Distribution
         run: |

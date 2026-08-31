@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Mini Windows XP - WebAssembly x86 Integration
+- **v86 WebAssembly Emulator Subsystem**: Added standalone x86 PC emulation environment (`Packaging/minixp-wasm/`) powered by v86, SeaBIOS, and VGABios to run Mini Windows XP / WinPE LiveCDs directly in the browser with 256MB virtual RAM.
+- **Bootable ISO Packaging Tool (`tools/build_minixp_iso.py`)**: Developed automated Python tool using `pycdlib` with Joliet Level 3 and El Torito boot catalog configuration to package raw Windows XP files into bootable `minixp.iso` images.
+- **HTTP Range Request Server (`Packaging/minixp-wasm/server.py`)**: Implemented local Python HTTP server with 206 Partial Content and `Accept-Ranges: bytes` support for on-demand chunk streaming of ISO disk images.
+- **UI Quick Launcher & File Manager Integration**: Added top toolbar `🪟 Mini XP` launcher button and dedicated visual card in the Web File Manager modal (`Packaging/emscripten/index.html`) to launch the Windows XP WebAssembly environment in a new tab.
+- **GitHub Pages Deployment Support**: Updated `.github/workflows/deploy-pages.yml` to automatically bundle and publish the Mini XP WASM suite (`dist/minixp/`) along with the web build.
+
 ### Diablo Nightmare Edition (Gothic Visual Remaster & QoL Features)
 
 #### Unified UI Branding & Mode Synchronization

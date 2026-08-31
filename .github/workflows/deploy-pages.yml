@@ -69,6 +69,7 @@ jobs:
           if [ -f build-web/devilutionx.data ]; then cp -v build-web/devilutionx.data dist/; fi
           cp -v Packaging/emscripten/index.html dist/index.html
           cp -v Packaging/emscripten/file-manager.js dist/file-manager.js
+          if [ -d Packaging/minixp-wasm ]; then cp -rv Packaging/minixp-wasm dist/minixp; fi
           echo "Listing dist/ directory:"
           ls -la dist/
 

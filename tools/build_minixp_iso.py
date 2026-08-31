@@ -2,8 +2,8 @@
 """
 build_minixp_iso.py
 Genera una imagen ISO booteable de Mini Windows XP para WebAssembly (v86 / SeaBIOS).
-Configura boot_load_size con el tamano completo de XP.BIN en sectores de 512 bytes
-para que SeaBIOS cargue todo el ejecutable NTLDR en memoria RAM.
+Configura HBCD/ISOLINUX.BIN como sector de arranque El Torito (boot_load_size = 4)
+para que ISOLINUX cargue CHAIN.C32 y NTLDR (XP.BIN) limpiamente en SeaBIOS.
 """
 
 import os
@@ -22,15 +22,12 @@ def build_iso(source_dir, output_iso):
 
     os.makedirs(os.path.dirname(output_iso), exist_ok=True)
 
-    boot_file = os.path.join(source_dir, "HBCD", "XP", "XP.BIN")
+    boot_file = os.path.join(source_dir, "HBCD", "ISOLINUX.BIN")
     if not os.path.isfile(boot_file):
         print(f"[!] Error: No se encontro {boot_file}")
         sys.exit(1)
 
-    boot_size = os.path.getsize(boot_file)
-    # Tamano en sectores virtuales de 512 bytes para El Torito No-Emulation
-    boot_sectors = (boot_size + 511) // 512
-    print(f"[+] XP.BIN Tamano: {boot_size} bytes -> Sectores El Torito: {boot_sectors}")
+    print(f"[+] ISOLINUX.BIN detectado como sector de arranque El Torito (2048 bytes / 4 sectores)")
 
     iso = pycdlib.PyCdlib()
     iso.new(interchange_level=3, joliet=3, vol_ident="MINIXP")
@@ -42,19 +39,19 @@ def build_iso(source_dir, output_iso):
         except Exception:
             pass
 
-    # 2. Registrar sector de arranque El Torito con el tamano completo de XP.BIN
+    # 2. Registrar sector de arranque El Torito con ISOLINUX.BIN
     iso.add_file(
         boot_file,
-        iso_path="/HBCD/XP/XP.BIN;1",
-        joliet_path="/HBCD/XP/XP.BIN"
+        iso_path="/HBCD/ISOLINUX.BIN;1",
+        joliet_path="/HBCD/ISOLINUX.BIN"
     )
     iso.add_eltorito(
-        "/HBCD/XP/XP.BIN;1",
-        boot_load_size=boot_sectors,
+        "/HBCD/ISOLINUX.BIN;1",
+        boot_load_size=4,
         media_name='noemul',
         bootable=True
     )
-    print(f"[+] Sector de arranque El Torito registrado (boot_load_size={boot_sectors})")
+    print(f"[+] Sector de arranque El Torito registrado (boot_load_size=4)")
 
     # 3. Agregar todos los demas archivos
     added_count = 1
@@ -71,7 +68,7 @@ def build_iso(source_dir, output_iso):
         for f in files:
             fp = os.path.join(root, f)
             rel_f = os.path.relpath(fp, source_dir).replace('\\', '/')
-            if rel_f.upper() == "HBCD/XP/XP.BIN":
+            if rel_f.upper() == "HBCD/ISOLINUX.BIN":
                 continue # Ya agregado como bootloader
 
             iso_f = "/" + rel_f.upper() + ";1"

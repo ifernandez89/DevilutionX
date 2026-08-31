@@ -5,7 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mini Windows XP — WebAssembly Edition</title>
     <link rel="stylesheet" href="style.css">
-    <script src="libv86.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/v86@latest/build/libv86.js"></script>
+    <script>
+      if (typeof V86Starter === 'undefined' && typeof V86 === 'undefined') {
+        document.write('<script src="libv86.js"><\/script>');
+      }
+    </script>
 </head>
 <body>
     <!-- Top Header -->

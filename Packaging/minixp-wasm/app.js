@@ -26,6 +26,14 @@ function updateStatus(text, stateClass) {
     statusDot.className = "status-dot " + (stateClass || "");
 }
 
+function createV86Instance(config) {
+    const V86Class = window.V86Starter || window.V86 || (typeof V86Starter !== "undefined" ? V86Starter : (typeof V86 !== "undefined" ? V86 : null));
+    if (!V86Class) {
+        throw new Error("El motor v86 no se ha podido cargar. Por favor recarga la página.");
+    }
+    return new V86Class(config);
+}
+
 function initEmulator(customCdromBuffer = null) {
     if (emulator) {
         emulator.destroy();
@@ -55,7 +63,7 @@ function initEmulator(customCdromBuffer = null) {
     }
 
     try {
-        emulator = new V86Starter(config);
+        emulator = createV86Instance(config);
 
         emulator.add_listener("emulator-ready", function() {
             isRunning = true;
@@ -166,7 +174,7 @@ inputLoadState.addEventListener("change", (e) => {
                 initial_state: { buffer: reader.result },
                 autostart: true,
             };
-            emulator = new V86Starter(config);
+            emulator = createV86Instance(config);
             updateStatus("Estado restaurado", "running");
             btnStart.disabled = true;
             btnPause.disabled = false;

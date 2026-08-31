@@ -80,13 +80,14 @@ function initEmulator(customCdromBuffer = null) {
     updateStatus("Cargando BIOS y WebAssembly...", "paused");
     logDiagnostic("Iniciando emulador x86 (256 MB RAM, SeaBIOS, VGABIOS)...", "info");
 
+    const cacheBuster = Date.now();
     const config = {
-        wasm_path: "v86.wasm",
+        wasm_path: "v86.wasm?v=" + cacheBuster,
         memory_size: 256 * 1024 * 1024,      // 256 MB RAM
         vga_memory_size: 8 * 1024 * 1024,    // 8 MB VRAM
         screen_container: screenContainer,
-        bios: { url: "bios/seabios.bin" },
-        vga_bios: { url: "bios/vgabios.bin" },
+        bios: { url: "bios/seabios.bin?v=" + cacheBuster },
+        vga_bios: { url: "bios/vgabios.bin?v=" + cacheBuster },
         autostart: true,
         network_relay_url: null,
     };
@@ -96,7 +97,7 @@ function initEmulator(customCdromBuffer = null) {
         config.cdrom = { buffer: customCdromBuffer };
     } else {
         logDiagnostic("Cargando minixp.iso (Live PE WinPE)...", "info");
-        config.cdrom = { url: "minixp.iso" };
+        config.cdrom = { url: "minixp.iso?v=" + cacheBuster };
     }
 
     try {

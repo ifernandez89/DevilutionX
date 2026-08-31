@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 build_minixp_iso.py
-Wrapper en Python que invoca la herramienta de empaquetado ISO en Node.js (tools/build_minixp_iso.js)
-con el cargador directo de 16-bits de NTLDR sin dependencias de ISOLINUX.
+Construye la ISO de Mini Windows XP usando pycdlib (si está disponible) o el generador de Node.js.
+Genera una imagen ISO 100% compatible con la especificación El Torito + NTLDR direct boot.
 """
 
 import os
@@ -11,10 +11,17 @@ import subprocess
 
 def build_iso(source_dir, output_iso):
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    pycdlib_builder = os.path.join(base_dir, "tools", "build_iso_pycdlib.py")
     js_builder = os.path.join(base_dir, "tools", "build_minixp_iso.js")
 
-    cmd = ["node", js_builder, source_dir, output_iso]
-    print(f"[*] Ejecutando cargador ISO de Node.js: {' '.join(cmd)}")
+    try:
+        import pycdlib
+        print("[*] pycdlib detectado. Usando motor oficial pycdlib...")
+        cmd = [sys.executable, pycdlib_builder, source_dir, output_iso]
+    except ImportError:
+        print("[*] pycdlib no disponible. Usando motor Node.js...")
+        cmd = ["node", js_builder, source_dir, output_iso]
+
     result = subprocess.run(cmd)
     if result.returncode != 0:
         print("[!] Error en la generación de la ISO.")

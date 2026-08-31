@@ -8,12 +8,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 
 ### WebAssembly Virtualization Platform & Mini Windows XP Integration
-- **Mini Windows XP WebAssembly Environment (`Packaging/minixp-wasm/`)**: Added an isolated in-browser x86 virtualization runtime powered by `v86` and WebAssembly (WASM). Features 256 MB emulated RAM, SeaBIOS/VGABIOS standard support, pointer lock mouse capture, responsive modern UI, drag-and-drop ISO loading, snapshot saving/restoration to `.bin` files, and local streaming server (`server.py`).
-- **Direct El Torito Windows XP NTLDR Bootloader (`MiniXp/HBCD/XP/XP.BIN`)**: Configured `XP.BIN` as direct El Torito No-Emulation bootloader, bypassing legacy ISOLINUX chainloader incompatibilities and booting the WinPE RAMDisk (`XP.WIM`) straight into memory.
-- **ISO Builder Utility (`tools/build_minixp_iso.py`)**: Automated ISO packaging script with El Torito Boot catalog configuration, ISO9660/Joliet Level 3 sanitization, and dual `genisoimage` / `pycdlib` backend support.
-- **Clean Hardware UI & Real-Time Diagnostics Telemetry**: Redesigned UI with compact hardware status banner (`Pentium II x86 • 256 MB RAM • VGA VBE • CD-ROM IDE`), dynamic green disk I/O activity LED meter with transfer counter, and live timestamped diagnostic event logging console.
-- **UI Quick Launcher & File Manager Integration**: Added top toolbar `🪟 Mini XP` launcher button and dedicated visual card in the Web File Manager modal (`Packaging/emscripten/index.html`) to launch the Windows XP WebAssembly environment in a new tab.
-- **Same-Origin GitHub Pages CI/CD Deployment**: Updated `.github/workflows/deploy-pages.yml` with `genisoimage` to automatically build and bundle `minixp.iso` into `dist/minixp/`, enabling zero-CORS on-demand HTTP Range (206) streaming directly on GitHub Pages.
+
+#### Hardware & Virtualization Architecture
+- **In-Browser x86 Cycle-Accurate Virtual Machine (`Packaging/minixp-wasm/`)**: Added a dedicated, isolated x86 virtual machine powered by `v86` compiled to WebAssembly (WASM). Emulates full Pentium II / i686 instruction sets, protected mode paging, 256 MB emulated RAM, Cirrus/VESA VBE standard graphical framebuffer, ATAPI IDE CD-ROM controller, PIT/PIC/RTC timers, and PS/2 mouse pointer lock capture (`ESC` to release).
+- **Direct El Torito Windows XP NTLDR Bootloader (`MiniXp/HBCD/XP/XP.BIN`)**: Configured the 370 KB Windows XP NTLDR binary (`XP.BIN`) as a direct El Torito No-Emulation bootloader with dynamic sector sizing (`boot_load_size = 724` sectors / 370.6 KB). This guarantees SeaBIOS loads the complete NTLDR payload into RAM upon boot, bypassing intermediate ISOLINUX/chainloader bugs and initializing the WinPE compressed RAMDisk (`XP.WIM`) directly.
+- **Snapshot Persistence Subsystem**: Added instant state serialization (`save_state` / `restore_state`) allowing the entire 256 MB RAM state to be downloaded as a `.bin` snapshot file or reloaded in ~1 second, eliminating boot times on repeat sessions.
+
+#### Packaging & CI/CD Pipeline
+- **ISO Packaging Engine (`tools/build_minixp_iso.py`)**: Developed an automated packaging script supporting ISO9660 + Joliet Level 3 directory sanitization and El Torito boot catalog injection with dual backend support (`pycdlib` / `genisoimage`), generating compact 61.8 MB bootable images (`minixp.iso`).
+- **Same-Origin GitHub Pages CI/CD Pipeline (`.github/workflows/deploy-pages.yml`)**: Automated the build and deployment pipeline in GitHub Actions to build `minixp.iso` from the repository and publish it into `dist/minixp/minixp.iso`. This serves the OS image from the exact same domain origin, enabling native HTTP Range (206 Partial Content) streaming with zero CORS restrictions.
+
+#### Modern Telemetry UI & Diablo Integration
+- **Clean Hardware Status Bar**: Redesigned the emulator dashboard to replace text-heavy specification cards with a minimalist, modern status strip (`Pentium II x86 • 256 MB RAM • VGA VBE • CD-ROM IDE`).
+- **Real-Time Disk I/O Activity LED & Transfer Meter**: Integrated a live green activity LED that pulses on ATAPI IDE read interrupts (`ide-read-start` / `ide-read-end`), accompanied by a real-time transfer counter displaying cumulative megabytes streamed into RAM.
+- **Live Diagnostic & Event Console**: Embedded a collapsible dark terminal drawer logging timestamped emulator lifecycle events, BIOS execution, video mode transitions (text to VESA high-resolution), and network asset download progress.
+- **Aggressive Cache-Busting Subsystem**: Implemented cache-control HTTP meta tags (`no-cache, no-store, must-revalidate`) and asset versioning query parameters (`app.js?v=3`, `style.css?v=3`) ensuring clients immediately run updated scripts without stale browser caching.
+- **Web Diablo Quick Launchers**: Integrated a top toolbar launcher button (`🪟 Mini XP`) and an interactive card in the Web File Manager modal (`Packaging/emscripten/index.html`) to launch the virtual machine in a dedicated tab.
 
 ### Diablo Nightmare Edition (Gothic Visual Remaster & QoL Features)
 

@@ -5,6 +5,7 @@
 #include "engine/random.hpp"
 #include "engine/sound.h"
 #include "movie.h"
+#include "nightmare/restoration/layer2.hpp"
 #include "options.h"
 #include "player.h"
 #include "quests.h"
@@ -57,6 +58,42 @@ const LostContentEntry NightmareRestorationRegistry[] = {
 	    "sfx/animals/*",
 	    "sfx/animals/*.wav in MPQ",
 	    "Tristram ambient animal background sound queue"
+	},
+	{
+	    "map_of_stars",
+	    ContentLayer::OriginalUnused,
+	    ContentStatus::FullyRestored,
+	    true, true, false, false, true,
+	    "sfx/towners/cain22.wav",
+	    "TEXT_DOOM1 to TEXT_DOOM10 in MPQ",
+	    "Map of the Stars prophecy lines (Cain22.wav - Cain24.wav)"
+	},
+	{
+	    "town_gossip_lore",
+	    ContentLayer::OriginalUnused,
+	    ContentStatus::FullyRestored,
+	    true, true, false, false, true,
+	    "textdat.tsv",
+	    "TEXT_FARNHAM16-22, TEXT_PEPIN12-30, TEXT_GRISWOLD14-37, TEXT_GILLIAN11-26",
+	    "Tristram extended cut gossip & towners lore library"
+	},
+	{
+	    "incinerator",
+	    ContentLayer::CutContent,
+	    ContentStatus::FullyRestored,
+	    false, false, true, false, true,
+	    "monsters/fireman/firem",
+	    "MT_INCIN fireman/firem artwork & FireManAi",
+	    "Incinerator monster & unique bosses (Wrathfire, Warpfire)"
+	},
+	{
+	    "arch_lich_malignus",
+	    ContentLayer::CutContent,
+	    ContentStatus::FullyRestored,
+	    false, false, true, false, true,
+	    "monsters/darkmage/dmage",
+	    "MT_DARKMAGE darkmage/dmage artwork",
+	    "Arch-Lich Malignus supreme boss in level 15/16"
 	}
 };
 
@@ -71,6 +108,7 @@ void InitNightmareRestoration()
 {
 	g_butcherCinematicPlayed = false;
 	g_restorationSnds.clear();
+	InitNightmareLayer2();
 }
 
 void UpdateNightmareRestoration()

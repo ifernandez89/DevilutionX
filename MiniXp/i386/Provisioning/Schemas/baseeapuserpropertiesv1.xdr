@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<Schema 
+      name="http://www.microsoft.com/provisioning/BaseEapUserPropertiesV1"
+      xmlns="urn:schemas-microsoft-com:xml-data"
+      xmlns:dt="urn:schemas-microsoft-com:datatypes"
+   >
+   <ElementType name="Type" dt:type="int" content="textOnly"/>
+   <ElementType name="Identity" dt:type="string" content="textOnly"/>
+   <ElementType name="Eap" content="eltOnly">
+      <element type="Type" />
+      <element type="EapType" minOccurs="0" maxOccurs="*" />
+   </ElementType>   
+   <ElementType name="EapType" content="eltOnly"/>
+</Schema>

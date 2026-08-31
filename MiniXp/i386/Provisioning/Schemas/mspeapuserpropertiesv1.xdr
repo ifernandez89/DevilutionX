@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<Schema 
+      name="http://www.microsoft.com/provisioning/MsPeapUserPropertiesV1" 
+      xmlns="urn:schemas-microsoft-com:xml-data"
+      xmlns:dt="urn:schemas-microsoft-com:datatypes"      
+      xmlns:baseEap="http://www.microsoft.com/provisioning/BaseEapUserPropertiesV1"
+   >
+   <ElementType name="RoutingIdentity" dt:type="string" content="textOnly">
+         <extends type="baseEap:Identity"/>
+   </ElementType>
+   <ElementType name="EapType" content="eltOnly">
+         <extends type="baseEap:EapType"/>
+      <element type="RoutingIdentity" minOccurs="0"/>
+      <element type="baseEap:Eap" minOccurs="0" maxOccurs="*" />
+   </ElementType>
+</Schema>

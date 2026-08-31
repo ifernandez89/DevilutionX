@@ -1,398 +1,103 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <title>Mini Windows XP - WebAssembly x86 (v86)</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🪟</text></svg>">
-  <script src="libv86.js"></script>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      background: radial-gradient(circle at center, #1b2838 0%, #0a0e14 100%);
-      color: #e2d2a4;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-      padding: 16px;
-      overflow-x: hidden;
-    }
-
-    header {
-      width: 100%;
-      max-width: 1060px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 14px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid #2d3848;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .brand h1 {
-      font-size: 20px;
-      color: #00a2ed;
-      text-shadow: 0 0 10px rgba(0, 162, 237, 0.4);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .status-badge {
-      background: #102a45;
-      border: 1px solid #1a568c;
-      color: #63b3ed;
-      padding: 3px 10px;
-      border-radius: 12px;
-      font-size: 12px;
-      font-weight: bold;
-    }
-
-    .back-btn {
-      background: #1f2937;
-      border: 1px solid #374151;
-      color: #cbd5e1;
-      text-decoration: none;
-      padding: 6px 14px;
-      border-radius: 4px;
-      font-size: 13px;
-      transition: all 0.2s ease;
-    }
-
-    .back-btn:hover {
-      background: #374151;
-      color: #fff;
-    }
-
-    /* Screen Viewport */
-    #screen_wrapper {
-      position: relative;
-      background: #000;
-      border: 2px solid #2d3748;
-      border-radius: 6px;
-      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 162, 237, 0.15);
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    #screen_container {
-      width: 1024px;
-      height: 768px;
-      background: #000;
-      position: relative;
-    }
-
-    #screen_container canvas {
-      width: 100% !important;
-      height: 100% !important;
-      object-fit: contain;
-      image-rendering: pixelated;
-    }
-
-    #screen_container div {
-      color: #a0aec0;
-    }
-
-    /* Control Panel */
-    .controls-panel {
-      width: 100%;
-      max-width: 1060px;
-      margin-top: 14px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(15, 23, 42, 0.8);
-      border: 1px solid #334155;
-      padding: 12px 18px;
-      border-radius: 6px;
-    }
-
-    .btn-group {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-
-    button, .file-label {
-      background: linear-gradient(180deg, #1e40af 0%, #1e3a8a 100%);
-      border: 1px solid #3b82f6;
-      color: #ffffff;
-      padding: 7px 14px;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      border-radius: 4px;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      transition: all 0.15s ease;
-      user-select: none;
-    }
-
-    button:hover, .file-label:hover {
-      background: linear-gradient(180deg, #2563eb 0%, #1d4ed8 100%);
-      border-color: #60a5fa;
-      transform: translateY(-1px);
-    }
-
-    button.btn-secondary {
-      background: #334155;
-      border-color: #475569;
-      color: #e2e8f0;
-    }
-
-    button.btn-secondary:hover {
-      background: #475569;
-      color: #fff;
-    }
-
-    button.btn-danger {
-      background: #991b1b;
-      border-color: #ef4444;
-    }
-
-    button.btn-danger:hover {
-      background: #b91c1c;
-    }
-
-    .hint-text {
-      font-size: 12px;
-      color: #94a3b8;
-      margin-top: 8px;
-      text-align: center;
-    }
-
-    /* Modal / Overlay Info */
-    #isoOverlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(10, 14, 20, 0.95);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      z-index: 100;
-      padding: 24px;
-      text-align: center;
-    }
-
-    #isoOverlay.hidden {
-      display: none;
-    }
-
-    .iso-card {
-      background: #1e293b;
-      border: 1px solid #475569;
-      padding: 24px;
-      border-radius: 8px;
-      max-width: 480px;
-      width: 100%;
-    }
-
-    .iso-card h2 {
-      color: #60a5fa;
-      margin-bottom: 12px;
-      font-size: 18px;
-    }
-
-    .iso-card p {
-      font-size: 13px;
-      color: #cbd5e1;
-      line-height: 1.5;
-      margin-bottom: 16px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Windows XP — WebAssembly Edition</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="libv86.js"></script>
 </head>
 <body>
-
-  <header>
-    <div class="brand">
-      <h1>🪟 Mini Windows XP</h1>
-      <span class="status-badge" id="cpuBadge">WASM x86 (v86)</span>
-    </div>
-    <a href="../index.html" class="back-btn">⚔️ Volver a Diablo Web</a>
-  </header>
-
-  <div id="screen_wrapper">
-    <div id="screen_container">
-      <div style="white-space: pre; font: 14px monospace; line-height: 14px"></div>
-      <canvas style="display: none"></canvas>
-    </div>
-
-    <!-- Selector / Auto-start Overlay -->
-    <div id="isoOverlay">
-      <div class="iso-card">
-        <h2>🚀 Iniciar Mini Windows XP</h2>
-        <p>
-          Puedes iniciar con la imagen local predeterminada (<strong>minixp.iso</strong>) o cargar una ISO personalizada desde tu ordenador.
-        </p>
-        <div style="display: flex; flex-direction: column; gap: 10px;">
-          <button onclick="startDefaultIso()" style="justify-content: center; padding: 10px;">
-            💿 Iniciar minixp.iso Predeterminada
-          </button>
-          <label class="file-label" style="justify-content: center; padding: 10px; background: #334155; border-color: #475569;">
-            📂 Seleccionar ISO desde el Disco...
-            <input type="file" id="custom_iso_input" accept=".iso,.bin,.img" style="display:none" onchange="startCustomIso(event)">
-          </label>
+    <!-- Top Header -->
+    <header class="app-header">
+        <div class="logo-area">
+            <span class="logo-badge">WASM x86</span>
+            <h1 class="logo-title">Mini Windows <span>XP</span> Live Edition</h1>
         </div>
-      </div>
-    </div>
-  </div>
 
-  <div class="controls-panel">
-    <div class="btn-group">
-      <button onclick="saveEmulatorState()">💾 Guardar Estado (.bin)</button>
-      <label class="file-label btn-secondary">
-        📂 Cargar Estado...
-        <input type="file" id="state_file" accept=".bin" style="display:none" onchange="loadEmulatorState(event)">
-      </label>
-      <button class="btn-secondary" onclick="restartEmulator()">🔄 Reiniciar</button>
-      <button class="btn-danger" onclick="stopEmulator()">⏹ Detener</button>
-    </div>
+        <div class="toolbar">
+            <div class="status-badge">
+                <span class="status-dot" id="status_dot"></span>
+                <span id="status_text">Listo para iniciar</span>
+            </div>
 
-    <div class="btn-group">
-      <button class="btn-secondary" onclick="toggleFullscreen()">⛶ Pantalla Completa</button>
-      <button class="btn-secondary" onclick="lockMouse()">🖱 Capturar Ratón</button>
-    </div>
-  </div>
+            <button class="btn btn-primary" id="btn_start" title="Iniciar Emulador">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Iniciar
+            </button>
+            <button class="btn" id="btn_pause" title="Pausar / Reanudar Emulación" disabled>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+                Pausar
+            </button>
+            <button class="btn btn-danger" id="btn_reset" title="Reiniciar Máquina Virtual" disabled>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.65 6.35A7.958 7.958 0 0 0 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0 1 12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"></path></svg>
+                Reiniciar
+            </button>
 
-  <div class="hint-text">
-    💡 Haz clic en la pantalla para capturar el ratón. Presiona <strong>ESC</strong> en cualquier momento para liberarlo.
-  </div>
+            <button class="btn" id="btn_save_state" title="Guardar estado de la RAM a archivo" disabled>
+                💾 Guardar Estado
+            </button>
+            <button class="btn" id="btn_load_state_trigger" title="Cargar archivo de estado guardado">
+                📂 Cargar Estado
+            </button>
+            <input type="file" id="input_load_state" accept=".bin">
 
-  <script>
-    var emulator = null;
+            <button class="btn" id="btn_custom_iso_trigger" title="Cargar otra ISO de arranque">
+                💿 Cargar ISO
+            </button>
+            <input type="file" id="input_custom_iso" accept=".iso,.img">
 
-    function initEmulator(cdromConfig) {
-      document.getElementById('isoOverlay').classList.add('hidden');
-      document.getElementById('cpuBadge').innerText = "Iniciando BIOS...";
+            <button class="btn" id="btn_fullscreen" title="Pantalla Completa">
+                ⛶ Pantalla Completa
+            </button>
+        </div>
+    </header>
 
-      if (emulator) {
-        emulator.destroy();
-      }
+    <!-- Main Viewport -->
+    <main class="main-viewport">
+        <div class="screen-wrapper" id="screen_wrapper">
+            <div id="screen_container">
+                <div style="white-space: pre; font: 14px monospace; line-height: 14px"></div>
+                <canvas style="display: none"></canvas>
+            </div>
+            <div class="hint-overlay" id="hint_overlay">
+                🖱️ Haz clic en la pantalla para capturar el ratón (Presiona <strong>ESC</strong> para liberarlo)
+            </div>
+        </div>
 
-      var config = {
-        wasm_path: "v86.wasm",
-        memory_size: 256 * 1024 * 1024,      // 256 MB RAM
-        vga_memory_size: 16 * 1024 * 1024,   // 16 MB VRAM
-        screen_container: document.getElementById("screen_container"),
-        bios: { url: "seabios.bin" },
-        vga_bios: { url: "vgabios.bin" },
-        cdrom: cdromConfig,
-        autostart: true,
-      };
+        <!-- System Diagnostic & Specs Panel -->
+        <section class="info-panel">
+            <div class="info-card">
+                <h4>⚡ Especificaciones Virtuales</h4>
+                <ul>
+                    <li><strong>CPU:</strong> x86 32-bit (v86 WASM JIT)</li>
+                    <li><strong>Memoria RAM:</strong> 256 MB (RAMDisk WinPE)</li>
+                    <li><strong>BIOS:</strong> SeaBIOS + VGABIOS estándar</li>
+                    <li><strong>Almacenamiento:</strong> IDE ATAPI (minixp.iso 107 MB)</li>
+                </ul>
+            </div>
 
-      try {
-        emulator = new V86Starter(config);
+            <div class="info-card">
+                <h4>🛠️ Herramientas & Capacidades</h4>
+                <ul>
+                    <li><strong>Live Session:</strong> Carga 100% en RAM sin tocar disco físico.</li>
+                    <li><strong>Persistencia:</strong> Guarda y reanuda snapshots en 1 segundo.</li>
+                    <li><strong>Compatibilidad:</strong> Ejecuta apps Win32, scripts y utilidades XP.</li>
+                    <li><strong>Aislamiento:</strong> Sandbox seguro dentro de WebAssembly.</li>
+                </ul>
+            </div>
 
-        emulator.add_listener("emulator-ready", function() {
-          document.getElementById('cpuBadge').innerText = "x86 Ejecutándose";
-        });
+            <div class="info-card">
+                <h4>💡 Controles & Atajos</h4>
+                <ul>
+                    <li><strong>Captura de Ratón:</strong> Clic sobre la ventana del emulador.</li>
+                    <li><strong>Liberar Ratón:</strong> Presiona tecla <code>ESC</code>.</li>
+                    <li><strong>Drag & Drop:</strong> Arrastra cualquier archivo <code>.iso</code> sobre la pantalla.</li>
+                </ul>
+            </div>
+        </section>
+    </main>
 
-        emulator.add_listener("emulator-stopped", function() {
-          document.getElementById('cpuBadge').innerText = "Detenido";
-        });
-      } catch (err) {
-        alert("Error al inicializar v86: " + err);
-        document.getElementById('isoOverlay').classList.remove('hidden');
-      }
-    }
-
-    function startDefaultIso() {
-      initEmulator({ url: "minixp.iso" });
-    }
-
-    function startCustomIso(e) {
-      var file = e.target.files[0];
-      if (!file) return;
-      initEmulator({ buffer: file });
-    }
-
-    function saveEmulatorState() {
-      if (!emulator) return alert("El emulador no está en ejecución.");
-      emulator.save_state(function(err, state) {
-        if (err) return alert("Error al guardar estado: " + err);
-        var a = document.createElement("a");
-        a.href = window.URL.createObjectURL(new Blob([state]));
-        a.download = "minixp_state_" + new Date().toISOString().replace(/[:.]/g, "-") + ".bin";
-        a.click();
-      });
-    }
-
-    function loadEmulatorState(e) {
-      var file = e.target.files[0];
-      if (!file) return;
-      document.getElementById('isoOverlay').classList.add('hidden');
-      
-      if (!emulator) {
-        emulator = new V86Starter({
-          wasm_path: "v86.wasm",
-          memory_size: 256 * 1024 * 1024,
-          vga_memory_size: 16 * 1024 * 1024,
-          screen_container: document.getElementById("screen_container"),
-          bios: { url: "seabios.bin" },
-          vga_bios: { url: "vgabios.bin" },
-          autostart: false,
-        });
-      }
-
-      var reader = new FileReader();
-      reader.onload = function(evt) {
-        emulator.restore_state(evt.target.result);
-      };
-      reader.readAsArrayBuffer(file);
-    }
-
-    function restartEmulator() {
-      if (emulator) {
-        emulator.restart();
-      }
-    }
-
-    function stopEmulator() {
-      if (emulator) {
-        emulator.stop();
-        document.getElementById('cpuBadge').innerText = "Detenido";
-      }
-    }
-
-    function lockMouse() {
-      if (emulator) {
-        emulator.lock_mouse();
-      }
-    }
-
-    function toggleFullscreen() {
-      var elem = document.getElementById("screen_wrapper");
-      if (!document.fullscreenElement) {
-        elem.requestFullscreen().catch(function(err) {
-          alert("Error activando pantalla completa: " + err.message);
-        });
-      } else {
-        document.exitFullscreen();
-      }
-    }
-  </script>
+    <script src="app.js"></script>
 </body>
 </html>

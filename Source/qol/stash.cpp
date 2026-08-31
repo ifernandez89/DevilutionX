@@ -505,11 +505,12 @@ bool UseStashItem(uint16_t c)
 		return true;
 	}
 
-	if (item->_iMiscId > IMISC_RUNEFIRST && item->_iMiscId < IMISC_RUNELAST && leveltype == DTYPE_TOWN) {
-		return true;
-	}
+	// Vanilla town check for runes (commented for reference):
+	// if (item->_iMiscId > IMISC_RUNEFIRST && item->_iMiscId < IMISC_RUNELAST && leveltype == DTYPE_TOWN) {
+	// 	return true;
+	// }
 
-	if (item->_iMiscId == IMISC_BOOK)
+	if (item->_iMiscId == IMISC_BOOK || item->isRune())
 		PlaySFX(SfxID::ReadBook);
 	else
 		PlaySFX(ItemInvSnds[ItemCAnimTbl[item->_iCurs]]);

@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+<Schema 
+      name="http://www.microsoft.com/provisioning/EapConnectionPropertiesV1"
+      xmlns="urn:schemas-microsoft-com:xml-data"
+      xmlns:dt="urn:schemas-microsoft-com:datatypes"
+      xmlns:baseEap="http://www.microsoft.com/provisioning/BaseEapConnectionPropertiesV1"
+   >
+   <ElementType name="Name" dt:type="string" content="textOnly"/>
+   <ElementType name="Connection" content="eltOnly">
+      <element type="Name"/>
+      <element type="baseEap:Eap" maxOccurs="*" />
+   </ElementType>      
+   <ElementType name="Connections" model="closed">
+      <element type="Connection" minOccurs="0" maxOccurs="*"/>
+   </ElementType>
+</Schema>
+

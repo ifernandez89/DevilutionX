@@ -7,10 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-### Mini Windows XP - WebAssembly x86 Integration
-- **v86 WebAssembly Emulator Subsystem**: Added standalone x86 PC emulation environment (`Packaging/minixp-wasm/`) powered by v86, SeaBIOS, and VGABios to run Mini Windows XP / WinPE LiveCDs directly in the browser with 256MB virtual RAM.
-- **Bootable ISO Packaging Tool (`tools/build_minixp_iso.py`)**: Developed automated Python tool using `pycdlib` with Joliet Level 3 and El Torito boot catalog configuration to package raw Windows XP files into bootable `minixp.iso` images.
-- **HTTP Range Request Server (`Packaging/minixp-wasm/server.py`)**: Implemented local Python HTTP server with 206 Partial Content and `Accept-Ranges: bytes` support for on-demand chunk streaming of ISO disk images.
+### WebAssembly Virtualization Platform & Mini Windows XP Tools
+- **Mini Windows XP WebAssembly Environment (`Packaging/minixp-wasm/`)**: Added an isolated in-browser x86 virtualization runtime powered by `v86` and WebAssembly (WASM). Features 256 MB emulated RAM, SeaBIOS/VGABIOS standard support, pointer lock mouse capture, responsive modern UI, drag-and-drop ISO loading, snapshot saving/restoration to `.bin` files, and local streaming server (`server.py`).
+- **ISO Builder Utility (`tools/build_minixp_iso.py`)**: Added an automated Python packaging script using `pycdlib` with ISO9660/Joliet Level 3 sanitization and El Torito boot catalog configuration to build bootable Live PE ISO images (`minixp.iso`) from the local `MiniXp/` directory.
 - **UI Quick Launcher & File Manager Integration**: Added top toolbar `🪟 Mini XP` launcher button and dedicated visual card in the Web File Manager modal (`Packaging/emscripten/index.html`) to launch the Windows XP WebAssembly environment in a new tab.
 - **GitHub Pages Deployment Support**: Updated `.github/workflows/deploy-pages.yml` to automatically bundle and publish the Mini XP WASM suite (`dist/minixp/`) along with the web build.
 
@@ -23,7 +22,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Monster Health Bar & Overhead Floating Bars**: Configured `enemyHealthBar` option to `true` by default and added dynamic overhead health bars (`DrawMonsterOverheadHealthBar`) rendered directly above living monsters in combat, featuring real-time health scaling, critical health indicators, and gold borders for unique champions/bosses.
 - **Floating Damage Numbers**: Integrated dynamic floating damage numbers (`AddFloatingNumber`) in `ApplyMonsterDamage`, displaying red damage popups floating above monsters during combat.
 
+#### NIGHTMARE — Arcane Runes (+2 Spell Level Consumables)
+- **Empowered Spell Runic Inscriptions**: Completely overhauled the dormant 1997 Hellfire single-use ground trap rune mechanic into valuable ancient runic inscriptions (`Source/items.cpp`, `Source/inv.cpp`, `Source/qol/stash.cpp`). Right-clicking a rune now directly and permanently consumes it from the inventory (usable in both town and dungeons with book-reading audio and visual feedback), increasing the associated spell level by **+2** up to the maximum spell cap (`MaxSpellLevel = 15`).
+  - **Rune of Fire** (`IMISC_RUNEF`): Permanently increases *Fireball* by +2 spell levels.
+  - **Rune of Lightning** (`IMISC_RUNEL`): Permanently increases *Lightning* by +2 spell levels.
+  - **Greater Rune of Lightning** (`IMISC_GR_RUNEL`): Permanently increases *Chain Lightning* by +2 spell levels.
+  - **Greater Rune of Fire** (`IMISC_GR_RUNEF`): Permanently increases *Flame Wave* by +2 spell levels.
+  - **Rune of Stone** (`IMISC_RUNES`): Permanently increases *Stone Curse* by +2 spell levels.
+- **Rune Tooltips & Info Box**: Updated item descriptions (`PrintItemOil` in `Source/items.cpp`) to clearly state the exact +2 spell level benefits, eliminating legacy trap text while keeping original code commented for reference.
+
+#### NIGHTMARE — Atmospheric Floor Reconfiguration (24 Dungeon Levels)
+- **Dynamic Floor Light Radii**: Implemented `GetNightmareBaseLightRadius(currlevel)` in `Source/nightmare/world/level_atmosphere.cpp` and `Source/items.cpp` replacing static base radius (12) with per-floor atmospheric depths (ranging from claustrophobic darkness of 3-4 tiles in deep Hell and bone crypts to 10 in open cavern and chamber floors).
+- **Procedural Floor Music Orchestration**: Integrated `GetNightmareLevelMusic(dungeonType, currlevel, setlevel)` in `Source/engine/sound.cpp` breaking biome auditory predictability (e.g. Cathedral Threshold playing haunting Crypt tracks, Catacombs Lords playing Hell music, and Crypt Treasure Chamber playing Cathedral solemn themes).
+- **Floor Economy & Chest Density Overrides**: Added `GetNightmareChestCounts(currlevel)` in `Source/objects.cpp` tuning chest distributions per floor archetype (extreme scarcity in Hunger/Silence levels, high rewards in Lords/Treasure chambers).
+- **Monster Depth Distribution Overrides**: Integrated `ApplyNightmareMonsterLevelOverrides()` in `Source/tables/monstdat.cpp` allowing early shock spawns (Hidden/Sneaks and Flesh Clan in lower Cathedral floors, earlier Acid beasts, and deep dungeon Succubi/Casters) while keeping all original engine tables documented and commented.
+
 #### NIGHTMARE — Restoration Layer (Dormant Content Activation)
+- **Restoration Layer 2 (Prophecy of the Stars, Cut Gossip Library & Monster Restorations)**:
+  - **Map of the Stars Prophecy**: Integrated Deckard Cain's dormant prophecy dialogue (`Cain22.wav` / `TEXT_DOOM1` - `TEXT_DOOM10`) with defensive sound loading (`PlayLayer2WavDefensive`) and text banner rendering when inspecting the Map of the Stars.
+  - **Extended Tristram Gossip & Lore**: Reactivated sleeping town gossip pools (`TEXT_FARNHAM16-22`, `TEXT_GILLIAN11-26`, `TEXT_PEPIN12-30`, `TEXT_GRISWOLD14-37`) with 30% random selection probability (`GetLayer2GossipDefensive`) when speaking to Tristram NPCs.
+  - **Incinerator (`MT_INCIN`) AI & Unique Bosses**: Implemented `FireManAi` handling ranged fireball attacks and rolling fireball transformation (`Special` animation), spawning in Caves (levels 11-12) and Hell (levels 13-15) alongside unique bosses *Wrathfire the Doomed* and *Warpfire Hellspawn*.
+  - **Arch-Lich Malignus (`MT_DARKMAGE`) AI & Level 15/16 Spawns**: Configured Arch-Lich Malignus with `CounselorAi` (evasive teleportation and arcane conjuration) in Hell levels 15 and 16.
+  - **Anti-Crash VFS/MPQ Asset Guards**: Added runtime asset checks (`IsIncineratorAssetAvailable`, `IsDarkMageAssetAvailable`, `IsLayer2AssetAvailable`) in `IsMonsterAvailable` and audio playback to prevent `app_fatal` crashes when custom or vanilla MPQs lack Layer 2 assets.
 - **Tremain the Priest & Shadowfang Quest**: Integrated dormant towner Tremain (`TOWN_PRIEST`, `priest8.cel`) into Tristram church courtyard (`{65, 24}`) via `towners.tsv` (Diablo & Hellfire) and `Source/towners.cpp`, with full original voice lines (`priest00.wav` - `priest07.wav`), procedural unique boss *Fleshdoom* in Catacombs (levels 5-7), dropping *Shadowfang*, and rewarding `Lightforge` mace upon resolution.
 - **Tremain Audio & Quest Log Bug Fixes**:
   - **Single Dialogue Playback**: Fixed dialogue audio looping continuously across town and dungeons by updating sound player invocation (`PlayNightmareRestorationWav`) to stop prior samples and issue single-instance playback (`numIterations = 1`).
@@ -57,7 +77,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Dual-Extension Fallback**: Implemented primary and alternate save file fallback in `OpenSaveArchive()`. Hellfire mode can now open Diablo (`.sv`) saves and Diablo mode can open Hellfire (`.hsv`) saves seamlessly.
 - **Transparent Character Conversion**: Automatic save game conversion (`pfile_convert_levels()`) when loading a character created in the opposite mode.
 - **Synchronized Character Deletion**: Updated `pfile_delete_save()` to delete both `.sv` and `.hsv` files associated with a character slot.
-- **File Manager UI**: Web and desktop UI options to import, manage, export, and download `.sv`, `.dsv`, and `.hsv` save files.
+- **File Manager UI & Download Button**: Added dedicated download buttons (`💾 Descargar`) alongside delete controls for all character save files (`.sv`, `.hsv`, `.dsv`, `.ini`) and MPQ archives in the File Manager, with toast notification feedback for backing up character progress locally.
 
 #### WebAssembly & Browser Port (Emscripten / GitHub Pages)
 - **GitHub Pages CI/CD**: Automated WebAssembly build and deployment workflow via GitHub Actions (`.github/workflows/deploy.yml`).

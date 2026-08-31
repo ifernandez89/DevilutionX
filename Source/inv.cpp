@@ -2173,9 +2173,10 @@ bool UseInvItem(int cii)
 		return true;
 	}
 
-	if (item->_iMiscId > IMISC_RUNEFIRST && item->_iMiscId < IMISC_RUNELAST && leveltype == DTYPE_TOWN) {
-		return true;
-	}
+	// Vanilla town check for runes (commented for reference):
+	// if (item->_iMiscId > IMISC_RUNEFIRST && item->_iMiscId < IMISC_RUNELAST && leveltype == DTYPE_TOWN) {
+	// 	return true;
+	// }
 
 	if (item->_iMiscId == IMISC_ARENAPOT && !player.isOnArenaLevel()) {
 		player.Say(HeroSpeech::ThatWontWorkHere);
@@ -2183,7 +2184,7 @@ bool UseInvItem(int cii)
 	}
 
 	const int idata = ItemCAnimTbl[item->_iCurs];
-	if (item->_iMiscId == IMISC_BOOK)
+	if (item->_iMiscId == IMISC_BOOK || item->isRune())
 		PlaySFX(SfxID::ReadBook);
 	else if (&player == MyPlayer)
 		PlaySFX(ItemInvSnds[idata]);
@@ -2196,7 +2197,7 @@ bool UseInvItem(int cii)
 			CloseInventory();
 			return true;
 		}
-		if (!item->isScroll() && !item->isRune())
+		if (!item->isScroll())
 			player.RemoveSpdBarItem(c);
 		return true;
 	}
@@ -2207,7 +2208,7 @@ bool UseInvItem(int cii)
 		CloseInventory();
 		return true;
 	}
-	if (!item->isScroll() && !item->isRune())
+	if (!item->isScroll())
 		player.RemoveInvItem(c);
 
 	return true;

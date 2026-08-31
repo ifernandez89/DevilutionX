@@ -1,26 +1,39 @@
 #!/usr/bin/env python3
 """
-server.py
-Servidor HTTP local con soporte completo para HTTP Range Requests (Status 206 Partial Content),
-necesario para que el emulador WebAssembly v86 lea la imagen ISO por bloques bajo demanda.
+server.py - Servidor HTTP local optimizado para WebAssembly (WASM) y v86
+Soporta peticiones HTTP Range (206 Partial Content) para streaming de imágenes ISO y cabeceras COOP/COEP.
 """
 
 import os
 import sys
 import re
-from http.server import SimpleHTTPRequestHandler, HTTPServer
+import http.server
+import socketserver
 
+PORT = 8000
 
-class RangeHTTPRequestHandler(SimpleHTTPRequestHandler):
+class WasmRangeHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
     protocol_version = "HTTP/1.1"
 
     def end_headers(self):
         # Cabeceras requeridas para SharedArrayBuffer y streaming en navegadores modernos
         self.send_header("Cross-Origin-Opener-Policy", "same-origin")
         self.send_header("Cross-Origin-Embedder-Policy", "require-corp")
+        self.send_header("Access-Control-Allow-Origin", "*")
         self.send_header("Accept-Ranges", "bytes")
         self.send_header("Cache-Control", "no-cache")
         super().end_headers()
+
+    def guess_type(self, path):
+        if path.endswith(".wasm"):
+            return "application/wasm"
+        if path.endswith(".js"):
+            return "application/javascript"
+        if path.endswith(".iso"):
+            return "application/x-iso9660-image"
+        if path.endswith(".bin"):
+            return "application/octet-stream"
+        return super().guess_type(path)
 
     def do_GET(self):
         range_header = self.headers.get("Range")
@@ -64,24 +77,24 @@ class RangeHTTPRequestHandler(SimpleHTTPRequestHandler):
                 self.wfile.write(chunk)
                 bytes_to_send -= len(chunk)
 
-
-def run_server(port=8000, directory=None):
-    if directory:
-        os.chdir(directory)
+def run(port=PORT):
+    dir_path = os.path.dirname(os.path.abspath(__file__))
+    os.chdir(dir_path)
     
-    server_address = ("0.0.0.0", port)
-    httpd = HTTPServer(server_address, RangeHTTPRequestHandler)
-    print("=" * 65)
-    print(f"[*] Servidor Mini XP v86 WASM activo")
-    print(f"[*] Accede localmente en: http://localhost:{port}")
-    print("=" * 65)
-    try:
-        httpd.serve_forever()
-    except KeyboardInterrupt:
-        print("\n[*] Servidor detenido.")
-        httpd.server_close()
-
+    handler = WasmRangeHTTPRequestHandler
+    socketserver.TCPServer.allow_reuse_address = True
+    
+    with socketserver.TCPServer(("", port), handler) as httpd:
+        print(f"\n========================================================")
+        print(f"  Mini Windows XP - Entorno WebAssembly (v86)")
+        print(f"  Servidor iniciado en: http://localhost:{port}")
+        print(f"  Presiona Ctrl+C para detener el servidor")
+        print(f"========================================================\n")
+        try:
+            httpd.serve_forever()
+        except KeyboardInterrupt:
+            print("\nServidor detenido.")
 
 if __name__ == "__main__":
-    port = int(sys.argv[1]) if len(sys.argv) > 1 else 8000
-    run_server(port)
+    p = int(sys.argv[1]) if len(sys.argv) > 1 else PORT
+    run(p)

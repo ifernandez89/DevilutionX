@@ -22,7 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Dual-Extension Fallback**: Implemented primary and alternate save file fallback in `OpenSaveArchive()`. Hellfire mode can now open Diablo (`.sv`) saves and Diablo mode can open Hellfire (`.hsv`) saves seamlessly.
 - **Transparent Character Conversion**: Automatic save game conversion (`pfile_convert_levels()`) when loading a character created in the opposite mode.
 - **Synchronized Character Deletion**: Updated `pfile_delete_save()` to delete both `.sv` and `.hsv` files associated with a character slot.
-- **File Manager UI**: Web and desktop UI options to import, manage, export, and download `.sv`, `.dsv`, and `.hsv` save files.
+- **File Manager UI & Download Button**: Added dedicated download buttons (`💾 Descargar`) alongside delete controls for all character save files (`.sv`, `.hsv`, `.dsv`, `.ini`) and MPQ archives in the File Manager, with toast notification feedback for backing up character progress locally.
 
 #### WebAssembly & Browser Port (Emscripten / GitHub Pages)
 - **GitHub Pages CI/CD**: Automated WebAssembly build and deployment workflow via GitHub Actions (`.github/workflows/deploy.yml`).

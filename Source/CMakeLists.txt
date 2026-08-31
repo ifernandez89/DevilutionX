@@ -93,8 +93,10 @@ set(libdevilutionx_SRCS
   engine/render/weather_overlay.cpp
 
   nightmare/restoration/registry.cpp
+  nightmare/restoration/layer2.cpp
   nightmare/npcs/tremain.cpp
   nightmare/world/ambient_animals.cpp
+  nightmare/world/level_atmosphere.cpp
 
   items/validation.cpp
 

@@ -1,181 +1,191 @@
 /**
  * generate_boot_sector.js
- * Genera el sector de arranque de 2048 bytes para Mini Windows XP (No Emulation El Torito).
- * Incluye tolerancia a fallos de lectura BIOS INT 13h (AH=42h) probando unidades (DL = 0x9F, 0xE0, 0x80).
- * Carga XP.BIN (370 KB NTLDR) en el segmento 0x2000:0000 y salta a él.
+ * Genera un sector de arranque de 2048 bytes (El Torito No-Emulation) para Mini Windows XP.
+ *
+ * CORRECCIONES CRÍTICAS vs. versiones anteriores:
+ * 1. DS se inicializa a 0x07C0 (NO push cs/pop ds, porque SeaBIOS salta con CS=0x0000)
+ * 2. Todos los saltos relativos (jmp/jz/jnc/loop) calculados SIN p++ para evitar off-by-one
+ * 3. CLD antes de LODSB para garantizar dirección de lectura de memoria hacia adelante
+ * 4. Progreso visual con "." por cada bloque leído
+ *
+ * Carga XP.BIN (370 KB NTLDR) en 0x2000:0000 y salta a él.
  */
 
 function createMiniXpBootSector(xpBinLba2048) {
     const buf = Buffer.alloc(2048, 0);
-
-    // Variables / Data Offsets (Relativos al segmento CS, inicio en 0x0000)
-    const OFFSET_MSG_BOOT   = 0x0050;
-    const OFFSET_MSG_ERR    = 0x0070;
-    const OFFSET_DAP        = 0x0090;
-    const OFFSET_BOOT_DRIVE = 0x00B0;
-
-    // Escribir Mensajes
-    buf.write("Booting Mini Windows XP...\r\n\0", OFFSET_MSG_BOOT, 'ascii');
-    buf.write("Disk read error!\r\n\0", OFFSET_MSG_ERR, 'ascii');
-
-    // Escribir DAP por defecto
-    const xpBinLba512 = xpBinLba2048 * 4;
-    buf[OFFSET_DAP + 0] = 0x10; // DAP size = 16 bytes
-    buf[OFFSET_DAP + 1] = 0x00; // Reserved
-    buf.writeUInt16LE(128, OFFSET_DAP + 2); // Sectors per chunk = 128
-    buf.writeUInt16LE(0x0000, OFFSET_DAP + 4); // Offset = 0x0000
-    buf.writeUInt16LE(0x2000, OFFSET_DAP + 6); // Segment = 0x2000
-    buf.writeUInt32LE(xpBinLba512, OFFSET_DAP + 8); // LBA start (512-byte sectors)
-    buf.writeUInt32LE(0, OFFSET_DAP + 12); // LBA high
-
     let p = 0;
 
-    // cli
-    buf[p++] = 0xFA;
-    // push cs; pop ds
-    buf[p++] = 0x0E; buf[p++] = 0x1F;
-    // push cs; pop es
-    buf[p++] = 0x0E; buf[p++] = 0x07;
-    // xor ax, ax; mov ss, ax; mov sp, 0x7C00; sti
-    buf[p++] = 0x31; buf[p++] = 0xC0;
-    buf[p++] = 0x8E; buf[p++] = 0xD0;
-    buf[p++] = 0xBC; buf[p++] = 0x00; buf[p++] = 0x7C;
-    buf[p++] = 0xFB;
+    // Helper: escribe bytes sin ambigüedad de p++
+    function emit(...bytes) {
+        for (const b of bytes) {
+            buf[p++] = b & 0xFF;
+        }
+    }
 
-    // mov [OFFSET_BOOT_DRIVE], dl  (Save DL boot drive)
-    buf[p++] = 0x88; buf[p++] = 0x16; buf[p++] = (OFFSET_BOOT_DRIVE & 0xFF); buf[p++] = (OFFSET_BOOT_DRIVE >> 8);
+    // Helper: escribe salto relativo hacia adelante (devuelve posición para fixup)
+    function emitJccForward(opcode) {
+        const pos = p;
+        emit(opcode, 0x00);
+        return pos;
+    }
 
-    // Print boot message
-    // mov si, OFFSET_MSG_BOOT
-    buf[p++] = 0xBE; buf[p++] = (OFFSET_MSG_BOOT & 0xFF); buf[p++] = (OFFSET_MSG_BOOT >> 8);
-    // .print_boot_loop:
+    // Helper: fixup de salto relativo hacia adelante
+    function fixupForward(instrPos) {
+        buf[instrPos + 1] = (p - (instrPos + 2)) & 0xFF;
+    }
+
+    // Helper: escribe salto relativo hacia atrás
+    function emitJmpBack(opcode, target) {
+        const instrStart = p;
+        emit(opcode, (target - (instrStart + 2)) & 0xFF);
+    }
+
+    // ========== DATA AREA (offset 0x100..0x1FF) ==========
+    const DATA_BASE = 0x100;
+
+    const MSG_BOOT = DATA_BASE;
+    buf.write("Booting Mini Windows XP...\r\n\0", MSG_BOOT, 'ascii');
+
+    const MSG_ERR = DATA_BASE + 30;
+    buf.write("\r\nDisk read error!\r\n\0", MSG_ERR, 'ascii');
+
+    const MSG_OK = DATA_BASE + 52;
+    buf.write(" OK\r\n\0", MSG_OK, 'ascii');
+
+    // DAP (Disk Address Packet) de 16 bytes en offset 0x130
+    const DAP = DATA_BASE + 0x30;
+    const xpBinLba512 = xpBinLba2048 * 4;
+    buf[DAP + 0] = 0x10;       // Tamaño del DAP
+    buf[DAP + 1] = 0x00;       // Reservado
+    buf.writeUInt16LE(128, DAP + 2);      // Cantidad de sectores (128 × 512 = 64 KB)
+    buf.writeUInt16LE(0x0000, DAP + 4);   // Offset del búfer
+    buf.writeUInt16LE(0x2000, DAP + 6);   // Segmento del búfer
+    buf.writeUInt32LE(xpBinLba512, DAP + 8);  // LBA bajo (sectores de 512 bytes)
+    buf.writeUInt32LE(0, DAP + 12);            // LBA alto
+
+    // Almacenamiento de la unidad de arranque
+    const BOOT_DRV = DATA_BASE + 0x40;
+
+    // ========== CÓDIGO (offset 0x0000) ==========
+
+    // --- Inicialización de segmentos ---
+    // SeaBIOS El Torito No-Emulation carga el sector en 0x7C00 y salta con CS=0x0000, IP=0x7C00.
+    // Necesitamos DS=0x07C0 para que las referencias a datos (mensajes, DAP) apunten correctamente.
+    emit(0xFA);                           // cli
+    emit(0xB8, 0xC0, 0x07);              // mov ax, 0x07C0
+    emit(0x8E, 0xD8);                    // mov ds, ax
+    emit(0x8E, 0xC0);                    // mov es, ax
+    emit(0x31, 0xC0);                    // xor ax, ax
+    emit(0x8E, 0xD0);                    // mov ss, ax
+    emit(0xBC, 0x00, 0x7C);              // mov sp, 0x7C00
+    emit(0xFB);                           // sti
+    emit(0xFC);                           // cld (dirección ascendente para lodsb)
+
+    // Guardar número de unidad BIOS (DL)
+    emit(0x88, 0x16, BOOT_DRV & 0xFF, (BOOT_DRV >> 8) & 0xFF);  // mov [BOOT_DRV], dl
+
+    // --- Imprimir mensaje de arranque ---
+    emit(0xBE, MSG_BOOT & 0xFF, (MSG_BOOT >> 8) & 0xFF);  // mov si, MSG_BOOT
     const printBootLoop = p;
-    // lodsb
-    buf[p++] = 0xAC;
-    // or al, al
-    buf[p++] = 0x08; buf[p++] = 0xC0;
-    // jz .start_read
-    const jzBootIdx = p; buf[p++] = 0x74; buf[p++] = 0x00;
-    // mov ah, 0x0E
-    buf[p++] = 0xB4; buf[p++] = 0x0E;
-    // mov bx, 0x0007
-    buf[p++] = 0xBB; buf[p++] = 0x07; buf[p++] = 0x00;
-    // int 0x10
-    buf[p++] = 0xCD; buf[p++] = 0x10;
-    // jmp .print_boot_loop
-    buf[p++] = 0xEB; buf[p++] = (printBootLoop - (p + 1)) & 0xFF;
+    emit(0xAC);                           // lodsb
+    emit(0x08, 0xC0);                    // or al, al
+    const jzAfterBoot = emitJccForward(0x74);  // jz → (después del loop de impresión)
+    emit(0xB4, 0x0E);                    // mov ah, 0x0E (teletype output)
+    emit(0xBB, 0x07, 0x00);              // mov bx, 0x0007 (page 0, light gray)
+    emit(0xCD, 0x10);                    // int 0x10
+    emitJmpBack(0xEB, printBootLoop);    // jmp printBootLoop
+    fixupForward(jzAfterBoot);
 
-    // Fill jz placeholder
-    buf[jzBootIdx + 1] = (p - (jzBootIdx + 2)) & 0xFF;
-
-    // .start_read:
-    // mov cx, 6  (6 chunks of 128/84 sectors)
-    buf[p++] = 0xB9; buf[p++] = 0x06; buf[p++] = 0x00;
+    // --- Bucle principal de lectura de sectores ---
+    // XP.BIN = 370268 bytes = 724 sectores de 512 bytes
+    // 5 bloques × 128 sectores + 1 bloque × 84 sectores = 724 sectores
+    emit(0xB9, 0x06, 0x00);              // mov cx, 6 (6 iteraciones)
 
     const readLoop = p;
-    // push cx
-    buf[p++] = 0x51;
-    // cmp cx, 1
-    buf[p++] = 0x83; buf[p++] = 0xF9; buf[p++] = 0x01;
-    // jne .not_last
-    const jneLastIdx = p; buf[p++] = 0x75; buf[p++] = 0x00;
-    // mov word [OFFSET_DAP + 2], 84 (Last chunk is 84 sectors)
-    buf[p++] = 0xC7; buf[p++] = 0x06; buf[p++] = ((OFFSET_DAP + 2) & 0xFF); buf[p++] = ((OFFSET_DAP + 2) >> 8); buf[p++] = 0x54; buf[p++] = 0x00;
+    emit(0x51);                           // push cx
 
-    // .not_last:
-    buf[jneLastIdx + 1] = (p - (jneLastIdx + 2)) & 0xFF;
+    // ¿Último bloque? Si cx==1, leer solo 84 sectores
+    emit(0x83, 0xF9, 0x01);              // cmp cx, 1
+    const jneNotLast = emitJccForward(0x75);  // jne → .notLast
+    emit(0xC7, 0x06,                     // mov word [DAP+2], 84
+        (DAP + 2) & 0xFF, ((DAP + 2) >> 8) & 0xFF,
+        84, 0x00);
+    fixupForward(jneNotLast);
 
-    // .try_int13:
-    const tryInt13 = p;
-    // mov si, OFFSET_DAP
-    buf[p++] = 0xBE; buf[p++] = (OFFSET_DAP & 0xFF); buf[p++] = (OFFSET_DAP >> 8);
-    // mov dl, [OFFSET_BOOT_DRIVE]
-    buf[p++] = 0x8A; buf[p++] = 0x16; buf[p++] = (OFFSET_BOOT_DRIVE & 0xFF); buf[p++] = (OFFSET_BOOT_DRIVE >> 8);
-    // mov ah, 0x42
-    buf[p++] = 0xB4; buf[p++] = 0x42;
-    // int 0x13
-    buf[p++] = 0xCD; buf[p++] = 0x13;
-    // jnc .read_ok
-    const jncReadIdx = p; buf[p++] = 0x73; buf[p++] = 0x00;
+    // Preparar y ejecutar INT 13h AH=42h (Extended Read)
+    emit(0xBE, DAP & 0xFF, (DAP >> 8) & 0xFF);  // mov si, DAP
+    emit(0x8A, 0x16, BOOT_DRV & 0xFF, (BOOT_DRV >> 8) & 0xFF);  // mov dl, [BOOT_DRV]
+    emit(0xB4, 0x42);                    // mov ah, 0x42
+    emit(0xCD, 0x13);                    // int 0x13
+    const jncReadOk = emitJccForward(0x73);  // jnc → .readOk
 
-    // Read failed! Fallback drive numbers (0x9F -> 0xE0 -> 0x80 -> error)
-    // cmp byte [OFFSET_BOOT_DRIVE], 0x9F
-    buf[p++] = 0x80; buf[p++] = 0x3E; buf[p++] = (OFFSET_BOOT_DRIVE & 0xFF); buf[p++] = (OFFSET_BOOT_DRIVE >> 8); buf[p++] = 0x9F;
-    // jne .try_9f
-    const jne9fIdx = p; buf[p++] = 0x75; buf[p++] = 0x00;
-    // mov byte [OFFSET_BOOT_DRIVE], 0xE0
-    buf[p++] = 0xC6; buf[p++] = 0x06; buf[p++] = (OFFSET_BOOT_DRIVE & 0xFF); buf[p++] = (OFFSET_BOOT_DRIVE >> 8); buf[p++] = 0xE0;
-    // jmp .try_int13
-    buf[p++] = 0xEB; buf[p++] = (tryInt13 - (p + 1)) & 0xFF;
-
-    // .try_9f:
-    buf[jne9fIdx + 1] = (p - (jne9fIdx + 2)) & 0xFF;
-    // cmp byte [OFFSET_BOOT_DRIVE], 0xE0
-    buf[p++] = 0x80; buf[p++] = 0x3E; buf[p++] = (OFFSET_BOOT_DRIVE & 0xFF); buf[p++] = (OFFSET_BOOT_DRIVE >> 8); buf[p++] = 0xE0;
-    // jne .try_e0
-    const jneE0Idx = p; buf[p++] = 0x75; buf[p++] = 0x00;
-    // mov byte [OFFSET_BOOT_DRIVE], 0x80
-    buf[p++] = 0xC6; buf[p++] = 0x06; buf[p++] = (OFFSET_BOOT_DRIVE & 0xFF); buf[p++] = (OFFSET_BOOT_DRIVE >> 8); buf[p++] = 0x80;
-    // jmp .try_int13
-    buf[p++] = 0xEB; buf[p++] = (tryInt13 - (p + 1)) & 0xFF;
-
-    // .try_e0:
-    buf[jneE0Idx + 1] = (p - (jneE0Idx + 2)) & 0xFF;
-    // mov byte [OFFSET_BOOT_DRIVE], 0x9F
-    buf[p++] = 0xC6; buf[p++] = 0x06; buf[p++] = (OFFSET_BOOT_DRIVE & 0xFF); buf[p++] = (OFFSET_BOOT_DRIVE >> 8); buf[p++] = 0x9F;
-
-    // Print error message
-    // mov si, OFFSET_MSG_ERR
-    buf[p++] = 0xBE; buf[p++] = (OFFSET_MSG_ERR & 0xFF); buf[p++] = (OFFSET_MSG_ERR >> 8);
-    const errLoop = p;
-    // lodsb
-    buf[p++] = 0xAC;
-    // or al, al
-    buf[p++] = 0x08; buf[p++] = 0xC0;
-    // jz .halt
-    const jzHaltIdx = p; buf[p++] = 0x74; buf[p++] = 0x00;
-    // mov ah, 0x0E
-    buf[p++] = 0xB4; buf[p++] = 0x0E;
-    // mov bx, 0x0007
-    buf[p++] = 0xBB; buf[p++] = 0x07; buf[p++] = 0x00;
-    // int 0x10
-    buf[p++] = 0xCD; buf[p++] = 0x10;
-    // jmp .err_loop
-    buf[p++] = 0xEB; buf[p++] = (errLoop - (p + 1)) & 0xFF;
+    // --- Error de lectura ---
+    emit(0xBE, MSG_ERR & 0xFF, (MSG_ERR >> 8) & 0xFF);  // mov si, MSG_ERR
+    const errPrintLoop = p;
+    emit(0xAC);                           // lodsb
+    emit(0x08, 0xC0);                    // or al, al
+    const jzHalt = emitJccForward(0x74); // jz → .halt
+    emit(0xB4, 0x0E);                    // mov ah, 0x0E
+    emit(0xBB, 0x07, 0x00);              // mov bx, 0x0007
+    emit(0xCD, 0x10);                    // int 0x10
+    emitJmpBack(0xEB, errPrintLoop);     // jmp errPrintLoop
+    fixupForward(jzHalt);
 
     // .halt:
-    buf[jzHaltIdx + 1] = (p - (jzHaltIdx + 2)) & 0xFF;
-    const haltLabel = p;
-    // hlt
-    buf[p++] = 0xF4;
-    // jmp .halt
-    buf[p++] = 0xEB; buf[p++] = (haltLabel - (p + 1)) & 0xFF;
+    const haltAddr = p;
+    emit(0xF4);                           // hlt
+    emitJmpBack(0xEB, haltAddr);         // jmp .halt (bucle infinito)
 
-    // .read_ok:
-    buf[jncReadIdx + 1] = (p - (jncReadIdx + 2)) & 0xFF;
+    // --- Lectura exitosa ---
+    fixupForward(jncReadOk);
 
-    // add word [OFFSET_DAP + 6], 0x1000 (Advance segment by 0x1000 = 64KB)
-    buf[p++] = 0x81; buf[p++] = 0x06; buf[p++] = ((OFFSET_DAP + 6) & 0xFF); buf[p++] = ((OFFSET_DAP + 6) >> 8); buf[p++] = 0x00; buf[p++] = 0x10;
-    // add dword [OFFSET_DAP + 8], 128 (Advance LBA by 128 sectors)
-    buf[p++] = 0x81; buf[p++] = 0x06; buf[p++] = ((OFFSET_DAP + 8) & 0xFF); buf[p++] = ((OFFSET_DAP + 8) >> 8); buf[p++] = 0x80; buf[p++] = 0x00;
-    buf[p++] = 0x83; buf[p++] = 0x16; buf[p++] = ((OFFSET_DAP + 10) & 0xFF); buf[p++] = ((OFFSET_DAP + 10) >> 8); buf[p++] = 0x00;
+    // Imprimir "." de progreso
+    emit(0xB0, 0x2E);                    // mov al, '.'
+    emit(0xB4, 0x0E);                    // mov ah, 0x0E
+    emit(0xBB, 0x07, 0x00);              // mov bx, 0x0007
+    emit(0xCD, 0x10);                    // int 0x10
 
-    // pop cx
-    buf[p++] = 0x59;
-    // loop .read_loop
-    buf[p++] = 0xE2; buf[p++] = (readLoop - (p + 1)) & 0xFF;
+    // Avanzar segmento destino: += 0x1000 (64 KB)
+    emit(0x81, 0x06,                     // add word [DAP+6], 0x1000
+        (DAP + 6) & 0xFF, ((DAP + 6) >> 8) & 0xFF,
+        0x00, 0x10);
 
-    // Finished reading! Now jump to 0x2000:0000
-    // mov dl, [OFFSET_BOOT_DRIVE]
-    buf[p++] = 0x8A; buf[p++] = 0x16; buf[p++] = (OFFSET_BOOT_DRIVE & 0xFF); buf[p++] = (OFFSET_BOOT_DRIVE >> 8);
-    // jmp far 0x2000:0000
-    buf[p++] = 0xEA;
-    buf[p++] = 0x00; buf[p++] = 0x00; // offset 0x0000
-    buf[p++] = 0x00; buf[p++] = 0x20; // segment 0x2000
+    // Avanzar LBA: += 128 sectores
+    emit(0x81, 0x06,                     // add word [DAP+8], 128
+        (DAP + 8) & 0xFF, ((DAP + 8) >> 8) & 0xFF,
+        0x80, 0x00);
+    emit(0x83, 0x16,                     // adc word [DAP+10], 0
+        (DAP + 10) & 0xFF, ((DAP + 10) >> 8) & 0xFF,
+        0x00);
 
-    // Magic signature at end of first 512 bytes
+    // Loop
+    emit(0x59);                           // pop cx
+    emitJmpBack(0xE2, readLoop);         // loop readLoop
+
+    // --- Carga completa: imprimir " OK" y saltar a NTLDR ---
+    emit(0xBE, MSG_OK & 0xFF, (MSG_OK >> 8) & 0xFF);  // mov si, MSG_OK
+    const okPrintLoop = p;
+    emit(0xAC);                           // lodsb
+    emit(0x08, 0xC0);                    // or al, al
+    const jzJump = emitJccForward(0x74); // jz → .jump
+    emit(0xB4, 0x0E);                    // mov ah, 0x0E
+    emit(0xBB, 0x07, 0x00);              // mov bx, 0x0007
+    emit(0xCD, 0x10);                    // int 0x10
+    emitJmpBack(0xEB, okPrintLoop);      // jmp okPrintLoop
+    fixupForward(jzJump);
+
+    // .jump: Restaurar DL y saltar a NTLDR en 0x2000:0x0000
+    emit(0x8A, 0x16, BOOT_DRV & 0xFF, (BOOT_DRV >> 8) & 0xFF);  // mov dl, [BOOT_DRV]
+    emit(0xEA, 0x00, 0x00, 0x00, 0x20);  // jmp far 0x2000:0x0000
+
+    // --- Firma de arranque ---
     buf[510] = 0x55;
     buf[511] = 0xAA;
+
+    console.log(`[+] Sector de arranque: ${p} bytes de código (máximo ${DATA_BASE} antes del área de datos)`);
+    if (p > DATA_BASE) {
+        throw new Error(`¡Código (${p} bytes) invade el área de datos (${DATA_BASE})!`);
+    }
 
     return buf;
 }

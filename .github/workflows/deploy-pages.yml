@@ -64,7 +64,8 @@ jobs:
       - name: Build Mini Windows XP ISO
         run: |
           mkdir -p Packaging/minixp-wasm
-          genisoimage -b HBCD/XP/XP.BIN -c HBCD/boot.cat -no-emul-boot -boot-load-size 4 -J -R -V "MINIXP" -o Packaging/minixp-wasm/minixp.iso MiniXp || (pip install pycdlib && python3 tools/build_minixp_iso.py MiniXp Packaging/minixp-wasm/minixp.iso)
+          pip install pycdlib
+          python3 tools/build_minixp_iso.py MiniXp Packaging/minixp-wasm/minixp.iso
 
       - name: Prepare GitHub Pages Distribution
         run: |

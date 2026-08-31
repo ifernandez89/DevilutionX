@@ -2,7 +2,8 @@
 """
 build_minixp_iso.py
 Genera una imagen ISO booteable de Mini Windows XP para WebAssembly (v86 / SeaBIOS).
-Usa HBCD/XP/XP.BIN como cargador de arranque directo El Torito No-Emulation.
+Configura boot_load_size con el tamano completo de XP.BIN en sectores de 512 bytes
+para que SeaBIOS cargue todo el ejecutable NTLDR en memoria RAM.
 """
 
 import os
@@ -14,12 +15,22 @@ def build_iso(source_dir, output_iso):
     output_iso = os.path.abspath(output_iso)
 
     print("=" * 65)
-    print("[*] Empaquetando Mini Windows XP Live ISO (Boot directo XP.BIN)")
+    print("[*] Empaquetando Mini Windows XP Live ISO (Full XP.BIN Bootload)")
     print(f"[*] Origen:  {source_dir}")
     print(f"[*] Destino: {output_iso}")
     print("=" * 65)
 
     os.makedirs(os.path.dirname(output_iso), exist_ok=True)
+
+    boot_file = os.path.join(source_dir, "HBCD", "XP", "XP.BIN")
+    if not os.path.isfile(boot_file):
+        print(f"[!] Error: No se encontro {boot_file}")
+        sys.exit(1)
+
+    boot_size = os.path.getsize(boot_file)
+    # Tamano en sectores virtuales de 512 bytes para El Torito No-Emulation
+    boot_sectors = (boot_size + 511) // 512
+    print(f"[+] XP.BIN Tamano: {boot_size} bytes -> Sectores El Torito: {boot_sectors}")
 
     iso = pycdlib.PyCdlib()
     iso.new(interchange_level=3, joliet=3, vol_ident="MINIXP")
@@ -31,12 +42,7 @@ def build_iso(source_dir, output_iso):
         except Exception:
             pass
 
-    # 2. Registrar sector de arranque El Torito directo (XP.BIN)
-    boot_file = os.path.join(source_dir, "HBCD", "XP", "XP.BIN")
-    if not os.path.isfile(boot_file):
-        print(f"[!] Error: No se encontro {boot_file}")
-        sys.exit(1)
-
+    # 2. Registrar sector de arranque El Torito con el tamano completo de XP.BIN
     iso.add_file(
         boot_file,
         iso_path="/HBCD/XP/XP.BIN;1",
@@ -44,13 +50,13 @@ def build_iso(source_dir, output_iso):
     )
     iso.add_eltorito(
         "/HBCD/XP/XP.BIN;1",
-        boot_load_size=4,
+        boot_load_size=boot_sectors,
         media_name='noemul',
         bootable=True
     )
-    print("[+] Sector de arranque El Torito registrado con HBCD/XP/XP.BIN")
+    print(f"[+] Sector de arranque El Torito registrado (boot_load_size={boot_sectors})")
 
-    # 3. Agregar todos los demás archivos
+    # 3. Agregar todos los demas archivos
     added_count = 1
     for root, dirs, files in os.walk(source_dir):
         rel_root = os.path.relpath(root, source_dir).replace('\\', '/')

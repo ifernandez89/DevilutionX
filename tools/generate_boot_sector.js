@@ -1,54 +1,48 @@
 /**
  * generate_boot_sector.js
  * Genera el sector de arranque de 2048 bytes para Mini Windows XP (No Emulation El Torito).
- * Carga directamente XP.BIN (370 KB NTLDR) en el segmento 0x2000:0000 y salta a él.
+ * Usa offsets relativos al segmento CS (DS = CS) para garantizar direccionamiento exacto de memoria.
+ * Carga XP.BIN (370 KB NTLDR) en el segmento 0x2000:0000 y salta a él.
  */
 
 function createMiniXpBootSector(xpBinLba2048) {
     const buf = Buffer.alloc(2048, 0);
 
-    // Variables / Data Offsets
-    // 0x7C00 + 0x00: Code start
-    // 0x7C00 + 0x50: Messages
-    // 0x7C00 + 0x90: DAP structure
-    // 0x7C00 + 0xB0: Variables (boot_drive)
-
-    const OFFSET_BOOT_DRIVE = 0x7CB0;
-    const OFFSET_MSG_BOOT   = 0x7C50;
-    const OFFSET_MSG_ERR    = 0x7C70;
-    const OFFSET_DAP        = 0x7C90;
+    // Variables / Data Offsets (Relativos al segmento CS, inicio en 0x0000)
+    const OFFSET_MSG_BOOT   = 0x0050;
+    const OFFSET_MSG_ERR    = 0x0070;
+    const OFFSET_DAP        = 0x0090;
+    const OFFSET_BOOT_DRIVE = 0x00B0;
 
     // Escribir Mensajes
-    buf.write("Booting Mini Windows XP...\r\n\0", 0x50, 'ascii');
-    buf.write("Disk read error!\r\n\0", 0x70, 'ascii');
+    buf.write("Booting Mini Windows XP...\r\n\0", OFFSET_MSG_BOOT, 'ascii');
+    buf.write("Disk read error!\r\n\0", OFFSET_MSG_ERR, 'ascii');
 
     // Escribir DAP por defecto
     const xpBinLba512 = xpBinLba2048 * 4;
-    buf[0x90] = 0x10; // DAP size = 16 bytes
-    buf[0x91] = 0x00; // Reserved
-    buf.writeUInt16LE(128, 0x92); // Sectors per chunk = 128
-    buf.writeUInt16LE(0x0000, 0x94); // Offset = 0x0000
-    buf.writeUInt16LE(0x2000, 0x96); // Segment = 0x2000
-    buf.writeUInt32LE(xpBinLba512, 0x98); // LBA start (512-byte sectors)
-    buf.writeUInt32LE(0, 0x9C); // LBA high
+    buf[OFFSET_DAP + 0] = 0x10; // DAP size = 16 bytes
+    buf[OFFSET_DAP + 1] = 0x00; // Reserved
+    buf.writeUInt16LE(128, OFFSET_DAP + 2); // Sectors per chunk = 128
+    buf.writeUInt16LE(0x0000, OFFSET_DAP + 4); // Offset = 0x0000
+    buf.writeUInt16LE(0x2000, OFFSET_DAP + 6); // Segment = 0x2000
+    buf.writeUInt32LE(xpBinLba512, OFFSET_DAP + 8); // LBA start (512-byte sectors)
+    buf.writeUInt32LE(0, OFFSET_DAP + 12); // LBA high
 
     let p = 0;
 
     // cli
     buf[p++] = 0xFA;
-    // xor ax, ax
+    // push cs; pop ds
+    buf[p++] = 0x0E; buf[p++] = 0x1F;
+    // push cs; pop es
+    buf[p++] = 0x0E; buf[p++] = 0x07;
+    // xor ax, ax; mov ss, ax; mov sp, 0x7C00; sti
     buf[p++] = 0x31; buf[p++] = 0xC0;
-    // mov ds, ax
-    buf[p++] = 0x8E; buf[p++] = 0xD8;
-    // mov es, ax
-    buf[p++] = 0x8E; buf[p++] = 0xC0;
-    // mov ss, ax
     buf[p++] = 0x8E; buf[p++] = 0xD0;
-    // mov sp, 0x7C00
     buf[p++] = 0xBC; buf[p++] = 0x00; buf[p++] = 0x7C;
-    // sti
     buf[p++] = 0xFB;
-    // mov [0x7CB0], dl  (Save DL boot drive)
+
+    // mov [OFFSET_BOOT_DRIVE], dl  (Save DL boot drive)
     buf[p++] = 0x88; buf[p++] = 0x16; buf[p++] = (OFFSET_BOOT_DRIVE & 0xFF); buf[p++] = (OFFSET_BOOT_DRIVE >> 8);
 
     // Print boot message
@@ -85,8 +79,8 @@ function createMiniXpBootSector(xpBinLba2048) {
     buf[p++] = 0x83; buf[p++] = 0xF9; buf[p++] = 0x01;
     // jne .not_last
     const jneLastIdx = p; buf[p++] = 0x75; buf[p++] = 0x00;
-    // mov word [0x7C92], 84 (Last chunk is 84 sectors)
-    buf[p++] = 0xC7; buf[p++] = 0x06; buf[p++] = 0x92; buf[p++] = 0x7C; buf[p++] = 0x54; buf[p++] = 0x00;
+    // mov word [OFFSET_DAP + 2], 84 (Last chunk is 84 sectors)
+    buf[p++] = 0xC7; buf[p++] = 0x06; buf[p++] = ((OFFSET_DAP + 2) & 0xFF); buf[p++] = ((OFFSET_DAP + 2) >> 8); buf[p++] = 0x54; buf[p++] = 0x00;
 
     // .not_last:
     buf[jneLastIdx + 1] = (p - (jneLastIdx + 2)) & 0xFF;
@@ -132,11 +126,11 @@ function createMiniXpBootSector(xpBinLba2048) {
     // .read_ok:
     buf[jncReadIdx + 1] = (p - (jncReadIdx + 2)) & 0xFF;
 
-    // add word [0x7C96], 0x1000 (Advance segment by 0x1000 = 64KB)
-    buf[p++] = 0x81; buf[p++] = 0x06; buf[p++] = 0x96; buf[p++] = 0x7C; buf[p++] = 0x00; buf[p++] = 0x10;
-    // add dword [0x7C98], 128 (Advance LBA by 128 sectors)
-    buf[p++] = 0x81; buf[p++] = 0x06; buf[p++] = 0x98; buf[p++] = 0x7C; buf[p++] = 0x80; buf[p++] = 0x00;
-    buf[p++] = 0x83; buf[p++] = 0x16; buf[p++] = 0x9A; buf[p++] = 0x7C; buf[p++] = 0x00;
+    // add word [OFFSET_DAP + 6], 0x1000 (Advance segment by 0x1000 = 64KB)
+    buf[p++] = 0x81; buf[p++] = 0x06; buf[p++] = ((OFFSET_DAP + 6) & 0xFF); buf[p++] = ((OFFSET_DAP + 6) >> 8); buf[p++] = 0x00; buf[p++] = 0x10;
+    // add dword [OFFSET_DAP + 8], 128 (Advance LBA by 128 sectors)
+    buf[p++] = 0x81; buf[p++] = 0x06; buf[p++] = ((OFFSET_DAP + 8) & 0xFF); buf[p++] = ((OFFSET_DAP + 8) >> 8); buf[p++] = 0x80; buf[p++] = 0x00;
+    buf[p++] = 0x83; buf[p++] = 0x16; buf[p++] = ((OFFSET_DAP + 10) & 0xFF); buf[p++] = ((OFFSET_DAP + 10) >> 8); buf[p++] = 0x00;
 
     // pop cx
     buf[p++] = 0x59;

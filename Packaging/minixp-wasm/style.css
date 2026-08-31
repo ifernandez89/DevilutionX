@@ -228,51 +228,151 @@ body {
     transition: opacity 0.3s;
 }
 
-/* Quick Info Panel */
-.info-panel {
+/* Compact Modern Hardware & Status Strip */
+.system-status-bar {
     width: 100%;
     max-width: 1024px;
-    margin-top: 16px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 16px;
-}
-
-.info-card {
+    margin-top: 14px;
     background: var(--bg-surface);
     border: 1px solid var(--border-color);
     border-radius: var(--radius);
-    padding: 14px 18px;
-}
-
-.info-card h4 {
-    font-size: 13px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    color: #58a6ff;
-    margin-bottom: 8px;
+    padding: 10px 18px;
     display: flex;
     align-items: center;
-    gap: 6px;
+    justify-content: space-between;
+    gap: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-.info-card p, .info-card ul {
+.hw-spec {
+    display: flex;
+    align-items: center;
+    gap: 8px;
     font-size: 13px;
-    color: var(--text-secondary);
-    line-height: 1.5;
 }
 
-.info-card ul {
-    list-style: none;
+.hw-label {
+    font-weight: 700;
+    color: #58a6ff;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 0.5px;
 }
 
-.info-card ul li {
-    margin-bottom: 4px;
-}
-
-.info-card ul li strong {
+.hw-val {
     color: var(--text-primary);
+    font-family: 'JetBrains Mono', Consolas, monospace;
+    font-size: 12px;
 }
+
+.disk-activity-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 4px 12px;
+    border-radius: 16px;
+    font-size: 12px;
+    font-family: 'JetBrains Mono', Consolas, monospace;
+    color: var(--text-secondary);
+}
+
+.disk-activity-indicator .led-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--text-muted);
+    transition: background-color 0.15s, box-shadow 0.15s;
+}
+
+.disk-activity-indicator.active .led-dot {
+    background-color: #3fb950;
+    box-shadow: 0 0 10px #3fb950, 0 0 4px #3fb950;
+}
+
+.disk-activity-indicator.active {
+    color: #3fb950;
+}
+
+.btn-ghost {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    font-size: 12px;
+    padding: 4px 10px;
+}
+
+.btn-ghost:hover {
+    background: var(--bg-surface-elevated);
+    border-color: #58a6ff;
+    color: #58a6ff;
+}
+
+/* Live Diagnostic Terminal Drawer */
+.diagnostic-console {
+    width: 100%;
+    max-width: 1024px;
+    margin-top: 12px;
+    background: #0d1117;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    overflow: hidden;
+    display: block;
+    box-shadow: inset 0 2px 8px rgba(0,0,0,0.6);
+}
+
+.diagnostic-console.collapsed {
+    display: none;
+}
+
+.console-header {
+    background: #161b22;
+    padding: 6px 14px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.console-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    letter-spacing: 0.3px;
+}
+
+.btn-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 13px;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.btn-icon:hover {
+    opacity: 1;
+}
+
+.console-body {
+    padding: 10px 14px;
+    max-height: 140px;
+    overflow-y: auto;
+    font-family: 'JetBrains Mono', Consolas, monospace;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+.log-line {
+    margin-bottom: 2px;
+    word-break: break-all;
+}
+
+.log-info { color: #8b949e; }
+.log-success { color: #3fb950; font-weight: 600; }
+.log-warn { color: #d29922; }
+.log-disk { color: #58a6ff; }
+.log-error { color: #f85149; font-weight: 600; }
 
 /* Hidden File Inputs */
 input[type="file"] {

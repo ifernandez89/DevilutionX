@@ -73,35 +73,29 @@
             </div>
         </div>
 
-        <!-- System Diagnostic & Specs Panel -->
-        <section class="info-panel">
-            <div class="info-card">
-                <h4>⚡ Especificaciones Virtuales</h4>
-                <ul>
-                    <li><strong>CPU:</strong> x86 32-bit (v86 WASM JIT)</li>
-                    <li><strong>Memoria RAM:</strong> 256 MB (RAMDisk WinPE)</li>
-                    <li><strong>BIOS:</strong> SeaBIOS + VGABIOS estándar</li>
-                    <li><strong>Almacenamiento:</strong> IDE ATAPI (minixp.iso 107 MB)</li>
-                </ul>
+        <!-- Compact Modern Status & Hardware Strip -->
+        <div class="system-status-bar">
+            <div class="hw-spec">
+                <span class="hw-label">PC Emulada:</span>
+                <span class="hw-val">Pentium II (x86 32-bit) • 256 MB RAM • VGA VBE • CD-ROM IDE</span>
             </div>
-
-            <div class="info-card">
-                <h4>🛠️ Herramientas & Capacidades</h4>
-                <ul>
-                    <li><strong>Live Session:</strong> Carga 100% en RAM sin tocar disco físico.</li>
-                    <li><strong>Persistencia:</strong> Guarda y reanuda snapshots en 1 segundo.</li>
-                    <li><strong>Compatibilidad:</strong> Ejecuta apps Win32, scripts y utilidades XP.</li>
-                    <li><strong>Aislamiento:</strong> Sandbox seguro dentro de WebAssembly.</li>
-                </ul>
+            <div class="disk-activity-indicator" id="disk_led">
+                <span class="led-dot"></span>
+                <span id="disk_status_text">CD-ROM: Inactivo</span>
             </div>
+            <button class="btn btn-sm btn-ghost" id="btn_toggle_log" title="Mostrar/Ocultar Consola de Diagnóstico">
+                📋 Consola de Eventos
+            </button>
+        </div>
 
-            <div class="info-card">
-                <h4>💡 Controles & Atajos</h4>
-                <ul>
-                    <li><strong>Captura de Ratón:</strong> Clic sobre la ventana del emulador.</li>
-                    <li><strong>Liberar Ratón:</strong> Presiona tecla <code>ESC</code>.</li>
-                    <li><strong>Drag & Drop:</strong> Arrastra cualquier archivo <code>.iso</code> sobre la pantalla.</li>
-                </ul>
+        <!-- Live Boot Diagnostic Console -->
+        <section class="diagnostic-console" id="diagnostic_console">
+            <div class="console-header">
+                <span class="console-title">🖥️ Registro de Arranque & Diagnóstico en Vivo</span>
+                <button class="btn-icon" id="btn_clear_log" title="Limpiar Consola">🗑️</button>
+            </div>
+            <div class="console-body" id="console_log">
+                <div class="log-line log-info">[00:00:00] Sistema inicializado. Presiona "Iniciar" o espera el auto-arranque.</div>
             </div>
         </section>
     </main>

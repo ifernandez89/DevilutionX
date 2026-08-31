@@ -130,6 +130,18 @@ function initEmulator(customCdromBuffer = null) {
             }
         });
 
+        let serialBuffer = "";
+        emulator.add_listener("serial0-output-char", function(char) {
+            if (char === "\n") {
+                if (serialBuffer.trim().length > 0) {
+                    logDiagnostic(`[BIOS/Kernel] ${serialBuffer}`, "info");
+                }
+                serialBuffer = "";
+            } else if (char !== "\r") {
+                serialBuffer += char;
+            }
+        });
+
         emulator.add_listener("ide-read-start", function() {
             triggerDiskActivity(16);
         });

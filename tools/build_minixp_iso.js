@@ -154,7 +154,8 @@ function buildIso(sourceDir, outputIsoPath) {
         "TIMEOUT 0\n\n" +
         "LABEL minixp\n" +
         "  MENU LABEL Mini Windows XP\n" +
-        "  COM32 /HBCD/BOOT/CHAIN.C32 ntldr=/HBCD/XP/XP.BIN\n",
+        "  COM32 /HBCD/BOOT/CHAIN.C32\n" +
+        "  APPEND ntldr=/HBCD/XP/XP.BIN\n",
         "utf8"
     );
 

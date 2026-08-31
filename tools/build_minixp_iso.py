@@ -3,8 +3,6 @@
 build_minixp_iso.py
 Genera una imagen ISO booteable (ISO9660 + Joliet + El Torito) para Mini Windows XP
 compatible con el emulador WebAssembly v86 / SeaBIOS.
-
-Soporta sanitización de nombres de archivo ISO9660 (8.3) y Joliet Level 3.
 """
 
 import os
@@ -83,7 +81,7 @@ def build_iso(source_dir, output_iso, boot_file=None):
         boot_file = find_boot_file(source_dir)
 
     iso = pycdlib.PyCdlib()
-    iso.new(interchange_level=3, joliet=3, rock_ridge='1.09', vol_ident="MINIXP")
+    iso.new(interchange_level=3, joliet=3, vol_ident="MINIXP")
 
     # 1. Configurar El Torito si existe archivo de boot
     boot_iso_path = None

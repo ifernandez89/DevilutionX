@@ -1,13 +1,12 @@
 /**
  * build_minixp_iso.js
- * Generador completo de ISO-9660 + Joliet con arranque El Torito (ISOLINUX / SeaBIOS)
- * para Mini Windows XP en WebAssembly (v86).
- * Incluye Path Tables estándar (L/M), réplicas de rutas de configuración de ISOLINUX
- * y parchado de Boot-Info-Table.
+ * Generador completo de ISO-9660 + Joliet con cargador directo de 16-bits para SeaBIOS / WebAssembly (v86)
+ * Carga XP.BIN (NTLDR) directamente a la memoria RAM (segmento 0x2000) saltando intermediarios bugueados.
  */
 
 const fs = require('fs');
 const path = require('path');
+const { createMiniXpBootSector } = require('./generate_boot_sector');
 
 const SECTOR_SIZE = 2048;
 
@@ -100,18 +99,9 @@ function createDirectoryRecord(isJoliet, name, sectorLba, dataLength, isDir, dat
     return buf;
 }
 
-function calculateIsolinuxChecksum(buf) {
-    let sum = 0;
-    for (let i = 64; i < buf.length; i += 4) {
-        const val = buf.readUInt32LE(i);
-        sum = (sum + val) >>> 0;
-    }
-    return sum;
-}
-
 function buildIso(sourceDir, outputIsoPath) {
     console.log("==================================================================");
-    console.log("[*] Generando Mini Windows XP Live ISO (Boot ISOLINUX + SeaBIOS)");
+    console.log("[*] Generando Mini Windows XP Live ISO (Direct NTLDR Loader + SeaBIOS)");
     console.log(`[*] Origen:  ${sourceDir}`);
     console.log(`[*] Destino: ${outputIsoPath}`);
     console.log("==================================================================");
@@ -137,67 +127,18 @@ function buildIso(sourceDir, outputIsoPath) {
     }
     scan(sourceDir);
 
-    // Encontrar archivos clave de arranque
-    const isolinuxBin = rawEntries.find(e => e.relPath.toUpperCase() === 'HBCD/ISOLINUX.BIN' || e.relPath.toUpperCase() === 'ISOLINUX.BIN');
-    const isolinuxCfg = rawEntries.find(e => e.relPath.toUpperCase() === 'HBCD/ISOLINUX.CFG' || e.relPath.toUpperCase() === 'ISOLINUX.CFG');
-    const chainC32 = rawEntries.find(e => e.relPath.toUpperCase() === 'HBCD/BOOT/CHAIN.C32' || e.relPath.toUpperCase() === 'CHAIN.C32');
-    const menuC32 = rawEntries.find(e => e.relPath.toUpperCase() === 'HBCD/BOOT/MENU.C32' || e.relPath.toUpperCase() === 'MENU.C32');
-
-    if (!isolinuxBin) {
-        throw new Error("No se encontró ISOLINUX.BIN");
+    const xpBin = rawEntries.find(e => e.relPath.toUpperCase() === 'HBCD/XP/XP.BIN' || e.relPath.toUpperCase() === 'XP.BIN');
+    if (!xpBin) {
+        throw new Error("No se encontró XP.BIN en el origen.");
     }
 
-    // Configuración universal de ISOLINUX para auto-arranque
-    const universalCfgContent = Buffer.from(
-        "DEFAULT minixp\n" +
-        "PROMPT 0\n" +
-        "TIMEOUT 0\n\n" +
-        "LABEL minixp\n" +
-        "  MENU LABEL Mini Windows XP\n" +
-        "  COM32 /HBCD/BOOT/CHAIN.C32\n" +
-        "  APPEND ntldr=/HBCD/XP/XP.BIN\n",
-        "utf8"
-    );
-
-    // Mapeo virtual de archivos en el árbol ISO
-    // Aseguramos que ISOLINUX encuentre su archivo de configuración y dependencias en cualquier ruta estándar
     const allFiles = new Map();
-
-    // Archivos de origen
     for (const e of rawEntries) {
         allFiles.set(e.relPath.toUpperCase(), {
             path: e.relPath,
             fullPath: e.fullPath,
             buffer: null,
             size: e.size
-        });
-    }
-
-    // Réplicas esenciales para el cargador de ISOLINUX
-    const mirrorFiles = [
-        { isoPath: "ISOLINUX.CFG", buffer: universalCfgContent },
-        { isoPath: "ISOLINUX/ISOLINUX.CFG", buffer: universalCfgContent },
-        { isoPath: "BOOT/ISOLINUX/ISOLINUX.CFG", buffer: universalCfgContent },
-        { isoPath: "HBCD/ISOLINUX.CFG", buffer: universalCfgContent },
-    ];
-
-    if (chainC32) {
-        mirrorFiles.push({ isoPath: "CHAIN.C32", fullPath: chainC32.fullPath, size: chainC32.size });
-        mirrorFiles.push({ isoPath: "ISOLINUX/CHAIN.C32", fullPath: chainC32.fullPath, size: chainC32.size });
-        mirrorFiles.push({ isoPath: "BOOT/CHAIN.C32", fullPath: chainC32.fullPath, size: chainC32.size });
-    }
-    if (menuC32) {
-        mirrorFiles.push({ isoPath: "MENU.C32", fullPath: menuC32.fullPath, size: menuC32.size });
-        mirrorFiles.push({ isoPath: "ISOLINUX/MENU.C32", fullPath: menuC32.fullPath, size: menuC32.size });
-        mirrorFiles.push({ isoPath: "BOOT/MENU.C32", fullPath: menuC32.fullPath, size: menuC32.size });
-    }
-
-    for (const m of mirrorFiles) {
-        allFiles.set(m.isoPath.toUpperCase(), {
-            path: m.isoPath,
-            fullPath: m.fullPath || null,
-            buffer: m.buffer || null,
-            size: m.buffer ? m.buffer.length : m.size
         });
     }
 
@@ -255,6 +196,7 @@ function buildIso(sourceDir, outputIsoPath) {
     // Sector 23: Path Table L (Joliet)
     // Sector 24: Path Table M (Joliet)
     // Sector 25..: Directory Blocks (ISO y Joliet)
+    // Sector BOOT_SECTOR_LBA: Sector de arranque de 2048 bytes
     // Siguientes: Archivos de datos
 
     const PVD_LBA = 16;
@@ -279,24 +221,33 @@ function buildIso(sourceDir, outputIsoPath) {
         jolietDirLbas.set(d, currentLba++);
     }
 
+    const BOOT_SECTOR_LBA = currentLba++;
+
     // Asignar LBAs a archivos
     const fileLbas = new Map();
-    let isolinuxBinLba = 0;
-    let isolinuxBinSize = 0;
+    let xpBinLba = 0;
+    let xpBinSize = 0;
 
     for (const [key, item] of allFiles.entries()) {
         fileLbas.set(key, currentLba);
         const sectors = Math.ceil(item.size / SECTOR_SIZE) || 1;
-        if (key === 'HBCD/ISOLINUX.BIN' || key === 'ISOLINUX.BIN') {
-            isolinuxBinLba = currentLba;
-            isolinuxBinSize = item.size;
+        if (key === 'HBCD/XP/XP.BIN' || key === 'XP.BIN') {
+            xpBinLba = currentLba;
+            xpBinSize = item.size;
         }
         currentLba += sectors;
     }
 
+    if (!xpBinLba) {
+        throw new Error("No se pudo determinar el LBA de XP.BIN.");
+    }
+
+    const bootSectorBuf = createMiniXpBootSector(xpBinLba);
+
     const totalSectors = currentLba;
     console.log(`[+] Total Sectores ISO: ${totalSectors} (~${((totalSectors * 2048) / (1024 * 1024)).toFixed(2)} MB)`);
-    console.log(`[+] ISOLINUX.BIN LBA: ${isolinuxBinLba}, Tamaño: ${isolinuxBinSize} bytes`);
+    console.log(`[+] Boot Sector LBA: ${BOOT_SECTOR_LBA}`);
+    console.log(`[+] XP.BIN LBA: ${xpBinLba}, Tamaño: ${xpBinSize} bytes`);
 
     // 3. Construir Path Tables (ISO y Joliet)
     function buildPathTable(isJoliet, isBigEndian) {
@@ -377,7 +328,7 @@ function buildIso(sourceDir, outputIsoPath) {
     encodeAsciiPadded("MINIXP", 128).copy(pvd, 190);
     encodeAsciiPadded("DEVILUTIONX", 128).copy(pvd, 318);
     encodeAsciiPadded("DEVILUTIONX", 128).copy(pvd, 446);
-    encodeAsciiPadded("ISOLINUX", 128).copy(pvd, 574);
+    encodeAsciiPadded("MINIXP_LOADER", 128).copy(pvd, 574);
     formatIsoDate().copy(pvd, 813);
     formatIsoDate().copy(pvd, 830);
     formatIsoDate().copy(pvd, 847);
@@ -426,7 +377,7 @@ function buildIso(sourceDir, outputIsoPath) {
     const cat = Buffer.alloc(SECTOR_SIZE, 0);
     cat[0] = 0x01; // Header
     cat[1] = 0x00; // x86
-    cat.write("ISOLINUX", 4, 'ascii');
+    cat.write("MiniXP Direct Loader", 4, 'ascii');
     cat[30] = 0x55;
     cat[31] = 0xAA;
     let sum16 = 0;
@@ -437,10 +388,10 @@ function buildIso(sourceDir, outputIsoPath) {
 
     cat[32] = 0x88; // Bootable
     cat[33] = 0x00; // No emulation
-    cat.writeUInt16LE(0x0000, 34);
+    cat.writeUInt16LE(0x0000, 34); // Load segment (0 = 0x07C0)
     cat[36] = 0x00;
     cat.writeUInt16LE(4, 38); // 4 virtual sectors = 2048 bytes
-    cat.writeUInt32LE(isolinuxBinLba, 40);
+    cat.writeUInt32LE(BOOT_SECTOR_LBA, 40);
     writeSectorAt(cat, BOOT_CATALOG_LBA);
 
     // Path Tables (Sectors 21..24)
@@ -515,6 +466,9 @@ function buildIso(sourceDir, outputIsoPath) {
         writeSectorAt(jolietBuf, selfJolietLba);
     }
 
+    // Escribir Sector de Arranque directo
+    writeSectorAt(bootSectorBuf, BOOT_SECTOR_LBA);
+
     // Escribir datos de archivos
     for (const [key, item] of allFiles.entries()) {
         const lba = fileLbas.get(key);
@@ -522,21 +476,7 @@ function buildIso(sourceDir, outputIsoPath) {
         if (!content && item.fullPath) {
             content = fs.readFileSync(item.fullPath);
         }
-
-        if (key === 'HBCD/ISOLINUX.BIN' || key === 'ISOLINUX.BIN') {
-            const patched = Buffer.from(content);
-            patched.writeUInt32LE(PVD_LBA, 8);
-            patched.writeUInt32LE(lba, 12);
-            patched.writeUInt32LE(content.length, 16);
-            patched.fill(0, 20, 64);
-            const checksum = calculateIsolinuxChecksum(patched);
-            patched.writeUInt32LE(checksum, 20);
-
-            console.log(`[+] Parcheado Boot-Info-Table para ${key}: PVD=16, LBA=${lba}, Size=${content.length}, Checksum=0x${checksum.toString(16)}`);
-            fs.writeSync(fd, patched, 0, patched.length, lba * SECTOR_SIZE);
-        } else {
-            fs.writeSync(fd, content, 0, content.length, lba * SECTOR_SIZE);
-        }
+        fs.writeSync(fd, content, 0, content.length, lba * SECTOR_SIZE);
     }
 
     fs.closeSync(fd);

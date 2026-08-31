@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### WebAssembly Virtualization Platform & Mini Windows XP Integration
 
 #### Hardware & Virtualization Architecture
-- **Standards-Compliant El Torito Bootloader with ISOLINUX & Checksum Patching (`HBCD/ISOLINUX.BIN`)**: Configured `HBCD/ISOLINUX.BIN` as the El Torito No-Emulation bootloader (2048 bytes / 4 sectors) with dynamic 56-byte boot-info-table patching (PVD LBA 16, Boot file LBA, file size, and 32-bit checksum). Additionally, patched the internal self-check jump (`0x74` -> `0xeb`) in `ISOLINUX.BIN` to eliminate `ETCDISOLINUX: Image checksum error` halts in WASM/SeaBIOS virtual environments, allowing ISOLINUX to immediately parse `HBCD/ISOLINUX.CFG` and chainload `HBCD/BOOT/CHAIN.C32 ntldr=/HBCD/XP/XP.BIN` to boot Mini Windows XP.
+- **Direct NTLDR Real-Mode El Torito Bootloader (`tools/generate_boot_sector.js`)**: Replaced ISOLINUX/Syslinux with a custom 16-bit real-mode El Torito bootloader (`minixp_boot.bin`). When SeaBIOS boots, the sector displays `Booting Mini Windows XP...`, streams `XP.BIN` (370 KB NTLDR) directly into RAM (`0x2000:0000`) using BIOS INT 13h Extensions (AH=42h) across 64 KB segment boundaries, and transfers execution to NTLDR with `DL` set to the active boot drive. This bypasses all Syslinux filesystem parsing hangs (`ETCD`), booting Mini Windows XP directly.
 - **Snapshot Persistence Subsystem**: Added instant state serialization (`save_state` / `restore_state`) allowing the entire 256 MB RAM state to be downloaded as a `.bin` snapshot file or reloaded in ~1 second, eliminating boot times on repeat sessions.
 
 #### Packaging, Server & CI/CD Pipeline

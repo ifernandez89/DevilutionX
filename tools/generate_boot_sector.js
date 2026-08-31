@@ -1,7 +1,7 @@
 /**
  * generate_boot_sector.js
  * Genera el sector de arranque de 2048 bytes para Mini Windows XP (No Emulation El Torito).
- * Usa offsets relativos al segmento CS (DS = CS) para garantizar direccionamiento exacto de memoria.
+ * Incluye tolerancia a fallos de lectura BIOS INT 13h (AH=42h) probando unidades (DL = 0x9F, 0xE0, 0x80).
  * Carga XP.BIN (370 KB NTLDR) en el segmento 0x2000:0000 y salta a él.
  */
 
@@ -55,7 +55,7 @@ function createMiniXpBootSector(xpBinLba2048) {
     // or al, al
     buf[p++] = 0x08; buf[p++] = 0xC0;
     // jz .start_read
-    const jzBootIdx = p; buf[p++] = 0x74; buf[p++] = 0x00; // rel8 placeholder
+    const jzBootIdx = p; buf[p++] = 0x74; buf[p++] = 0x00;
     // mov ah, 0x0E
     buf[p++] = 0xB4; buf[p++] = 0x0E;
     // mov bx, 0x0007
@@ -85,6 +85,8 @@ function createMiniXpBootSector(xpBinLba2048) {
     // .not_last:
     buf[jneLastIdx + 1] = (p - (jneLastIdx + 2)) & 0xFF;
 
+    // .try_int13:
+    const tryInt13 = p;
     // mov si, OFFSET_DAP
     buf[p++] = 0xBE; buf[p++] = (OFFSET_DAP & 0xFF); buf[p++] = (OFFSET_DAP >> 8);
     // mov dl, [OFFSET_BOOT_DRIVE]
@@ -96,7 +98,33 @@ function createMiniXpBootSector(xpBinLba2048) {
     // jnc .read_ok
     const jncReadIdx = p; buf[p++] = 0x73; buf[p++] = 0x00;
 
-    // Read error -> print error message
+    // Read failed! Fallback drive numbers (0x9F -> 0xE0 -> 0x80 -> error)
+    // cmp byte [OFFSET_BOOT_DRIVE], 0x9F
+    buf[p++] = 0x80; buf[p++] = 0x3E; buf[p++] = (OFFSET_BOOT_DRIVE & 0xFF); buf[p++] = (OFFSET_BOOT_DRIVE >> 8); buf[p++] = 0x9F;
+    // jne .try_9f
+    const jne9fIdx = p; buf[p++] = 0x75; buf[p++] = 0x00;
+    // mov byte [OFFSET_BOOT_DRIVE], 0xE0
+    buf[p++] = 0xC6; buf[p++] = 0x06; buf[p++] = (OFFSET_BOOT_DRIVE & 0xFF); buf[p++] = (OFFSET_BOOT_DRIVE >> 8); buf[p++] = 0xE0;
+    // jmp .try_int13
+    buf[p++] = 0xEB; buf[p++] = (tryInt13 - (p + 1)) & 0xFF;
+
+    // .try_9f:
+    buf[jne9fIdx + 1] = (p - (jne9fIdx + 2)) & 0xFF;
+    // cmp byte [OFFSET_BOOT_DRIVE], 0xE0
+    buf[p++] = 0x80; buf[p++] = 0x3E; buf[p++] = (OFFSET_BOOT_DRIVE & 0xFF); buf[p++] = (OFFSET_BOOT_DRIVE >> 8); buf[p++] = 0xE0;
+    // jne .try_e0
+    const jneE0Idx = p; buf[p++] = 0x75; buf[p++] = 0x00;
+    // mov byte [OFFSET_BOOT_DRIVE], 0x80
+    buf[p++] = 0xC6; buf[p++] = 0x06; buf[p++] = (OFFSET_BOOT_DRIVE & 0xFF); buf[p++] = (OFFSET_BOOT_DRIVE >> 8); buf[p++] = 0x80;
+    // jmp .try_int13
+    buf[p++] = 0xEB; buf[p++] = (tryInt13 - (p + 1)) & 0xFF;
+
+    // .try_e0:
+    buf[jneE0Idx + 1] = (p - (jneE0Idx + 2)) & 0xFF;
+    // mov byte [OFFSET_BOOT_DRIVE], 0x9F
+    buf[p++] = 0xC6; buf[p++] = 0x06; buf[p++] = (OFFSET_BOOT_DRIVE & 0xFF); buf[p++] = (OFFSET_BOOT_DRIVE >> 8); buf[p++] = 0x9F;
+
+    // Print error message
     // mov si, OFFSET_MSG_ERR
     buf[p++] = 0xBE; buf[p++] = (OFFSET_MSG_ERR & 0xFF); buf[p++] = (OFFSET_MSG_ERR >> 8);
     const errLoop = p;

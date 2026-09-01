@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Hardware & Virtualization Architecture
 - **In-Browser x86 Cycle-Accurate Virtual Machine (`Packaging/minixp-wasm/`)**: Added native Tiny Core Linux GUI LiveCD execution powered by official `v86` v0.5.451 compiled to WebAssembly (WASM). Emulates Pentium II (32-bit x86), 256 MB RAM, 8 MB VRAM with VESA/VBE framebuffer, SeaBIOS and VGABIOS integration, and PS/2 pointer lock capture.
+- **Mobile Touch Controls & Scancode Input Injection (`Packaging/minixp-wasm/`)**:
+  - Added on-screen floating touch action button (`#btn_mobile_enter`) transmitting x86 hardware scancodes (`0x1C` Make / `0x9C` Break) directly to the virtual machine CPU/keyboard controller.
+  - Configured tactile touch feedback via `navigator.vibrate` and zero-delay `touch-action: manipulation` styling.
 - **Kernel Boot & Performance Optimization**:
   - Eliminated UI freeze/lockups by converting serial kernel logs (`serial0-output-char`) into a non-blocking `requestAnimationFrame` batched flush with a 100-line DOM buffer limit.
   - Throttled IDE disk activity LED updates to 150 ms intervals, preventing event loop starvation.
@@ -19,6 +22,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **GitHub Pages Ready & Snapshot Persistence**:
   - Fully static architecture with relative paths (`./`) and HTTP Range compatibility for seamless deployment on GitHub Pages.
   - Integrated instant memory snapshot serialization (`.bin`) for sub-second saves and restores.
+
+### Documentation & Integrations
+- **PayPal Donation & Payment Integration Guide (`PAYPAL_DONATION_SETUP.md`)**: Added comprehensive documentation and modular snippets for integrating PayPal donations across React, Next.js, and Vanilla JS, including Sandbox vs Live workflows, environment variable schemas, and server-side order creation.
 
 ### WebAssembly Virtualization Platform & Mini Windows XP Integration
 

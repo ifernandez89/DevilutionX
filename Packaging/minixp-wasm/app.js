@@ -428,6 +428,28 @@ screenContainer.addEventListener("click", () => {
     }
 });
 
+// Mobile Touch Enter Button Handler
+const btnMobileEnter = document.getElementById("btn_mobile_enter");
+if (btnMobileEnter) {
+    const triggerEnterKey = (e) => {
+        if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        if (emulator && isRunning && !isPaused) {
+            // 0x1C (Make Enter), 0x9C (Break Enter / 0x1C | 0x80)
+            emulator.keyboard_send_scancodes([0x1C, 0x9C]);
+            if (navigator.vibrate) {
+                try { navigator.vibrate(35); } catch (err) {}
+            }
+            logDiagnostic("Touch -> Tecla ENTER enviada a la VM (0x1C)", "info");
+        }
+    };
+
+    btnMobileEnter.addEventListener("touchstart", triggerEnterKey, { passive: false });
+    btnMobileEnter.addEventListener("mousedown", triggerEnterKey);
+}
+
 // Toggle Log Console
 if (btnToggleLog && diagnosticConsole) {
     btnToggleLog.addEventListener("click", () => {

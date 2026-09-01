@@ -83,7 +83,7 @@ function initEmulator(customCdromBuffer = null) {
     const cacheBuster = Date.now();
     const config = {
         wasm_path: "v86.wasm?v=" + cacheBuster,
-        memory_size: 256 * 1024 * 1024,      // 256 MB RAM
+        memory_size: 512 * 1024 * 1024,      // 512 MB RAM (plenty of room for 46.2 MB WIM + Windows XP kernel + desktop)
         vga_memory_size: 8 * 1024 * 1024,    // 8 MB VRAM
         screen_container: screenContainer,
         bios: { url: "bios/seabios.bin?v=" + cacheBuster },

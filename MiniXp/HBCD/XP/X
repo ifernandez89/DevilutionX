@@ -1,4 +1,4 @@
 [SetupData]
 BootDevice="ramdisk(0)"
 BootPath="\i386\System32\"
-OsLoadOptions="/fastdetect /minint /rdimageoffset=8192 /rdimagelength=48517170 /rdpath=\HBCD\XP\XP.wim"
+OsLoadOptions="/fastdetect /minint /sos /rdimageoffset=0 /rdimagelength=48525362 /rdpath=\HBCD\XP\XP.wim"

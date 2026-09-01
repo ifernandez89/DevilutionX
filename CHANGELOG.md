@@ -18,7 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - **CLD Instruction**: Added `CLD` before `LODSB` to guarantee forward string direction.
   - **Visual Progress**: Prints `"Booting Mini Windows XP..."`, then `.` per 64 KB chunk loaded, then `" OK"` before jumping to NTLDR.
 - **MSWIM Header & RAMDisk Configuration (`MiniXp/HBCD/XP/X`)**: Corrected `/rdimageoffset=0` (the MSWIM header starts at byte 0, not 8192) and `/rdimagelength=48525362` (the full `XP.wim` image size) with `/sos` enabled for live verbose driver boot output. Removed stale `/iso=\ISO\Hiren'sBootCD.iso` reference.
-- **Snapshot Persistence Subsystem**: Added instant state serialization (`save_state` / `restore_state`) allowing the entire 256 MB RAM state to be downloaded as a `.bin` snapshot file or reloaded in ~1 second, eliminating boot times on repeat sessions.
+- **Snapshot Persistence Subsystem**: Added instant state serialization (`save_state` / `restore_state`) allowing the entire 512 MB RAM state to be downloaded as a `.bin` snapshot file or reloaded in ~1 second, eliminating boot times on repeat sessions.
 
 #### Packaging, Server & CI/CD Pipeline
 - **Node.js Zero-Dependency ISO-9660 Builder (`tools/build_minixp_iso.js`)**: Standalone ISO-9660 + Joliet Level 3 + El Torito builder generating 61.8 MB bootable images with full Type L/M Path Tables. Dynamically calculates the LBA of `XP.BIN` and generates the boot sector with the correct disk address embedded.
@@ -27,7 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Same-Origin GitHub Pages CI/CD Pipeline (`.github/workflows/deploy-pages.yml`)**: Automated deployment pipeline using `pycdlib` (with Node.js fallback) to build `minixp.iso` with the direct NTLDR bootloader and publish to GitHub Pages.
 
 #### Modern Telemetry UI & Diablo Integration
-- **Clean Hardware Status Bar**: Redesigned the emulator dashboard to replace text-heavy specification cards with a minimalist, modern status strip (`Pentium II x86 • 256 MB RAM • VGA VBE • CD-ROM IDE`).
+- **Clean Hardware Status Bar**: Redesigned the emulator dashboard to replace text-heavy specification cards with a minimalist, modern status strip (`Pentium II x86 • 512 MB RAM • VGA VBE • CD-ROM IDE`).
 - **Real-Time Disk I/O Activity LED & Transfer Meter**: Integrated a live green activity LED that pulses on ATAPI IDE read interrupts (`ide-read-start` / `ide-read-end`), accompanied by a real-time transfer counter displaying cumulative megabytes streamed into RAM.
 - **Live Diagnostic & Serial Event Console**: Embedded a collapsible dark terminal drawer logging timestamped emulator lifecycle events, BIOS execution, video mode transitions, network asset download progress, and live serial output (`serial0-output-char`) from BIOS/Kernel.
 - **Aggressive Dynamic Cache-Busting Subsystem**: Implemented dynamic URL timestamps (`minixp.iso?v=Date.now()`, `v86.wasm?v=Date.now()`, `bios/seabios.bin?v=Date.now()`) and asset versioning query parameters (`app.js?v=5`, `style.css?v=5`) ensuring browsers immediately fetch fresh ISO images and scripts without relying on stale HTTP disk cache.

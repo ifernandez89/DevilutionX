@@ -83,11 +83,11 @@ function initEmulator(customCdromBuffer = null) {
     const cacheBuster = Date.now();
     const config = {
         wasm_path: "v86.wasm?v=" + cacheBuster,
-        memory_size: 512 * 1024 * 1024,      // 512 MB RAM (permite descompresión completa de XP.WIM y kernel WinPE)
-        vga_memory_size: 16 * 1024 * 1024,   // 16 MB VRAM (soporte gráfico VESA/VBE alta resolución)
+        memory_size: 256 * 1024 * 1024,      // 256 MB RAM (Standard PC 1999)
+        vga_memory_size: 8 * 1024 * 1024,    // 8 MB VRAM Standard VGABIOS VBE
         screen_container: screenContainer,
         bios: { url: "bios/seabios.bin?v=" + cacheBuster },
-        acpi: true,
+        vga_bios: { url: "bios/vgabios.bin?v=" + cacheBuster },
         autostart: true,
         network_relay_url: null,
     };
@@ -304,12 +304,11 @@ inputLoadState.addEventListener("change", (e) => {
         } else {
             const config = {
                 wasm_path: "v86.wasm",
-                memory_size: 512 * 1024 * 1024,
-                vga_memory_size: 16 * 1024 * 1024,
+                memory_size: 256 * 1024 * 1024,
+                vga_memory_size: 8 * 1024 * 1024,
                 screen_container: screenContainer,
                 bios: { url: "bios/seabios.bin" },
                 vga_bios: { url: "bios/vgabios.bin" },
-                acpi: true,
                 initial_state: { buffer: reader.result },
                 autostart: true,
             };

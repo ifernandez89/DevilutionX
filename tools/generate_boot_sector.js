@@ -53,14 +53,14 @@ function createMiniXpBootSector(xpBinLba2048) {
     buf.write(" OK\r\n\0", MSG_OK, 'ascii');
 
     // DAP (Disk Address Packet) de 16 bytes en offset 0x130
+    // SeaBIOS CD-ROM INT 13h usa sectores nativos de 2048 bytes (NO 512).
     const DAP = DATA_BASE + 0x30;
-    const xpBinLba512 = xpBinLba2048 * 4;
     buf[DAP + 0] = 0x10;       // Tamaño del DAP
     buf[DAP + 1] = 0x00;       // Reservado
-    buf.writeUInt16LE(128, DAP + 2);      // Cantidad de sectores (128 × 512 = 64 KB)
+    buf.writeUInt16LE(32, DAP + 2);       // 32 sectores × 2048 bytes = 64 KB por chunk
     buf.writeUInt16LE(0x0000, DAP + 4);   // Offset del búfer
     buf.writeUInt16LE(0x2000, DAP + 6);   // Segmento del búfer
-    buf.writeUInt32LE(xpBinLba512, DAP + 8);  // LBA bajo (sectores de 512 bytes)
+    buf.writeUInt32LE(xpBinLba2048, DAP + 8);  // LBA en sectores de 2048 bytes (nativo CD-ROM)
     buf.writeUInt32LE(0, DAP + 12);            // LBA alto
 
     // Almacenamiento de la unidad de arranque
@@ -97,19 +97,19 @@ function createMiniXpBootSector(xpBinLba2048) {
     fixupForward(jzAfterBoot);
 
     // --- Bucle principal de lectura de sectores ---
-    // XP.BIN = 370268 bytes = 724 sectores de 512 bytes
-    // 5 bloques × 128 sectores + 1 bloque × 84 sectores = 724 sectores
+    // XP.BIN = 370268 bytes. En sectores de 2048: ceil(370268/2048) = 181 sectores.
+    // 5 bloques × 32 sectores + 1 bloque × 21 sectores = 181 sectores = 370688 bytes.
     emit(0xB9, 0x06, 0x00);              // mov cx, 6 (6 iteraciones)
 
     const readLoop = p;
     emit(0x51);                           // push cx
 
-    // ¿Último bloque? Si cx==1, leer solo 84 sectores
+    // ¿Último bloque? Si cx==1, leer solo 21 sectores (21 × 2048 = 43008 bytes)
     emit(0x83, 0xF9, 0x01);              // cmp cx, 1
     const jneNotLast = emitJccForward(0x75);  // jne → .notLast
-    emit(0xC7, 0x06,                     // mov word [DAP+2], 84
+    emit(0xC7, 0x06,                     // mov word [DAP+2], 21
         (DAP + 2) & 0xFF, ((DAP + 2) >> 8) & 0xFF,
-        84, 0x00);
+        21, 0x00);
     fixupForward(jneNotLast);
 
     // Preparar y ejecutar INT 13h AH=42h (Extended Read)
@@ -150,10 +150,10 @@ function createMiniXpBootSector(xpBinLba2048) {
         (DAP + 6) & 0xFF, ((DAP + 6) >> 8) & 0xFF,
         0x00, 0x10);
 
-    // Avanzar LBA: += 128 sectores
-    emit(0x81, 0x06,                     // add word [DAP+8], 128
+    // Avanzar LBA: += 32 sectores (de 2048 bytes cada uno)
+    emit(0x81, 0x06,                     // add word [DAP+8], 32
         (DAP + 8) & 0xFF, ((DAP + 8) >> 8) & 0xFF,
-        0x80, 0x00);
+        32, 0x00);
     emit(0x83, 0x16,                     // adc word [DAP+10], 0
         (DAP + 10) & 0xFF, ((DAP + 10) >> 8) & 0xFF,
         0x00);

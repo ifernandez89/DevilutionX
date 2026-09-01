@@ -115,7 +115,7 @@ function initEmulator(customCdromBuffer = null) {
     const selectedIso = selectOs ? selectOs.value : "tinycore.iso";
     const isTinyCore = selectedIso.includes("tinycore") || (!customCdromBuffer && selectedIso === "tinycore.iso");
     const memSize = isTinyCore ? 256 * 1024 * 1024 : 512 * 1024 * 1024;
-    const osTitle = isTinyCore ? "Tiny Core Linux" : "MiniXP";
+    const osTitle = isTinyCore ? "Tiny Core Linux" : "Linux Live";
 
     logDiagnostic(`Iniciando emulador x86 (${memSize / (1024 * 1024)} MB RAM, SeaBIOS, VGABIOS)...`, "info");
 

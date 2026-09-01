@@ -45,7 +45,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Real-Time Disk I/O Activity LED & Transfer Meter**: Integrated a live green activity LED that pulses on ATAPI IDE read interrupts (`ide-read-start` / `ide-read-end`), accompanied by a real-time transfer counter displaying cumulative megabytes streamed into RAM.
 - **Live Diagnostic & Serial Event Console**: Embedded a collapsible dark terminal drawer logging timestamped emulator lifecycle events, BIOS execution, video mode transitions (text to VESA high-resolution), network asset download progress, and live serial output (`serial0-output-char`) from BIOS/Kernel.
 - **Aggressive Dynamic Cache-Busting Subsystem**: Implemented dynamic URL timestamps (`minixp.iso?v=Date.now()`, `v86.wasm?v=Date.now()`, `bios/seabios.bin?v=Date.now()`) and asset versioning query parameters (`app.js?v=5`, `style.css?v=5`) ensuring browsers immediately fetch fresh ISO images and scripts without relying on stale HTTP disk cache.
-- **Web Diablo Quick Launchers**: Integrated a top toolbar launcher button (`🪟 Mini XP`) and an interactive card in the Web File Manager modal (`Packaging/emscripten/index.html`) to launch the virtual machine in a dedicated tab.
+- **Web Diablo Quick Launchers**: Integrated a top toolbar launcher button (`🐧 Tiny Core Linux`) and an interactive card in the Web File Manager modal (`Packaging/emscripten/index.html`) to launch the virtual machine in a dedicated tab with `noopener,noreferrer` isolation.
 
 ### Diablo Nightmare Edition (Gothic Visual Remaster & QoL Features)
 

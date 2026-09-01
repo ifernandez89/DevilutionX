@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### WebAssembly Virtualization Platform — Tiny Core Linux Integration
+
+#### Hardware & Virtualization Architecture
+- **In-Browser x86 Cycle-Accurate Virtual Machine (`Packaging/minixp-wasm/`)**: Added native Tiny Core Linux GUI LiveCD execution powered by official `v86` v0.5.451 compiled to WebAssembly (WASM). Emulates Pentium II (32-bit x86), 256 MB RAM, 8 MB VRAM with VESA/VBE framebuffer, SeaBIOS and VGABIOS integration, and PS/2 pointer lock capture.
+- **Kernel Boot & Performance Optimization**:
+  - Eliminated UI freeze/lockups by converting serial kernel logs (`serial0-output-char`) into a non-blocking `requestAnimationFrame` batched flush with a 100-line DOM buffer limit.
+  - Throttled IDE disk activity LED updates to 150 ms intervals, preventing event loop starvation.
+  - Cleaned up `libv86.js` by removing legacy demo code and resolving `xe is not defined` and `onclick` null reference errors.
+  - Added user gesture audio unlocker complying with browser Autoplay policies for Web Audio / Sound Blaster 16 emulation.
+- **GitHub Pages Ready & Snapshot Persistence**:
+  - Fully static architecture with relative paths (`./`) and HTTP Range compatibility for seamless deployment on GitHub Pages.
+  - Integrated instant memory snapshot serialization (`.bin`) for sub-second saves and restores.
+
 ### WebAssembly Virtualization Platform & Mini Windows XP Integration
 
 #### Hardware & Virtualization Architecture

@@ -6,27 +6,30 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Mini Windows XP — WebAssembly Edition</title>
-    <link rel="stylesheet" href="style.css?v=5">
-    <script src="https://cdn.jsdelivr.net/npm/v86@latest/build/libv86.js"></script>
-    <script>
-      if (typeof V86Starter === 'undefined' && typeof V86 === 'undefined') {
-        document.write('<script src="libv86.js?v=5"><\/script>');
-      }
-    </script>
+    <title>Tiny Core Linux — WebAssembly x86 PC</title>
+    <link rel="stylesheet" href="style.css?v=9">
+    <script src="libv86.js?v=9"></script>
 </head>
 <body>
     <!-- Top Header -->
     <header class="app-header">
         <div class="logo-area">
             <span class="logo-badge">WASM x86</span>
-            <h1 class="logo-title">Mini Windows <span>XP</span> Live Edition</h1>
+            <h1 class="logo-title">Tiny Core <span>Linux</span> Live Edition</h1>
         </div>
 
         <div class="toolbar">
             <div class="status-badge">
                 <span class="status-dot" id="status_dot"></span>
                 <span id="status_text">Listo para iniciar</span>
+            </div>
+
+            <div class="os-selector-wrapper">
+                <label for="select_os" style="font-size: 11px; color: #94a3b8; margin-right: 4px;">Sistema:</label>
+                <select id="select_os" class="btn btn-select" style="background: #1e293b; color: #f8fafc; border: 1px solid #334155; padding: 4px 8px; border-radius: 6px; font-size: 12px; cursor: pointer;">
+                    <option value="tinycore.iso" selected>🐧 Tiny Core Linux (GUI)</option>
+                    <option value="custom">💿 Cargar otra ISO...</option>
+                </select>
             </div>
 
             <button class="btn btn-primary" id="btn_start" title="Iniciar Emulador">
@@ -77,7 +80,7 @@
         <div class="system-status-bar">
             <div class="hw-spec">
                 <span class="hw-label">PC Emulada:</span>
-                <span class="hw-val">Pentium II (x86 32-bit) • 512 MB RAM • VGA VBE (16MB) • CD-ROM IDE</span>
+                <span class="hw-val">Pentium II (x86 32-bit) • 256 MB RAM • VGA VBE (8MB) • CD-ROM IDE</span>
             </div>
             <div class="disk-activity-indicator" id="disk_led">
                 <span class="led-dot"></span>
@@ -100,6 +103,6 @@
         </section>
     </main>
 
-    <script src="app.js?v=6"></script>
+    <script src="app.js?v=9"></script>
 </body>
 </html>

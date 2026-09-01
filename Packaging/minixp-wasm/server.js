@@ -1,6 +1,6 @@
 /**
  * server.js - Servidor HTTP local con soporte de HTTP Range (206 Partial Content) y COOP/COEP
- * para emulación WebAssembly (v86 / Mini Windows XP)
+ * para emulación WebAssembly (v86 / Tiny Core Linux)
  */
 
 const http = require('http');
@@ -90,7 +90,7 @@ const server = http.createServer((req, res) => {
 
 server.listen(PORT, () => {
     console.log('========================================================');
-    console.log('  Mini Windows XP - Servidor WebAssembly v86');
+    console.log('  Tiny Core Linux - Servidor WebAssembly v86');
     console.log(`  Disponible en: http://localhost:${PORT}`);
     console.log('  Presiona Ctrl+C para detener el servidor');
     console.log('========================================================');

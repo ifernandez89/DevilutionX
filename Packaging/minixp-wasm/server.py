@@ -86,7 +86,7 @@ def run(port=PORT):
     
     with socketserver.TCPServer(("", port), handler) as httpd:
         print(f"\n========================================================")
-        print(f"  Mini Windows XP - Entorno WebAssembly (v86)")
+        print(f"  Tiny Core Linux - Entorno WebAssembly (v86)")
         print(f"  Servidor iniciado en: http://localhost:{port}")
         print(f"  Presiona Ctrl+C para detener el servidor")
         print(f"========================================================\n")

@@ -7,8 +7,8 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <title>Tiny Core Linux — WebAssembly x86 PC</title>
-    <link rel="stylesheet" href="style.css?v=9">
-    <script src="libv86.js?v=9"></script>
+    <link rel="stylesheet" href="style.css?v=10">
+    <script src="libv86.js?v=10"></script>
 </head>
 <body>
     <!-- Top Header -->
@@ -72,13 +72,76 @@
                 <canvas style="display: none"></canvas>
             </div>
             <div class="hint-overlay" id="hint_overlay">
-                🖱️ Haz clic en la pantalla para capturar el ratón (Presiona <strong>ESC</strong> para liberarlo)
+                🖱️ Clic para capturar ratón · ESC para liberar
             </div>
-            <div class="mobile-touch-controls" id="mobile_touch_controls">
-                <button id="btn_mobile_enter" class="mobile-touch-btn" title="Enviar tecla ENTER a la VM">
-                    <span class="key-symbol">↵</span> ENTER
-                </button>
+
+            <!-- On-Screen Mobile Retro Gamepad Overlay -->
+            <div class="gamepad-overlay" id="gamepad_overlay">
+                <!-- Top Mini Utility Strip -->
+                <div class="gamepad-utility-bar">
+                    <button class="pad-key-btn btn-util" data-key="ESC">ESC</button>
+                    <button class="pad-key-btn btn-util" data-key="TAB">TAB</button>
+                    <button class="pad-key-btn btn-util" data-key="SPACE">␣ SPC</button>
+                    <button class="pad-key-btn btn-util" data-key="LCTRL">CTRL</button>
+                    <button class="pad-key-btn btn-util" data-key="LALT">ALT</button>
+                    <button class="pad-key-btn btn-util" id="btn_toggle_fkeys" title="Mostrar/Ocultar teclas numéricas y F-keys">F1-F5</button>
+                    <button class="pad-key-btn btn-util btn-profile-toggle" id="btn_toggle_profile" title="Cambiar perfil de control">🎮 WASD</button>
+                </div>
+
+                <!-- Collapsible Numbers & F-Keys Strip -->
+                <div class="gamepad-fkeys-bar" id="gamepad_fkeys_bar" style="display: none;">
+                    <button class="pad-key-btn btn-fkey" data-key="F1">F1</button>
+                    <button class="pad-key-btn btn-fkey" data-key="F2">F2</button>
+                    <button class="pad-key-btn btn-fkey" data-key="F3">F3</button>
+                    <button class="pad-key-btn btn-fkey" data-key="F4">F4</button>
+                    <button class="pad-key-btn btn-fkey" data-key="F5">F5</button>
+                    <button class="pad-key-btn btn-fkey" data-key="1">1</button>
+                    <button class="pad-key-btn btn-fkey" data-key="2">2</button>
+                    <button class="pad-key-btn btn-fkey" data-key="3">3</button>
+                    <button class="pad-key-btn btn-fkey" data-key="4">4</button>
+                    <button class="pad-key-btn btn-fkey" data-key="Y">Y</button>
+                    <button class="pad-key-btn btn-fkey" data-key="N">N</button>
+                </div>
+
+                <!-- Main Controller Controls: D-Pad (Left) and Action Cluster (Right) -->
+                <div class="gamepad-main-controls">
+                    <!-- Left: Precision D-Pad -->
+                    <div class="gamepad-dpad" id="gamepad_dpad">
+                        <button class="pad-btn dpad-btn dpad-up" data-dpad="UP" aria-label="Arriba">▲</button>
+                        <div class="dpad-middle-row">
+                            <button class="pad-btn dpad-btn dpad-left" data-dpad="LEFT" aria-label="Izquierda">◀</button>
+                            <div class="dpad-center"></div>
+                            <button class="pad-btn dpad-btn dpad-right" data-dpad="RIGHT" aria-label="Derecha">▶</button>
+                        </div>
+                        <button class="pad-btn dpad-btn dpad-down" data-dpad="DOWN" aria-label="Abajo">▼</button>
+                    </div>
+
+                    <!-- Right: Action Buttons Cluster -->
+                    <div class="gamepad-actions" id="gamepad_actions">
+                        <button class="pad-btn action-btn action-fire" data-action="FIRE" title="Fuego / Ataque">
+                            <span class="btn-label">FIRE</span>
+                            <span class="btn-sub">CTRL</span>
+                        </button>
+                        <button class="pad-btn action-btn action-use" data-action="USE" title="Usar / Abrir">
+                            <span class="btn-label">USE</span>
+                            <span class="btn-sub">SPACE</span>
+                        </button>
+                        <button class="pad-btn action-btn action-run" data-action="RUN" title="Correr / Acelerar">
+                            <span class="btn-label">RUN</span>
+                            <span class="btn-sub">SHIFT</span>
+                        </button>
+                        <button class="pad-btn action-btn action-enter" data-action="ENTER" title="Aceptar / Enter">
+                            <span class="btn-label">ENTER</span>
+                            <span class="btn-sub">↵</span>
+                        </button>
+                    </div>
+                </div>
             </div>
+
+            <!-- Toggle Gamepad Visibility Button -->
+            <button class="btn-toggle-gamepad" id="btn_toggle_gamepad" title="Mostrar/Ocultar Controles Táctiles">
+                🎮 Gamepad
+            </button>
         </div>
 
         <!-- Compact Modern Status & Hardware Strip -->
@@ -108,6 +171,6 @@
         </section>
     </main>
 
-    <script src="app.js?v=9"></script>
+    <script src="app.js?v=10"></script>
 </body>
 </html>

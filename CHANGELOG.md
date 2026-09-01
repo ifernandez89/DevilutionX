@@ -11,9 +11,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Hardware & Virtualization Architecture
 - **In-Browser x86 Cycle-Accurate Virtual Machine (`Packaging/minixp-wasm/`)**: Added native Tiny Core Linux GUI LiveCD execution powered by official `v86` v0.5.451 compiled to WebAssembly (WASM). Emulates Pentium II (32-bit x86), 256 MB RAM, 8 MB VRAM with VESA/VBE framebuffer, SeaBIOS and VGABIOS integration, and PS/2 pointer lock capture.
-- **Mobile Touch Controls & Scancode Input Injection (`Packaging/minixp-wasm/`)**:
-  - Added on-screen floating touch action button (`#btn_mobile_enter`) transmitting x86 hardware scancodes (`0x1C` Make / `0x9C` Break) directly to the virtual machine CPU/keyboard controller.
-  - Configured tactile touch feedback via `navigator.vibrate` and zero-delay `touch-action: manipulation` styling.
+- **Mobile Retro Gamepad, InputMapper & Responsive UI (`Packaging/minixp-wasm/`)**:
+  - Engineered an on-screen translucent retro gamepad overlay with a 4-way precision D-Pad, color-coded action buttons (`FIRE/CTRL`, `USE/SPACE`, `RUN/SHIFT`, `ENTER`), collapsible utility bar (`ESC`, `TAB`, `SPACE`, `CTRL`, `ALT`, `F1-F5`), and quick toggle switch.
+  - Implemented the decoupled `InputMapper` layer transmitting hardware x86 Make/Break scancodes (`v86.keyboard_send_scancodes`) on touch start and release, enabling fluid continuous movement and holding in DOSBox/Doom.
+  - Added hot-swappable control profiles (`🎮 WASD`, `🏹 Flechas`, `🧙 Roguelike`) for instant adaptation to first-person shooters, arcade games, and turn-based roguelikes.
+  - Redesigned top toolbar and status bar with adaptive CSS Grid/Flex wrapping and compact media queries, completely eliminating mobile horizontal overflow on smartphones.
+  - Converted mouse lock hint into a compact, auto-dismissing top badge that automatically hides after 4 seconds or on first click.
 - **Kernel Boot & Performance Optimization**:
   - Eliminated UI freeze/lockups by converting serial kernel logs (`serial0-output-char`) into a non-blocking `requestAnimationFrame` batched flush with a 100-line DOM buffer limit.
   - Throttled IDE disk activity LED updates to 150 ms intervals, preventing event loop starvation.

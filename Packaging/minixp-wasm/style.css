@@ -40,12 +40,15 @@ body {
 .app-header {
     background: linear-gradient(180deg, #161b24 0%, #0d1117 100%);
     border-bottom: 1px solid var(--border-color);
-    padding: 10px 20px;
+    padding: 10px 16px;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
+    gap: 10px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.4);
     z-index: 100;
+    max-width: 100vw;
 }
 
 .logo-area {
@@ -82,8 +85,9 @@ body {
 /* Toolbar Controls */
 .toolbar {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
 }
 
 .btn {
@@ -213,73 +217,291 @@ body {
     font-family: 'JetBrains Mono', Consolas, monospace;
 }
 
-/* Overlay Helper */
+/* Overlay Helper (Compact & Non-intrusive) */
 .hint-overlay {
     position: absolute;
-    bottom: 12px;
-    background: rgba(10, 12, 16, 0.85);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    top: 10px;
+    background: rgba(10, 12, 16, 0.75);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     color: var(--text-secondary);
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 11px;
     pointer-events: none;
-    transition: opacity 0.3s;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    z-index: 40;
 }
 
-/* Mobile Touch Controls */
-.mobile-touch-controls {
+.hint-overlay.fade-out {
+    opacity: 0;
+    transform: translateY(-8px);
+}
+
+@media (pointer: coarse) {
+    .hint-overlay {
+        display: none !important;
+    }
+}
+
+/* ==========================================================================
+   WASM Retro Mobile Gamepad Overlay
+   ========================================================================== */
+
+.gamepad-overlay {
     position: absolute;
-    bottom: 14px;
-    right: 14px;
-    z-index: 50;
+    inset: 0;
+    pointer-events: none;
     display: flex;
-    gap: 8px;
-}
-
-.mobile-touch-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    padding: 10px 18px;
-    min-width: 96px;
-    min-height: 44px;
-    background: rgba(15, 23, 42, 0.85);
-    color: #38bdf8;
-    border: 1px solid rgba(56, 189, 248, 0.5);
-    border-radius: 10px;
-    font-family: 'JetBrains Mono', Consolas, monospace;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    cursor: pointer;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px 14px;
+    z-index: 60;
     user-select: none;
     -webkit-user-select: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.gamepad-overlay.collapsed {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(20px);
+}
+
+/* Top Mini Utility Strip */
+.gamepad-utility-bar,
+.gamepad-fkeys-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    pointer-events: auto;
+    flex-wrap: wrap;
+    background: rgba(10, 14, 22, 0.7);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 4px 8px;
+    border-radius: 10px;
+    align-self: center;
+    max-width: 95%;
+}
+
+.gamepad-fkeys-bar {
+    margin-top: 4px;
+    background: rgba(2, 6, 23, 0.85);
+    border-color: rgba(56, 189, 248, 0.3);
+}
+
+.pad-key-btn {
+    background: rgba(30, 41, 59, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #cbd5e1;
+    font-family: 'JetBrains Mono', Consolas, monospace;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 6px;
+    cursor: pointer;
     touch-action: manipulation;
-    transition: all 0.15s ease;
+    transition: all 0.1s ease;
 }
 
-.mobile-touch-btn:hover {
-    background: rgba(30, 41, 59, 0.95);
+.pad-key-btn:hover {
+    background: rgba(51, 65, 85, 0.9);
+    color: #fff;
     border-color: #38bdf8;
-    color: #ffffff;
-    box-shadow: 0 0 14px rgba(56, 189, 248, 0.4);
 }
 
-.mobile-touch-btn:active {
+.pad-key-btn:active,
+.pad-key-btn.pressed {
+    background: #0284c7;
+    color: #fff;
+    transform: scale(0.92);
+}
+
+.btn-profile-toggle {
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+    color: #fff;
+    border-color: #38bdf8;
+}
+
+/* Main Controller Controls (D-Pad Left + Action Right) */
+.gamepad-main-controls {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: auto;
+    pointer-events: none;
+    padding-bottom: 4px;
+}
+
+/* Left: Precision D-Pad */
+.gamepad-dpad {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: auto;
+    user-select: none;
+    touch-action: none;
+}
+
+.dpad-middle-row {
+    display: flex;
+    align-items: center;
+}
+
+.dpad-center {
+    width: 44px;
+    height: 44px;
+    background: rgba(15, 23, 42, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.dpad-btn {
+    width: 48px;
+    height: 48px;
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(56, 189, 248, 0.35);
+    color: #38bdf8;
+    font-size: 18px;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    touch-action: none;
+    user-select: none;
+    transition: all 0.1s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.dpad-up { border-radius: 12px 12px 0 0; }
+.dpad-down { border-radius: 0 0 12px 12px; }
+.dpad-left { border-radius: 12px 0 0 12px; }
+.dpad-right { border-radius: 0 12px 12px 0; }
+
+.dpad-btn:active,
+.dpad-btn.pressed {
     background: #0284c7;
     color: #ffffff;
-    transform: scale(0.92);
-    box-shadow: 0 2px 8px rgba(2, 132, 199, 0.7);
+    box-shadow: 0 0 14px rgba(56, 189, 248, 0.8);
+    transform: scale(0.93);
 }
 
-.mobile-touch-btn .key-symbol {
-    font-size: 15px;
+/* Right: Action Buttons Cluster */
+.gamepad-actions {
+    display: grid;
+    grid-template-columns: repeat(2, 54px);
+    gap: 8px;
+    pointer-events: auto;
+    user-select: none;
+    touch-action: none;
+}
+
+.action-btn {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(8px);
+    border: 2px solid rgba(56, 189, 248, 0.4);
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    touch-action: none;
+    user-select: none;
+    transition: all 0.1s ease;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6);
+}
+
+.action-btn .btn-label {
+    font-family: 'JetBrains Mono', Consolas, monospace;
+    font-size: 11px;
+    font-weight: 800;
     line-height: 1;
+}
+
+.action-btn .btn-sub {
+    font-size: 9px;
+    color: #94a3b8;
+    margin-top: 2px;
+}
+
+.action-fire {
+    border-color: rgba(239, 68, 68, 0.6);
+    color: #fca5a5;
+}
+
+.action-fire:active, .action-fire.pressed {
+    background: #dc2626;
+    color: #fff;
+    box-shadow: 0 0 16px rgba(239, 68, 68, 0.9);
+    transform: scale(0.92);
+}
+
+.action-use {
+    border-color: rgba(34, 197, 94, 0.6);
+    color: #86efac;
+}
+
+.action-use:active, .action-use.pressed {
+    background: #16a34a;
+    color: #fff;
+    box-shadow: 0 0 16px rgba(34, 197, 94, 0.9);
+    transform: scale(0.92);
+}
+
+.action-run {
+    border-color: rgba(234, 179, 8, 0.6);
+    color: #fde047;
+}
+
+.action-run:active, .action-run.pressed {
+    background: #ca8a04;
+    color: #fff;
+    box-shadow: 0 0 16px rgba(234, 179, 8, 0.9);
+    transform: scale(0.92);
+}
+
+.action-enter {
+    border-color: rgba(56, 189, 248, 0.6);
+    color: #7dd3fc;
+}
+
+.action-enter:active, .action-enter.pressed {
+    background: #0284c7;
+    color: #fff;
+    box-shadow: 0 0 16px rgba(56, 189, 248, 0.9);
+    transform: scale(0.92);
+}
+
+/* Floating Gamepad Toggle Switch */
+.btn-toggle-gamepad {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    z-index: 65;
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #94a3b8;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-toggle-gamepad:hover {
+    background: rgba(30, 41, 59, 0.95);
+    color: #fff;
+    border-color: #38bdf8;
 }
 
 /* Compact Modern Hardware & Status Strip */
@@ -437,4 +659,132 @@ input[type="file"] {
 .screen-wrapper.dragover {
     border-color: #58a6ff;
     box-shadow: 0 0 20px rgba(88, 166, 255, 0.4);
+}
+
+/* ==========================================================================
+   Responsive Mobile & Tablet Optimizations
+   ========================================================================== */
+
+@media (max-width: 960px) {
+    .app-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+        padding: 10px 14px;
+    }
+
+    .logo-area {
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .toolbar {
+        justify-content: flex-start;
+        width: 100%;
+        gap: 6px;
+    }
+
+    .system-status-bar {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+        gap: 8px;
+    }
+
+    .hw-spec {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 640px) {
+    .app-header {
+        padding: 8px 10px;
+        gap: 8px;
+    }
+
+    .logo-title {
+        font-size: 14px;
+    }
+
+    .logo-badge {
+        font-size: 10px;
+        padding: 2px 6px;
+    }
+
+    .toolbar {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+        gap: 5px;
+        width: 100%;
+    }
+
+    .status-badge {
+        grid-column: 1 / -1;
+        justify-content: center;
+        font-size: 11px;
+        padding: 4px 8px;
+    }
+
+    .os-selector-wrapper {
+        grid-column: 1 / -1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .os-selector-wrapper select {
+        width: 100%;
+        max-width: 280px;
+    }
+
+    .btn {
+        padding: 6px 8px;
+        font-size: 11px;
+        justify-content: center;
+        gap: 4px;
+        white-space: nowrap;
+    }
+
+    .btn svg {
+        width: 12px;
+        height: 12px;
+    }
+
+    .main-viewport {
+        padding: 6px;
+        width: 100%;
+        overflow-x: hidden;
+    }
+
+    .screen-wrapper {
+        border-width: 1px;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    #screen_container canvas,
+    #screen_container div {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+
+    .system-status-bar {
+        padding: 8px 10px;
+        font-size: 11px;
+    }
+
+    .hw-spec {
+        font-size: 10px;
+    }
+
+    .diagnostic-console {
+        margin-top: 8px;
+    }
+
+    .console-body {
+        max-height: 100px;
+        font-size: 10px;
+        padding: 6px 10px;
+    }
 }

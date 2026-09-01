@@ -138,15 +138,23 @@ function initEmulator(customCdromBuffer = null) {
         });
 
         let serialBuffer = "";
-        emulator.add_listener("serial0-output-char", function(char) {
-            if (char === "\n") {
+        function handleSerialChar(c) {
+            if (c === "\n") {
                 if (serialBuffer.trim().length > 0) {
-                    logDiagnostic(`[BIOS/Kernel] ${serialBuffer}`, "info");
+                    logDiagnostic(`[Kernel/COM1] ${serialBuffer}`, "info");
                 }
                 serialBuffer = "";
-            } else if (char !== "\r") {
-                serialBuffer += char;
+            } else if (c !== "\r") {
+                serialBuffer += c;
             }
+        }
+
+        emulator.add_listener("serial0-output-char", function(char) {
+            handleSerialChar(typeof char === "string" ? char : String.fromCharCode(char));
+        });
+
+        emulator.add_listener("serial0-output-byte", function(byte) {
+            handleSerialChar(String.fromCharCode(byte));
         });
 
         emulator.add_listener("ide-read-start", function() {
@@ -157,9 +165,47 @@ function initEmulator(customCdromBuffer = null) {
             triggerDiskActivity(16);
         });
 
+        // CPU Execution & Screen Telemetry Loop
+        let lastScreenText = "";
+        let lastInstructions = 0;
+        const telemetryInterval = setInterval(() => {
+            if (!emulator || !isRunning || isPaused) return;
+
+            // 1. Monitoreo de texto en pantalla
+            const textDiv = screenContainer.querySelector("div");
+            if (textDiv && textDiv.innerText) {
+                const currentText = textDiv.innerText.trim();
+                if (currentText && currentText !== lastScreenText) {
+                    const lines = currentText.split("\n").map(l => l.trim()).filter(Boolean);
+                    lines.forEach(l => {
+                        if (!lastScreenText.includes(l)) {
+                            logDiagnostic(`[Pantalla] ${l}`, "disk");
+                        }
+                    });
+                    lastScreenText = currentText;
+                }
+            }
+
+            // 2. Telemetría de CPU cuando el disco está inactivo (procesando en RAM)
+            try {
+                if (emulator.v86 && emulator.v86.cpu) {
+                    const currentInstr = emulator.v86.cpu.instruction_counter || 0;
+                    const diff = currentInstr - lastInstructions;
+                    lastInstructions = currentInstr;
+                    if (diff > 0 && !diskLed.classList.contains("active")) {
+                        const mips = (diff / 1000000).toFixed(1);
+                        diskStatusText.textContent = `CPU x86: Procesando Kernel en RAM (${mips} MIPS)`;
+                    }
+                }
+            } catch (ex) {
+                // ignore
+            }
+        }, 1000);
+
         emulator.add_listener("emulator-stopped", function() {
             isRunning = false;
             isPaused = false;
+            clearInterval(telemetryInterval);
             updateStatus("Emulador Detenido", "");
             logDiagnostic("Emulador detenido.", "warn");
             btnStart.disabled = false;

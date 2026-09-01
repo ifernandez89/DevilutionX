@@ -83,11 +83,11 @@ function initEmulator(customCdromBuffer = null) {
     const cacheBuster = Date.now();
     const config = {
         wasm_path: "v86.wasm?v=" + cacheBuster,
-        memory_size: 512 * 1024 * 1024,      // 512 MB RAM (plenty of room for 46.2 MB WIM + Windows XP kernel + desktop)
-        vga_memory_size: 8 * 1024 * 1024,    // 8 MB VRAM
+        memory_size: 512 * 1024 * 1024,      // 512 MB RAM (permite descompresión completa de XP.WIM y kernel WinPE)
+        vga_memory_size: 16 * 1024 * 1024,   // 16 MB VRAM (soporte gráfico VESA/VBE alta resolución)
         screen_container: screenContainer,
         bios: { url: "bios/seabios.bin?v=" + cacheBuster },
-        vga_bios: { url: "bios/vgabios.bin?v=" + cacheBuster },
+        acpi: true,
         autostart: true,
         network_relay_url: null,
     };
@@ -115,7 +115,7 @@ function initEmulator(customCdromBuffer = null) {
             isRunning = true;
             isPaused = false;
             updateStatus("Ejecutando MiniXP", "running");
-            logDiagnostic("CPU virtual x86 inicializada. Arrancando SeaBIOS...", "success");
+            logDiagnostic("CPU virtual x86 inicializada (512 MB RAM, ACPI activo). Arrancando SeaBIOS...", "success");
             btnStart.disabled = true;
             btnPause.disabled = false;
             btnReset.disabled = false;
@@ -123,11 +123,17 @@ function initEmulator(customCdromBuffer = null) {
         });
 
         emulator.add_listener("screen-set-mode", function(is_graphical) {
+            const canvas = screenContainer.querySelector("canvas");
+            const textDiv = screenContainer.querySelector("div");
             if (is_graphical) {
-                logDiagnostic("Modo de video gráfico VESA/VGA activado.", "success");
+                if (canvas) canvas.style.display = "block";
+                if (textDiv) textDiv.style.display = "none";
+                logDiagnostic("Modo de video gráfico VESA/VGA activado (Logo & Escritorio XP).", "success");
                 updateStatus("Windows XP Gráfico", "running");
             } else {
-                logDiagnostic("Modo de texto BIOS/ISOLINUX activo.", "info");
+                if (canvas) canvas.style.display = "none";
+                if (textDiv) textDiv.style.display = "block";
+                logDiagnostic("Modo de texto BIOS activo.", "info");
             }
         });
 
@@ -252,11 +258,12 @@ inputLoadState.addEventListener("change", (e) => {
         } else {
             const config = {
                 wasm_path: "v86.wasm",
-                memory_size: 256 * 1024 * 1024,
-                vga_memory_size: 8 * 1024 * 1024,
+                memory_size: 512 * 1024 * 1024,
+                vga_memory_size: 16 * 1024 * 1024,
                 screen_container: screenContainer,
                 bios: { url: "bios/seabios.bin" },
                 vga_bios: { url: "bios/vgabios.bin" },
+                acpi: true,
                 initial_state: { buffer: reader.result },
                 autostart: true,
             };

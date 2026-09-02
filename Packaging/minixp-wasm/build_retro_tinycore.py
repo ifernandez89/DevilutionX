@@ -16,8 +16,8 @@ import shutil
 import urllib.request
 import subprocess
 
-REPO_BASE = "http://repo.tinycorelinux.net/15.x/x86/tcz"
-ISO_URL = "http://tinycorelinux.net/15.x/x86/release/TinyCore-current.iso"
+REPO_BASE = "http://tinycorelinux.net/14.x/x86/tcz"
+ISO_URL = "http://tinycorelinux.net/14.x/x86/release/TinyCore-current.iso"
 DOOM_SHAREWARE_ZIP = "https://archive.org/download/DoomShareware1.9/doom19s.zip"
 
 PACKAGES = [

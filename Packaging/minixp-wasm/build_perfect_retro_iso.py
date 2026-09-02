@@ -1,10 +1,55 @@
-import io, os, struct, tarfile, shutil, pycdlib, gzip, time, zlib
+import io, os, struct, tarfile, shutil, pycdlib, gzip, time, zlib, urllib.request
 
 SCRIPT_DIR  = os.path.dirname(os.path.abspath(__file__))
 BASE_ISO    = os.path.join(SCRIPT_DIR, "tinycore.iso")
 OUTPUT_ISO  = os.path.join(SCRIPT_DIR, "tinycore-retro.iso")
 TCZ_DIR     = os.path.join(SCRIPT_DIR, "tinycore_build", "cde", "optional")
 FREEDOOM_DIR= os.path.join(SCRIPT_DIR, "tinycore_build", "freedoom_files", "freedoom-0.13.0")
+DOOM_FILES_DIR = os.path.join(SCRIPT_DIR, "tinycore_build", "doom_files")
+
+def ensure_assets():
+    os.makedirs(TCZ_DIR, exist_ok=True)
+    os.makedirs(DOOM_FILES_DIR, exist_ok=True)
+    
+    # 1. Base ISO
+    if not os.path.exists(BASE_ISO) or os.path.getsize(BASE_ISO) < 1000000:
+        alt_iso = os.path.join(SCRIPT_DIR, "tinycore_build", "TinyCore-base.iso")
+        if os.path.exists(alt_iso) and os.path.getsize(alt_iso) > 1000000:
+            shutil.copyfile(alt_iso, BASE_ISO)
+        else:
+            url = "http://tinycorelinux.net/14.x/x86/release/TinyCore-current.iso"
+            print(f"[*] Descargando ISO base desde {url}...")
+            req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+            with urllib.request.urlopen(req, timeout=30) as resp, open(BASE_ISO, "wb") as f:
+                shutil.copyfileobj(resp, f)
+
+    # 2. TCZ Packages for Tiny Core 14.x (GLIBC 2.36)
+    packages = [
+        "dosbox.tcz", "sdl-sound.tcz", "SDL.tcz",
+        "libvorbis.tcz", "libogg.tcz", "libmad.tcz",
+        "libasound.tcz", "libpng.tcz", "tree.tcz",
+        "emelfm.tcz", "gtk1.tcz", "glib1.tcz"
+    ]
+    for pkg in packages:
+        pkg_path = os.path.join(TCZ_DIR, pkg)
+        # libasound.tcz en 14.x mide ~413 KB, en 15.x mide ~500 KB
+        need_download = not os.path.exists(pkg_path) or (pkg == "libasound.tcz" and os.path.getsize(pkg_path) > 450000)
+        if need_download:
+            url = f"http://tinycorelinux.net/14.x/x86/tcz/{pkg}"
+            print(f"[*] Descargando {pkg} desde 14.x repo...")
+            req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+            with urllib.request.urlopen(req, timeout=30) as resp, open(pkg_path, "wb") as f:
+                shutil.copyfileobj(resp, f)
+
+    # 3. DOOM Binaries
+    for fname, url_name in [('doom.exe', 'DOOM.exe'), ('doom1.wad', 'DOOM1.WAD')]:
+        dest = os.path.join(DOOM_FILES_DIR, fname)
+        if not os.path.exists(dest) or os.path.getsize(dest) < 10000:
+            url = f"https://raw.githubusercontent.com/angea/doom-poly/main/{url_name}"
+            print(f"[*] Descargando {fname}...")
+            req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+            with urllib.request.urlopen(req, timeout=30) as resp, open(dest, "wb") as f:
+                shutil.copyfileobj(resp, f)
 
 def make_simple_png(width=32, height=32, color=(255, 0, 0, 255)):
     def chunk(tag, d):
@@ -42,6 +87,7 @@ def create_cpio_archive(files_dict):
     return out.getvalue()
 
 def build_perfect_retro_iso():
+    ensure_assets()
     print(f"[*] Abriendo ISO base: {BASE_ISO}")
     base = pycdlib.PyCdlib()
     base.open(BASE_ISO)

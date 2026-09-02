@@ -25,6 +25,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **GitHub Pages Ready & Snapshot Persistence**:
   - Fully static architecture with relative paths (`./`) and HTTP Range compatibility for seamless deployment on GitHub Pages.
   - Integrated instant memory snapshot serialization (`.bin`) for sub-second saves and restores.
+- **DOOM Shareware v1.9 Retro Gaming Machine Roadmap (`Packaging/minixp-wasm/`)**:
+  - Designed the bare-metal FreeDOS / DOS4GW 32-bit execution pipeline for running DOOM Shareware at 60 FPS in WebAssembly.
+  - Mapped Sound Blaster 16 / OPL3 FM synthesis integration with browser Web Audio API and pre-calibrated WASD/Gamepad touch bindings.
+- **WASM Multi-Console Retro Station & Dynamic ROM Loader Roadmap (`Packaging/minixp-wasm/`)**:
+  - Architected zero-overhead 8-bit & 16-bit multi-emulator support (NES, Game Boy, Sega Genesis, SNES) running natively on Tiny Core Linux x86.
+  - Designed client-side Dynamic ROM Mount subsystem (`📁 Montar ROM`) with persistent storage in IndexedDB/OPFS, eliminating heavy bundled assets while preserving user saves (`.sav`).
+  - Outlined dual-input support: Mobile On-Screen Gamepad (`InputMapper`) and physical Bluetooth/USB controllers via Browser Gamepad API.
 
 ### Documentation & Integrations
 - **PayPal Donation & Payment Integration Guide (`PAYPAL_DONATION_SETUP.md`)**: Added comprehensive documentation and modular snippets for integrating PayPal donations across React, Next.js, and Vanilla JS, including Sandbox vs Live workflows, environment variable schemas, and server-side order creation.

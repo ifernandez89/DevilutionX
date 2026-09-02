@@ -297,14 +297,30 @@ def build_retro_iso():
     new_iso.add_fp(io.BytesIO(mydata_bytes), len(mydata_bytes), '/CDE/MYDATA.TGZ',
                    rr_name='mydata.tgz', joliet_path='/cde/mydata.tgz')
 
-    # 7. Configurar arranque El Torito (ISOLINUX)
-    new_iso.add_eltorito('/BOOT/ISOLINUX/ISOLINUX.BIN')
+    # 7. Configurar arranque El Torito (ISOLINUX con Boot Info Table requerida)
+    print("[*] Configurando El Torito con boot_info_table=True para ISOLINUX...")
+    new_iso.add_eltorito('/BOOT/ISOLINUX/ISOLINUX.BIN', boot_info_table=True)
 
     print(f"\n[*] Escribiendo ISO final en {OUTPUT_ISO_PATH}...")
     new_iso.write(OUTPUT_ISO_PATH)
     new_iso.close()
+
+    # 8. Extraer vmlinuz y core.gz para soporte directo de arranque rápido en v86
+    print("[*] Extrayendo vmlinuz y core.gz para arranque directo v86...")
+    vmlinuz_path = os.path.join(SCRIPT_DIR, "vmlinuz")
+    core_path = os.path.join(SCRIPT_DIR, "core.gz")
+    
+    with open(vmlinuz_path, "wb") as f_vml:
+        base_iso.get_file_from_iso_fp(f_vml, iso_path='/BOOT/VMLINUZ.;1')
+    with open(core_path, "wb") as f_core:
+        base_iso.get_file_from_iso_fp(f_core, iso_path='/BOOT/CORE.GZ;1')
+    
+    print(f"[OK] vmlinuz extraido ({os.path.getsize(vmlinuz_path):,} bytes)")
+    print(f"[OK] core.gz extraido ({os.path.getsize(core_path):,} bytes)")
+
     base_iso.close()
     print(f"[EXITO] ISO 'tinycore-retro.iso' creada exitosamente ({os.path.getsize(OUTPUT_ISO_PATH):,} bytes)!")
+
 
 if __name__ == "__main__":
     build_retro_iso()

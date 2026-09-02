@@ -45,8 +45,12 @@ const OS_PROFILES = {
         boot_order: 0x123,                    // CD-ROM
         media_type: "cdrom",
         media_url: "tinycore-retro.iso",
+        bzimage: "vmlinuz",
+        initrd: "core.gz",
+        cmdline: "loglevel=3 cde waitusb=5",
         acpi: false
     },
+
     tinycore: {
         name: "Tiny Core Linux (Base GUI LiveCD)",
         memory_size: 128 * 1024 * 1024,
@@ -261,13 +265,21 @@ function initEmulator(customBuffer = null) {
         network_relay_url: null,
     };
 
+    if (profile.bzimage && profile.initrd) {
+        config.bzimage = { url: `${profile.bzimage}?v=${cacheBuster}` };
+        config.initrd = { url: `${profile.initrd}?v=${cacheBuster}` };
+        config.cmdline = profile.cmdline || "loglevel=3 cde waitusb=5";
+        logDiagnostic(`[DIRECT BOOT] Kernel: ${profile.bzimage} • Initrd: ${profile.initrd} • Cmdline: ${config.cmdline}`, "info");
+    }
+
     if (customBuffer) {
         config.cdrom = { buffer: customBuffer };
         logDiagnostic("Iniciando con imagen personalizada cargada por el usuario...", "info");
-    } else {
+    } else if (profile.media_type && profile.media_url) {
         config[profile.media_type] = { url: `${profile.media_url}?v=${cacheBuster}` };
         logDiagnostic(`Iniciando ${profile.name}...`, "info");
     }
+
 
     try {
         const ramMb = (config.memory_size / (1024 * 1024)).toFixed(0);

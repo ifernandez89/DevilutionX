@@ -36,6 +36,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
    - Se integraron `DOOM.exe` (motor DOS 8.4 MB) + `doom1.wad` (Shareware Episode 4.2 MB) + `freedoom1.wad` (28.8 MB) en `/home/tc/games/doom/` y `/etc/skel/games/doom/`.
    - Se restauró el entorno de escritorio original de Tiny Core con su fondo característico y dock inferior centrado (`wbar.sh`).
 
+7. **Laboratorio Metodológico de Benchmarking Integrado**:
+   - Implementación del script paramétrico `/usr/local/bin/benchmark_doom [cycles] [frameskip] [audio] [timedemo]` para pruebas de rendimiento científicas, reproducibles y cronometradas con `-timedemo demo1`.
+   - Diagnóstico en tiempo real de consumo por capas (/usr/local/bin/bench_layers: A0 Base CLI, A1 GUI Xvesa/FLWM, A2 DOSBox en reposo, A3 DOOM en ejecución).
+   - Menú interactivo en escritorio `1_Laboratorio_Benchmark.sh` y guía explicativa `GUIA_METODOLOGIA.txt`.
+
+8. **Corrección de Mapeo de Teclado en DOSBox sobre Xvesa**:
+   - `Xvesa` utiliza eventos estándar X11 KeySym en lugar de scancodes de hardware crudos (EVDEV/XKB).
+   - Al configurar `usescancodes=false`, DOSBox interpreta perfectamente las flechas direccionales, Ctrl, Espacio, Enter y teclas alfanuméricas sin pérdida de eventos de teclado.
+
 
 ### Retro Virtual PC (Tiny Core Linux + DOSBox + Doom + Tree + EmelFM)
 

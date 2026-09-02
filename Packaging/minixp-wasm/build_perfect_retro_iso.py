@@ -71,7 +71,7 @@ autolock=true
 sensitivity=100
 waitonerror=true
 priority=higher,normal
-usescancodes=true
+usescancodes=false
 
 [dosbox]
 machine=svga_s3
@@ -116,7 +116,7 @@ autolock=true
 sensitivity=100
 waitonerror=true
 priority=higher,normal
-usescancodes=true
+usescancodes=false
 
 [dosbox]
 machine=svga_s3
@@ -150,6 +150,212 @@ pcspeaker=false
 mount c /home/tc/games/doom
 c:
 """
+    benchmark_doom_script = b"""#!/bin/sh
+CYCLES=${1:-10000}
+FRAMESKIP=${2:-0}
+AUDIO=${3:-off}
+MODE=${4:-timedemo}
+
+echo "====================================================="
+echo "   LABORATORIO BENCHMARK: DOOM en DOSBox (Retro PC)  "
+echo "====================================================="
+echo "Parametros de prueba:"
+echo "  * Cycles:    $CYCLES"
+echo "  * Frameskip: $FRAMESKIP"
+echo "  * Audio:     $AUDIO"
+echo "  * Modo:      $MODE"
+echo "-----------------------------------------------------"
+
+CONF="/tmp/bench_$CYCLES.conf"
+
+if [ "$AUDIO" = "on" ]; then
+  MIXER_CONF="nosound=false
+rate=22050
+blocksize=1024
+prebuffer=20"
+  SB_CONF="sbtype=sb16
+sbbase=220
+irq=7
+dma=1"
+else
+  MIXER_CONF="nosound=true
+rate=11025
+blocksize=1024
+prebuffer=20"
+  SB_CONF="sbtype=none"
+fi
+
+if [ "$MODE" = "timedemo" ]; then
+  EXEC_CMD="doom.exe -timedemo demo1"
+else
+  EXEC_CMD="doom.exe"
+fi
+
+cat << EOF > $CONF
+[sdl]
+fullscreen=false
+fulldouble=false
+fullresolution=original
+windowresolution=original
+output=surface
+autolock=true
+sensitivity=100
+waitonerror=true
+priority=higher,normal
+usescancodes=false
+
+[dosbox]
+machine=svga_s3
+memsize=16
+
+[render]
+frameskip=$FRAMESKIP
+aspect=false
+scaler=none
+
+[cpu]
+core=normal
+cputype=auto
+cycles=$CYCLES
+cycleup=1000
+cycledown=1000
+
+[mixer]
+$MIXER_CONF
+
+[sblaster]
+$SB_CONF
+
+[speaker]
+pcspeaker=false
+
+[autoexec]
+mount c /home/tc/games/doom
+c:
+$EXEC_CMD
+EOF
+
+echo "Ejecutando prueba cronometrada..."
+START_SEC=$(date +%s)
+SDL_VIDEODRIVER=x11 SDL_VIDEO_X11_NODIRECTCOLOR=1 dosbox -conf $CONF
+END_SEC=$(date +%s)
+ELAPSED=$((END_SEC - START_SEC))
+echo "-----------------------------------------------------"
+echo "RESULTADO BENCHMARK:"
+echo "  * Duracion de prueba: ${ELAPSED} segundos"
+echo "  * Perfil: Cycles=$CYCLES | Frameskip=$FRAMESKIP | Audio=$AUDIO"
+echo "====================================================="
+"""
+
+    bench_layers_script = b"""#!/bin/sh
+clear
+echo "====================================================="
+echo "   RELEVAMIENTO DE CAPAS EN EJECUCION (A0 - A3)      "
+echo "====================================================="
+echo ""
+echo "--- [1] MEMORIA RAM DEL SISTEMA ---"
+free -m
+echo ""
+echo "--- [2] PROCESOS ACTIVOS (TOP CONSUMO) ---"
+ps aux | head -n 15
+echo ""
+echo "--- [3] ESTADO DE CAPAS ACTIVAS ---"
+echo -n "  * Capa A1 (Servidor Xvesa):       "
+pgrep Xvesa >/dev/null && echo "ACTIVO" || echo "INACTIVO (Modo CLI puro A0)"
+echo -n "  * Capa A1 (Window Manager FLWM):  "
+pgrep flwm >/dev/null && echo "ACTIVO" || echo "INACTIVO"
+echo -n "  * Capa A1 (Dock Wbar):            "
+pgrep wbar >/dev/null && echo "ACTIVO" || echo "INACTIVO"
+echo -n "  * Capa A2/A3 (Emulador DOSBox):   "
+pgrep dosbox >/dev/null && echo "ACTIVO" || echo "INACTIVO"
+echo "====================================================="
+"""
+
+    laboratorio_menu_script = rb"""#!/bin/sh
+aterm -geometry 80x25+30+30 -title "Laboratorio de Benchmarking DOOM" -e sh -c '
+while true; do
+  clear
+  echo "====================================================="
+  echo "   LABORATORIO METODOLOGICO DE RENDIMIENTO (DOOM)    "
+  echo "====================================================="
+  echo " 1) Medir Consumo de Capas (RAM / CPU / Procesos)"
+  echo " 2) Test A3: Cycles 5.000  (Timedemo reproducible)"
+  echo " 3) Test A3: Cycles 7.500  (Timedemo reproducible)"
+  echo " 4) Test A3: Cycles 10.000 (Timedemo reproducible)"
+  echo " 5) Test A3: Cycles 15.000 (Timedemo reproducible)"
+  echo " 6) Test A3: Cycles 20.000 (Timedemo reproducible)"
+  echo " 7) Test A3: Frameskip 0 vs 1 (Comparativa)"
+  echo " 8) Test A3: Audio ON vs OFF"
+  echo " 9) Test Personalizado (Ingresar ciclos/frameskip)"
+  echo " 0) Jugar DOOM Interactivo"
+  echo " q) Salir"
+  echo "-----------------------------------------------------"
+  echo -n "Seleccione una opcion [0-9, q]: "
+  read opt
+  case "$opt" in
+    1) /usr/local/bin/bench_layers; echo ""; echo "Presione ENTER para continuar..."; read dummy ;;
+    2) /usr/local/bin/benchmark_doom 5000 0 off timedemo; echo "Presione ENTER..."; read dummy ;;
+    3) /usr/local/bin/benchmark_doom 7500 0 off timedemo; echo "Presione ENTER..."; read dummy ;;
+    4) /usr/local/bin/benchmark_doom 10000 0 off timedemo; echo "Presione ENTER..."; read dummy ;;
+    5) /usr/local/bin/benchmark_doom 15000 0 off timedemo; echo "Presione ENTER..."; read dummy ;;
+    6) /usr/local/bin/benchmark_doom 20000 0 off timedemo; echo "Presione ENTER..."; read dummy ;;
+    7) 
+       echo "--- Corriendo con Frameskip 0 (Todos los cuadros) ---"
+       /usr/local/bin/benchmark_doom 10000 0 off timedemo
+       echo "--- Corriendo con Frameskip 1 (Salto de 1 cuadro) ---"
+       /usr/local/bin/benchmark_doom 10000 1 off timedemo
+       echo "Presione ENTER para continuar..."; read dummy
+       ;;
+    8)
+       echo "--- Corriendo con Audio OFF ---"
+       /usr/local/bin/benchmark_doom 10000 1 off timedemo
+       echo "--- Corriendo con Audio ON (Sound Blaster 16) ---"
+       /usr/local/bin/benchmark_doom 10000 1 on timedemo
+       echo "Presione ENTER para continuar..."; read dummy
+       ;;
+    9)
+       echo -n "Ingrese Ciclos [ej: 8000]: "
+       read c
+       echo -n "Ingrese Frameskip [0, 1, 2]: "
+       read fs
+       echo -n "Audio [on/off]: "
+       read aud
+       /usr/local/bin/benchmark_doom "${c:-10000}" "${fs:-0}" "${aud:-off}" timedemo
+       echo "Presione ENTER para continuar..."; read dummy
+       ;;
+    0) /usr/local/bin/play_doom ;;
+    q|Q) exit 0 ;;
+  esac
+done
+' &
+"""
+
+    gamemode_test_script = b"""#!/bin/sh
+/usr/local/bin/benchmark_doom 10000 1 off play &
+"""
+
+    guia_metodologia_text = rb"""=== METODOLOGIA DE PRUEBAS DE RENDIMIENTO ===
+Retro Virtual PC (Tiny Core Linux + DOSBox + DOOM)
+
+OBJETIVO:
+  Determinar cientificamente el perfil optimo de juego sin sobrecargar
+  el motor WebAssembly ni la CPU anfitriona.
+
+CAPAS ANALIZADAS:
+  * A0: Tiny Core CLI (Consumo base sin interfaz grafica)
+  * A1: Tiny Core GUI (Overhead de Xvesa y Window Manager)
+  * A2: DOSBox Reposo (Overhead del emulador en C:\>)
+  * A3: DOSBox + DOOM (Pruebas parametricas cronometradas con -timedemo demo1)
+  * A4: Motor Nativo Linux (Chocolate Doom / PrBoom)
+
+COMO REGISTRAR RESULTADOS:
+  1. Abrir '1_Laboratorio_Benchmark.sh'
+  2. Ejecutar cada prueba (5k, 7.5k, 10k, 15k, 20k)
+  3. Anotar los segundos de duracion y la sensacion de fluidez.
+  4. La configuracion con menor duracion y mayor suavidad sera la elegida
+     para el Game Mode definitivo.
+"""
+
     play_doom_script = b"""#!/bin/sh
 cd /home/tc/games/doom
 SDL_VIDEODRIVER=x11 SDL_VIDEO_X11_NODIRECTCOLOR=1 dosbox -conf /home/tc/games/doom/dosbox.conf
@@ -160,15 +366,6 @@ tree /home/tc
     run_dosbox_script = b"""#!/bin/sh
 cd /home/tc
 SDL_VIDEODRIVER=x11 SDL_VIDEO_X11_NODIRECTCOLOR=1 dosbox -conf /home/tc/.dosbox/dosbox-0.74-3.conf
-"""
-    readme_text = b"""=== RETRO VIRTUAL PC ===
-Tiny Core Linux + DOSBox + DOOM (Freedoom / Shareware) + Tree + EmelFM
-
-COMANDOS:
-  play_doom    -> Jugar DOOM
-  dosbox_safe  -> Iniciar DOSBox
-  emelfm       -> Abrir Administrador de Archivos
-  tree         -> Ver arbol de archivos
 """
 
     doom_desktop = b"""[Desktop Entry]
@@ -218,11 +415,19 @@ filetype txt: aterm -e cat %f &
         'home/tc/.emelfm': (b'', 0o040755),
         'etc/skel/.emelfm': (b'', 0o040755),
         
-        # Scripts ejecutables en home y skel
-        'home/tc/Desktop/Play_DOOM.sh': (play_doom_script, 0o100755),
-        'home/tc/Desktop/Start_DOSBox.sh': (run_dosbox_script, 0o100755),
-        'home/tc/Desktop/Tree_Explorer.sh': (run_tree_script, 0o100755),
-        'home/tc/Desktop/README.txt': (readme_text, 0o100644),
+        # Scripts de Benchmarking y accesos directos
+        'home/tc/Desktop/1_Laboratorio_Benchmark.sh': (laboratorio_menu_script, 0o100755),
+        'home/tc/Desktop/2_DOOM_GameMode_Test.sh': (gamemode_test_script, 0o100755),
+        'home/tc/Desktop/3_Start_DOSBox.sh': (run_dosbox_script, 0o100755),
+        'home/tc/Desktop/4_Tree_Explorer.sh': (run_tree_script, 0o100755),
+        'home/tc/Desktop/GUIA_METODOLOGIA.txt': (guia_metodologia_text, 0o100644),
+
+        'etc/skel/Desktop/1_Laboratorio_Benchmark.sh': (laboratorio_menu_script, 0o100755),
+        'etc/skel/Desktop/2_DOOM_GameMode_Test.sh': (gamemode_test_script, 0o100755),
+        'etc/skel/Desktop/3_Start_DOSBox.sh': (run_dosbox_script, 0o100755),
+        'etc/skel/Desktop/4_Tree_Explorer.sh': (run_tree_script, 0o100755),
+        'etc/skel/Desktop/GUIA_METODOLOGIA.txt': (guia_metodologia_text, 0o100644),
+
         'home/tc/games/doom/play_doom.sh': (play_doom_script, 0o100755),
         'home/tc/games/doom/dosbox.conf': (dosbox_safe_conf, 0o100644),
         'home/tc/games/doom/PLAY_DOOM.BAT': (b"@echo off\r\ndoom.exe\r\n", 0o100755),
@@ -230,10 +435,6 @@ filetype txt: aterm -e cat %f &
         'home/tc/games/doom/PLAY.BAT': (b"@echo off\r\ndoom.exe\r\n", 0o100755),
         'home/tc/.dosbox/dosbox-0.74-3.conf': (dosbox_interactive_conf, 0o100644),
 
-        'etc/skel/Desktop/Play_DOOM.sh': (play_doom_script, 0o100755),
-        'etc/skel/Desktop/Start_DOSBox.sh': (run_dosbox_script, 0o100755),
-        'etc/skel/Desktop/Tree_Explorer.sh': (run_tree_script, 0o100755),
-        'etc/skel/Desktop/README.txt': (readme_text, 0o100644),
         'etc/skel/games/doom/play_doom.sh': (play_doom_script, 0o100755),
         'etc/skel/games/doom/dosbox.conf': (dosbox_safe_conf, 0o100644),
         'etc/skel/games/doom/PLAY_DOOM.BAT': (b"@echo off\r\ndoom.exe\r\n", 0o100755),
@@ -244,6 +445,8 @@ filetype txt: aterm -e cat %f &
         # Binarios globales en PATH
         'usr/local/bin/play_doom': (play_doom_script, 0o100755),
         'usr/local/bin/dosbox_safe': (run_dosbox_script, 0o100755),
+        'usr/local/bin/benchmark_doom': (benchmark_doom_script, 0o100755),
+        'usr/local/bin/bench_layers': (bench_layers_script, 0o100755),
 
         # Pixmaps e iconos de Wbar
         'usr/local/share/pixmaps/doom.png': (make_simple_png(32, 32, (220, 30, 30, 255)), 0o100644),

@@ -69,6 +69,8 @@ jobs:
           python3 Packaging/minixp-wasm/fetch_freedoom.py || true
           python3 Packaging/minixp-wasm/create_retro_iso.py || true
           python3 tools/build_minixp_iso.py MiniXp Packaging/minixp-wasm/minixp.iso || true
+          echo "Checking Packaging/minixp-wasm contents:"
+          ls -la Packaging/minixp-wasm/
 
 
       - name: Prepare GitHub Pages Distribution
@@ -79,10 +81,14 @@ jobs:
           if [ -f build-web/devilutionx.data ]; then cp -v build-web/devilutionx.data dist/; fi
           cp -v Packaging/emscripten/index.html dist/index.html
           cp -v Packaging/emscripten/file-manager.js dist/file-manager.js
-          if [ -d Packaging/minixp-wasm ]; then cp -rv Packaging/minixp-wasm dist/minixp; fi
+          if [ -d Packaging/minixp-wasm ]; then
+            cp -rv Packaging/minixp-wasm dist/minixp
+            cp -rv Packaging/minixp-wasm dist/tinycore
+          fi
           echo "Listing dist/ and dist/minixp/ directory:"
           ls -la dist/
           ls -la dist/minixp/
+          ls -la dist/tinycore/
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

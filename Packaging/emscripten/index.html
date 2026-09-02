@@ -479,7 +479,7 @@
 <body class="remaster-enabled">
 	<div class="top-toolbar">
 		<button class="ui-btn" id="remasterToggleBtn" title="Alternar Modo Remaster (F2)">✨ Remaster: ON</button>
-		<button class="ui-btn" id="miniXpBtn" title="Lanzar Mini Windows XP (WebAssembly)" onclick="window.open(window.location.pathname.includes('/minixp/') ? 'index.html' : 'minixp/index.html', '_blank')">🪟 Mini XP</button>
+		<button class="ui-btn" id="tinyCoreBtn" title="Lanzar Tiny Core Linux (WebAssembly)" onclick="if(document.exitPointerLock) document.exitPointerLock(); window.open('minixp/index.html', '_blank', 'noopener,noreferrer')">🐧 Tiny Core Linux</button>
 		<button class="ui-btn" id="fileManagerBtn" title="Administrador de Archivos">📁 File Manager</button>
 		<button class="ui-btn" id="fullscreenBtn" title="Pantalla Completa">⛶ Pantalla Completa</button>
 	</div>
@@ -493,20 +493,20 @@
 				<button class="close-btn" id="closeModal">&times;</button>
 			</div>
 
-			<!-- Mini Windows XP WebAssembly Launcher Section -->
+			<!-- Tiny Core Linux WebAssembly Launcher Section -->
 			<div class="section" style="border: 1px solid #1a568c; background: linear-gradient(180deg, #102338 0%, #0d1724 100%); padding: 14px; border-radius: 6px; margin-bottom: 16px;">
 				<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
 					<h3 style="margin: 0; color: #63b3ed; display: flex; align-items: center; gap: 8px;">
-						🪟 Mini Windows XP (WebAssembly)
+						🐧 Tiny Core Linux (WebAssembly)
 					</h3>
 					<span style="background: #1e40af; color: #ffffff; font-size: 11px; padding: 2px 8px; border-radius: 10px; font-weight: bold;">v86 x86 WASM</span>
 				</div>
 				<div class="info-text" style="color: #cbd5e1;">
-					Ejecuta un entorno completo de <strong>Mini Windows XP</strong> directamente en tu navegador emulado en WebAssembly con 256MB de RAM virtual.
+					Ejecuta un entorno completo de <strong>Tiny Core Linux con interfaz gráfica (FLWM/X11)</strong> directamente en tu navegador emulado en WebAssembly con 256MB de RAM virtual.
 				</div>
 				<div style="margin-top: 10px; display: flex; gap: 10px;">
-					<a href="minixp/index.html" target="_blank" class="ui-btn" id="launchMiniXpModalBtn" style="background: linear-gradient(180deg, #1d4ed8 0%, #1e3a8a 100%); border-color: #3b82f6; color: #ffffff; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; font-size: 13px; padding: 8px 16px;">
-						🚀 Lanzar Mini Windows XP (Nueva Pestaña)
+					<a href="minixp/index.html" target="_blank" rel="noopener noreferrer" class="ui-btn" id="launchTinyCoreModalBtn" style="background: linear-gradient(180deg, #1d4ed8 0%, #1e3a8a 100%); border-color: #3b82f6; color: #ffffff; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; font-size: 13px; padding: 8px 16px;">
+						🚀 Lanzar Tiny Core Linux (Nueva Pestaña)
 					</a>
 				</div>
 			</div>

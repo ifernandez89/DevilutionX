@@ -18,8 +18,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Web Interface & Mobile Touch Gamepad
 - **Multi-OS Profile Selector**: Updated `index.html` and `app.js` with dynamic profile switching between **🕹️ Retro PC (Tiny Core)**, **💻 Mini Windows XP**, **🪟 Windows 3.11**, **🪟 Windows 3.0**, **💾 FreeDOS**, and **🐦 KolibriOS**.
-- **Virtual On-Screen Gamepad Overlay**: Added a touch gamepad overlay with D-Pad and dedicated action buttons (`CTRL` Fire, `SPACE` Open/Use, `ALT` Strafe, `ESC`, `ENTER`) mapping synthetic keyboard events directly to the v86 virtual CPU for seamless gameplay on smartphones and tablets.
+- **Virtual On-Screen Gamepad Overlay & InputMapper**: Added a touch gamepad overlay with D-Pad and dedicated action buttons (`CTRL` Fire, `SPACE` Open/Use, `ALT` Strafe, `ESC`, `ENTER`) mapping synthetic keyboard events directly to the v86 virtual CPU for seamless gameplay on smartphones and tablets.
 - **GitHub Actions CI/CD Automation (`.github/workflows/deploy-pages.yml`)**: Added automated ISO assembly steps (`build_retro_tinycore.py`, `fetch_freedoom.py`, `create_retro_iso.py`) to build and deploy the Retro PC image to GitHub Pages on every release commit.
+
+### WebAssembly Virtualization Platform — Tiny Core Linux Integration
+
+#### Hardware & Virtualization Architecture
+- **In-Browser x86 Cycle-Accurate Virtual Machine (`Packaging/minixp-wasm/`)**: Added native Tiny Core Linux GUI LiveCD execution powered by official `v86` compiled to WebAssembly (WASM). Emulates Pentium II (32-bit x86), 256 MB RAM, 8 MB VRAM with VESA/VBE framebuffer, SeaBIOS and VGABIOS integration, and PS/2 pointer lock capture.
+- **Mobile Retro Gamepad, InputMapper & Responsive UI (`Packaging/minixp-wasm/`)**:
+  - Engineered an on-screen translucent retro gamepad overlay with a 4-way precision D-Pad, color-coded action buttons (`FIRE/CTRL`, `USE/SPACE`, `RUN/SHIFT`, `ENTER`), collapsible utility bar (`ESC`, `TAB`, `SPACE`, `CTRL`, `ALT`, `F1-F5`), and quick toggle switch.
+  - Implemented the decoupled `InputMapper` layer transmitting hardware x86 Make/Break scancodes (`v86.keyboard_send_scancodes`) on touch start and release, enabling fluid continuous movement and holding in DOSBox/Doom.
+  - Added hot-swappable control profiles (`🎮 WASD`, `🏹 Flechas`, `🧙 Roguelike`) for instant adaptation to first-person shooters, arcade games, and turn-based roguelikes.
+  - Redesigned top toolbar and status bar with adaptive CSS Grid/Flex wrapping and compact media queries, completely eliminating mobile horizontal overflow on smartphones.
+  - Converted mouse lock hint into a compact, auto-dismissing top badge that automatically hides after 4 seconds or on first click.
+- **Kernel Boot & Performance Optimization**:
+  - Eliminated UI freeze/lockups by converting serial kernel logs (`serial0-output-char`) into a non-blocking `requestAnimationFrame` batched flush with a 100-line DOM buffer limit.
+  - Throttled IDE disk activity LED updates to 150 ms intervals, preventing event loop starvation.
+  - Cleaned up `libv86.js` by removing legacy demo code and resolving `xe is not defined` and `onclick` null reference errors.
+  - Added user gesture audio unlocker complying with browser Autoplay policies for Web Audio / Sound Blaster 16 emulation.
+- **GitHub Pages Ready & Snapshot Persistence**:
+  - Fully static architecture with relative paths (`./`) and HTTP Range compatibility for seamless deployment on GitHub Pages.
+  - Integrated instant memory snapshot serialization (`.bin`) for sub-second saves and restores.
+
+### Documentation & Integrations
+- **PayPal Donation & Payment Integration Guide (`PAYPAL_DONATION_SETUP.md`)**: Added comprehensive documentation and modular snippets for integrating PayPal donations across React, Next.js, and Vanilla JS, including Sandbox vs Live workflows, environment variable schemas, and server-side order creation.
+
 
 ### WebAssembly Virtualization Platform & Mini Windows XP Integration
 
@@ -47,7 +70,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Real-Time Disk I/O Activity LED & Transfer Meter**: Integrated a live green activity LED that pulses on ATAPI IDE read interrupts (`ide-read-start` / `ide-read-end`), accompanied by a real-time transfer counter displaying cumulative megabytes streamed into RAM.
 - **Live Diagnostic & Serial Event Console**: Embedded a collapsible dark terminal drawer logging timestamped emulator lifecycle events, BIOS execution, video mode transitions (text to VESA high-resolution), network asset download progress, and live serial output (`serial0-output-char`) from BIOS/Kernel.
 - **Aggressive Dynamic Cache-Busting Subsystem**: Implemented dynamic URL timestamps (`minixp.iso?v=Date.now()`, `v86.wasm?v=Date.now()`, `bios/seabios.bin?v=Date.now()`) and asset versioning query parameters (`app.js?v=5`, `style.css?v=5`) ensuring browsers immediately fetch fresh ISO images and scripts without relying on stale HTTP disk cache.
-- **Web Diablo Quick Launchers**: Integrated a top toolbar launcher button (`🪟 Mini XP`) and an interactive card in the Web File Manager modal (`Packaging/emscripten/index.html`) to launch the virtual machine in a dedicated tab.
+- **Web Diablo Quick Launchers**: Integrated a top toolbar launcher button (`🐧 Tiny Core Linux`) and an interactive card in the Web File Manager modal (`Packaging/emscripten/index.html`) to launch the virtual machine in a dedicated tab with `noopener,noreferrer` isolation.
 
 ### Diablo Nightmare Edition (Gothic Visual Remaster & QoL Features)
 

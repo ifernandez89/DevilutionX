@@ -105,9 +105,11 @@ def run(port=PORT):
     
     with ThreadedTCPServer(("", port), handler) as httpd:
         print(f"\n========================================================")
-        print(f"  Mini Windows XP - Entorno WebAssembly (v86)")
-        print(f"  Servidor Multihilo en: http://localhost:{port}")
-        print(f"  Soporte HTTP Range + Telemetría Concurrente Activada")
+        print(f"  Retro Virtual PC & WASM Lab (v86)")
+        print(f"  Servidor iniciado en: http://localhost:{port}")
+        print(f"  Soporte HTTP Range (206) + Multihilo Activado")
+        print(f"  Presiona Ctrl+C para detener el servidor")
+
         print(f"========================================================\n")
         try:
             httpd.serve_forever()

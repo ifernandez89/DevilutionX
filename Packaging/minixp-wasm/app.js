@@ -1,5 +1,5 @@
 /**
- * Retro Virtual PC & MiniXP — WebAssembly Runtime Controller
+ * Retro Virtual PC & Tiny Core Linux — WebAssembly Runtime Controller
  */
 
 let emulator = null;
@@ -14,8 +14,6 @@ const hwProfileText = document.getElementById("hw_profile_text");
 const btnStart = document.getElementById("btn_start");
 const btnPause = document.getElementById("btn_pause");
 const btnReset = document.getElementById("btn_reset");
-const btnToggleTouch = document.getElementById("btn_toggle_touch");
-const touchGamepad = document.getElementById("touch_gamepad");
 const btnSaveState = document.getElementById("btn_save_state");
 const btnLoadStateTrigger = document.getElementById("btn_load_state_trigger");
 const inputLoadState = document.getElementById("input_load_state");
@@ -31,6 +29,13 @@ const consoleLog = document.getElementById("console_log");
 const btnToggleLog = document.getElementById("btn_toggle_log");
 const btnClearLog = document.getElementById("btn_clear_log");
 
+// Gamepad UI Elements
+const btnToggleGamepad = document.getElementById("btn_toggle_gamepad");
+const gamepadOverlay = document.getElementById("gamepad_overlay");
+const btnToggleFkeys = document.getElementById("btn_toggle_fkeys");
+const gamepadFkeysBar = document.getElementById("gamepad_fkeys_bar");
+const btnToggleProfile = document.getElementById("btn_toggle_profile");
+
 // OS Configurations Registry
 const OS_PROFILES = {
     tinycore_retro: {
@@ -40,6 +45,15 @@ const OS_PROFILES = {
         boot_order: 0x123,                    // CD-ROM
         media_type: "cdrom",
         media_url: "tinycore-retro.iso",
+        acpi: false
+    },
+    tinycore: {
+        name: "Tiny Core Linux (Base GUI LiveCD)",
+        memory_size: 128 * 1024 * 1024,
+        vga_memory_size: 8 * 1024 * 1024,
+        boot_order: 0x123,
+        media_type: "cdrom",
+        media_url: "tinycore.iso",
         acpi: false
     },
     win31: {
@@ -86,6 +100,93 @@ const OS_PROFILES = {
         media_type: "cdrom",
         media_url: "minixp.iso",
         acpi: false
+    }
+};
+
+// Hardware Scancodes Table (Make / Break)
+const SCANCODES = {
+    ESC:    { make: [0x01], break: [0x81] },
+    TAB:    { make: [0x0F], break: [0x8F] },
+    SPACE:  { make: [0x39], break: [0xB9] },
+    LCTRL:  { make: [0x1D], break: [0x9D] },
+    LALT:   { make: [0x38], break: [0xB8] },
+    LSHIFT: { make: [0x2A], break: [0xAA] },
+    ENTER:  { make: [0x1C], break: [0x9C] },
+    UP:     { make: [0xE0, 0x48], break: [0xE0, 0xC8] },
+    DOWN:   { make: [0xE0, 0x50], break: [0xE0, 0xD0] },
+    LEFT:   { make: [0xE0, 0x4B], break: [0xE0, 0xCB] },
+    RIGHT:  { make: [0xE0, 0x4D], break: [0xE0, 0xCD] },
+    W:      { make: [0x11], break: [0x91] },
+    A:      { make: [0x1E], break: [0x9E] },
+    S:      { make: [0x1F], break: [0x9F] },
+    D:      { make: [0x20], break: [0xA0] },
+    F1:     { make: [0x3B], break: [0xBB] },
+    F2:     { make: [0x3C], break: [0xBC] },
+    F3:     { make: [0x3D], break: [0xBD] },
+    F4:     { make: [0x3E], break: [0xBE] },
+    F5:     { make: [0x3F], break: [0xBF] },
+    "1":    { make: [0x02], break: [0x82] },
+    "2":    { make: [0x03], break: [0x83] },
+    "3":    { make: [0x04], break: [0x84] },
+    "4":    { make: [0x05], break: [0x85] },
+    Y:      { make: [0x15], break: [0x95] },
+    N:      { make: [0x31], break: [0xB1] }
+};
+
+// Control Profiles
+const CONTROL_PROFILES = [
+    { name: "🎮 WASD", dpad: { UP: "W", DOWN: "S", LEFT: "A", RIGHT: "D" } },
+    { name: "🏹 Flechas", dpad: { UP: "UP", DOWN: "DOWN", LEFT: "LEFT", RIGHT: "RIGHT" } }
+];
+let currentProfileIdx = 0;
+
+// Input Mapper Engine
+const InputMapper = {
+    activeKeys: new Set(),
+
+    sendKey(keyName, isDown) {
+        if (!emulator) return;
+
+        let scancodeKey = keyName;
+        const profile = CONTROL_PROFILES[currentProfileIdx];
+        if (profile.dpad[keyName]) {
+            scancodeKey = profile.dpad[keyName];
+        }
+
+        const codes = SCANCODES[scancodeKey];
+        if (codes) {
+            try {
+                const bytes = isDown ? codes.make : codes.break;
+                if (emulator.keyboard_send_scancodes) {
+                    emulator.keyboard_send_scancodes(bytes);
+                } else if (emulator.v86 && emulator.v86.keyboard_send_scancodes) {
+                    emulator.v86.keyboard_send_scancodes(bytes);
+                }
+            } catch (err) {}
+        }
+
+        // Also trigger synthetic event for maximum compatibility
+        const evtType = isDown ? "keydown" : "keyup";
+        const evt = new KeyboardEvent(evtType, { key: keyName, code: keyName, bubbles: true });
+        window.dispatchEvent(evt);
+    },
+
+    press(keyName) {
+        if (this.activeKeys.has(keyName)) return;
+        this.activeKeys.add(keyName);
+        this.sendKey(keyName, true);
+    },
+
+    release(keyName) {
+        if (!this.activeKeys.has(keyName)) return;
+        this.activeKeys.delete(keyName);
+        this.sendKey(keyName, false);
+    },
+
+    releaseAll() {
+        for (const key of Array.from(this.activeKeys)) {
+            this.release(key);
+        }
     }
 };
 
@@ -215,20 +316,19 @@ function initEmulator(customBuffer = null) {
             }
         });
 
-        let serialBuffer = "";
-        function handleSerialChar(c) {
-            if (c === "\n") {
-                if (serialBuffer.trim().length > 0) {
-                    logDiagnostic(`[TTY/COM1] ${serialBuffer}`, "info");
-                }
-                serialBuffer = "";
-            } else if (c !== "\r") {
-                serialBuffer += c;
-            }
-        }
-
+        let serialLineBuffer = "";
         emulator.add_listener("serial0-output-char", function(char) {
-            handleSerialChar(typeof char === "string" ? char : String.fromCharCode(char));
+            const c = typeof char === "string" ? char : String.fromCharCode(char);
+            if (c === "\n") {
+                if (serialLineBuffer.trim().length > 0) {
+                    if (serialLineBuffer.includes("Linux") || serialLineBuffer.includes("Boot") || serialLineBuffer.includes("TC")) {
+                        logDiagnostic(`[Kernel] ${serialLineBuffer.trim()}`, "info");
+                    }
+                }
+                serialLineBuffer = "";
+            } else if (c !== "\r" && serialLineBuffer.length < 120) {
+                serialLineBuffer += c;
+            }
         });
 
         emulator.add_listener("ide-read-start", function() {
@@ -237,6 +337,34 @@ function initEmulator(customBuffer = null) {
 
         emulator.add_listener("ide-read-end", function() {
             triggerDiskActivity(16);
+        });
+
+        let lastInstructions = 0;
+        const telemetryInterval = setInterval(() => {
+            if (!emulator || !isRunning || isPaused) return;
+            try {
+                if (emulator.v86 && emulator.v86.cpu) {
+                    const currentInstr = emulator.v86.cpu.instruction_counter || 0;
+                    const diff = currentInstr - lastInstructions;
+                    lastInstructions = currentInstr;
+                    if (diff > 0 && diskStatusText && !diskLed.classList.contains("active")) {
+                        const mips = (diff / 1000000).toFixed(1);
+                        diskStatusText.textContent = `CPU x86: Procesando (${mips} MIPS)`;
+                    }
+                }
+            } catch (ex) {}
+        }, 1000);
+
+        emulator.add_listener("emulator-stopped", function() {
+            isRunning = false;
+            isPaused = false;
+            clearInterval(telemetryInterval);
+            updateStatus("Emulador Detenido", "");
+            logDiagnostic("Emulador detenido.", "warn");
+            btnStart.disabled = false;
+            btnPause.disabled = true;
+            btnReset.disabled = true;
+            btnSaveState.disabled = true;
         });
 
     } catch (err) {
@@ -289,53 +417,73 @@ btnReset.addEventListener("click", () => {
     }
 });
 
-// Touch Gamepad Toggle
-if (btnToggleTouch && touchGamepad) {
-    btnToggleTouch.addEventListener("click", () => {
-        const isHidden = touchGamepad.style.display === "none";
-        touchGamepad.style.display = isHidden ? "flex" : "none";
-        btnToggleTouch.classList.toggle("btn-active", isHidden);
-        logDiagnostic(`Controles táctiles ${isHidden ? 'activados' : 'desactivados'}.`, "info");
+// Gamepad UI Toggles & Actions
+if (btnToggleGamepad && gamepadOverlay) {
+    btnToggleGamepad.addEventListener("click", () => {
+        const isHidden = gamepadOverlay.style.display === "none";
+        gamepadOverlay.style.display = isHidden ? "flex" : "none";
+        btnToggleGamepad.classList.toggle("btn-active", isHidden);
     });
 }
 
-// Dispatch Synthetic Keyboard Events to v86
-function triggerKey(key, type) {
-    const event = new KeyboardEvent(type, {
-        key: key,
-        code: key,
-        bubbles: true,
-        cancelable: true
+if (btnToggleFkeys && gamepadFkeysBar) {
+    btnToggleFkeys.addEventListener("click", () => {
+        const isHidden = gamepadFkeysBar.style.display === "none";
+        gamepadFkeysBar.style.display = isHidden ? "flex" : "none";
+        btnToggleFkeys.classList.toggle("active", isHidden);
     });
-    window.dispatchEvent(event);
 }
 
-// Wire Touch Buttons
-document.querySelectorAll(".touch-gamepad button").forEach(btn => {
-    const key = btn.getAttribute("data-key");
-    if (!key) return;
+if (btnToggleProfile) {
+    btnToggleProfile.addEventListener("click", () => {
+        currentProfileIdx = (currentProfileIdx + 1) % CONTROL_PROFILES.length;
+        btnToggleProfile.textContent = CONTROL_PROFILES[currentProfileIdx].name;
+    });
+}
 
-    btn.addEventListener("touchstart", (e) => {
+// Attach Touch & Mouse Handlers to Gamepad Buttons
+function attachKeyButton(elem, keyName) {
+    if (!elem) return;
+
+    const startHandler = (e) => {
         e.preventDefault();
-        btn.classList.add("pressed");
-        triggerKey(key, "keydown");
-    });
+        elem.classList.add("pressed");
+        InputMapper.press(keyName);
+    };
 
-    btn.addEventListener("touchend", (e) => {
+    const endHandler = (e) => {
         e.preventDefault();
-        btn.classList.remove("pressed");
-        triggerKey(key, "keyup");
-    });
+        elem.classList.remove("pressed");
+        InputMapper.release(keyName);
+    };
 
-    btn.addEventListener("mousedown", (e) => {
-        btn.classList.add("pressed");
-        triggerKey(key, "keydown");
-    });
+    elem.addEventListener("touchstart", startHandler, { passive: false });
+    elem.addEventListener("touchend", endHandler, { passive: false });
+    elem.addEventListener("touchcancel", endHandler, { passive: false });
+    elem.addEventListener("mousedown", startHandler);
+    elem.addEventListener("mouseup", endHandler);
+    elem.addEventListener("mouseleave", endHandler);
+}
 
-    btn.addEventListener("mouseup", (e) => {
-        btn.classList.remove("pressed");
-        triggerKey(key, "keyup");
-    });
+document.querySelectorAll("[data-key]").forEach(btn => {
+    attachKeyButton(btn, btn.getAttribute("data-key"));
+});
+
+document.querySelectorAll("[data-dpad]").forEach(btn => {
+    attachKeyButton(btn, btn.getAttribute("data-dpad"));
+});
+
+const ACTION_MAP = {
+    FIRE: "LCTRL",
+    USE: "SPACE",
+    RUN: "LSHIFT",
+    ENTER: "ENTER"
+};
+
+document.querySelectorAll("[data-action]").forEach(btn => {
+    const act = btn.getAttribute("data-action");
+    const key = ACTION_MAP[act] || act;
+    attachKeyButton(btn, key);
 });
 
 // Save State

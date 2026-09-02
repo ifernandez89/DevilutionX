@@ -42,14 +42,18 @@ const OS_PROFILES = {
         name: "Retro PC (Tiny Core Linux 15.x + DOSBox + Doom + Tree + EmelFM)",
         memory_size: 128 * 1024 * 1024,      // 128 MB RAM
         vga_memory_size: 8 * 1024 * 1024,     // 8 MB VRAM VESA
-        boot_order: 0x123,                    // CD-ROM
+        boot_order: 0x123,                    // CD-ROM first
         media_type: "cdrom",
         media_url: "tinycore-retro.iso",
         bzimage: "vmlinuz",
         initrd: "core.gz",
-        cmdline: "loglevel=3 cde waitusb=5",
+        // cde     = load extensions from CD-ROM (/dev/sr0)
+        // waitusb = extra wait time for device to appear in emulated env
+        // vga=    = VESA framebuffer (788 = 800x600x16, 791 = 1024x768x16)
+        cmdline: "root=/dev/sr0 loglevel=3 cde waitusb=5 vga=788 quiet",
         acpi: false
     },
+
 
     tinycore: {
         name: "Tiny Core Linux (Base GUI LiveCD)",
@@ -266,13 +270,19 @@ function initEmulator(customBuffer = null) {
     };
 
     if (profile.bzimage && profile.initrd) {
+        // Direct kernel boot: v86 loads the kernel + initrd bypassing BIOS/ISOLINUX
         config.bzimage = { url: `${profile.bzimage}?v=${cacheBuster}` };
-        config.initrd = { url: `${profile.initrd}?v=${cacheBuster}` };
+        config.initrd  = { url: `${profile.initrd}?v=${cacheBuster}` };
         config.cmdline = profile.cmdline || "loglevel=3 cde waitusb=5";
-        logDiagnostic(`[DIRECT BOOT] Kernel: ${profile.bzimage} • Initrd: ${profile.initrd} • Cmdline: ${config.cmdline}`, "info");
-    }
+        logDiagnostic(`[DIRECT BOOT] Kernel: ${profile.bzimage} | Initrd: ${profile.initrd} | Cmdline: ${config.cmdline}`, "info");
 
-    if (customBuffer) {
+        // CRITICAL: Tiny Core 'cde' mode still needs the ISO on /dev/sr0 to load .tcz extensions
+        // Always mount the ISO as cdrom even in direct-boot mode
+        if (!customBuffer && profile.media_url) {
+            config.cdrom = { url: `${profile.media_url}?v=${cacheBuster}` };
+            logDiagnostic(`[CDROM] Montando ISO para extensiones CDE: ${profile.media_url}`, "info");
+        }
+    } else if (customBuffer) {
         config.cdrom = { buffer: customBuffer };
         logDiagnostic("Iniciando con imagen personalizada cargada por el usuario...", "info");
     } else if (profile.media_type && profile.media_url) {
@@ -280,12 +290,18 @@ function initEmulator(customBuffer = null) {
         logDiagnostic(`Iniciando ${profile.name}...`, "info");
     }
 
+    if (customBuffer && profile.bzimage) {
+        // If user loads a custom ISO + direct boot kernel, use it as cdrom
+        config.cdrom = { buffer: customBuffer };
+    }
 
     try {
-        const ramMb = (config.memory_size / (1024 * 1024)).toFixed(0);
+        const ramMb  = (config.memory_size     / (1024 * 1024)).toFixed(0);
         const vramMb = (config.vga_memory_size / (1024 * 1024)).toFixed(0);
+        const medio  = config.cdrom ? "CDROM" : (profile.media_type || "?").toUpperCase();
+        const url    = profile.media_url || "(buffer)";
 
-        logDiagnostic(`[CONFIG] ${ramMb} MB RAM • ${vramMb} MB VRAM • Medio: ${profile.media_type.toUpperCase()} (${profile.media_url})`, "info");
+        logDiagnostic(`[CONFIG] ${ramMb} MB RAM • ${vramMb} MB VRAM • Medio: ${medio} (${url})`, "info");
 
         emulator = createV86Instance(config);
 

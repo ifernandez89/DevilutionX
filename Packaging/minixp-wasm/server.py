@@ -77,21 +77,42 @@ class WasmRangeHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                 self.wfile.write(chunk)
                 bytes_to_send -= len(chunk)
 
+    def do_POST(self):
+        if self.path == "/api/telemetry":
+            content_length = int(self.headers.get('Content-Length', 0))
+            post_data = self.rfile.read(content_length).decode('utf-8', errors='ignore')
+            log_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "telemetry.log")
+            with open(log_path, "a", encoding="utf-8") as f:
+                f.write(post_data + "\n")
+            print(f"[TELEMETRY] {post_data}")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.end_headers()
+            self.wfile.write(b'{"status":"ok"}')
+            return
+        self.send_response(404)
+        self.end_headers()
+
+class ThreadedTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
+    daemon_threads = True
+    allow_reuse_address = True
+
 def run(port=PORT):
     dir_path = os.path.dirname(os.path.abspath(__file__))
     os.chdir(dir_path)
     
     handler = WasmRangeHTTPRequestHandler
-    socketserver.TCPServer.allow_reuse_address = True
     
-    with socketserver.TCPServer(("", port), handler) as httpd:
+    with ThreadedTCPServer(("", port), handler) as httpd:
         print(f"\n========================================================")
         print(f"  Mini Windows XP - Entorno WebAssembly (v86)")
-        print(f"  Servidor iniciado en: http://localhost:{port}")
-        print(f"  Presiona Ctrl+C para detener el servidor")
+        print(f"  Servidor Multihilo en: http://localhost:{port}")
+        print(f"  Soporte HTTP Range + Telemetría Concurrente Activada")
         print(f"========================================================\n")
         try:
             httpd.serve_forever()
+        except KeyboardInterrupt:
+            print("\nServidor detenido.")
         except KeyboardInterrupt:
             print("\nServidor detenido.")
 

@@ -6,24 +6,32 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Mini Windows XP — WebAssembly Edition</title>
-    <link rel="stylesheet" href="style.css?v=5">
-    <script src="https://cdn.jsdelivr.net/npm/v86@latest/build/libv86.js"></script>
-    <script>
-      if (typeof V86Starter === 'undefined' && typeof V86 === 'undefined') {
-        document.write('<script src="libv86.js?v=5"><\/script>');
-      }
-    </script>
+    <title>Retro Virtual PC & MiniXP — WebAssembly Edition</title>
+    <link rel="stylesheet" href="style.css?v=6">
+    <script src="libv86.js?v=21"></script>
 </head>
 <body>
     <!-- Top Header -->
     <header class="app-header">
         <div class="logo-area">
             <span class="logo-badge">WASM x86</span>
-            <h1 class="logo-title">Mini Windows <span>XP</span> Live Edition</h1>
+            <h1 class="logo-title">Retro Virtual <span>PC</span> Live</h1>
         </div>
 
         <div class="toolbar">
+            <!-- OS Profile Selector -->
+            <div class="profile-selector-container">
+                <label for="select_os_profile" class="os-label">Sistema:</label>
+                <select id="select_os_profile" class="select-os">
+                    <option value="tinycore_retro" selected>🕹️ Retro PC (Tiny Core Linux + DOSBox + Doom + Tree)</option>
+                    <option value="win31">🪟 Windows 3.11</option>
+                    <option value="windows30">🪟 Windows 3.0</option>
+                    <option value="freedos">💾 FreeDOS</option>
+                    <option value="kolibri">🐦 KolibriOS</option>
+                    <option value="minixp">💻 Mini Windows XP (Live CD)</option>
+                </select>
+            </div>
+
             <div class="status-badge">
                 <span class="status-dot" id="status_dot"></span>
                 <span id="status_text">Listo para iniciar</span>
@@ -34,12 +42,16 @@
                 Iniciar
             </button>
             <button class="btn" id="btn_pause" title="Pausar / Reanudar Emulación" disabled>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="16"></rect></svg>
                 Pausar
             </button>
             <button class="btn btn-danger" id="btn_reset" title="Reiniciar Máquina Virtual" disabled>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.65 6.35A7.958 7.958 0 0 0 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0 1 12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"></path></svg>
                 Reiniciar
+            </button>
+
+            <button class="btn" id="btn_toggle_touch" title="Activar/Desactivar Controles Táctiles">
+                🎮 Controles Touch
             </button>
 
             <button class="btn" id="btn_save_state" title="Guardar estado de la RAM a archivo" disabled>
@@ -49,11 +61,6 @@
                 📂 Cargar Estado
             </button>
             <input type="file" id="input_load_state" accept=".bin">
-
-            <button class="btn" id="btn_custom_iso_trigger" title="Cargar otra ISO de arranque">
-                💿 Cargar ISO
-            </button>
-            <input type="file" id="input_custom_iso" accept=".iso,.img">
 
             <button class="btn" id="btn_fullscreen" title="Pantalla Completa">
                 ⛶ Pantalla Completa
@@ -71,17 +78,38 @@
             <div class="hint-overlay" id="hint_overlay">
                 🖱️ Haz clic en la pantalla para capturar el ratón (Presiona <strong>ESC</strong> para liberarlo)
             </div>
+
+            <!-- Virtual Touch Gamepad Overlay (Mobile & Tablet friendly) -->
+            <div class="touch-gamepad" id="touch_gamepad" style="display: none;">
+                <div class="dpad">
+                    <button class="dpad-btn dpad-up" data-key="ArrowUp">▲</button>
+                    <button class="dpad-btn dpad-left" data-key="ArrowLeft">◀</button>
+                    <button class="dpad-btn dpad-right" data-key="ArrowRight">▶</button>
+                    <button class="dpad-btn dpad-down" data-key="ArrowDown">▼</button>
+                </div>
+                <div class="action-buttons">
+                    <div class="btn-group-top">
+                        <button class="touch-btn key-esc" data-key="Escape">ESC</button>
+                        <button class="touch-btn key-enter" data-key="Enter">ENTER</button>
+                    </div>
+                    <div class="btn-group-main">
+                        <button class="touch-btn key-ctrl" data-key="Control">CTRL (Fire)</button>
+                        <button class="touch-btn key-space" data-key="Space">SPACE (Open)</button>
+                        <button class="touch-btn key-alt" data-key="Alt">ALT (Strafe)</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Compact Modern Status & Hardware Strip -->
         <div class="system-status-bar">
             <div class="hw-spec">
                 <span class="hw-label">PC Emulada:</span>
-                <span class="hw-val">Standard PC (x86 32-bit • No-ACPI) • 256 MB RAM • VGA VBE • CD-ROM IDE</span>
+                <span class="hw-val" id="hw_profile_text">Retro PC (Tiny Core Linux 15.x • 128 MB RAM • DOSBox + Doom + EmelFM)</span>
             </div>
             <div class="disk-activity-indicator" id="disk_led">
                 <span class="led-dot"></span>
-                <span id="disk_status_text">CD-ROM: Inactivo</span>
+                <span id="disk_status_text">Disco: Inactivo</span>
             </div>
             <button class="btn btn-sm btn-ghost" id="btn_toggle_log" title="Mostrar/Ocultar Consola de Diagnóstico">
                 📋 Consola de Eventos
@@ -95,11 +123,11 @@
                 <button class="btn-icon" id="btn_clear_log" title="Limpiar Consola">🗑️</button>
             </div>
             <div class="console-body" id="console_log">
-                <div class="log-line log-info">[00:00:00] Sistema inicializado. Presiona "Iniciar" o espera el auto-arranque.</div>
+                <div class="log-line log-info">[00:00:00] Sistema inicializado. Selecciona un SO o presiona Iniciar.</div>
             </div>
         </section>
     </main>
 
-    <script src="app.js?v=7"></script>
+    <script src="app.js?v=25"></script>
 </body>
 </html>

@@ -384,3 +384,143 @@ input[type="file"] {
     border-color: #58a6ff;
     box-shadow: 0 0 20px rgba(88, 166, 255, 0.4);
 }
+
+/* OS Profile Selector */
+.profile-selector-container {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--bg-surface-elevated);
+    padding: 2px 8px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border-color);
+}
+
+.os-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.select-os {
+    background: #0d1117;
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.select-os:hover, .select-os:focus {
+    border-color: #58a6ff;
+}
+
+.btn-active {
+    background: #238636 !important;
+    border-color: #2ea043 !important;
+    color: white !important;
+}
+
+/* Virtual Touch Gamepad Overlay */
+.touch-gamepad {
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    right: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    pointer-events: none;
+    z-index: 50;
+    user-select: none;
+}
+
+.touch-gamepad button {
+    pointer-events: auto;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* D-Pad */
+.dpad {
+    position: relative;
+    width: 140px;
+    height: 140px;
+}
+
+.dpad-btn {
+    position: absolute;
+    width: 44px;
+    height: 44px;
+    background: rgba(30, 41, 59, 0.75);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    color: #fff;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+    cursor: pointer;
+    transition: background 0.1s, transform 0.1s;
+}
+
+.dpad-btn:active, .dpad-btn.pressed {
+    background: rgba(88, 166, 255, 0.85);
+    transform: scale(0.92);
+}
+
+.dpad-up { top: 0; left: 48px; }
+.dpad-down { bottom: 0; left: 48px; }
+.dpad-left { top: 48px; left: 0; }
+.dpad-right { top: 48px; right: 0; }
+
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-end;
+}
+
+.btn-group-top {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-group-main {
+    display: flex;
+    gap: 8px;
+}
+
+.touch-btn {
+    background: rgba(30, 41, 59, 0.75);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    color: #fff;
+    font-weight: 700;
+    font-size: 12px;
+    padding: 10px 14px;
+    backdrop-filter: blur(4px);
+    cursor: pointer;
+    transition: background 0.1s, transform 0.1s;
+}
+
+.touch-btn:active, .touch-btn.pressed {
+    background: rgba(224, 68, 68, 0.85);
+    transform: scale(0.92);
+}
+
+.key-ctrl {
+    background: rgba(220, 38, 38, 0.75);
+}
+
+.key-space {
+    background: rgba(37, 99, 235, 0.75);
+}
+

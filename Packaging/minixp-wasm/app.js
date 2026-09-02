@@ -1,5 +1,5 @@
 /**
- * Mini Windows XP — WebAssembly Runtime Controller
+ * Retro Virtual PC & MiniXP — WebAssembly Runtime Controller
  */
 
 let emulator = null;
@@ -9,14 +9,16 @@ let bytesReadTotal = 0;
 let diskLedTimer = null;
 
 // DOM Elements
+const selectOsProfile = document.getElementById("select_os_profile");
+const hwProfileText = document.getElementById("hw_profile_text");
 const btnStart = document.getElementById("btn_start");
 const btnPause = document.getElementById("btn_pause");
 const btnReset = document.getElementById("btn_reset");
+const btnToggleTouch = document.getElementById("btn_toggle_touch");
+const touchGamepad = document.getElementById("touch_gamepad");
 const btnSaveState = document.getElementById("btn_save_state");
 const btnLoadStateTrigger = document.getElementById("btn_load_state_trigger");
 const inputLoadState = document.getElementById("input_load_state");
-const btnCustomIsoTrigger = document.getElementById("btn_custom_iso_trigger");
-const inputCustomIso = document.getElementById("input_custom_iso");
 const btnFullscreen = document.getElementById("btn_fullscreen");
 const statusDot = document.getElementById("status_dot");
 const statusText = document.getElementById("status_text");
@@ -28,6 +30,64 @@ const diagnosticConsole = document.getElementById("diagnostic_console");
 const consoleLog = document.getElementById("console_log");
 const btnToggleLog = document.getElementById("btn_toggle_log");
 const btnClearLog = document.getElementById("btn_clear_log");
+
+// OS Configurations Registry
+const OS_PROFILES = {
+    tinycore_retro: {
+        name: "Retro PC (Tiny Core Linux 15.x + DOSBox + Doom + Tree + EmelFM)",
+        memory_size: 128 * 1024 * 1024,      // 128 MB RAM
+        vga_memory_size: 8 * 1024 * 1024,     // 8 MB VRAM VESA
+        boot_order: 0x123,                    // CD-ROM
+        media_type: "cdrom",
+        media_url: "tinycore-retro.iso",
+        acpi: false
+    },
+    win31: {
+        name: "Windows 3.11 for Workgroups (Virtual HD C:)",
+        memory_size: 64 * 1024 * 1024,
+        vga_memory_size: 8 * 1024 * 1024,
+        boot_order: 0x213,                    // Hard Drive
+        media_type: "hda",
+        media_url: "win31.img",
+        acpi: false
+    },
+    windows30: {
+        name: "Windows 3.0 (Virtual HD C:)",
+        memory_size: 32 * 1024 * 1024,
+        vga_memory_size: 4 * 1024 * 1024,
+        boot_order: 0x213,
+        media_type: "hda",
+        media_url: "windows30.img",
+        acpi: false
+    },
+    freedos: {
+        name: "FreeDOS 1.3 (Floppy A:)",
+        memory_size: 32 * 1024 * 1024,
+        vga_memory_size: 4 * 1024 * 1024,
+        boot_order: 0x312,
+        media_type: "fda",
+        media_url: "freedos.img",
+        acpi: false
+    },
+    kolibri: {
+        name: "KolibriOS (Floppy A:)",
+        memory_size: 64 * 1024 * 1024,
+        vga_memory_size: 8 * 1024 * 1024,
+        boot_order: 0x312,
+        media_type: "fda",
+        media_url: "kolibri.img",
+        acpi: false
+    },
+    minixp: {
+        name: "Mini Windows XP (Live CD)",
+        memory_size: 256 * 1024 * 1024,
+        vga_memory_size: 8 * 1024 * 1024,
+        boot_order: 0x123,
+        media_type: "cdrom",
+        media_url: "minixp.iso",
+        acpi: false
+    }
+};
 
 function formatTime() {
     const d = new Date();
@@ -53,12 +113,12 @@ function triggerDiskActivity(sectors = 1) {
     bytesReadTotal += sectors * 2048;
     const mb = (bytesReadTotal / (1024 * 1024)).toFixed(1);
     diskLed.classList.add("active");
-    diskStatusText.textContent = `CD-ROM: Leyendo (${mb} MB)`;
+    diskStatusText.textContent = `Disco: Leyendo (${mb} MB)`;
 
     clearTimeout(diskLedTimer);
     diskLedTimer = setTimeout(() => {
         diskLed.classList.remove("active");
-        diskStatusText.textContent = `CD-ROM: Inactivo (${mb} MB transferidos)`;
+        diskStatusText.textContent = `Disco: Inactivo (${mb} MB transferidos)`;
     }, 400);
 }
 
@@ -70,37 +130,50 @@ function createV86Instance(config) {
     return new V86Class(config);
 }
 
-function initEmulator(customCdromBuffer = null) {
+function initEmulator(customBuffer = null) {
     if (emulator) {
         emulator.destroy();
         emulator = null;
     }
 
     bytesReadTotal = 0;
-    updateStatus("Cargando BIOS y WebAssembly...", "paused");
-    logDiagnostic("Iniciando emulador x86 (256 MB RAM, SeaBIOS, VGABIOS)...", "info");
+    const profileKey = selectOsProfile ? selectOsProfile.value : "tinycore_retro";
+    const profile = OS_PROFILES[profileKey] || OS_PROFILES.tinycore_retro;
 
+    if (hwProfileText) {
+        hwProfileText.textContent = profile.name;
+    }
+
+    updateStatus(`Cargando ${profile.name.split(' ')[0]}...`, "paused");
+    
     const cacheBuster = Date.now();
     const config = {
         wasm_path: "v86.wasm?v=" + cacheBuster,
-        memory_size: 256 * 1024 * 1024,      // 256 MB RAM (Standard PC 1999)
-        vga_memory_size: 8 * 1024 * 1024,    // 8 MB VRAM Standard VGABIOS VBE
+        memory_size: profile.memory_size,
+        vga_memory_size: profile.vga_memory_size,
         screen_container: screenContainer,
         bios: { url: "bios/seabios.bin?v=" + cacheBuster },
         vga_bios: { url: "bios/vgabios.bin?v=" + cacheBuster },
+        boot_order: profile.boot_order,
+        disable_speaker: false,
         autostart: true,
         network_relay_url: null,
     };
 
-    if (customCdromBuffer) {
-        logDiagnostic("Cargando ISO personalizada desde búfer local...", "info");
-        config.cdrom = { buffer: customCdromBuffer };
+    if (customBuffer) {
+        config.cdrom = { buffer: customBuffer };
+        logDiagnostic("Iniciando con imagen personalizada cargada por el usuario...", "info");
     } else {
-        logDiagnostic("Cargando minixp.iso (Live PE WinPE)...", "info");
-        config.cdrom = { url: "minixp.iso?v=" + cacheBuster };
+        config[profile.media_type] = { url: `${profile.media_url}?v=${cacheBuster}` };
+        logDiagnostic(`Iniciando ${profile.name}...`, "info");
     }
 
     try {
+        const ramMb = (config.memory_size / (1024 * 1024)).toFixed(0);
+        const vramMb = (config.vga_memory_size / (1024 * 1024)).toFixed(0);
+
+        logDiagnostic(`[CONFIG] ${ramMb} MB RAM • ${vramMb} MB VRAM • Medio: ${profile.media_type.toUpperCase()} (${profile.media_url})`, "info");
+
         emulator = createV86Instance(config);
 
         emulator.add_listener("download-progress", function(e) {
@@ -111,11 +184,16 @@ function initEmulator(customCdromBuffer = null) {
             }
         });
 
+        emulator.add_listener("download-error", function(e) {
+            logDiagnostic(`[ERROR DE DESCARGA] Falló la carga de: ${e.file_name || e.url || 'recurso'}`, "error");
+            updateStatus("Error de descarga", "paused");
+        });
+
         emulator.add_listener("emulator-ready", function() {
             isRunning = true;
             isPaused = false;
-            updateStatus("Ejecutando MiniXP", "running");
-            logDiagnostic("CPU virtual x86 inicializada (512 MB RAM, ACPI activo). Arrancando SeaBIOS...", "success");
+            updateStatus("En ejecución", "running");
+            logDiagnostic(`CPU virtual inicializada (${ramMb} MB RAM). Arrancando SeaBIOS...`, "success");
             btnStart.disabled = true;
             btnPause.disabled = false;
             btnReset.disabled = false;
@@ -128,12 +206,12 @@ function initEmulator(customCdromBuffer = null) {
             if (is_graphical) {
                 if (canvas) canvas.style.display = "block";
                 if (textDiv) textDiv.style.display = "none";
-                logDiagnostic("Modo de video gráfico VESA/VGA activado (Logo & Escritorio XP).", "success");
-                updateStatus("Windows XP Gráfico", "running");
+                logDiagnostic("Modo gráfico VESA/VGA activado (Escritorio GUI).", "success");
+                updateStatus("Modo Gráfico", "running");
             } else {
                 if (canvas) canvas.style.display = "none";
                 if (textDiv) textDiv.style.display = "block";
-                logDiagnostic("Modo de texto BIOS activo.", "info");
+                logDiagnostic("Modo de texto BIOS/Terminal activo.", "info");
             }
         });
 
@@ -141,7 +219,7 @@ function initEmulator(customCdromBuffer = null) {
         function handleSerialChar(c) {
             if (c === "\n") {
                 if (serialBuffer.trim().length > 0) {
-                    logDiagnostic(`[Kernel/COM1] ${serialBuffer}`, "info");
+                    logDiagnostic(`[TTY/COM1] ${serialBuffer}`, "info");
                 }
                 serialBuffer = "";
             } else if (c !== "\r") {
@@ -153,10 +231,6 @@ function initEmulator(customCdromBuffer = null) {
             handleSerialChar(typeof char === "string" ? char : String.fromCharCode(char));
         });
 
-        emulator.add_listener("serial0-output-byte", function(byte) {
-            handleSerialChar(String.fromCharCode(byte));
-        });
-
         emulator.add_listener("ide-read-start", function() {
             triggerDiskActivity(16);
         });
@@ -165,65 +239,25 @@ function initEmulator(customCdromBuffer = null) {
             triggerDiskActivity(16);
         });
 
-        // CPU Execution & Screen Telemetry Loop
-        let lastScreenText = "";
-        let lastInstructions = 0;
-        const telemetryInterval = setInterval(() => {
-            if (!emulator || !isRunning || isPaused) return;
-
-            // 1. Monitoreo de texto en pantalla
-            const textDiv = screenContainer.querySelector("div");
-            if (textDiv && textDiv.innerText) {
-                const currentText = textDiv.innerText.trim();
-                if (currentText && currentText !== lastScreenText) {
-                    const lines = currentText.split("\n").map(l => l.trim()).filter(Boolean);
-                    lines.forEach(l => {
-                        if (!lastScreenText.includes(l)) {
-                            logDiagnostic(`[Pantalla] ${l}`, "disk");
-                        }
-                    });
-                    lastScreenText = currentText;
-                }
-            }
-
-            // 2. Telemetría de CPU cuando el disco está inactivo (procesando en RAM)
-            try {
-                if (emulator.v86 && emulator.v86.cpu) {
-                    const currentInstr = emulator.v86.cpu.instruction_counter || 0;
-                    const diff = currentInstr - lastInstructions;
-                    lastInstructions = currentInstr;
-                    if (diff > 0 && !diskLed.classList.contains("active")) {
-                        const mips = (diff / 1000000).toFixed(1);
-                        diskStatusText.textContent = `CPU x86: Procesando Kernel en RAM (${mips} MIPS)`;
-                    }
-                }
-            } catch (ex) {
-                // ignore
-            }
-        }, 1000);
-
-        emulator.add_listener("emulator-stopped", function() {
-            isRunning = false;
-            isPaused = false;
-            clearInterval(telemetryInterval);
-            updateStatus("Emulador Detenido", "");
-            logDiagnostic("Emulador detenido.", "warn");
-            btnStart.disabled = false;
-            btnPause.disabled = true;
-            btnReset.disabled = true;
-            btnSaveState.disabled = true;
-        });
-
     } catch (err) {
-        console.error("Error al iniciar emulador v86:", err);
-        updateStatus("Error: " + err.message, "");
-        logDiagnostic("Error: " + err.message, "error");
+        logDiagnostic(`Error crítico al inicializar v86: ${err.message}`, "error");
+        updateStatus("Error de inicio", "paused");
     }
+}
+
+// OS Profile Selector Event
+if (selectOsProfile) {
+    selectOsProfile.addEventListener("change", () => {
+        logDiagnostic(`Cambiando a perfil: ${selectOsProfile.value}`, "warn");
+        initEmulator();
+    });
 }
 
 // Start Button
 btnStart.addEventListener("click", () => {
-    initEmulator();
+    if (!isRunning) {
+        initEmulator();
+    }
 });
 
 // Pause / Resume Button
@@ -233,14 +267,14 @@ btnPause.addEventListener("click", () => {
     if (isPaused) {
         emulator.run();
         isPaused = false;
-        btnPause.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg> Pausar';
-        updateStatus("Ejecutando MiniXP", "running");
+        btnPause.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="16"></rect></svg> Pausar`;
+        updateStatus("En ejecución", "running");
         logDiagnostic("Emulación reanudada.", "info");
     } else {
         emulator.stop();
         isPaused = true;
-        btnPause.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg> Reanudar';
-        updateStatus("Emulación Pausada", "paused");
+        btnPause.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg> Reanudar`;
+        updateStatus("Pausado", "paused");
         logDiagnostic("Emulación pausada.", "warn");
     }
 });
@@ -255,17 +289,66 @@ btnReset.addEventListener("click", () => {
     }
 });
 
-// Save State (Snapshot to File)
+// Touch Gamepad Toggle
+if (btnToggleTouch && touchGamepad) {
+    btnToggleTouch.addEventListener("click", () => {
+        const isHidden = touchGamepad.style.display === "none";
+        touchGamepad.style.display = isHidden ? "flex" : "none";
+        btnToggleTouch.classList.toggle("btn-active", isHidden);
+        logDiagnostic(`Controles táctiles ${isHidden ? 'activados' : 'desactivados'}.`, "info");
+    });
+}
+
+// Dispatch Synthetic Keyboard Events to v86
+function triggerKey(key, type) {
+    const event = new KeyboardEvent(type, {
+        key: key,
+        code: key,
+        bubbles: true,
+        cancelable: true
+    });
+    window.dispatchEvent(event);
+}
+
+// Wire Touch Buttons
+document.querySelectorAll(".touch-gamepad button").forEach(btn => {
+    const key = btn.getAttribute("data-key");
+    if (!key) return;
+
+    btn.addEventListener("touchstart", (e) => {
+        e.preventDefault();
+        btn.classList.add("pressed");
+        triggerKey(key, "keydown");
+    });
+
+    btn.addEventListener("touchend", (e) => {
+        e.preventDefault();
+        btn.classList.remove("pressed");
+        triggerKey(key, "keyup");
+    });
+
+    btn.addEventListener("mousedown", (e) => {
+        btn.classList.add("pressed");
+        triggerKey(key, "keydown");
+    });
+
+    btn.addEventListener("mouseup", (e) => {
+        btn.classList.remove("pressed");
+        triggerKey(key, "keyup");
+    });
+});
+
+// Save State
 btnSaveState.addEventListener("click", () => {
     if (!emulator || !isRunning) return;
 
     updateStatus("Generando Snapshot...", "paused");
-    logDiagnostic("Guardando estado completo de la memoria RAM a archivo...", "info");
+    logDiagnostic("Guardando estado de la memoria RAM a archivo...", "info");
 
     emulator.save_state(function(error, state_data) {
         if (error) {
             alert("Error al guardar estado: " + error.message);
-            updateStatus("Ejecutando MiniXP", "running");
+            updateStatus("En ejecución", "running");
             logDiagnostic("Fallo al guardar estado: " + error.message, "error");
             return;
         }
@@ -274,7 +357,7 @@ btnSaveState.addEventListener("click", () => {
         const url = URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
-        a.download = `minixp_state_${Date.now()}.bin`;
+        a.download = `retropc_state_${Date.now()}.bin`;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
@@ -302,81 +385,10 @@ inputLoadState.addEventListener("change", (e) => {
             updateStatus("Estado restaurado", "running");
             logDiagnostic("Estado de RAM restaurado en emulador activo.", "success");
         } else {
-            const config = {
-                wasm_path: "v86.wasm",
-                memory_size: 256 * 1024 * 1024,
-                vga_memory_size: 8 * 1024 * 1024,
-                screen_container: screenContainer,
-                bios: { url: "bios/seabios.bin" },
-                vga_bios: { url: "bios/vgabios.bin" },
-                initial_state: { buffer: reader.result },
-                autostart: true,
-            };
-            emulator = createV86Instance(config);
-            updateStatus("Estado restaurado", "running");
-            logDiagnostic("Emulador iniciado con snapshot restaurado.", "success");
-            btnStart.disabled = true;
-            btnPause.disabled = false;
-            btnReset.disabled = false;
-            btnSaveState.disabled = false;
+            initEmulator();
         }
     };
     reader.readAsArrayBuffer(file);
-});
-
-// Load Custom ISO Trigger
-btnCustomIsoTrigger.addEventListener("click", () => {
-    inputCustomIso.click();
-});
-
-inputCustomIso.addEventListener("change", (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    updateStatus(`Cargando ${file.name}...`, "paused");
-    logDiagnostic(`Cargando ISO local: ${file.name} (${(file.size / (1024 * 1024)).toFixed(1)} MB)...`, "info");
-    const reader = new FileReader();
-    reader.onload = function() {
-        initEmulator(reader.result);
-    };
-    reader.readAsArrayBuffer(file);
-});
-
-// Drag and Drop ISO Support
-screenWrapper.addEventListener("dragover", (e) => {
-    e.preventDefault();
-    screenWrapper.classList.add("dragover");
-});
-
-screenWrapper.addEventListener("dragleave", () => {
-    screenWrapper.classList.remove("dragover");
-});
-
-screenWrapper.addEventListener("drop", (e) => {
-    e.preventDefault();
-    screenWrapper.classList.remove("dragover");
-
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-        const file = e.dataTransfer.files[0];
-        if (file.name.endsWith(".iso") || file.name.endsWith(".img")) {
-            updateStatus(`Arrastrado: ${file.name}`, "paused");
-            logDiagnostic(`ISO arrastrada: ${file.name} (${(file.size / (1024 * 1024)).toFixed(1)} MB)...`, "info");
-            const reader = new FileReader();
-            reader.onload = function() {
-                initEmulator(reader.result);
-            };
-            reader.readAsArrayBuffer(file);
-        } else if (file.name.endsWith(".bin")) {
-            const reader = new FileReader();
-            reader.onload = function() {
-                if (emulator) {
-                    emulator.restore_state(reader.result);
-                    logDiagnostic("Snapshot arrastrado restaurado.", "success");
-                }
-            };
-            reader.readAsArrayBuffer(file);
-        }
-    }
 });
 
 // Fullscreen Button
@@ -412,8 +424,8 @@ if (btnClearLog && consoleLog) {
     });
 }
 
-// Auto-start emulator on load
+// Auto-start on load
 window.addEventListener("DOMContentLoaded", () => {
-    logDiagnostic("Página cargada. Auto-iniciando emulador...", "info");
+    logDiagnostic("Página cargada. Iniciando Retro PC...", "info");
     initEmulator();
 });

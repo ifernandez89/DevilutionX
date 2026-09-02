@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Retro Virtual PC (Tiny Core Linux + DOSBox + Doom + Tree + EmelFM)
+
+#### Core Architecture & System Images
+- **Standalone Retro Virtual PC (`Packaging/minixp-wasm/tinycore-retro.iso`, 37 MB)**: Built a lightweight, fully autonomous Linux distribution powered by Tiny Core Linux 15.x x86 running inside `v86` WebAssembly. Boots directly into an interactive graphical desktop (Xvesa + FLWM + Wbar dock) in seconds.
+- **Embedded DOSBox Subsystem (`dosbox.tcz`, `libSDL.tcz`, `libasound.tcz`)**: Integrated official Tiny Core extensions preconfigured in `/cde/onboot.lst` for automatic mounting on boot with full Sound Blaster / AdLib audio and VESA/VGA video support.
+- **DOOM / Freedoom Phase 1 Integration**: Bundled full open-source IWAD assets (`freedoom1.wad`) in `/home/tc/games/doom/` with 1-click desktop launchers (`Play_Doom.sh`) and optimized DOSBox cycle configurations.
+- **GUI File Manager & CLI Diagnostic Tools**: Included `emelfm.tcz` (ultra-lightweight dual-pane GTK1 graphical file manager) and `tree.tcz` (hierarchical directory tree inspection in terminal).
+- **Persistent User Environment (`/cde/mydata.tgz`)**: Structured `/home/tc/` with preloaded `Desktop/`, `Games/`, `Documents/`, `Tools/` directories, documentation manuals (`README.txt`, `Retro_PC_Guide.txt`), and dock shortcuts in `.wbar`.
+
+#### Web Interface & Mobile Touch Gamepad
+- **Multi-OS Profile Selector**: Updated `index.html` and `app.js` with dynamic profile switching between **🕹️ Retro PC (Tiny Core)**, **💻 Mini Windows XP**, **🪟 Windows 3.11**, **🪟 Windows 3.0**, **💾 FreeDOS**, and **🐦 KolibriOS**.
+- **Virtual On-Screen Gamepad Overlay**: Added a touch gamepad overlay with D-Pad and dedicated action buttons (`CTRL` Fire, `SPACE` Open/Use, `ALT` Strafe, `ESC`, `ENTER`) mapping synthetic keyboard events directly to the v86 virtual CPU for seamless gameplay on smartphones and tablets.
+- **GitHub Actions CI/CD Automation (`.github/workflows/deploy-pages.yml`)**: Added automated ISO assembly steps (`build_retro_tinycore.py`, `fetch_freedoom.py`, `create_retro_iso.py`) to build and deploy the Retro PC image to GitHub Pages on every release commit.
+
 ### WebAssembly Virtualization Platform & Mini Windows XP Integration
 
 #### Hardware & Virtualization Architecture

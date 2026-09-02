@@ -7,20 +7,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-### 🔧 Hotfix — Boot Regression (2026-09-02)
+### 🔧 Fix & Hardening — Bootloader, Rock Ridge & GUI Integration (2026-09-02)
 
-#### Causa del Incidente
-- **Commit `0f24e1b`** introdujo arranque directo de kernel Linux (`bzimage` + `initrd`) en `app.js` para el perfil `tinycore_retro`, intentando evitar el error de checksum de ISOLINUX.
-- **Error resultante**: `Kernel panic - not syncing: Attempted to kill the idle task!` — El proceso `init` de Tiny Core en modo `cde` (CD Extensions) busca el disco CD-ROM `/dev/sr0` para montar las extensiones `.tcz`. Al arrancar con `bzimage`+`initrd` sin el CDROM adjunto, `init` no podía encontrar los paquetes, colapsaba, y el kernel entraba en pánico intentando matar su propio proceso idle.
-- **Commit `73c5731`** intentó corregir añadiendo el `cdrom` junto al `bzimage`, pero el `cmdline` (`root=/dev/sr0 cde waitusb=5`) no fue suficiente: la ISO generada por `create_retro_iso.py` no tiene el layout de raíz que `cde` mode espera encontrar en `/dev/sr0` con esa ruta.
+#### Causa Raíz de los Errores Resueltos
+1. **ISOLINUX Checksum Error / SeaBIOS Black Screen**:
+   - `pycdlib` corrompía los primeros 8 bytes de `isolinux.bin` al reescribir la ISO (reemplazando `FA EA 6C 7C...` con ceros/basura).
+   - El campo `Size` de la **Boot Info Table** de ISOLINUX requiere estrictamente el tamaño de `isolinux.bin` (**24.576 bytes** = `0x6000`) y no el tamaño de toda la ISO (36 MB). Al recibir 36 MB, ISOLINUX intentaba verificar checksum sobre memoria inexistente y colgaba el arranque.
+   - **Solución**: Se extrae `isolinux.bin` original desde `tinycore.iso` y se inyecta en el LBA exacto con la Boot Info Table matemática (`PVD=16`, `BootLBA=47`, `Size=24576`, `Checksum=0xF40E655E`).
 
-#### Resolución Aplicada
-- **Revert `ebfba8c`**: Se revirtieron completamente los commits `0f24e1b` y `73c5731` mediante `git revert --no-commit`, restaurando el perfil `tinycore_retro` a arranque puro por ISO (`media_type: "cdrom"`) sin `bzimage`/`initrd`, idéntico al estado funcional del commit de merge `0bc75ff`.
-- Se eliminaron los archivos `vmlinuz` y `core.gz` del repositorio (no se necesitan en la arquitectura actual).
-- **Arquitectura de arranque estable confirmada**: `v86` → `SeaBIOS` → `El Torito ISOLINUX` → `vmlinuz` + `core.gz` (contenidos en la ISO) → `Tiny Core init` → extensiones `.tcz` desde `/dev/sr0`.
+2. **Invalid or Corrupt Kernel Image**:
+   - Modificar una ISO existente con `pycdlib.open()` reservaba nuevos extents para `vmlinuz` y `core.gz` pero dejaba los sectores en `0x00`.
+   - **Solución**: En `build_perfect_retro_iso.py`, se extraen los bytes reales del kernel (`4d5aea07...` MZ) e initrd (`1f8b...` gzip) desde `tinycore.iso` y se agregan explícitamente mediante `add_fp()`.
 
-#### Lección Aprendida
-El modo `cde` de Tiny Core monta las extensiones directamente desde el CD-ROM usando el camino `/cde/optional/*.tcz` del filesystem ISO9660. El arranque directo `bzimage`+`initrd` en v86 requeriría una `initrd` especialmente construida que incluya todos los `.tcz` desempaquetados, no es compatible con la arquitectura `cde` sin un `rootfs` personalizado. No introducir `bzimage`/`initrd` sin validar en un entorno de staging separado.
+3. **Caída a Shell `tc@box:~$` sin GUI**:
+   - Las extensiones `.tcz` en la capa **Rock Ridge** de Linux deben preservar exactamente mayúsculas/minúsculas (`Xvesa.tcz`, `Xlibs.tcz`, `flwm.tcz`, `wbar.tcz`, `imlib2-bin.tcz`). Al forzarlas a mayúsculas ISO9660, `tce-load` no las encontraba.
+   - Faltaba `copy2fs.lst` en `/cde/`, necesario para que Tiny Core cargue las extensiones en RAM durante el booteo.
+   - **Solución**: Se preservan los nombres Rock Ridge exactos y se generan `onboot.lst`, `xbase.lst`, y `copy2fs.lst` completos.
+
+4. **Lanzadores de Wbar Dock y Configuración de DOSBox**:
+   - Se configuró `/home/tc/.dosbox/dosbox-0.74-3.conf` con `output=surface` (renderizado por software 2D, 100% compatible con `Xvesa`) evitando fallos de aceleración hardware OpenGL inexistente.
+   - Se agregaron accesos directos ejecutables en `/home/tc/Desktop/` (`Play_DOOM.sh`, `Start_DOSBox.sh`, `Tree_Explorer.sh`) y binarios globales `play_doom` y `dosbox_safe` en `$PATH`.
+
+5. **Incompatibilidad de GLIBC en paquetes TCZ (`GLIBC_2.38 not found`)**:
+   - `libasound.tcz` y `dosbox.tcz` se habían descargado inicialmente del repositorio 15.x (GLIBC 2.38), pero la ISO base de Tiny Core utiliza GLIBC 2.36.
+   - **Solución**: Se reemplazaron todas las extensiones TCZ por sus builds nativas y estables del repositorio oficial Tiny Core 14.x (`http://tinycorelinux.net/14.x/x86/tcz/`), compiladas exactamente para GLIBC 2.36.
+
+6. **Inyección de binarios completos de DOOM en Initramfs**:
+   - Se integraron `DOOM.exe` (motor DOS 8.4 MB) + `doom1.wad` (Shareware Episode 4.2 MB) + `freedoom1.wad` (28.8 MB) en `/home/tc/games/doom/` y `/etc/skel/games/doom/`.
+   - Se restauró el entorno de escritorio original de Tiny Core con su fondo característico y dock inferior centrado (`wbar.sh`).
+
 
 ### Retro Virtual PC (Tiny Core Linux + DOSBox + Doom + Tree + EmelFM)
 

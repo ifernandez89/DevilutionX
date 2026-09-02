@@ -67,7 +67,7 @@ jobs:
           pip install pycdlib
           python3 Packaging/minixp-wasm/build_retro_tinycore.py || true
           python3 Packaging/minixp-wasm/fetch_freedoom.py || true
-          python3 Packaging/minixp-wasm/create_retro_iso.py || true
+          python3 Packaging/minixp-wasm/build_perfect_retro_iso.py || true
           python3 tools/build_minixp_iso.py MiniXp Packaging/minixp-wasm/minixp.iso || true
           echo "Checking Packaging/minixp-wasm contents:"
           ls -la Packaging/minixp-wasm/

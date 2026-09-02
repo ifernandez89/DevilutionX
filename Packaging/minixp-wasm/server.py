@@ -10,7 +10,7 @@ import re
 import http.server
 import socketserver
 
-PORT = 8000
+PORT = 8085
 
 class WasmRangeHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
     protocol_version = "HTTP/1.1"

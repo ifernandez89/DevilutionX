@@ -40,7 +40,7 @@ const btnToggleProfile = document.getElementById("btn_toggle_profile");
 const OS_PROFILES = {
     tinycore_retro: {
         name: "Retro PC (Tiny Core Linux 15.x + DOSBox + Doom + Tree + EmelFM)",
-        memory_size: 128 * 1024 * 1024,      // 128 MB RAM
+        memory_size: 256 * 1024 * 1024,      // 256 MB RAM
         vga_memory_size: 8 * 1024 * 1024,     // 8 MB VRAM VESA
         boot_order: 0x123,                    // CD-ROM
         media_type: "cdrom",

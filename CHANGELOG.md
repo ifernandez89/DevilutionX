@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### 🔧 Hotfix — Boot Regression (2026-09-02)
+
+#### Causa del Incidente
+- **Commit `0f24e1b`** introdujo arranque directo de kernel Linux (`bzimage` + `initrd`) en `app.js` para el perfil `tinycore_retro`, intentando evitar el error de checksum de ISOLINUX.
+- **Error resultante**: `Kernel panic - not syncing: Attempted to kill the idle task!` — El proceso `init` de Tiny Core en modo `cde` (CD Extensions) busca el disco CD-ROM `/dev/sr0` para montar las extensiones `.tcz`. Al arrancar con `bzimage`+`initrd` sin el CDROM adjunto, `init` no podía encontrar los paquetes, colapsaba, y el kernel entraba en pánico intentando matar su propio proceso idle.
+- **Commit `73c5731`** intentó corregir añadiendo el `cdrom` junto al `bzimage`, pero el `cmdline` (`root=/dev/sr0 cde waitusb=5`) no fue suficiente: la ISO generada por `create_retro_iso.py` no tiene el layout de raíz que `cde` mode espera encontrar en `/dev/sr0` con esa ruta.
+
+#### Resolución Aplicada
+- **Revert `ebfba8c`**: Se revirtieron completamente los commits `0f24e1b` y `73c5731` mediante `git revert --no-commit`, restaurando el perfil `tinycore_retro` a arranque puro por ISO (`media_type: "cdrom"`) sin `bzimage`/`initrd`, idéntico al estado funcional del commit de merge `0bc75ff`.
+- Se eliminaron los archivos `vmlinuz` y `core.gz` del repositorio (no se necesitan en la arquitectura actual).
+- **Arquitectura de arranque estable confirmada**: `v86` → `SeaBIOS` → `El Torito ISOLINUX` → `vmlinuz` + `core.gz` (contenidos en la ISO) → `Tiny Core init` → extensiones `.tcz` desde `/dev/sr0`.
+
+#### Lección Aprendida
+El modo `cde` de Tiny Core monta las extensiones directamente desde el CD-ROM usando el camino `/cde/optional/*.tcz` del filesystem ISO9660. El arranque directo `bzimage`+`initrd` en v86 requeriría una `initrd` especialmente construida que incluya todos los `.tcz` desempaquetados, no es compatible con la arquitectura `cde` sin un `rootfs` personalizado. No introducir `bzimage`/`initrd` sin validar en un entorno de staging separado.
+
 ### Retro Virtual PC (Tiny Core Linux + DOSBox + Doom + Tree + EmelFM)
 
 #### Core Architecture & System Images

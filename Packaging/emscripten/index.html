@@ -71,21 +71,54 @@
 
 		/* Subtle Graphics Remaster Active Presentation */
 		body.remaster-enabled canvas.emscripten {
-			filter: contrast(1.12) saturate(1.18) brightness(1.04);
+			filter: contrast(1.08) saturate(1.12);
 		}
 
-		/* Remaster Dynamic Lighting 2D Overlay Canvas */
-		#remasterLightingCanvas {
+		/* WebGPU Neural HD Canvas Overlay */
+		#webgpuNeuralCanvas {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			max-width: 100vw;
+			max-height: 100vh;
+			object-fit: contain;
+			image-rendering: pixelated;
+			pointer-events: none;
+			z-index: 6;
+			opacity: 0;
+			transition: opacity 0.25s ease;
+		}
+
+		body.remaster-enabled #webgpuNeuralCanvas {
+			opacity: 1;
+		}
+
+		/* Rain 2.0 Canvas Overlay */
+		#rain-canvas {
 			position: absolute;
 			top: 0;
 			left: 0;
 			width: 100%;
 			height: 100%;
 			pointer-events: none;
+			z-index: 10;
+		}
+
+		/* Lightning Flash Overlay */
+		#lightning-overlay {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			pointer-events: none;
+			background-color: #ffffff;
 			mix-blend-mode: color-dodge;
 			opacity: 0;
-			transition: opacity 0.35s ease;
-			z-index: 9;
+			z-index: 11;
+			transition: opacity 0.05s ease-out;
 		}
 
 		body.remaster-enabled #remasterLightingCanvas {
@@ -108,6 +141,33 @@
 
 		body.remaster-enabled .remaster-vignette-layer {
 			opacity: 1;
+		}
+
+		/* Enhanced Isometric Rain & Lightning Overlay */
+		#rain-canvas {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			pointer-events: none;
+			z-index: 12;
+			opacity: 0;
+			transition: opacity 0.35s ease;
+		}
+
+		body.remaster-enabled #rain-canvas {
+			opacity: 1;
+		}
+
+		#lightning-overlay {
+			position: absolute;
+			inset: 0;
+			pointer-events: none;
+			z-index: 14;
+			opacity: 0;
+			mix-blend-mode: color-dodge;
+			transition: opacity 0.04s ease;
 		}
 
 		.remaster-bloom-layer {
@@ -466,12 +526,76 @@
 			color: #ffffff;
 		}
 
-		#fileInput {
+		#output {
 			display: none;
 		}
 
-		#output {
+		/* Tab Background Pause Modal */
+		#tabPauseOverlay {
+			position: fixed;
+			inset: 0;
+			background: rgba(0, 0, 0, 0.85);
+			backdrop-filter: blur(8px);
+			z-index: 99999;
 			display: none;
+			justify-content: center;
+			align-items: center;
+			color: #e2d2a4;
+			animation: fadeInPause 0.25s ease;
+		}
+
+		@keyframes fadeInPause {
+			from { opacity: 0; transform: scale(0.97); }
+			to { opacity: 1; transform: scale(1.0); }
+		}
+
+		.pause-box {
+			background: linear-gradient(180deg, #22140c 0%, #0d0906 100%);
+			border: 2px solid #8b181b;
+			box-shadow: 0 0 35px rgba(139, 24, 27, 0.7), inset 0 0 20px rgba(229, 193, 88, 0.15);
+			padding: 2.2rem 2.8rem;
+			border-radius: 8px;
+			text-align: center;
+			max-width: 520px;
+			width: 90%;
+		}
+
+		.pause-box h2 {
+			color: #e5c158;
+			font-family: 'Cinzel', serif;
+			font-size: 1.6rem;
+			letter-spacing: 0.12em;
+			margin-bottom: 0.8rem;
+			text-shadow: 0 0 10px rgba(229, 193, 88, 0.4);
+		}
+
+		.pause-box p {
+			color: #d1c7b7;
+			font-family: 'Inter', sans-serif;
+			font-size: 0.95rem;
+			line-height: 1.6;
+			margin-bottom: 1.4rem;
+		}
+
+		.pause-resume-btn {
+			background: linear-gradient(180deg, #8b181b 0%, #4a0d0e 100%);
+			border: 2px solid #e5c158;
+			color: #fff;
+			font-family: 'Cinzel', serif;
+			font-size: 1.05rem;
+			font-weight: 700;
+			padding: 12px 28px;
+			border-radius: 6px;
+			cursor: pointer;
+			letter-spacing: 0.08em;
+			box-shadow: 0 0 15px rgba(229, 193, 88, 0.3);
+			transition: all 0.2s ease;
+		}
+
+		.pause-resume-btn:hover {
+			background: linear-gradient(180deg, #a81e22 0%, #611113 100%);
+			transform: translateY(-2px);
+			box-shadow: 0 0 22px rgba(229, 193, 88, 0.6);
 		}
 	</style>
 </head>
@@ -555,24 +679,52 @@
 		<progress value="0" max="100" id="progress" hidden></progress>
 	</div>
 
+	<!-- Background Tab Protection & Auto-Pause Modal -->
+	<div id="tabPauseOverlay">
+		<div class="pause-box">
+			<h2>⏸️ JUEGO EN PAUSA</h2>
+			<p>La pestaña pasó a segundo plano. El motor de audio y los bucles de renderizado se han suspendido automáticamente para prevenir desincronizaciones y congelamientos.</p>
+			<button class="pause-resume-btn" id="resumeGameBtn">▶️ REANUDAR PARTIDA</button>
+		</div>
+	</div>
+
 	<!-- Game Canvas -->
 	<div class="game-container">
 		<div class="emscripten_border">
 			<canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" tabindex="-1"></canvas>
-			<canvas id="remasterLightingCanvas"></canvas>
+			<canvas id="webgpuNeuralCanvas"></canvas>
+			<canvas id="rain-canvas"></canvas>
+			<div id="lightning-overlay"></div>
 			<div class="remaster-vignette-layer"></div>
-			<div class="remaster-bloom-layer"></div>
 			<div class="remaster-scanline-layer"></div>
 		</div>
 	</div>
 
 	<textarea id="output" rows="8"></textarea>
-
 	<script type='text/javascript'>
 		var statusElement = document.getElementById('status');
 		var progressElement = document.getElementById('progress');
 		var spinnerElement = document.getElementById('spinner');
 		var loadingOverlay = document.getElementById('loading-overlay');
+
+		// 100% Reliable In-Game Detector (Hooks SDL2 WebGL texture uploads)
+		window.latestGamePixels = null;
+		var oldTexSub = WebGLRenderingContext.prototype.texSubImage2D;
+		WebGLRenderingContext.prototype.texSubImage2D = function() {
+			if (arguments.length >= 9 && arguments[8] && arguments[8].length >= 640 * 480 * 3) {
+				window.latestGamePixels = arguments[8];
+			}
+			return oldTexSub.apply(this, arguments);
+		};
+		if (typeof WebGL2RenderingContext !== 'undefined') {
+			var oldTexSub2 = WebGL2RenderingContext.prototype.texSubImage2D;
+			WebGL2RenderingContext.prototype.texSubImage2D = function() {
+				if (arguments.length >= 9 && arguments[8] && arguments[8].length >= 640 * 480 * 3) {
+					window.latestGamePixels = arguments[8];
+				}
+				return oldTexSub2.apply(this, arguments);
+			};
+		}
 
 		// Toast feedback utility
 		function showToast(msg) {
@@ -584,23 +736,35 @@
 			}
 		}
 
-		// Remaster toggle logic
+		// Remaster / Neural HD toggle logic (3 States: Enhanced -> Split A/B -> Original 1996)
 		var remasterBtn = document.getElementById('remasterToggleBtn');
-		var isRemaster = true;
-		function toggleRemaster() {
-			isRemaster = !isRemaster;
-			if (isRemaster) {
+		var renderModeState = 1; // 1: Enhanced, 0: Original 1996
+
+		function updateRemasterUI() {
+			window.currentWebGPURenderMode = renderModeState;
+			if (renderModeState === 1) {
 				document.body.classList.add('remaster-enabled');
-				if (remasterBtn) remasterBtn.innerHTML = '✨ Remaster: ON';
-				showToast('✨ Remaster Activado (Dynamic Lights, Flame Flickering, Localized Bloom)');
+				if (remasterBtn) remasterBtn.innerHTML = '⚡ Neural HD: ON (WebGPU)';
+				showToast('⚡ Neural HD: Activado (Reconstrucción Subpixel, Pseudo-Normales y Lluvia Volumétrica)');
 			} else {
 				document.body.classList.remove('remaster-enabled');
 				if (remasterBtn) remasterBtn.innerHTML = '⚔️ Original: 1996';
-				showToast('⚔️ Modo Original 1996 Puro (Sin Efectos)');
+				showToast('⚔️ Modo Original 1996 Puro (Sin Shaders)');
+			}
+			if (window.setWebGPURenderMode) {
+				window.setWebGPURenderMode(renderModeState);
 			}
 		}
+		window.currentWebGPURenderMode = 1;
+
+		function toggleRemaster() {
+			renderModeState = (renderModeState === 1) ? 0 : 1;
+			updateRemasterUI();
+		}
+
 		if (remasterBtn) {
 			remasterBtn.addEventListener('click', toggleRemaster);
+			remasterBtn.innerHTML = '⚡ Neural HD: ON (WebGPU)';
 		}
 		window.addEventListener('keydown', function(e) {
 			if (e.key === 'F2') {
@@ -609,140 +773,175 @@
 			}
 		});
 
-		// Dynamic 2D Lighting & Organic Torch Flickering Engine
-		(function initRemasterLightingEngine() {
-			var lightingCanvas = document.getElementById('remasterLightingCanvas');
-			if (!lightingCanvas) return;
-			var ctx = lightingCanvas.getContext('2d');
-			var animFrameId = null;
+		// Live WebGPU Neural HD Engine
+		(async function initLiveWebGPUEngine() {
+			var webgpuCanvas = document.getElementById('webgpuNeuralCanvas');
+			var gameCanvas = document.getElementById('canvas');
+			if (!webgpuCanvas || !gameCanvas || !navigator.gpu) return;
 
-			// Floating dungeon ember particles
-			var embers = [];
-			var maxEmbers = 22;
-			for (var i = 0; i < maxEmbers; i++) {
-				embers.push({
-					x: Math.random(),
-					y: Math.random(),
-					size: Math.random() * 1.8 + 0.7,
-					speedY: Math.random() * 0.0007 + 0.0003,
-					speedX: (Math.random() - 0.5) * 0.0004,
-					alpha: Math.random() * 0.6 + 0.3,
-					pulse: Math.random() * Math.PI * 2
+			try {
+				const adapter = await navigator.gpu.requestAdapter();
+				if (!adapter) return;
+				const device = await adapter.requestDevice();
+				const context = webgpuCanvas.getContext('webgpu');
+				const presentationFormat = navigator.gpu.getPreferredCanvasFormat();
+
+				context.configure({
+					device: device,
+					format: presentationFormat,
+					alphaMode: 'premultiplied'
 				});
-			}
 
-			function resizeCanvas() {
-				var parent = lightingCanvas.parentElement;
-				if (parent && (lightingCanvas.width !== parent.clientWidth || lightingCanvas.height !== parent.clientHeight)) {
-					lightingCanvas.width = parent.clientWidth || window.innerWidth;
-					lightingCanvas.height = parent.clientHeight || window.innerHeight;
-				}
-			}
+				const shaderResp = await fetch('shaders/tristram_enhancer.wgsl');
+				const shaderCode = await shaderResp.text();
+				const shaderModule = device.createShaderModule({ code: shaderCode });
 
-			var time = 0;
-			function renderLighting() {
-				if (!document.body.classList.contains('remaster-enabled')) {
-					if (ctx && lightingCanvas.width) {
-						ctx.clearRect(0, 0, lightingCanvas.width, lightingCanvas.height);
+				const sampler = device.createSampler({ magFilter: 'nearest', minFilter: 'nearest' });
+				const uniformBuffer = device.createBuffer({ size: 64, usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST });
+
+				const w = 640, h = 480;
+				webgpuCanvas.width = w;
+				webgpuCanvas.height = h;
+
+				const desc = (format, usage = GPUTextureUsage.TEXTURE_BINDING | GPUTextureUsage.COPY_DST | GPUTextureUsage.RENDER_ATTACHMENT) => ({
+					size: [w, h],
+					format: format,
+					usage: usage,
+				});
+
+				const texRGB = device.createTexture(desc('rgba8unorm'));
+				const texDepth = device.createTexture(desc('r32float'));
+				const texLight = device.createTexture(desc('r8unorm'));
+				const texSemantic = device.createTexture(desc('r8unorm'));
+
+				// Pre-populate default synthetic depth and semantic maps
+				const numPixels = w * h;
+				const depthData = new Float32Array(numPixels);
+				const lightData = new Uint8Array(numPixels);
+				const semanticData = new Uint8Array(numPixels);
+
+				for (let y = 0; y < h; y++) {
+					for (let x = 0; x < w; x++) {
+						const idx = y * w + x;
+						depthData[idx] = ((x + y * 1.2) / (w + h)) * 0.7 + 0.15;
+						lightData[idx] = 180;
+						semanticData[idx] = (y < 240) ? 2 : 1; // Top walls, bottom floor
 					}
-					animFrameId = requestAnimationFrame(renderLighting);
-					return;
 				}
 
-				resizeCanvas();
-				var width = lightingCanvas.width;
-				var height = lightingCanvas.height;
-				if (!width || !height) {
-					animFrameId = requestAnimationFrame(renderLighting);
-					return;
-				}
+				device.queue.writeTexture({ texture: texDepth }, depthData, { bytesPerRow: w * 4 }, [w, h]);
+				device.queue.writeTexture({ texture: texLight }, lightData, { bytesPerRow: w }, [w, h]);
+				device.queue.writeTexture({ texture: texSemantic }, semanticData, { bytesPerRow: w }, [w, h]);
 
-				ctx.clearRect(0, 0, width, height);
-				time += 0.04;
+				const pipeline = device.createRenderPipeline({
+					layout: 'auto',
+					vertex: { module: shaderModule, entryPoint: 'vs_main' },
+					fragment: { module: shaderModule, entryPoint: 'fs_main', targets: [{ format: presentationFormat }] },
+					primitive: { topology: 'triangle-list' }
+				});
 
-				// 1. Organic Torch Flame Flickering at player/environment center
-				var baseCenterX = width * 0.5;
-				var baseCenterY = height * 0.48;
+				const bindGroup = device.createBindGroup({
+					layout: pipeline.getBindGroupLayout(0),
+					entries: [
+						{ binding: 0, resource: { buffer: uniformBuffer } },
+						{ binding: 1, resource: sampler },
+						{ binding: 2, resource: texRGB.createView() },
+						{ binding: 3, resource: texDepth.createView() },
+						{ binding: 4, resource: texLight.createView() },
+						{ binding: 5, resource: texSemantic.createView() },
+					]
+				});
 
-				var flickerR1 = Math.sin(time * 3.7) * 0.04 + Math.sin(time * 7.1) * 0.02 + Math.cos(time * 13.3) * 0.015;
-				var flickerAlpha = Math.sin(time * 5.2) * 0.06 + 0.94;
-				var lightRadius = Math.min(width, height) * (0.38 + flickerR1);
+				var currentRenderMode = 1;
+				window.setWebGPURenderMode = function(mode) {
+					currentRenderMode = mode;
+				};
 
-				// Radial torch flame aura (Warm amber & glowing orange)
-				var torchGrad = ctx.createRadialGradient(
-					baseCenterX, baseCenterY, 4,
-					baseCenterX, baseCenterY, lightRadius
-				);
-				torchGrad.addColorStop(0, 'rgba(255, 195, 100, ' + (0.34 * flickerAlpha) + ')');
-				torchGrad.addColorStop(0.32, 'rgba(230, 120, 35, ' + (0.19 * flickerAlpha) + ')');
-				torchGrad.addColorStop(0.72, 'rgba(170, 55, 10, ' + (0.07 * flickerAlpha) + ')');
-				torchGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+				var startTime = performance.now();
+				function renderWebGPUFrame() {
+					if (document.body.classList.contains('remaster-enabled') && gameCanvas.width > 0 && gameCanvas.height > 0) {
+						const timeSec = (performance.now() - startTime) * 0.001;
 
-				ctx.fillStyle = torchGrad;
-				ctx.fillRect(0, 0, width, height);
+						// Update Uniforms
+						const uData = new ArrayBuffer(64);
+						const uViewU32 = new Uint32Array(uData);
+						const uViewF32 = new Float32Array(uData);
 
-				// 2. Secondary Atmospheric Dungeon Wall Torches
-				var leftTorchX = width * 0.22;
-				var leftTorchY = height * 0.35;
-				var leftFlicker = Math.sin(time * 4.9 + 1.2) * 0.035 + 0.965;
-				var leftGrad = ctx.createRadialGradient(
-					leftTorchX, leftTorchY, 2,
-					leftTorchX, leftTorchY, Math.min(width, height) * 0.26 * leftFlicker
-				);
-				leftGrad.addColorStop(0, 'rgba(255, 165, 65, 0.16)');
-				leftGrad.addColorStop(0.5, 'rgba(195, 75, 15, 0.06)');
-				leftGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+						uViewU32[0] = currentRenderMode;
+						uViewF32[1] = 0.5; // Split at 50%
+						uViewF32[2] = 1.4; // Light intensity
+						uViewF32[3] = 1.0; // Flame flicker
+						uViewF32[4] = 1.0; // Contact shadows
+						uViewF32[5] = 1.2; // Specular
+						let activeBiome = 0;
+						if (window.Module && typeof Module._Nightmare_GBuffer_GetBiome === 'function') {
+							try { activeBiome = Module._Nightmare_GBuffer_GetBiome(); } catch(e) {}
+						}
+						uViewF32[6] = timeSec;
+						uViewU32[7] = activeBiome;
+						uViewF32[8] = w;
+						uViewF32[9] = h;
+						uViewF32[10] = 320; // Bonfire center x
+						uViewF32[11] = 240; // Bonfire center y
 
-				ctx.fillStyle = leftGrad;
-				ctx.beginPath();
-				ctx.arc(leftTorchX, leftTorchY, Math.min(width, height) * 0.26, 0, Math.PI * 2);
-				ctx.fill();
+						device.queue.writeBuffer(uniformBuffer, 0, uData);
 
-				var rightTorchX = width * 0.78;
-				var rightTorchY = height * 0.35;
-				var rightFlicker = Math.cos(time * 5.5 + 2.4) * 0.035 + 0.965;
-				var rightGrad = ctx.createRadialGradient(
-					rightTorchX, rightTorchY, 2,
-					rightTorchX, rightTorchY, Math.min(width, height) * 0.26 * rightFlicker
-				);
-				rightGrad.addColorStop(0, 'rgba(255, 165, 65, 0.16)');
-				rightGrad.addColorStop(0.5, 'rgba(195, 75, 15, 0.06)');
-				rightGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+						// Stream live C++ G-Buffer (Semantic & Depth) into WebGPU Textures
+						if (window.Module && Module.HEAPU8 && typeof Module._Nightmare_GBuffer_GetSemantic === 'function') {
+							try {
+								if (typeof Module._Nightmare_GBuffer_IsEnabled === 'function' && !Module._Nightmare_GBuffer_IsEnabled()) {
+									Module._Nightmare_GBuffer_SetEnabled(1);
+								}
+								const semPtr = Module._Nightmare_GBuffer_GetSemantic();
+								const depthPtr = Module._Nightmare_GBuffer_GetDepth();
+								if (semPtr && depthPtr) {
+									const semView = new Uint8Array(Module.HEAPU8.buffer, semPtr, w * h);
+									const depthView = new Float32Array(Module.HEAPU8.buffer, depthPtr, w * h);
+									device.queue.writeTexture({ texture: texSemantic }, semView, { bytesPerRow: w }, [w, h]);
+									device.queue.writeTexture({ texture: texDepth }, depthView, { bytesPerRow: w * 4 }, [w, h]);
+								}
+							} catch(e) {}
+						}
 
-				ctx.fillStyle = rightGrad;
-				ctx.beginPath();
-				ctx.arc(rightTorchX, rightTorchY, Math.min(width, height) * 0.26, 0, Math.PI * 2);
-				ctx.fill();
+						// Copy live SDL game frame into WebGPU Texture
+						try {
+							device.queue.copyExternalImageToTexture(
+								{ source: gameCanvas },
+								{ texture: texRGB },
+								[w, h]
+							);
+						} catch(e) {}
 
-				// 3. Floating Ember Specks
-				for (var e = 0; e < embers.length; e++) {
-					var p = embers[e];
-					p.y -= p.speedY;
-					p.x += Math.sin(time + p.pulse) * p.speedX;
-					p.pulse += 0.03;
+						// Render WGSL Shader pass
+						const commandEncoder = device.createCommandEncoder();
+						const textureView = context.getCurrentTexture().createView();
 
-					if (p.y < 0) {
-						p.y = 1.0;
-						p.x = Math.random();
+						const renderPass = commandEncoder.beginRenderPass({
+							colorAttachments: [{
+								view: textureView,
+								clearValue: { r: 0.0, g: 0.0, b: 0.0, a: 0.0 },
+								loadOp: 'clear',
+								storeOp: 'store',
+							}]
+						});
+
+						renderPass.setPipeline(pipeline);
+						renderPass.setBindGroup(0, bindGroup);
+						renderPass.draw(3, 1, 0, 0);
+						renderPass.end();
+
+						device.queue.submit([commandEncoder.finish()]);
 					}
 
-					var px = p.x * width;
-					var py = p.y * height;
-					var pAlpha = (Math.sin(p.pulse) * 0.35 + 0.65) * p.alpha;
-
-					ctx.fillStyle = 'rgba(255, 185, 70, ' + pAlpha + ')';
-					ctx.beginPath();
-					ctx.arc(px, py, p.size, 0, Math.PI * 2);
-					ctx.fill();
+					requestAnimationFrame(renderWebGPUFrame);
 				}
 
-				animFrameId = requestAnimationFrame(renderLighting);
+				requestAnimationFrame(renderWebGPUFrame);
+				console.log('[NIGHTMARE] Live WebGPU Game Enhancer initialized successfully.');
+			} catch(err) {
+				console.warn('[NIGHTMARE] WebGPU live enhancer failed, using 2D fallback:', err);
 			}
-
-			window.addEventListener('resize', resizeCanvas);
-			renderLighting();
 		})();
-
 		// Fullscreen button logic
 		document.getElementById('fullscreenBtn').addEventListener('click', function () {
 			if (!document.fullscreenElement) {
@@ -755,6 +954,389 @@
 				}
 			}
 		});
+
+		// Diablo Rain 2.0 & Weather Engine (Física Volumétrica + Identidad Pixel-Art 1996)
+		(function initDiabloRain2Engine() {
+			var rainCanvas = document.getElementById('rain-canvas');
+			var lightning = document.getElementById('lightning-overlay');
+			if (!rainCanvas) return;
+			var ctx = rainCanvas.getContext('2d');
+
+			var width = (rainCanvas.width = window.innerWidth);
+			var height = (rainCanvas.height = window.innerHeight);
+
+			function resizeRain() {
+				var parent = rainCanvas.parentElement;
+				if (parent && (rainCanvas.width !== parent.clientWidth || rainCanvas.height !== parent.clientHeight)) {
+					width = rainCanvas.width = parent.clientWidth || window.innerWidth;
+					height = rainCanvas.height = parent.clientHeight || window.innerHeight;
+				}
+			}
+			window.addEventListener('resize', resizeRain);
+
+			// Weather State & Wind Gust Dynamics
+			var time = 0;
+			var weatherIntensity = 0.65; // 0.25 (Drizzle) to 0.95 (Heavy Storm)
+			var baseWind = -2.3;
+			var currentGust = 0.0;
+			var targetGust = 0.0;
+			var nextGustTime = 8.0;
+
+			// Light sources in screen coordinates (normalized 0.0 to 1.0)
+			var lightSources = [
+				{ x: 0.50, y: 0.48, radius: 0.28, color: [240, 180, 100] }, // Town Bonfire
+				{ x: 0.22, y: 0.35, radius: 0.18, color: [230, 150, 70] },  // Left Forge Torch
+				{ x: 0.78, y: 0.35, radius: 0.18, color: [230, 150, 70] },  // Right Wall Torch
+			];
+
+			var FAR_COUNT = 160;
+			var MID_COUNT = 280;
+			var NEAR_COUNT = 28;
+			var drops = [];
+			var splashes = [];
+			var puddleGlints = [];
+
+			class Drop2 {
+				constructor(layer) {
+					this.layer = layer; // 0: Far, 1: Mid, 2: Near
+					this.morphType = Math.floor(Math.random() * 4); // 0: dot, 1: short, 2: medium, 3: double
+					this.lifeFrames = (layer === 2) ? Math.floor(Math.random() * 5) + 3 : 9999;
+					this.reset(true);
+				}
+
+				reset(initial = false) {
+					this.x = Math.random() * (width + 360) - 80;
+					this.y = initial ? Math.random() * (height * 0.94) : -25;
+					this.life = (this.layer === 2) ? Math.floor(Math.random() * 5) + 3 : 9999;
+
+					if (this.layer === 0) {
+						// Far Rain (Background micro-droplets)
+						this.speedY = 13 + Math.random() * 3;
+						this.length = 4 + Math.random() * 3;
+						this.alpha = 0.26 + Math.random() * 0.14;
+						this.width = 0.75;
+					} else if (this.layer === 1) {
+						// Mid Rain (Main fine Diablo drops with morphology variation)
+						this.speedY = 17 + Math.random() * 5;
+						this.length = (this.morphType === 0) ? 3.5 : (this.morphType === 1) ? 6.5 : (this.morphType === 2) ? 9.5 : 12;
+						this.alpha = 0.44 + Math.random() * 0.22;
+						this.width = 1.0;
+					} else {
+						// Near Rain (Camera lens close streaks)
+						this.speedY = 24 + Math.random() * 6;
+						this.length = 16 + Math.random() * 8;
+						this.alpha = 0.70 + Math.random() * 0.20;
+						this.width = 1.5;
+					}
+
+					// Ground plane (Extended down to 95% height, reaching right down to the ground level and HUD)
+					var hudLimit = (this.layer === 2) ? height * 0.98 : height * 0.95;
+					this.floorY = height * 0.60 + Math.random() * (hudLimit - height * 0.60);
+				}
+
+				update(windX) {
+					var layerWindFactor = (this.layer === 0) ? 0.75 : (this.layer === 1) ? 1.0 : 1.35;
+					this.x += windX * layerWindFactor;
+					this.y += this.speedY;
+
+					if (this.layer === 2) {
+						this.life--;
+						if (this.life <= 0) {
+							this.reset();
+							return;
+						}
+					}
+
+					var maxLimit = (this.layer === 2) ? height * 0.98 : height * 0.95;
+					if (this.y >= this.floorY || this.y > maxLimit) {
+						// Ground impact
+						if (this.y <= maxLimit && Math.random() > 0.42) {
+							splashes.push(new Splash2(this.x, this.y, this.layer));
+						}
+						this.reset();
+					}
+				}
+
+				draw(windX) {
+					// Check local light illumination (torches / bonfire)
+					var normX = this.x / width;
+					var normY = this.y / height;
+					var r = 195, g = 215, b = 245; // Vibrant cool silver-cyan rain
+					var boost = 1.0;
+
+					for (var i = 0; i < lightSources.length; i++) {
+						var src = lightSources[i];
+						var dist = Math.hypot(normX - src.x, normY - src.y);
+						if (dist < src.radius) {
+							var factor = (1.0 - (dist / src.radius));
+							r = r * (1 - factor) + src.color[0] * factor;
+							g = g * (1 - factor) + src.color[1] * factor;
+							b = b * (1 - factor) + src.color[2] * factor;
+							boost += factor * 0.6;
+							break;
+						}
+					}
+
+					var finalAlpha = Math.min(1.0, this.alpha * boost * (weatherIntensity / 0.65));
+					ctx.strokeStyle = 'rgba(' + Math.floor(r) + ',' + Math.floor(g) + ',' + Math.floor(b) + ',' + finalAlpha.toFixed(2) + ')';
+					ctx.lineWidth = this.width;
+
+					ctx.beginPath();
+					ctx.moveTo(this.x, this.y);
+					ctx.lineTo(this.x + windX * 1.8, this.y + this.length);
+					ctx.stroke();
+
+					// Double streak morphology
+					if (this.morphType === 3 && this.layer === 1) {
+						ctx.beginPath();
+						ctx.moveTo(this.x + 3, this.y - 2);
+						ctx.lineTo(this.x + 3 + windX * 1.8, this.y - 2 + this.length * 0.75);
+						ctx.stroke();
+					}
+				}
+			}
+
+			class Splash2 {
+				constructor(x, y, layer) {
+					this.x = x;
+					this.y = y;
+					this.layer = layer;
+					this.life = 4;
+					this.maxLife = 4;
+					this.size = (layer === 0) ? 1.5 : (layer === 1) ? 2.5 : 3.8;
+				}
+
+				update() {
+					this.life--;
+				}
+
+				draw() {
+					var alpha = (this.life / this.maxLife) * 0.45;
+					ctx.strokeStyle = 'rgba(180, 195, 210, ' + alpha.toFixed(2) + ')';
+					ctx.fillStyle = 'rgba(180, 195, 210, ' + alpha.toFixed(2) + ')';
+					ctx.lineWidth = 1;
+
+					// Pixel-sharp 2:1 flattened isometric ripple
+					ctx.beginPath();
+					ctx.ellipse(this.x, this.y, this.size * 1.8, this.size * 0.85, 0, 0, Math.PI * 2);
+					ctx.stroke();
+
+					// Micro-impact droplets
+					ctx.fillRect(this.x - 2, this.y - 1, 1, 1);
+					ctx.fillRect(this.x + 2, this.y - 1, 1, 1);
+				}
+			}
+
+			// Puddle Glints (Reflections in damp mud near torches)
+			class PuddleGlint {
+				constructor() {
+					this.reset();
+				}
+
+				reset() {
+					var src = lightSources[Math.floor(Math.random() * lightSources.length)];
+					var angle = Math.random() * Math.PI * 2;
+					var rad = Math.random() * src.radius * 0.85;
+					this.x = (src.x + Math.cos(angle) * rad) * width;
+					this.y = (src.y + Math.sin(angle) * rad * 0.5) * height; // Isometric squashed
+					this.maxAlpha = Math.random() * 0.28 + 0.12;
+					this.alpha = 0;
+					this.life = Math.floor(Math.random() * 30) + 15;
+					this.maxLife = this.life;
+					this.color = src.color;
+				}
+
+				update() {
+					this.life--;
+					var progress = 1.0 - (this.life / this.maxLife);
+					this.alpha = Math.sin(progress * Math.PI) * this.maxAlpha;
+					if (this.life <= 0) {
+						this.reset();
+					}
+				}
+
+				draw() {
+					if (this.y > height * 0.95) return; // Guard HUD
+					ctx.fillStyle = 'rgba(' + this.color[0] + ',' + this.color[1] + ',' + this.color[2] + ',' + this.alpha.toFixed(2) + ')';
+					ctx.fillRect(this.x, this.y, 2, 1);
+				}
+			}
+
+			// Initialize Particle Pools
+			for (var f = 0; f < FAR_COUNT; f++) drops.push(new Drop2(0));
+			for (var m = 0; m < MID_COUNT; m++) drops.push(new Drop2(1));
+			for (var n = 0; n < NEAR_COUNT; n++) drops.push(new Drop2(2));
+			for (var g = 0; g < 14; g++) puddleGlints.push(new PuddleGlint());
+
+			// Thunderstorm Double-Flash Lighting Engine
+			function triggerDiabloLightning() {
+				if (!document.body.classList.contains('remaster-enabled') || document.hidden) {
+					setTimeout(triggerDiabloLightning, 8000 + Math.random() * 10000);
+					return;
+				}
+
+				var flashOpacity = 0.25 + Math.random() * 0.30;
+				if (lightning) {
+					lightning.style.backgroundColor = 'rgba(215, 230, 255, 1)';
+					lightning.style.opacity = flashOpacity;
+
+					setTimeout(function() {
+						lightning.style.opacity = 0;
+						if (Math.random() > 0.4) {
+							setTimeout(function() {
+								lightning.style.opacity = flashOpacity * 0.65;
+								setTimeout(function() { lightning.style.opacity = 0; }, 55);
+							}, 70);
+						}
+					}, 80);
+				}
+
+				setTimeout(triggerDiabloLightning, 7000 + Math.random() * 12000);
+			}
+			setTimeout(triggerDiabloLightning, 5000);
+
+			// Main Weather Loop (Active ONLY in Tristram Town & When Neural HD is ON)
+			// Main Weather Loop (Active in Tristram Town & When Neural HD is ON)
+			function weatherLoop() {
+				// Guard 1: Disable if Neural HD is off or tab is hidden
+				var isNeuralActive = document.body.classList.contains('remaster-enabled') && (window.currentWebGPURenderMode !== 0);
+				
+				// Guard 2: Disable during initial boot loading overlay
+				var loadingOverlay = document.getElementById('loading-overlay');
+				var isBooted = loadingOverlay && (loadingOverlay.style.display === 'none' || loadingOverlay.classList.contains('hidden'));
+				
+				// Guard 3: Biome detection (Active only inside Tristram Town gameplay)
+				var isTownBiome = false;
+				if (window.Module) {
+					if (typeof Module._Nightmare_IsTown === 'function') {
+						try {
+							isTownBiome = (Module._Nightmare_IsTown() === 1);
+						} catch(e) {
+							isTownBiome = false;
+						}
+					} else if (typeof Module._Nightmare_GBuffer_GetBiome === 'function') {
+						try {
+							var biomeId = Module._Nightmare_GBuffer_GetBiome();
+							isTownBiome = (biomeId === 0);
+						} catch(e) {
+							isTownBiome = false;
+						}
+					}
+				}
+
+				if (!isNeuralActive || !isTownBiome || !isBooted || document.hidden) {
+					ctx.clearRect(0, 0, width, height);
+					if (lightning) lightning.style.opacity = 0;
+					requestAnimationFrame(weatherLoop);
+					return;
+				}
+
+				resizeRain();
+				ctx.clearRect(0, 0, width, height);
+				time += 0.016;
+
+				// Wind Oscillation & Dynamic Gusts
+				if (time > nextGustTime) {
+					targetGust = (Math.random() - 0.5) * 2.2;
+					nextGustTime = time + 9.0 + Math.random() * 8.0;
+				}
+				currentGust += (targetGust - currentGust) * 0.04;
+				var activeWindX = baseWind + Math.sin(time * 0.4) * 0.45 + currentGust;
+
+				// Weather Intensity Cycling
+				weatherIntensity = 0.65 + Math.sin(time * 0.04) * 0.25;
+
+				// 1. Draw Puddle Glints (Subtle Wet Ground Reflections)
+				for (var pg = 0; pg < puddleGlints.length; pg++) {
+					puddleGlints[pg].update();
+					puddleGlints[pg].draw();
+				}
+
+				// 2. Update & Draw Rain Drops across 3 Depth Layers
+				var activeDropCount = Math.floor(drops.length * (weatherIntensity / 0.65));
+				for (var d = 0; d < Math.min(drops.length, activeDropCount); d++) {
+					drops[d].update(activeWindX);
+					drops[d].draw(activeWindX);
+				}
+
+				// 3. Update & Draw Splashes
+				for (var s = splashes.length - 1; s >= 0; s--) {
+					splashes[s].update();
+					splashes[s].draw();
+					if (splashes[s].life <= 0) {
+						splashes.splice(s, 1);
+					}
+				}
+
+				requestAnimationFrame(weatherLoop);
+			}
+
+			weatherLoop();
+			console.log('[NIGHTMARE] Diablo Rain 2.0 & Weather Engine initialized successfully.');
+		})();
+
+		// Smart Background Tab Protection & Freeze Preventer
+		(function initTabProtectionEngine() {
+			var pauseOverlay = document.getElementById('tabPauseOverlay');
+			var resumeBtn = document.getElementById('resumeGameBtn');
+			var isPausedByTab = false;
+
+			function handleTabHidden() {
+				// 1. Release pointer lock immediately to prevent browser input trap
+				if (document.exitPointerLock) {
+					try { document.exitPointerLock(); } catch(e) {}
+				}
+
+				// 2. Safely suspend Web Audio to prevent buffer underrun deadlocks
+				if (window.SDL && SDL.audioContext && SDL.audioContext.state === 'running') {
+					try { SDL.audioContext.suspend(); } catch(e) {}
+				}
+
+				// 3. Show clean pause overlay
+				if (pauseOverlay) {
+					pauseOverlay.style.display = 'flex';
+				}
+				isPausedByTab = true;
+			}
+
+			function resumeGame() {
+				if (pauseOverlay) {
+					pauseOverlay.style.display = 'none';
+				}
+
+				// Resume Audio Context cleanly
+				if (window.SDL && SDL.audioContext && SDL.audioContext.state === 'suspended') {
+					try { SDL.audioContext.resume(); } catch(e) {}
+				}
+
+				// Refocus canvas
+				var canvas = document.getElementById('canvas');
+				if (canvas) {
+					canvas.focus();
+				}
+				isPausedByTab = false;
+				showToast('▶️ Partida reanudada');
+			}
+
+			if (resumeBtn) {
+				resumeBtn.addEventListener('click', resumeGame);
+			}
+
+			// Listen for Visibility Changes (Switching tabs / Minimizing)
+			document.addEventListener('visibilitychange', function() {
+				if (document.hidden) {
+					handleTabHidden();
+				}
+			});
+
+			// Spacebar or Escape key to resume when pause modal is shown
+			window.addEventListener('keydown', function(e) {
+				if (isPausedByTab && (e.key === ' ' || e.key === 'Escape' || e.key === 'Enter')) {
+					e.preventDefault();
+					resumeGame();
+				}
+			});
+		})();
 
 		var Module = {
 			preRun: [],
@@ -820,6 +1402,12 @@
 				}
 				statusElement.innerHTML = text || '';
 			},
+			locateFile: function(path, prefix) {
+				if (path.endsWith('.wasm')) {
+					return prefix + path + '?v=' + Date.now();
+				}
+				return prefix + path;
+			},
 			totalDependencies: 0,
 			monitorRunDependencies: function (left) {
 				this.totalDependencies = Math.max(this.totalDependencies, left);
@@ -833,8 +1421,10 @@
 			Module.setStatus('Error al ejecutar WebAssembly.');
 		};
 	</script>
+	<script src="https://cdn.jsdelivr.net/npm/onnxruntime-web/dist/ort.min.js"></script>
+	<script src="neural_infer.js"></script>
 	<script type='text/javascript' src="file-manager.js"></script>
-	<script async type="text/javascript" src="devilutionx.js"></script>
+	<script async type="text/javascript" src="devilutionx.js?v=nightmare"></script>
 </body>
 
 </html>

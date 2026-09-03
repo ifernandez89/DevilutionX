@@ -97,6 +97,8 @@ set(libdevilutionx_SRCS
   nightmare/npcs/tremain.cpp
   nightmare/world/ambient_animals.cpp
   nightmare/world/level_atmosphere.cpp
+  nightmare/neural/gbuffer.cpp
+  nightmare/neural/dataset_dumper.cpp
 
   items/validation.cpp
 

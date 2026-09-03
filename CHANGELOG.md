@@ -7,6 +7,54 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Neural Material Accentuation for Armor, Clothing & Enemies (WebGPU Shader & G-Buffer)
+- **Head & Facial 10% Micro-Realism Detection ([`Packaging/emscripten/shaders/tristram_enhancer.wgsl`](file:///c:/Projects/DevilutionX/Packaging/emscripten/shaders/tristram_enhancer.wgsl), [`Packaging/neural_harness/shaders/tristram_enhancer.wgsl`](file:///c:/Projects/DevilutionX/Packaging/neural_harness/shaders/tristram_enhancer.wgsl))**:
+  - Automatically identifies the cranial/head region (top ~14px of character silhouettes) across player hero, NPCs, and monsters.
+  - **Subsurface Scattering (Skin/Face)**: Infuses exposed skin tones with a soft, warm 10% subsurface glow (`sssColor = vec3(1.08, 0.94, 0.84)`) that diffuses town firelight and torchlight naturally across faces, cheeks, and foreheads without altering the original pixel art.
+  - **Cranial Dome Curvature & Helmet Crest Highlight**: Perturbs 3D normals around the skull dome, focusing an apex specular glint on helmets, crowns, and horn tips.
+  - **Monster Eye Embers**: Armored demons and undead in dark dungeons display subtle, menacing eye-socket embers.
+- **Dynamic Specular & Metallic Highlights**:
+  - Differentiates metallic armor (steel, iron, silver, gold/bronze) from fabrics using saturation and luminance analysis.
+  - High-power Blinn-Phong specular glints (`metalSpec` with power 36–48) reflecting torches, town bonfires, and lightning flashes on helmets, chestplates, pauldrons, shields, and weapons.
+- **Volumetric Cloth & Robe 2.5D Shading**:
+  - Soft fabric wrap-around lighting (`max(NdotL * 0.72 + 0.28, 0.0)`) and velvet micro-sheen for Sorcerer robes, Rogue tunics, and NPC garments, preserving the hand-painted 1996 pixel aesthetic while giving folds three-dimensional depth.
+- **Sprite Micro-Relief Normal Mapping**:
+  - Computes normal perturbations from local sprite luminance gradients across character silhouettes (`spriteGradX`, `spriteGradY`), turning 2D sprite folds, edges, and musculature into responsive 3D normals.
+- **Menacing Rim-Lighting on Enemies & Monsters (`semId == 7u`)**:
+  - Armored demons, Doom Knights, and skeletal warriors receive sinister specular gleams on bone, horns, and plate armor.
+  - Adds edge-grazing rim-light (Fresnel factor) that outlines monster silhouettes in dark dungeon corridors, making enemies pop against murky floors.
+- **Live WASM G-Buffer Streaming to WebGPU ([`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html))**:
+  - Automatically enables `Nightmare_GBuffer_SetEnabled(1)` when Remaster is active.
+  - Streams real-time `SemanticId` and `Depth` maps directly from WebAssembly linear memory (`HEAPU8.buffer`) to WebGPU textures without allocations.
+  - Dynamically passes active dungeon biome ID (`Module._Nightmare_GBuffer_GetBiome()`) to the WebGPU uniform buffer.
+
+### Diablo Rain 2.0, Neural DLSS Shaders & WebAssembly Build Pipeline
+
+#### WebAssembly (Emscripten / WASM) Definitive Build Environment
+- **Definitive WASM Compilation Guide ([`METODO_COMPILACION_DEFINITIVO_WASM.md`](file:///c:/Projects/DevilutionX/METODO_COMPILACION_DEFINITIVO_WASM.md))**:
+  - Documented the exact, official CI-aligned build pipeline for compiling C++ source to `devilutionx.wasm` and `devilutionx.js` using Emscripten 3.1.53, Ninja, and CMake (`emcmake`).
+  - Added one-click automation scripts: [`scripts/setup_emsdk.bat`](file:///c:/Projects/DevilutionX/scripts/setup_emsdk.bat) (clones and activates Emscripten SDK) and [`scripts/build_wasm.bat`](file:///c:/Projects/DevilutionX/scripts/build_wasm.bat) (prebuilds ports, compiles target `devilutionx`, and updates `Packaging/emscripten/`).
+
+#### Diablo Rain 2.0 & Real-Time Weather Engine
+- **Volumetric 3-Layer Rain Physics ([`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html))**:
+  - Multi-depth particle layers (*Far*, *Mid*, *Near*) with isometric angle variance, wind oscillation, and organic gust cycles.
+  - Roof occlusion mapping in Tristram preventing drops from passing through house structures.
+  - Puddle specular glints on muddy ground reacting to environmental illumination.
+  - Extended rain floor boundary down to 95% screen height (98% for foreground lens streaks) reaching ground level and HUD.
+  - Double-flash atmospheric lightning with dynamic ground illuminance flashes.
+- **Strict In-Game & Biome State Detection**:
+  - Zero-cost WebGL texture hook reading HUD health orb status in real time to ensure 0% rain in menus, intro screens, or character selection.
+  - Restricts weather simulation exclusively to Tristram (`Biome 0`), automatically turning off upon dungeon descent (Cathedral, Catacombs, Caves, Hell).
+
+#### Advanced WebGPU Neural Reconstruction & DLSS-Style Shaders
+- **Subpixel Edge Reconstruction ([`Packaging/emscripten/shaders/tristram_enhancer.wgsl`](file:///c:/Projects/DevilutionX/Packaging/emscripten/shaders/tristram_enhancer.wgsl))**:
+  - Luminance-gradient edge detection smoothing sprite staircasing without blurs.
+  - Volumetric atmospheric glow around bonfires and torches.
+  - Dynamic wet surface specular shimmer synchronized with weather.
+  - Legacy 1-pixel dark streak eradication spatial filter.
+- **Streamlined 2-State Control**:
+  - Simplified remaster toggle to direct hot-switch between `⚡ Neural HD: ON` and `⚔️ Original: 1996` via UI button or `F2` key.
+
 ### 🔧 Fix & Hardening — Bootloader, Rock Ridge & GUI Integration (2026-09-02)
 
 #### Causa Raíz de los Errores Resueltos

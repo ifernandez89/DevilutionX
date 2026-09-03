@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NIGHTMARE Neural HD — Multi-Biome WebGPU Engine & Neural Renderer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #0a0a0c;
+            --bg-panel: rgba(18, 18, 24, 0.88);
+            --border-gothic: #3a2a1d;
+            --border-gold: #b38f4d;
+            --gold-bright: #e5c158;
+            --gold-glow: rgba(229, 193, 88, 0.25);
+            --red-accent: #8b181b;
+            --text-primary: #e6e4dc;
+            --text-secondary: #9c978b;
+            --mono-font: 'JetBrains Mono', monospace;
+            --serif-font: 'Cinzel', serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(139, 24, 27, 0.15) 0%, transparent 60%),
+                linear-gradient(to bottom, #0f0f14 0%, #050507 100%);
+        }
+
+        header {
+            padding: 1.25rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-gothic);
+            background: rgba(10, 10, 12, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 10;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .brand h1 {
+            font-family: var(--serif-font);
+            font-size: 1.4rem;
+            letter-spacing: 0.12em;
+            color: var(--gold-bright);
+            text-shadow: 0 0 12px var(--gold-glow);
+        }
+
+        .brand span.badge {
+            background: linear-gradient(135deg, var(--red-accent), #450a0a);
+            border: 1px solid #dc2626;
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 0.2rem 0.55rem;
+            border-radius: 4px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .telemetry-bar {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            font-family: var(--mono-font);
+            font-size: 0.85rem;
+        }
+
+        .telemetry-item {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .telemetry-item .label {
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .telemetry-item .value {
+            font-weight: 700;
+            color: var(--gold-bright);
+        }
+
+        .status-badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            background: #1e1e24;
+            color: #888;
+            border: 1px solid #333;
+        }
+
+        .status-badge.active {
+            background: rgba(34, 197, 94, 0.12);
+            color: #4ade80;
+            border-color: rgba(34, 197, 94, 0.35);
+        }
+
+        main {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 1.5rem;
+            padding: 1.5rem 2rem;
+            max-width: 1440px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .viewport-section {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .canvas-container {
+            position: relative;
+            background: #000;
+            border: 2px solid var(--border-gothic);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 15px rgba(179, 143, 77, 0.1);
+            border-radius: 6px;
+            aspect-ratio: 4 / 3;
+            max-width: 860px;
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+            image-rendering: pixelated;
+        }
+
+        .overlay-instruction {
+            position: absolute;
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.75);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            pointer-events: none;
+            backdrop-filter: blur(4px);
+        }
+
+        .error-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(10, 10, 12, 0.92);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            text-align: center;
+            color: #f87171;
+            font-family: var(--mono-font);
+            font-size: 0.95rem;
+        }
+
+        .controls-panel {
+            background: var(--bg-panel);
+            border: 1px solid var(--border-gothic);
+            border-radius: 6px;
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            backdrop-filter: blur(12px);
+        }
+
+        .panel-group h3 {
+            font-family: var(--serif-font);
+            font-size: 0.9rem;
+            letter-spacing: 0.08em;
+            color: var(--gold-bright);
+            margin-bottom: 0.85rem;
+            text-transform: uppercase;
+            border-bottom: 1px solid rgba(179, 143, 77, 0.2);
+            padding-bottom: 0.4rem;
+        }
+
+        .mode-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+        }
+
+        .biome-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 0.4rem;
+        }
+
+        .mode-btn, .biome-btn {
+            background: #14141a;
+            border: 1px solid #2a2a35;
+            color: var(--text-primary);
+            padding: 0.5rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        .mode-btn:hover, .biome-btn:hover {
+            border-color: var(--border-gold);
+            background: #1c1c24;
+        }
+
+        .mode-btn.active, .biome-btn.active {
+            background: linear-gradient(135deg, rgba(179, 143, 77, 0.25), rgba(139, 24, 27, 0.25));
+            border-color: var(--gold-bright);
+            color: var(--gold-bright);
+            font-weight: 700;
+            box-shadow: 0 0 10px rgba(229, 193, 88, 0.2);
+        }
+
+        .slider-control {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+            margin-bottom: 0.85rem;
+        }
+
+        .slider-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 5px;
+            border-radius: 3px;
+            background: #252530;
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--gold-bright);
+            cursor: pointer;
+            box-shadow: 0 0 6px rgba(229, 193, 88, 0.6);
+        }
+
+        .feature-bullets {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .feature-bullets li {
+            list-style-type: none;
+            position: relative;
+            padding-left: 1rem;
+        }
+
+        .feature-bullets li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--gold-bright);
+        }
+
+        footer {
+            padding: 1rem 2rem;
+            border-top: 1px solid var(--border-gothic);
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-align: center;
+            background: rgba(10, 10, 12, 0.9);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="brand">
+            <h1>NIGHTMARE Neural HD</h1>
+            <span class="badge">Engine v2.0</span>
+        </div>
+
+        <div class="telemetry-bar">
+            <div class="telemetry-item">
+                <span class="label">Dynamic Tier</span>
+                <span class="value" id="metric-quality" style="color: #60a5fa;">HIGH (Neural)</span>
+            </div>
+            <div class="telemetry-item">
+                <span class="label">Framerate</span>
+                <span class="value" id="metric-fps">-- FPS</span>
+            </div>
+            <div class="telemetry-item">
+                <span class="label">Frametime</span>
+                <span class="value" id="metric-frametime">-- ms</span>
+            </div>
+            <div class="telemetry-item">
+                <span class="label">Frametime Jitter</span>
+                <span class="value" id="metric-jitter" style="color: #4ade80;">-- ms</span>
+            </div>
+            <div class="status-badge" id="status-badge">Initializing WebGPU...</div>
+        </div>
+    </header>
+
+    <main>
+        <div class="viewport-section">
+            <div class="canvas-container">
+                <canvas id="webgpu-canvas" width="640" height="480"></canvas>
+                <div class="overlay-instruction">Drag slider or click canvas to move dynamic point light</div>
+                <div class="error-overlay" id="error-overlay"></div>
+            </div>
+        </div>
+
+        <div class="controls-panel">
+            <div class="panel-group">
+                <h3>Dungeon Biome (Fase 6)</h3>
+                <div class="biome-grid">
+                    <button class="biome-btn active" data-biome="0">Tristram</button>
+                    <button class="biome-btn" data-biome="1">Cathedral</button>
+                    <button class="biome-btn" data-biome="2">Catacombs</button>
+                    <button class="biome-btn" data-biome="3">Caves</button>
+                    <button class="biome-btn" data-biome="4">Hell</button>
+                    <button class="biome-btn" data-biome="5">Crypt</button>
+                </div>
+            </div>
+
+            <div class="panel-group">
+                <h3>Render Mode / G-Buffer</h3>
+                <div class="mode-grid">
+                    <button class="mode-btn active" data-mode="2">Split A/B</button>
+                    <button class="mode-btn" data-mode="1">Enhanced</button>
+                    <button class="mode-btn" data-mode="0">Original 1996</button>
+                    <button class="mode-btn" data-mode="6">Pseudo-Normals</button>
+                    <button class="mode-btn" data-mode="3">Logical Depth</button>
+                    <button class="mode-btn" data-mode="4">Lightmap</button>
+                    <button class="mode-btn" data-mode="5">Semantic ID</button>
+                </div>
+            </div>
+
+            <div class="panel-group">
+                <h3>Pipeline Parameters</h3>
+                
+                <div class="slider-control">
+                    <div class="slider-header">
+                        <span>A/B Split Position</span>
+                    </div>
+                    <input type="range" id="slider-split" min="0" max="1" step="0.01" value="0.5">
+                </div>
+
+                <div class="slider-control">
+                    <div class="slider-header">
+                        <span>Light Radiance</span>
+                    </div>
+                    <input type="range" id="slider-light" min="0" max="3" step="0.05" value="1.4">
+                </div>
+
+                <div class="slider-control">
+                    <div class="slider-header">
+                        <span>Flame Flicker</span>
+                    </div>
+                    <input type="range" id="slider-flicker" min="0" max="2" step="0.05" value="1.0">
+                </div>
+
+                <div class="slider-control">
+                    <div class="slider-header">
+                        <span>Contact Shadows</span>
+                    </div>
+                    <input type="range" id="slider-shadow" min="0" max="2" step="0.05" value="1.0">
+                </div>
+
+                <div class="slider-control">
+                    <div class="slider-header">
+                        <span>Liquid Specular / Lava</span>
+                    </div>
+                    <input type="range" id="slider-specular" min="0" max="3" step="0.05" value="1.2">
+                </div>
+            </div>
+
+            <div class="panel-group">
+                <h3>Guardrails & Degradation</h3>
+                <ul class="feature-bullets">
+                    <li><strong>Silhouette Invariance:</strong> $S_{orig} \odot \text{Enhanced}$ (0% contour shift).</li>
+                    <li><strong>Multi-Biome Radiance:</strong> Lava glow, blood pools, stone columns, missiles.</li>
+                    <li><strong>Dynamic Fallback:</strong> Auto-steps to WebGPU Shaders if frametime exceeds 20ms.</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        NIGHTMARE Neural HD Engine &bull; WebGPU Native Shader Pipeline &bull; Multi-Biome Architecture
+    </footer>
+
+    <!-- ONNX Runtime Web & WebGPU Inference Engine -->
+    <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web/dist/ort.min.js"></script>
+    <script src="neural_infer.js"></script>
+    <script src="wasm_bridge.js"></script>
+    <script src="harness.js"></script>
+</body>
+</html>

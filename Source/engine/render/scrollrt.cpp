@@ -40,6 +40,8 @@
 #include "engine/render/text_render.hpp"
 #include "engine/render/weather_overlay.hpp"
 #include "engine/trn.hpp"
+#include "nightmare/neural/gbuffer.hpp"
+#include "nightmare/neural/dataset_dumper.hpp"
 #include "engine/world_tile.hpp"
 #include "game_mode.hpp"
 #include "gmenu.h"
@@ -167,29 +169,8 @@ void UpdateRain()
 
 void DrawRainLayer(const Surface &out, RainLayer layer)
 {
-	if (leveltype != DTYPE_TOWN)
-		return;
-
-	UpdateRain();
-
-	for (int i = 0; i < MAX_RAIN; i++) {
-		if (Rain[i].layer != layer)
-			continue;
-
-		int x0 = Rain[i].x;
-		int y0 = Rain[i].y;
-		int x1 = Rain[i].x + Rain[i].wind;
-		int y1 = Rain[i].y + Rain[i].len;
-
-		if (x0 >= 0 && x0 < out.w() && y0 >= 0 && y0 < out.h()) {
-			uint8_t *pixel = out.at(x0, y0);
-			*pixel = static_cast<uint8_t>(std::max(0, static_cast<int>(*pixel) - 20));
-			if (y1 >= 0 && y1 < out.h()) {
-				uint8_t *pixel2 = out.at(x1, y1);
-				*pixel2 = static_cast<uint8_t>(std::max(0, static_cast<int>(*pixel2) - 30));
-			}
-		}
-	}
+	// Legacy C++ software rain disabled in favor of Diablo Rain 2.0 WebGPU Weather Engine
+	return;
 }
 
 [[nodiscard]] DVL_ALWAYS_INLINE bool IsFloor(Point tilePosition)
@@ -801,6 +782,11 @@ void DrawFloorTile(const Surface &out, const Lightmap &lightmap, Point tilePosit
 
 	const uint16_t levelPieceId = dPiece[tilePosition.x][tilePosition.y];
 	{
+		float normDepth = std::clamp((tilePosition.x + tilePosition.y) / (2.0f * MAXDUNX), 0.0f, 1.0f);
+		uint8_t lightVal = static_cast<uint8_t>(std::clamp(255 - lightTableIndex * 16, 0, 255));
+		nightmare::neural::GBufferManager::Instance().StampDiamondTile(targetBufferPosition, nightmare::neural::SemanticId::Floor, normDepth, lightVal);
+	}
+	{
 		const LevelCelBlock levelCelBlock { DPieceMicros[levelPieceId].mt[0] };
 		if (levelCelBlock.hasValue()) {
 			RenderTileFrame(out, lightmap, targetBufferPosition, TileType::LeftTriangle,
@@ -898,6 +884,10 @@ void DrawDungeon(const Surface &out, const Lightmap &lightmap, Point tilePositio
 	assert(InDungeonBounds(tilePosition));
 	const int lightTableIndex = dLight[tilePosition.x][tilePosition.y];
 
+	float normDepth = std::clamp((tilePosition.x + tilePosition.y) / (2.0f * MAXDUNX), 0.0f, 1.0f);
+	uint8_t lightVal = static_cast<uint8_t>(std::clamp(255 - lightTableIndex * 16, 0, 255));
+	nightmare::neural::GBufferManager::Instance().StampDiamondTile(targetBufferPosition, nightmare::neural::SemanticId::Wall, normDepth, lightVal);
+
 	DrawCell(out, lightmap, tilePosition, targetBufferPosition, lightTableIndex);
 
 	const int8_t bDead = dCorpse[tilePosition.x][tilePosition.y];
@@ -972,6 +962,7 @@ void DrawDungeon(const Surface &out, const Lightmap &lightmap, Point tilePositio
 				tempTargetBufferPosition += { -TILE_WIDTH, 0 };
 				tempTilePosition += Opposite(player->_pdir);
 			}
+			nightmare::neural::GBufferManager::Instance().StampSemanticRect(tempTargetBufferPosition.x - 32, tempTargetBufferPosition.y - 64, 64, 64, nightmare::neural::SemanticId::Player, normDepth, lightVal);
 			DrawPlayer(out, *player, tempTilePosition, tempTargetBufferPosition, lightTableIndex);
 		}
 	}
@@ -1009,10 +1000,13 @@ void DrawDungeon(const Surface &out, const Lightmap &lightmap, Point tilePositio
 				tempTargetBufferPosition += { -TILE_WIDTH, 0 };
 				tempTilePosition += Opposite(monster->direction);
 			}
+			const nightmare::neural::SemanticId sem = (leveltype == DTYPE_TOWN) ? nightmare::neural::SemanticId::NPC : nightmare::neural::SemanticId::Monster;
+			nightmare::neural::GBufferManager::Instance().StampSemanticRect(tempTargetBufferPosition.x - 32, tempTargetBufferPosition.y - 64, 64, 64, sem, normDepth, lightVal);
 			DrawMonsterHelper(out, tempTilePosition, tempTargetBufferPosition, lightTableIndex);
 		}
 	}
 
+	nightmare::neural::GBufferManager::Instance().StampSemanticRect(targetBufferPosition.x - 16, targetBufferPosition.y - 16, 32, 32, nightmare::neural::SemanticId::Missile, normDepth, 255);
 	DrawMissile(out, tilePosition, targetBufferPosition, false, lightTableIndex);
 
 	if (object != nullptr && !object->_oPreFlag) {
@@ -1399,6 +1393,11 @@ void DrawGame(const Surface &fullOut, Point position, Displacement offset)
 	DrawRainLayer(out, RAIN_FRONT);
 	DrawOOB(out, lightmap, position, Point {} + offset, rows, columns);
 
+	nightmare::neural::GBufferManager::Instance().CaptureSceneSurface(out, system_palette.data());
+	if (MyPlayer != nullptr) {
+		nightmare::neural::DatasetDumper::Instance().OnSceneRendered(MyPlayer->position.tile, leveltype, SDL_GetTicks());
+	}
+
 	if (*GetOptions().Graphics.zoom) {
 		Zoom(fullOut.subregionY(0, gnViewportHeight));
 	}
@@ -1429,6 +1428,8 @@ void DrawGame(const Surface &fullOut, Point position, Displacement offset)
  */
 void DrawView(const Surface &out, Point startPosition)
 {
+	nightmare::neural::GBufferManager::Instance().BeginFrame(out.w(), out.h());
+	nightmare::neural::GBufferManager::Instance().SetCurrentBiome(static_cast<nightmare::neural::DungeonBiome>(std::clamp(static_cast<int>(leveltype), 0, 6)));
 #ifdef _DEBUG
 	DebugCoordsMap.clear();
 #endif

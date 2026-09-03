@@ -53,6 +53,7 @@
 #include "engine/random.hpp"
 #include "engine/render/clx_render.hpp"
 #include "engine/sound.h"
+#include "nightmare/neural/dataset_dumper.hpp"
 #include "game_mode.hpp"
 #include "gamemenu.h"
 #include "gmenu.h"
@@ -1144,6 +1145,8 @@ void DiabloParseFlags(int argc, char **argv)
 			gbVanilla = true;
 		} else if (arg == "--verbose") {
 			SDL_SetLogPriorities(SDL_LOG_PRIORITY_VERBOSE);
+		} else if (arg == "--dataset" || arg == "--dump-dataset") {
+			nightmare::neural::DatasetDumper::Instance().SetEnabled(true);
 #if SDL_VERSION_ATLEAST(2, 0, 0)
 		} else if (arg == "--log-to-file") {
 			if (i + 1 == argc) {

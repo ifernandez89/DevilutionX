@@ -81,6 +81,9 @@ jobs:
           if [ -f build-web/devilutionx.data ]; then cp -v build-web/devilutionx.data dist/; fi
           cp -v Packaging/emscripten/index.html dist/index.html
           cp -v Packaging/emscripten/file-manager.js dist/file-manager.js
+          if [ -d Packaging/emscripten/shaders ]; then
+            cp -rv Packaging/emscripten/shaders dist/shaders
+          fi
           if [ -d Packaging/minixp-wasm ]; then
             cp -rv Packaging/minixp-wasm dist/minixp
             cp -rv Packaging/minixp-wasm dist/tinycore

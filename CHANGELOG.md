@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### ⚔️ Desbloqueo y Restauración de Clases Ocultas: Bárbaro y Bardo (Barbarian & Bard)
+- **Activación por Defecto de Clases Durmientes ([`Source/options.cpp`](file:///c:/Projects/DevilutionX/Source/options.cpp), [`Packaging/emscripten/emscripten_pre.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/emscripten_pre.js))**:
+  - **El Bárbaro (*Barbarian*)**: Se activó `testBarbarian = true` por defecto. Puede empuñar espadas de dos manos a una mano, llevar dos hachas/mazas a la vez (*dual-wield*), golpear en arco a enemigos adyacentes y posee resistencia mágica pasiva al subir de nivel.
+  - **El Bardo (*Bard*)**: Se activó `testBard = true` por defecto. Puede empuñar dos espadas a la vez (*dual-wield*), golpear a dos objetivos simultáneamente y combina combate cuerpo a cuerpo veloz con hechizos híbridos.
+  - Se eliminó la restricción de visibilidad `OnlyHellfire` de ambas clases para que puedan ser seleccionadas y configuradas sin fricción en el menú de personajes.
+  - **Correr en Tristán (*Run in Town*)**: Habilitado por defecto (`runInTown = true`) para una exploración ágil y rápida del pueblo.
+  - **Preconfiguración Automática en WebAssembly**: Se genera automáticamente `diablo.ini` con `Test Barbarian=1`, `Test Bard=1` y `Run in Town=1` para nuevos jugadores y partidas web.
+
 ### 🌧️ Lluvia Permanente Sin Bloqueos, Recuperador de MPQ y Despliegue Robusto en Pages
 - **Lluvia Volumétrica 2.0 Permanente ([`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html))**:
   - Se eliminó el bloqueo falso-negativo de `isTownBiome`: ahora tiene valor predeterminado `true`, garantizando que la lluvia isométrica, gotas micro y relámpagos se rendericen siempre incluso si el binario WebAssembly no expone temporalmente los símbolos C++ del G-Buffer.

@@ -49,6 +49,17 @@ Module['preRun'].push(function() {
         console.error('Error loading saves from IndexedDB:', err);
       } else {
         console.log('Existing saves loaded from IndexedDB');
+        try {
+          mkdirSafe('/libsdl/diasurgical/devilution');
+          var iniPath = '/libsdl/diasurgical/devilution/diablo.ini';
+          var hasIni = false;
+          try { FS.stat(iniPath); hasIni = true; } catch(e) {}
+          if (!hasIni) {
+            var defaultIni = "[Game]\nTest Barbarian=1\nTest Bard=1\nRun in Town=1\nCow Quest=1\nTheo Quest=1\n";
+            FS.writeFile(iniPath, defaultIni);
+            FS.syncfs(false, function() {});
+          }
+        } catch(e) {}
       }
       Module.removeRunDependency('syncfs');
     });

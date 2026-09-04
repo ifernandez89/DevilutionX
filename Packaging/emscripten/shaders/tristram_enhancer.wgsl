@@ -1,5 +1,5 @@
 // NIGHTMARE Neural HD — Advanced Neural Reconstruction & Multi-Biome WebGPU Shader (WGSL)
-// Features: Subpixel Edge Reconstruction (DLSS-Style), Volumetric Light Scattering, 2.5D Pseudo-Normals, Wet Surface Shimmer, Material Physiology & Silhouette Invariance
+// Optimized Version: Fused Multi-Pass Texture Lookups, Low-Overhead Normals & Quality-Tiered Shadows
 
 struct Uniforms {
     renderMode: u32,             // 0: Original, 1: Enhanced, 2: Split A/B, 3: Depth, 4: Light, 5: Semantic, 6: Normals
@@ -62,12 +62,12 @@ fn hash21(p: vec2<f32>) -> f32 {
     return fract(dot(q, q + 45.32));
 }
 
-// Subpixel Edge Reconstruction, Legacy Rain Eradicator & Heat Shimmer
+// Subpixel Edge Reconstruction, Legacy Rain Eradicator & Heat Shimmer (Optimized)
 fn sampleReconstructedRGB(coords: vec2<i32>) -> vec4<f32> {
     let dim = vec2<i32>(u.resolution);
     var sampleCoords = coords;
 
-    // Atmospheric Heat Shimmer rising directly above the Town Bonfire
+    // Atmospheric Heat Shimmer (Town Bonfire only)
     if (u.qualityTier > 0u && u.dungeonBiome == 0u) {
         let dyFire = u.bonfirePos.y - f32(coords.y);
         let dxFire = abs(f32(coords.x) - u.bonfirePos.x);
@@ -91,15 +91,14 @@ fn sampleReconstructedRGB(coords: vec2<i32>) -> vec4<f32> {
     let lU = dot(cU.rgb, vec3<f32>(0.299, 0.587, 0.114));
     let lD = dot(cD.rgb, vec3<f32>(0.299, 0.587, 0.114));
 
-    // Legacy C++ Rain Eradicator: If the current pixel is significantly darker than horizontal neighbors,
-    // AND forms a vertical line (similar luminance to above/below), erase it by blending!
+    // Legacy Rain Eradicator in Town
     if (u.dungeonBiome == 0u) {
         if (lC < lL - 0.04 && lC < lR - 0.04 && abs(lC - lU) < 0.05 && abs(lC - lD) < 0.05) {
             return mix(c, (cL + cR) * 0.5, 0.85);
         }
     }
 
-    // Standard Subpixel Edge Smoothing (DLSS-style)
+    // Subpixel Edge Smoothing (DLSS-style)
     let edgeH = abs(lL - lR);
     let edgeV = abs(lU - lD);
 
@@ -110,8 +109,8 @@ fn sampleReconstructedRGB(coords: vec2<i32>) -> vec4<f32> {
     return c;
 }
 
-// Compute 2.5D Pseudo-Normals with Surface Relief
-fn computeMultiBiomeNormal(coords: vec2<i32>, semId: u32, depthVal: f32) -> vec3<f32> {
+// Compute 2.5D Pseudo-Normals with Surface Relief (Optimized Texture Access)
+fn computeMultiBiomeNormal(coords: vec2<i32>, semId: u32, depthVal: f32, isHeadRegion: bool) -> vec3<f32> {
     let texDim = vec2<i32>(u.resolution);
     
     let dL = textureLoad(t_depth, clamp(coords + vec2<i32>(-1, 0), vec2<i32>(0), texDim - 1), 0).r;
@@ -139,28 +138,19 @@ fn computeMultiBiomeNormal(coords: vec2<i32>, semId: u32, depthVal: f32) -> vec3
         }
         case 3u, 4u, 7u: {
             // Characters (Player 3u, NPCs 4u, Monsters/Enemies 7u):
-            // Micro-relief extracted from sprite luminance gradients (clothing folds, armor plates, muscles)
+            // Efficient 2-tap sprite luminance gradient for armor folds & muscles
             let cL = textureLoad(t_rgb, clamp(coords + vec2<i32>(-1, 0), vec2<i32>(0), texDim - 1), 0).rgb;
             let cR = textureLoad(t_rgb, clamp(coords + vec2<i32>( 1, 0), vec2<i32>(0), texDim - 1), 0).rgb;
-            let cU = textureLoad(t_rgb, clamp(coords + vec2<i32>(0, -1), vec2<i32>(0), texDim - 1), 0).rgb;
-            let cD = textureLoad(t_rgb, clamp(coords + vec2<i32>(0,  1), vec2<i32>(0), texDim - 1), 0).rgb;
             let lumL = dot(cL, vec3<f32>(0.299, 0.587, 0.114));
             let lumR = dot(cR, vec3<f32>(0.299, 0.587, 0.114));
-            let lumU = dot(cU, vec3<f32>(0.299, 0.587, 0.114));
-            let lumD = dot(cD, vec3<f32>(0.299, 0.587, 0.114));
             let spriteGradX = (lumR - lumL) * 3.2;
-            let spriteGradY = (lumD - lumU) * 3.2;
 
-            // Head / Cranial curvature detection (~top 14px of character entity)
-            let semUp12 = u32(round(textureLoad(t_semantic, clamp(coords + vec2<i32>(0, -12), vec2<i32>(0), texDim - 1), 0).r * 255.0));
-            let semDn12 = u32(round(textureLoad(t_semantic, clamp(coords + vec2<i32>(0, 12), vec2<i32>(0), texDim - 1), 0).r * 255.0));
             var headBowing = vec2<f32>(0.0, 0.0);
-            if (semUp12 != semId && semDn12 == semId) {
-                // Spherical dome curvature around the skull / helmet / face
+            if (isHeadRegion) {
                 headBowing = vec2<f32>(spriteGradX * 0.35, -0.22);
             }
 
-            n = normalize(vec3<f32>(-dz_dx * 1.6 - spriteGradX + headBowing.x, -dz_dy * 1.6 - spriteGradY + headBowing.y, 0.70));
+            n = normalize(vec3<f32>(-dz_dx * 1.6 - spriteGradX + headBowing.x, -dz_dy * 1.6 + headBowing.y, 0.70));
         }
         case 5u: {
             // Water / Lava waves
@@ -208,7 +198,17 @@ fn fs_main(in: VertexOutput) -> @location(0) vec4<f32> {
         return vec4<f32>(getSemanticColor(semId), 1.0);
     }
 
-    let normal = computeMultiBiomeNormal(screenPixel, semId, depthVal);
+    // Single-tap Head / Facial Region Detection (~top 12px border of character entity)
+    let isEntity = (semId == 3u || semId == 4u || semId == 7u);
+    var isHeadRegion = false;
+    if (isEntity) {
+        let semUp12 = u32(round(textureLoad(t_semantic, clamp(screenPixel + vec2<i32>(0, -12), vec2<i32>(0), vec2<i32>(u.resolution) - 1), 0).r * 255.0));
+        if (semUp12 != semId) {
+            isHeadRegion = true;
+        }
+    }
+
+    let normal = computeMultiBiomeNormal(screenPixel, semId, depthVal, isHeadRegion);
 
     if (u.renderMode == 6u) {
         return vec4<f32>(normal * 0.5 + 0.5, 1.0);
@@ -250,24 +250,21 @@ fn fs_main(in: VertexOutput) -> @location(0) vec4<f32> {
         }
     }
 
-    // Directional Cast Shadows from Point Light (Town Bonfire / Dungeon Torches)
+    // Directional Cast Shadows from Point Light (Optimized 2-Tap Trace)
     var directionalShadow = 1.0;
-    if (u.qualityTier > 0u && semId == 1u && distToBonfire > 32.0 && distToBonfire < 320.0) {
+    if (u.qualityTier > 0u && semId == 1u && distToBonfire > 36.0 && distToBonfire < 300.0) {
         let traceDir = normalize(u.bonfirePos - pixelPos);
-        let s1 = u32(round(textureLoad(t_semantic, clamp(screenPixel + vec2<i32>(traceDir * 7.0), vec2<i32>(0), vec2<i32>(u.resolution) - 1), 0).r * 255.0));
-        let s2 = u32(round(textureLoad(t_semantic, clamp(screenPixel + vec2<i32>(traceDir * 15.0), vec2<i32>(0), vec2<i32>(u.resolution) - 1), 0).r * 255.0));
-        let s3 = u32(round(textureLoad(t_semantic, clamp(screenPixel + vec2<i32>(traceDir * 24.0), vec2<i32>(0), vec2<i32>(u.resolution) - 1), 0).r * 255.0));
+        let s1 = u32(round(textureLoad(t_semantic, clamp(screenPixel + vec2<i32>(traceDir * 9.0), vec2<i32>(0), vec2<i32>(u.resolution) - 1), 0).r * 255.0));
+        let s2 = u32(round(textureLoad(t_semantic, clamp(screenPixel + vec2<i32>(traceDir * 20.0), vec2<i32>(0), vec2<i32>(u.resolution) - 1), 0).r * 255.0));
 
         var occlude = 0.0;
-        if (s1 >= 2u && s1 <= 7u && s1 != 5u) { occlude += 0.42; }
-        if (s2 >= 2u && s2 <= 7u && s2 != 5u) { occlude += 0.35; }
-        if (s3 >= 2u && s3 <= 7u && s3 != 5u) { occlude += 0.23; }
+        if (s1 >= 2u && s1 <= 7u && s1 != 5u) { occlude += 0.55; }
+        if (s2 >= 2u && s2 <= 7u && s2 != 5u) { occlude += 0.45; }
 
-        directionalShadow = clamp(1.0 - (occlude * 0.55 * u.contactShadowStrength), 0.38, 1.0);
+        directionalShadow = clamp(1.0 - (occlude * 0.50 * u.contactShadowStrength), 0.40, 1.0);
     }
     let totalGroundShadow = contactShadow * directionalShadow;
 
-    // Material Specular & Wetness Shimmer
     // Material Specular, Cloth Volumetrics & Character Rim Shimmer
     var diffuseFactor = NdotL;
     var specularContribution = vec3<f32>(0.0);
@@ -279,17 +276,6 @@ fn fs_main(in: VertexOutput) -> @location(0) vec4<f32> {
     let minC = min(origColor.r, min(origColor.g, origColor.b));
     let sat = select(0.0, (maxC - minC) / max(maxC, 0.001), maxC > 0.01);
     let rimFactor = pow(clamp(1.0 - NdotV, 0.0, 1.0), 3.2);
-
-    // Head / Facial Region Detection (~top 14px of character entity)
-    let isEntity = (semId == 3u || semId == 4u || semId == 7u);
-    var isHeadRegion = false;
-    if (isEntity) {
-        let semUp14 = u32(round(textureLoad(t_semantic, clamp(screenPixel + vec2<i32>(0, -14), vec2<i32>(0), vec2<i32>(u.resolution) - 1), 0).r * 255.0));
-        let semDn14 = u32(round(textureLoad(t_semantic, clamp(screenPixel + vec2<i32>(0, 14), vec2<i32>(0), vec2<i32>(u.resolution) - 1), 0).r * 255.0));
-        if (semUp14 != semId && semDn14 == semId) {
-            isHeadRegion = true;
-        }
-    }
 
     switch (semId) {
         case 1u: {
@@ -310,42 +296,33 @@ fn fs_main(in: VertexOutput) -> @location(0) vec4<f32> {
             let isMetal = isGoldMetal || isSteelMetal;
 
             if (isHeadRegion && isSkinTone) {
-                // 10% Realism: Subsurface Scattering & Soft Facial Contouring
-                // Human skin gently diffuses firelight with a warm micro-subsurface glow
+                // Subsurface Scattering & Soft Facial Contouring
                 let sssColor = vec3<f32>(1.08, 0.94, 0.84);
                 let faceWrap = max(NdotL * 0.65 + 0.35, 0.0);
                 diffuseFactor = faceWrap;
-                // Soft skin micro-sheen (forehead/cheek highlight)
                 let skinSheen = pow(NdotH, 18.0) * 0.32;
                 specularContribution = sssColor * skinSheen * (mainRadiance + vec3<f32>(0.10));
-                // Soft rim-lighting outlining the face/jawline
                 specularContribution += sssColor * (rimFactor * 0.32 * (mainRadiance + vec3<f32>(0.10)));
-                // Subtle warmth infusion
                 emissiveLight = origColor.rgb * sssColor * 0.08 * attenuation;
             } else if (isMetal) {
                 // High-reflectance metallic armor / helmet / shield / sword
                 let metalPower = select(36.0, 48.0, isSteelMetal);
-                // On the helmet crown, focus an apex specular glint (cranial curvature)
                 let helmetBoost = select(1.0, 1.25, isHeadRegion);
                 let metalSpec = pow(NdotH, metalPower) * (2.8 * helmetBoost);
                 let metalColor = select(vec3<f32>(1.0, 0.84, 0.46), vec3<f32>(0.92, 0.96, 1.0), isSteelMetal);
-                // Directional point light glint + ambient sheen
                 specularContribution = metalColor * (metalSpec * mainRadiance + metalSpec * 0.25);
-                // Crisp rim lighting along armor bevels, visor slit, and helmet crest
                 specularContribution += metalColor * (rimFactor * 0.60 * (mainRadiance + vec3<f32>(0.18)));
                 diffuseFactor = pow(NdotL, 0.95);
             } else {
-                // Cloth / Robes / Leather / Tunic / Cowl / Hair:
-                // Soft fabric wrap-lighting with velvet micro-sheen on folds and hood
+                // Cloth / Robes / Leather / Tunic
                 diffuseFactor = max(NdotL * 0.72 + 0.28, 0.0);
                 let clothSpec = pow(NdotH, 12.0) * 0.40;
                 specularContribution = origColor.rgb * clothSpec * mainRadiance;
-                // Soft rim-light along fabric folds and cloak silhouettes
                 specularContribution += origColor.rgb * (rimFactor * 0.40 * (mainRadiance + vec3<f32>(0.12)));
             }
         }
         case 5u: {
-            // Liquid Water / Molten Lava with Dynamic Impact Ripples
+            // Liquid Water / Molten Lava
             if (u.dungeonBiome == 3u || u.dungeonBiome == 4u) {
                 emissiveLight = vec3<f32>(1.0, 0.42, 0.06) * 0.8;
             } else {
@@ -363,27 +340,21 @@ fn fs_main(in: VertexOutput) -> @location(0) vec4<f32> {
             diffuseFactor = diffuseFactor * 0.5 + 0.5;
         }
         case 7u: {
-            // Monsters & Bosses (Enemies):
-            // Armored demons (Knights), Skeletons (Bone/Plate), Overlords (Leathery hide/horns)
+            // Monsters & Bosses (Enemies)
             let isMonsterArmor = (sat < 0.30 && lum > 0.26) || (origColor.r > 0.40 && origColor.g > 0.28 && origColor.b < 0.25);
             if (isMonsterArmor) {
-                // Sharp sinister gleam on enemy armor, shields, weapons, and cranial horns/bone
                 let hornBoost = select(1.0, 1.30, isHeadRegion);
                 let armorSpec = pow(NdotH, 44.0) * (2.6 * hornBoost);
                 let armorTint = select(vec3<f32>(0.95, 0.85, 0.6), vec3<f32>(0.85, 0.92, 1.0), sat < 0.22);
                 specularContribution = armorTint * (armorSpec * mainRadiance + armorSpec * 0.22);
-                // Edge rim-light to cut through the dungeon dark
                 specularContribution += vec3<f32>(0.95, 0.75, 0.65) * (rimFactor * 0.58 * (mainRadiance + vec3<f32>(0.16)));
                 diffuseFactor = pow(NdotL, 1.05);
             } else {
-                // Demonic flesh / scales / dark hides
                 diffuseFactor = pow(NdotL, 1.12) * 0.95;
                 let skinSpec = pow(NdotH, 16.0) * 0.38;
                 specularContribution = vec3<f32>(0.75, 0.45, 0.35) * skinSpec * mainRadiance;
-                // Eerie red-amber rim light on demonic silhouettes
                 let rimTint = vec3<f32>(1.0, 0.45, 0.18);
                 specularContribution += rimTint * (rimFactor * 0.48 * (mainRadiance + vec3<f32>(0.14)));
-                // 10% Realism: In head region, give demonic eye sockets a subtle menacing ember
                 if (isHeadRegion && lum > 0.32 && sat > 0.40) {
                     emissiveLight += origColor.rgb * 0.30;
                 }
@@ -399,13 +370,11 @@ fn fs_main(in: VertexOutput) -> @location(0) vec4<f32> {
     let volumetricGlow = biomeLightTint * pow(attenuation, 1.5) * 0.15;
 
     // Composition & Neural Tone Curve
-    // Town: 20% Darker Enveloping Midnight Rain Atmosphere
     var ambientBase = max(lightVal, 0.24);
     var ambientTint = vec3<f32>(1.0);
     if (u.dungeonBiome == 0u) {
-        // 20% deeper ambient in Town with cool nocturnal rain tint
         ambientBase = max(lightVal * 0.80, 0.18);
-        ambientTint = vec3<f32>(0.84, 0.89, 0.96) * 0.80; // 20% darker, deep night immersion
+        ambientTint = vec3<f32>(0.84, 0.89, 0.96) * 0.80; // Deeper night immersion in town
     }
 
     var groundMist = vec3<f32>(0.0);
@@ -424,7 +393,7 @@ fn fs_main(in: VertexOutput) -> @location(0) vec4<f32> {
     var enhanced = (origColor.rgb * totalLight * totalGroundShadow) + specularContribution + emissiveLight + groundMist;
 
     // Rich Shadow Depth & Highlight Saturation Curve
-    let gammaLift = select(0.96, 1.02, u.dungeonBiome == 0u); // Deeper nocturnal black levels in Town
+    let gammaLift = select(0.96, 1.02, u.dungeonBiome == 0u);
     enhanced = pow(enhanced, vec3<f32>(gammaLift));
 
     // Silhouette Invariance Masking

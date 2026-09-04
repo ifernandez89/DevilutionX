@@ -133,7 +133,7 @@
 			width: 100%;
 			height: 100%;
 			pointer-events: none;
-			background: radial-gradient(circle at center, rgba(0, 0, 0, 0) 48%, rgba(0, 0, 0, 0.52) 100%);
+			background: radial-gradient(circle at center, rgba(0, 0, 0, 0) 36%, rgba(0, 0, 0, 0.68) 100%);
 			opacity: 0;
 			transition: opacity 0.3s ease;
 			z-index: 10;
@@ -1616,7 +1616,79 @@
 		});
 
 		var Module = {
-			preRun: [],
+			preRun: [
+				function() {
+					// Intercept FS.syncfs to ensure Test Barbarian=1 and Test Bard=1 in diablo.ini
+					if (typeof FS !== 'undefined' && FS.syncfs) {
+						var origSyncfs = FS.syncfs;
+						FS.syncfs = function(populate, callback) {
+							if (populate) {
+								origSyncfs.call(FS, true, function(err) {
+									try {
+										var iniPath = '/libsdl/diasurgical/devilution/diablo.ini';
+										var currentIni = '';
+										try {
+											currentIni = new TextDecoder().decode(FS.readFile(iniPath));
+										} catch(e) {}
+
+										var modified = false;
+										if (!currentIni || currentIni.trim().length === 0) {
+											currentIni = "[Game]\nTest Barbarian=1\nTest Bard=1\nRun in Town=1\nCow Quest=1\nTheo Quest=1\n";
+											modified = true;
+										} else {
+											if (currentIni.indexOf('Test Barbarian=1') === -1) {
+												if (currentIni.indexOf('Test Barbarian') !== -1) {
+													currentIni = currentIni.replace(/Test Barbarian\s*=\s*\d+/i, 'Test Barbarian=1');
+												} else if (currentIni.indexOf('[Game]') !== -1) {
+													currentIni = currentIni.replace('[Game]', "[Game]\nTest Barbarian=1");
+												} else {
+													currentIni += "\n[Game]\nTest Barbarian=1\n";
+												}
+												modified = true;
+											}
+											if (currentIni.indexOf('Test Bard=1') === -1) {
+												if (currentIni.indexOf('Test Bard') !== -1) {
+													currentIni = currentIni.replace(/Test Bard\s*=\s*\d+/i, 'Test Bard=1');
+												} else if (currentIni.indexOf('[Game]') !== -1) {
+													currentIni = currentIni.replace('[Game]', "[Game]\nTest Bard=1");
+												} else {
+													currentIni += "\n[Game]\nTest Bard=1\n";
+												}
+												modified = true;
+											}
+											if (currentIni.indexOf('Run in Town=1') === -1) {
+												if (currentIni.indexOf('Run in Town') !== -1) {
+													currentIni = currentIni.replace(/Run in Town\s*=\s*\d+/i, 'Run in Town=1');
+												} else if (currentIni.indexOf('[Game]') !== -1) {
+													currentIni = currentIni.replace('[Game]', "[Game]\nRun in Town=1");
+												} else {
+													currentIni += "\n[Game]\nRun in Town=1\n";
+												}
+												modified = true;
+											}
+										}
+
+										if (modified) {
+											try { FS.mkdir('/libsdl'); } catch(e){}
+											try { FS.mkdir('/libsdl/diasurgical'); } catch(e){}
+											try { FS.mkdir('/libsdl/diasurgical/devilution'); } catch(e){}
+											FS.writeFile(iniPath, currentIni);
+											try { FS.writeFile('/diablo.ini', currentIni); } catch(e){}
+											origSyncfs.call(FS, false, function() {});
+											console.log('[NIGHTMARE] Injected Test Barbarian=1, Test Bard=1, Run in Town=1 into diablo.ini');
+										}
+									} catch(e) {
+										console.error('[NIGHTMARE] Error injecting hero classes:', e);
+									}
+									if (callback) callback(err);
+								});
+							} else {
+								origSyncfs.apply(FS, arguments);
+							}
+						};
+					}
+				}
+			],
 			postRun: [
 				function() {
 					// Hide loading overlay once the engine has booted

@@ -268,14 +268,16 @@
 			const iniPath1 = '/libsdl/diasurgical/devilution/diablo.ini';
 			const iniPath2 = '/libsdl/diasurgical/diablo.ini';
 
-			try { FS.unlink(iniPath1); } catch (e) {}
-			try { FS.unlink(iniPath2); } catch (e) {}
+			const defaultIni = "[Game]\nTest Barbarian=1\nTest Bard=1\nRun in Town=1\nCow Quest=1\nTheo Quest=1\n";
+			try { FS.writeFile(iniPath1, defaultIni); } catch (e) {}
+			try { FS.writeFile(iniPath2, defaultIni); } catch (e) {}
+			try { FS.writeFile('/diablo.ini', defaultIni); } catch (e) {}
 
 			FS.syncfs(false, function(err) {
 				if (err) {
 					console.error('Error syncing settings reset:', err);
 				}
-				alert('¡Configuración restablecida! Recargando juego...');
+				alert('¡Configuración restablecida con Bárbaro y Bardo activos! Recargando juego...');
 				setTimeout(() => location.reload(), 300);
 			});
 		} catch (err) {

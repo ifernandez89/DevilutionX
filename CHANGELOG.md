@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### 🌑 Atmósfera Nocturna Envolvente en Tristán (Town 20% Más Oscuro)
+- **Calibración Lumínica Nocturna ([`Packaging/emscripten/shaders/tristram_enhancer.wgsl`](file:///c:/Projects/DevilutionX/Packaging/emscripten/shaders/tristram_enhancer.wgsl), [`Packaging/neural_harness/shaders/tristram_enhancer.wgsl`](file:///c:/Projects/DevilutionX/Packaging/neural_harness/shaders/tristram_enhancer.wgsl))**:
+  - Se redujo la iluminación ambiental base del pueblo en un 20% (`ambientBase = max(lightVal * 0.80, 0.18)`), envolviendo a Tristán en una noche gótica profunda, fría y lluviosa.
+  - Se introdujo un tinte ambiental nocturno de tormenta (`vec3(0.84, 0.89, 0.96) * 0.80`) que intensifica el dramatismo y hace que la hoguera, las antorchas y los relámpagos resalten con un contraste cálido impresionante.
+  - Se ajustó la curva tonal gamma (`gammaLift = 1.02`) para negros más profundos en el suelo y charcos.
+  - **Viñeta Cinemática Perimetral ([`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html))**: Se oscureció el gradiente radial exterior (`rgba(0, 0, 0, 0.68)`) para encuadrar la acción y acentuar la sensación de intemperie y desolación en el pueblo.
+
 ### ⚔️ Desbloqueo y Restauración de Clases Ocultas: Bárbaro y Bardo (Barbarian & Bard)
 - **Activación por Defecto de Clases Durmientes ([`Source/options.cpp`](file:///c:/Projects/DevilutionX/Source/options.cpp), [`Packaging/emscripten/emscripten_pre.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/emscripten_pre.js))**:
   - **El Bárbaro (*Barbarian*)**: Se activó `testBarbarian = true` por defecto. Puede empuñar espadas de dos manos a una mano, llevar dos hachas/mazas a la vez (*dual-wield*), golpear en arco a enemigos adyacentes y posee resistencia mágica pasiva al subir de nivel.

@@ -398,6 +398,16 @@ fn fs_main(in: VertexOutput) -> @location(0) vec4<f32> {
     // Volumetric Atmospheric Glow & Low Ground Mist
     let volumetricGlow = biomeLightTint * pow(attenuation, 1.5) * 0.15;
 
+    // Composition & Neural Tone Curve
+    // Town: 20% Darker Enveloping Midnight Rain Atmosphere
+    var ambientBase = max(lightVal, 0.24);
+    var ambientTint = vec3<f32>(1.0);
+    if (u.dungeonBiome == 0u) {
+        // 20% deeper ambient in Town with cool nocturnal rain tint
+        ambientBase = max(lightVal * 0.80, 0.18);
+        ambientTint = vec3<f32>(0.84, 0.89, 0.96) * 0.80; // 20% darker, deep night immersion
+    }
+
     var groundMist = vec3<f32>(0.0);
     if (u.qualityTier > 0u && semId == 1u) {
         let mistCoord = vec2<f32>(screenPixel) * 0.032;
@@ -408,15 +418,14 @@ fn fs_main(in: VertexOutput) -> @location(0) vec4<f32> {
         groundMist = mistTint * mistAlpha * ambientBase;
     }
 
-    // Composition & Neural Tone Curve
-    let ambientBase = max(lightVal, 0.24);
     let dynamicDiffuse = mainRadiance * diffuseFactor;
-    let totalLight = vec3<f32>(ambientBase) + dynamicDiffuse + volumetricGlow;
+    let totalLight = (ambientTint * ambientBase) + dynamicDiffuse + volumetricGlow;
 
     var enhanced = (origColor.rgb * totalLight * totalGroundShadow) + specularContribution + emissiveLight + groundMist;
 
     // Rich Shadow Depth & Highlight Saturation Curve
-    enhanced = pow(enhanced, vec3<f32>(0.96)); // Tone curve lift
+    let gammaLift = select(0.96, 1.02, u.dungeonBiome == 0u); // Deeper nocturnal black levels in Town
+    enhanced = pow(enhanced, vec3<f32>(gammaLift));
 
     // Silhouette Invariance Masking
     enhanced = mix(origColor.rgb, enhanced, origColor.a);

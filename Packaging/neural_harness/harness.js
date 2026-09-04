@@ -28,6 +28,8 @@ class NightmareHarness {
             waterSpecular: 1.2,
             dungeonBiome: 0, // 0: Town, 1: Cathedral, 2: Catacombs, 3: Caves, 4: Hell, 5: Crypt, 6: Hive
             bonfirePos: [320, 240],
+            qualityTier: 1, // 1: Full effects (directional shadows, heat shimmer, mist), 0: Fallback low-tier
+            mistDensity: 0.35,
         };
 
         // Neural Inference Engine (Phase 5)
@@ -276,6 +278,8 @@ class NightmareHarness {
         uViewF32[9] = this.height;
         uViewF32[10] = this.state.bonfirePos[0];
         uViewF32[11] = this.state.bonfirePos[1];
+        uViewU32[12] = this.state.qualityTier;
+        uViewF32[13] = this.state.mistDensity;
 
         this.device.queue.writeBuffer(this.uniformBuffer, 0, uData);
     }
@@ -338,6 +342,15 @@ class NightmareHarness {
         if (this.neuralEngine) {
             this.neuralEngine.updateDynamicDegradation(avgDelta);
         }
+
+        // WebGPU Quality Safeguard Watchdog (maintains 60 FPS on older GPUs)
+        if (avgDelta > 18.5 && this.state.qualityTier === 1) {
+            this.state.qualityTier = 0;
+            if (this.qualityBadgeEl) this.qualityBadgeEl.textContent = "SAFEGUARD (60 FPS)";
+        } else if (avgDelta < 15.5 && this.state.qualityTier === 0) {
+            this.state.qualityTier = 1;
+            if (this.qualityBadgeEl) this.qualityBadgeEl.textContent = "HIGH (Neural)";
+        }
     }
 
     startRenderLoop() {
@@ -379,6 +392,7 @@ class NightmareHarness {
         bindSlider('slider-flicker', 'bonfireFlicker');
         bindSlider('slider-shadow', 'contactShadowStrength');
         bindSlider('slider-specular', 'waterSpecular');
+        bindSlider('slider-mist', 'mistDensity');
 
         this.canvas.addEventListener('mousedown', (e) => {
             if (this.state.renderMode === 2) {

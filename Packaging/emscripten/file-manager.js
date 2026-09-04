@@ -90,8 +90,9 @@
 						// Directory might already exist, ignore
 					}
 
-					// Write file to IDBFS-backed directory
+					// Write file to IDBFS-backed directory and root
 					FS.writeFile(path, data);
+					try { FS.writeFile('/' + file.name, data); } catch (e) {}
 					console.log('Uploaded:', file.name, '(' + formatBytes(file.size) + ')');
 
 					processed++;
@@ -103,7 +104,7 @@
 								alert('Error guardando archivos. Revisa la consola.');
 							} else {
 								alert('¡Archivos cargados con éxito! Recargando el juego...');
-								setTimeout(() => location.reload(), 500);
+								setTimeout(() => location.reload(), 400);
 							}
 						});
 					}
@@ -259,28 +260,23 @@
 
 	// Reset settings
 	resetSettingsBtn.addEventListener('click', () => {
-		if (!confirm('¿Restablecer la configuración? Esto eliminará diablo.ini pero conservará tus partidas guardadas. El juego se recargará.')) {
+		if (!confirm('¿Restablecer la configuración gráfica? Esto eliminará diablo.ini pero conservará todos tus archivos de juego (.MPQ) y partidas guardadas. El juego se recargará.')) {
 			return;
 		}
 
 		try {
-			const iniPath = '/libsdl/diasurgical/devilution/diablo.ini';
+			const iniPath1 = '/libsdl/diasurgical/devilution/diablo.ini';
+			const iniPath2 = '/libsdl/diasurgical/diablo.ini';
 
-			try {
-				FS.stat(iniPath);
-				FS.unlink(iniPath);
-			} catch (e) {
-				// File doesn't exist
-			}
+			try { FS.unlink(iniPath1); } catch (e) {}
+			try { FS.unlink(iniPath2); } catch (e) {}
 
 			FS.syncfs(false, function(err) {
 				if (err) {
 					console.error('Error syncing settings reset:', err);
-					alert('Error al restablecer la configuración.');
-				} else {
-					alert('¡Configuración restablecida! Recargando juego...');
-					setTimeout(() => location.reload(), 500);
 				}
+				alert('¡Configuración restablecida! Recargando juego...');
+				setTimeout(() => location.reload(), 300);
 			});
 		} catch (err) {
 			console.error('Error resetting settings:', err);

@@ -12,6 +12,8 @@ struct Uniforms {
     dungeonBiome: u32,           // 0: Town, 1: Cathedral, 2: Catacombs, 3: Caves, 4: Hell, 5: Crypt, 6: Hive
     resolution: vec2<f32>,       // Screen dimensions (640.0, 480.0)
     bonfirePos: vec2<f32>,       // Light source position
+    qualityTier: u32,            // 0: Safe Baseline (60FPS), 1: Rich Atmospheric (Shadows, Heat, Mist)
+    mistDensity: f32,            // Ground mist density
 };
 
 @group(0) @binding(0) var<uniform> u: Uniforms;
@@ -60,14 +62,28 @@ fn hash21(p: vec2<f32>) -> f32 {
     return fract(dot(q, q + 45.32));
 }
 
-// Subpixel Edge Reconstruction & Legacy Rain Eradicator
+// Subpixel Edge Reconstruction, Legacy Rain Eradicator & Heat Shimmer
 fn sampleReconstructedRGB(coords: vec2<i32>) -> vec4<f32> {
     let dim = vec2<i32>(u.resolution);
-    let c = textureLoad(t_rgb, clamp(coords, vec2<i32>(0), dim - 1), 0);
-    let cL = textureLoad(t_rgb, clamp(coords + vec2<i32>(-1, 0), vec2<i32>(0), dim - 1), 0);
-    let cR = textureLoad(t_rgb, clamp(coords + vec2<i32>(1, 0), vec2<i32>(0), dim - 1), 0);
-    let cU = textureLoad(t_rgb, clamp(coords + vec2<i32>(0, -1), vec2<i32>(0), dim - 1), 0);
-    let cD = textureLoad(t_rgb, clamp(coords + vec2<i32>(0, 1), vec2<i32>(0), dim - 1), 0);
+    var sampleCoords = coords;
+
+    // Atmospheric Heat Shimmer rising directly above the Town Bonfire
+    if (u.qualityTier > 0u && u.dungeonBiome == 0u) {
+        let dyFire = u.bonfirePos.y - f32(coords.y);
+        let dxFire = abs(f32(coords.x) - u.bonfirePos.x);
+        if (dyFire > 6.0 && dyFire < 80.0 && dxFire < 38.0) {
+            let heatFactor = (1.0 - (dxFire / 38.0)) * (1.0 - (dyFire / 80.0));
+            let shimmerX = sin(f32(coords.y) * 0.16 + u.time * 8.5) * (heatFactor * 1.6);
+            let shimmerY = cos(f32(coords.x) * 0.18 + u.time * 7.0) * (heatFactor * 0.8);
+            sampleCoords = clamp(coords + vec2<i32>(i32(shimmerX), i32(shimmerY)), vec2<i32>(0), dim - 1);
+        }
+    }
+
+    let c = textureLoad(t_rgb, clamp(sampleCoords, vec2<i32>(0), dim - 1), 0);
+    let cL = textureLoad(t_rgb, clamp(sampleCoords + vec2<i32>(-1, 0), vec2<i32>(0), dim - 1), 0);
+    let cR = textureLoad(t_rgb, clamp(sampleCoords + vec2<i32>(1, 0), vec2<i32>(0), dim - 1), 0);
+    let cU = textureLoad(t_rgb, clamp(sampleCoords + vec2<i32>(0, -1), vec2<i32>(0), dim - 1), 0);
+    let cD = textureLoad(t_rgb, clamp(sampleCoords + vec2<i32>(0, 1), vec2<i32>(0), dim - 1), 0);
 
     let lC = dot(c.rgb, vec3<f32>(0.299, 0.587, 0.114));
     let lL = dot(cL.rgb, vec3<f32>(0.299, 0.587, 0.114));
@@ -75,12 +91,10 @@ fn sampleReconstructedRGB(coords: vec2<i32>) -> vec4<f32> {
     let lU = dot(cU.rgb, vec3<f32>(0.299, 0.587, 0.114));
     let lD = dot(cD.rgb, vec3<f32>(0.299, 0.587, 0.114));
 
-    // Legacy C++ Rain Eradicator: The old rain draws 1-pixel wide vertical dark streaks.
-    // If the current pixel is significantly darker than both left and right neighbors,
-    // AND forms a vertical line (similar luminance to above/below), we erase it by blending!
+    // Legacy C++ Rain Eradicator: If the current pixel is significantly darker than horizontal neighbors,
+    // AND forms a vertical line (similar luminance to above/below), erase it by blending!
     if (u.dungeonBiome == 0u) {
         if (lC < lL - 0.04 && lC < lR - 0.04 && abs(lC - lU) < 0.05 && abs(lC - lD) < 0.05) {
-            // It's an old rain streak! Erase it with horizontal median interpolation
             return mix(c, (cL + cR) * 0.5, 0.85);
         }
     }
@@ -236,6 +250,23 @@ fn fs_main(in: VertexOutput) -> @location(0) vec4<f32> {
         }
     }
 
+    // Directional Cast Shadows from Point Light (Town Bonfire / Dungeon Torches)
+    var directionalShadow = 1.0;
+    if (u.qualityTier > 0u && semId == 1u && distToBonfire > 32.0 && distToBonfire < 320.0) {
+        let traceDir = normalize(u.bonfirePos - pixelPos);
+        let s1 = u32(round(textureLoad(t_semantic, clamp(screenPixel + vec2<i32>(traceDir * 7.0), vec2<i32>(0), vec2<i32>(u.resolution) - 1), 0).r * 255.0));
+        let s2 = u32(round(textureLoad(t_semantic, clamp(screenPixel + vec2<i32>(traceDir * 15.0), vec2<i32>(0), vec2<i32>(u.resolution) - 1), 0).r * 255.0));
+        let s3 = u32(round(textureLoad(t_semantic, clamp(screenPixel + vec2<i32>(traceDir * 24.0), vec2<i32>(0), vec2<i32>(u.resolution) - 1), 0).r * 255.0));
+
+        var occlude = 0.0;
+        if (s1 >= 2u && s1 <= 7u && s1 != 5u) { occlude += 0.42; }
+        if (s2 >= 2u && s2 <= 7u && s2 != 5u) { occlude += 0.35; }
+        if (s3 >= 2u && s3 <= 7u && s3 != 5u) { occlude += 0.23; }
+
+        directionalShadow = clamp(1.0 - (occlude * 0.55 * u.contactShadowStrength), 0.38, 1.0);
+    }
+    let totalGroundShadow = contactShadow * directionalShadow;
+
     // Material Specular & Wetness Shimmer
     // Material Specular, Cloth Volumetrics & Character Rim Shimmer
     var diffuseFactor = NdotL;
@@ -314,12 +345,19 @@ fn fs_main(in: VertexOutput) -> @location(0) vec4<f32> {
             }
         }
         case 5u: {
-            // Liquid Water / Molten Lava
+            // Liquid Water / Molten Lava with Dynamic Impact Ripples
             if (u.dungeonBiome == 3u || u.dungeonBiome == 4u) {
                 emissiveLight = vec3<f32>(1.0, 0.42, 0.06) * 0.8;
             } else {
                 let fresnel = fresnelSchlick(NdotV, 0.02) * u.waterSpecular;
-                let liquidSpec = pow(NdotH, 30.0) * 2.4 * u.waterSpecular;
+                var ripple = 0.0;
+                if (u.qualityTier > 0u) {
+                    let pf = vec2<f32>(screenPixel);
+                    let r1 = sin(length(pf - vec2<f32>(310.0, 195.0)) * 0.50 - u.time * 4.5);
+                    let r2 = cos(length(pf - vec2<f32>(335.0, 210.0)) * 0.60 - u.time * 5.2);
+                    ripple = (r1 + r2) * 0.12;
+                }
+                let liquidSpec = pow(clamp(NdotH + ripple, 0.0, 1.0), 28.0) * 2.4 * u.waterSpecular;
                 specularContribution = (vec3<f32>(0.7, 0.85, 1.0) * liquidSpec + vec3<f32>(0.2, 0.4, 0.6) * fresnel) * attenuation;
             }
             diffuseFactor = diffuseFactor * 0.5 + 0.5;
@@ -357,15 +395,25 @@ fn fs_main(in: VertexOutput) -> @location(0) vec4<f32> {
         default: {}
     }
 
-    // Volumetric Atmospheric Glow (subtle scattering near fire)
+    // Volumetric Atmospheric Glow & Low Ground Mist
     let volumetricGlow = biomeLightTint * pow(attenuation, 1.5) * 0.15;
+
+    var groundMist = vec3<f32>(0.0);
+    if (u.qualityTier > 0u && semId == 1u) {
+        let mistCoord = vec2<f32>(screenPixel) * 0.032;
+        let mistNoise = sin(mistCoord.x * 1.6 + u.time * 0.22) * cos(mistCoord.y * 1.9 + u.time * 0.28) * 0.5 + 0.5;
+        let fireClear = clamp((distToBonfire - 50.0) / 140.0, 0.0, 1.0);
+        let mistAlpha = mistNoise * fireClear * (u.mistDensity * 0.22);
+        let mistTint = select(vec3<f32>(0.62, 0.70, 0.82), vec3<f32>(0.45, 0.65, 0.75), u.dungeonBiome == 5u);
+        groundMist = mistTint * mistAlpha * ambientBase;
+    }
 
     // Composition & Neural Tone Curve
     let ambientBase = max(lightVal, 0.24);
     let dynamicDiffuse = mainRadiance * diffuseFactor;
     let totalLight = vec3<f32>(ambientBase) + dynamicDiffuse + volumetricGlow;
 
-    var enhanced = (origColor.rgb * totalLight * contactShadow) + specularContribution + emissiveLight;
+    var enhanced = (origColor.rgb * totalLight * totalGroundShadow) + specularContribution + emissiveLight + groundMist;
 
     // Rich Shadow Depth & Highlight Saturation Curve
     enhanced = pow(enhanced, vec3<f32>(0.96)); // Tone curve lift

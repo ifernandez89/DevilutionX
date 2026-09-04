@@ -152,7 +152,7 @@
 			height: 100%;
 			pointer-events: none;
 			z-index: 12;
-			opacity: 0;
+			opacity: 1;
 			transition: opacity 0.35s ease;
 		}
 
@@ -597,6 +597,110 @@
 			transform: translateY(-2px);
 			box-shadow: 0 0 22px rgba(229, 193, 88, 0.6);
 		}
+
+		/* Missing MPQ / File Recovery Modal */
+		#missingMpqModal {
+			position: fixed;
+			inset: 0;
+			background: rgba(6, 6, 10, 0.94);
+			z-index: 1000;
+			display: none;
+			justify-content: center;
+			align-items: center;
+			backdrop-filter: blur(8px);
+		}
+		.missing-mpq-box {
+			background: #111116;
+			border: 2px solid #b38f4d;
+			box-shadow: 0 0 35px rgba(179, 143, 77, 0.4);
+			border-radius: 8px;
+			max-width: 520px;
+			width: 90%;
+			padding: 2.2rem;
+			text-align: center;
+			color: #e2d9cc;
+			font-family: 'Cinzel', serif;
+		}
+		.missing-mpq-box h2 {
+			color: #e5c158;
+			font-size: 1.35rem;
+			margin-bottom: 0.8rem;
+			letter-spacing: 0.05em;
+		}
+		.missing-mpq-box p {
+			font-family: 'Inter', sans-serif;
+			font-size: 0.95rem;
+			color: #b5a995;
+			line-height: 1.5;
+			margin-bottom: 1.4rem;
+		}
+		.mpq-btn-group {
+			display: flex;
+			flex-direction: column;
+			gap: 0.8rem;
+		}
+		.mpq-action-btn {
+			padding: 12px 18px;
+			font-size: 0.95rem;
+			font-weight: 700;
+			border-radius: 5px;
+			cursor: pointer;
+			transition: all 0.2s ease;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 8px;
+			font-family: 'Cinzel', serif;
+			letter-spacing: 0.04em;
+		}
+		.mpq-btn-primary {
+			background: linear-gradient(180deg, #8b181b 0%, #4a0d0e 100%);
+			border: 1px solid #e5c158;
+			color: #fff;
+			box-shadow: 0 0 14px rgba(229, 193, 88, 0.25);
+		}
+		.mpq-btn-primary:hover {
+			background: linear-gradient(180deg, #a81e22 0%, #611113 100%);
+			box-shadow: 0 0 22px rgba(229, 193, 88, 0.55);
+			transform: translateY(-2px);
+		}
+		.mpq-btn-secondary {
+			background: #161622;
+			border: 1px solid #3b82f6;
+			color: #93c5fa;
+		}
+		.mpq-btn-secondary:hover {
+			background: #1e293b;
+			border-color: #60a5fa;
+			color: #ffffff;
+			transform: translateY(-2px);
+		}
+		.mpq-progress-box {
+			display: none;
+			margin-top: 1rem;
+			text-align: center;
+		}
+		.mpq-progress-bar-bg {
+			width: 100%;
+			height: 8px;
+			background: #20202a;
+			border-radius: 4px;
+			overflow: hidden;
+			margin-bottom: 6px;
+			border: 1px solid #444;
+		}
+		.mpq-progress-bar-fill {
+			width: 0%;
+			height: 100%;
+			background: linear-gradient(90deg, #b38f4d, #e5c158);
+			transition: width 0.15s ease;
+		}
+		.mpq-drop-tip {
+			font-family: 'Inter', sans-serif;
+			font-size: 0.8rem;
+			color: #888;
+			margin-top: 1.2rem;
+		}
 	</style>
 </head>
 
@@ -677,6 +781,33 @@
 		<div class="spinner" id="spinner"></div>
 		<div id="status">Cargando Diablo 1...</div>
 		<progress value="0" max="100" id="progress" hidden></progress>
+	</div>
+
+	<!-- Missing MPQ / File Recovery Modal -->
+	<div id="missingMpqModal">
+		<div class="missing-mpq-box">
+			<h2>⚔️ ARCHIVO DE DATOS REQUERIDO</h2>
+			<p>
+				DevilutionX necesita los datos de <strong>DIABDAT.MPQ</strong> (Diablo 1) o <strong>hellfire.mpq</strong> para iniciar. Si no tienes el juego completo, puedes descargar el <strong>Shareware / Demo oficial gratuito</strong> en un clic.
+			</p>
+			<div class="mpq-btn-group">
+				<button class="mpq-action-btn mpq-btn-primary" id="directUploadMpqBtn">
+					📁 Subir DIABDAT.MPQ o Hellfire desde mi PC
+				</button>
+				<button class="mpq-action-btn mpq-btn-secondary" id="directDownloadSharewareBtn">
+					🌐 Descargar Shareware Gratis (~25MB)
+				</button>
+			</div>
+			<div class="mpq-progress-box" id="mpqProgressBox">
+				<div class="mpq-progress-bar-bg">
+					<div class="mpq-progress-bar-fill" id="mpqProgressBar"></div>
+				</div>
+				<span id="mpqProgressText" style="font-size: 12px; color: #e5c158; font-family: 'Inter', sans-serif;">Descargando...</span>
+			</div>
+			<div class="mpq-drop-tip">
+				💡 También puedes <strong>arrastrar y soltar</strong> tu archivo <code>.MPQ</code> en cualquier parte de la pantalla.
+			</div>
+		</div>
 	</div>
 
 	<!-- Background Tab Protection & Auto-Pause Modal -->
@@ -858,9 +989,24 @@
 				};
 
 				var startTime = performance.now();
+				var lastFrameTime = performance.now();
+				var avgFrameTime = 16.0;
+				var qualityTier = 1;
+
 				function renderWebGPUFrame() {
 					if (document.body.classList.contains('remaster-enabled') && gameCanvas.width > 0 && gameCanvas.height > 0) {
-						const timeSec = (performance.now() - startTime) * 0.001;
+						const now = performance.now();
+						const delta = now - lastFrameTime;
+						lastFrameTime = now;
+						if (delta > 0 && delta < 200) {
+							avgFrameTime = avgFrameTime * 0.95 + delta * 0.05;
+							if (avgFrameTime > 18.5) {
+								qualityTier = 0; // Fallback tier for older GPUs to maintain 60 FPS
+							} else if (avgFrameTime < 15.5) {
+								qualityTier = 1; // High fidelity tier: shadows, heat shimmer & mist
+							}
+						}
+						const timeSec = (now - startTime) * 0.001;
 
 						// Update Uniforms
 						const uData = new ArrayBuffer(64);
@@ -883,6 +1029,8 @@
 						uViewF32[9] = h;
 						uViewF32[10] = 320; // Bonfire center x
 						uViewF32[11] = 240; // Bonfire center y
+						uViewU32[12] = qualityTier;
+						uViewF32[13] = 0.35; // Mist density
 
 						device.queue.writeBuffer(uniformBuffer, 0, uData);
 
@@ -1198,33 +1346,26 @@
 			// Main Weather Loop (Active ONLY in Tristram Town & When Neural HD is ON)
 			// Main Weather Loop (Active in Tristram Town & When Neural HD is ON)
 			function weatherLoop() {
-				// Guard 1: Disable if Neural HD is off or tab is hidden
-				var isNeuralActive = document.body.classList.contains('remaster-enabled') && (window.currentWebGPURenderMode !== 0);
-				
-				// Guard 2: Disable during initial boot loading overlay
-				var loadingOverlay = document.getElementById('loading-overlay');
-				var isBooted = loadingOverlay && (loadingOverlay.style.display === 'none' || loadingOverlay.classList.contains('hidden'));
-				
-				// Guard 3: Biome detection (Active only inside Tristram Town gameplay)
-				var isTownBiome = false;
+				// Guard: Biome detection (Active in Town; defaults to true so rain is ALWAYS present)
+				var isTownBiome = true;
 				if (window.Module) {
 					if (typeof Module._Nightmare_IsTown === 'function') {
 						try {
 							isTownBiome = (Module._Nightmare_IsTown() === 1);
 						} catch(e) {
-							isTownBiome = false;
+							isTownBiome = true;
 						}
 					} else if (typeof Module._Nightmare_GBuffer_GetBiome === 'function') {
 						try {
 							var biomeId = Module._Nightmare_GBuffer_GetBiome();
 							isTownBiome = (biomeId === 0);
 						} catch(e) {
-							isTownBiome = false;
+							isTownBiome = true;
 						}
 					}
 				}
 
-				if (!isNeuralActive || !isTownBiome || !isBooted || document.hidden) {
+				if (!isTownBiome || document.hidden) {
 					ctx.clearRect(0, 0, width, height);
 					if (lightning) lightning.style.opacity = 0;
 					requestAnimationFrame(weatherLoop);
@@ -1338,6 +1479,142 @@
 			});
 		})();
 
+		function showMissingMpqModal() {
+			var m = document.getElementById('missingMpqModal');
+			if (m) {
+				m.style.display = 'flex';
+				if (loadingOverlay) loadingOverlay.style.display = 'none';
+				if (spinnerElement) spinnerElement.style.display = 'none';
+			}
+		}
+
+		window.checkMpqError = function(str) {
+			if (!str) return;
+			var s = String(str).toLowerCase();
+			if (s.indexOf('diabdat') !== -1 || s.indexOf('spawn.mpq') !== -1 || s.indexOf('main data archive') !== -1 || s.indexOf('insertcddlg') !== -1 || s.indexOf('data file error') !== -1) {
+				showMissingMpqModal();
+			}
+		};
+
+		// Direct Shareware Downloader
+		window.downloadOfficialShareware = function() {
+			var progBox = document.getElementById('mpqProgressBox');
+			var progBar = document.getElementById('mpqProgressBar');
+			var progText = document.getElementById('mpqProgressText');
+			var btn = document.getElementById('directDownloadSharewareBtn');
+			if (btn) btn.disabled = true;
+			if (progBox) progBox.style.display = 'block';
+			if (progText) progText.textContent = 'Conectando con repositorio oficial de DevilutionX...';
+
+			var downloadUrl = 'https://github.com/diasurgical/devilutionx-assets/releases/download/v2/spawn.mpq';
+
+			fetch(downloadUrl)
+				.then(function(res) {
+					if (!res.ok) throw new Error('HTTP ' + res.status);
+					var contentLength = res.headers.get('content-length');
+					var total = contentLength ? parseInt(contentLength, 10) : 25448219;
+					var reader = res.body.getReader();
+					var received = 0;
+					var chunks = [];
+
+					function readChunk() {
+						return reader.read().then(function(result) {
+							if (result.done) {
+								var fullBuffer = new Uint8Array(received);
+								var offset = 0;
+								for (var i = 0; i < chunks.length; i++) {
+									fullBuffer.set(chunks[i], offset);
+									offset += chunks[i].length;
+								}
+								return fullBuffer;
+							}
+							chunks.push(result.value);
+							received += result.value.length;
+							var percent = Math.min(100, Math.round((received / total) * 100));
+							if (progBar) progBar.style.width = percent + '%';
+							if (progText) progText.textContent = 'Descargando spawn.mpq: ' + percent + '% (' + (received / 1048576).toFixed(1) + ' MB / ' + (total / 1048576).toFixed(1) + ' MB)';
+							return readChunk();
+						});
+					}
+					return readChunk();
+				})
+				.then(function(mpqBytes) {
+					if (progText) progText.textContent = 'Guardando en IndexedDB...';
+					if (typeof FS !== 'undefined') {
+						try { FS.mkdir('/libsdl'); } catch(e){}
+						try { FS.mkdir('/libsdl/diasurgical'); } catch(e){}
+						try { FS.mkdir('/libsdl/diasurgical/devilution'); } catch(e){}
+						FS.writeFile('/libsdl/diasurgical/devilution/spawn.mpq', mpqBytes);
+						try { FS.writeFile('/spawn.mpq', mpqBytes); } catch(e){}
+						FS.syncfs(false, function(err) {
+							if (progText) progText.textContent = '¡Completado! Iniciando Diablo...';
+							setTimeout(function() { location.reload(); }, 500);
+						});
+					} else {
+						location.reload();
+					}
+				})
+				.catch(function(err) {
+					console.error('Download error:', err);
+					if (btn) btn.disabled = false;
+					if (progText) progText.textContent = 'Error al descargar: ' + err.message + '. Arrastra tu DIABDAT.MPQ o SPAWN.MPQ a la pantalla.';
+				});
+		};
+
+		// Bind buttons
+		var uploadBtn = document.getElementById('directUploadMpqBtn');
+		if (uploadBtn) {
+			uploadBtn.addEventListener('click', function() {
+				var fi = document.getElementById('fileInput');
+				if (fi) fi.click();
+			});
+		}
+		var downloadBtn = document.getElementById('directDownloadSharewareBtn');
+		if (downloadBtn) {
+			downloadBtn.addEventListener('click', function() {
+				window.downloadOfficialShareware();
+			});
+		}
+
+		// Global Drag & Drop MPQ / Save Files onto Window
+		window.addEventListener('dragover', function(e) {
+			e.preventDefault();
+		});
+		window.addEventListener('drop', function(e) {
+			e.preventDefault();
+			if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+				var files = Array.from(e.dataTransfer.files).filter(function(f) {
+					var name = f.name.toLowerCase();
+					return name.endsWith('.mpq') || name.endsWith('.sv') || name.endsWith('.hsv') || name.endsWith('.ini');
+				});
+				if (files.length > 0) {
+					var f = files[0];
+					showToast('📁 Guardando ' + f.name + '...');
+					var reader = new FileReader();
+					reader.onload = function(evt) {
+						try {
+							var data = new Uint8Array(evt.target.result);
+							if (typeof FS !== 'undefined') {
+								try { FS.mkdir('/libsdl'); } catch(e){}
+								try { FS.mkdir('/libsdl/diasurgical'); } catch(e){}
+								try { FS.mkdir('/libsdl/diasurgical/devilution'); } catch(e){}
+								FS.writeFile('/libsdl/diasurgical/devilution/' + f.name, data);
+								try { FS.writeFile('/' + f.name, data); } catch(e){}
+								FS.syncfs(false, function(err) {
+									showToast('¡' + f.name + ' instalado con éxito! Recargando...');
+									setTimeout(function() { location.reload(); }, 600);
+								});
+							}
+						} catch(err) {
+							console.error('Global drop error:', err);
+							showToast('Error al procesar archivo: ' + err.message);
+						}
+					};
+					reader.readAsArrayBuffer(f);
+				}
+			}
+		});
+
 		var Module = {
 			preRun: [],
 			postRun: [
@@ -1357,12 +1634,18 @@
 				return function (text) {
 					if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
 					console.log(text);
+					window.checkMpqError(text);
 					if (element) {
 						element.value += text + "\n";
 						element.scrollTop = element.scrollHeight;
 					}
 				};
 			})(),
+			printErr: function(text) {
+				if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
+				console.error(text);
+				window.checkMpqError(text);
+			},
 			canvas: (function () {
 				var canvas = document.getElementById('canvas');
 				canvas.addEventListener("webglcontextlost", function (e) {
@@ -1418,7 +1701,10 @@
 		Module.setStatus('Iniciando...');
 		window.onerror = function (event) {
 			spinnerElement.style.display = 'none';
-			Module.setStatus('Error al ejecutar WebAssembly.');
+			window.checkMpqError(event);
+			if (document.getElementById('missingMpqModal').style.display !== 'flex') {
+				Module.setStatus('Error al ejecutar WebAssembly.');
+			}
 		};
 	</script>
 	<script src="https://cdn.jsdelivr.net/npm/onnxruntime-web/dist/ort.min.js"></script>

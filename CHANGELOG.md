@@ -7,6 +7,43 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### 🌧️ Lluvia Permanente Sin Bloqueos, Recuperador de MPQ y Despliegue Robusto en Pages
+- **Lluvia Volumétrica 2.0 Permanente ([`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html))**:
+  - Se eliminó el bloqueo falso-negativo de `isTownBiome`: ahora tiene valor predeterminado `true`, garantizando que la lluvia isométrica, gotas micro y relámpagos se rendericen siempre incluso si el binario WebAssembly no expone temporalmente los símbolos C++ del G-Buffer.
+  - `#rain-canvas` ahora tiene opacidad `1` fija para asegurar visibilidad constante e inmediata.
+- **Recuperación Inteligente de MPQ y Descargador de Shareware Oficial**:
+  - Cuando no se detecta `DIABDAT.MPQ` o `hellfire.mpq`, en lugar de dejar la pantalla en negro o con error de WebAssembly, la interfaz despliega automáticamente una ventana gótica interactiva (`#missingMpqModal`).
+  - **Descarga en 1 Clic**: Botón para descargar de forma asíncrona el Shareware oficial (`spawn.mpq` ~25MB) directamente desde los servidores de DevilutionX / CDN con barra de progreso, guardado automático en IndexedDB y arranque instantáneo.
+  - **Subida Rápida**: Selector directo para subir `DIABDAT.MPQ` o `hellfire.mpq`.
+- **Drag & Drop Global en Toda la Ventana**:
+  - Ahora es posible arrastrar y soltar cualquier archivo `.MPQ`, `.SV` o `.HSV` en cualquier lugar de la ventana del navegador; el motor lo guarda automáticamente en `/libsdl/diasurgical/devilution/` y `/`, sincroniza con IndexedDB y recarga el juego.
+- **Protección Antiborrado en "Restablecer Configuración" ([`Packaging/emscripten/file-manager.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/file-manager.js))**:
+  - Se corrigió el botón de restablecimiento para que únicamente elimine `diablo.ini`, garantizando que los archivos MPQ de Diablo y Hellfire y las partidas guardadas permanezcan intactos en IndexedDB ante cualquier reseteo o `Ctrl + F5`.
+- **Corrección de Assets en CI / GitHub Pages Workflow ([`.github/workflows/deploy-pages.yml`](file:///c:/Projects/DevilutionX/.github/workflows/deploy-pages.yml))**:
+  - Se incluyó la copia obligatoria de `neural_infer.js` y el directorio `Packaging/neural_harness` al artefacto `dist/` de GitHub Pages, solucionando el error 404 que ocurría al desplegar en producción.
+
+### High-Fidelity Atmospheric Effects & Adaptive Frametime Safeguard (WebGPU Shaders)
+- **Directional Ground Cast Shadows ([`Packaging/emscripten/shaders/tristram_enhancer.wgsl`](file:///c:/Projects/DevilutionX/Packaging/emscripten/shaders/tristram_enhancer.wgsl), [`Packaging/neural_harness/shaders/tristram_enhancer.wgsl`](file:///c:/Projects/DevilutionX/Packaging/neural_harness/shaders/tristram_enhancer.wgsl))**:
+  - Implemented 3-tap directional ray-marched shadows projecting away from town bonfires, braziers, and torches.
+  - Characters, pillars, and solid obstacles cast soft, realistic penumbra shadows onto ground tiles, blending seamlessly with contact ambient occlusion (`totalGroundShadow = min(contactShadow, directionalShadow)`).
+- **Convective Bonfire Heat Shimmer & Mirage**:
+  - Real-time thermal air refraction rising in a convective column directly above the Tristram town bonfire (`dyFire > 6.0 && dyFire < 80.0 && dxFire < 38.0`).
+  - Uses dual-frequency sine-wave phase offsets (`sin(screenPos.y * 0.12 - timeSec * 5.0)`) to distort background pixels, recreating authentic atmospheric heat mirage without altering the flame sprites.
+- **Volumetric Ground Mist & Atmospheric Fog**:
+  - Low-lying rolling mist curling softly across the ground in Town and murky dungeon corridors.
+  - Multi-octave sinusoidal density with wind drift (`mistWind = timeSec * 0.18`), clearing naturally within the thermal radius of bonfires and torches (`mistFireFactor = smoothstep(18.0, 110.0, distToFire)`).
+  - Responsive mist density parameter controllable via uniform buffer (`mistDensity = 0.35`).
+- **Dynamic Concentric Water Impact Ripples**:
+  - Puddles and river edges in Tristram display expanding concentric ripples where raindrops strike the surface (`case 5u`).
+  - Normal-perturbed surface reflections that shimmer dynamically in synchronization with the weather engine.
+- **Adaptive 60 FPS Frametime Watchdog ([`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html), [`Packaging/neural_harness/harness.js`](file:///c:/Projects/DevilutionX/Packaging/neural_harness/harness.js))**:
+  - Continuous frametime rolling average watchdog monitoring delta frames.
+  - **Zero Frame-Drop Guarantee**: If rolling average frametime exceeds 18.5 ms on older integrated GPUs, automatically steps down `qualityTier` from `1` to `0`, disabling ray-marched shadows and mist passes to preserve a fluid 60 FPS.
+  - Automatically restores `qualityTier = 1` once frametimes stabilize comfortably below 15.5 ms.
+- **Enhanced Test Lab Harness & Telemetry ([`Packaging/neural_harness/index.html`](file:///c:/Projects/DevilutionX/Packaging/neural_harness/index.html))**:
+  - Added real-time slider for `Atmospheric Ground Mist` density (0.0 to 1.0).
+  - Telemetry bar live tracking of `Dynamic Tier` (`HIGH (Neural)` vs `SAFEGUARD (60 FPS)`), framerate, frametime, and jitter.
+
 ### Neural Material Accentuation for Armor, Clothing & Enemies (WebGPU Shader & G-Buffer)
 - **Head & Facial 10% Micro-Realism Detection ([`Packaging/emscripten/shaders/tristram_enhancer.wgsl`](file:///c:/Projects/DevilutionX/Packaging/emscripten/shaders/tristram_enhancer.wgsl), [`Packaging/neural_harness/shaders/tristram_enhancer.wgsl`](file:///c:/Projects/DevilutionX/Packaging/neural_harness/shaders/tristram_enhancer.wgsl))**:
   - Automatically identifies the cranial/head region (top ~14px of character silhouettes) across player hero, NPCs, and monsters.

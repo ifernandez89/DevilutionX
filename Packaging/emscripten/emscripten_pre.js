@@ -77,6 +77,10 @@ Module['preRun'].push(function() {
         .then(function(data) {
           console.log('Loading ' + filename + ' into virtual filesystem...');
           FS.writeFile('/' + filename, new Uint8Array(data));
+          try {
+            mkdirSafe('/libsdl/diasurgical/devilution');
+            FS.writeFile('/libsdl/diasurgical/devilution/' + filename, new Uint8Array(data));
+          } catch(e) {}
           console.log('Successfully loaded ' + filename);
           resolve();
         })

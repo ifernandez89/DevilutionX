@@ -50,16 +50,91 @@ Module['preRun'].push(function() {
       } else {
         console.log('Existing saves loaded from IndexedDB');
         try {
+          // Remove any stray /diablo.ini in root to prevent portable mode override
+          try { FS.unlink('/diablo.ini'); } catch(e) {}
+
           mkdirSafe('/libsdl/diasurgical/devilution');
           var iniPath = '/libsdl/diasurgical/devilution/diablo.ini';
-          var hasIni = false;
-          try { FS.stat(iniPath); hasIni = true; } catch(e) {}
-          if (!hasIni) {
-            var defaultIni = "[Game]\nTest Barbarian=1\nTest Bard=1\nRun in Town=1\nCow Quest=1\nTheo Quest=1\n";
-            FS.writeFile(iniPath, defaultIni);
+          var currentIni = '';
+          try {
+            currentIni = new TextDecoder().decode(FS.readFile(iniPath));
+          } catch(e) {}
+
+          var modified = false;
+          if (!currentIni || currentIni.trim().length === 0) {
+            currentIni = "[Game]\nTest Barbarian=1\nTest Bard=1\nRun in Town=1\nCow Quest=1\nTheo Quest=1\n";
+            modified = true;
+          } else {
+            if (currentIni.indexOf('Test Barbarian=1') === -1) {
+              if (currentIni.indexOf('Test Barbarian') !== -1) {
+                currentIni = currentIni.replace(/Test Barbarian\s*=\s*\d+/i, 'Test Barbarian=1');
+              } else if (currentIni.indexOf('[Game]') !== -1) {
+                currentIni = currentIni.replace('[Game]', "[Game]\nTest Barbarian=1");
+              } else {
+                currentIni += "\n[Game]\nTest Barbarian=1\n";
+              }
+              modified = true;
+            }
+            if (currentIni.indexOf('Test Bard=1') === -1) {
+              if (currentIni.indexOf('Test Bard') !== -1) {
+                currentIni = currentIni.replace(/Test Bard\s*=\s*\d+/i, 'Test Bard=1');
+              } else if (currentIni.indexOf('[Game]') !== -1) {
+                currentIni = currentIni.replace('[Game]', "[Game]\nTest Bard=1");
+              } else {
+                currentIni += "\n[Game]\nTest Bard=1\n";
+              }
+              modified = true;
+            }
+            if (currentIni.indexOf('Run in Town=1') === -1) {
+              if (currentIni.indexOf('Run in Town') !== -1) {
+                currentIni = currentIni.replace(/Run in Town\s*=\s*\d+/i, 'Run in Town=1');
+              } else if (currentIni.indexOf('[Game]') !== -1) {
+                currentIni = currentIni.replace('[Game]', "[Game]\nRun in Town=1");
+              } else {
+                currentIni += "\n[Game]\nRun in Town=1\n";
+              }
+              modified = true;
+            }
+          }
+          if (modified) {
+            FS.writeFile(iniPath, currentIni);
             FS.syncfs(false, function() {});
           }
-        } catch(e) {}
+
+          // Mirror all MPQs from IndexedDB into root virtual filesystem with casing variants
+          try {
+            var files = FS.readdir('/libsdl/diasurgical/devilution');
+            files.forEach(function(fname) {
+              if (fname === '.' || fname === '..') return;
+              var lower = fname.toLowerCase();
+              if (lower.endsWith('.mpq')) {
+                var content = FS.readFile('/libsdl/diasurgical/devilution/' + fname);
+                if (lower === 'diabdat.mpq') {
+                  try { FS.writeFile('/libsdl/diasurgical/devilution/DIABDAT.MPQ', content); } catch(e) {}
+                  try { FS.writeFile('/libsdl/diasurgical/devilution/diabdat.mpq', content); } catch(e) {}
+                  try { FS.writeFile('/DIABDAT.MPQ', content); } catch(e) {}
+                  try { FS.writeFile('/diabdat.mpq', content); } catch(e) {}
+                } else if (lower === 'spawn.mpq') {
+                  try { FS.writeFile('/libsdl/diasurgical/devilution/spawn.mpq', content); } catch(e) {}
+                  try { FS.writeFile('/libsdl/diasurgical/devilution/SPAWN.MPQ', content); } catch(e) {}
+                  try { FS.writeFile('/spawn.mpq', content); } catch(e) {}
+                  try { FS.writeFile('/SPAWN.MPQ', content); } catch(e) {}
+                } else if (lower === 'hellfire.mpq') {
+                  try { FS.writeFile('/libsdl/diasurgical/devilution/hellfire.mpq', content); } catch(e) {}
+                  try { FS.writeFile('/libsdl/diasurgical/devilution/HELLFIRE.MPQ', content); } catch(e) {}
+                  try { FS.writeFile('/hellfire.mpq', content); } catch(e) {}
+                  try { FS.writeFile('/HELLFIRE.MPQ', content); } catch(e) {}
+                } else {
+                  try { FS.writeFile('/' + fname, content); } catch(e) {}
+                }
+              }
+            });
+          } catch(e) {
+            console.warn('Error mirroring MPQ files from IDBFS:', e);
+          }
+        } catch(e) {
+          console.error('Error during IDBFS post-sync:', e);
+        }
       }
       Module.removeRunDependency('syncfs');
     });
@@ -87,16 +162,19 @@ Module['preRun'].push(function() {
         })
         .then(function(data) {
           console.log('Loading ' + filename + ' into virtual filesystem...');
-          FS.writeFile('/' + filename, new Uint8Array(data));
+          var u8 = new Uint8Array(data);
+          FS.writeFile('/' + filename, u8);
+          try { FS.writeFile('/' + filename.toUpperCase(), u8); } catch(e) {}
           try {
             mkdirSafe('/libsdl/diasurgical/devilution');
-            FS.writeFile('/libsdl/diasurgical/devilution/' + filename, new Uint8Array(data));
+            FS.writeFile('/libsdl/diasurgical/devilution/' + filename, u8);
+            FS.writeFile('/libsdl/diasurgical/devilution/' + filename.toUpperCase(), u8);
           } catch(e) {}
           console.log('Successfully loaded ' + filename);
           resolve();
         })
         .catch(function() {
-          // File doesn't exist, skip silently
+          // File doesn't exist on server, skip silently (may exist in IndexedDB)
           resolve();
         });
     });

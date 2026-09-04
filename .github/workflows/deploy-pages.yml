@@ -92,6 +92,8 @@ jobs:
             cp -rv Packaging/minixp-wasm dist/minixp
             cp -rv Packaging/minixp-wasm dist/tinycore
           fi
+          echo "Fetching official spawn.mpq (shareware) into dist/..."
+          curl -L -f -s -S --retry 3 -o dist/spawn.mpq https://github.com/diasurgical/devilutionx-assets/releases/download/v2/spawn.mpq || true
           echo "Listing dist/ and dist/minixp/ directory:"
           ls -la dist/
           ls -la dist/minixp/

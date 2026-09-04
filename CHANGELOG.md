@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### 🛠️ Corrección Crítica de Carga de MPQs en GitHub Pages y Normalización de Rutas
+- **Descarga y Empaquetado Automático de `spawn.mpq` en CI ([`.github/workflows/deploy-pages.yml`](file:///c:/Projects/DevilutionX/.github/workflows/deploy-pages.yml))**:
+  - Se agregó la descarga automática del archivo oficial `spawn.mpq` (shareware, 24.2 MB) durante la preparación de la carpeta `dist/` en GitHub Actions, garantizando que el juego sea ejecutable al 100% *out-of-the-box* directamente desde GitHub Pages sin requerir descargas ni subidas manuales previas.
+- **Protección de Rutas Virtuales en Emscripten ([`Source/utils/paths.cpp`](file:///c:/Projects/DevilutionX/Source/utils/paths.cpp))**:
+  - Se previno que la detección de modo portable (`diablo.ini`) en la raíz virtual anule `PrefPath()` y `ConfigPath()` en compilaciones WebAssembly (`__EMSCRIPTEN__`). Ahora siempre resuelven correctamente a `/libsdl/diasurgical/devilution/`, permitiendo encontrar permanentemente `DIABDAT.MPQ`, `spawn.mpq` y partidas guardadas.
+- **Normalización de Casing de MPQs y Limpieza de Raíz ([`Packaging/emscripten/emscripten_pre.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/emscripten_pre.js), [`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html), [`Packaging/emscripten/file-manager.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/file-manager.js))**:
+  - Se eliminó el *monkeypatch* concurrente de `FS.syncfs` en `index.html` que causaba bloqueos de IndexedDB.
+  - Se implementó la duplicación y normalización automática de mayúsculas/minúsculas (`DIABDAT.MPQ`, `diabdat.mpq`, `spawn.mpq`, `SPAWN.MPQ`, `hellfire.mpq`, `HELLFIRE.MPQ`) tanto en `/libsdl/diasurgical/devilution/` como en `/` al sincronizar IndexedDB o subir archivos por Drag & Drop o Administrador de Archivos.
+  - Eliminación automática de cualquier archivo `diablo.ini` espurio en la raíz virtual `/`.
+
 ### 🌑 Atmósfera Nocturna Envolvente en Tristán (Town 20% Más Oscuro)
 - **Calibración Lumínica Nocturna ([`Packaging/emscripten/shaders/tristram_enhancer.wgsl`](file:///c:/Projects/DevilutionX/Packaging/emscripten/shaders/tristram_enhancer.wgsl), [`Packaging/neural_harness/shaders/tristram_enhancer.wgsl`](file:///c:/Projects/DevilutionX/Packaging/neural_harness/shaders/tristram_enhancer.wgsl))**:
   - Se redujo la iluminación ambiental base del pueblo en un 20% (`ambientBase = max(lightVal * 0.80, 0.18)`), envolviendo a Tristán en una noche gótica profunda, fría y lluviosa.

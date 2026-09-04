@@ -90,9 +90,27 @@
 						// Directory might already exist, ignore
 					}
 
-					// Write file to IDBFS-backed directory and root
+					// Write file to IDBFS-backed directory and root with casing variants
+					const lowerName = file.name.toLowerCase();
 					FS.writeFile(path, data);
-					try { FS.writeFile('/' + file.name, data); } catch (e) {}
+					if (lowerName === 'diabdat.mpq') {
+						try { FS.writeFile('/libsdl/diasurgical/devilution/DIABDAT.MPQ', data); } catch (e) {}
+						try { FS.writeFile('/libsdl/diasurgical/devilution/diabdat.mpq', data); } catch (e) {}
+						try { FS.writeFile('/DIABDAT.MPQ', data); } catch (e) {}
+						try { FS.writeFile('/diabdat.mpq', data); } catch (e) {}
+					} else if (lowerName === 'spawn.mpq') {
+						try { FS.writeFile('/libsdl/diasurgical/devilution/spawn.mpq', data); } catch (e) {}
+						try { FS.writeFile('/libsdl/diasurgical/devilution/SPAWN.MPQ', data); } catch (e) {}
+						try { FS.writeFile('/spawn.mpq', data); } catch (e) {}
+						try { FS.writeFile('/SPAWN.MPQ', data); } catch (e) {}
+					} else if (lowerName === 'hellfire.mpq') {
+						try { FS.writeFile('/libsdl/diasurgical/devilution/hellfire.mpq', data); } catch (e) {}
+						try { FS.writeFile('/libsdl/diasurgical/devilution/HELLFIRE.MPQ', data); } catch (e) {}
+						try { FS.writeFile('/hellfire.mpq', data); } catch (e) {}
+						try { FS.writeFile('/HELLFIRE.MPQ', data); } catch (e) {}
+					} else {
+						try { FS.writeFile('/' + file.name, data); } catch (e) {}
+					}
 					console.log('Uploaded:', file.name, '(' + formatBytes(file.size) + ')');
 
 					processed++;
@@ -271,7 +289,7 @@
 			const defaultIni = "[Game]\nTest Barbarian=1\nTest Bard=1\nRun in Town=1\nCow Quest=1\nTheo Quest=1\n";
 			try { FS.writeFile(iniPath1, defaultIni); } catch (e) {}
 			try { FS.writeFile(iniPath2, defaultIni); } catch (e) {}
-			try { FS.writeFile('/diablo.ini', defaultIni); } catch (e) {}
+			try { FS.unlink('/diablo.ini'); } catch (e) {}
 
 			FS.syncfs(false, function(err) {
 				if (err) {

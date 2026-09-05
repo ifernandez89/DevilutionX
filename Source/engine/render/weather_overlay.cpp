@@ -48,8 +48,39 @@ void ResetWeatherRain()
 
 void RenderWeatherRain(const Surface &out)
 {
-	// Legacy C++ software rain disabled in favor of Diablo Rain 2.0 WebGPU Weather Engine
-	return;
+	if (leveltype != DTYPE_TOWN)
+		return;
+
+	const int width = out.w();
+	const int height = out.h();
+
+	if (width <= 0 || height <= 0)
+		return;
+
+	if (!rainInitialized || rainPool.empty()) {
+		InitRainPool(width, height);
+	}
+
+	for (auto &drop : rainPool) {
+		drop.x += drop.speedX;
+		drop.y += drop.speedY;
+
+		if (drop.y >= height || drop.x < -50) {
+			drop.y = static_cast<float>(-(rand() % 20));
+			drop.x = static_cast<float>(rand() % (width + 100) - 20);
+		}
+
+		const int startX = static_cast<int>(drop.x);
+		const int startY = static_cast<int>(drop.y);
+
+		for (int i = 0; i < drop.length; i++) {
+			const int px = startX + static_cast<int>(i * (drop.speedX / drop.length));
+			const int py = startY + i;
+			if (px >= 0 && px < width && py >= 0 && py < height) {
+				out.SetPixel({ px, py }, drop.color);
+			}
+		}
+	}
 }
 
 

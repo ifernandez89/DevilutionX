@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### 🌧️ Corrección y Restauración de Lluvia en Tristán (Town Weather Fix)
+- **Restauración de Lluvia Nativa C++ ([`Source/engine/render/weather_overlay.cpp`](file:///c:/Projects/DevilutionX/Source/engine/render/weather_overlay.cpp))**:
+  - Se restauró la implementación de `RenderWeatherRain()` para renderizar el sistema de partículas screen-space de gotas y viento en Tristán cuando se ejecuta el juego en plataformas nativas de escritorio y software rendering.
+- **Corrección de Inicialización y Fallback de Bioma en Web ([`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html))**:
+  - Se corrigió el valor inicial de `isTownBiome = true` en el bucle `weatherLoop()`, asegurando que la lluvia 2D / WebGPU esté activa inmediatamente en el pueblo aun si las llamadas exportadas de WebAssembly (`Module._Nightmare_IsTown` / `Module._Nightmare_GBuffer_GetBiome`) tardan en vincularse o se ejecutan en modo autónomo.
+  - Se preservó la desactivación estricta de la simulación al descender a las mazmorras (Catedral, Catacumbas, Cuevas e Infierno).
+
 ### ⚡ Optimización de Rendimiento del Neural Render & Corrección Definitiva del Clima en Dungeons
 - **Corrección Estricta del Clima en Dungeons ([`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html))**:
   - Se solucionó el fallo de bioma por el cual la lluvia 2D, salpicaduras y relámpagos continuaban activos dentro de los niveles subterráneos (Catedral, Catacumbas, Cuevas e Infierno).

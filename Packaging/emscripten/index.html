@@ -1341,29 +1341,29 @@
 			}
 			setTimeout(triggerDiabloLightning, 5000);
 
-			// Main Weather Loop (Strictly Active ONLY in Tristram Town & When Neural HD is ON)
+			// Main Weather Loop (Active in Tristram Town & When Remaster is ON)
 			function weatherLoop() {
-				// Guard: Biome detection (Active strictly in Town / Biome 0)
-				var isTownBiome = false;
+				// Guard: Biome detection (Active in Town; defaults to true and checks WASM exports)
+				var isTownBiome = true;
 				if (window.Module) {
 					if (typeof Module._Nightmare_IsTown === 'function') {
 						try {
 							isTownBiome = (Module._Nightmare_IsTown() === 1);
 						} catch(e) {
-							isTownBiome = false;
+							isTownBiome = true;
 						}
 					} else if (typeof Module._Nightmare_GBuffer_GetBiome === 'function') {
 						try {
 							var biomeId = Module._Nightmare_GBuffer_GetBiome();
 							isTownBiome = (biomeId === 0);
 						} catch(e) {
-							isTownBiome = false;
+							isTownBiome = true;
 						}
 					} else if (typeof Module.asm !== 'undefined' && typeof Module.asm.Nightmare_IsTown === 'function') {
 						try {
 							isTownBiome = (Module.asm.Nightmare_IsTown() === 1);
 						} catch(e) {
-							isTownBiome = false;
+							isTownBiome = true;
 						}
 					}
 				}

@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### 👹 Muerte Limpia de Diablo & El Infierno Nunca Termina (Endless Diablo Boss Loop)
+- **Corrección de Bucle Infinito en la Muerte de Diablo ([`Source/monster.cpp`](file:///c:/Projects/DevilutionX/Source/monster.cpp))**:
+  - Se solucionó el fallo por el cual en Single Player (`!gbIsMultiplayer`), la muerte de Diablo nunca concluía, quedando su sprite congelado sangrando y gritando indefinidamente.
+  - Al completar su secuencia de agonía (140 ticks / ~3.5 segundos), Diablo se desvanece limpiamente del mapa (`dMonster[x][y] = 0`, `monster.isInvalid = true`), se entrega el botín y la experiencia completa, y se registra la victoria en las estadísticas del héroe (`pDiabloKillLevel`) sin forzar la salida ni bloquear la sesión.
+- **Reencarnación del Señor del Terror al Salir y Volver al Nivel 16 ([`Source/pfile.cpp`](file:///c:/Projects/DevilutionX/Source/pfile.cpp), [`Source/loadsave.h`](file:///c:/Projects/DevilutionX/Source/loadsave.h))**:
+  - Al derrotar a Diablo y abandonar el Nivel 16 (subiendo por escaleras al Nivel 15 o cruzando un Portal de Ciudad a Tristán), el estado temporal del Nivel 16 se reinicia limpiamente y la misión se restablece a `QUEST_ACTIVE`.
+  - Al volver a descender al Nivel 16, Diablo y sus heraldos del infierno reaparecen con toda su salud en la cámara del trono, creando un ciclo de combate infinito (*Endless Boss Loop*) para farmear al Señor del Terror sin reiniciar la partida ni perder el progreso de los pisos 1-15 ni el pueblo.
+
+### 🗿 Easter Egg: Golem Acompañante Inmortal (Single Player)
+- **Compañero Permanente y Re-lanzamiento Táctico ([`Source/missiles.cpp`](file:///c:/Projects/DevilutionX/Source/missiles.cpp), [`Source/player.h`](file:///c:/Projects/DevilutionX/Source/player.h))**:
+  - Al ejecutar el hechizo *Golem* en un jugador individual (*Single Player*), el Golem se convierte en un compañero permanente que persiste a lo largo de toda la partida.
+  - **Re-lanzamiento Táctico**: Si se vuelve a castear el hechizo mientras el Golem está activo, este se teletransporta instantáneamente a las coordenadas exactas del cursor con vida restaurada al 100%, permitiendo dirigirlo al combate.
+- **Inmortalidad en Combate ([`Source/monster.cpp`](file:///c:/Projects/DevilutionX/Source/monster.cpp))**:
+  - En `ApplyMonsterDamage`, la vida del Golem está protegida frente a ataques enemigos, garantizando que nunca muera en combate a menos que el jugador muera o finalice la partida.
+- **Persistencia y Reposicionamiento Garantizado entre Niveles, Portales y Tristram ([`Source/diablo.cpp`](file:///c:/Projects/DevilutionX/Source/diablo.cpp), [`Source/player.cpp`](file:///c:/Projects/DevilutionX/Source/player.cpp), [`Source/engine/render/scrollrt.cpp`](file:///c:/Projects/DevilutionX/Source/engine/render/scrollrt.cpp))**:
+  - **Eliminación de Golems "Zombie"**: En `RemovePlrMissiles()`, al cambiar de nivel se limpia la instancia del nivel anterior, evitando que se guarden copias duplicadas o huérfanas en los archivos de guardado de pisos previos.
+  - **Reposicionamiento Forzado en Entrada**: En `LoadGameLevel()`, al entrar a cualquier nivel o pueblo, el Golem se sitúa de forma inmediata e infalible al lado del héroe (búsqueda radial extendida y fallback sobre el jugador).
+  - **Corrección de Render en Tristram**: Se corrigió `DrawMonsterHelper` en `scrollrt.cpp` para que los esbirros (`isPlayerMinion()`) se rendericen con su sprite original de Golem de piedra en lugar de confundirse con los aldeanos de Tristram (`Towners[0]` / Griswold).
+- **IA de Escolta / Leash ([`Source/monster.cpp`](file:///c:/Projects/DevilutionX/Source/monster.cpp))**:
+  - En `GolumAi`: si el Golem queda rezagado o se encuentra a más de 8 casillas del jugador, se reubica automáticamente junto a él de forma inmediata.
+
 ### 🌧️ Corrección y Restauración de Lluvia en Tristán (Town Weather Fix)
 - **Restauración de Lluvia Nativa C++ ([`Source/engine/render/weather_overlay.cpp`](file:///c:/Projects/DevilutionX/Source/engine/render/weather_overlay.cpp))**:
   - Se restauró la implementación de `RenderWeatherRain()` para renderizar el sistema de partículas screen-space de gotas y viento en Tristán cuando se ejecuta el juego en plataformas nativas de escritorio y software rendering.

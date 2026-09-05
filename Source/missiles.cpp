@@ -2412,9 +2412,36 @@ void AddGolem(Missile &missile, AddMissileParameter &parameter)
 	Player &player = Players[playerId];
 	Monster *golem = FindGolemForPlayer(player);
 
+	const bool isSinglePlayerEasterEgg = !gbIsMultiplayer;
+
 	// Is Golem alive?
-	if (golem != nullptr) {
-		KillGolem(*golem);
+	if (golem != nullptr || (isSinglePlayerEasterEgg && player._persistentGolemSpellLevel > 0)) {
+		if (isSinglePlayerEasterEgg) {
+			const auto spellLevel = static_cast<uint8_t>(missile._mispllvl);
+			player._persistentGolemSpellLevel = std::max(player._persistentGolemSpellLevel, spellLevel);
+			std::optional<Point> spawnPosition = FindClosestValidPosition(
+			    [start = missile.position.start](Point target) {
+				    return !IsTileOccupied(target) && LineClearMissile(start, target);
+			    },
+			    parameter.dst, 0, 8);
+			if (spawnPosition) {
+				if (golem != nullptr) {
+					M_ClearSquares(*golem);
+					golem->position.tile = *spawnPosition;
+					golem->position.old = *spawnPosition;
+					golem->position.future = *spawnPosition;
+					golem->occupyTile(*spawnPosition, false);
+					golem->hitPoints = golem->maxHitPoints;
+					golem->isInvalid = false;
+					M_StartStand(*golem, player._pdir);
+				} else {
+					SpawnGolem(player, *spawnPosition, player._persistentGolemSpellLevel);
+				}
+			}
+			return;
+		}
+		if (golem != nullptr)
+			KillGolem(*golem);
 		return;
 	}
 
@@ -2431,6 +2458,10 @@ void AddGolem(Missile &missile, AddMissileParameter &parameter)
 		return;
 
 	const auto spellLevel = static_cast<uint8_t>(missile._mispllvl);
+
+	if (isSinglePlayerEasterEgg) {
+		player._persistentGolemSpellLevel = spellLevel;
+	}
 
 	// The command is only executed for the level owner, to prevent desyncs in multiplayer.
 	if (!MyPlayer->isLevelOwnedByLocalClient()) {

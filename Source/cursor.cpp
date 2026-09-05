@@ -113,6 +113,8 @@ bool TrySelectTowner(bool flipflag, Point tile)
 		if (!InDungeonBounds(posToCheck) || dMonster[posToCheck.x][posToCheck.y] == 0)
 			return;
 		const uint16_t monsterId = std::abs(dMonster[posToCheck.x][posToCheck.y]) - 1;
+		if (static_cast<size_t>(monsterId) < MaxMonsters && Monsters[monsterId].isPlayerMinion())
+			return;
 		cursPosition = posToCheck;
 		pcursmonst = monsterId;
 	};
@@ -302,14 +304,27 @@ bool TrySelectPixelBased(Point tile)
 		if (monsterId != 0 && IsNoneOf(pcurs, CURSOR_HEALOTHER, CURSOR_RESURRECT)) {
 			monsterId = std::abs(monsterId) - 1;
 			if (leveltype == DTYPE_TOWN) {
-				const Towner &towner = Towners[monsterId];
-				const OptionalClxSprite sprite = towner.currentSprite();
-				if (sprite) {
-					const Displacement renderingOffset = towner.getRenderingOffset();
-					if (checkSprite(adjacentTile, *sprite, renderingOffset)) {
-						cursPosition = adjacentTile;
-						pcursmonst = monsterId;
-						return true;
+				if (static_cast<size_t>(monsterId) < Towners.size() && Towners[monsterId].position == adjacentTile) {
+					const Towner &towner = Towners[monsterId];
+					const OptionalClxSprite sprite = towner.currentSprite();
+					if (sprite) {
+						const Displacement renderingOffset = towner.getRenderingOffset();
+						if (checkSprite(adjacentTile, *sprite, renderingOffset)) {
+							cursPosition = adjacentTile;
+							pcursmonst = monsterId;
+							return true;
+						}
+					}
+				} else if (static_cast<size_t>(monsterId) < MaxMonsters && Monsters[monsterId].isPlayerMinion()) {
+					const Monster &monster = Monsters[monsterId];
+					if (IsTileLit(adjacentTile)) {
+						const ClxSprite sprite = monster.animInfo.currentSprite();
+						const Displacement renderingOffset = monster.getRenderingOffset(sprite);
+						if (checkSprite(adjacentTile, sprite, renderingOffset)) {
+							cursPosition = adjacentTile;
+							pcursmonst = monsterId;
+							return true;
+						}
 					}
 				}
 			} else {

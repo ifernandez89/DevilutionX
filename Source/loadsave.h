@@ -44,6 +44,8 @@ void SaveGame();
 void SaveLevel(SaveWriter &saveWriter);
 tl::expected<void, std::string> LoadLevel();
 tl::expected<void, std::string> ConvertLevels(SaveWriter &saveWriter);
+void GetTempLevelNames(char *szTemp);
+void GetPermLevelNames(char *szPerm);
 void LoadStash();
 void SaveStash(SaveWriter &stashWriter);
 

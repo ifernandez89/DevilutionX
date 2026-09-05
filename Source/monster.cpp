@@ -1520,8 +1520,15 @@ void MonsterDeath(Monster &monster)
 			ViewPosition.y++;
 		}
 
-		if (monster.var1 == 140 && gbIsMultiplayer)
-			PrepDoEnding();
+		if (monster.var1 == 140) {
+			if (gbIsMultiplayer) {
+				PrepDoEnding();
+			} else {
+				dMonster[monster.position.tile.x][monster.position.tile.y] = 0;
+				monster.isInvalid = true;
+				M_UpdateRelations(monster);
+			}
+		}
 	} else if (monster.animInfo.isLastFrame()) {
 		if (monster.isUnique())
 			AddCorpse(monster.position.tile, monster.corpseId, monster.direction);
@@ -3809,6 +3816,10 @@ void ApplyMonsterDamage(DamageType damageType, Monster &monster, int damage)
 {
 	LuaEvent("OnMonsterTakeDamage", &monster, damage, static_cast<int>(damageType));
 
+	if (!gbIsMultiplayer && monster.isPlayerMinion()) {
+		damage = std::min(damage, std::max(0, monster.hitPoints - 64));
+	}
+
 	monster.hitPoints -= damage;
 
 	const int displayDmg = damage >> 6;
@@ -4071,6 +4082,30 @@ void GolumAi(Monster &golem)
 		return;
 	}
 
+	const bool isSinglePlayerEasterEgg = !gbIsMultiplayer;
+	const Player &owner = Players[golem.goalVar3];
+
+	if (isSinglePlayerEasterEgg && owner.plractive && owner.isOnActiveLevel()) {
+		const int distToOwner = golem.position.tile.WalkingDistance(owner.position.tile);
+		if (distToOwner > 8) {
+			auto newPos = FindClosestValidPosition(
+			    [start = owner.position.tile](Point target) {
+				    return !IsTileOccupied(target);
+			    },
+			    owner.position.tile, 1, 6);
+			if (!newPos) {
+				newPos = owner.position.tile;
+			}
+			M_ClearSquares(golem);
+			golem.position.tile = *newPos;
+			golem.position.old = *newPos;
+			golem.position.future = *newPos;
+			golem.occupyTile(*newPos, false);
+			M_StartStand(golem, owner._pdir);
+			return;
+		}
+	}
+
 	if ((golem.flags & MFLAG_TARGETS_MONSTER) == 0)
 		UpdateEnemy(golem);
 
@@ -4105,6 +4140,15 @@ void GolumAi(Monster &golem)
 		}
 		if (AiPlanPath(golem))
 			return;
+	}
+
+	if (isSinglePlayerEasterEgg && owner.plractive && owner.isOnActiveLevel()) {
+		const int distToOwner = golem.position.tile.WalkingDistance(owner.position.tile);
+		if (distToOwner > 2) {
+			golem.enemyPosition = owner.position.future;
+			if (AiPlanPath(golem))
+				return;
+		}
 	}
 
 	golem.pathCount++;

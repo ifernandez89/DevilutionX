@@ -23,10 +23,14 @@
 #include "engine/load_file.hpp"
 #include "engine/render/primitive_render.hpp"
 #include "game_mode.hpp"
+#include "levels/gendung.h"
 #include "loadsave.h"
 #include "menu.h"
 #include "mpq/mpq_common.hpp"
+#include "multi.h"
 #include "pack.h"
+#include "player.h"
+#include "quests.h"
 #include "qol/stash.h"
 #include "tables/playerdat.hpp"
 #include "utils/endian_read.hpp"
@@ -821,6 +825,18 @@ void pfile_read_player_from_save(uint32_t saveNum, Player &player)
 void pfile_save_level()
 {
 	SaveWriter saveWriter = GetSaveWriter(gSaveNumber);
+	if (!gbIsMultiplayer && currlevel == 16 && Quests[Q_DIABLO]._qactive == QUEST_DONE) {
+		char szName[MaxMpqPathSize];
+		GetTempLevelNames(szName);
+		if (saveWriter.HasFile(szName))
+			saveWriter.RemoveHashEntry(szName);
+		GetPermLevelNames(szName);
+		if (saveWriter.HasFile(szName))
+			saveWriter.RemoveHashEntry(szName);
+		MyPlayer->_pLvlVisited[16] = false;
+		Quests[Q_DIABLO]._qactive = QUEST_ACTIVE;
+		return;
+	}
 	SaveLevel(saveWriter);
 }
 

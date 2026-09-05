@@ -69,6 +69,7 @@
 #include "levels/gendung.h"
 #include "levels/setmaps.h"
 #include "levels/themes.h"
+#include "levels/tile_properties.hpp"
 #include "levels/town.h"
 #include "levels/trigs.h"
 #include "lighting.h"
@@ -77,11 +78,13 @@
 #include "menu.h"
 #include "minitext.h"
 #include "missiles.h"
+#include "monster.h"
 #include "movie.h"
 #include "multi.h"
 #include "nthread.h"
 #include "objects.h"
 #include "options.h"
+#include "engine/path.h"
 #include "panels/console.hpp"
 #include "panels/info_box.hpp"
 #include "panels/partypanel.hpp"
@@ -1535,6 +1538,10 @@ void GameLogic()
 	} else {
 		gGameLogicStep = GameLogicStep::ProcessTowners;
 		ProcessTowners();
+		if (!gbIsMultiplayer && MyPlayer->_persistentGolemSpellLevel > 0) {
+			gGameLogicStep = GameLogicStep::ProcessMonsters;
+			ProcessMonsters();
+		}
 		gGameLogicStep = GameLogicStep::ProcessItemsTown;
 		ProcessItems();
 		gGameLogicStep = GameLogicStep::ProcessMissilesTown;
@@ -3195,6 +3202,14 @@ tl::expected<void, std::string> LoadGameLevelTown(bool firstflag, lvl_entry lvld
 		}
 	}
 
+	if (!gbIsMultiplayer && myPlayer._persistentGolemSpellLevel > 0) {
+		const auto typeIndex = AddMonsterType(MT_GOLEM, PLACE_SPECIAL);
+		if (!typeIndex)
+			return tl::make_unexpected(typeIndex.error());
+		RETURN_IF_ERROR(InitMonsterGFX(LevelMonsterTypes[*typeIndex]));
+		InitGolems();
+	}
+
 	InitTowners();
 	InitStash();
 	InitItems();
@@ -3422,6 +3437,32 @@ tl::expected<void, std::string> LoadGameLevel(bool firstflag, lvl_entry lvldir)
 	UnstuckChargers();
 
 	LoadGameLevelLightVision();
+
+	if (!gbIsMultiplayer && MyPlayer->_persistentGolemSpellLevel > 0) {
+		std::optional<Point> spawnPosition = FindClosestValidPosition(
+		    [start = MyPlayer->position.tile](Point target) {
+			    return !IsTileOccupied(target);
+		    },
+		    MyPlayer->position.tile, 1, 10);
+		if (!spawnPosition) {
+			spawnPosition = MyPlayer->position.tile;
+		}
+		Monster *golem = FindGolemForPlayer(*MyPlayer);
+		if (golem == nullptr) {
+			SpawnGolem(*MyPlayer, *spawnPosition, MyPlayer->_persistentGolemSpellLevel);
+			golem = FindGolemForPlayer(*MyPlayer);
+		}
+		if (golem != nullptr) {
+			M_ClearSquares(*golem);
+			golem->position.tile = *spawnPosition;
+			golem->position.old = *spawnPosition;
+			golem->position.future = *spawnPosition;
+			golem->occupyTile(*spawnPosition, false);
+			golem->hitPoints = golem->maxHitPoints;
+			golem->isInvalid = false;
+			M_StartStand(*golem, MyPlayer->_pdir);
+		}
+	}
 
 	if (leveltype == DTYPE_CRYPT) {
 		LoadGameLevelCrypt();

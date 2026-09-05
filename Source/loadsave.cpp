@@ -1054,15 +1054,19 @@ void GetLevelNames(std::string_view prefix, char *out)
 	*BufCopy(out, prefix, std::string_view(&suf, 1), LeftPad(num, 2, '0')) = '\0';
 }
 
+} // namespace
+
 void GetTempLevelNames(char *szTemp)
 {
-	return GetLevelNames("temp", szTemp);
+	GetLevelNames("temp", szTemp);
 }
 
 void GetPermLevelNames(char *szPerm)
 {
-	return GetLevelNames("perm", szPerm);
+	GetLevelNames("perm", szPerm);
 }
+
+namespace {
 
 bool LevelFileExists(SaveWriter &archive)
 {

@@ -835,14 +835,40 @@ void DrawMonsterHelper(const Surface &out, Point tilePosition, Point targetBuffe
 	mi = std::abs(mi) - 1;
 
 	if (leveltype == DTYPE_TOWN) {
-		auto &towner = Towners[mi];
-		const OptionalClxSprite sprite = towner.currentSprite();
-		if (sprite) {
-			const Point position = targetBufferPosition + towner.getRenderingOffset();
-			if (mi == pcursmonst) {
-				ClxDrawOutlineSkipColorZero(out, 166, position, *sprite);
+		if (static_cast<size_t>(mi) < Towners.size() && Towners[mi].position == tilePosition) {
+			auto &towner = Towners[mi];
+			const OptionalClxSprite sprite = towner.currentSprite();
+			if (sprite) {
+				const Point position = targetBufferPosition + towner.getRenderingOffset();
+				if (mi == pcursmonst) {
+					ClxDrawOutlineSkipColorZero(out, 166, position, *sprite);
+				}
+				ClxDraw(out, position, *sprite);
 			}
-			ClxDraw(out, position, *sprite);
+			return;
+		}
+		if (static_cast<size_t>(mi) < MaxMonsters && Monsters[mi].isPlayerMinion()) {
+			const auto &monster = Monsters[mi];
+			const ClxSprite sprite = monster.animInfo.currentSprite();
+			const Displacement offset = monster.getRenderingOffset(sprite);
+			const Point monsterRenderPosition = targetBufferPosition + offset;
+			if (mi == pcursmonst) {
+				ClxDrawOutlineSkipColorZero(out, 233, monsterRenderPosition, sprite);
+			}
+			DrawMonster(out, tilePosition, monsterRenderPosition, monster, lightTableIndex);
+			DrawMonsterOverheadHealthBar(out, monsterRenderPosition, sprite, monster, mi == pcursmonst);
+			return;
+		}
+		if (static_cast<size_t>(mi) < Towners.size()) {
+			auto &towner = Towners[mi];
+			const OptionalClxSprite sprite = towner.currentSprite();
+			if (sprite) {
+				const Point position = targetBufferPosition + towner.getRenderingOffset();
+				if (mi == pcursmonst) {
+					ClxDrawOutlineSkipColorZero(out, 166, position, *sprite);
+				}
+				ClxDraw(out, position, *sprite);
+			}
 		}
 		return;
 	}

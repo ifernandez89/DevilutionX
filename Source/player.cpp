@@ -2684,6 +2684,9 @@ StartPlayerKill(Player &player, DeathReason deathReason)
 		return;
 	}
 
+	player._persistentGolemSpellLevel = 0;
+	RemovePlrMissiles(player);
+
 	if (&player == MyPlayer) {
 		NetSendCmdParam1(true, CMD_PLRDEAD, static_cast<uint16_t>(deathReason));
 		gamemenu_off();
@@ -2879,7 +2882,15 @@ void RemovePlrMissiles(const Player &player)
 	if (leveltype != DTYPE_TOWN) {
 		Monster *golem;
 		while ((golem = FindGolemForPlayer(player)) != nullptr) {
-			KillGolem(*golem);
+			if (!gbIsMultiplayer && player._persistentGolemSpellLevel > 0) {
+				M_ClearSquares(*golem);
+				dMonster[golem->position.tile.x][golem->position.tile.y] = 0;
+				golem->position.tile = GolemHoldingCell;
+				golem->hitPoints = 0;
+				golem->isInvalid = true;
+			} else {
+				KillGolem(*golem);
+			}
 		}
 	}
 

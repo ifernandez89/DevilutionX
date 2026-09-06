@@ -3464,6 +3464,18 @@ tl::expected<void, std::string> LoadGameLevel(bool firstflag, lvl_entry lvldir)
 		}
 	}
 
+	if (!gbIsMultiplayer && MyPlayer->_persistentBoneSpiritSpellLevel > 0) {
+		std::optional<Point> spawnPosition = FindClosestValidPosition(
+		    [start = MyPlayer->position.tile](Point target) {
+			    return !IsTileOccupied(target);
+		    },
+		    MyPlayer->position.tile, 1, 6);
+		if (!spawnPosition) {
+			spawnPosition = MyPlayer->position.tile;
+		}
+		SpawnBoneSpiritCompanion(*MyPlayer, *spawnPosition, MyPlayer->_persistentBoneSpiritSpellLevel);
+	}
+
 	if (leveltype == DTYPE_CRYPT) {
 		LoadGameLevelCrypt();
 	}

@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### 🌫️ Niebla Gótica Atmosférica & Relámpagos en Tristán (Gothic Fog & Mist Engine)
+- **Sustitución de Lluvia por Niebla Volumétrica ([`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html), [`Source/engine/render/weather_overlay.cpp`](file:///c:/Projects/DevilutionX/Source/engine/render/weather_overlay.cpp), [`Source/engine/render/weather_overlay.hpp`](file:///c:/Projects/DevilutionX/Source/engine/render/weather_overlay.hpp), [`Source/engine/render/scrollrt.cpp`](file:///c:/Projects/DevilutionX/Source/engine/render/scrollrt.cpp))**:
+  - Se transformó el sistema climático de Tristán reemplazando la lluvia vertical por un motor de **niebla gótica volumétrica y bancos de bruma flotante** (*Rolling Fog Clouds & Mist Wisps*).
+  - **Iluminación Dinámica Reactiva**: Los bancos de bruma absorben suavemente la iluminación cálida de la fogata central y antorchas de Tristán mediante gradientes radiales optimizados sin recolección de basura (*Zero-GC*).
+  - **Relámpagos de Tormenta Preservados**: Se mantiene el sistema de relámpagos con doble destello aleatorio (`triggerDiabloLightning()`), que al caer ilumina instantáneamente toda la escena y la masa de niebla en un resplandor azul/blanco eléctrico.
+  - **Limpieza de Código Heredado en C++**: Se eliminaron estructuras obsoletas de gotas de lluvia y se implementó `RenderWeatherFog()` con partículas de bruma difusa y deriva horizontal suave para el renderizador nativo.
+
+### 💀 Compañero Infernal Inmortal "Bone Spirit" (Single Player Companion & Save Persistence)
+- **Persistencia en Partidas Guardadas ([`Source/loadsave.cpp`](file:///c:/Projects/DevilutionX/Source/loadsave.cpp), [`Source/loadsave.h`](file:///c:/Projects/DevilutionX/Source/loadsave.h), [`Source/pfile.cpp`](file:///c:/Projects/DevilutionX/Source/pfile.cpp), [`Source/player.h`](file:///c:/Projects/DevilutionX/Source/player.h), [`Source/player.cpp`](file:///c:/Projects/DevilutionX/Source/player.cpp))**:
+  - Se agregó `_persistentBoneSpiritSpellLevel` en `Player`, permitiendo que el hechizo *Bone Spirit* invoque un espíritu guardián permanente que se guarda y recupera automáticamente de los archivos de guardado (`SaveBoneSpiritState` / `LoadBoneSpiritState`).
+- **Compañero Flotante Inmortal y Leal ([`Source/missiles.cpp`](file:///c:/Projects/DevilutionX/Source/missiles.cpp), [`Source/missiles.h`](file:///c:/Projects/DevilutionX/Source/missiles.h), [`Source/diablo.cpp`](file:///c:/Projects/DevilutionX/Source/diablo.cpp))**:
+  - Al castear *Bone Spirit*, el espíritu óseo se convierte en un compañero permanente (duración infinita) que acompaña y orbita al héroe con su propia luz espectral.
+  - **Presencia en Tristán y Mazmorras**: Acompaña fielmente al jugador en el pueblo junto a los habitantes y el Golem, y viaja automáticamente a través de portales, escaleras y niveles de mazmorra.
+  - **Combate Autónomo e Inmortalidad**: En mazmorras busca y castiga continuamente a los enemigos dentro de su rango sin destruirse ni morir jamás, regresando al lado del héroe al limpiar el área.
+
 ### 👹 Muerte Limpia de Diablo & El Infierno Nunca Termina (Endless Diablo Boss Loop)
 - **Corrección de Bucle Infinito en la Muerte de Diablo ([`Source/monster.cpp`](file:///c:/Projects/DevilutionX/Source/monster.cpp))**:
   - Se solucionó el fallo por el cual en Single Player (`!gbIsMultiplayer`), la muerte de Diablo nunca concluía, quedando su sprite congelado sangrando y gritando indefinidamente.

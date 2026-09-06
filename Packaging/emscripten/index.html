@@ -1107,212 +1107,68 @@
 			}
 		});
 
-		// Diablo Rain 2.0 & Weather Engine (Física Volumétrica Optimizada + Zero-GC Pool)
-		(function initDiabloRain2Engine() {
-			var rainCanvas = document.getElementById('rain-canvas');
+		// Diablo Gothic Fog & Mist Engine (Niebla Volumétrica + Bruma Dinámica + Relámpagos)
+		(function initGothicFogEngine() {
+			var fogCanvas = document.getElementById('rain-canvas') || document.getElementById('fog-canvas');
 			var lightning = document.getElementById('lightning-overlay');
-			if (!rainCanvas) return;
-			var ctx = rainCanvas.getContext('2d');
+			if (!fogCanvas) return;
+			var ctx = fogCanvas.getContext('2d');
 
-			var width = (rainCanvas.width = window.innerWidth);
-			var height = (rainCanvas.height = window.innerHeight);
+			var width = (fogCanvas.width = window.innerWidth);
+			var height = (fogCanvas.height = window.innerHeight);
 
-			function resizeRain() {
-				var parent = rainCanvas.parentElement;
-				if (parent && (rainCanvas.width !== parent.clientWidth || rainCanvas.height !== parent.clientHeight)) {
-					width = rainCanvas.width = parent.clientWidth || window.innerWidth;
-					height = rainCanvas.height = parent.clientHeight || window.innerHeight;
+			function resizeFog() {
+				var parent = fogCanvas.parentElement;
+				if (parent && (fogCanvas.width !== parent.clientWidth || fogCanvas.height !== parent.clientHeight)) {
+					width = fogCanvas.width = parent.clientWidth || window.innerWidth;
+					height = fogCanvas.height = parent.clientHeight || window.innerHeight;
 				}
 			}
-			window.addEventListener('resize', resizeRain);
+			window.addEventListener('resize', resizeFog);
 
-			// Weather State & Wind Gust Dynamics
 			var time = 0;
-			var weatherIntensity = 0.65; // 0.25 (Drizzle) to 0.95 (Heavy Storm)
-			var baseWind = -2.3;
+			var baseWind = 0.55;
 			var currentGust = 0.0;
 			var targetGust = 0.0;
-			var nextGustTime = 8.0;
+			var nextGustTime = 6.0;
 
 			// Light sources in screen coordinates (normalized 0.0 to 1.0)
 			var lightSources = [
-				{ x: 0.50, y: 0.48, radius: 0.28, color: [240, 180, 100] }, // Town Bonfire
-				{ x: 0.22, y: 0.35, radius: 0.18, color: [230, 150, 70] },  // Left Forge Torch
-				{ x: 0.78, y: 0.35, radius: 0.18, color: [230, 150, 70] },  // Right Wall Torch
+				{ x: 0.50, y: 0.48, radius: 0.32, color: [240, 180, 100] }, // Town Bonfire
+				{ x: 0.22, y: 0.35, radius: 0.20, color: [230, 150, 70] },  // Left Forge Torch
+				{ x: 0.78, y: 0.35, radius: 0.20, color: [230, 150, 70] },  // Right Wall Torch
 			];
 
-			// Balanced Particle Pools (47% CPU reduction with full visual density)
-			var FAR_COUNT = 90;
-			var MID_COUNT = 140;
-			var NEAR_COUNT = 16;
-			var drops = [];
-			var puddleGlints = [];
-
-			// Preallocated Zero-GC Splash Pool
-			var MAX_SPLASHES = 32;
-			var splashPool = [];
-			for (var sp = 0; sp < MAX_SPLASHES; sp++) {
-				splashPool.push({ x: 0, y: 0, layer: 0, life: 0, maxLife: 4, size: 2.5, active: false });
+			// Volumetric Rolling Fog Clouds (Low GC)
+			var FOG_CLOUD_COUNT = 14;
+			var fogClouds = [];
+			for (var i = 0; i < FOG_CLOUD_COUNT; i++) {
+				fogClouds.push({
+					x: Math.random() * (width + 600) - 300,
+					y: height * 0.15 + Math.random() * (height * 0.80),
+					radiusX: 180 + Math.random() * 220,
+					radiusY: 70 + Math.random() * 80,
+					speedX: 0.25 + Math.random() * 0.45,
+					baseAlpha: 0.06 + Math.random() * 0.08,
+					phase: Math.random() * Math.PI * 2,
+					layer: i % 2 // 0: ground mist, 1: mid atmospheric fog
+				});
 			}
 
-			function spawnSplash(x, y, layer) {
-				for (var i = 0; i < MAX_SPLASHES; i++) {
-					if (!splashPool[i].active) {
-						var s = splashPool[i];
-						s.x = x;
-						s.y = y;
-						s.layer = layer;
-						s.life = 4;
-						s.maxLife = 4;
-						s.size = (layer === 0) ? 1.5 : (layer === 1) ? 2.5 : 3.8;
-						s.active = true;
-						return;
-					}
-				}
+			// Drifting Mist Motes / Floating Spores
+			var MOTE_COUNT = 85;
+			var motes = [];
+			for (var m = 0; m < MOTE_COUNT; m++) {
+				motes.push({
+					x: Math.random() * (width + 200) - 100,
+					y: Math.random() * height,
+					speedX: 0.3 + Math.random() * 0.6,
+					speedY: (Math.random() - 0.5) * 0.2,
+					size: 1.5 + Math.random() * 3.5,
+					alpha: 0.12 + Math.random() * 0.25,
+					pulsePhase: Math.random() * Math.PI * 2
+				});
 			}
-
-			class Drop2 {
-				constructor(layer) {
-					this.layer = layer; // 0: Far, 1: Mid, 2: Near
-					this.morphType = Math.floor(Math.random() * 4); // 0: dot, 1: short, 2: medium, 3: double
-					this.lifeFrames = (layer === 2) ? Math.floor(Math.random() * 5) + 3 : 9999;
-					this.reset(true);
-				}
-
-				reset(initial = false) {
-					this.x = Math.random() * (width + 360) - 80;
-					this.y = initial ? Math.random() * (height * 0.94) : -25;
-					this.life = (this.layer === 2) ? Math.floor(Math.random() * 5) + 3 : 9999;
-
-					if (this.layer === 0) {
-						// Far Rain (Background micro-droplets)
-						this.speedY = 13 + Math.random() * 3;
-						this.length = 4 + Math.random() * 3;
-						this.alpha = 0.26 + Math.random() * 0.14;
-						this.width = 0.75;
-					} else if (this.layer === 1) {
-						// Mid Rain (Main fine Diablo drops with morphology variation)
-						this.speedY = 17 + Math.random() * 5;
-						this.length = (this.morphType === 0) ? 3.5 : (this.morphType === 1) ? 6.5 : (this.morphType === 2) ? 9.5 : 12;
-						this.alpha = 0.44 + Math.random() * 0.22;
-						this.width = 1.0;
-					} else {
-						// Near Rain (Camera lens close streaks)
-						this.speedY = 24 + Math.random() * 6;
-						this.length = 16 + Math.random() * 8;
-						this.alpha = 0.70 + Math.random() * 0.20;
-						this.width = 1.5;
-					}
-
-					var hudLimit = (this.layer === 2) ? height * 0.98 : height * 0.95;
-					this.floorY = height * 0.60 + Math.random() * (hudLimit - height * 0.60);
-				}
-
-				update(windX) {
-					var layerWindFactor = (this.layer === 0) ? 0.75 : (this.layer === 1) ? 1.0 : 1.35;
-					this.x += windX * layerWindFactor;
-					this.y += this.speedY;
-
-					if (this.layer === 2) {
-						this.life--;
-						if (this.life <= 0) {
-							this.reset();
-							return;
-						}
-					}
-
-					var maxLimit = (this.layer === 2) ? height * 0.98 : height * 0.95;
-					if (this.y >= this.floorY || this.y > maxLimit) {
-						// Ground impact
-						if (this.y <= maxLimit && Math.random() > 0.45) {
-							spawnSplash(this.x, this.y, this.layer);
-						}
-						this.reset();
-					}
-				}
-
-				draw(windX) {
-					// Check local light illumination (torches / bonfire) with fast squared distance
-					var normX = this.x / width;
-					var normY = this.y / height;
-					var r = 195, g = 215, b = 245; // Vibrant cool silver-cyan rain
-					var boost = 1.0;
-
-					for (var i = 0; i < lightSources.length; i++) {
-						var src = lightSources[i];
-						var dx = normX - src.x;
-						var dy = normY - src.y;
-						var distSq = dx * dx + dy * dy;
-						var radSq = src.radius * src.radius;
-						if (distSq < radSq) {
-							var factor = 1.0 - Math.sqrt(distSq) / src.radius;
-							r = r * (1 - factor) + src.color[0] * factor;
-							g = g * (1 - factor) + src.color[1] * factor;
-							b = b * (1 - factor) + src.color[2] * factor;
-							boost += factor * 0.6;
-							break;
-						}
-					}
-
-					var finalAlpha = Math.min(1.0, this.alpha * boost * (weatherIntensity / 0.65));
-					ctx.strokeStyle = 'rgba(' + Math.floor(r) + ',' + Math.floor(g) + ',' + Math.floor(b) + ',' + finalAlpha.toFixed(2) + ')';
-					ctx.lineWidth = this.width;
-
-					ctx.beginPath();
-					ctx.moveTo(this.x, this.y);
-					ctx.lineTo(this.x + windX * 1.8, this.y + this.length);
-					ctx.stroke();
-
-					// Double streak morphology
-					if (this.morphType === 3 && this.layer === 1) {
-						ctx.beginPath();
-						ctx.moveTo(this.x + 3, this.y - 2);
-						ctx.lineTo(this.x + 3 + windX * 1.8, this.y - 2 + this.length * 0.75);
-						ctx.stroke();
-					}
-				}
-			}
-
-			// Puddle Glints (Reflections in damp mud near torches)
-			class PuddleGlint {
-				constructor() {
-					this.reset();
-				}
-
-				reset() {
-					var src = lightSources[Math.floor(Math.random() * lightSources.length)];
-					var angle = Math.random() * Math.PI * 2;
-					var rad = Math.random() * src.radius * 0.85;
-					this.x = (src.x + Math.cos(angle) * rad) * width;
-					this.y = (src.y + Math.sin(angle) * rad * 0.5) * height; // Isometric squashed
-					this.maxAlpha = Math.random() * 0.28 + 0.12;
-					this.alpha = 0;
-					this.life = Math.floor(Math.random() * 30) + 15;
-					this.maxLife = this.life;
-					this.color = src.color;
-				}
-
-				update() {
-					this.life--;
-					var progress = 1.0 - (this.life / this.maxLife);
-					this.alpha = Math.sin(progress * Math.PI) * this.maxAlpha;
-					if (this.life <= 0) {
-						this.reset();
-					}
-				}
-
-				draw() {
-					if (this.y > height * 0.95) return; // Guard HUD
-					ctx.fillStyle = 'rgba(' + this.color[0] + ',' + this.color[1] + ',' + this.color[2] + ',' + this.alpha.toFixed(2) + ')';
-					ctx.fillRect(this.x, this.y, 2, 1);
-				}
-			}
-
-			// Initialize Particle Pools
-			for (var f = 0; f < FAR_COUNT; f++) drops.push(new Drop2(0));
-			for (var m = 0; m < MID_COUNT; m++) drops.push(new Drop2(1));
-			for (var n = 0; n < NEAR_COUNT; n++) drops.push(new Drop2(2));
-			for (var g = 0; g < 10; g++) puddleGlints.push(new PuddleGlint());
 
 			// Thunderstorm Double-Flash Lighting Engine
 			function triggerDiabloLightning() {
@@ -1321,29 +1177,28 @@
 					return;
 				}
 
-				var flashOpacity = 0.25 + Math.random() * 0.30;
+				var flashOpacity = 0.28 + Math.random() * 0.32;
 				if (lightning) {
 					lightning.style.backgroundColor = 'rgba(215, 230, 255, 1)';
 					lightning.style.opacity = flashOpacity;
 
 					setTimeout(function() {
 						lightning.style.opacity = 0;
-						if (Math.random() > 0.4) {
+						if (Math.random() > 0.35) {
 							setTimeout(function() {
-								lightning.style.opacity = flashOpacity * 0.65;
+								lightning.style.opacity = flashOpacity * 0.70;
 								setTimeout(function() { lightning.style.opacity = 0; }, 55);
-							}, 70);
+							}, 75);
 						}
-					}, 80);
+					}, 85);
 				}
 
-				setTimeout(triggerDiabloLightning, 7000 + Math.random() * 12000);
+				setTimeout(triggerDiabloLightning, 7000 + Math.random() * 11000);
 			}
-			setTimeout(triggerDiabloLightning, 5000);
+			setTimeout(triggerDiabloLightning, 4000);
 
-			// Main Weather Loop (Active in Tristram Town & When Remaster is ON)
+			// Main Fog Weather Loop (Active in Tristram Town & When Remaster is ON)
 			function weatherLoop() {
-				// Guard: Biome detection (Active in Town; defaults to true and checks WASM exports)
 				var isTownBiome = true;
 				if (window.Module) {
 					if (typeof Module._Nightmare_IsTown === 'function') {
@@ -1375,59 +1230,92 @@
 					return;
 				}
 
-				resizeRain();
+				resizeFog();
 				ctx.clearRect(0, 0, width, height);
 				time += 0.016;
 
-				// Wind Oscillation & Dynamic Gusts
+				// Wind Oscillation & Gusts
 				if (time > nextGustTime) {
-					targetGust = (Math.random() - 0.5) * 2.2;
-					nextGustTime = time + 9.0 + Math.random() * 8.0;
+					targetGust = (Math.random() - 0.5) * 0.8;
+					nextGustTime = time + 7.0 + Math.random() * 6.0;
 				}
-				currentGust += (targetGust - currentGust) * 0.04;
-				var activeWindX = baseWind + Math.sin(time * 0.4) * 0.45 + currentGust;
+				currentGust += (targetGust - currentGust) * 0.03;
+				var activeWindX = baseWind + Math.sin(time * 0.35) * 0.25 + currentGust;
 
-				// Weather Intensity Cycling
-				weatherIntensity = 0.65 + Math.sin(time * 0.04) * 0.25;
+				// 1. Render Rolling Volumetric Fog Clouds
+				for (var c = 0; c < fogClouds.length; c++) {
+					var cloud = fogClouds[c];
+					cloud.x += activeWindX * cloud.speedX;
+					if (cloud.x - cloud.radiusX > width + 100) {
+						cloud.x = -cloud.radiusX - (Math.random() * 150);
+						cloud.y = height * 0.15 + Math.random() * (height * 0.80);
+					}
 
-				// 1. Draw Puddle Glints (Subtle Wet Ground Reflections)
-				for (var pg = 0; pg < puddleGlints.length; pg++) {
-					puddleGlints[pg].update();
-					puddleGlints[pg].draw();
-				}
+					var oscY = Math.sin(time * 0.6 + cloud.phase) * 12;
+					var cy = cloud.y + oscY;
+					var normX = cloud.x / width;
+					var normY = cy / height;
 
-				// 2. Update & Draw Rain Drops across 3 Depth Layers
-				var activeDropCount = Math.floor(drops.length * (weatherIntensity / 0.65));
-				for (var d = 0; d < Math.min(drops.length, activeDropCount); d++) {
-					drops[d].update(activeWindX);
-					drops[d].draw(activeWindX);
-				}
-
-				// 3. Update & Draw Splashes (Zero-GC Pool)
-				for (var s = 0; s < MAX_SPLASHES; s++) {
-					var sp = splashPool[s];
-					if (sp.active) {
-						sp.life--;
-						var alpha = (sp.life / sp.maxLife) * 0.45;
-						ctx.strokeStyle = 'rgba(180, 195, 210, ' + alpha.toFixed(2) + ')';
-						ctx.fillStyle = 'rgba(180, 195, 210, ' + alpha.toFixed(2) + ')';
-						ctx.lineWidth = 1;
-						ctx.beginPath();
-						ctx.ellipse(sp.x, sp.y, sp.size * 1.8, sp.size * 0.85, 0, 0, Math.PI * 2);
-						ctx.stroke();
-						ctx.fillRect(sp.x - 2, sp.y - 1, 1, 1);
-						ctx.fillRect(sp.x + 2, sp.y - 1, 1, 1);
-						if (sp.life <= 0) {
-							sp.active = false;
+					// Torch/Bonfire light tinting
+					var r = 180, g = 195, b = 215;
+					var lightFactor = 0;
+					for (var li = 0; li < lightSources.length; li++) {
+						var src = lightSources[li];
+						var dx = normX - src.x;
+						var dy = normY - src.y;
+						var dSq = dx * dx + dy * dy;
+						var radSq = src.radius * src.radius;
+						if (dSq < radSq) {
+							var factor = 1.0 - Math.sqrt(dSq) / src.radius;
+							r = r * (1 - factor) + src.color[0] * factor;
+							g = g * (1 - factor) + src.color[1] * factor;
+							b = b * (1 - factor) + src.color[2] * factor;
+							lightFactor += factor * 0.4;
+							break;
 						}
 					}
+
+					var currentAlpha = (cloud.baseAlpha + lightFactor) * (0.85 + Math.sin(time * 0.5 + cloud.phase) * 0.15);
+
+					var grad = ctx.createRadialGradient(cloud.x, cy, 0, cloud.x, cy, cloud.radiusX);
+					grad.addColorStop(0, 'rgba(' + Math.floor(r) + ',' + Math.floor(g) + ',' + Math.floor(b) + ',' + currentAlpha.toFixed(3) + ')');
+					grad.addColorStop(0.55, 'rgba(' + Math.floor(r) + ',' + Math.floor(g) + ',' + Math.floor(b) + ',' + (currentAlpha * 0.45).toFixed(3) + ')');
+					grad.addColorStop(1, 'rgba(' + Math.floor(r) + ',' + Math.floor(g) + ',' + Math.floor(b) + ',0)');
+
+					ctx.save();
+					ctx.beginPath();
+					ctx.scale(1.0, cloud.radiusY / cloud.radiusX);
+					ctx.arc(cloud.x, cy * (cloud.radiusX / cloud.radiusY), cloud.radiusX, 0, Math.PI * 2);
+					ctx.fillStyle = grad;
+					ctx.fill();
+					ctx.restore();
+				}
+
+				// 2. Render Drifting Mist Motes
+				for (var m = 0; m < motes.length; m++) {
+					var mote = motes[m];
+					mote.x += activeWindX * mote.speedX;
+					mote.y += mote.speedY + Math.sin(time + mote.pulsePhase) * 0.15;
+
+					if (mote.x > width + 50) {
+						mote.x = -30;
+						mote.y = Math.random() * height;
+					}
+					if (mote.y < 0) mote.y = height;
+					if (mote.y > height) mote.y = 0;
+
+					var pulseAlpha = mote.alpha * (0.7 + Math.sin(time * 2.0 + mote.pulsePhase) * 0.3);
+					ctx.fillStyle = 'rgba(200, 215, 235, ' + pulseAlpha.toFixed(2) + ')';
+					ctx.beginPath();
+					ctx.arc(mote.x, mote.y, mote.size, 0, Math.PI * 2);
+					ctx.fill();
 				}
 
 				requestAnimationFrame(weatherLoop);
 			}
 
 			weatherLoop();
-			console.log('[NIGHTMARE] Diablo Rain 2.0 & Weather Engine initialized successfully (Optimized Zero-GC).');
+			console.log('[NIGHTMARE] Diablo Gothic Fog & Mist Engine initialized successfully (Optimized Zero-GC).');
 		})();
 
 		// Smart Background Tab Protection & Freeze Preventer

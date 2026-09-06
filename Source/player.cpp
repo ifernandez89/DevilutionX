@@ -2685,6 +2685,7 @@ StartPlayerKill(Player &player, DeathReason deathReason)
 	}
 
 	player._persistentGolemSpellLevel = 0;
+	player._persistentBoneSpiritSpellLevel = 0;
 	RemovePlrMissiles(player);
 
 	if (&player == MyPlayer) {

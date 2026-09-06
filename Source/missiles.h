@@ -423,6 +423,8 @@ void AddResurrect(Missile &missile, AddMissileParameter &parameter);
 void AddResurrectBeam(Missile &missile, AddMissileParameter &parameter);
 void AddTelekinesis(Missile &missile, AddMissileParameter &parameter);
 void AddBoneSpirit(Missile &missile, AddMissileParameter &parameter);
+Missile *FindBoneSpiritForPlayer(const Player &player);
+void SpawnBoneSpiritCompanion(Player &player, Point position, uint8_t spellLevel);
 void AddRedPortal(Missile &missile, AddMissileParameter &parameter);
 void AddDiabloApocalypse(Missile &missile, AddMissileParameter &parameter);
 Missile *AddMissile(WorldTilePosition src, WorldTilePosition dst, Direction midir, MissileID mitype,

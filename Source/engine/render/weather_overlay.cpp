@@ -1,5 +1,6 @@
 #include "engine/render/weather_overlay.hpp"
 
+#include <cmath>
 #include <cstdlib>
 #include <vector>
 
@@ -10,78 +11,92 @@
 namespace devilution {
 namespace {
 
-struct RainDrop {
+struct FogWisp {
 	float x;
 	float y;
-	float speedY;
 	float speedX;
-	int length;
+	float speedY;
+	int width;
+	int height;
+	int density;
 	uint8_t color;
 };
 
-std::vector<RainDrop> rainPool;
-bool rainInitialized = false;
+std::vector<FogWisp> fogPool;
+bool fogInitialized = false;
 
-void InitRainPool(int width, int height)
+void InitFogPool(int screenWidth, int screenHeight)
 {
-	constexpr size_t NumRainDrops = 350;
-	rainPool.resize(NumRainDrops);
+	constexpr size_t NumFogWisps = 160;
+	fogPool.resize(NumFogWisps);
 
-	for (auto &drop : rainPool) {
-		drop.x = static_cast<float>(rand() % (width + 100) - 50);
-		drop.y = static_cast<float>(rand() % height);
-		drop.speedY = 12.0f + static_cast<float>(rand() % 8);
-		drop.speedX = -2.5f - static_cast<float>(rand() % 3);
-		drop.length = 5 + (rand() % 7);
-		drop.color = (rand() % 2 == 0) ? 200 : 205; // Cold blue/silver palette index
+	for (auto &wisp : fogPool) {
+		wisp.x = static_cast<float>(rand() % (screenWidth + 200) - 100);
+		wisp.y = static_cast<float>(rand() % screenHeight);
+		wisp.speedX = 0.4f + static_cast<float>(rand() % 100) / 140.0f; // Soft gentle drift
+		wisp.speedY = (static_cast<float>(rand() % 100) - 50.0f) / 500.0f; // Subtle vertical oscillation
+		wisp.width = 18 + (rand() % 35);
+		wisp.height = 3 + (rand() % 4);
+		wisp.density = 2 + (rand() % 3);
+		wisp.color = (rand() % 2 == 0) ? 200 : 205; // Cold translucent mist tint in standard palette
 	}
-	rainInitialized = true;
+	fogInitialized = true;
 }
 
 } // namespace
 
-void ResetWeatherRain()
+void ResetWeatherFog()
 {
-	rainInitialized = false;
-	rainPool.clear();
+	fogInitialized = false;
+	fogPool.clear();
 }
 
-void RenderWeatherRain(const Surface &out)
+void RenderWeatherFog(const Surface &out)
 {
 	if (leveltype != DTYPE_TOWN)
 		return;
 
-	const int width = out.w();
-	const int height = out.h();
+	const int screenWidth = out.w();
+	const int screenHeight = out.h();
 
-	if (width <= 0 || height <= 0)
+	if (screenWidth <= 0 || screenHeight <= 0)
 		return;
 
-	if (!rainInitialized || rainPool.empty()) {
-		InitRainPool(width, height);
+	if (!fogInitialized || fogPool.empty()) {
+		InitFogPool(screenWidth, screenHeight);
 	}
 
-	for (auto &drop : rainPool) {
-		drop.x += drop.speedX;
-		drop.y += drop.speedY;
+	for (auto &wisp : fogPool) {
+		wisp.x += wisp.speedX;
+		wisp.y += wisp.speedY;
 
-		if (drop.y >= height || drop.x < -50) {
-			drop.y = static_cast<float>(-(rand() % 20));
-			drop.x = static_cast<float>(rand() % (width + 100) - 20);
+		if (wisp.x > screenWidth + 100) {
+			wisp.x = static_cast<float>(-(rand() % 80 + 30));
+			wisp.y = static_cast<float>(rand() % screenHeight);
 		}
+		if (wisp.y < 0)
+			wisp.y = static_cast<float>(screenHeight - 1);
+		else if (wisp.y >= screenHeight)
+			wisp.y = 0;
 
-		const int startX = static_cast<int>(drop.x);
-		const int startY = static_cast<int>(drop.y);
+		const int startX = static_cast<int>(wisp.x);
+		const int startY = static_cast<int>(wisp.y);
 
-		for (int i = 0; i < drop.length; i++) {
-			const int px = startX + static_cast<int>(i * (drop.speedX / drop.length));
-			const int py = startY + i;
-			if (px >= 0 && px < width && py >= 0 && py < height) {
-				out.SetPixel({ px, py }, drop.color);
+		// Render soft dithered horizontal fog wisp
+		for (int dy = 0; dy < wisp.height; dy++) {
+			const int py = startY + dy;
+			if (py < 0 || py >= screenHeight)
+				continue;
+
+			for (int dx = 0; dx < wisp.width; dx += wisp.density) {
+				const int px = startX + dx + ((dy % 2) * (wisp.density / 2));
+				if (px >= 0 && px < screenWidth) {
+					out.SetPixel({ px, py }, wisp.color);
+				}
 			}
 		}
 	}
 }
 
-
 } // namespace devilution
+

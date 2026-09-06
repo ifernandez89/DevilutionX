@@ -50,5 +50,7 @@ void LoadStash();
 void SaveStash(SaveWriter &stashWriter);
 void LoadGolemState(Player &player);
 void SaveGolemState(SaveWriter &saveWriter, const Player &player);
+void LoadBoneSpiritState(Player &player);
+void SaveBoneSpiritState(SaveWriter &saveWriter, const Player &player);
 
 } // namespace devilution

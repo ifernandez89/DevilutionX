@@ -2420,6 +2420,16 @@ void LoadGolemState(Player &player)
 	player._persistentGolemSpellLevel = file.NextLE<uint8_t>();
 }
 
+void LoadBoneSpiritState(Player &player)
+{
+	player._persistentBoneSpiritSpellLevel = 0;
+	LoadHelper file(OpenSaveArchive(gSaveNumber), "bonespirit");
+	if (!file.IsValid())
+		return;
+
+	player._persistentBoneSpiritSpellLevel = file.NextLE<uint8_t>();
+}
+
 constexpr uint8_t StashVersion = 0;
 
 void LoadStash()
@@ -2534,6 +2544,7 @@ tl::expected<void, std::string> LoadGame(bool firstflag)
 
 	LoadPlayer(file, myPlayer);
 	LoadGolemState(myPlayer);
+	LoadBoneSpiritState(myPlayer);
 
 	if (sgGameInitInfo.nDifficulty < DIFF_NORMAL || sgGameInitInfo.nDifficulty > DIFF_HELL)
 		sgGameInitInfo.nDifficulty = DIFF_NORMAL;
@@ -2722,6 +2733,12 @@ void SaveGolemState(SaveWriter &saveWriter, const Player &player)
 {
 	SaveHelper file(saveWriter, "golem", sizeof(uint8_t));
 	file.WriteLE<uint8_t>(player._persistentGolemSpellLevel);
+}
+
+void SaveBoneSpiritState(SaveWriter &saveWriter, const Player &player)
+{
+	SaveHelper file(saveWriter, "bonespirit", sizeof(uint8_t));
+	file.WriteLE<uint8_t>(player._persistentBoneSpiritSpellLevel);
 }
 
 void SaveStash(SaveWriter &stashWriter)

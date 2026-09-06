@@ -104,75 +104,6 @@ namespace {
 
 constexpr auto RightFrameDisplacement = Displacement { DunFrameWidth, 0 };
 
-enum RainLayer {
-	RAIN_BACK,
-	RAIN_FRONT,
-};
-
-struct RainDrop {
-	int x;
-	int y;
-	int len;
-	int speed;
-	int wind;
-	uint8_t alpha;
-	RainLayer layer;
-};
-
-constexpr int MAX_RAIN = 220;
-RainDrop Rain[MAX_RAIN];
-bool RainInitialized = false;
-
-void InitRain()
-{
-	for (int i = 0; i < MAX_RAIN; i++) {
-		Rain[i].x = static_cast<int>(GenerateRandomNumber() % 640);
-		Rain[i].y = static_cast<int>(GenerateRandomNumber() % 480);
-		int type = static_cast<int>(GenerateRandomNumber() % 3);
-		if (type == 0) {
-			Rain[i].len = 3;
-			Rain[i].speed = 2;
-			Rain[i].alpha = 70;
-		} else if (type == 1) {
-			Rain[i].len = 6;
-			Rain[i].speed = 4;
-			Rain[i].alpha = 100;
-		} else {
-			Rain[i].len = 10;
-			Rain[i].speed = 6;
-			Rain[i].alpha = 140;
-		}
-		Rain[i].wind = 1;
-		Rain[i].layer = (GenerateRandomNumber() % 2 == 0) ? RAIN_BACK : RAIN_FRONT;
-	}
-	RainInitialized = true;
-}
-
-void UpdateRain()
-{
-	if (!RainInitialized)
-		InitRain();
-
-	const int width = std::max<int>(gnScreenWidth, 640);
-	const int height = std::max<int>(gnScreenHeight, 480);
-
-	for (int i = 0; i < MAX_RAIN; i++) {
-		Rain[i].x += Rain[i].wind;
-		Rain[i].y += Rain[i].speed;
-
-		if (Rain[i].y > height || Rain[i].x < -20 || Rain[i].x > width + 20) {
-			Rain[i].x = static_cast<int>(GenerateRandomNumber() % width);
-			Rain[i].y = -(static_cast<int>(GenerateRandomNumber() % 50));
-		}
-	}
-}
-
-void DrawRainLayer(const Surface &out, RainLayer layer)
-{
-	// Legacy C++ software rain disabled in favor of Diablo Rain 2.0 WebGPU Weather Engine
-	return;
-}
-
 [[nodiscard]] DVL_ALWAYS_INLINE bool IsFloor(Point tilePosition)
 {
 	return !TileHasAny(tilePosition, TileProperties::Solid | TileProperties::BlockMissile);
@@ -1414,9 +1345,7 @@ void DrawGame(const Surface &fullOut, Point position, Displacement offset)
 	    dLight, MicroTileLen);
 
 	DrawFloor(out, lightmap, position, Point {} + offset, rows, columns);
-	DrawRainLayer(out, RAIN_BACK);
 	DrawTileContent(out, lightmap, position, Point {} + offset, rows, columns);
-	DrawRainLayer(out, RAIN_FRONT);
 	DrawOOB(out, lightmap, position, Point {} + offset, rows, columns);
 
 	nightmare::neural::GBufferManager::Instance().CaptureSceneSurface(out, system_palette.data());
@@ -1536,7 +1465,7 @@ void DrawView(const Surface &out, Point startPosition)
 	DrawItemNameLabels(out);
 	DrawMonsterHealthBar(out);
 	DrawFloatingNumbers(out, startPosition, offset);
-	RenderWeatherRain(out);
+	RenderWeatherFog(out);
 
 	if (IsPlayerInStore() && !qtextflag)
 		DrawSText(out);

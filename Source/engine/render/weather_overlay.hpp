@@ -5,14 +5,18 @@
 namespace devilution {
 
 /**
- * @brief Render screen-space rain and atmospheric effect in Tristram (Town).
+ * @brief Render screen-space gothic fog/mist overlay effect in Tristram (Town).
  * @param out Target surface to render on.
  */
-void RenderWeatherRain(const Surface &out);
+void RenderWeatherFog(const Surface &out);
 
 /**
- * @brief Reset the rain particle pool state.
+ * @brief Reset the fog particle and wisp pool state.
  */
-void ResetWeatherRain();
+void ResetWeatherFog();
+
+// Compatibility aliases
+inline void RenderWeatherRain(const Surface &out) { RenderWeatherFog(out); }
+inline void ResetWeatherRain() { ResetWeatherFog(); }
 
 } // namespace devilution

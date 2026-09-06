@@ -912,6 +912,7 @@ public:
 	}
 
 	uint8_t _persistentGolemSpellLevel = 0;
+	uint8_t _persistentBoneSpiritSpellLevel = 0;
 };
 
 extern DVL_API_FOR_TEST uint8_t MyPlayerId;

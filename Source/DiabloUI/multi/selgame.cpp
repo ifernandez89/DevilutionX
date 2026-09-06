@@ -685,7 +685,7 @@ void selgame_Password_Select(size_t /*value*/)
 	m_game_data->nTickRate = nTickRate;
 	m_game_data->bRunInTown = *GetOptions().Gameplay.runInTown ? 1 : 0;
 	m_game_data->bTheoQuest = (gbIsHellfire || *GetOptions().Gameplay.theoQuest) ? 1 : 0;
-	m_game_data->bCowQuest = (gbIsHellfire || *GetOptions().Gameplay.cowQuest) ? 1 : 0;
+	m_game_data->bCowQuest = *GetOptions().Gameplay.cowQuest ? 1 : 0;
 
 	GameData gameInitInfo = *m_game_data;
 	gameInitInfo.swapLE();

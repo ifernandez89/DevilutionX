@@ -20,6 +20,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Al castear *Bone Spirit*, el espíritu óseo se convierte en un compañero permanente (duración infinita) que acompaña y orbita al héroe con su propia luz espectral.
   - **Presencia en Tristán y Mazmorras**: Acompaña fielmente al jugador en el pueblo junto a los habitantes y el Golem, y viaja automáticamente a través de portales, escaleras y niveles de mazmorra.
   - **Combate Autónomo e Inmortalidad**: En mazmorras busca y castiga continuamente a los enemigos dentro de su rango sin destruirse ni morir jamás, regresando al lado del héroe al limpiar el área.
+- **Corrección Crítica de Freeze / Bloqueo en Navegador y Mazmorras ([`Source/missiles.cpp`](file:///c:/Projects/DevilutionX/Source/missiles.cpp))**:
+  - **Eliminación del Bucle de Daño 0**: Se estableció un piso de daño mínimo letal (`std::max(1, monster.hitPoints / 3 >> 6)`), permitiendo que el espíritu remate y mate a los enemigos con poca vida en lugar de congelarse golpeándolos infinitamente a 0 de daño.
+  - **Cooldown Táctico y Blindaje de Audio**: Se añadió un cooldown de recarga de 14 ticks (~0.7s) entre impactos, erradicando la saturación de hasta 60 sonidos/paquetes por segundo que colapsaba el hilo de WebAudio en el navegador.
+  - **Búsqueda Focalizada (`FindCompanionTarget`)**: La selección de blancos ahora itera directamente sobre `ActiveMonsters`, descartando cadáveres, monstruos inmunes a magia y minions aliados (como el Golem).
+  - **Leash de Seguridad**: Si el espíritu se aleja más de 14 casillas del jugador, regresa o se reposiciona a su lado reseteando sus vectores cinemáticos.
+  - **Instancia Única**: Al re-castear el hechizo, se descarta limpiamente cualquier espíritu anterior.
+
+### 👿 Restauración de las Voces Demoníacas Imponentes de Na-Krul ([`Source/monster.cpp`](file:///c:/Projects/DevilutionX/Source/monster.cpp), [`Source/multi.cpp`](file:///c:/Projects/DevilutionX/Source/multi.cpp), [`Source/DiabloUI/multi/selgame.cpp`](file:///c:/Projects/DevilutionX/Source/DiabloUI/multi/selgame.cpp))
+- **Recuperación del Diálogo Original Siniestro**:
+  - Se eliminó el secuestro que forzaba a Na-Krul a hablar como locutor / contestador telefónico cómico (`NaKrul6`) debido al acoplamiento de `bCowQuest` en Hellfire.
+  - Al despertar en la Cripta, Na-Krul ahora reproduce fielmente sus voces demoníacas canónicas según el método de liberación:
+    - **Por Libros de Hechizos (`IsUberRoomOpened`)**: *"What?! Who dares disturb the great Na-Krul?! Your life is forfeit, mortal!"* (`NaKrul4`).
+    - **Por Palanca Directa**: *"Out of my way, wretched human! Retribution calls for he whom you call... Diablo!"* (`NaKrul5`).
+  - Al morir Na-Krul, el stream de audio de su discurso demoníaco se detiene limpiamente (`stream_stop()`).
+  - Se desacopló `bCowQuest` de `gbIsHellfire`, respetando la opción de configuración independiente sin alterar la atmósfera sombría de Nightmare Edition.
 
 ### 👹 Muerte Limpia de Diablo & El Infierno Nunca Termina (Endless Diablo Boss Loop)
 - **Corrección de Bucle Infinito en la Muerte de Diablo ([`Source/monster.cpp`](file:///c:/Projects/DevilutionX/Source/monster.cpp))**:

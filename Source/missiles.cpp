@@ -307,7 +307,7 @@ bool MonsterMHit(const Player &player, Monster &monster, int mindam, int maxdam,
 
 	int dam;
 	if (t == MissileID::BoneSpirit) {
-		dam = monster.hitPoints / 3 >> 6;
+		dam = std::max(1, monster.hitPoints / 3 >> 6);
 	} else {
 		dam = RandomIntBetween(mindam, maxdam);
 	}
@@ -2801,6 +2801,11 @@ void AddBoneSpirit(Missile &missile, AddMissileParameter &parameter)
 		const auto spellLevel = static_cast<uint8_t>(missile._mispllvl > 0 ? missile._mispllvl : 1);
 		player._persistentBoneSpiritSpellLevel = std::max(player._persistentBoneSpiritSpellLevel, spellLevel);
 		missile.duration = 32000;
+		Missile *existing = FindBoneSpiritForPlayer(player);
+		if (existing != nullptr && existing != &missile) {
+			existing->_miDelFlag = true;
+			AddUnLight(existing->_mlid);
+		}
 	}
 	missile.var1 = missile.position.start.x;
 	missile.var2 = missile.position.start.y;
@@ -2826,6 +2831,10 @@ void SpawnBoneSpiritCompanion(Player &player, Point position, uint8_t spellLevel
 		existing->position.tile = position;
 		existing->position.start = position;
 		existing->position.tileForRendering = position;
+		existing->position.traveled = { 0, 0 };
+		existing->position.offset = { 0, 0 };
+		existing->position.velocity = { 0, 0 };
+		existing->position.StopMissile();
 		existing->duration = 32000;
 		existing->var3 = 0;
 		return;
@@ -4186,6 +4195,39 @@ void ProcessElemental(Missile &missile)
 	PutMissile(missile);
 }
 
+Monster *FindCompanionTarget(Point petPos, Point playerPos, int maxDistFromPet, int maxDistFromPlayer)
+{
+	Monster *bestMonster = nullptr;
+	int bestDist = 999999;
+
+	for (size_t i = 0; i < ActiveMonsterCount; i++) {
+		Monster &mon = Monsters[ActiveMonsters[i]];
+		if (mon.hasNoLife() || mon.isInvalid || mon.isPlayerMinion())
+			continue;
+		if (mon.mode == MonsterMode::Death || !mon.isPossibleToHit())
+			continue;
+		if (mon.isImmune(MissileID::BoneSpirit, DamageType::Magic))
+			continue;
+
+		const int distFromPlayer = mon.position.tile.WalkingDistance(playerPos);
+		if (distFromPlayer > maxDistFromPlayer)
+			continue;
+
+		const int distFromPet = mon.position.tile.WalkingDistance(petPos);
+		if (distFromPet > maxDistFromPet)
+			continue;
+
+		if (!LineClearMissile(petPos, mon.position.tile))
+			continue;
+
+		if (distFromPet < bestDist) {
+			bestDist = distFromPet;
+			bestMonster = &mon;
+		}
+	}
+	return bestMonster;
+}
+
 void ProcessBoneSpirit(Missile &missile)
 {
 	if (!gbIsMultiplayer && missile._misource >= 0 && missile._misource < static_cast<int>(Players.size()) && Players[missile._misource]._persistentBoneSpiritSpellLevel > 0) {
@@ -4194,38 +4236,68 @@ void ProcessBoneSpirit(Missile &missile)
 		const Point c = missile.position.tile;
 		const Point playerPos = player.position.tile;
 
+		if (missile.var3 > 0) {
+			missile.var3--;
+		}
+
 		if (leveltype == DTYPE_TOWN) {
-			const int dist = std::abs(c.x - playerPos.x) + std::abs(c.y - playerPos.y);
-			if (dist > 2) {
+			const int dist = c.WalkingDistance(playerPos);
+			if (dist > 8) {
+				missile.position.tile = playerPos;
+				missile.position.start = playerPos;
+				missile.position.traveled = { 0, 0 };
+				missile.position.offset = { 0, 0 };
+				missile.position.StopMissile();
+			} else if (dist > 2) {
 				const Direction dir = GetDirection(c, playerPos);
 				missile.setDirection(dir);
 				UpdateMissileVelocity(missile, playerPos, 12);
+				MoveMissile(missile, [](Point) { return true; });
 			} else {
 				missile.position.StopMissile();
 			}
-			MoveMissileAndCheckMissileCol(missile, DamageType::Magic, 0, 0, false, false);
 			ChangeLight(missile._mlid, missile.position.tile, 8);
 			PutMissile(missile);
 			return;
 		}
 
-		auto *monster = FindClosest(c, 16);
-		if (monster != nullptr && monster->hitPoints > 0) {
-			missile._midam = std::max(1, monster->hitPoints / 3 >> 6);
-			const Direction dir = GetDirection(c, monster->position.tile);
+		const int distToPlayer = c.WalkingDistance(playerPos);
+		if (distToPlayer > 14) {
+			missile.position.tile = playerPos;
+			missile.position.start = playerPos;
+			missile.position.traveled = { 0, 0 };
+			missile.position.offset = { 0, 0 };
+			missile.position.StopMissile();
+			missile.var3 = 0;
+			ChangeLight(missile._mlid, missile.position.tile, 8);
+			PutMissile(missile);
+			return;
+		}
+
+		Monster *monster = FindCompanionTarget(c, playerPos, 10, 12);
+		if (monster != nullptr && missile.var3 == 0) {
+			const Point targetPos = monster->position.tile;
+			const Direction dir = GetDirection(c, targetPos);
 			missile.setDirection(dir);
-			UpdateMissileVelocity(missile, monster->position.tile, 16);
-			MoveMissileAndCheckMissileCol(missile, DamageType::Magic, missile._midam, missile._midam, false, false);
+			UpdateMissileVelocity(missile, targetPos, 16);
+			MoveMissile(missile, [](Point) { return true; });
+
+			const int distToTarget = missile.position.tile.WalkingDistance(targetPos);
+			if (distToTarget <= 1) {
+				MonsterMHit(player, *monster, 0, 0, 0, MissileID::BoneSpirit, missile.position.tile, DamageType::Magic, false);
+				PlaySfxLoc(SfxID::SpellBoneSpiritHit, missile.position.tile);
+				missile.var3 = 14;
+				missile.position.StopMissile();
+			}
 		} else {
-			const int dist = std::abs(c.x - playerPos.x) + std::abs(c.y - playerPos.y);
-			if (dist > 3) {
+			if (distToPlayer > 3) {
 				const Direction dir = GetDirection(c, playerPos);
 				missile.setDirection(dir);
 				UpdateMissileVelocity(missile, playerPos, 14);
+				MoveMissile(missile, [](Point) { return true; });
 			} else {
 				missile.position.StopMissile();
 			}
-			MoveMissileAndCheckMissileCol(missile, DamageType::Magic, 0, 0, false, false);
 		}
 
 		if (c != Point { missile.var1, missile.var2 }) {

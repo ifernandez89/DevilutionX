@@ -932,8 +932,6 @@ void SpawnLoot(Monster &monster, bool sendmsg)
 		}
 	} else if (monster.type().type == MT_NAKRUL) {
 		SfxID nSFX = IsUberRoomOpened ? SfxID::NaKrul4 : SfxID::NaKrul5;
-		if (sgGameInitInfo.bCowQuest != 0)
-			nSFX = SfxID::NaKrul6;
 		if (effect_is_playing(nSFX))
 			stream_stop();
 		UberDiabloMonsterIndex = -2;
@@ -4241,14 +4239,10 @@ void ProcessMonsters()
 				PlaySFX(SfxID::ButcherGreeting);
 			}
 			if (monster.type().type == MT_NAKRUL) {
-				if (sgGameInitInfo.bCowQuest != 0) {
-					PlaySFX(SfxID::NaKrul6);
-				} else {
-					if (IsUberRoomOpened)
-						PlaySFX(SfxID::NaKrul4);
-					else
-						PlaySFX(SfxID::NaKrul5);
-				}
+				if (IsUberRoomOpened)
+					PlaySFX(SfxID::NaKrul4);
+				else
+					PlaySFX(SfxID::NaKrul5);
 			}
 			if (monster.type().type == MT_DEFILER)
 				PlaySFX(SfxID::Defiler8);

@@ -7,12 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-### 🌫️ Niebla Gótica Atmosférica & Relámpagos en Tristán (Gothic Fog & Mist Engine)
-- **Sustitución de Lluvia por Niebla Volumétrica ([`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html), [`Source/engine/render/weather_overlay.cpp`](file:///c:/Projects/DevilutionX/Source/engine/render/weather_overlay.cpp), [`Source/engine/render/weather_overlay.hpp`](file:///c:/Projects/DevilutionX/Source/engine/render/weather_overlay.hpp), [`Source/engine/render/scrollrt.cpp`](file:///c:/Projects/DevilutionX/Source/engine/render/scrollrt.cpp))**:
-  - Se transformó el sistema climático de Tristán reemplazando la lluvia vertical por un motor de **niebla gótica volumétrica y bancos de bruma flotante** (*Rolling Fog Clouds & Mist Wisps*).
-  - **Iluminación Dinámica Reactiva**: Los bancos de bruma absorben suavemente la iluminación cálida de la fogata central y antorchas de Tristán mediante gradientes radiales optimizados sin recolección de basura (*Zero-GC*).
-  - **Relámpagos de Tormenta Preservados**: Se mantiene el sistema de relámpagos con doble destello aleatorio (`triggerDiabloLightning()`), que al caer ilumina instantáneamente toda la escena y la masa de niebla en un resplandor azul/blanco eléctrico.
-  - **Limpieza de Código Heredado en C++**: Se eliminaron estructuras obsoletas de gotas de lluvia y se implementó `RenderWeatherFog()` con partículas de bruma difusa y deriva horizontal suave para el renderizador nativo.
+### 🌧️ Diablo Rain 2.0 & Motor Climático en Tristán (Town Weather Engine)
+- **Restauración de Diablo Rain 2.0 en Web / Neural Render ([`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html))**:
+  - Se restauró el sistema de lluvia dinámica 2.0 de Tristán con 3 capas de profundidad de partículas (*Far, Mid, Near*), salpicaduras volumétricas reactivas al suelo, destellos de charcos en el lodo y relámpagos de tormenta con doble destello.
+  - **Desactivación de Lluvia en Software C++ ([`Source/engine/render/weather_overlay.cpp`](file:///c:/Projects/DevilutionX/Source/engine/render/weather_overlay.cpp), [`Source/engine/render/weather_overlay.hpp`](file:///c:/Projects/DevilutionX/Source/engine/render/weather_overlay.hpp), [`Source/engine/render/scrollrt.cpp`](file:///c:/Projects/DevilutionX/Source/engine/render/scrollrt.cpp))**:
+    - Se eliminó el renderizado por software de lluvia en CPU para evitar trazos pixelados redundantes y consumo innecesario de recursos, delegando el 100% de la simulación atmosférica a la capa moderna de renderizado acelerado.
 
 ### 💀 Compañero Infernal Inmortal "Bone Spirit" (Single Player Companion & Save Persistence)
 - **Persistencia en Partidas Guardadas ([`Source/loadsave.cpp`](file:///c:/Projects/DevilutionX/Source/loadsave.cpp), [`Source/loadsave.h`](file:///c:/Projects/DevilutionX/Source/loadsave.h), [`Source/pfile.cpp`](file:///c:/Projects/DevilutionX/Source/pfile.cpp), [`Source/player.h`](file:///c:/Projects/DevilutionX/Source/player.h), [`Source/player.cpp`](file:///c:/Projects/DevilutionX/Source/player.cpp))**:

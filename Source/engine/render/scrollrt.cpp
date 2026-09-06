@@ -1465,7 +1465,7 @@ void DrawView(const Surface &out, Point startPosition)
 	DrawItemNameLabels(out);
 	DrawMonsterHealthBar(out);
 	DrawFloatingNumbers(out, startPosition, offset);
-	RenderWeatherFog(out);
+	RenderWeatherRain(out);
 
 	if (IsPlayerInStore() && !qtextflag)
 		DrawSText(out);

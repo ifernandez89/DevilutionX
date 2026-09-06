@@ -847,7 +847,7 @@ void DrawMonsterHelper(const Surface &out, Point tilePosition, Point targetBuffe
 			}
 			return;
 		}
-		if (static_cast<size_t>(mi) < MaxMonsters && Monsters[mi].isPlayerMinion()) {
+		if (static_cast<size_t>(mi) < MaxMonsters && Monsters[mi].isPlayerMinion() && !Monsters[mi].isInvalid && Monsters[mi].animInfo.sprites) {
 			const auto &monster = Monsters[mi];
 			const ClxSprite sprite = monster.animInfo.currentSprite();
 			const Displacement offset = monster.getRenderingOffset(sprite);

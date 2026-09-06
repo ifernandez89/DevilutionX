@@ -2410,6 +2410,16 @@ void LoadHeroItems(Player &player)
 	gbIsHellfireSaveGame = gbIsHellfire;
 }
 
+void LoadGolemState(Player &player)
+{
+	player._persistentGolemSpellLevel = 0;
+	LoadHelper file(OpenSaveArchive(gSaveNumber), "golem");
+	if (!file.IsValid())
+		return;
+
+	player._persistentGolemSpellLevel = file.NextLE<uint8_t>();
+}
+
 constexpr uint8_t StashVersion = 0;
 
 void LoadStash()
@@ -2523,6 +2533,7 @@ tl::expected<void, std::string> LoadGame(bool firstflag)
 	Player &myPlayer = *MyPlayer;
 
 	LoadPlayer(file, myPlayer);
+	LoadGolemState(myPlayer);
 
 	if (sgGameInitInfo.nDifficulty < DIFF_NORMAL || sgGameInitInfo.nDifficulty > DIFF_HELL)
 		sgGameInitInfo.nDifficulty = DIFF_NORMAL;
@@ -2542,7 +2553,8 @@ tl::expected<void, std::string> LoadGame(bool firstflag)
 	SyncPlrAnim(myPlayer);
 
 	ViewPosition = { viewX, viewY };
-	ActiveMonsterCount = tmpNummonsters;
+	if (leveltype != DTYPE_TOWN)
+		ActiveMonsterCount = tmpNummonsters;
 	ActiveObjectCount = tmpNobjects;
 
 	for (size_t i = 0; i < MonstersData.size(); ++i) {
@@ -2706,6 +2718,12 @@ void SaveHeroItems(SaveWriter &saveWriter, Player &player)
 		SaveItem(file, item);
 }
 
+void SaveGolemState(SaveWriter &saveWriter, const Player &player)
+{
+	SaveHelper file(saveWriter, "golem", sizeof(uint8_t));
+	file.WriteLE<uint8_t>(player._persistentGolemSpellLevel);
+}
+
 void SaveStash(SaveWriter &stashWriter)
 {
 	const char *filename;
@@ -2796,7 +2814,7 @@ void SaveGameData(SaveWriter &saveWriter)
 	file.WriteBE<int32_t>(ViewPosition.y);
 	file.WriteLE<uint8_t>(invflag ? 1 : 0);
 	file.WriteLE<uint8_t>(CharFlag ? 1 : 0);
-	file.WriteBE(static_cast<int32_t>(ActiveMonsterCount));
+	file.WriteBE(static_cast<int32_t>(leveltype == DTYPE_TOWN ? 0 : ActiveMonsterCount));
 	file.WriteBE<int32_t>(ActiveItemCount);
 	// ActiveMissileCount will be a value from 0-125 (for vanilla compatibility). Writing an unsigned value here to avoid
 	// warnings about casting from unsigned to signed, but there's no sign extension issues when reading this as a signed

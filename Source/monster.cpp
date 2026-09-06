@@ -3817,7 +3817,11 @@ void ApplyMonsterDamage(DamageType damageType, Monster &monster, int damage)
 	LuaEvent("OnMonsterTakeDamage", &monster, damage, static_cast<int>(damageType));
 
 	if (!gbIsMultiplayer && monster.isPlayerMinion()) {
-		damage = std::min(damage, std::max(0, monster.hitPoints - 64));
+		if (Players[monster.goalVar3]._persistentGolemSpellLevel > 0) {
+			damage = std::min(damage, std::max(0, monster.hitPoints - 64));
+			if (monster.hitPoints <= 64)
+				monster.hitPoints = 64;
+		}
 	}
 
 	monster.hitPoints -= damage;
@@ -3957,6 +3961,9 @@ void StartMonsterDeath(Monster &monster, const Player &player, bool sendmsg)
 
 void KillGolem(Monster &golem)
 {
+	if (!gbIsMultiplayer && Players[golem.goalVar3]._persistentGolemSpellLevel > 0) {
+		return;
+	}
 	delta_kill_monster(golem, golem.position.tile, *MyPlayer);
 	NetSendCmdLocParam1(false, CMD_MONSTDEATH, golem.position.tile, static_cast<uint16_t>(golem.getId()));
 	M_StartKill(golem, *MyPlayer);
@@ -4074,7 +4081,7 @@ bool Walk(Monster &monster, Direction md)
 
 void GolumAi(Monster &golem)
 {
-	if (golem.position.tile.x == 1 && golem.position.tile.y == 0) {
+	if (golem.hasNoLife() || golem.isInvalid || golem.position.tile == GolemHoldingCell || (golem.position.tile.x == 1 && golem.position.tile.y == 0)) {
 		return;
 	}
 
@@ -4101,6 +4108,8 @@ void GolumAi(Monster &golem)
 			golem.position.old = *newPos;
 			golem.position.future = *newPos;
 			golem.occupyTile(*newPos, false);
+			golem.hitPoints = golem.maxHitPoints;
+			golem.isInvalid = false;
 			M_StartStand(golem, owner._pdir);
 			return;
 		}

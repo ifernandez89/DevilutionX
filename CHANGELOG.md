@@ -15,18 +15,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Al derrotar a Diablo y abandonar el Nivel 16 (subiendo por escaleras al Nivel 15 o cruzando un Portal de Ciudad a Tristán), el estado temporal del Nivel 16 se reinicia limpiamente y la misión se restablece a `QUEST_ACTIVE`.
   - Al volver a descender al Nivel 16, Diablo y sus heraldos del infierno reaparecen con toda su salud en la cámara del trono, creando un ciclo de combate infinito (*Endless Boss Loop*) para farmear al Señor del Terror sin reiniciar la partida ni perder el progreso de los pisos 1-15 ni el pueblo.
 
-### 🗿 Easter Egg: Golem Acompañante Inmortal (Single Player)
+### 🗿 Easter Egg: Golem Acompañante Inmortal & Persistencia de Guardado (Single Player)
+- **Persistencia en Archivo de Guardado (`SaveGolemState` / `LoadGolemState` en [`Source/loadsave.cpp`](file:///c:/Projects/DevilutionX/Source/loadsave.cpp), [`Source/loadsave.h`](file:///c:/Projects/DevilutionX/Source/loadsave.h), [`Source/pfile.cpp`](file:///c:/Projects/DevilutionX/Source/pfile.cpp))**:
+  - Se solucionó el bug donde al guardar y salir del juego en Tristán o mazmorras, `_persistentGolemSpellLevel` se perdía (quedaba en 0 al cargar la partida).
+  - Ahora el estado del Golem se serializa en el archivo `golem` dentro del archivo de guardado del héroe (MPQ), restaurándose automáticamente al reanudar la partida.
+- **Prevención de Golems Zombie y Congelamiento al Cargar Partida ([`Source/monster.cpp`](file:///c:/Projects/DevilutionX/Source/monster.cpp), [`Source/loadsave.cpp`](file:///c:/Projects/DevilutionX/Source/loadsave.cpp), [`Source/engine/render/scrollrt.cpp`](file:///c:/Projects/DevilutionX/Source/engine/render/scrollrt.cpp))**:
+  - Se blindó `GolumAi()`: si el Golem no tiene vida o está en celda de reserva (`hasNoLife()`, `isInvalid`, `GolemHoldingCell`), la IA aborta de inmediato en lugar de teletransportar entidades muertas ni disparar bucles infinitos de muerte/paquetes.
+  - Al teletransportarse o reaparecer con el jugador, el Golem recupera su salud al 100% y se valida su sprite antes del renderizado, evitando cualquier bloqueo o cuelgue del navegador / hilo nativo.
+  - En `SaveGameData()` y `LoadGame()`, se corrigió el conteo de monstruos al guardar/cargar en Tristán (`leveltype == DTYPE_TOWN`) para evitar desincronizaciones en la tabla de entidades activas.
+- **Inmortalidad Total Frente a Todo Daño y Muerte Forzada ([`Source/monster.cpp`](file:///c:/Projects/DevilutionX/Source/monster.cpp))**:
+  - En `ApplyMonsterDamage()`, la salud del Golem tiene un piso mínimo indestructible de 64 HP mientras `_persistentGolemSpellLevel > 0`.
+  - `KillGolem()` ignora solicitudes de muerte si el Golem persistente de Single Player está activo.
 - **Compañero Permanente y Re-lanzamiento Táctico ([`Source/missiles.cpp`](file:///c:/Projects/DevilutionX/Source/missiles.cpp), [`Source/player.h`](file:///c:/Projects/DevilutionX/Source/player.h))**:
-  - Al ejecutar el hechizo *Golem* en un jugador individual (*Single Player*), el Golem se convierte en un compañero permanente que persiste a lo largo de toda la partida.
-  - **Re-lanzamiento Táctico**: Si se vuelve a castear el hechizo mientras el Golem está activo, este se teletransporta instantáneamente a las coordenadas exactas del cursor con vida restaurada al 100%, permitiendo dirigirlo al combate.
-- **Inmortalidad en Combate ([`Source/monster.cpp`](file:///c:/Projects/DevilutionX/Source/monster.cpp))**:
-  - En `ApplyMonsterDamage`, la vida del Golem está protegida frente a ataques enemigos, garantizando que nunca muera en combate a menos que el jugador muera o finalice la partida.
-- **Persistencia y Reposicionamiento Garantizado entre Niveles, Portales y Tristram ([`Source/diablo.cpp`](file:///c:/Projects/DevilutionX/Source/diablo.cpp), [`Source/player.cpp`](file:///c:/Projects/DevilutionX/Source/player.cpp), [`Source/engine/render/scrollrt.cpp`](file:///c:/Projects/DevilutionX/Source/engine/render/scrollrt.cpp))**:
-  - **Eliminación de Golems "Zombie"**: En `RemovePlrMissiles()`, al cambiar de nivel se limpia la instancia del nivel anterior, evitando que se guarden copias duplicadas o huérfanas en los archivos de guardado de pisos previos.
-  - **Reposicionamiento Forzado en Entrada**: En `LoadGameLevel()`, al entrar a cualquier nivel o pueblo, el Golem se sitúa de forma inmediata e infalible al lado del héroe (búsqueda radial extendida y fallback sobre el jugador).
-  - **Corrección de Render en Tristram**: Se corrigió `DrawMonsterHelper` en `scrollrt.cpp` para que los esbirros (`isPlayerMinion()`) se rendericen con su sprite original de Golem de piedra en lugar de confundirse con los aldeanos de Tristram (`Towners[0]` / Griswold).
+  - Al castear el hechizo mientras el Golem está activo, este se teletransporta instantáneamente al cursor con vida restaurada al 100%.
 - **IA de Escolta / Leash ([`Source/monster.cpp`](file:///c:/Projects/DevilutionX/Source/monster.cpp))**:
-  - En `GolumAi`: si el Golem queda rezagado o se encuentra a más de 8 casillas del jugador, se reubica automáticamente junto a él de forma inmediata.
+  - En `GolumAi`: si el Golem queda a más de 8 casillas del jugador, se reubica automáticamente junto a él.
 
 ### 🌧️ Corrección y Restauración de Lluvia en Tristán (Town Weather Fix)
 - **Restauración de Lluvia Nativa C++ ([`Source/engine/render/weather_overlay.cpp`](file:///c:/Projects/DevilutionX/Source/engine/render/weather_overlay.cpp))**:

@@ -43,6 +43,7 @@
 #include "loadsave.h"
 #include "lua/lua_global.hpp"
 #include "minitext.h"
+#include "nightmare/invasion/invasion_manager.hpp"
 #include "missiles.h"
 #include "monster.h"
 #include "nthread.h"
@@ -2113,25 +2114,23 @@ void LoadPlrGFX(Player &player, player_graphic graphic)
 	const PlayerSpriteData &spriteData = GetPlayerSpriteDataForClass(cls);
 	const char *path = spriteData.classPath.c_str();
 
+	const bool inPeacefulTown = (leveltype == DTYPE_TOWN && !IsTownCombatActive());
+
 	std::string_view szCel;
 	switch (graphic) {
 	case player_graphic::Stand:
-		szCel = "as";
-		if (leveltype == DTYPE_TOWN)
-			szCel = "st";
+		szCel = inPeacefulTown ? "st" : "as";
 		break;
 	case player_graphic::Walk:
-		szCel = "aw";
-		if (leveltype == DTYPE_TOWN)
-			szCel = "wl";
+		szCel = inPeacefulTown ? "wl" : "aw";
 		break;
 	case player_graphic::Attack:
-		if (leveltype == DTYPE_TOWN)
+		if (inPeacefulTown)
 			return;
 		szCel = "at";
 		break;
 	case player_graphic::Hit:
-		if (leveltype == DTYPE_TOWN)
+		if (inPeacefulTown)
 			return;
 		szCel = "ht";
 		break;
@@ -2150,7 +2149,7 @@ void LoadPlrGFX(Player &player, player_graphic graphic)
 		szCel = "dt";
 		break;
 	case player_graphic::Block:
-		if (leveltype == DTYPE_TOWN)
+		if (inPeacefulTown)
 			return;
 		if (!player._pBlockFlag)
 			return;
@@ -2235,7 +2234,7 @@ void SetPlrAnims(Player &player)
 	const PlayerAnimData &plrAtkAnimData = GetPlayerAnimDataForClass(pc);
 	auto gn = static_cast<PlayerWeaponGraphic>(player._pgfxnum & 0xFU);
 
-	if (leveltype == DTYPE_TOWN) {
+	if (leveltype == DTYPE_TOWN && !IsTownCombatActive()) {
 		player._pNFrames = plrAtkAnimData.townIdleFrames;
 		player._pWFrames = plrAtkAnimData.townWalkingFrames;
 	} else {
@@ -3504,5 +3503,10 @@ bool TestPlayerDoGotHit(Player &player)
 	return DoGotHit(player);
 }
 #endif
+
+bool IsTownCombatActive()
+{
+	return nightmare::invasion::InvasionManager::Get().IsCombatActive();
+}
 
 } // namespace devilution

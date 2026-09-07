@@ -35,6 +35,7 @@
 #include <fmt/core.h>
 
 #include "automap.h"
+#include "nightmare/invasion/invasion_manager.hpp"
 #include "nightmare/npcs/tremain.hpp"
 #include "control/control.hpp"
 #include "crawl.hpp"
@@ -2790,7 +2791,7 @@ void MegaAi(Monster &monster)
 		monster.goal = MonsterGoal::Normal;
 	}
 	if (monster.goal == MonsterGoal::Normal) {
-		if (((distanceToEnemy >= 3 && v < 5 * (monster.intelligence + 2)) || v < 5 * (monster.intelligence + 1) || monster.goalVar3 == 4) && LineClearMissile(monster.position.tile, monster.enemyPosition)) {
+		if (leveltype != DTYPE_TOWN && (((distanceToEnemy >= 3 && v < 5 * (monster.intelligence + 2)) || v < 5 * (monster.intelligence + 1) || monster.goalVar3 == 4) && LineClearMissile(monster.position.tile, monster.enemyPosition))) {
 			StartRangedSpecialAttack(monster, MissileID::InfernoControl, 0);
 		} else if (distanceToEnemy >= 2) {
 			v = GenerateRnd(100);
@@ -3090,6 +3091,8 @@ bool IsRelativeMoveOK(const Monster &monster, Point position, Direction mdir)
 	const Point futurePosition = position + mdir;
 	if (!InDungeonBounds(futurePosition) || !IsTileAvailable(monster, futurePosition))
 		return false;
+	if (leveltype == DTYPE_TOWN && monster.type().type == MT_WINGED)
+		return true;
 	if (mdir == Direction::East) {
 		if (IsTileSolid(position + Direction::SouthEast))
 			return false;
@@ -3969,6 +3972,9 @@ void KillGolem(Monster &golem)
 
 void M_StartKill(Monster &monster, const Player &player)
 {
+	if (leveltype == DTYPE_TOWN) {
+		nightmare::invasion::InvasionManager::Get().OnMonsterDeath(monster);
+	}
 	StartMonsterDeath(monster, player, true);
 }
 
@@ -4709,6 +4715,16 @@ Monster *FindGolemForPlayer(const Player &player)
 
 bool IsTileAvailable(const Monster &monster, Point position)
 {
+	if (leveltype == DTYPE_TOWN && monster.type().type == MT_WINGED) {
+		if (!InDungeonBounds(position))
+			return false;
+		if (dPlayer[position.x][position.y] != 0 || dMonster[position.x][position.y] != 0)
+			return false;
+		if (TileHasAny(position, TileProperties::BlockMissile))
+			return false;
+		return true;
+	}
+
 	if (!IsTileAvailable(position))
 		return false;
 

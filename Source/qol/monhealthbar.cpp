@@ -16,6 +16,7 @@
 #include "engine/render/clx_render.hpp"
 #include "engine/render/primitive_render.hpp"
 #include "game_mode.hpp"
+#include "nightmare/invasion/invasion_manager.hpp"
 #include "options.h"
 #include "utils/language.h"
 #include "utils/str_cat.hpp"
@@ -75,7 +76,7 @@ void DrawMonsterHealthBar(const Surface &out)
 	if (!*GetOptions().Gameplay.enemyHealthBar)
 		return;
 
-	if (leveltype == DTYPE_TOWN)
+	if (leveltype == DTYPE_TOWN && !nightmare::invasion::InvasionManager::Get().IsCombatActive())
 		return;
 	if (pcursmonst == -1)
 		return;

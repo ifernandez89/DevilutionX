@@ -282,6 +282,19 @@ void CheckQuests()
 	if (gbIsSpawn)
 		return;
 
+	if (leveltype == DTYPE_TOWN && Quests[Q_FARMER]._qactive != QUEST_DONE) {
+		for (int i = 0; i < ActiveItemCount; i++) {
+			const int ii = ActiveItems[i];
+			Item &item = Items[ii];
+			if (item.IDidx == IDI_RUNEBOMB && OpensHive(item.position)) {
+				OpenHive();
+				dItem[item.position.x][item.position.y] = 0;
+				DeleteItem(i);
+				break;
+			}
+		}
+	}
+
 	auto &quest = Quests[Q_BETRAYER];
 	if (quest.IsAvailable() && UseMultiplayerQuests() && quest._qvar1 == 2) {
 		AddObject(OBJ_ALTBOY, SetPiece.position.megaToWorld() + Displacement { 4, 6 });

@@ -28,6 +28,7 @@
 #include "menu.h"
 #include "mpq/mpq_common.hpp"
 #include "multi.h"
+#include "nightmare/invasion/invasion_manager.hpp"
 #include "pack.h"
 #include "player.h"
 #include "quests.h"
@@ -525,6 +526,7 @@ void pfile_write_hero(SaveWriter &saveWriter, bool writeGameData)
 		SaveHeroItems(saveWriter, myPlayer);
 		SaveGolemState(saveWriter, myPlayer);
 		SaveBoneSpiritState(saveWriter, myPlayer);
+		SaveInvasionState(saveWriter);
 	}
 }
 
@@ -826,6 +828,7 @@ void pfile_read_player_from_save(uint32_t saveNum, Player &player)
 	LoadHeroItems(player);
 	LoadGolemState(player);
 	LoadBoneSpiritState(player);
+	LoadInvasionState();
 	RemoveAllInvalidItems(player);
 	CalcPlrInv(player, false);
 }

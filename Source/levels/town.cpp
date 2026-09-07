@@ -11,6 +11,7 @@
 #include "multi.h"
 #include "player.h"
 #include "quests.h"
+#include "nightmare/invasion/invasion_manager.hpp"
 #include "nightmare/world/ambient_animals.hpp"
 #include "utils/endian_swap.hpp"
 
@@ -227,10 +228,11 @@ void DrlgTPass3()
 		}
 	}
 	if (gbIsHellfire) {
-		if (IsWarpOpen(DTYPE_NEST)) {
-			TownOpenHive();
-		} else {
-			TownCloseHive();
+		if (!nightmare::invasion::InvasionManager::Get().IsInvaded()) {
+			if (IsWarpOpen(DTYPE_NEST))
+				TownOpenHive();
+			else
+				TownCloseHive();
 		}
 		if (IsWarpOpen(DTYPE_CRYPT))
 			TownOpenGrave();
@@ -253,7 +255,7 @@ bool OpensHive(Point position)
 {
 	const int yp = position.y;
 	const int xp = position.x;
-	return xp >= 79 && xp <= 82 && yp >= 61 && yp <= 64;
+	return xp >= 74 && xp <= 86 && yp >= 58 && yp <= 68;
 }
 
 bool OpensGrave(Point position)
@@ -363,6 +365,7 @@ void CreateTown(lvl_entry entry)
 	dmaxPosition = { 84, 84 };
 
 	if (entry == ENTRY_MAIN) { // New game
+		nightmare::invasion::InvasionManager::Get().ResetInvasionState();
 		ViewPosition = { 75, 68 };
 	} else if (entry == ENTRY_PREV) { // Cathedral
 		ViewPosition = { 25, 31 };

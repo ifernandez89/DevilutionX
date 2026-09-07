@@ -32,6 +32,7 @@
 #include "monster.h"
 #include "monsters/validation.hpp"
 #include "mpq/mpq_common.hpp"
+#include "nightmare/invasion/invasion_manager.hpp"
 #include "pfile.h"
 #include "plrmsg.h"
 #include "qol/stash.h"
@@ -1935,8 +1936,10 @@ void SaveLevel(SaveWriter &saveWriter, LevelConversionData *levelConversionData)
 
 	DoUnVision(myPlayer.position.tile, myPlayer._pLightRad); // fix for vision staying on the level
 
-	if (leveltype == DTYPE_TOWN)
+	if (leveltype == DTYPE_TOWN) {
 		DungeonSeeds[0] = GenerateSeed();
+		nightmare::invasion::InvasionManager::Get().SaveInvasionSnapshot();
+	}
 
 	char szName[MaxMpqPathSize];
 	GetTempLevelNames(szName);
@@ -2430,6 +2433,32 @@ void LoadBoneSpiritState(Player &player)
 	player._persistentBoneSpiritSpellLevel = file.NextLE<uint8_t>();
 }
 
+void LoadInvasionState()
+{
+	auto &state = nightmare::invasion::InvasionManager::Get().GetState();
+	LoadHelper file(OpenSaveArchive(gSaveNumber), "tristram_inv");
+	if (!file.IsValid())
+		return;
+
+	state.active = file.NextLE<uint8_t>() != 0;
+	state.completed = file.NextLE<uint8_t>() != 0;
+	state.boss_phase = file.NextLE<uint8_t>();
+	state.dramatic_pause_start_tick = file.NextLE<uint32_t>();
+	state.boss_selected = static_cast<_monster_id>(file.NextLE<uint16_t>());
+	state.boss_unique_type = static_cast<UniqueMonsterType>(file.NextLE<uint16_t>());
+	state.monster_count = file.NextLE<uint8_t>();
+
+	for (size_t i = 0; i < nightmare::invasion::MaxInvasionMonsters; i++) {
+		auto &m = state.monsters[i];
+		m.current_hp = file.NextLE<int32_t>();
+		m.x = file.NextLE<uint8_t>();
+		m.y = file.NextLE<uint8_t>();
+		m.type = static_cast<_monster_id>(file.NextLE<uint16_t>());
+		m.is_boss = file.NextLE<uint8_t>() != 0;
+		m.is_alive = file.NextLE<uint8_t>() != 0;
+	}
+}
+
 constexpr uint8_t StashVersion = 0;
 
 void LoadStash()
@@ -2739,6 +2768,30 @@ void SaveBoneSpiritState(SaveWriter &saveWriter, const Player &player)
 {
 	SaveHelper file(saveWriter, "bonespirit", sizeof(uint8_t));
 	file.WriteLE<uint8_t>(player._persistentBoneSpiritSpellLevel);
+}
+
+void SaveInvasionState(SaveWriter &saveWriter)
+{
+	const auto &state = nightmare::invasion::InvasionManager::Get().GetState();
+	SaveHelper file(saveWriter, "tristram_inv", sizeof(uint8_t) * 4 + sizeof(uint32_t) + sizeof(uint16_t) * 2 + sizeof(uint8_t) + (sizeof(int32_t) + sizeof(uint8_t) * 2 + sizeof(uint16_t) + sizeof(uint8_t) * 2) * nightmare::invasion::MaxInvasionMonsters);
+
+	file.WriteLE<uint8_t>(state.active ? 1 : 0);
+	file.WriteLE<uint8_t>(state.completed ? 1 : 0);
+	file.WriteLE<uint8_t>(state.boss_phase);
+	file.WriteLE<uint32_t>(state.dramatic_pause_start_tick);
+	file.WriteLE<uint16_t>(static_cast<uint16_t>(state.boss_selected));
+	file.WriteLE<uint16_t>(static_cast<uint16_t>(state.boss_unique_type));
+	file.WriteLE<uint8_t>(state.monster_count);
+
+	for (size_t i = 0; i < nightmare::invasion::MaxInvasionMonsters; i++) {
+		const auto &m = state.monsters[i];
+		file.WriteLE<int32_t>(m.current_hp);
+		file.WriteLE<uint8_t>(m.x);
+		file.WriteLE<uint8_t>(m.y);
+		file.WriteLE<uint16_t>(static_cast<uint16_t>(m.type));
+		file.WriteLE<uint8_t>(m.is_boss ? 1 : 0);
+		file.WriteLE<uint8_t>(m.is_alive ? 1 : 0);
+	}
 }
 
 void SaveStash(SaveWriter &stashWriter)

@@ -37,6 +37,7 @@
 #include "inv.h"
 #include "levels/trigs.h"
 #include "missiles.h"
+#include "nightmare/invasion/invasion_manager.hpp"
 #include "options.h"
 #include "qol/itemlabels.h"
 #include "qol/stash.h"
@@ -303,7 +304,7 @@ bool TrySelectPixelBased(Point tile)
 		// Never select a monster if a target-player-only spell is selected
 		if (monsterId != 0 && IsNoneOf(pcurs, CURSOR_HEALOTHER, CURSOR_RESURRECT)) {
 			monsterId = std::abs(monsterId) - 1;
-			if (leveltype == DTYPE_TOWN) {
+			if (leveltype == DTYPE_TOWN && !nightmare::invasion::InvasionManager::Get().IsCombatActive()) {
 				if (static_cast<size_t>(monsterId) < Towners.size() && Towners[monsterId].position == adjacentTile) {
 					const Towner &towner = Towners[monsterId];
 					const OptionalClxSprite sprite = towner.currentSprite();
@@ -875,7 +876,7 @@ bool CheckCursorActions(const Point currentTile, bool flipflag)
 	if (TrySelectPixelBased(currentTile))
 		return true;
 
-	if (leveltype != DTYPE_TOWN) {
+	if (leveltype != DTYPE_TOWN || nightmare::invasion::InvasionManager::Get().IsCombatActive()) {
 		// Never select a monster if a target-player-only spell is selected
 		if (IsNoneOf(pcurs, CURSOR_HEALOTHER, CURSOR_RESURRECT)) {
 			if (pcurstemp != -1 && TrySelectMonster(flipflag, currentTile, [](const Monster &monster) {

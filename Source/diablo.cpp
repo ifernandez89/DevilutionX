@@ -53,6 +53,7 @@
 #include "engine/random.hpp"
 #include "engine/render/clx_render.hpp"
 #include "engine/sound.h"
+#include "nightmare/invasion/invasion_manager.hpp"
 #include "nightmare/neural/dataset_dumper.hpp"
 #include "game_mode.hpp"
 #include "gamemenu.h"
@@ -253,7 +254,7 @@ void LeftMouseCmd(bool bShift)
 
 	assert(!GetMainPanel().contains(MousePosition));
 
-	if (leveltype == DTYPE_TOWN) {
+	if (leveltype == DTYPE_TOWN && !nightmare::invasion::InvasionManager::Get().IsCombatActive()) {
 		CloseGoldWithdraw();
 		CloseStash();
 		if (pcursitem != -1 && pcurs == CURSOR_HAND)
@@ -321,16 +322,21 @@ bool TryOpenDungeonWithMouse()
 	if (leveltype != DTYPE_TOWN)
 		return false;
 
-	const Item &holdItem = MyPlayer->HoldItem;
-	if (holdItem.IDidx == IDI_RUNEBOMB && OpensHive(cursPosition))
+	Item &holdItem = MyPlayer->HoldItem;
+	if (holdItem.IDidx == IDI_RUNEBOMB && (OpensHive(cursPosition) || OpensHive(MyPlayer->position.tile))) {
 		OpenHive();
-	else if (holdItem.IDidx == IDI_MAPOFDOOM && OpensGrave(cursPosition))
+		holdItem.clear();
+		NewCursor(CURSOR_HAND);
+		return true;
+	}
+	if (holdItem.IDidx == IDI_MAPOFDOOM && (OpensGrave(cursPosition) || OpensGrave(MyPlayer->position.tile))) {
 		OpenGrave();
-	else
-		return false;
+		holdItem.clear();
+		NewCursor(CURSOR_HAND);
+		return true;
+	}
 
-	NewCursor(CURSOR_HAND);
-	return true;
+	return false;
 }
 
 void LeftMouseDown(uint16_t modState)
@@ -1521,7 +1527,7 @@ void GameLogic()
 		gGameLogicStep = GameLogicStep::ProcessPlayers;
 		ProcessPlayers();
 	}
-	if (leveltype != DTYPE_TOWN) {
+	if (leveltype != DTYPE_TOWN || nightmare::invasion::InvasionManager::Get().IsCombatActive()) {
 		gGameLogicStep = GameLogicStep::ProcessMonsters;
 #ifdef _DEBUG
 		if (!DebugInvisible)
@@ -1535,6 +1541,9 @@ void GameLogic()
 		ProcessItems();
 		ProcessLightList();
 		ProcessVisionList();
+		if (leveltype == DTYPE_TOWN) {
+			nightmare::invasion::InvasionManager::Get().Update();
+		}
 	} else {
 		gGameLogicStep = GameLogicStep::ProcessTowners;
 		ProcessTowners();
@@ -3159,7 +3168,7 @@ void LoadGameLevelSyncPlayerEntry(lvl_entry lvldir)
 
 void LoadGameLevelLightVision()
 {
-	if (leveltype != DTYPE_TOWN) {
+	if (leveltype != DTYPE_TOWN || nightmare::invasion::InvasionManager::Get().IsInvaded()) {
 		memcpy(dLight, dPreLight, sizeof(dLight));                                     // resets the light on entering a level to get rid of incorrect light
 		ChangeLightXY(Players[MyPlayerId].lightId, Players[MyPlayerId].position.tile); // forces player light refresh
 		ProcessLightList();
@@ -3210,10 +3219,13 @@ tl::expected<void, std::string> LoadGameLevelTown(bool firstflag, lvl_entry lvld
 		InitGolems();
 	}
 
-	InitTowners();
+	if (!nightmare::invasion::InvasionManager::Get().IsInvaded()) {
+		InitTowners();
+	}
 	InitStash();
 	InitItems();
 	InitMissiles();
+	nightmare::invasion::InvasionManager::Get().OnTownEntry();
 
 	IncProgress();
 

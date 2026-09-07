@@ -7,6 +7,7 @@
 
 #include <algorithm>
 #include "levels/gendung.h"
+#include "nightmare/invasion/invasion_manager.hpp"
 #include "tables/monstdat.h"
 
 namespace devilution {
@@ -90,6 +91,10 @@ int GetNightmareBaseLightRadius(uint8_t level)
 
 _music_id GetNightmareLevelMusic(dungeon_type dungeonType, uint8_t level, bool isSetLevel)
 {
+	if (dungeonType == DTYPE_TOWN && nightmare::invasion::InvasionManager::Get().IsInvaded()) {
+		return NUM_MUSIC;
+	}
+
 	// In quest set pieces, retain their designated theme
 	if (isSetLevel) {
 		switch (dungeonType) {

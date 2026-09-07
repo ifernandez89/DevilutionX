@@ -52,5 +52,7 @@ void LoadGolemState(Player &player);
 void SaveGolemState(SaveWriter &saveWriter, const Player &player);
 void LoadBoneSpiritState(Player &player);
 void SaveBoneSpiritState(SaveWriter &saveWriter, const Player &player);
+void LoadInvasionState();
+void SaveInvasionState(SaveWriter &saveWriter);
 
 } // namespace devilution

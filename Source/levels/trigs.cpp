@@ -17,6 +17,7 @@
 #include "diablo_msg.hpp"
 #include "game_mode.hpp"
 #include "multi.h"
+#include "nightmare/invasion/invasion_manager.hpp"
 #include "utils/algorithm/container.hpp"
 #include "utils/is_of.hpp"
 #include "utils/language.h"
@@ -134,7 +135,7 @@ void InitTownTriggers()
 		trigs[numtrigs]._tlvl = 13;
 		numtrigs++;
 	}
-	if (IsWarpOpen(DTYPE_NEST)) {
+	if (IsWarpOpen(DTYPE_NEST) && !nightmare::invasion::InvasionManager::Get().IsInvaded()) {
 		trigs[numtrigs].position = { 80, 62 };
 		trigs[numtrigs]._tmsg = WM_DIABTOWNWARP;
 		trigs[numtrigs]._tlvl = 17;
@@ -388,7 +389,7 @@ bool ForceTownTrig()
 		}
 	}
 
-	if (IsWarpOpen(DTYPE_NEST)) {
+	if (IsWarpOpen(DTYPE_NEST) && !nightmare::invasion::InvasionManager::Get().IsInvaded()) {
 		for (const uint16_t tileId : TownHiveList) {
 			if (dPiece[cursPosition.x][cursPosition.y] == tileId) {
 				InfoString = _("Down to Hive");

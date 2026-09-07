@@ -4,6 +4,7 @@
 
 #include "engine/random.hpp"
 #include "levels/gendung.h"
+#include "nightmare/invasion/invasion_manager.hpp"
 #include "nightmare/restoration/registry.hpp"
 
 namespace devilution {
@@ -30,7 +31,7 @@ void InitTristramAmbientAnimals()
 
 void UpdateTristramAmbientAnimals()
 {
-	if (leveltype != DTYPE_TOWN)
+	if (leveltype != DTYPE_TOWN || invasion::InvasionManager::Get().IsInvaded())
 		return;
 
 	const uint32_t now = SDL_GetTicks();

@@ -7,6 +7,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### 🩸 NIGHTMARE: La Invasión Demoníaca de Tristán (Post-Na-Krul Town Incursion)
+- **Evento Demoníaco Desencadenado al Derrotar a Na-Krul ([`Source/nightmare/invasion/invasion_manager.cpp`](file:///c:/Projects/DevilutionX/Source/nightmare/invasion/invasion_manager.cpp), [`Source/nightmare/invasion/invasion_manager.hpp`](file:///c:/Projects/DevilutionX/Source/nightmare/invasion/invasion_manager.hpp))**:
+  - Tras la caída del demonio ancestral Na-Krul (`Quests[Q_NAKRUL]._qactive == QUEST_DONE`), una brecha dimensional se abre sobre el pueblo de Tristán, desatando una invasión demoníaca total en la superficie.
+  - **Preservación Arquitectónica Absoluta**: La estructura y el mapa de Tristán permanecen intactos (`dPiece`, dun y colisiones inalterados), transformando la atmósfera sin destruir la aldea.
+  - **Atmósfera y Penumbra Opresiva ([`Source/nightmare/world/level_atmosphere.cpp`](file:///c:/Projects/DevilutionX/Source/nightmare/world/level_atmosphere.cpp), [`Source/nightmare/world/ambient_animals.cpp`](file:///c:/Projects/DevilutionX/Source/nightmare/world/ambient_animals.cpp), [`Source/diablo.cpp`](file:///c:/Projects/DevilutionX/Source/diablo.cpp))**:
+    - Silencio sepulcral: Se anula el tema musical de Tristán (`TMUSIC_TOWN`) y los chillidos de animales/pájaros diurnos.
+    - Penumbra opresiva (`LightTableIndex = 2..3`): La niebla y hogueras se apagan, encendiendo un foco de luz roja espectral sobre la entrada de la Catedral (`Point{25, 31}`, radio 10).
+  - **Superación de las Barreras del Motor para Combate en Superficie**:
+    - **Control y Ataque Activo ([`Source/cursor.cpp`](file:///c:/Projects/DevilutionX/Source/cursor.cpp), [`Source/diablo.cpp`](file:///c:/Projects/DevilutionX/Source/diablo.cpp), [`Source/msg.cpp`](file:///c:/Projects/DevilutionX/Source/msg.cpp))**: El cursor permite fijar monstruos y lanzar comandos de ataque directo en Tristán (`IsTownCombatActive()`) en lugar del forzado `CMD_TALKXY`.
+    - **Lógica y Animaciones de Combate ([`Source/player.cpp`](file:///c:/Projects/DevilutionX/Source/player.cpp), [`Source/player.h`](file:///c:/Projects/DevilutionX/Source/player.h))**: Se cargan los conjuntos gráficos completos de armas, arcos y hechizos en el pueblo, permitiendo animaciones de ataque, daño y muerte del héroe.
+    - **Bucle de Simulación Completo ([`Source/diablo.cpp`](file:///c:/Projects/DevilutionX/Source/diablo.cpp))**: En Tristán invadido se procesan activamente monstruos, proyectiles, IA (`ProcessMonsters()`, `ProcessMissiles()`) e iluminación dinámica.
+    - **Barra de Vida de Monstruos ([`Source/qol/monhealthbar.cpp`](file:///c:/Projects/DevilutionX/Source/qol/monhealthbar.cpp))**: Reactivada en el pueblo durante el combate.
+  - **Fuerza Invasora y Encuentro de Jefatura**:
+    - 20 demonios de choque (Balrogs y Gárgolas aladas) apostados estratégicamente desde el cementerio y caminos hasta el centro del pueblo.
+    - Capacidad de vuelo adaptativa (`MT_WINGED`): Las gárgolas vuelan sobre vallas bajas y el río en Tristán para cercar al jugador.
+    - Supresión de Inferno en el pueblo (`MegaAi`): Los Balrogs priorizan persecución y choque cuerpo a cuerpo para evitar saturación de proyectiles.
+    - Pausa dramática de 2.5 segundos: Al ingresar, los demonios no atacan de inmediato, creando un instante de tensión cinematográfica.
+    - **Despeje Total del Puente y Retiro del Nest ([`Source/levels/town.cpp`](file:///c:/Projects/DevilutionX/Source/levels/town.cpp))**: Durante el juego normal, el Nest permanece intacto en su posición vanilla; al desencadenarse la invasión demoníaca, el Nest se retira por completo (`TownCloseHive` y `TownOpenHive` anulados), restaurando el puente de madera original y la hierba de Diablo 1 hacia la península del jefe (Leoric o Sir Gorash / Warlord of Blood).
+    - **Corrección en la Detonación de la Bomba Rúnica del Granjero ([`Source/levels/town.cpp`](file:///c:/Projects/DevilutionX/Source/levels/town.cpp), [`Source/diablo.cpp`](file:///c:/Projects/DevilutionX/Source/diablo.cpp), [`Source/quests.cpp`](file:///c:/Projects/DevilutionX/Source/quests.cpp))**: Se amplió el área de detección de `OpensHive` de una caja rígida de 4x4 tiles a todo el sector del puente y la colmena (`x = 74..86, y = 58..68`), se agregó soporte para usar la bomba tanto desde la posición del cursor como desde la posición donde está parado el jugador, y se añadió detección automática para bombas arrojadas o caídas al suelo cerca del nido, detonándolas de inmediato sin dejarlas abandonadas como ítems inertes.
+    - **Comando de Testeo Rápido en Chat (`/invasion`) ([`Source/control/control_chat_commands.cpp`](file:///c:/Projects/DevilutionX/Source/control/control_chat_commands.cpp))**: Presionando Enter en cualquier momento, el comando `/invasion` alterna al instante entre el modo pacífico normal y la Invasión Demoníaca completa de Tristán, permitiendo probar la desaparición del Nest, la apertura del puente, la penumbra, el combate y los jefes sin tener que derrotar a Na-Krul previamente.
+  - **Persistencia Completa y Reseteo Limpio ([`Source/loadsave.cpp`](file:///c:/Projects/DevilutionX/Source/loadsave.cpp), [`Source/loadsave.h`](file:///c:/Projects/DevilutionX/Source/loadsave.h), [`Source/pfile.cpp`](file:///c:/Projects/DevilutionX/Source/pfile.cpp))**:
+    - El estado de la invasión (monstruos vivos, posiciones y vida actual) se guarda en el archivo de guardado del héroe (MPQ), manteniéndose al viajar a mazmorras o al recargar la partida.
+    - Se reinicia limpiamente al iniciar un juego nuevo (`ENTRY_MAIN`).
+
 ### 🌧️ Diablo Rain 2.0 & Motor Climático en Tristán (Town Weather Engine)
 - **Restauración de Diablo Rain 2.0 en Web / Neural Render ([`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html))**:
   - Se restauró el sistema de lluvia dinámica 2.0 de Tristán con 3 capas de profundidad de partículas (*Far, Mid, Near*), salpicaduras volumétricas reactivas al suelo, destellos de charcos en el lodo y relámpagos de tormenta con doble destello.

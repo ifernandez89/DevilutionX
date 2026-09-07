@@ -1,0 +1,159 @@
+# NIGHTMARE — Tristram Invasion
+
+Implementación de un evento de invasión demoníaca total, física, finita y determinista en Tristram para el mod NIGHTMARE sobre el motor DevilutionX.
+
+El evento se dispara únicamente como consecuencia del clímax de Hellfire (**tras derrotar a Na-Krul en la Cripta**), transformando la percepción de Tristram mediante **iluminación, penumbra, silencio y presencia demoníaca**, preservando la geometría y arquitectura original intactas. Despeja el acceso hacia la península del río (reubicando el Nest permanentemente o retirándolo en la invasión), introduce unidades aéreas (Winged Fiends) para evitar el abuso del puente, adapta dinámicamente el Boss final según el historial de misiones del jugador y garantiza **persistencia total del estado de los monstruos tanto en transiciones de nivel como en guardados de partida (Save/Load)**.
+
+---
+
+## User Review Required
+
+> [!IMPORTANT]
+> **Principio Fundamental de Diseño — "El mismo Tristram, pero desierto y ocupado":**  
+> - **Regla de Oro:** Se prohíbe terminantemente alterar la arquitectura del pueblo: **NO** modificar `dPiece`, tiles, paredes, caminos, puertas, suelo ni estructuras. No habrá puertas rotas, escombros decorativos ni casas incendiadas prefabricadas.  
+> - **La estética rectora:** *"No destruyeron Tristram. Simplemente ya no queda nadie para vivir en él."*  
+> - La transformación visual proviene exclusivamente de la penumbra ambiental, el apagado de fuegos normales, el silencio lúgubre, la presencia física de los invasores y los cadáveres que surjan genuinamente del combate.  
+> - **Única excepción física al mapa:** El Nest de Hellfire, exclusivamente para liberar el paso por el puente original hacia la península.
+
+> [!IMPORTANT]
+> **Atmósfera Lumínica y Foco de la Catedral:**  
+> - **Penumbra Ambiental:** Tristram no será una mazmorra negra, sino un pueblo sumido en una penumbra inquietante pero legible (nivel de luz nativo `LightTableIndex = 2–4`), donde los edificios y el puente sean reconocibles y los monstruos contrasten con el fondo.  
+> - **Catedral como Faro Demoníaco:** La entrada a la Catedral (`Point{25, 31}`) será el único foco de luz artificial activo en el pueblo mediante el sistema nativo `AddLight(Point{25, 31}, 8–10)`, proyectando una iluminación tenue y cálida/rojiza que evoca la presencia maligna emanando de su interior.  
+> - **Apagado de Luces Cotidianas:** Se suprimen los aportes de luz de la vida normal del pueblo (la fogata central y la herrería de Griswold quedan extintas/sin iluminación activa).
+
+> [!IMPORTANT]
+> **Condición Estricta de Disparo (Trigger):**  
+> La invasión de Tristram **SOLO** se activará cuando **Na-Krul sea derrotado** (`Quests[Q_NAKRUL]._qactive == QUEST_DONE`).  
+> Hasta que el jugador no mate a Na-Krul en el nivel 4 de la Cripta, Tristram permanece en su estado normal de día, paz, comercios y pobladores.
+
+> [!IMPORTANT]
+> **Comportamiento Estricto de Guardados (Save/Load) y Fuga de Nivel:**  
+> - Si el jugador guarda partida en plena invasión o baja a la Catedral a refugiarse y vuelve, **los muertos siguen muertos y los vivos conservan su HP exacto restante**.  
+> - Este estado **SOLO se purga al iniciar una Nueva Partida completa (*New Game*)**, donde Tristram vuelve 100% a su estado pacífico con todos sus aldeanos y vacas.
+
+> [!IMPORTANT]
+> **Regla de Boss Final y Coherencia Narrativa:**  
+> - **Skeleton King (Leoric):** ÚNICAMENTE si nunca fue derrotado en la quest `Q_SKELKING`.  
+> - **Knights (Gorash / Warlord):** Si Leoric ya fue derrotado, prohibido revivirlo; se selecciona a Sir Gorash o Warlord of Blood.
+
+---
+
+## Proposed Changes
+
+### 1. Atmósfera, Iluminación y Paisaje Sonoro (`Source/lighting.cpp`, `Source/sound.cpp`)
+
+#### [MODIFY] [lighting.cpp](file:///Source/lighting.cpp)
+- **Iluminación Ambiental de Tristram Invadido:**
+  - En la inicialización de luces de Town (`InitLighting()` / `T_FillLighting()`), evaluar `InvasionManager::IsInvaded()`.
+  - Si la invasión está activa:
+    - Rellenar `dLight` y `dPreLight` con un valor de penumbra calibrado (`LightTableIndex = 2` a `3`), evitando el brillo solar pleno de Tristram (`0`) sin llegar a la ceguera total (`15`).
+    - **Foco de la Catedral:** Registrar una fuente de luz tenue en la entrada de la Catedral:
+      ```cpp
+      if (InvasionManager::IsInvaded()) {
+          AddLight(Point { 25, 31 }, 8); // Radio tenue sobre el atrio de la Catedral
+      }
+      ```
+    - **Apagado de fuegos cotidianos:** Evitar la creación de fuentes de luz en las coordenadas del yunque de Griswold y la fogata comunal.
+
+#### [MODIFY] [music.cpp](file:///Source/music.cpp) & [sound.cpp](file:///Source/sound.cpp)
+- **Silencio Sepulcral:**
+  - Durante la invasión, suspender la reproducción del tema acústico de Tristram (`TMUSIC_TOWN`).
+  - El paisaje sonoro queda gobernado exclusivamente por el viento ambiental, los pasos sobre la hierba, los gruñidos de los monstruos, los ecos del combate y el silencio opresivo.
+
+---
+
+### 2. Núcleo del Administrador de Invasión y Persistencia (`Source/nightmare/invasion/`)
+
+#### [NEW] [invasion_manager.hpp](file:///Source/nightmare/invasion/invasion_manager.hpp)
+- Estructura determinista y snapshot de sobrevivientes:
+  ```cpp
+  struct InvasionMonsterSnapshot {
+      int16_t current_hp;
+      uint8_t x;
+      uint8_t y;
+  };
+
+  struct TristramInvasionState {
+      bool active;
+      bool completed;
+      uint64_t killed_mask; // Bit 1 = muerto
+      uint8_t boss_phase;   // 0: inactivo, 1: silencio de 2-3s, 2: combate, 3: muerto
+      MonsterType boss_selected;
+      int16_t boss_hp;
+      InvasionMonsterSnapshot monsters[40]; // HP y posición de supervivientes
+  };
+  ```
+- Métodos del gestor:
+  - `CheckInvasionTrigger()`: Evalúa si `Quests[Q_NAKRUL]._qactive == QUEST_DONE`.
+  - `IsInvaded()`: Retorna verdadero si la invasión está en curso o completada en esa partida.
+  - `SaveInvasionSnapshot()` & `RestoreInvasionSnapshot()`.
+  - `ResetInvasionState()`: Invocado exclusivamente al pulsar *New Game*.
+
+#### [NEW] [invasion_manager.cpp](file:///Source/nightmare/invasion/invasion_manager.cpp)
+- **Selección Condicional del Boss:**
+  - Si `Quests[Q_SKELKING]._qactive != QUEST_DONE` $\rightarrow$ Leoric potenciado.
+  - Si Leoric ya murió $\rightarrow$ Sir Gorash o Warlord of Blood.
+- **Pausa Dramática:** Al morir el último enemigo regular, disparo de 2–3 segundos de silencio absoluto antes de activar al Boss y su guardia en la península.
+- **Estado Final Irreversible:** Al morir el Boss, Tristram permanece permanentemente abandonado, en penumbra, sin música y poblado solo por los restos de la batalla.
+
+---
+
+### 3. Geografía, Puente y Tratamiento del Nest (`Source/levels/town.cpp`)
+
+#### [MODIFY] [town.cpp](file:///Source/levels/town.cpp)
+- **Preservación Geométrica Absoluta:** No se altera ningún tile ni archivo `.dun` del pueblo original.
+- **Paso del Puente y Nest:**
+  - *Prioridad A:* Desplazar permanentemente las coordenadas de `TownCloseHive()` y `TownOpenHive()` hacia el fondo de la península (`x += 4, y += 4`), garantizando paso libre desde el nivel 1.
+  - *Fallback:* Si el desplazamiento crea inconsistencias, mantener posición vanilla en juego normal y simplemente no invocar `TownCloseHive()` durante la invasión, dejando la península libre.
+- **Supresión Limpia de Pobladores:** Si `IsInvaded() == true`, no ejecutar `InitTowners()` (desaparecen aldeanos y vacas sin tocar el mapa).
+
+---
+
+### 4. Mecánicas de Navegación, Combate e IA (`Source/`)
+
+#### [MODIFY] [monster.h](file:///Source/monster.h) & [monster.cpp](file:///Source/monster.cpp)
+- **Pathfinding Aéreo de Winged Fiends:**
+  - Evaluar `!TileHasAny(position, TileProperties::BlockMissile)` en lugar de `Solid` para permitir el cruce aéreo del río y cercas bajas, neutralizando el *cheese* del puente sin atravesar casas de piedra.
+- **Balrog Melee-Only:**
+  - En `currlevel == 0`, suprimir el aliento de fuego (`SPELL_INFERNO`) y forzar marcha de aproximación cuerpo a cuerpo.
+- **Ciclo de IA en Town:** Habilitar `ProcessMonsters()` en Tristram durante la invasión.
+
+#### [MODIFY] [cursor.cpp](file:///Source/cursor.cpp) & [player.cpp](file:///Source/player.cpp)
+- **Combate con Armas:** Permitir cursor de ataque y daño con armas melee/arcos en Town.
+- **Restricción Mágica Intacta:** Mantener el bloqueo de lanzamiento de hechizos en Town (*"I cannot cast that here!"*).
+
+---
+
+### 5. Serialización en el Archivo de Guardado (`Source/pfile.cpp`)
+
+#### [MODIFY] [pfile.cpp](file:///Source/pfile.cpp)
+- Serializar `TristramInvasionState` en el archivo de guardado (`.sv`).
+- En `pfile_create` (*New Game*), reiniciar el estado para que Tristram vuelva a su estado original de paz y luz.
+
+---
+
+## Verification Plan
+
+### Automated Tests
+- Compilación del proyecto:
+  ```powershell
+  cmake -B build -S .
+  cmake --build build --config RelWithDebInfo
+  ```
+
+### Manual Verification
+1. **Verificación Estética y de Iluminación:**
+   - Entrar a Tristram durante la invasión:
+     - Constatar la penumbra ambiental (`LightTableIndex = 2–3`): el pueblo es tétrico y oscuro, pero las casas, el río y el puente son claramente legibles.
+     - Comprobar que la fogata central y la herrería de Griswold están apagadas.
+     - Localizar la entrada de la Catedral (`Point{25, 31}`): verificar el halo de luz tenue (radio ~8 tiles) como único foco de luz activo.
+     - Constatar la ausencia total de música acústica: solo viento, silencio y sonidos de monstruos.
+2. **Verificación de Preservación del Mapa:**
+   - Comprobar que ninguna casa tiene puertas rotas, escombros artificiales ni texturas alteradas.
+   - Constatar que los únicos cadáveres en el suelo son los de los enemigos que el jugador va abatiendo.
+3. **Verificación de Persistencia y Refugio:**
+   - Herir a un Balrog, bajar a la Catedral para refugiarse y volver: verificar que los muertos siguen muertos y el Balrog conserva su daño exacto.
+   - Guardar partida (*Save Game*) en medio del combate, salir y recargar: comprobar que todo se reanuda de forma idéntica sin bugs de duplicación.
+4. **Verificación de Partida Nueva (*New Game*):**
+   - Crear una partida nueva: verificar que Tristram recupera su luz plena de día, música clásica, pobladores y vacas.
+5. **Verificación del Trigger de Na-Krul y Coherencia del Boss Final.**

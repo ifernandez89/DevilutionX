@@ -183,6 +183,8 @@ constexpr std::array<char, 9> WepChar = {
 	't', // staff
 };
 
+bool IsTownCombatActive();
+
 /**
  * @brief Contains Data (CelSprites) for a player graphic (player_graphic)
  */
@@ -903,7 +905,7 @@ public:
 
 	bool hasNoLife() const
 	{
-		return leveltype == DTYPE_TOWN ? false : _pHitPoints >> 6 <= 0;
+		return (leveltype == DTYPE_TOWN && !IsTownCombatActive()) ? false : _pHitPoints >> 6 <= 0;
 	}
 
 	bool hasNoMana() const

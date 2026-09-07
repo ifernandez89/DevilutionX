@@ -42,6 +42,7 @@
 #include "missiles.h"
 #include "monster.h"
 #include "monsters/validation.hpp"
+#include "nightmare/invasion/invasion_manager.hpp"
 #include "nthread.h"
 #include "objects.h"
 #include "options.h"
@@ -1798,7 +1799,7 @@ size_t OnAttackMonster(const TCmdParam1 &message, Player &player)
 {
 	const uint16_t monsterIdx = Swap16LE(message.wParam1);
 
-	if (gbBufferMsgs != 1 && player.isOnActiveLevel() && leveltype != DTYPE_TOWN && monsterIdx < MaxMonsters) {
+	if (gbBufferMsgs != 1 && player.isOnActiveLevel() && (leveltype != DTYPE_TOWN || nightmare::invasion::InvasionManager::Get().IsCombatActive()) && monsterIdx < MaxMonsters) {
 		const Point position = Monsters[monsterIdx].position.future;
 		if (player.position.tile.WalkingDistance(position) > 1)
 			MakePlrPath(player, position, false);
@@ -1826,7 +1827,7 @@ size_t OnRangedAttackMonster(const TCmdParam1 &message, Player &player)
 {
 	const uint16_t monsterIdx = Swap16LE(message.wParam1);
 
-	if (gbBufferMsgs != 1 && player.isOnActiveLevel() && leveltype != DTYPE_TOWN && monsterIdx < MaxMonsters) {
+	if (gbBufferMsgs != 1 && player.isOnActiveLevel() && (leveltype != DTYPE_TOWN || nightmare::invasion::InvasionManager::Get().IsCombatActive()) && monsterIdx < MaxMonsters) {
 		ClrPlrPath(player);
 		player.destAction = ACTION_RATTACKMON;
 		player.destParam1 = monsterIdx;
@@ -2009,7 +2010,7 @@ size_t OnMonstDeath(const TCmdLocParam1 &message, Player &player)
 	const uint16_t monsterIdx = Swap16LE(message.wParam1);
 
 	if (gbBufferMsgs != 1) {
-		if (&player != MyPlayer && player.plrlevel > 0 && InDungeonBounds(position) && monsterIdx < MaxMonsters) {
+		if (&player != MyPlayer && (player.plrlevel > 0 || nightmare::invasion::InvasionManager::Get().IsCombatActive()) && InDungeonBounds(position) && monsterIdx < MaxMonsters) {
 			Monster &monster = Monsters[monsterIdx];
 			if (player.isOnActiveLevel())
 				M_SyncStartKill(monster, position, player);
@@ -2041,7 +2042,7 @@ size_t OnMonstDamage(const TCmdMonDamage &message, Player &player)
 
 	if (gbBufferMsgs != 1) {
 		if (&player != MyPlayer) {
-			if (player.isOnActiveLevel() && leveltype != DTYPE_TOWN && monsterIdx < MaxMonsters) {
+			if (player.isOnActiveLevel() && (leveltype != DTYPE_TOWN || nightmare::invasion::InvasionManager::Get().IsCombatActive()) && monsterIdx < MaxMonsters) {
 				Monster &monster = Monsters[monsterIdx];
 				monster.tag(player);
 				if (monster.hitPoints > 0) {

@@ -10,6 +10,8 @@
 #include "utils/log.hpp"
 #include "utils/parse_int.hpp"
 #include "utils/str_case.hpp"
+#include "nightmare/invasion/invasion_manager.hpp"
+#include "quests.h"
 #include "utils/str_cat.hpp"
 
 #ifdef _DEBUG
@@ -245,6 +247,20 @@ std::string TextCmdPing(const std::string_view parameter)
 	return ret;
 }
 
+std::string TextCmdInvasion(const std::string_view parameter)
+{
+	if (nightmare::invasion::InvasionManager::Get().IsInvaded()) {
+		Quests[Q_NAKRUL]._qactive = QUEST_INIT;
+		nightmare::invasion::InvasionManager::Get().ResetInvasionState();
+		StartNewLvl(*MyPlayer, WM_DIABTOWNWARP, 0);
+		return std::string(_("Tristram Invasion Deactivated! Town restored to peace."));
+	}
+
+	Quests[Q_NAKRUL]._qactive = QUEST_DONE;
+	StartNewLvl(*MyPlayer, WM_DIABTOWNWARP, 0);
+	return std::string(_("NIGHTMARE: Tristram Invasion Triggered!"));
+}
+
 std::vector<TextCmdItem> TextCmdList = {
 	{ "/help", N_("Prints help overview or help for a specific command."), N_("[command]"), &TextCmdHelp },
 	{ "/arena", N_("Enter a PvP Arena."), N_("<arena-number>"), &TextCmdArena },
@@ -252,6 +268,7 @@ std::vector<TextCmdItem> TextCmdList = {
 	{ "/inspect", N_("Inspects stats and equipment of another player."), N_("<player name>"), &TextCmdInspect },
 	{ "/seedinfo", N_("Show seed infos for current level."), "", &TextCmdLevelSeed },
 	{ "/ping", N_("Show latency statistics for another player."), N_("<player name>"), &TextCmdPing },
+	{ "/invasion", N_("Toggle Nightmare Tristram Invasion event."), "", &TextCmdInvasion },
 };
 
 } // namespace

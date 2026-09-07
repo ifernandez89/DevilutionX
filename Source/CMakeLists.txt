@@ -92,6 +92,7 @@ set(libdevilutionx_SRCS
   engine/render/scrollrt.cpp
   engine/render/weather_overlay.cpp
 
+  nightmare/invasion/invasion_manager.cpp
   nightmare/restoration/registry.cpp
   nightmare/restoration/layer2.cpp
   nightmare/npcs/tremain.cpp

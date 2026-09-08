@@ -245,6 +245,7 @@ bool ShouldShowCursor()
  */
 inline void ClxDrawLight(const Surface &out, Point position, ClxSprite clx, int lightTableIndex)
 {
+	lightTableIndex = std::clamp(lightTableIndex, 0, 15);
 	if (lightTableIndex != 0) {
 		ClxDrawTRN(out, position, clx, LightTables[lightTableIndex].data());
 	} else {
@@ -260,6 +261,7 @@ inline void ClxDrawLight(const Surface &out, Point position, ClxSprite clx, int 
  */
 inline void ClxDrawLightBlended(const Surface &out, Point position, ClxSprite clx, int lightTableIndex)
 {
+	lightTableIndex = std::clamp(lightTableIndex, 0, 15);
 	if (lightTableIndex != 0) {
 		ClxDrawBlendedTRN(out, position, clx, LightTables[lightTableIndex].data());
 	} else {
@@ -573,6 +575,7 @@ static void DrawDungeon(const Surface & /*out*/, const Lightmap & /*lightmap*/, 
  */
 void DrawCell(const Surface &out, const Lightmap lightmap, Point tilePosition, Point targetBufferPosition, int lightTableIndex)
 {
+	lightTableIndex = std::clamp(lightTableIndex, 0, 15);
 	const uint16_t levelPieceId = dPiece[tilePosition.x][tilePosition.y];
 	const MICROS *pMap = &DPieceMicros[levelPieceId];
 
@@ -704,7 +707,7 @@ void DrawCell(const Surface &out, const Lightmap lightmap, Point tilePosition, P
  */
 void DrawFloorTile(const Surface &out, const Lightmap &lightmap, Point tilePosition, Point targetBufferPosition)
 {
-	const int lightTableIndex = dLight[tilePosition.x][tilePosition.y];
+	const int lightTableIndex = std::clamp(static_cast<int>(dLight[tilePosition.x][tilePosition.y]), 0, 15);
 
 	const uint8_t *tbl = LightTables[lightTableIndex].data();
 #ifdef _DEBUG
@@ -843,7 +846,7 @@ void DrawMonsterHelper(const Surface &out, Point tilePosition, Point targetBuffe
 void DrawDungeon(const Surface &out, const Lightmap &lightmap, Point tilePosition, Point targetBufferPosition)
 {
 	assert(InDungeonBounds(tilePosition));
-	const int lightTableIndex = dLight[tilePosition.x][tilePosition.y];
+	const int lightTableIndex = std::clamp(static_cast<int>(dLight[tilePosition.x][tilePosition.y]), 0, 15);
 
 	float normDepth = std::clamp((tilePosition.x + tilePosition.y) / (2.0f * MAXDUNX), 0.0f, 1.0f);
 	uint8_t lightVal = static_cast<uint8_t>(std::clamp(255 - lightTableIndex * 16, 0, 255));
@@ -1142,7 +1145,7 @@ void DrawDirtTile(const Surface &out, const Lightmap &lightmap, Point tilePositi
 		return;
 	}
 
-	const int lightTableIndex = dLight[sample.x][sample.y];
+	const int lightTableIndex = std::clamp(static_cast<int>(dLight[sample.x][sample.y]), 0, 15);
 
 	// Let the normal dungeon tile renderer compose the full tile
 	DrawCell(out, lightmap, sample, targetBufferPosition, lightTableIndex);

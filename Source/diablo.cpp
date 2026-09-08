@@ -1544,8 +1544,10 @@ void GameLogic()
 		ProcessMissiles();
 		gGameLogicStep = GameLogicStep::ProcessItems;
 		ProcessItems();
-		if (leveltype != DTYPE_TOWN) {
+		if (leveltype != DTYPE_TOWN || nightmare::invasion::InvasionManager::Get().IsCombatActive()) {
 			ProcessLightList();
+		}
+		if (leveltype != DTYPE_TOWN) {
 			ProcessVisionList();
 		}
 		if (leveltype == DTYPE_TOWN) {
@@ -3175,11 +3177,13 @@ void LoadGameLevelSyncPlayerEntry(lvl_entry lvldir)
 
 void LoadGameLevelLightVision()
 {
-	if (leveltype != DTYPE_TOWN) {
+	if (leveltype != DTYPE_TOWN || nightmare::invasion::InvasionManager::Get().IsCombatActive()) {
 		memcpy(dLight, dPreLight, sizeof(dLight));                                     // resets the light on entering a level to get rid of incorrect light
 		ChangeLightXY(Players[MyPlayerId].lightId, Players[MyPlayerId].position.tile); // forces player light refresh
 		ProcessLightList();
-		ProcessVisionList();
+		if (leveltype != DTYPE_TOWN) {
+			ProcessVisionList();
+		}
 	}
 }
 
@@ -3217,6 +3221,8 @@ tl::expected<void, std::string> LoadGameLevelTown(bool firstflag, lvl_entry lvld
 			dFlags[i][j] |= DungeonFlag::Lit;
 			dCorpse[i][j] = 0;
 			dMonster[i][j] = 0;
+			dLight[i][j] = 0;
+			dPreLight[i][j] = 0;
 		}
 	}
 
@@ -3434,7 +3440,7 @@ tl::expected<void, std::string> LoadGameLevel(bool firstflag, lvl_entry lvldir)
 
 	InitAutomap();
 
-	if (leveltype != DTYPE_TOWN && lvldir != ENTRY_LOAD) {
+	if ((leveltype != DTYPE_TOWN || nightmare::invasion::InvasionManager::Get().IsCombatActive()) && lvldir != ENTRY_LOAD) {
 		InitLighting();
 	}
 

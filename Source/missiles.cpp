@@ -42,6 +42,7 @@
 #include "levels/gendung_defs.hpp"
 #include "msg.h"
 #include "multi.h"
+#include "nightmare/invasion/invasion_manager.hpp"
 #include "objects.h"
 #include "player.h"
 #include "sound_effect_enums.h"
@@ -3775,9 +3776,11 @@ void ProcessTeleport(Missile &missile)
 	PlrDoTrans(player.position.tile);
 	missile.var1 = 1;
 	player.occupyTile(player.position.tile, false);
-	if (leveltype != DTYPE_TOWN) {
+	if (leveltype != DTYPE_TOWN || nightmare::invasion::InvasionManager::Get().IsCombatActive()) {
 		ChangeLightXY(player.lightId, player.position.tile);
-		ChangeVisionXY(player.getId(), player.position.tile);
+		if (leveltype != DTYPE_TOWN) {
+			ChangeVisionXY(player.getId(), player.position.tile);
+		}
 	}
 	if (&player == MyPlayer) {
 		ViewPosition = player.position.tile;

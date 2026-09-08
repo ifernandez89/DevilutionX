@@ -409,6 +409,7 @@ if(EMSCRIPTEN)
     -sINITIAL_MEMORY=268435456
     -sMAXIMUM_MEMORY=2147483648
     -sASYNCIFY
+    -sASYNCIFY_STACK_SIZE=65536
     -lidbfs.js
     --shell-file ${CMAKE_CURRENT_SOURCE_DIR}/Packaging/emscripten/index.html
   )

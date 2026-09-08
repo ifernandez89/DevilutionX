@@ -795,6 +795,113 @@
 		var spinnerElement = document.getElementById('spinner');
 		var loadingOverlay = document.getElementById('loading-overlay');
 
+		// Immediate Module & Canvas Registration for Emscripten
+		var gameCanvasEl = document.getElementById('canvas');
+		var Module = window.Module = window.Module || {
+			preRun: [
+				function() {
+					try {
+						if (typeof FS !== 'undefined') {
+							try { FS.unlink('/diablo.ini'); } catch(e){}
+						}
+					} catch(e) {}
+				}
+			],
+			postRun: [
+				function() {
+					if (loadingOverlay) {
+						loadingOverlay.classList.add('hidden');
+						setTimeout(function() {
+							loadingOverlay.style.display = 'none';
+						}, 500);
+					}
+				}
+			],
+			print: (function () {
+				var element = document.getElementById('output');
+				if (element) element.value = '';
+				return function (text) {
+					if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
+					console.log(text);
+					if (window.checkMpqError) window.checkMpqError(text);
+					if (element) {
+						element.value += text + "\n";
+						element.scrollTop = element.scrollHeight;
+					}
+				};
+			})(),
+			printErr: function(text) {
+				if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
+				console.error(text);
+				if (window.checkMpqError) window.checkMpqError(text);
+			},
+			canvas: (function () {
+				if (!gameCanvasEl) gameCanvasEl = document.getElementById('canvas');
+				if (gameCanvasEl) {
+					gameCanvasEl.addEventListener("webglcontextlost", function (e) {
+						alert('WebGL context lost. Recarga la página.');
+						e.preventDefault();
+					}, false);
+					gameCanvasEl.addEventListener("dragstart", function (e) { e.preventDefault(); }, false);
+				}
+				return gameCanvasEl;
+			})(),
+			setStatus: function (text) {
+				if (!Module.setStatus.last) Module.setStatus.last = { time: Date.now(), text: '' };
+				if (text === Module.setStatus.last.text) return;
+				var m = text.match(/([^(]+)\((\d+(\.\d+)?)\/(\d+)\)/);
+				var now = Date.now();
+				if (m && now - Module.setStatus.last.time < 30) return;
+				Module.setStatus.last.time = now;
+				Module.setStatus.last.text = text;
+				if (m) {
+					text = m[1];
+					if (progressElement) {
+						progressElement.value = parseInt(m[2]) * 100;
+						progressElement.max = parseInt(m[4]) * 100;
+						progressElement.hidden = false;
+					}
+					if (spinnerElement) spinnerElement.hidden = false;
+				} else {
+					if (progressElement) {
+						progressElement.value = null;
+						progressElement.max = null;
+						progressElement.hidden = true;
+					}
+					if (!text) {
+						if (spinnerElement) spinnerElement.style.display = 'none';
+						if (loadingOverlay) {
+							loadingOverlay.classList.add('hidden');
+							setTimeout(function() {
+								loadingOverlay.style.display = 'none';
+							}, 500);
+						}
+					}
+				}
+				if (statusElement) statusElement.innerHTML = text || '';
+			},
+			locateFile: function(path, prefix) {
+				if (path.endsWith('.wasm')) {
+					return prefix + path + '?v=' + Date.now();
+				}
+				return prefix + path;
+			},
+			totalDependencies: 0,
+			monitorRunDependencies: function (left) {
+				this.totalDependencies = Math.max(this.totalDependencies, left);
+				Module.setStatus(left ? 'Preparando... (' + (this.totalDependencies - left) + '/' + this.totalDependencies + ')' : '');
+			}
+		};
+
+		Module.setStatus('Iniciando...');
+		window.onerror = function (event) {
+			if (spinnerElement) spinnerElement.style.display = 'none';
+			if (window.checkMpqError) window.checkMpqError(event);
+			if (document.getElementById('missingMpqModal') && document.getElementById('missingMpqModal').style.display !== 'flex') {
+				Module.setStatus('Error al ejecutar WebAssembly.');
+			}
+		};
+
 		// 100% Reliable In-Game Detector (Hooks SDL2 WebGL texture uploads)
 		window.latestGamePixels = null;
 		var oldTexSub = WebGLRenderingContext.prototype.texSubImage2D;
@@ -1110,6 +1217,7 @@
 					radius: width * 0.20 + (fp % 2) * (width * 0.07),
 					speedX: 0.22 + (fp % 3) * 0.10,
 					pulsePhase: fp * 0.8,
+					pulseSpeed: 1.2 + (fp % 3) * 0.4,
 					alphaBase: 0.075 + (fp % 2) * 0.035
 				});
 			}
@@ -1398,8 +1506,13 @@
 						puff.x = -puff.radius;
 					}
 
-					var pulse = Math.sin(time * puff.pulseSpeed + puff.pulsePhase);
-					var curAlpha = puff.alphaBase + pulse * 0.02;
+					var pSpeed = puff.pulseSpeed || 1.2;
+					var pPhase = puff.pulsePhase || 0.0;
+					var pulse = Math.sin(time * pSpeed + pPhase);
+					var curAlpha = (puff.alphaBase || 0.075) + pulse * 0.02;
+					if (isNaN(curAlpha) || curAlpha < 0.001) curAlpha = 0.05;
+					if (curAlpha > 1.0) curAlpha = 1.0;
+
 					var puffGrad = ctx.createRadialGradient(puff.x, puff.y, puff.radius * 0.1, puff.x, puff.y, puff.radius);
 					puffGrad.addColorStop(0, 'rgba(' + fogBaseR + ',' + fogBaseG + ',' + fogBaseB + ',' + curAlpha.toFixed(3) + ')');
 					puffGrad.addColorStop(0.5, 'rgba(' + fogBaseR + ',' + fogBaseG + ',' + fogBaseB + ',' + (curAlpha * 0.45).toFixed(3) + ')');
@@ -1690,105 +1803,6 @@
 			}
 		});
 
-		var Module = {
-			preRun: [
-				function() {
-					try {
-						if (typeof FS !== 'undefined') {
-							try { FS.unlink('/diablo.ini'); } catch(e){}
-						}
-					} catch(e) {}
-				}
-			],
-			postRun: [
-				function() {
-					// Hide loading overlay once the engine has booted
-					if (loadingOverlay) {
-						loadingOverlay.classList.add('hidden');
-						setTimeout(function() {
-							loadingOverlay.style.display = 'none';
-						}, 500);
-					}
-				}
-			],
-			print: (function () {
-				var element = document.getElementById('output');
-				if (element) element.value = '';
-				return function (text) {
-					if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
-					console.log(text);
-					window.checkMpqError(text);
-					if (element) {
-						element.value += text + "\n";
-						element.scrollTop = element.scrollHeight;
-					}
-				};
-			})(),
-			printErr: function(text) {
-				if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
-				console.error(text);
-				window.checkMpqError(text);
-			},
-			canvas: (function () {
-				var canvas = document.getElementById('canvas');
-				canvas.addEventListener("webglcontextlost", function (e) {
-					alert('WebGL context lost. Recarga la página.');
-					e.preventDefault();
-				}, false);
-				canvas.addEventListener("dragstart", function (e) { e.preventDefault(); }, false);
-				return canvas;
-			})(),
-			setStatus: function (text) {
-				if (!Module.setStatus.last) Module.setStatus.last = { time: Date.now(), text: '' };
-				if (text === Module.setStatus.last.text) return;
-				var m = text.match(/([^(]+)\((\d+(\.\d+)?)\/(\d+)\)/);
-				var now = Date.now();
-				if (m && now - Module.setStatus.last.time < 30) return;
-				Module.setStatus.last.time = now;
-				Module.setStatus.last.text = text;
-				if (m) {
-					text = m[1];
-					progressElement.value = parseInt(m[2]) * 100;
-					progressElement.max = parseInt(m[4]) * 100;
-					progressElement.hidden = false;
-					spinnerElement.hidden = false;
-				} else {
-					progressElement.value = null;
-					progressElement.max = null;
-					progressElement.hidden = true;
-					if (!text) {
-						spinnerElement.style.display = 'none';
-						if (loadingOverlay) {
-							loadingOverlay.classList.add('hidden');
-							setTimeout(function() {
-								loadingOverlay.style.display = 'none';
-							}, 500);
-						}
-					}
-				}
-				statusElement.innerHTML = text || '';
-			},
-			locateFile: function(path, prefix) {
-				if (path.endsWith('.wasm')) {
-					return prefix + path + '?v=' + Date.now();
-				}
-				return prefix + path;
-			},
-			totalDependencies: 0,
-			monitorRunDependencies: function (left) {
-				this.totalDependencies = Math.max(this.totalDependencies, left);
-				Module.setStatus(left ? 'Preparando... (' + (this.totalDependencies - left) + '/' + this.totalDependencies + ')' : '');
-			}
-		};
-
-		Module.setStatus('Iniciando...');
-		window.onerror = function (event) {
-			spinnerElement.style.display = 'none';
-			window.checkMpqError(event);
-			if (document.getElementById('missingMpqModal').style.display !== 'flex') {
-				Module.setStatus('Error al ejecutar WebAssembly.');
-			}
-		};
 	</script>
 	<script src="https://cdn.jsdelivr.net/npm/onnxruntime-web/dist/ort.min.js"></script>
 	<script src="neural_infer.js"></script>

@@ -69,10 +69,9 @@
 			outline: none;
 		}
 
-		/* Cinematic Graphics Remaster Active Presentation */
+		/* Clean Graphics Presentation */
 		body.remaster-enabled canvas.emscripten {
-			filter: contrast(1.18) saturate(1.16) brightness(0.98);
-			transition: filter 0.3s ease;
+			filter: none;
 		}
 
 		/* WebGPU Neural HD Canvas Overlay */
@@ -93,25 +92,12 @@
 		}
 
 		body.remaster-enabled #webgpuNeuralCanvas {
-			opacity: 1;
-		}
-
-		/* Cinematic Vignette Layer */
-		.remaster-vignette-layer {
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			pointer-events: none;
-			background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 42%, rgba(8, 12, 22, 0.42) 72%, rgba(0, 0, 0, 0.78) 100%);
 			opacity: 0;
-			transition: opacity 0.35s ease;
-			z-index: 10;
 		}
 
-		body.remaster-enabled .remaster-vignette-layer {
-			opacity: 1;
+		/* Soft Subtle Vignette */
+		.remaster-vignette-layer {
+			display: none;
 		}
 
 		/* Enhanced Isometric Rain & Lightning Overlay */
@@ -1344,27 +1330,9 @@
 			}
 			setTimeout(triggerDiabloLightning, 5000);
 
-			// Main Atmosphere & Weather Loop (Active ONLY in Tristram Town during active gameplay)
+			// Main Atmosphere & Weather Loop (Diablo Rain 2.0 & Thunderstorm Engine)
 			function weatherLoop() {
-				var isTownBiome = false;
-				if (window.Module) {
-					if (typeof Module._Nightmare_IsTown === 'function') {
-						try {
-							isTownBiome = (Module._Nightmare_IsTown() === 1);
-						} catch(e) {
-							isTownBiome = false;
-						}
-					} else if (typeof Module._Nightmare_GBuffer_GetBiome === 'function') {
-						try {
-							var biomeId = Module._Nightmare_GBuffer_GetBiome();
-							isTownBiome = (biomeId === 0);
-						} catch(e) {
-							isTownBiome = false;
-						}
-					}
-				}
-
-				if (!isTownBiome || document.hidden || !document.body.classList.contains('remaster-enabled')) {
+				if (!document.body.classList.contains('remaster-enabled') || document.hidden) {
 					ctx.clearRect(0, 0, width, height);
 					if (lightning) lightning.style.opacity = 0;
 					requestAnimationFrame(weatherLoop);

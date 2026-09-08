@@ -245,8 +245,8 @@ void InvasionManager::SpawnInitialInvasionForce()
 
 		Monster *monster = AddMonster(spawn.pt, Direction::South, typeIdx, true);
 		if (monster != nullptr) {
-			monster->intelligence = 3;
-			monster->activeForTicks = UINT8_MAX;
+			monster->intelligence = 2;
+			monster->activeForTicks = 0; // Proximity-based awakening to prevent WebAssembly CPU pathfinding freeze
 			if (monster->type().type == MT_BALROG) {
 				monster->maxHitPoints = 2500 << 6;
 				monster->hitPoints = monster->maxHitPoints;
@@ -424,13 +424,13 @@ void InvasionManager::RestoreInvasionSnapshot()
 		Monster *monster = AddMonster(Point { snap.x, snap.y }, Direction::South, typeIdx, true);
 		if (monster != nullptr) {
 			// Restore aggression and base stats matching initial spawn values
-			monster->intelligence = 3;
-			monster->activeForTicks = UINT8_MAX;
+			monster->intelligence = 2;
+			monster->activeForTicks = 0;
 			if (snap.is_boss && state_.boss_unique_type != UniqueMonsterType::None) {
 				PrepareUniqueMonst(*monster, state_.boss_unique_type, 0, 0, UniqueMonstersData[static_cast<size_t>(state_.boss_unique_type)]);
 				monster->hitPoints = snap.current_hp;
 				monster->intelligence = 3;
-				monster->activeForTicks = UINT8_MAX;
+				monster->activeForTicks = 0;
 				monster->minDamage = 75;
 				monster->maxDamage = 120;
 				monster->armorClass = 95;

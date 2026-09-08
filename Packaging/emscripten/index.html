@@ -706,7 +706,8 @@
 
 <body class="remaster-enabled">
 	<div class="top-toolbar">
-		<button class="ui-btn" id="remasterToggleBtn" title="Alternar Modo Remaster (F2)">✨ Remaster: ON</button>
+		<button class="ui-btn" id="remasterToggleBtn" title="Alternar Preset Cinemático (F2)">🎬 Cinematic 2.5D: ON</button>
+		<button class="ui-btn" id="mistToggleBtn" title="Alternar Niebla Atmosférica 2.5D">🌫️ Niebla: ON</button>
 		<button class="ui-btn" id="tinyCoreBtn" title="Lanzar Tiny Core Linux (WebAssembly)" onclick="if(document.exitPointerLock) document.exitPointerLock(); window.open('minixp/index.html', '_blank', 'noopener,noreferrer')">🐧 Tiny Core Linux</button>
 		<button class="ui-btn" id="fileManagerBtn" title="Administrador de Archivos">📁 File Manager</button>
 		<button class="ui-btn" id="fullscreenBtn" title="Pantalla Completa">⛶ Pantalla Completa</button>
@@ -867,16 +868,22 @@
 			}
 		}
 
-		// Remaster / Neural HD toggle logic (3 States: Enhanced -> Split A/B -> Original 1996)
+		// Cinematic 2.5D Renderer Preset Selector (3 States: 1=Cinematic Grimdark -> 7=Invasion -> 0=Original 1996)
 		var remasterBtn = document.getElementById('remasterToggleBtn');
-		var renderModeState = 1; // 1: Enhanced, 0: Original 1996
+		var mistBtn = document.getElementById('mistToggleBtn');
+		var renderModeState = 1; // 1: Cinematic 2.5D, 7: La Caída de Tristram, 0: Original 1996
+		window.currentMistDensity = 0.38;
 
 		function updateRemasterUI() {
 			window.currentWebGPURenderMode = renderModeState;
 			if (renderModeState === 1) {
 				document.body.classList.add('remaster-enabled');
-				if (remasterBtn) remasterBtn.innerHTML = '⚡ Neural HD: ON (WebGPU)';
-				showToast('⚡ Neural HD: Activado (Reconstrucción Subpixel, Pseudo-Normales y Lluvia Volumétrica)');
+				if (remasterBtn) remasterBtn.innerHTML = '🎬 Cinematic 2.5D';
+				showToast('🎬 Modo Cinemático 2.5D: Sombras Frías, Contraste S-Curve & Niebla Suave');
+			} else if (renderModeState === 7) {
+				document.body.classList.add('remaster-enabled');
+				if (remasterBtn) remasterBtn.innerHTML = '🔴 La Caída de Tristram';
+				showToast('🔴 Invasión: Bruma Carmesí, Resplandor de Catedral & Iluminación Gótica');
 			} else {
 				document.body.classList.remove('remaster-enabled');
 				if (remasterBtn) remasterBtn.innerHTML = '⚔️ Original: 1996';
@@ -888,19 +895,40 @@
 		}
 		window.currentWebGPURenderMode = 1;
 
-		function toggleRemaster() {
-			renderModeState = (renderModeState === 1) ? 0 : 1;
+		function cycleRemasterPreset() {
+			if (renderModeState === 1) {
+				renderModeState = 7;
+			} else if (renderModeState === 7) {
+				renderModeState = 0;
+			} else {
+				renderModeState = 1;
+			}
 			updateRemasterUI();
 		}
 
 		if (remasterBtn) {
-			remasterBtn.addEventListener('click', toggleRemaster);
-			remasterBtn.innerHTML = '⚡ Neural HD: ON (WebGPU)';
+			remasterBtn.addEventListener('click', cycleRemasterPreset);
+			remasterBtn.innerHTML = '🎬 Cinematic 2.5D';
 		}
+
+		if (mistBtn) {
+			mistBtn.addEventListener('click', function() {
+				if (window.currentMistDensity > 0.05) {
+					window.currentMistDensity = 0.0;
+					mistBtn.innerHTML = '🌫️ Niebla: OFF';
+					showToast('🌫️ Niebla 2.5D Desactivada');
+				} else {
+					window.currentMistDensity = 0.38;
+					mistBtn.innerHTML = '🌫️ Niebla: ON';
+					showToast('🌫️ Niebla 2.5D Activada');
+				}
+			});
+		}
+
 		window.addEventListener('keydown', function(e) {
 			if (e.key === 'F2') {
 				e.preventDefault();
-				toggleRemaster();
+				cycleRemasterPreset();
 			}
 		});
 
@@ -1034,7 +1062,7 @@
 						uViewF32[10] = 320; // Bonfire center x
 						uViewF32[11] = 240; // Bonfire center y
 						uViewU32[12] = qualityTier;
-						uViewF32[13] = 0.35; // Mist density
+						uViewF32[13] = (typeof window.currentMistDensity === 'number') ? window.currentMistDensity : 0.38; // Dynamic 2.5D Mist Density
 
 						device.queue.writeBuffer(uniformBuffer, 0, uData);
 

@@ -377,14 +377,28 @@ fn fs_main(in: VertexOutput) -> @location(0) vec4<f32> {
         ambientTint = vec3<f32>(0.84, 0.89, 0.96) * 0.80; // Deeper night immersion in town
     }
 
+    // Multi-Octave Atmospheric Ground Mist 2.5D
     var groundMist = vec3<f32>(0.0);
     if (u.qualityTier > 0u && semId == 1u) {
-        let mistCoord = vec2<f32>(screenPixel) * 0.032;
-        let mistNoise = sin(mistCoord.x * 1.6 + u.time * 0.22) * cos(mistCoord.y * 1.9 + u.time * 0.28) * 0.5 + 0.5;
-        let fireClear = clamp((distToBonfire - 50.0) / 140.0, 0.0, 1.0);
-        let mistAlpha = mistNoise * fireClear * (u.mistDensity * 0.22);
-        let mistTint = select(vec3<f32>(0.62, 0.70, 0.82), vec3<f32>(0.45, 0.65, 0.75), u.dungeonBiome == 5u);
-        groundMist = mistTint * mistAlpha * ambientBase;
+        let pWorld = vec2<f32>(screenPixel);
+        // Multi-octave wind-driven low mist
+        let wind1 = vec2<f32>(u.time * 0.08, u.time * 0.02);
+        let wind2 = vec2<f32>(-u.time * 0.04, u.time * 0.06);
+        let n1 = sin(pWorld.x * 0.022 + wind1.x) * cos(pWorld.y * 0.026 + wind1.y);
+        let n2 = sin(pWorld.x * 0.045 + wind2.x) * cos(pWorld.y * 0.038 + wind2.y) * 0.5;
+        let mistNoise = clamp((n1 + n2) * 0.5 + 0.5, 0.0, 1.0);
+        
+        let fireClear = clamp((distToBonfire - 40.0) / 120.0, 0.0, 1.0);
+        let mistFactor = mistNoise * fireClear * (u.mistDensity * 0.35);
+        
+        // Cold moonlight mist tint in town, blood mist in invasion
+        var mistColor = vec3<f32>(0.58, 0.68, 0.82); // Cold Gothic Slate
+        if (u.renderMode == 7u) {
+            mistColor = vec3<f32>(0.85, 0.35, 0.25); // Crimson invasion mist
+        } else if (u.dungeonBiome == 5u) {
+            mistColor = vec3<f32>(0.42, 0.65, 0.78); // Crypt ethereal mist
+        }
+        groundMist = mistColor * mistFactor * ambientBase;
     }
 
     let dynamicDiffuse = mainRadiance * diffuseFactor;
@@ -392,18 +406,30 @@ fn fs_main(in: VertexOutput) -> @location(0) vec4<f32> {
 
     var enhanced = (origColor.rgb * totalLight * totalGroundShadow) + specularContribution + emissiveLight + groundMist;
 
-    // Rich Shadow Depth & Highlight Saturation Curve
-    let gammaLift = select(0.96, 1.02, u.dungeonBiome == 0u);
-    enhanced = pow(enhanced, vec3<f32>(gammaLift));
+    // Cinematic Color Grading & Split Toning (Cold Shadows / Warm Highlights)
+    let lumVal = dot(enhanced, vec3<f32>(0.299, 0.587, 0.114));
+    let shadowTone = vec3<f32>(0.85, 0.92, 1.08); // Cold Cyan/Blue in deep shadows
+    let highlightTone = vec3<f32>(1.08, 0.96, 0.84); // Warm Amber in lights
+    let splitTone = mix(shadowTone, highlightTone, smoothstep(0.15, 0.75, lumVal));
+    enhanced = enhanced * splitTone;
+
+    // S-Curve Contrast Enhancement (Rich Black Levels)
+    let contrastS = enhanced * enhanced * (3.0 - 2.0 * clamp(enhanced, vec3<f32>(0.0), vec3<f32>(1.0)));
+    enhanced = mix(enhanced, contrastS, 0.38);
+
+    // Subtle Vignette in Shader
+    let vigCoord = (in.uv - vec2<f32>(0.5)) * vec2<f32>(1.12, 0.95);
+    let vig = 1.0 - smoothstep(0.38, 0.92, length(vigCoord)) * 0.32;
+    enhanced = enhanced * vig;
 
     // Silhouette Invariance Masking
     enhanced = mix(origColor.rgb, enhanced, origColor.a);
 
-    // Modes
+    // Modes & Presets
     if (u.renderMode == 0u) {
-        return origColor;
-    } else if (u.renderMode == 1u) {
-        return vec4<f32>(enhanced, origColor.a);
+        return origColor; // Original 1996 Pure
+    } else if (u.renderMode == 1u || u.renderMode == 7u) {
+        return vec4<f32>(enhanced, origColor.a); // 1: Cinematic Grimdark, 7: La Caída de Tristram
     } else if (u.renderMode == 2u) {
         if (in.uv.x < u.splitPos) {
             return origColor;

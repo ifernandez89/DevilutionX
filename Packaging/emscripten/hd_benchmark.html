@@ -3,64 +3,86 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>NIGHTMARE HD — Benchmark Visual (Fase 0)</title>
+	<title>NIGHTMARE HD — Benchmark Visual Universal</title>
 	<style>
 		* { box-sizing: border-box; margin: 0; padding: 0; }
 		body {
 			background: #080b10;
 			color: #e2e8f0;
-			font-family: 'Segoe UI', system-ui, sans-serif;
+			font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
 			display: flex;
 			flex-direction: column;
 			align-items: center;
 			min-height: 100vh;
-			padding: 24px;
+			padding: 20px 16px;
 		}
 		header {
 			text-align: center;
-			margin-bottom: 20px;
+			margin-bottom: 16px;
 		}
 		h1 {
 			color: #f59e0b;
-			font-size: 1.8rem;
-			text-shadow: 0 0 12px rgba(245, 158, 11, 0.4);
-			margin-bottom: 6px;
+			font-size: 1.7rem;
+			text-shadow: 0 0 14px rgba(245, 158, 11, 0.45);
+			margin-bottom: 4px;
+			letter-spacing: 0.5px;
 		}
 		.subtitle {
 			color: #94a3b8;
-			font-size: 0.95rem;
+			font-size: 0.88rem;
 		}
 		.controls-bar {
 			display: flex;
-			gap: 12px;
-			margin-bottom: 18px;
-			background: #111827;
-			padding: 10px 18px;
+			gap: 8px;
+			margin-bottom: 10px;
+			background: #0f172a;
+			padding: 8px 14px;
 			border-radius: 8px;
-			border: 1px solid #1f2937;
+			border: 1px solid #1e293b;
 			flex-wrap: wrap;
 			justify-content: center;
+			align-items: center;
+			max-width: 720px;
+		}
+		.bar-label {
+			font-size: 0.8rem;
+			color: #64748b;
+			font-weight: 600;
+			text-transform: uppercase;
+			margin-right: 4px;
 		}
 		.btn {
 			background: #1e293b;
-			color: #e2e8f0;
+			color: #cbd5e1;
 			border: 1px solid #334155;
-			padding: 8px 16px;
+			padding: 6px 12px;
 			border-radius: 6px;
 			cursor: pointer;
-			font-size: 0.9rem;
+			font-size: 0.82rem;
 			font-weight: 500;
-			transition: all 0.2s ease;
+			transition: all 0.15s ease;
+			display: inline-flex;
+			align-items: center;
+			gap: 4px;
 		}
 		.btn:hover {
 			background: #334155;
 			border-color: #64748b;
+			color: #ffffff;
 		}
 		.btn.active {
 			background: #d97706;
 			border-color: #f59e0b;
 			color: #ffffff;
-			box-shadow: 0 0 10px rgba(245, 158, 11, 0.3);
+			box-shadow: 0 0 12px rgba(245, 158, 11, 0.35);
+			font-weight: 600;
+		}
+		.btn.active-blue {
+			background: #2563eb;
+			border-color: #60a5fa;
+			color: #ffffff;
+			box-shadow: 0 0 12px rgba(37, 99, 235, 0.35);
+			font-weight: 600;
 		}
 		.viewport-container {
 			position: relative;
@@ -69,7 +91,7 @@
 			background: #05070a;
 			border-radius: 8px;
 			overflow: hidden;
-			box-shadow: 0 12px 36px rgba(0, 0, 0, 0.8), 0 0 0 1px #1e293b;
+			box-shadow: 0 16px 40px rgba(0, 0, 0, 0.9), 0 0 0 1px #1e293b;
 			cursor: crosshair;
 		}
 		canvas {
@@ -81,76 +103,102 @@
 			image-rendering: pixelated;
 		}
 		.hud-tip {
-			margin-top: 14px;
-			font-size: 0.85rem;
+			margin-top: 12px;
+			font-size: 0.82rem;
 			color: #64748b;
 			text-align: center;
+			max-width: 640px;
 		}
 		.info-grid {
 			display: grid;
-			grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-			gap: 16px;
+			grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+			gap: 12px;
 			max-width: 640px;
 			width: 100%;
-			margin-top: 24px;
+			margin-top: 18px;
 		}
 		.info-card {
 			background: #0f172a;
 			border: 1px solid #1e293b;
 			border-radius: 8px;
-			padding: 14px;
+			padding: 12px;
 		}
 		.info-card h3 {
-			font-size: 0.9rem;
+			font-size: 0.85rem;
 			color: #38bdf8;
-			margin-bottom: 6px;
+			margin-bottom: 4px;
 		}
 		.info-card p {
-			font-size: 0.8rem;
+			font-size: 0.76rem;
 			color: #94a3b8;
-			line-height: 1.4;
+			line-height: 1.35;
 		}
 	</style>
 </head>
 <body>
 
 	<header>
-		<h1>⚔️ NIGHTMARE HD — Benchmark Visual</h1>
-		<div class="subtitle">Fase 0: Vertical Slice de Reconstrucción de Materiales & Iluminación Reactiva 2.5D</div>
+		<h1>⚔️ NIGHTMARE HD — Benchmark Visual Universal</h1>
+		<div class="subtitle">Reconstrucción de Materiales & Iluminación Reactiva 2.5D Aplicada a Todo el Juego</div>
 	</header>
 
+	<!-- Selector de Bioma / Escenario -->
+	<div class="controls-bar" style="border-color: #334155;">
+		<span class="bar-label">🗺️ Bioma:</span>
+		<button class="btn active-blue" id="bioTown" onclick="setBiome('town')">🏡 Tristram</button>
+		<button class="btn" id="bioCathedral" onclick="setBiome('cathedral')">⛪ Catedral</button>
+		<button class="btn" id="bioCatacombs" onclick="setBiome('catacombs')">💀 Catacumbas</button>
+		<button class="btn" id="bioCaves" onclick="setBiome('caves')">🌋 Cavernas</button>
+		<button class="btn" id="bioHell" onclick="setBiome('hell')">🔥 Infierno</button>
+	</div>
+
+	<!-- Selector de Personaje / Monstruo -->
+	<div class="controls-bar" style="border-color: #3b82f6;">
+		<span class="bar-label">👤 Entidad:</span>
+		<button class="btn active" id="entWarrior" onclick="setEntity('warrior')">🛡️ Guerrero</button>
+		<button class="btn" id="entRogue" onclick="setEntity('rogue')">🏹 Pícara</button>
+		<button class="btn" id="entSorcerer" onclick="setEntity('sorcerer')">🔮 Hechicero</button>
+		<button class="btn" id="entBloodKnight" onclick="setEntity('blood_knight')">👹 Blood Knight</button>
+		<button class="btn" id="entBalrog" onclick="setEntity('balrog')">🦇 Balrog</button>
+		<button class="btn" id="entReaper" onclick="setEntity('reaper')">💀 Reaper</button>
+	</div>
+
+	<!-- Selector de Canales PBR -->
 	<div class="controls-bar">
 		<button class="btn active" id="modeHD" onclick="setMode('hd')">🛡️ NIGHTMARE HD (PBR 2.5D)</button>
-		<button class="btn" id="modeOriginal" onclick="setMode('original')">⚔️ Original 1996 (Plano)</button>
+		<button class="btn" id="modeOriginal" onclick="setMode('original')">⚔️ Original 1996</button>
 		<button class="btn" id="modeNormals" onclick="setMode('normals')">🧭 Mapa de Normales</button>
 		<button class="btn" id="modeMaterials" onclick="setMode('materials')">🎨 Material ID</button>
+		<button class="btn" id="modeRoughness" onclick="setMode('roughness')">🌓 Rugosidad</button>
+		<button class="btn" id="modeDepth" onclick="setMode('depth')">⛰️ Profundidad</button>
 		<button class="btn" id="toggleRain" onclick="toggleRain()">🌧️ Lluvia: ON</button>
 	</div>
 
+	<!-- Viewport Canvas 640x480 -->
 	<div class="viewport-container" id="viewport">
 		<canvas id="renderCanvas" width="640" height="480"></canvas>
 	</div>
 
 	<div class="hud-tip">
-		💡 Mueve el <strong>ratón</strong> sobre la pantalla para cambiar la posición de la antorcha y ver cómo reaccionan las placas de armadura, la tela y la piedra.
+		💡 Mueve el <strong>ratón</strong> sobre la pantalla para desplazar la antorcha y observar la respuesta física de placas de armadura, túnicas de seda, madera y piedra con sombras proyectadas en tiempo real.
 	</div>
 
 	<div class="info-grid">
 		<div class="info-card">
-			<h3>🛡️ Placas Metálicas & Armas</h3>
-			<p>Roughness baja (0.22). Refleja highlights nítidos y micro-aristas ante el ángulo de la antorcha sin parecer un espejo cromado.</p>
+			<h3>🛡️ Placas Metálicas (Roughness 0.22)</h3>
+			<p>Brillos especulares reactivos al ángulo de la antorcha. Acero bruñido, bordes biselados y reflejos nítidos sin perder la silueta original.</p>
 		</div>
 		<div class="info-card">
-			<h3>🧵 Túnica & Pliegues</h3>
-			<p>Roughness alta (0.92). Micro-sombras en las arrugas de la tela roja, separándola visualmente de las placas de acero.</p>
+			<h3>🧵 Telas & Cuero (Roughness 0.60 - 0.92)</h3>
+			<p>Micro-sombras en pliegues y respuesta difusa aterciopelada en la túnica roja del Guerrero y los mantos del Hechicero.</p>
 		</div>
 		<div class="info-card">
-			<h3>🧱 Mampostería de Piedra</h3>
-			<p>Relieve con sombras en las hendiduras de mortero y vetas de madera cálida en la puerta.</p>
+			<h3>🧱 Entorno & Suelo Húmedo</h3>
+			<p>Mortero de piedra con sombras en las grietas, vetas en vigas de madera y charcos con reflejo de luz cuando llueve.</p>
 		</div>
 		<div class="info-card">
-			<h3>🌧️ Suelo Húmedo</h3>
-			<p>Tierra y empedrado con reducción dinámica de rugosidad para reflejar sutilmente las luces de Tristram.</p>
+			<h3>✨ Emisores de Luz & Sombras</h3>
+			<p>Ojos demoníacos, cristales de bastón y antorchas con atenuación cuadrática inversa y proyección de sombras en el suelo.</p>
 		</div>
 	</div>
 
@@ -159,9 +207,11 @@
 		const ctx = canvas.getContext('2d');
 
 		let currentMode = 'hd';
+		let currentEntity = 'warrior';
+		let currentBiome = 'town';
 		let rainActive = true;
 		let lightX = 320;
-		let lightY = 220;
+		let lightY = 200;
 
 		const viewport = document.getElementById('viewport');
 		viewport.addEventListener('mousemove', (e) => {
@@ -172,13 +222,36 @@
 
 		function setMode(mode) {
 			currentMode = mode;
-			document.querySelectorAll('.controls-bar .btn').forEach(b => {
+			document.querySelectorAll('.controls-bar:nth-of-type(3) .btn').forEach(b => {
 				if (b.id !== 'toggleRain') b.classList.remove('active');
 			});
 			if (mode === 'hd') document.getElementById('modeHD').classList.add('active');
 			if (mode === 'original') document.getElementById('modeOriginal').classList.add('active');
 			if (mode === 'normals') document.getElementById('modeNormals').classList.add('active');
 			if (mode === 'materials') document.getElementById('modeMaterials').classList.add('active');
+			if (mode === 'roughness') document.getElementById('modeRoughness').classList.add('active');
+			if (mode === 'depth') document.getElementById('modeDepth').classList.add('active');
+		}
+
+		function setEntity(ent) {
+			currentEntity = ent;
+			document.querySelectorAll('.controls-bar:nth-of-type(2) .btn').forEach(b => b.classList.remove('active'));
+			if (ent === 'warrior') document.getElementById('entWarrior').classList.add('active');
+			if (ent === 'rogue') document.getElementById('entRogue').classList.add('active');
+			if (ent === 'sorcerer') document.getElementById('entSorcerer').classList.add('active');
+			if (ent === 'blood_knight') document.getElementById('entBloodKnight').classList.add('active');
+			if (ent === 'balrog') document.getElementById('entBalrog').classList.add('active');
+			if (ent === 'reaper') document.getElementById('entReaper').classList.add('active');
+		}
+
+		function setBiome(bio) {
+			currentBiome = bio;
+			document.querySelectorAll('.controls-bar:nth-of-type(1) .btn').forEach(b => b.classList.remove('active-blue'));
+			if (bio === 'town') document.getElementById('bioTown').classList.add('active-blue');
+			if (bio === 'cathedral') document.getElementById('bioCathedral').classList.add('active-blue');
+			if (bio === 'catacombs') document.getElementById('bioCatacombs').classList.add('active-blue');
+			if (bio === 'caves') document.getElementById('bioCaves').classList.add('active-blue');
+			if (bio === 'hell') document.getElementById('bioHell').classList.add('active-blue');
 		}
 
 		function toggleRain() {
@@ -187,7 +260,7 @@
 			document.getElementById('toggleRain').classList.toggle('active', rainActive);
 		}
 
-		// Precalculate Rain particles
+		// Rain drops
 		const drops = [];
 		for (let i = 0; i < 90; i++) {
 			drops.push({
@@ -201,190 +274,39 @@
 		let animTime = 0;
 
 		function render() {
-			animTime += 0.02;
+			animTime += 0.025;
 			ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-			// Background Soil & Path
-			ctx.fillStyle = '#10141a';
-			ctx.fillRect(0, 0, canvas.width, canvas.height);
+			// 1. DIBUJAR ENTORNO / BIOMA
+			drawEnvironment(currentBiome);
 
-			// Ground Texture
-			const pathGrad = ctx.createLinearGradient(0, 180, 640, 320);
-			pathGrad.addColorStop(0, '#151b22');
-			pathGrad.addColorStop(0.5, '#1e242b');
-			pathGrad.addColorStop(1, '#12161c');
-			ctx.fillStyle = pathGrad;
-			ctx.beginPath();
-			ctx.moveTo(0, 180);
-			ctx.lineTo(640, 300);
-			ctx.lineTo(640, 480);
-			ctx.lineTo(0, 480);
-			ctx.fill();
+			// 2. DIBUJAR SOMBRA PROYECTADA DE LA ENTIDAD
+			drawDynamicShadow(320, 290, lightX, lightY);
 
-			// Griswold Stone House Facade
-			ctx.save();
-			ctx.fillStyle = '#22262d';
-			ctx.fillRect(40, 60, 180, 160);
+			// 3. DIBUJAR ENTIDAD (Héroe o Monstruo)
+			drawEntity(currentEntity, 320, 200, lightX, lightY, currentMode);
 
-			// Roof
-			ctx.fillStyle = '#2d2922';
-			ctx.beginPath();
-			ctx.moveTo(20, 70);
-			ctx.lineTo(130, 10);
-			ctx.lineTo(240, 70);
-			ctx.fill();
-
-			// Arched Wooden Door with Warm Light
-			const doorGrad = ctx.createRadialGradient(130, 150, 4, 130, 150, 80);
-			doorGrad.addColorStop(0, 'rgba(255, 180, 70, 0.8)');
-			doorGrad.addColorStop(0.4, 'rgba(220, 130, 40, 0.4)');
-			doorGrad.addColorStop(1, 'rgba(180, 90, 20, 0)');
-			ctx.fillStyle = doorGrad;
-			ctx.fillRect(95, 120, 70, 100);
-
-			ctx.fillStyle = '#1a140e';
-			ctx.beginPath();
-			ctx.arc(130, 140, 22, Math.PI, 0);
-			ctx.lineTo(152, 220);
-			ctx.lineTo(108, 220);
-			ctx.fill();
-			ctx.restore();
-
-			// Shadow under Warrior
-			ctx.save();
-			ctx.fillStyle = 'rgba(4, 6, 10, 0.65)';
-			ctx.beginPath();
-			ctx.ellipse(330, 295, 34, 14, -0.25, 0, Math.PI * 2);
-			ctx.fill();
-			ctx.restore();
-
-			// Warrior Entity Center Position
-			const wx = 320, wy = 200;
-
-			if (currentMode === 'original') {
-				// Flat 1996 Sprite Rendering
-				// Head
-				ctx.fillStyle = '#d29a76';
-				ctx.fillRect(wx + 10, wy + 2, 8, 10);
-				// Breastplate
-				ctx.fillStyle = '#8f9aa6';
-				ctx.fillRect(wx + 2, wy + 14, 24, 28);
-				// Red Tunic
-				ctx.fillStyle = '#9e221c';
-				ctx.fillRect(wx - 2, wy + 22, 32, 40);
-				// Pauldrons
-				ctx.fillStyle = '#a6b2c0';
-				ctx.fillRect(wx - 4, wy + 14, 8, 12);
-				ctx.fillRect(wx + 24, wy + 14, 8, 12);
-				// Staff / Weapon
-				ctx.fillStyle = '#e5a532';
-				ctx.fillRect(wx - 14, wy + 6, 4, 75);
-				// Legs / Boots
-				ctx.fillStyle = '#b85e26';
-				ctx.fillRect(wx + 4, wy + 62, 8, 26);
-				ctx.fillRect(wx + 16, wy + 62, 8, 26);
-
-			} else if (currentMode === 'normals') {
-				// Normal Map Inspection View (Tangent Space RGB)
-				ctx.fillStyle = '#8080ff';
-				ctx.fillRect(wx - 6, wy, 40, 90);
-				// Spherical Normal on Pauldron
-				const nGrad = ctx.createRadialGradient(wx + 26, wy + 20, 2, wx + 26, wy + 20, 12);
-				nGrad.addColorStop(0, '#ff8080');
-				nGrad.addColorStop(1, '#8080ff');
-				ctx.fillStyle = nGrad;
-				ctx.beginPath();
-				ctx.arc(wx + 26, wy + 20, 8, 0, Math.PI * 2);
-				ctx.fill();
-				// Weapon normal
-				ctx.fillStyle = '#ffff80';
-				ctx.fillRect(wx - 14, wy + 6, 4, 75);
-
-			} else if (currentMode === 'materials') {
-				// Material ID Segmentation View
-				ctx.fillStyle = '#00ffff'; // Metal (Steel/Gold)
-				ctx.fillRect(wx + 2, wy + 14, 24, 28);
-				ctx.fillRect(wx - 4, wy + 14, 8, 12);
-				ctx.fillRect(wx + 24, wy + 14, 8, 12);
-				ctx.fillRect(wx - 14, wy + 6, 4, 75);
-
-				ctx.fillStyle = '#ff0000'; // Cloth (Red Tunic)
-				ctx.fillRect(wx - 2, wy + 42, 32, 22);
-
-				ctx.fillStyle = '#ff9900'; // Leather
-				ctx.fillRect(wx + 4, wy + 64, 20, 24);
-
-				ctx.fillStyle = '#ffcc99'; // Skin
-				ctx.fillRect(wx + 10, wy + 2, 8, 10);
-
-			} else {
-				// NIGHTMARE HD — Real-time PBR 2.5D Shading
-				const dx = lightX - wx;
-				const dy = lightY - wy;
-				const dist = Math.sqrt(dx * dx + dy * dy);
-				const lightIntensity = Math.max(0.2, 1.0 - (dist / 380.0));
-				const lightAngle = Math.atan2(dy, dx);
-
-				// Red Tunic with Micro-folds & Occlusion
-				const foldShadow = 0.5 + Math.sin(wx * 0.4) * 0.2;
-				ctx.fillStyle = `rgb(${Math.floor(165 * lightIntensity * foldShadow)}, ${Math.floor(28 * lightIntensity)}, ${Math.floor(24 * lightIntensity)})`;
-				ctx.fillRect(wx - 2, wy + 22, 32, 42);
-
-				// Steel Breastplate with Metallic Highlights (Roughness 0.22)
-				const specHighlight = Math.max(0, Math.cos(lightAngle - 0.4)) ** 6 * 140 * lightIntensity;
-				const plateR = Math.min(255, Math.floor(140 * lightIntensity + specHighlight));
-				const plateG = Math.min(255, Math.floor(155 * lightIntensity + specHighlight * 0.95));
-				const plateB = Math.min(255, Math.floor(180 * lightIntensity + specHighlight * 1.1));
-				ctx.fillStyle = `rgb(${plateR}, ${plateG}, ${plateB})`;
-				ctx.fillRect(wx + 2, wy + 14, 24, 28);
-
-				// Beveled Plate Edges
-				ctx.strokeStyle = `rgba(240, 245, 255, ${0.4 * lightIntensity})`;
-				ctx.lineWidth = 1.5;
-				ctx.strokeRect(wx + 2, wy + 14, 24, 28);
-
-				// Pauldrons with Spherical Specular
-				const pSpec = Math.max(0, Math.cos(lightAngle - 0.2)) ** 8 * 180 * lightIntensity;
-				ctx.fillStyle = `rgb(${Math.min(255, Math.floor(150 + pSpec))}, ${Math.min(255, Math.floor(165 + pSpec))}, ${Math.min(255, Math.floor(190 + pSpec))})`;
-				ctx.fillRect(wx - 5, wy + 14, 9, 14);
-				ctx.fillRect(wx + 24, wy + 14, 9, 14);
-
-				// Gold Trim & Weapon Edge Specular
-				const goldSpec = Math.max(0, Math.cos(lightAngle - 0.5)) ** 12 * 200 * lightIntensity;
-				ctx.fillStyle = `rgb(${Math.min(255, Math.floor(210 * lightIntensity + goldSpec))}, ${Math.min(255, Math.floor(160 * lightIntensity + goldSpec * 0.8))}, ${Math.floor(50 * lightIntensity)})`;
-				ctx.fillRect(wx - 14, wy + 6, 3, 75);
-
-				// Head / Helmet Contour
-				ctx.fillStyle = `rgb(${Math.floor(205 * lightIntensity)}, ${Math.floor(145 * lightIntensity)}, ${Math.floor(115 * lightIntensity)})`;
-				ctx.fillRect(wx + 10, wy + 2, 8, 10);
-
-				// Boots / Leather
-				ctx.fillStyle = `rgb(${Math.floor(175 * lightIntensity)}, ${Math.floor(90 * lightIntensity)}, ${Math.floor(40 * lightIntensity)})`;
-				ctx.fillRect(wx + 4, wy + 64, 8, 24);
-				ctx.fillRect(wx + 16, wy + 64, 8, 24);
-			}
-
-			// Torch Light Radiance at cursor position
+			// 4. ANTORCHA / LUZ DINÁMICA
 			if (currentMode === 'hd') {
-				const torchGrad = ctx.createRadialGradient(lightX, lightY, 4, lightX, lightY, 220);
-				torchGrad.addColorStop(0, 'rgba(255, 185, 75, 0.35)');
-				torchGrad.addColorStop(0.4, 'rgba(230, 130, 40, 0.12)');
+				const torchGrad = ctx.createRadialGradient(lightX, lightY, 4, lightX, lightY, 240);
+				torchGrad.addColorStop(0, 'rgba(255, 190, 80, 0.38)');
+				torchGrad.addColorStop(0.35, 'rgba(230, 130, 40, 0.14)');
 				torchGrad.addColorStop(1, 'rgba(180, 80, 20, 0)');
 				ctx.fillStyle = torchGrad;
 				ctx.beginPath();
-				ctx.arc(lightX, lightY, 220, 0, Math.PI * 2);
+				ctx.arc(lightX, lightY, 240, 0, Math.PI * 2);
 				ctx.fill();
 
-				// Torch Flame Core
-				ctx.fillStyle = '#ffea75';
+				// Torch Core Flame
+				ctx.fillStyle = '#fffa90';
 				ctx.beginPath();
-				ctx.arc(lightX, lightY, 5 + Math.sin(animTime * 8) * 1.5, 0, Math.PI * 2);
+				ctx.arc(lightX, lightY, 4.5 + Math.sin(animTime * 8) * 1.5, 0, Math.PI * 2);
 				ctx.fill();
 			}
 
-			// Rain Simulation
+			// 5. LLUVIA 2.0
 			if (rainActive) {
-				ctx.strokeStyle = 'rgba(195, 215, 245, 0.55)';
+				ctx.strokeStyle = 'rgba(195, 215, 245, 0.50)';
 				ctx.lineWidth = 1;
 				ctx.beginPath();
 				for (let d of drops) {
@@ -401,6 +323,321 @@
 			}
 
 			requestAnimationFrame(render);
+		}
+
+		function drawEnvironment(biome) {
+			if (biome === 'town') {
+				// Tristram Town Ground & Griswold Forge
+				ctx.fillStyle = '#0f1318';
+				ctx.fillRect(0, 0, 640, 480);
+
+				// Cobblestone Path
+				ctx.fillStyle = '#1a1f26';
+				ctx.beginPath();
+				ctx.moveTo(0, 180);
+				ctx.lineTo(640, 300);
+				ctx.lineTo(640, 480);
+				ctx.lineTo(0, 480);
+				ctx.fill();
+
+				// River Water section
+				ctx.fillStyle = '#0c1824';
+				ctx.fillRect(0, 360, 640, 120);
+
+				// Griswold Stone Workshop
+				ctx.fillStyle = '#222830';
+				ctx.fillRect(30, 60, 190, 160);
+				// Roof
+				ctx.fillStyle = '#2b2620';
+				ctx.beginPath();
+				ctx.moveTo(10, 70);
+				ctx.lineTo(125, 10);
+				ctx.lineTo(240, 70);
+				ctx.fill();
+
+				// Glowing Forge Anvil
+				const forgeGlow = ctx.createRadialGradient(125, 160, 4, 125, 160, 60);
+				forgeGlow.addColorStop(0, 'rgba(255, 120, 20, 0.7)');
+				forgeGlow.addColorStop(1, 'rgba(200, 60, 10, 0)');
+				ctx.fillStyle = forgeGlow;
+				ctx.fillRect(90, 120, 70, 80);
+
+			} else if (biome === 'cathedral') {
+				// Cathedral Flagstone Floor
+				ctx.fillStyle = '#12141a';
+				ctx.fillRect(0, 0, 640, 480);
+
+				// Gothic Pillars & Arches
+				ctx.fillStyle = '#262a33';
+				ctx.fillRect(60, 0, 40, 480);
+				ctx.fillRect(540, 0, 40, 480);
+				// Arch header
+				ctx.fillRect(60, 20, 520, 30);
+
+			} else if (biome === 'catacombs') {
+				// Catacombs Crypt Walls
+				ctx.fillStyle = '#0e1112';
+				ctx.fillRect(0, 0, 640, 480);
+				ctx.fillStyle = '#1c2224';
+				ctx.fillRect(40, 80, 160, 200);
+				ctx.fillRect(440, 80, 160, 200);
+
+			} else if (biome === 'caves') {
+				// Caves Magma / Basalt
+				ctx.fillStyle = '#140c0c';
+				ctx.fillRect(0, 0, 640, 480);
+
+				// Lava River
+				const lavaGrad = ctx.createLinearGradient(0, 340, 640, 400);
+				lavaGrad.addColorStop(0, '#c2410c');
+				lavaGrad.addColorStop(0.5, '#ea580c');
+				lavaGrad.addColorStop(1, '#9a3412');
+				ctx.fillStyle = lavaGrad;
+				ctx.fillRect(0, 340, 640, 140);
+
+			} else if (biome === 'hell') {
+				// Hell Obsidian & Blood
+				ctx.fillStyle = '#12080a';
+				ctx.fillRect(0, 0, 640, 480);
+				ctx.fillStyle = '#220d12';
+				ctx.fillRect(80, 40, 120, 240);
+				ctx.fillRect(440, 40, 120, 240);
+			}
+		}
+
+		function drawDynamicShadow(ex, ey, lx, ly) {
+			const dx = ex - lx;
+			const dy = ey - ly;
+			const dist = Math.sqrt(dx * dx + dy * dy);
+			const shadowLen = Math.min(80, dist * 0.35);
+			const shadowAngle = Math.atan2(dy, dx);
+
+			ctx.save();
+			ctx.fillStyle = 'rgba(2, 4, 8, 0.65)';
+			ctx.beginPath();
+			ctx.ellipse(ex + Math.cos(shadowAngle) * (shadowLen * 0.4), ey + Math.sin(shadowAngle) * (shadowLen * 0.2), 32 + shadowLen * 0.2, 14, shadowAngle * 0.3, 0, Math.PI * 2);
+			ctx.fill();
+			ctx.restore();
+		}
+
+		function drawEntity(entity, x, y, lx, ly, mode) {
+			const dx = lx - x;
+			const dy = ly - y;
+			const dist = Math.sqrt(dx * dx + dy * dy);
+			const lightIntensity = Math.max(0.2, 1.0 - (dist / 380.0));
+			const lightAngle = Math.atan2(dy, dx);
+
+			if (mode === 'original') {
+				// Renderizado Plano 1996 (Flat Sprite)
+				if (entity === 'warrior') {
+					ctx.fillStyle = '#d29a76'; ctx.fillRect(x + 10, y + 2, 8, 10); // Head
+					ctx.fillStyle = '#8f9aa6'; ctx.fillRect(x + 2, y + 14, 24, 28); // Plate
+					ctx.fillStyle = '#9e221c'; ctx.fillRect(x - 2, y + 22, 32, 40); // Tunic
+					ctx.fillStyle = '#a6b2c0'; ctx.fillRect(x - 4, y + 14, 8, 12); ctx.fillRect(x + 24, y + 14, 8, 12); // Pauldrons
+					ctx.fillStyle = '#e5a532'; ctx.fillRect(x - 14, y + 6, 4, 75); // Weapon
+					ctx.fillStyle = '#b85e26'; ctx.fillRect(x + 4, y + 62, 8, 26); ctx.fillRect(x + 16, y + 62, 8, 26); // Boots
+				} else if (entity === 'rogue') {
+					ctx.fillStyle = '#d8a480'; ctx.fillRect(x + 10, y + 2, 8, 10);
+					ctx.fillStyle = '#2a5fa0'; ctx.fillRect(x + 2, y + 14, 24, 48); // Blue Tunic
+					ctx.fillStyle = '#784a22'; ctx.fillRect(x + 4, y + 20, 20, 20); // Leather Corset
+					ctx.fillStyle = '#b07030'; ctx.fillRect(x - 12, y + 10, 3, 65); // Bow
+				} else if (entity === 'sorcerer') {
+					ctx.fillStyle = '#d29a76'; ctx.fillRect(x + 10, y + 2, 8, 10);
+					ctx.fillStyle = '#283c8c'; ctx.fillRect(x - 2, y + 14, 32, 65); // Indigo Robe
+					ctx.fillStyle = '#d4af37'; ctx.fillRect(x + 4, y + 14, 20, 8); // Gold trim
+					ctx.fillStyle = '#8b5a2b'; ctx.fillRect(x + 28, y + 6, 4, 75); // Staff
+					ctx.fillStyle = '#38bdf8'; ctx.fillRect(x + 27, y + 2, 6, 6); // Crystal
+				} else if (entity === 'blood_knight') {
+					ctx.fillStyle = '#404552'; ctx.fillRect(x - 4, y + 10, 36, 60); // Dark Plate
+					ctx.fillStyle = '#8a1c1c'; ctx.fillRect(x - 8, y + 16, 44, 50); // Red Cape
+					ctx.fillStyle = '#ff2020'; ctx.fillRect(x + 8, y + 6, 12, 3); // Red Eyes
+					ctx.fillStyle = '#94a3b8'; ctx.fillRect(x - 16, y + 4, 5, 80); // Broadsword
+				} else if (entity === 'balrog') {
+					ctx.fillStyle = '#521a1a'; ctx.fillRect(x - 10, y + 10, 48, 65); // Demon Body
+					ctx.fillStyle = '#220808'; ctx.fillRect(x - 30, y + 16, 22, 45); ctx.fillRect(x + 36, y + 16, 22, 45); // Wings
+					ctx.fillStyle = '#ff6b00'; ctx.fillRect(x + 2, y + 6, 6, 4); ctx.fillRect(x + 20, y + 6, 6, 4); // Glowing Eyes
+				} else if (entity === 'reaper') {
+					ctx.fillStyle = '#7a1c28'; ctx.fillRect(x - 6, y + 10, 40, 60);
+					ctx.fillStyle = '#e2d9c8'; ctx.fillRect(x - 18, y + 12, 6, 40); ctx.fillRect(x + 40, y + 12, 6, 40); // Scythes
+				}
+				return;
+			}
+
+			if (mode === 'normals') {
+				// Mapa de Normales Tangenciales (RGB)
+				ctx.fillStyle = '#8080ff'; ctx.fillRect(x - 10, y, 48, 90);
+				const nGrad = ctx.createRadialGradient(x + 14, y + 28, 2, x + 14, y + 28, 16);
+				nGrad.addColorStop(0, '#ff8080');
+				nGrad.addColorStop(1, '#8080ff');
+				ctx.fillStyle = nGrad;
+				ctx.beginPath();
+				ctx.arc(x + 14, y + 28, 14, 0, Math.PI * 2);
+				ctx.fill();
+				return;
+			}
+
+			if (mode === 'materials') {
+				// Material ID View
+				if (entity === 'warrior' || entity === 'blood_knight') {
+					ctx.fillStyle = '#00ffff'; ctx.fillRect(x + 2, y + 14, 24, 28); // Metal
+					ctx.fillStyle = '#ff0000'; ctx.fillRect(x - 2, y + 42, 32, 22); // Cloth
+					ctx.fillStyle = '#ff9900'; ctx.fillRect(x + 4, y + 64, 20, 24); // Leather
+					ctx.fillStyle = '#00ffff'; ctx.fillRect(x - 14, y + 6, 4, 75);  // Weapon Metal
+				} else if (entity === 'rogue') {
+					ctx.fillStyle = '#ff9900'; ctx.fillRect(x + 2, y + 14, 24, 30); // Leather
+					ctx.fillStyle = '#ff0000'; ctx.fillRect(x + 2, y + 44, 24, 24); // Cloth
+					ctx.fillStyle = '#8b5a2b'; ctx.fillRect(x - 12, y + 10, 3, 65); // Wood Bow
+				} else if (entity === 'sorcerer') {
+					ctx.fillStyle = '#ff0000'; ctx.fillRect(x - 2, y + 14, 32, 65); // Silk Cloth
+					ctx.fillStyle = '#ffff00'; ctx.fillRect(x + 27, y + 2, 6, 6);   // Emissive Crystal
+					ctx.fillStyle = '#8b5a2b'; ctx.fillRect(x + 28, y + 6, 4, 75);  // Wood Staff
+				} else if (entity === 'balrog' || entity === 'reaper') {
+					ctx.fillStyle = '#b42850'; ctx.fillRect(x - 10, y + 10, 48, 65); // Demon Flesh
+					ctx.fillStyle = '#f0ebd2'; ctx.fillRect(x - 18, y + 12, 6, 40);  // Bone
+					ctx.fillStyle = '#ffff00'; ctx.fillRect(x + 2, y + 6, 24, 4);   // Emissive Eyes
+				}
+				return;
+			}
+
+			if (mode === 'roughness') {
+				// Roughness Map (Black = Glossy 0.0, White = Matte 1.0)
+				ctx.fillStyle = '#e0e0e0'; ctx.fillRect(x - 2, y + 42, 32, 22); // Cloth 0.92
+				ctx.fillStyle = '#383838'; ctx.fillRect(x + 2, y + 14, 24, 28); // Steel 0.22
+				ctx.fillStyle = '#999999'; ctx.fillRect(x + 4, y + 64, 20, 24); // Leather 0.60
+				ctx.fillStyle = '#000000'; ctx.fillRect(x + 27, y + 2, 6, 6);   // Emissive 0.00
+				return;
+			}
+
+			if (mode === 'depth') {
+				// Depth Map (Linear Grayscale)
+				const dGrad = ctx.createLinearGradient(x, y, x, y + 90);
+				dGrad.addColorStop(0, '#555555');
+				dGrad.addColorStop(1, '#ffffff');
+				ctx.fillStyle = dGrad;
+				ctx.fillRect(x - 10, y, 48, 90);
+				return;
+			}
+
+			// ==========================================
+			// NIGHTMARE HD — SHADING PBR 2.5D UNIVERSAL
+			// ==========================================
+			if (entity === 'warrior') {
+				// Túnica Roja con Micro-pliegues
+				const foldShadow = 0.55 + Math.sin(x * 0.4) * 0.18;
+				ctx.fillStyle = `rgb(${Math.floor(165 * lightIntensity * foldShadow)}, ${Math.floor(28 * lightIntensity)}, ${Math.floor(24 * lightIntensity)})`;
+				ctx.fillRect(x - 2, y + 22, 32, 42);
+
+				// Coraza de Acero con Reflejo Especular Dinámico (Roughness 0.22)
+				const specHighlight = Math.max(0, Math.cos(lightAngle - 0.4)) ** 7 * 145 * lightIntensity;
+				const pR = Math.min(255, Math.floor(140 * lightIntensity + specHighlight));
+				const pG = Math.min(255, Math.floor(155 * lightIntensity + specHighlight * 0.95));
+				const pB = Math.min(255, Math.floor(180 * lightIntensity + specHighlight * 1.1));
+				ctx.fillStyle = `rgb(${pR}, ${pG}, ${pB})`;
+				ctx.fillRect(x + 2, y + 14, 24, 28);
+
+				// Biseles pulidos
+				ctx.strokeStyle = `rgba(240, 245, 255, ${0.45 * lightIntensity})`;
+				ctx.lineWidth = 1.5;
+				ctx.strokeRect(x + 2, y + 14, 24, 28);
+
+				// Hombreras (Pauldrons) Esféricas
+				const pSpec = Math.max(0, Math.cos(lightAngle - 0.2)) ** 8 * 180 * lightIntensity;
+				ctx.fillStyle = `rgb(${Math.min(255, Math.floor(150 + pSpec))}, ${Math.min(255, Math.floor(165 + pSpec))}, ${Math.min(255, Math.floor(190 + pSpec))})`;
+				ctx.fillRect(x - 5, y + 14, 9, 14);
+				ctx.fillRect(x + 24, y + 14, 9, 14);
+
+				// Espada de Acero Templado
+				const swordSpec = Math.max(0, Math.cos(lightAngle - 0.5)) ** 12 * 210 * lightIntensity;
+				ctx.fillStyle = `rgb(${Math.min(255, Math.floor(200 * lightIntensity + swordSpec))}, ${Math.min(255, Math.floor(210 * lightIntensity + swordSpec))}, ${Math.min(255, Math.floor(230 * lightIntensity + swordSpec))})`;
+				ctx.fillRect(x - 14, y + 6, 3, 75);
+
+				// Cabeza / Yelmo
+				ctx.fillStyle = `rgb(${Math.floor(200 * lightIntensity)}, ${Math.floor(150 * lightIntensity)}, ${Math.floor(120 * lightIntensity)})`;
+				ctx.fillRect(x + 10, y + 2, 8, 10);
+
+				// Botas de Cuero
+				ctx.fillStyle = `rgb(${Math.floor(170 * lightIntensity)}, ${Math.floor(90 * lightIntensity)}, ${Math.floor(40 * lightIntensity)})`;
+				ctx.fillRect(x + 4, y + 64, 8, 24);
+				ctx.fillRect(x + 16, y + 64, 8, 24);
+
+			} else if (entity === 'rogue') {
+				// Pícara — Cuero trabajado y Seda Azul Medianoche
+				ctx.fillStyle = `rgb(${Math.floor(42 * lightIntensity * 1.2)}, ${Math.floor(95 * lightIntensity * 1.2)}, ${Math.floor(160 * lightIntensity * 1.2)})`;
+				ctx.fillRect(x + 2, y + 14, 24, 48);
+
+				// Corsé de Cuero Claveteado (Sheen 0.60)
+				const leatherSpec = Math.max(0, Math.cos(lightAngle - 0.3)) ** 4 * 60 * lightIntensity;
+				ctx.fillStyle = `rgb(${Math.floor(120 * lightIntensity + leatherSpec)}, ${Math.floor(75 * lightIntensity + leatherSpec * 0.8)}, ${Math.floor(35 * lightIntensity)})`;
+				ctx.fillRect(x + 4, y + 20, 20, 20);
+
+				// Arco de Madera Noble
+				ctx.fillStyle = `rgb(${Math.floor(160 * lightIntensity)}, ${Math.floor(100 * lightIntensity)}, ${Math.floor(50 * lightIntensity)})`;
+				ctx.fillRect(x - 12, y + 10, 3, 65);
+
+				// Rostro bajo la capucha
+				ctx.fillStyle = `rgb(${Math.floor(210 * lightIntensity)}, ${Math.floor(160 * lightIntensity)}, ${Math.floor(130 * lightIntensity)})`;
+				ctx.fillRect(x + 10, y + 2, 8, 10);
+
+			} else if (entity === 'sorcerer') {
+				// Hechicero — Túnica de Seda Índigo con Borde Dorado
+				ctx.fillStyle = `rgb(${Math.floor(40 * lightIntensity)}, ${Math.floor(60 * lightIntensity)}, ${Math.floor(140 * lightIntensity)})`;
+				ctx.fillRect(x - 2, y + 14, 32, 65);
+
+				// Ribetes Dorados Especulares
+				const goldSpec = Math.max(0, Math.cos(lightAngle)) ** 6 * 120 * lightIntensity;
+				ctx.fillStyle = `rgb(${Math.min(255, Math.floor(210 * lightIntensity + goldSpec))}, ${Math.min(255, Math.floor(175 * lightIntensity + goldSpec * 0.8))}, ${Math.floor(50 * lightIntensity)})`;
+				ctx.fillRect(x + 4, y + 14, 20, 8);
+
+				// Bastón de Tejo
+				ctx.fillStyle = `rgb(${Math.floor(130 * lightIntensity)}, ${Math.floor(80 * lightIntensity)}, ${Math.floor(40 * lightIntensity)})`;
+				ctx.fillRect(x + 28, y + 6, 4, 75);
+
+				// Cristal Arcano Emisivo con Pulsación
+				const crystalGlow = 0.8 + Math.sin(animTime * 6) * 0.2;
+				ctx.fillStyle = `rgba(56, 189, 248, ${crystalGlow})`;
+				ctx.fillRect(x + 27, y + 2, 6, 6);
+
+			} else if (entity === 'blood_knight') {
+				// Caballero Sangriento — Acero Ennegrecido y Ojos Carmesí
+				const darkMetalSpec = Math.max(0, Math.cos(lightAngle - 0.4)) ** 8 * 110 * lightIntensity;
+				ctx.fillStyle = `rgb(${Math.floor(65 * lightIntensity + darkMetalSpec)}, ${Math.floor(70 * lightIntensity + darkMetalSpec)}, ${Math.floor(80 * lightIntensity + darkMetalSpec)})`;
+				ctx.fillRect(x - 4, y + 10, 36, 60);
+
+				// Capa Rasgada Carmesí
+				ctx.fillStyle = `rgb(${Math.floor(138 * lightIntensity)}, ${Math.floor(28 * lightIntensity)}, ${Math.floor(28 * lightIntensity)})`;
+				ctx.fillRect(x - 8, y + 16, 44, 50);
+
+				// Visor Ocular Emisivo
+				ctx.fillStyle = '#ff1111';
+				ctx.fillRect(x + 8, y + 6, 12, 3);
+
+				// Espadón Mandoble
+				ctx.fillStyle = `rgb(${Math.floor(160 * lightIntensity)}, ${Math.floor(170 * lightIntensity)}, ${Math.floor(180 * lightIntensity)})`;
+				ctx.fillRect(x - 16, y + 4, 5, 80);
+
+			} else if (entity === 'balrog') {
+				// Balrog — Roca Magmática y Ojos de Fuego
+				ctx.fillStyle = `rgb(${Math.floor(90 * lightIntensity)}, ${Math.floor(30 * lightIntensity)}, ${Math.floor(30 * lightIntensity)})`;
+				ctx.fillRect(x - 10, y + 10, 48, 65);
+
+				// Alas Demoniacas
+				ctx.fillStyle = `rgb(${Math.floor(40 * lightIntensity)}, ${Math.floor(15 * lightIntensity)}, ${Math.floor(15 * lightIntensity)})`;
+				ctx.fillRect(x - 30, y + 16, 22, 45); ctx.fillRect(x + 36, y + 16, 22, 45);
+
+				// Ojos de Fuego
+				ctx.fillStyle = '#ff8800';
+				ctx.fillRect(x + 2, y + 6, 6, 4); ctx.fillRect(x + 20, y + 6, 6, 4);
+
+			} else if (entity === 'reaper') {
+				// Reaper — Caparazón de Hueso y Guadañas Afiladas
+				ctx.fillStyle = `rgb(${Math.floor(130 * lightIntensity)}, ${Math.floor(30 * lightIntensity)}, ${Math.floor(40 * lightIntensity)})`;
+				ctx.fillRect(x - 6, y + 10, 40, 60);
+
+				// Guadañas Especulares
+				const scytheSpec = Math.max(0, Math.cos(lightAngle)) ** 10 * 180 * lightIntensity;
+				ctx.fillStyle = `rgb(${Math.min(255, Math.floor(220 * lightIntensity + scytheSpec))}, ${Math.min(255, Math.floor(215 * lightIntensity + scytheSpec))}, ${Math.min(255, Math.floor(200 * lightIntensity + scytheSpec))})`;
+				ctx.fillRect(x - 18, y + 12, 6, 40); ctx.fillRect(x + 40, y + 12, 6, 40);
+			}
 		}
 
 		render();

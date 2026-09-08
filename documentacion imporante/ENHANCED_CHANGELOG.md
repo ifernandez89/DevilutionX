@@ -1,6 +1,38 @@
 # 📋 DEVILUTIONX ENHANCED - CHANGELOG
 ## Registro Completo de Características Implementadas
 
+## 🚀 Versión Enhanced v1.3 - Septiembre 8, 2026
+
+### 🛡️ **NIGHTMARE HD — MOTOR PBR 2.5D UNIVERSAL PARA TODO EL JUEGO**
+
+#### 🌌 **Aplicación Universal a Todo el Juego (Sin exclusividades)**
+- ✅ **Cobertura Total de Niveles:** El motor de materiales PBR, profundidad lógica y cálculo lumínico reactivo se aplica de forma idéntica y universal en **Tristram (Town)** y en los **24 niveles de mazmorra (Catedral, Catacumbas, Cavernas, Infierno, Cripta y Colmena)**.
+- ✅ **Cobertura Universal de Personajes & Monstruos:** Integrado para todos los héroes (Guerrero, Pícara, Hechicero) y todas las familias de monstruos (Blood Knights, Balrogs, Reapers, Squeletos, Súcubos, Diablo).
+- ✅ **No exclusivo de eventos:** Los efectos físicos no están limitados a misiones o invasiones específicas; enriquecen la totalidad de la aventura desde el primer minuto.
+
+#### 🎨 **Reconstructor de Assets & Tuplas PBR 5-Canales (`tools/hd_asset_reconstructor.py`)**
+- ✅ **Generador de Tuplas PBR:** Motor por lotes sin dependencias externas (usa librería estándar de Python con codificador PNG puro) que genera las 5 capas físicas:
+  1. **Albedo HD 2x:** Color difuso respetando paletas icónicas de 1996.
+  2. **Normal Map:** Normales tangenciales RGB que modelan curvatura de hombreras, biseles de corazas, aristas de espadas y relieve de mortero.
+  3. **Depth Map:** Mapa de profundidad z para oclusión y sombras proyectadas.
+  4. **Roughness Map:** Parámetros físicos reales (Metal: 0.22, Cuero: 0.60, Piedra: 0.85, Tela: 0.92, Agua: 0.05, Emissive: 0.00).
+  5. **Material ID Map:** Segmentación semántica por clase de superficie.
+- ✅ **Manifiesto Universal:** Generación de `nightmare_hd_manifest.json` con todos los metadatos y tablas de rugosidad de héroes, monstruos y biomas.
+
+#### 💡 **Iluminación Reactiva, Sombras Dinámicas & Diablo Rain 2.0**
+- ✅ **Sombras Proyectadas:** Cálculo angular dinámico de sombras direccionales proyectadas en el suelo en base a la posición de la antorcha del jugador o fuentes lumínicas.
+- ✅ **Respuesta Especular a la Lluvia:** El suelo y empedrado disminuyen su rugosidad dinámicamente ante la lluvia, reflejando de forma tenue y elegante la luz ambiental y antorchas.
+- ✅ **Emissive Aislado:** Luces auto-emisivas reservadas exclusivamente para ojos demoníacos, cristales mágicos, runas y fuego.
+
+#### 🧪 **Benchmark Visual Interactivo Web (`Packaging/emscripten/hd_benchmark.html`)**
+- ✅ **Suite de Inspección Completa:**
+  - **Selector de Biomas:** Tristram Town, Catedral, Catacumbas, Cavernas e Infierno.
+  - **Selector de Entidades:** Guerrero, Pícara, Hechicero, Blood Knight, Balrog, Reaper.
+  - **Inspector de Canales:** NIGHTMARE HD Composite, Original 1996 Plano, Mapa de Normales, Material ID, Rugosidad y Profundidad.
+  - **Antorcha Interactiva:** Control en tiempo real con el puntero del ratón para ver la respuesta física de placas de armadura, túnicas y piedra bajo cualquier ángulo lumínico.
+
+---
+
 ## 🚀 Versión Enhanced v1.2 - Septiembre 8, 2026
 
 ### 🧠 **NEURAL RENDER 2.5D & ESTABILIDAD WEB / WASM**

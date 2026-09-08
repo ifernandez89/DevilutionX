@@ -1,0 +1,225 @@
+{
+  "version": "NIGHTMARE_HD_v1.0",
+  "philosophy": "La tecnología agrega información física de superficie y material; jamás reinventa el diseño de 1996.",
+  "material_definitions": {
+    "Void": 0,
+    "Stone": 1,
+    "Wood": 2,
+    "Steel": 3,
+    "GoldMetal": 3,
+    "Cloth": 4,
+    "Leather": 5,
+    "Soil": 6,
+    "Water": 7,
+    "Emissive": 8,
+    "DemonFlesh": 9,
+    "Bone": 10
+  },
+  "material_roughness_table": {
+    "0": 1.0,
+    "1": 0.85,
+    "2": 0.7,
+    "3": 0.22,
+    "4": 0.92,
+    "5": 0.6,
+    "6": 0.8,
+    "7": 0.05,
+    "8": 0.0,
+    "9": 0.45,
+    "10": 0.35
+  },
+  "heroes": {
+    "warrior": {
+      "name": "Warrior / Caballero",
+      "description": "Plate armor, chainmail, red tunic, iron sword and heater shield.",
+      "primary_materials": [
+        "Steel",
+        "Cloth",
+        "Leather",
+        "GoldMetal"
+      ],
+      "accent_color": [
+        165,
+        28,
+        24,
+        255
+      ],
+      "armor_specular_power": 52.0
+    },
+    "rogue": {
+      "name": "Rogue / Pícara",
+      "description": "Studded leather armor, midnight blue cowl, recurve bow and quiver.",
+      "primary_materials": [
+        "Leather",
+        "Cloth",
+        "Steel",
+        "Wood"
+      ],
+      "accent_color": [
+        42,
+        95,
+        160,
+        255
+      ],
+      "armor_specular_power": 38.0
+    },
+    "sorcerer": {
+      "name": "Sorcerer / Hechicero",
+      "description": "Silk hooded robes, gold trim runes, carved yew staff with arcane crystal.",
+      "primary_materials": [
+        "Cloth",
+        "Wood",
+        "Emissive",
+        "GoldMetal"
+      ],
+      "accent_color": [
+        40,
+        60,
+        140,
+        255
+      ],
+      "armor_specular_power": 24.0
+    }
+  },
+  "monsters": {
+    "blood_knight": {
+      "name": "Blood Knight / Steel Lord",
+      "description": "Heavy dark-steel plate armor, blood-red battle cape, two-handed broadsword, glowing red visor.",
+      "materials": [
+        "Steel",
+        "Cloth",
+        "DemonFlesh",
+        "Emissive"
+      ],
+      "roughness": 0.28
+    },
+    "balrog": {
+      "name": "Balrog / Pit Lord",
+      "description": "Volcanic magma muscle, burning obsidian skin, leathery wings, hellfire horns.",
+      "materials": [
+        "DemonFlesh",
+        "Bone",
+        "Emissive"
+      ],
+      "roughness": 0.5
+    },
+    "reaper": {
+      "name": "Reaper / Flesh Beast",
+      "description": "Flayed crimson musculature, bone-spiked carapace, scythe appendages.",
+      "materials": [
+        "DemonFlesh",
+        "Bone",
+        "Leather"
+      ],
+      "roughness": 0.4
+    },
+    "skeleton": {
+      "name": "Skeleton / Undead Warrior",
+      "description": "Bleached ribcage and skull, rusted iron shield, jagged scimitar.",
+      "materials": [
+        "Bone",
+        "Steel",
+        "Leather"
+      ],
+      "roughness": 0.35
+    },
+    "succubus": {
+      "name": "Succubus / Hell Witch",
+      "description": "Crimson demon skin, bat wings, floating blood orbs.",
+      "materials": [
+        "DemonFlesh",
+        "Cloth",
+        "Emissive"
+      ],
+      "roughness": 0.42
+    },
+    "diablo": {
+      "name": "Lord Diablo",
+      "description": "Towering hellspawn, burning spine spikes, terror aura, glowing eyes.",
+      "materials": [
+        "Bone",
+        "DemonFlesh",
+        "Emissive"
+      ],
+      "roughness": 0.32
+    }
+  },
+  "biomes": {
+    "town": {
+      "name": "Tristram Town",
+      "features": [
+        "Griswold Blacksmith Forge",
+        "Cathedral Facade",
+        "River Bridge",
+        "Town Square Bonfire",
+        "Timber Houses"
+      ],
+      "materials": [
+        "Stone",
+        "Wood",
+        "Soil",
+        "Water",
+        "Emissive"
+      ]
+    },
+    "cathedral": {
+      "name": "Cathedral (Levels 1-4)",
+      "features": [
+        "Granite flagstones",
+        "Gothic pointed arches",
+        "Stained glass windows",
+        "Torch wall sconces"
+      ],
+      "materials": [
+        "Stone",
+        "Wood",
+        "Bone",
+        "Emissive"
+      ]
+    },
+    "catacombs": {
+      "name": "Catacombs (Levels 5-8)",
+      "features": [
+        "Damp crypt masonry",
+        "Ancient tombs",
+        "Iron portcullises",
+        "Bone piles"
+      ],
+      "materials": [
+        "Stone",
+        "Soil",
+        "Bone",
+        "Steel"
+      ]
+    },
+    "caves": {
+      "name": "Caves (Levels 9-12)",
+      "features": [
+        "Basalt rock",
+        "Glowing lava rivers",
+        "Stalagmites",
+        "Brimstone deposits"
+      ],
+      "materials": [
+        "Stone",
+        "Water",
+        "Emissive"
+      ]
+    },
+    "hell": {
+      "name": "Hell (Levels 13-16)",
+      "features": [
+        "Obsidian demonic tiles",
+        "Blood cauldrons",
+        "Spiked arches",
+        "Pentagrams"
+      ],
+      "materials": [
+        "Bone",
+        "DemonFlesh",
+        "Stone",
+        "Emissive"
+      ]
+    }
+  }
+}

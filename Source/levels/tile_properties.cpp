@@ -4,6 +4,7 @@
 #include "engine/path.h"
 #include "engine/point.hpp"
 #include "gendung.h"
+#include "nightmare/invasion/invasion_manager.hpp"
 #include "objects.h"
 
 namespace devilution {
@@ -14,6 +15,12 @@ bool IsTileNotSolid(Point position)
 		return false;
 	}
 
+	if (leveltype == DTYPE_TOWN && nightmare::invasion::InvasionManager::Get().IsInvaded()) {
+		if (position.x >= 77 && position.x <= 86 && position.y >= 58 && position.y <= 68) {
+			return true;
+		}
+	}
+
 	return !TileHasAny(position, TileProperties::Solid);
 }
 
@@ -21,6 +28,12 @@ bool IsTileSolid(Point position)
 {
 	if (!InDungeonBounds(position)) {
 		return false;
+	}
+
+	if (leveltype == DTYPE_TOWN && nightmare::invasion::InvasionManager::Get().IsInvaded()) {
+		if (position.x >= 77 && position.x <= 86 && position.y >= 58 && position.y <= 68) {
+			return false;
+		}
 	}
 
 	return TileHasAny(position, TileProperties::Solid);

@@ -1747,6 +1747,10 @@ bool IsTileAccessible(const Monster &monster, Point position)
 	if (dPlayer[position.x][position.y] != 0 || dMonster[position.x][position.y] != 0)
 		return false;
 
+	if (leveltype == DTYPE_TOWN && monster.type().type == MT_WINGED) {
+		return !TileHasAny(position, TileProperties::BlockMissile);
+	}
+
 	if (!IsTileWalkable(position, (monster.flags & MFLAG_CAN_OPEN_DOOR) != 0))
 		return false;
 
@@ -2804,7 +2808,7 @@ void MegaAi(Monster &monster)
 		} else {
 			if (GenerateRnd(100) < 10 * (monster.intelligence + 4)) {
 				monster.direction = md;
-				if (FlipCoin())
+				if (leveltype != DTYPE_TOWN && FlipCoin())
 					StartRangedSpecialAttack(monster, MissileID::InfernoControl, 0);
 				else
 					StartAttack(monster);
@@ -3918,6 +3922,10 @@ void M_StartHit(Monster &monster, const Player &player, int dam)
 
 void MonsterDeath(Monster &monster, Direction md, bool sendmsg)
 {
+	if (leveltype == DTYPE_TOWN) {
+		nightmare::invasion::InvasionManager::Get().OnMonsterDeath(monster);
+	}
+
 	if (!monster.isPlayerMinion())
 		AddPlrMonstExper(monster.level(sgGameInitInfo.nDifficulty), monster.exp(sgGameInitInfo.nDifficulty), monster.whoHit);
 
@@ -4239,7 +4247,9 @@ void ProcessMonsters()
 			monster.hitPoints = std::min(monster.hitPoints, monster.maxHitPoints); // prevent going over max HP with part of a single regen tick
 		}
 
-		const bool isMonsterVisible = IsTileVisible(monster.position.tile);
+		const bool isMonsterVisible = (leveltype == DTYPE_TOWN)
+		    ? (monster.distanceToEnemy() <= 22)
+		    : IsTileVisible(monster.position.tile);
 		if (isMonsterVisible && monster.activeForTicks == 0) {
 			if (monster.type().type == MT_CLEAVER) {
 				PlaySFX(SfxID::ButcherGreeting);
@@ -4278,7 +4288,7 @@ void ProcessMonsters()
 			}
 		}
 
-		while (true) {
+		for (int loopLimit = 0; loopLimit < 100; loopLimit++) {
 			if ((monster.flags & MFLAG_SEARCH) == 0 || !AiPlanPath(monster)) {
 				AiProc[static_cast<int8_t>(monster.ai)](monster);
 			}

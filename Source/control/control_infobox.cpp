@@ -7,6 +7,7 @@
 #include "panels/partypanel.hpp"
 #include "qol/stash.h"
 #include "qol/xpbar.h"
+#include "nightmare/invasion/invasion_manager.hpp"
 #include "towners.h"
 #include "utils/algorithm/container.hpp"
 #include "utils/format_int.hpp"
@@ -379,7 +380,7 @@ void DrawInfoBox(const Surface &out)
 		else if (ObjectUnderCursor != nullptr)
 			GetObjectStr(*ObjectUnderCursor);
 		if (pcursmonst != -1) {
-			if (leveltype != DTYPE_TOWN) {
+			if (leveltype != DTYPE_TOWN || nightmare::invasion::InvasionManager::Get().IsCombatActive()) {
 				const Monster &monster = Monsters[pcursmonst];
 				InfoColor = UiFlags::ColorWhite;
 				InfoString = monster.name();
@@ -389,7 +390,7 @@ void DrawInfoBox(const Surface &out)
 				} else {
 					PrintMonstHistory(monster.type().type);
 				}
-			} else if (pcursitem == -1) {
+			} else if (pcursitem == -1 && static_cast<size_t>(pcursmonst) < Towners.size()) {
 				InfoString = std::string_view(Towners[pcursmonst].name);
 			}
 		}

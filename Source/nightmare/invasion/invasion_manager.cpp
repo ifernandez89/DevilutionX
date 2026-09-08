@@ -8,6 +8,7 @@
 #include "engine/point.hpp"
 #include "engine/sound.h"
 #include "levels/gendung.h"
+#include "levels/tile_properties.hpp"
 #include "lighting.h"
 #include "loadsave.h"
 #include "monster.h"
@@ -35,38 +36,108 @@ size_t GetMonsterTypeIndex(_monster_id type)
 }
 
 const SpawnCoord RegularSpawns[] = {
-	// Cathedral Courtyard
-	{ { 23, 27 }, MT_BALROG },
-	{ { 28, 28 }, MT_WINGED },
-	{ { 22, 33 }, MT_BALROG },
+	// Cathedral Courtyard & Steps (8 enemies)
+	{ { 27, 31 }, MT_BALROG },
+	{ { 29, 32 }, MT_WINGED },
+	{ { 25, 34 }, MT_BALROG },
 	{ { 29, 36 }, MT_WINGED },
-	// Roads & Riverbanks
+	{ { 28, 33 }, MT_WSKELAX },
+	{ { 26, 36 }, MT_WSKELAX },
+	{ { 24, 32 }, MT_WSKELAX },
+	{ { 30, 30 }, MT_WSKELAX },
+
+	// Roads to Town & Cemetery Path (10 enemies)
 	{ { 36, 38 }, MT_WINGED },
 	{ { 40, 44 }, MT_BALROG },
 	{ { 45, 48 }, MT_WINGED },
 	{ { 42, 54 }, MT_BALROG },
 	{ { 48, 55 }, MT_WINGED },
-	// Town Center (Near well/campfire, leaving {61, 71} clear for portal)
+	{ { 38, 41 }, MT_WSKELAX },
+	{ { 43, 46 }, MT_WSKELAX },
+	{ { 45, 52 }, MT_WSKELAX },
+	{ { 34, 40 }, MT_WSKELAX },
+	{ { 40, 48 }, MT_WSKELAX },
+
+	// Town Center, Tavern & Campfire (10 enemies)
 	{ { 54, 62 }, MT_WINGED },
 	{ { 58, 64 }, MT_BALROG },
 	{ { 64, 65 }, MT_WINGED },
 	{ { 53, 68 }, MT_BALROG },
 	{ { 57, 72 }, MT_WINGED },
 	{ { 66, 73 }, MT_BALROG },
-	// Towards Blacksmith & Eastern Path
+	{ { 56, 66 }, MT_WSKELAX },
+	{ { 62, 68 }, MT_WSKELAX },
+	{ { 50, 64 }, MT_WSKELAX },
+	{ { 60, 60 }, MT_WSKELAX },
+
+	// Blacksmith Area & Southern Road (6 enemies)
 	{ { 65, 52 }, MT_WINGED },
 	{ { 69, 50 }, MT_BALROG },
-	// Bridge Approach to Peninsula
+	{ { 67, 47 }, MT_WSKELAX },
+	{ { 71, 52 }, MT_WSKELAX },
+	{ { 64, 48 }, MT_BALROG },
+	{ { 68, 55 }, MT_WSKELAX },
+
+	// Lester the farmer & Northern Cow Pasture (16 enemies)
+	{ { 60, 20 }, MT_BALROG },
+	{ { 64, 18 }, MT_WINGED },
+	{ { 56, 17 }, MT_WINGED },
+	{ { 62, 24 }, MT_BALROG },
+	{ { 58, 19 }, MT_WSKELAX },
+	{ { 62, 17 }, MT_WSKELAX },
+	{ { 65, 22 }, MT_WSKELAX },
+	{ { 54, 15 }, MT_WSKELAX },
+	{ { 58, 14 }, MT_WSKELAX },
+	{ { 66, 15 }, MT_WSKELAX },
+	{ { 68, 18 }, MT_WINGED },
+	{ { 52, 20 }, MT_WSKELAX },
+	{ { 50, 24 }, MT_BALROG },
+	{ { 68, 24 }, MT_WSKELAX },
+	{ { 56, 26 }, MT_WSKELAX },
+	{ { 70, 20 }, MT_WSKELAX },
+
+	// Adria the witch's shack & Eastern Clearing (7 enemies)
+	{ { 80, 20 }, MT_BALROG },
+	{ { 83, 22 }, MT_WINGED },
+	{ { 78, 25 }, MT_WINGED },
+	{ { 85, 21 }, MT_BALROG },
+	{ { 82, 18 }, MT_WSKELAX },
+	{ { 79, 23 }, MT_WSKELAX },
+	{ { 84, 25 }, MT_WSKELAX },
+
+	// Bridge Approach (West riverbank) (5 enemies)
 	{ { 72, 58 }, MT_BALROG },
-	{ { 74, 55 }, MT_WINGED },
-	{ { 76, 59 }, MT_BALROG }
+	{ { 73, 56 }, MT_WINGED },
+	{ { 75, 62 }, MT_BALROG },
+	{ { 74, 60 }, MT_WSKELAX },
+	{ { 76, 63 }, MT_WSKELAX },
+
+	// Peninsula Perimeter Commanders (2 enemies)
+	{ { 81, 62 }, MT_WINGED },
+	{ { 85, 65 }, MT_BALROG },
+
+	// Extra assault wave -- mid-town flankers (10 more enemies)
+	{ { 52, 58 }, MT_BALROG },
+	{ { 55, 56 }, MT_WINGED },
+	{ { 47, 60 }, MT_WSKELAX },
+	{ { 44, 57 }, MT_BALROG },
+	{ { 46, 64 }, MT_WINGED },
+	{ { 70, 44 }, MT_WSKELAX },
+	{ { 72, 40 }, MT_BALROG },
+	{ { 74, 36 }, MT_WINGED },
+	{ { 34, 46 }, MT_WSKELAX },
+	{ { 32, 50 }, MT_BALROG },
 };
 
 const Point GuardPositions[] = {
-	{ 80, 68 },
-	{ 83, 69 },
-	{ 80, 72 },
-	{ 82, 74 }
+	{ 82, 63 },
+	{ 84, 63 },
+	{ 82, 65 },
+	{ 84, 65 },
+	{ 81, 64 },
+	{ 85, 64 },
+	{ 83, 62 },
+	{ 83, 66 }
 };
 
 } // namespace
@@ -126,17 +197,6 @@ void InvasionManager::OnTownEntry()
 	if (!IsInvaded())
 		return;
 
-	// Penumbra atmosphere
-	for (int i = 0; i < MAXDUNX; i++) {
-		for (int j = 0; j < MAXDUNY; j++) {
-			dLight[i][j] = 3;
-			dPreLight[i][j] = 3;
-		}
-	}
-
-	// Cathedral entrance spotlight
-	AddLight(Point { 25, 31 }, 9);
-
 	if (state_.completed)
 		return;
 
@@ -151,14 +211,8 @@ void InvasionManager::OnTownEntry()
 
 	preloadType(MT_WINGED, PLACE_SCATTER);
 	preloadType(MT_BALROG, PLACE_SCATTER);
-
-	if (Quests[Q_SKELKING]._qactive != QUEST_DONE) {
-		preloadType(UniqueMonsterType::SkeletonKing, PLACE_UNIQUE);
-		preloadType(MT_WSKELAX, PLACE_SCATTER);
-	} else {
-		preloadType(UniqueMonsterType::WarlordOfBlood, PLACE_UNIQUE);
-		preloadType(MT_GUARD, PLACE_SCATTER);
-	}
+	preloadType(MT_SKING, PLACE_UNIQUE);
+	preloadType(MT_WSKELAX, PLACE_SCATTER);
 
 	if (state_.monster_count == 0) {
 		SpawnInitialInvasionForce();
@@ -171,9 +225,19 @@ void InvasionManager::SpawnInitialInvasionForce()
 {
 	state_.monster_count = 0;
 
+	// --- Spawn Leoric FIRST to guarantee he always gets a slot ---
+	// The boss encounter reserves its own slots before the army fills up.
+	SpawnBossEncounter();
+	state_.boss_phase = 2;
+
+	// --- Then fill remaining slots with the regular invasion army ---
 	for (const auto &spawn : RegularSpawns) {
 		if (state_.monster_count >= MaxInvasionMonsters)
 			break;
+
+		// Skip spawn points that land on solid/unwalkable tiles (rooftops, walls)
+		if (!IsTileWalkable(spawn.pt))
+			continue;
 
 		const size_t typeIdx = GetMonsterTypeIndex(spawn.type);
 		if (typeIdx >= LevelMonsterTypeCount)
@@ -181,6 +245,28 @@ void InvasionManager::SpawnInitialInvasionForce()
 
 		Monster *monster = AddMonster(spawn.pt, Direction::South, typeIdx, true);
 		if (monster != nullptr) {
+			monster->intelligence = 3;
+			monster->activeForTicks = UINT8_MAX;
+			if (monster->type().type == MT_BALROG) {
+				monster->maxHitPoints = 2500 << 6;
+				monster->hitPoints = monster->maxHitPoints;
+				monster->minDamage = 35;
+				monster->maxDamage = 60;
+				monster->armorClass = 65;
+			} else if (monster->type().type == MT_WINGED) {
+				monster->maxHitPoints = 1200 << 6;
+				monster->hitPoints = monster->maxHitPoints;
+				monster->minDamage = 25;
+				monster->maxDamage = 45;
+				monster->armorClass = 50;
+			} else if (monster->type().type == MT_WSKELAX) {
+				monster->maxHitPoints = 850 << 6;
+				monster->hitPoints = monster->maxHitPoints;
+				monster->minDamage = 20;
+				monster->maxDamage = 40;
+				monster->armorClass = 50;
+			}
+
 			auto &snap = state_.monsters[state_.monster_count++];
 			snap.x = static_cast<uint8_t>(spawn.pt.x);
 			snap.y = static_cast<uint8_t>(spawn.pt.y);
@@ -194,43 +280,76 @@ void InvasionManager::SpawnInitialInvasionForce()
 
 void InvasionManager::SpawnBossEncounter()
 {
-	const Point bossPos { 82, 70 };
+	// Primary position on the peninsula. Fallbacks spread nearby in case
+	// the primary tile is blocked by another monster or object.
+	const Point bossCandidates[] = {
+		{ 83, 64 }, { 82, 64 }, { 84, 64 },
+		{ 83, 63 }, { 83, 65 }, { 81, 63 },
+	};
 
-	if (Quests[Q_SKELKING]._qactive != QUEST_DONE) {
-		state_.boss_selected = MT_SKING;
-		state_.boss_unique_type = UniqueMonsterType::SkeletonKing;
+	state_.boss_selected = MT_SKING;
+	state_.boss_unique_type = UniqueMonsterType::SkeletonKing;
 
-		const size_t kingTypeIdx = GetMonsterTypeIndex(MT_SKING);
-		if (kingTypeIdx < LevelMonsterTypeCount) {
-			Monster *king = AddMonster(bossPos, Direction::SouthWest, kingTypeIdx, true);
+	const size_t kingTypeIdx = GetMonsterTypeIndex(MT_SKING);
+	if (kingTypeIdx < LevelMonsterTypeCount && state_.monster_count < MaxInvasionMonsters) {
+		Monster *king = nullptr;
+		Point usedPos = bossCandidates[0];
+
+		// Try each candidate position until one succeeds
+		for (const auto &candidate : bossCandidates) {
+			if (!IsTileWalkable(candidate))
+				continue;
+			king = AddMonster(candidate, Direction::SouthWest, kingTypeIdx, true);
 			if (king != nullptr) {
-				PrepareUniqueMonst(*king, UniqueMonsterType::SkeletonKing, 0, 0, UniqueMonstersData[static_cast<size_t>(UniqueMonsterType::SkeletonKing)]);
+				usedPos = candidate;
+				break;
 			}
 		}
 
-		const size_t minionTypeIdx = GetMonsterTypeIndex(MT_WSKELAX);
-		if (minionTypeIdx < LevelMonsterTypeCount) {
-			for (const auto &guardPos : GuardPositions) {
-				AddMonster(guardPos, Direction::SouthWest, minionTypeIdx, true);
-			}
-		}
-	} else {
-		state_.boss_selected = MT_VTEXLRD;
-		state_.boss_unique_type = UniqueMonsterType::WarlordOfBlood;
+		if (king != nullptr) {
+			PrepareUniqueMonst(*king, UniqueMonsterType::SkeletonKing, 0, 0, UniqueMonstersData[static_cast<size_t>(UniqueMonsterType::SkeletonKing)]);
+			king->maxHitPoints = 18000 << 6;
+			king->hitPoints = king->maxHitPoints;
+			king->intelligence = 3;
+			king->activeForTicks = UINT8_MAX;
+			king->minDamage = 75;
+			king->maxDamage = 120;
+			king->armorClass = 95;
 
-		const _monster_id warlordBase = UniqueMonstersData[static_cast<size_t>(UniqueMonsterType::WarlordOfBlood)].mtype;
-		const size_t warlordTypeIdx = GetMonsterTypeIndex(warlordBase);
-		if (warlordTypeIdx < LevelMonsterTypeCount) {
-			Monster *warlord = AddMonster(bossPos, Direction::SouthWest, warlordTypeIdx, true);
-			if (warlord != nullptr) {
-				PrepareUniqueMonst(*warlord, UniqueMonsterType::WarlordOfBlood, 0, 0, UniqueMonstersData[static_cast<size_t>(UniqueMonsterType::WarlordOfBlood)]);
-			}
+			auto &snap = state_.monsters[state_.monster_count++];
+			snap.x = static_cast<uint8_t>(usedPos.x);
+			snap.y = static_cast<uint8_t>(usedPos.y);
+			snap.type = MT_SKING;
+			snap.current_hp = king->hitPoints;
+			snap.is_boss = true;
+			snap.is_alive = true;
 		}
+	}
 
-		const size_t minionTypeIdx = GetMonsterTypeIndex(MT_GUARD);
-		if (minionTypeIdx < LevelMonsterTypeCount) {
-			for (const auto &guardPos : GuardPositions) {
-				AddMonster(guardPos, Direction::SouthWest, minionTypeIdx, true);
+	const size_t minionTypeIdx = GetMonsterTypeIndex(MT_WSKELAX);
+	if (minionTypeIdx < LevelMonsterTypeCount) {
+		for (const auto &guardPos : GuardPositions) {
+			if (state_.monster_count >= MaxInvasionMonsters)
+				break;
+			if (!IsTileWalkable(guardPos))
+				continue;
+			Monster *guard = AddMonster(guardPos, Direction::SouthWest, minionTypeIdx, true);
+			if (guard != nullptr) {
+				guard->maxHitPoints = 1000 << 6;
+				guard->hitPoints = guard->maxHitPoints;
+				guard->intelligence = 3;
+				guard->activeForTicks = UINT8_MAX;
+				guard->minDamage = 25;
+				guard->maxDamage = 45;
+				guard->armorClass = 55;
+
+				auto &snap = state_.monsters[state_.monster_count++];
+				snap.x = static_cast<uint8_t>(guardPos.x);
+				snap.y = static_cast<uint8_t>(guardPos.y);
+				snap.type = MT_WSKELAX;
+				snap.current_hp = guard->hitPoints;
+				snap.is_boss = false;
+				snap.is_alive = true;
 			}
 		}
 	}
@@ -241,50 +360,31 @@ void InvasionManager::Update()
 	if (!IsCombatActive())
 		return;
 
-	if (state_.boss_phase == 0) {
-		bool anyRegularAlive = false;
-		for (size_t i = 0; i < ActiveMonsterCount; i++) {
-			const Monster &monster = Monsters[ActiveMonsters[i]];
-			if (!monster.isUnique() && monster.hitPoints > 0 && monster.mode != MonsterMode::Death) {
-				anyRegularAlive = true;
-				break;
-			}
+	// Count all living invasion monsters (skip player golems)
+	int aliveCount = 0;
+	for (size_t i = 0; i < ActiveMonsterCount; i++) {
+		const Monster &monster = Monsters[ActiveMonsters[i]];
+		if (monster.type().type == MT_GOLEM || (monster.flags & MFLAG_TARGETS_MONSTER) != 0)
+			continue;
+		if (monster.hitPoints > 0 && monster.mode != MonsterMode::Death) {
+			aliveCount++;
 		}
+	}
 
-		if (!anyRegularAlive) {
-			state_.boss_phase = 1;
-			state_.dramatic_pause_start_tick = SDL_GetTicks();
-		}
-	} else if (state_.boss_phase == 1) {
-		const uint32_t now = SDL_GetTicks();
-		if (now - state_.dramatic_pause_start_tick >= 2500) {
-			state_.boss_phase = 2;
-			SpawnBossEncounter();
-		}
-	} else if (state_.boss_phase == 2) {
-		bool bossAlive = false;
-		for (size_t i = 0; i < ActiveMonsterCount; i++) {
-			const Monster &monster = Monsters[ActiveMonsters[i]];
-			if (monster.isUnique() && monster.hitPoints > 0 && monster.mode != MonsterMode::Death) {
-				bossAlive = true;
-				break;
-			}
-		}
-
-		if (!bossAlive) {
-			state_.boss_phase = 3;
-			state_.completed = true;
-			state_.active = false;
-		}
+	// Only end the invasion when every single invasion monster is dead
+	if (aliveCount == 0 && state_.monster_count > 0) {
+		state_.boss_phase = 3;
+		state_.completed = true;
+		state_.active = false;
 	}
 }
 
 void InvasionManager::OnMonsterDeath(Monster &monster)
 {
-	if (monster.isUnique() && state_.boss_phase == 2) {
+	// Note boss death for bookkeeping, but do NOT end the invasion here.
+	// Update() is the authority — invasion ends only when ALL monsters are dead.
+	if (monster.isUnique()) {
 		state_.boss_phase = 3;
-		state_.completed = true;
-		state_.active = false;
 	}
 }
 
@@ -313,16 +413,46 @@ void InvasionManager::RestoreInvasionSnapshot()
 		if (!snap.is_alive || snap.current_hp <= 0)
 			continue;
 
+		// Skip any snapshot positions that are no longer walkable
+		if (!IsTileWalkable(Point { snap.x, snap.y }))
+			continue;
+
 		const size_t typeIdx = GetMonsterTypeIndex(snap.type);
 		if (typeIdx >= LevelMonsterTypeCount)
 			continue;
 
 		Monster *monster = AddMonster(Point { snap.x, snap.y }, Direction::South, typeIdx, true);
 		if (monster != nullptr) {
-			monster->hitPoints = snap.current_hp;
+			// Restore aggression and base stats matching initial spawn values
+			monster->intelligence = 3;
+			monster->activeForTicks = UINT8_MAX;
 			if (snap.is_boss && state_.boss_unique_type != UniqueMonsterType::None) {
 				PrepareUniqueMonst(*monster, state_.boss_unique_type, 0, 0, UniqueMonstersData[static_cast<size_t>(state_.boss_unique_type)]);
 				monster->hitPoints = snap.current_hp;
+				monster->intelligence = 3;
+				monster->activeForTicks = UINT8_MAX;
+				monster->minDamage = 75;
+				monster->maxDamage = 120;
+				monster->armorClass = 95;
+			} else {
+				monster->hitPoints = snap.current_hp;
+				// Restore type-specific stats
+				if (snap.type == MT_BALROG) {
+					monster->maxHitPoints = 2500 << 6;
+					monster->minDamage = 35;
+					monster->maxDamage = 60;
+					monster->armorClass = 65;
+				} else if (snap.type == MT_WINGED) {
+					monster->maxHitPoints = 1200 << 6;
+					monster->minDamage = 25;
+					monster->maxDamage = 45;
+					monster->armorClass = 50;
+				} else if (snap.type == MT_WSKELAX) {
+					monster->maxHitPoints = 850 << 6;
+					monster->minDamage = 20;
+					monster->maxDamage = 40;
+					monster->armorClass = 50;
+				}
 			}
 		}
 	}

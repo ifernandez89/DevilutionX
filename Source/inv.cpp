@@ -2038,7 +2038,7 @@ void ConsumeScroll(Player &player)
 
 bool CanUseScroll(Player &player, SpellID spell)
 {
-	if (leveltype == DTYPE_TOWN && !GetSpellData(spell).isAllowedInTown())
+	if (leveltype == DTYPE_TOWN && !IsTownCombatActive() && !GetSpellData(spell).isAllowedInTown())
 		return false;
 
 	return HasInventoryOrBeltItem(player, [spell](const Item &item) {
@@ -2169,7 +2169,7 @@ bool UseInvItem(int cii)
 
 	CloseGoldDrop();
 
-	if (item->isScroll() && leveltype == DTYPE_TOWN && !GetSpellData(item->_iSpell).isAllowedInTown()) {
+	if (item->isScroll() && leveltype == DTYPE_TOWN && !IsTownCombatActive() && !GetSpellData(item->_iSpell).isAllowedInTown()) {
 		return true;
 	}
 

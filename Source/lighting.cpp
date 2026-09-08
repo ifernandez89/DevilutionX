@@ -18,6 +18,7 @@
 #include "engine/displacement.hpp"
 #include "engine/lighting_defs.hpp"
 #include "engine/load_file.hpp"
+#include "engine/palette.h"
 #include "engine/point.hpp"
 #include "engine/points_in_rectangle_range.hpp"
 #include "engine/world_tile.hpp"
@@ -26,6 +27,7 @@
 #include "player.h"
 #include "utils/attributes.h"
 #include "utils/is_of.hpp"
+#include "utils/palette_kd_tree.hpp"
 #include "utils/status_macros.hpp"
 #include "vision.hpp"
 
@@ -231,33 +233,42 @@ tl::expected<void, std::string> LoadTrns()
 
 void MakeLightTable()
 {
-	// Generate 16 gradually darker translation tables for doing lighting
-	uint8_t shade = 0;
-	constexpr uint8_t Black = 0;
-	constexpr uint8_t White = 255;
-	for (auto &lightTable : LightTables) {
-		uint8_t colorIndex = 0;
-		for (const uint8_t steps : { 16, 16, 16, 16, 16, 16, 16, 16, 8, 8, 8, 8, 16, 16, 16, 16, 16, 16 }) {
-			const uint8_t shading = shade * steps / 16;
-			const uint8_t shadeStart = colorIndex;
-			const uint8_t shadeEnd = shadeStart + steps - 1;
-			for (uint8_t step = 0; step < steps; step++) {
-				if (colorIndex == Black) {
-					lightTable[colorIndex++] = Black;
-					continue;
-				}
-				int color = shadeStart + step + shading;
-				if (color > shadeEnd || color == White)
-					color = Black;
-				lightTable[colorIndex++] = color;
-			}
+	if (leveltype == DTYPE_TOWN) {
+		for (auto &lightTable : LightTables) {
+			std::iota(lightTable.begin(), lightTable.end(), uint8_t { 0 });
 		}
-		shade++;
-	}
+		LightTables[15] = {}; // Make last shade pitch black
+		FullyLitLightTable = LightTables[0].data();
+		FullyDarkLightTable = LightTables[LightsMax].data();
+	} else {
+		// Generate 16 gradually darker translation tables for doing lighting
+		uint8_t shade = 0;
+		constexpr uint8_t Black = 0;
+		constexpr uint8_t White = 255;
+		for (auto &lightTable : LightTables) {
+			uint8_t colorIndex = 0;
+			for (const uint8_t steps : { 16, 16, 16, 16, 16, 16, 16, 16, 8, 8, 8, 8, 16, 16, 16, 16, 16, 16 }) {
+				const uint8_t shading = shade * steps / 16;
+				const uint8_t shadeStart = colorIndex;
+				const uint8_t shadeEnd = shadeStart + steps - 1;
+				for (uint8_t step = 0; step < steps; step++) {
+					if (colorIndex == Black) {
+						lightTable[colorIndex++] = Black;
+						continue;
+					}
+					int color = shadeStart + step + shading;
+					if (color > shadeEnd || color == White)
+						color = Black;
+					lightTable[colorIndex++] = color;
+				}
+			}
+			shade++;
+		}
 
-	LightTables[15] = {}; // Make last shade pitch black
-	FullyLitLightTable = LightTables[0].data();
-	FullyDarkLightTable = LightTables[LightsMax].data();
+		LightTables[15] = {}; // Make last shade pitch black
+		FullyLitLightTable = LightTables[0].data();
+		FullyDarkLightTable = LightTables[LightsMax].data();
+	}
 
 	if (leveltype == DTYPE_HELL) {
 		// Blood wall lighting

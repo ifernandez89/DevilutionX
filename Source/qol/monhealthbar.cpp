@@ -82,6 +82,8 @@ void DrawMonsterHealthBar(const Surface &out)
 		return;
 
 	const Monster &monster = Monsters[pcursmonst];
+	if (monster.isInvalid || monster.maxHitPoints <= 0)
+		return;
 
 	const int width = (*healthBox)[0].width();
 	const int barWidth = (*health)[0].width();

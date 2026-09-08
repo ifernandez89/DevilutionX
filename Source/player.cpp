@@ -1479,7 +1479,7 @@ HeroClass GetPlayerSpriteClass(HeroClass cls)
 
 PlayerWeaponGraphic GetPlayerWeaponGraphic(player_graphic graphic, PlayerWeaponGraphic weaponGraphic)
 {
-	if (leveltype == DTYPE_TOWN && IsAnyOf(graphic, player_graphic::Lightning, player_graphic::Fire, player_graphic::Magic)) {
+	if (leveltype == DTYPE_TOWN && !IsTownCombatActive() && IsAnyOf(graphic, player_graphic::Lightning, player_graphic::Fire, player_graphic::Magic)) {
 		// If the hero doesn't hold the weapon in town then we should use the unarmed animation for casting
 		switch (weaponGraphic) {
 		case PlayerWeaponGraphic::Mace:
@@ -2240,46 +2240,46 @@ void SetPlrAnims(Player &player)
 	} else {
 		player._pNFrames = plrAtkAnimData.idleFrames;
 		player._pWFrames = plrAtkAnimData.walkingFrames;
-		player._pHFrames = plrAtkAnimData.recoveryFrames;
-		player._pBFrames = plrAtkAnimData.blockingFrames;
-		switch (gn) {
-		case PlayerWeaponGraphic::Unarmed:
-			player._pAFrames = plrAtkAnimData.unarmedFrames;
-			player._pAFNum = plrAtkAnimData.unarmedActionFrame;
-			break;
-		case PlayerWeaponGraphic::UnarmedShield:
-			player._pAFrames = plrAtkAnimData.unarmedShieldFrames;
-			player._pAFNum = plrAtkAnimData.unarmedShieldActionFrame;
-			break;
-		case PlayerWeaponGraphic::Sword:
-			player._pAFrames = plrAtkAnimData.swordFrames;
-			player._pAFNum = plrAtkAnimData.swordActionFrame;
-			break;
-		case PlayerWeaponGraphic::SwordShield:
-			player._pAFrames = plrAtkAnimData.swordShieldFrames;
-			player._pAFNum = plrAtkAnimData.swordShieldActionFrame;
-			break;
-		case PlayerWeaponGraphic::Bow:
-			player._pAFrames = plrAtkAnimData.bowFrames;
-			player._pAFNum = plrAtkAnimData.bowActionFrame;
-			break;
-		case PlayerWeaponGraphic::Axe:
-			player._pAFrames = plrAtkAnimData.axeFrames;
-			player._pAFNum = plrAtkAnimData.axeActionFrame;
-			break;
-		case PlayerWeaponGraphic::Mace:
-			player._pAFrames = plrAtkAnimData.maceFrames;
-			player._pAFNum = plrAtkAnimData.maceActionFrame;
-			break;
-		case PlayerWeaponGraphic::MaceShield:
-			player._pAFrames = plrAtkAnimData.maceShieldFrames;
-			player._pAFNum = plrAtkAnimData.maceShieldActionFrame;
-			break;
-		case PlayerWeaponGraphic::Staff:
-			player._pAFrames = plrAtkAnimData.staffFrames;
-			player._pAFNum = plrAtkAnimData.staffActionFrame;
-			break;
-		}
+	}
+	player._pHFrames = plrAtkAnimData.recoveryFrames;
+	player._pBFrames = plrAtkAnimData.blockingFrames;
+	switch (gn) {
+	case PlayerWeaponGraphic::Unarmed:
+		player._pAFrames = plrAtkAnimData.unarmedFrames;
+		player._pAFNum = plrAtkAnimData.unarmedActionFrame;
+		break;
+	case PlayerWeaponGraphic::UnarmedShield:
+		player._pAFrames = plrAtkAnimData.unarmedShieldFrames;
+		player._pAFNum = plrAtkAnimData.unarmedShieldActionFrame;
+		break;
+	case PlayerWeaponGraphic::Sword:
+		player._pAFrames = plrAtkAnimData.swordFrames;
+		player._pAFNum = plrAtkAnimData.swordActionFrame;
+		break;
+	case PlayerWeaponGraphic::SwordShield:
+		player._pAFrames = plrAtkAnimData.swordShieldFrames;
+		player._pAFNum = plrAtkAnimData.swordShieldActionFrame;
+		break;
+	case PlayerWeaponGraphic::Bow:
+		player._pAFrames = plrAtkAnimData.bowFrames;
+		player._pAFNum = plrAtkAnimData.bowActionFrame;
+		break;
+	case PlayerWeaponGraphic::Axe:
+		player._pAFrames = plrAtkAnimData.axeFrames;
+		player._pAFNum = plrAtkAnimData.axeActionFrame;
+		break;
+	case PlayerWeaponGraphic::Mace:
+		player._pAFrames = plrAtkAnimData.maceFrames;
+		player._pAFNum = plrAtkAnimData.maceActionFrame;
+		break;
+	case PlayerWeaponGraphic::MaceShield:
+		player._pAFrames = plrAtkAnimData.maceShieldFrames;
+		player._pAFNum = plrAtkAnimData.maceShieldActionFrame;
+		break;
+	case PlayerWeaponGraphic::Staff:
+		player._pAFrames = plrAtkAnimData.staffFrames;
+		player._pAFNum = plrAtkAnimData.staffActionFrame;
+		break;
 	}
 
 	player._pDFrames = plrAtkAnimData.deathFrames;
@@ -3107,7 +3107,7 @@ bool PosOkPlayer(const Player &player, Point position)
 		return false;
 
 	if (dMonster[position.x][position.y] != 0) {
-		if (leveltype == DTYPE_TOWN) {
+		if (leveltype == DTYPE_TOWN && !IsTownCombatActive()) {
 			return false;
 		}
 		if (dMonster[position.x][position.y] <= 0) {
@@ -3171,7 +3171,7 @@ void CheckPlrSpell(bool isShiftHeld, SpellID spellID, SpellType spellType)
 		}
 	}
 
-	if (leveltype == DTYPE_TOWN && !GetSpellData(spellID).isAllowedInTown()) {
+	if (leveltype == DTYPE_TOWN && !IsTownCombatActive() && !GetSpellData(spellID).isAllowedInTown()) {
 		myPlayer.Say(HeroSpeech::ICantCastThatHere);
 		return;
 	}

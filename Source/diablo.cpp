@@ -1438,6 +1438,10 @@ tl::expected<void, std::string> LoadAllGFX()
  */
 void CreateLevel(lvl_entry entry)
 {
+	if (leveltype == DTYPE_TOWN) {
+		nightmare::invasion::InvasionManager::Get().CheckInvasionTrigger();
+	}
+
 	CreateDungeon(DungeonSeeds[currlevel], entry);
 
 	switch (leveltype) {
@@ -1539,8 +1543,10 @@ void GameLogic()
 		ProcessMissiles();
 		gGameLogicStep = GameLogicStep::ProcessItems;
 		ProcessItems();
-		ProcessLightList();
-		ProcessVisionList();
+		if (leveltype != DTYPE_TOWN) {
+			ProcessLightList();
+			ProcessVisionList();
+		}
 		if (leveltype == DTYPE_TOWN) {
 			nightmare::invasion::InvasionManager::Get().Update();
 		}
@@ -2869,7 +2875,7 @@ bool TryIconCurs()
 		if (IsWallSpell(spellID)) {
 			const Direction sd = GetDirection(myPlayer.position.tile, cursPosition);
 			NetSendCmdLocParam4(true, CMD_SPELLXYD, cursPosition, static_cast<int8_t>(spellID), static_cast<uint8_t>(spellType), static_cast<uint16_t>(sd), spellFrom);
-		} else if (pcursmonst != -1 && leveltype != DTYPE_TOWN) {
+		} else if (pcursmonst != -1 && (leveltype != DTYPE_TOWN || nightmare::invasion::InvasionManager::Get().IsCombatActive())) {
 			NetSendCmdParam4(true, CMD_SPELLID, pcursmonst, static_cast<int8_t>(spellID), static_cast<uint8_t>(spellType), spellFrom);
 		} else if (PlayerUnderCursor != nullptr && !PlayerUnderCursor->hasNoLife() && !myPlayer.friendlyMode) {
 			NetSendCmdParam4(true, CMD_SPELLPID, PlayerUnderCursor->getId(), static_cast<int8_t>(spellID), static_cast<uint8_t>(spellType), spellFrom);
@@ -3168,7 +3174,7 @@ void LoadGameLevelSyncPlayerEntry(lvl_entry lvldir)
 
 void LoadGameLevelLightVision()
 {
-	if (leveltype != DTYPE_TOWN || nightmare::invasion::InvasionManager::Get().IsInvaded()) {
+	if (leveltype != DTYPE_TOWN) {
 		memcpy(dLight, dPreLight, sizeof(dLight));                                     // resets the light on entering a level to get rid of incorrect light
 		ChangeLightXY(Players[MyPlayerId].lightId, Players[MyPlayerId].position.tile); // forces player light refresh
 		ProcessLightList();
@@ -3208,6 +3214,7 @@ tl::expected<void, std::string> LoadGameLevelTown(bool firstflag, lvl_entry lvld
 	for (int i = 0; i < MAXDUNX; i++) { // NOLINT(modernize-loop-convert)
 		for (int j = 0; j < MAXDUNY; j++) {
 			dFlags[i][j] |= DungeonFlag::Lit;
+			dCorpse[i][j] = 0;
 		}
 	}
 
@@ -3219,13 +3226,16 @@ tl::expected<void, std::string> LoadGameLevelTown(bool firstflag, lvl_entry lvld
 		InitGolems();
 	}
 
+	nightmare::invasion::InvasionManager::Get().CheckInvasionTrigger();
 	if (!nightmare::invasion::InvasionManager::Get().IsInvaded()) {
 		InitTowners();
+	} else {
+		FreeTownerGFX();
+		Towners.clear();
 	}
 	InitStash();
 	InitItems();
 	InitMissiles();
-	nightmare::invasion::InvasionManager::Get().OnTownEntry();
 
 	IncProgress();
 
@@ -3233,6 +3243,9 @@ tl::expected<void, std::string> LoadGameLevelTown(bool firstflag, lvl_entry lvld
 		RETURN_IF_ERROR(LoadLevel());
 	if (gbIsMultiplayer)
 		DeltaLoadLevel();
+
+	nightmare::invasion::InvasionManager::Get().OnTownEntry();
+	InitCorpses();
 
 	IncProgress();
 

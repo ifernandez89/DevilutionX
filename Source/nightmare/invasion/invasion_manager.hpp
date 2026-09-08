@@ -14,7 +14,7 @@ using SaveWriter = MpqWriter;
 namespace nightmare {
 namespace invasion {
 
-constexpr size_t MaxInvasionMonsters = 36;
+constexpr size_t MaxInvasionMonsters = 100;
 
 struct InvasionMonsterSnapshot {
 	int32_t current_hp;

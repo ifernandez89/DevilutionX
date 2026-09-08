@@ -1657,7 +1657,7 @@ size_t OnStandingAttackTile(const TCmdLoc &message, Player &player)
 {
 	const Point position { message.x, message.y };
 
-	if (gbBufferMsgs != 1 && player.isOnActiveLevel() && leveltype != DTYPE_TOWN && InDungeonBounds(position)) {
+	if (gbBufferMsgs != 1 && player.isOnActiveLevel() && (leveltype != DTYPE_TOWN || nightmare::invasion::InvasionManager::Get().IsCombatActive()) && InDungeonBounds(position)) {
 		ClrPlrPath(player);
 		player.destAction = ACTION_ATTACK;
 		player.destParam1 = position.x;
@@ -1671,7 +1671,7 @@ size_t OnRangedAttackTile(const TCmdLoc &message, Player &player)
 {
 	const Point position { message.x, message.y };
 
-	if (gbBufferMsgs != 1 && player.isOnActiveLevel() && leveltype != DTYPE_TOWN && InDungeonBounds(position)) {
+	if (gbBufferMsgs != 1 && player.isOnActiveLevel() && (leveltype != DTYPE_TOWN || nightmare::invasion::InvasionManager::Get().IsCombatActive()) && InDungeonBounds(position)) {
 		ClrPlrPath(player);
 		player.destAction = ACTION_RATTACK;
 		player.destParam1 = position.x;
@@ -1694,7 +1694,7 @@ bool InitNewSpell(Player &player, uint16_t wParamSpellID, uint16_t wParamSpellTy
 		LogError(_("{:s} has cast an invalid spell."), player._pName);
 		return false;
 	}
-	if (leveltype == DTYPE_TOWN && !GetSpellData(spellID).isAllowedInTown()) {
+	if (leveltype == DTYPE_TOWN && !nightmare::invasion::InvasionManager::Get().IsCombatActive() && !GetSpellData(spellID).isAllowedInTown()) {
 		LogError(_("{:s} has cast an illegal spell."), player._pName);
 		return false;
 	}
@@ -1855,7 +1855,7 @@ size_t OnSpellMonster(const TCmdParam4 &message, Player &player)
 		return sizeof(message);
 	if (!player.isOnActiveLevel())
 		return sizeof(message);
-	if (leveltype == DTYPE_TOWN)
+	if (leveltype == DTYPE_TOWN && !nightmare::invasion::InvasionManager::Get().IsCombatActive())
 		return sizeof(message);
 	const uint16_t monsterIdx = Swap16LE(message.wParam1);
 	if (monsterIdx >= MaxMonsters)
@@ -1897,7 +1897,7 @@ size_t OnKnockback(const TCmdParam1 &message, Player &player)
 {
 	const uint16_t monsterIdx = Swap16LE(message.wParam1);
 
-	if (gbBufferMsgs != 1 && player.isOnActiveLevel() && leveltype != DTYPE_TOWN && monsterIdx < MaxMonsters) {
+	if (gbBufferMsgs != 1 && player.isOnActiveLevel() && (leveltype != DTYPE_TOWN || nightmare::invasion::InvasionManager::Get().IsCombatActive()) && monsterIdx < MaxMonsters) {
 		Monster &monster = Monsters[monsterIdx];
 		M_GetKnockback(monster, player.position.tile);
 		M_StartHit(monster, player, 0);

@@ -3,7 +3,67 @@
 
 ---
 
+## 🚀 Versión Enhanced v1.1 - Septiembre 7, 2026
+
+### ⚔️ **TRISTRAM INVASION SYSTEM — Combate en el Pueblo**
+
+#### 🏰 **Sistema de Invasión de Tristram (Fase Final)**
+- ✅ **Invasión post-Nakrul:** Tras matar a Nakrul, Tristram es invadida por un ejército de Balrogs, Winged Demons y Skeletal Axemen
+- ✅ **74+ enemigos** distribuidos en todo el mapa: catedral, caminos, taberna, herrería, granja de Lester, cabaña de Adria, el puente y la península
+- ✅ **Leoric King como Boss Final GARANTIZADO** — se invoca **primero**, antes que cualquier otro enemigo, reservando su slot sin importar cuántos monstruos regulares fallen. 6 posiciones de fallback en la península aseguran que siempre aparezca
+- ✅ **8 esqueletos guardias** custodian a Leoric en la península (también con IsTileWalkable antes de cada spawn)
+- ✅ **IA agresiva** en todos los enemigos (`intelligence=3`, `activeForTicks=UINT8_MAX`)
+- ✅ **Stats inflados** acordes a un enfrentamiento final épico
+
+#### 🎮 **Combate Habilitado en Town**
+- ✅ Acciones de ataque cuerpo a cuerpo habilitadas en Tristram durante la invasión (`OnStandingAttackTile`, `OnRangedAttackTile`)
+- ✅ Hechizos ofensivos disponibles durante combate en town (`CheckPlrSpell`, `CanUseScroll`)
+- ✅ Animaciones de combate completas durante la invasión (`SetPlrAnims`, `GetPlayerWeaponGraphic`)
+- ✅ Targeting de monstruos habilitado en town (`OnSpellMonster`, `OnKnockback`)
+- ✅ Panel de hechizos y libro de hechizos muestran opciones de combate durante la invasión
+- ✅ Mensajes de red (msg.cpp) correctamente habilitados para combate en town
+
+#### 🗺️ **Puente / Península Accesible**
+- ✅ El trigger del Nest ya no bloquea el paso al puente durante la invasión
+- ✅ Al salir del Nest durante la invasión, el jugador no queda atrapado del otro lado
+
+#### 🐛 **Bug Fixes — Invasión**
+
+##### Estabilidad
+- 🐛 **FIX:** `OnMonsterDeath()` ya no termina la invasión al morir el boss (Leoric) — los demás enemigos continúan vivos y combatiendo hasta que el último cae
+- 🐛 **FIX:** `Update()` ahora cuenta **todos** los monstruos vivos (no solo el unique) — la invasión solo termina cuando el último enemigo muere
+- 🐛 **FIX:** `LoadInvasionState()` ahora siempre resetea el estado del singleton antes de leer el archivo de save, evitando que estado de una sesión anterior con invasión activa "contamine" cargas de saves pre-Nakrul
+- 🐛 **FIX:** `RestoreInvasionSnapshot()` restaura `intelligence`, `activeForTicks` y stats de combate completos — los monstruos ya no reaparecen como zombies pasivos al recargar partida mid-invasión
+- 🐛 **FIX:** Spawn validado con `IsTileWalkable()` — se eliminan spawns sobre tiles sólidos (techos de cabañas, paredes, obstáculos)
+
+##### Renderizado
+- 🐛 **FIX:** Colores de Tristram restaurados a su paleta original tras la invasión (eliminado efecto de paleta corrupta residual)
+- 🐛 **FIX:** Efecto de "negrura palpitante" en los bordes de pantalla eliminado (efecto visual sin limpiar correctamente al salir)
+
+#### 📊 **Balance de Enemigos**
+| Tipo | HP | Daño | AC |
+|---|---|---|---|
+| Balrog | 2.500 << 6 | 35–60 | 65 |
+| Winged Demon | 1.200 << 6 | 25–45 | 50 |
+| Skeletal Axeman | 850 << 6 | 20–40 | 50 |
+| Guardia de Leoric | 1.000 << 6 | 25–45 | 55 |
+| **Leoric (Boss)** | **18.000 << 6** | **75–120** | **95** |
+
+#### 🔧 **Archivos Modificados:**
+- `Source/nightmare/invasion/invasion_manager.cpp` — Lógica central de invasión, spawn, snapshot, balance
+- `Source/nightmare/invasion/invasion_manager.hpp` — `MaxInvasionMonsters` ampliado a 100
+- `Source/diablo.cpp` — Targeting de monstruos y combat gates en town
+- `Source/player.cpp` — Frames de animación, pathing y spell checks en town
+- `Source/msg.cpp` — Mensajes de combate habilitados en town
+- `Source/inv.cpp` — Uso de scrolls durante invasión
+- `Source/panels/spell_list.cpp` / `spell_book.cpp` — Hechizos disponibles durante invasión
+- `Source/loadsave.cpp` — Reset garantizado en `LoadInvasionState()`
+- `Source/levels/trigs.cpp` — Puente/Nest desbloqueado durante invasión
+
+---
+
 ## 🚀 Versión Enhanced v1.0 - Enero 9, 2026
+
 
 ### ✨ **NUEVAS CARACTERÍSTICAS PRINCIPALES**
 

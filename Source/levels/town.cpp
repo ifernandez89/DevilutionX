@@ -228,7 +228,10 @@ void DrlgTPass3()
 		}
 	}
 	if (gbIsHellfire) {
-		if (!nightmare::invasion::InvasionManager::Get().IsInvaded()) {
+		if (nightmare::invasion::InvasionManager::Get().IsInvaded()) {
+			TownOpenPeninsulaPassage();
+			dungeon[36][27] = 0;
+		} else {
 			if (IsWarpOpen(DTYPE_NEST))
 				TownOpenHive();
 			else
@@ -322,6 +325,55 @@ void TownOpenHive()
 	dPiece[83][62] = 0x523;
 	dPiece[82][63] = 0x524;
 	dPiece[83][63] = 0x525;
+	dPiece[84][61] = 279;
+	dPiece[84][62] = 280;
+	dPiece[84][63] = 279;
+	dPiece[84][64] = 10;
+	dPiece[85][60] = 11;
+	dPiece[85][61] = 12;
+	dPiece[85][62] = 13;
+	dPiece[85][63] = 14;
+	dPiece[85][64] = 15;
+	dPiece[86][60] = 16;
+	dPiece[86][61] = 17;
+}
+
+void TownOpenPeninsulaPassage()
+{
+	dungeon[36][27] = 0;
+
+	// Stone bridge across river
+	dPiece[78][60] = 0x489;
+	dPiece[79][60] = 0x48a;
+	dPiece[78][61] = 0x48b;
+	dPiece[79][61] = 0x50d;
+	dPiece[78][62] = 0x4ed;
+	dPiece[78][63] = 0x4ef;
+	dPiece[79][62] = 0x50f;
+	dPiece[79][63] = 0x510;
+	dPiece[79][64] = 0x511;
+	dPiece[78][64] = 0x119;
+	dPiece[78][65] = 0x11b;
+	dPiece[79][65] = 0x11c;
+
+	// North landing of bridge
+	dPiece[80][60] = 0x512;
+	dPiece[80][61] = 0x514;
+	dPiece[81][61] = 0x515;
+	dPiece[82][60] = 0x516;
+	dPiece[83][60] = 0x517;
+	dPiece[82][61] = 0x518;
+	dPiece[83][61] = 0x519;
+
+	// Walkway replacing the Hive Nest completely with flat walkable path
+	for (int y = 62; y <= 65; y++) {
+		dPiece[80][y] = 0x514;
+		dPiece[81][y] = 0x515;
+		dPiece[82][y] = 0x518;
+		dPiece[83][y] = 0x519;
+	}
+
+	// East walkway into peninsula grass
 	dPiece[84][61] = 279;
 	dPiece[84][62] = 280;
 	dPiece[84][63] = 279;

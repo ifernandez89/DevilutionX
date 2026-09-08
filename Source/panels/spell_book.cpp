@@ -93,7 +93,7 @@ SpellType GetSBookTrans(SpellID ii, bool townok)
 			st = SpellType::Invalid;
 		}
 	}
-	if (townok && leveltype == DTYPE_TOWN && st != SpellType::Invalid && !GetSpellData(ii).isAllowedInTown()) {
+	if (townok && leveltype == DTYPE_TOWN && !IsTownCombatActive() && st != SpellType::Invalid && !GetSpellData(ii).isAllowedInTown()) {
 		st = SpellType::Invalid;
 	}
 

@@ -40,6 +40,7 @@
 #include "engine/render/text_render.hpp"
 #include "engine/render/weather_overlay.hpp"
 #include "engine/trn.hpp"
+#include "nightmare/invasion/invasion_manager.hpp"
 #include "nightmare/neural/gbuffer.hpp"
 #include "nightmare/neural/dataset_dumper.hpp"
 #include "engine/world_tile.hpp"
@@ -766,6 +767,20 @@ void DrawMonsterHelper(const Surface &out, Point tilePosition, Point targetBuffe
 	mi = std::abs(mi) - 1;
 
 	if (leveltype == DTYPE_TOWN) {
+		if (nightmare::invasion::InvasionManager::Get().IsCombatActive()) {
+			if (static_cast<size_t>(mi) < MaxMonsters && !Monsters[mi].isInvalid && Monsters[mi].animInfo.sprites) {
+				const auto &monster = Monsters[mi];
+				const ClxSprite sprite = monster.animInfo.currentSprite();
+				const Displacement offset = monster.getRenderingOffset(sprite);
+				const Point monsterRenderPosition = targetBufferPosition + offset;
+				if (mi == pcursmonst) {
+					ClxDrawOutlineSkipColorZero(out, 233, monsterRenderPosition, sprite);
+				}
+				DrawMonster(out, tilePosition, monsterRenderPosition, monster, lightTableIndex);
+				DrawMonsterOverheadHealthBar(out, monsterRenderPosition, sprite, monster, mi == pcursmonst);
+				return;
+			}
+		}
 		if (static_cast<size_t>(mi) < Towners.size() && Towners[mi].position == tilePosition) {
 			auto &towner = Towners[mi];
 			const OptionalClxSprite sprite = towner.currentSprite();
@@ -789,17 +804,6 @@ void DrawMonsterHelper(const Surface &out, Point tilePosition, Point targetBuffe
 			DrawMonster(out, tilePosition, monsterRenderPosition, monster, lightTableIndex);
 			DrawMonsterOverheadHealthBar(out, monsterRenderPosition, sprite, monster, mi == pcursmonst);
 			return;
-		}
-		if (static_cast<size_t>(mi) < Towners.size()) {
-			auto &towner = Towners[mi];
-			const OptionalClxSprite sprite = towner.currentSprite();
-			if (sprite) {
-				const Point position = targetBufferPosition + towner.getRenderingOffset();
-				if (mi == pcursmonst) {
-					ClxDrawOutlineSkipColorZero(out, 166, position, *sprite);
-				}
-				ClxDraw(out, position, *sprite);
-			}
 		}
 		return;
 	}
@@ -860,15 +864,17 @@ void DrawDungeon(const Surface &out, const Lightmap &lightmap, Point tilePositio
 		DrawMissile(out, tilePosition, targetBufferPosition, true, lightTableIndex);
 	}
 
-	if (lightTableIndex < LightsMax && bDead != 0) {
+	if (lightTableIndex < LightsMax && (bDead & 0x1F) != 0 && static_cast<size_t>((bDead & 0x1F) - 1) < MaxCorpses) {
 		const Corpse &corpse = Corpses[(bDead & 0x1F) - 1];
-		const Point position { targetBufferPosition.x - CalculateSpriteTileCenterX(corpse.width), targetBufferPosition.y };
-		const ClxSprite sprite = corpse.spritesForDirection(static_cast<Direction>((bDead >> 5) & 7))[corpse.frame];
-		if (corpse.translationPaletteIndex != 0) {
-			const uint8_t *trn = Monsters[corpse.translationPaletteIndex - 1].uniqueMonsterTRN.get();
-			ClxDrawTRN(out, position, sprite, trn);
-		} else {
-			ClxDrawLight(out, position, sprite, lightTableIndex);
+		if (corpse.sprites) {
+			const Point position { targetBufferPosition.x - CalculateSpriteTileCenterX(corpse.width), targetBufferPosition.y };
+			const ClxSprite sprite = corpse.spritesForDirection(static_cast<Direction>((bDead >> 5) & 7))[corpse.frame];
+			if (corpse.translationPaletteIndex != 0) {
+				const uint8_t *trn = Monsters[corpse.translationPaletteIndex - 1].uniqueMonsterTRN.get();
+				ClxDrawTRN(out, position, sprite, trn);
+			} else {
+				ClxDrawLight(out, position, sprite, lightTableIndex);
+			}
 		}
 	}
 

@@ -2435,6 +2435,11 @@ void LoadBoneSpiritState(Player &player)
 
 void LoadInvasionState()
 {
+	// Always reset first — prevents stale in-memory state (from a previous
+	// play session) from leaking into a freshly loaded pre-invasion save that
+	// has no "tristram_inv" chunk yet.
+	nightmare::invasion::InvasionManager::Get().ResetInvasionState();
+
 	auto &state = nightmare::invasion::InvasionManager::Get().GetState();
 	LoadHelper file(OpenSaveArchive(gSaveNumber), "tristram_inv");
 	if (!file.IsValid())

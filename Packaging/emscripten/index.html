@@ -69,9 +69,10 @@
 			outline: none;
 		}
 
-		/* Subtle Graphics Remaster Active Presentation */
+		/* Cinematic Graphics Remaster Active Presentation */
 		body.remaster-enabled canvas.emscripten {
-			filter: contrast(1.18) saturate(1.22) brightness(0.96);
+			filter: contrast(1.24) saturate(1.20) brightness(0.93);
+			transition: filter 0.3s ease;
 		}
 
 		/* WebGPU Neural HD Canvas Overlay */
@@ -95,37 +96,7 @@
 			opacity: 1;
 		}
 
-		/* Rain 2.0 Canvas Overlay */
-		#rain-canvas {
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			pointer-events: none;
-			z-index: 10;
-		}
-
-		/* Lightning Flash Overlay */
-		#lightning-overlay {
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			pointer-events: none;
-			background-color: #ffffff;
-			mix-blend-mode: color-dodge;
-			opacity: 0;
-			z-index: 11;
-			transition: opacity 0.05s ease-out;
-		}
-
-		body.remaster-enabled #remasterLightingCanvas {
-			opacity: 0.85;
-		}
-
-		/* Subtle Graphics Remaster Atmospheric Layers */
+		/* Cinematic Vignette Layer */
 		.remaster-vignette-layer {
 			position: absolute;
 			top: 0;
@@ -133,9 +104,9 @@
 			width: 100%;
 			height: 100%;
 			pointer-events: none;
-			background: radial-gradient(circle at center, rgba(0, 0, 0, 0) 36%, rgba(0, 0, 0, 0.68) 100%);
+			background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 42%, rgba(8, 12, 22, 0.42) 72%, rgba(0, 0, 0, 0.78) 100%);
 			opacity: 0;
-			transition: opacity 0.3s ease;
+			transition: opacity 0.35s ease;
 			z-index: 10;
 		}
 
@@ -1390,13 +1361,52 @@
 				// Weather Intensity Cycling
 				weatherIntensity = 0.65 + Math.sin(time * 0.04) * 0.25;
 
-				// 1. Draw Puddle Glints (Subtle Wet Ground Reflections)
+				// 1. Draw 2.5D Volumetric Drifting Ground Fog (Cold Gothic Moonlight / Crimson Invasion)
+				var fogY = height * 0.38;
+				var fogHeight = height * 0.56;
+				var isCrimson = (window.currentWebGPURenderMode === 7);
+				var fogBaseColor = isCrimson ? 'rgba(195, 45, 30, ' : 'rgba(120, 160, 210, ';
+
+				for (var fi = 0; fi < 3; fi++) {
+					var waveX = ((time * (22 + fi * 8)) % (width + 400)) - 200;
+					var waveY = Math.sin(time * 0.6 + fi * 2.1) * 16;
+					var grad = ctx.createRadialGradient(
+						width * 0.5 + Math.cos(time * 0.3 + fi) * (width * 0.3), fogY + fi * 45 + waveY, 40,
+						width * 0.5 + Math.cos(time * 0.3 + fi) * (width * 0.3), fogY + fi * 45 + waveY, width * 0.55
+					);
+					var fogAlpha1 = (0.16 + Math.sin(time * 0.8 + fi) * 0.04).toFixed(3);
+					var fogAlpha2 = (0.08 + Math.sin(time * 0.8 + fi) * 0.02).toFixed(3);
+					grad.addColorStop(0, fogBaseColor + fogAlpha1 + ')');
+					grad.addColorStop(0.55, fogBaseColor + fogAlpha2 + ')');
+					grad.addColorStop(1, fogBaseColor + '0.0)');
+					ctx.fillStyle = grad;
+					ctx.fillRect(0, fogY - 30, width, fogHeight);
+				}
+
+				// 2. Draw Dynamic Warm Torchlight & Campfire Glow
+				for (var li = 0; li < lightSources.length; li++) {
+					var src = lightSources[li];
+					var lx = src.x * width;
+					var ly = src.y * height;
+					var flicker = 1.0 + Math.sin(time * 7.5 + li * 2.3) * 0.06 + (Math.random() - 0.5) * 0.02;
+					var rad = src.radius * width * flicker;
+					var fireGrad = ctx.createRadialGradient(lx, ly, 8, lx, ly, rad);
+					fireGrad.addColorStop(0, 'rgba(' + src.color[0] + ',' + src.color[1] + ',' + src.color[2] + ', 0.32)');
+					fireGrad.addColorStop(0.45, 'rgba(' + src.color[0] + ',' + src.color[1] + ',' + src.color[2] + ', 0.12)');
+					fireGrad.addColorStop(1, 'rgba(' + src.color[0] + ',' + src.color[1] + ',' + src.color[2] + ', 0.0)');
+					ctx.fillStyle = fireGrad;
+					ctx.beginPath();
+					ctx.arc(lx, ly, rad, 0, Math.PI * 2);
+					ctx.fill();
+				}
+
+				// 3. Draw Puddle Glints (Subtle Wet Ground Reflections)
 				for (var pg = 0; pg < puddleGlints.length; pg++) {
 					puddleGlints[pg].update();
 					puddleGlints[pg].draw();
 				}
 
-				// 2. Update & Draw Rain Drops across 3 Depth Layers
+				// 4. Update & Draw Rain Drops across 3 Depth Layers
 				var activeDropCount = Math.floor(drops.length * (weatherIntensity / 0.65));
 				for (var d = 0; d < Math.min(drops.length, activeDropCount); d++) {
 					drops[d].update(activeWindX);

@@ -1,6 +1,37 @@
 # 📋 DEVILUTIONX ENHANCED - CHANGELOG
 ## Registro Completo de Características Implementadas
 
+## 🚀 Versión Enhanced v1.4 - Septiembre 8, 2026
+
+### 💀 **TRISTRAM INVASION 2.0: HORDA INFINITA CONTROLADA & HERALDOS LEGENDARIOS**
+
+#### ⚔️ **Arquitectura de Reemplazo 1 a 1 (Ventana Elástica 13–15)**
+- ✅ **Población Elástica Optimizada para WASM:** Ventana de contingencia estricta de 13 a 15 esbirros activos (`MinInvasionMinions = 13`, `TargetInvasionMinions = 14`, `MaxInvasionMinions = 15`), garantizando rendimiento fluido y previniendo picos de asignación en el heap del navegador.
+- ✅ **Bucle Infinito de Refuerzos:** Cada esbirro abatido añade un turno a la cola de reemplazo (`pending_reinforcements++`). Los refuerzos continúan regenerándose de forma ilimitada mientras el Comandante Rey Leoric permanezca con vida.
+- ✅ **Cero Reentrancia en `OnMonsterDeath()`:** Las funciones de invocación (`AddMonster`) se desacoplaron totalmente de los callbacks de muerte, difiriéndose de forma segura al ciclo principal `Update()` del motor, evitando crashes por mutación del vector de monstruos durante iteraciones de proyectiles.
+- ✅ **All-Stars Monster Roster:** Precarga fija de 11 tipos legendarios (`LevelMonsterTypes`, ocupando sólo 12 de los 24 slots del motor):
+  - **Comandante & Heraldos:** King Leoric, The Butcher, Na-Krul, Lord Diablo.
+  - **Esbirros de Invasión:** Skeletal Axemen, Skeletal Bowmen, Blood Clan Goat Men, Acid Beasts, Winged Demons, Balrogs, Succubi.
+
+#### 👑 **Hitos de Heraldos Legendarios (Milestone Boss Encounters)**
+- ✅ **The Butcher (El Carnicero):** Se une a la invasión al alcanzar `>= 15` bajas de esbirros, resonando su célebre *"Ah, fresh meat!"*.
+- ✅ **Na-Krul:** Desciende a Tristram al alcanzar `>= 35` bajas de esbirros con su rugido de las sombras.
+- ✅ **Lord Diablo:** Emerge en Tristram al acumular `>= 55` bajas de esbirros, acompañado de su bramido carmesí y explosión volcánica.
+- ✅ **Persistencia de Heraldos:** Los heraldos aparecen una sola vez como hitos de combate épicos y combaten en paralelo a la horda regular.
+
+#### 🛡️ **Hardening de Estabilidad & Corrección de Freezes WASM**
+- 🐛 **FIX (Saturación por Daño Continuo / Inferno):** Consolidación de números flotantes de daño (`AddFloatingNumber`) para impactos sucesivos en ventana de 150ms sobre el mismo objetivo, evitando saturar la memoria y el hilo de renderizado con hechizos como Inferno o Flame Wave.
+- 🐛 **FIX (Inferno Out-of-Bounds Missiles):** Detección defensiva de límites en `ProcessInfernoControl` (`InDungeonBounds`), eliminando punteros colgantes cuando las llamas alcanzan los bordes del mapa de Tristram.
+- 🐛 **FIX (CheckMissileCol Null Source):** Salvaguarda en detección de colisión de proyectiles cuando `missile.sourcePlayer()` es nulo o inválido, asegurando fallback a `MyPlayer`.
+- 🐛 **FIX (Lighting DoLighting Assert Crash):** Reemplazo del `assert(InDungeonBounds(position))` en `lighting.cpp` por verificación defensiva suave con retorno temprano, evitando abortos fatales del runtime de WebAssembly cuando un proyectil ilumina celdas periféricas.
+- 🐛 **FIX (Leoric Minion Spawning):** Desactivada la invocación descontrolada de esqueletos por IA de Leoric dentro de Tristram (`leveltype == DTYPE_TOWN`), manteniendo el control de población 100% bajo la economía de `InvasionManager`.
+
+#### 💾 **Persistencia y Compatibilidad de Partidas Guardadas**
+- ✅ **Snapshot Extendido de Invasión:** Serialización y deserialización en `loadsave.cpp` de `total_kills`, `pending_reinforcements`, `leoric_alive`, `butcher_spawned`, `nakrul_spawned`, `diablo_spawned`.
+- ✅ **Compatibilidad Hacia Atrás:** Carga condicional y segura con detección de tamaño de chunk (`file.IsValid()`) que permite reanudar partidas guardadas previas sin corromper el estado del juego.
+
+---
+
 ## 🚀 Versión Enhanced v1.3 - Septiembre 8, 2026
 
 ### 🛡️ **NIGHTMARE HD — MOTOR PBR 2.5D UNIVERSAL PARA TODO EL JUEGO**

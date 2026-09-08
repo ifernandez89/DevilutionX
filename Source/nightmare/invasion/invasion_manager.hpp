@@ -14,6 +14,9 @@ using SaveWriter = MpqWriter;
 namespace nightmare {
 namespace invasion {
 
+constexpr size_t MinInvasionMinions = 13;
+constexpr size_t TargetInvasionMinions = 14;
+constexpr size_t MaxInvasionMinions = 15;
 constexpr size_t MaxInvasionMonsters = 100;
 
 struct InvasionMonsterSnapshot {
@@ -33,6 +36,12 @@ struct TristramInvasionState {
 	_monster_id boss_selected;
 	UniqueMonsterType boss_unique_type;
 	uint8_t monster_count;
+	uint32_t total_kills;
+	uint16_t pending_reinforcements;
+	bool leoric_alive;
+	bool butcher_spawned;
+	bool nakrul_spawned;
+	bool diablo_spawned;
 	InvasionMonsterSnapshot monsters[MaxInvasionMonsters];
 };
 
@@ -60,7 +69,12 @@ public:
 private:
 	InvasionManager();
 	void SpawnInitialInvasionForce();
-	void SpawnBossEncounter();
+	void SpawnCommanderLeoric();
+	void SpawnHeraldButcher();
+	void SpawnHeraldNaKrul();
+	void SpawnHeraldDiablo();
+	bool SpawnOneReinforcement();
+	Point GetWalkablePerimeterSpawn();
 
 	TristramInvasionState state_;
 };

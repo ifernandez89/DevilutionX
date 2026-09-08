@@ -2346,15 +2346,7 @@ void LeoricAi(Monster &monster)
 	if (monster.goal == MonsterGoal::Normal) {
 		bool allowSummon = true;
 		if (leveltype == DTYPE_TOWN) {
-			int skelCount = 0;
-			for (size_t i = 0; i < ActiveMonsterCount; i++) {
-				const Monster &m = Monsters[ActiveMonsters[i]];
-				if (IsSkel(m.type().type) && m.hitPoints > 0 && m.mode != MonsterMode::Death && m.distanceToEnemy() <= 15) {
-					skelCount++;
-				}
-			}
-			if (skelCount >= 5)
-				allowSummon = false;
+			allowSummon = false;
 		}
 		if (allowSummon && !UseMultiplayerQuests()
 		    && ((distanceToEnemy >= 3 && v < 4 * monster.intelligence + 35) || v < 6)
@@ -3848,7 +3840,7 @@ void ApplyMonsterDamage(DamageType damageType, Monster &monster, int damage)
 
 	const int displayDmg = damage >> 6;
 	if (displayDmg > 0) {
-		AddFloatingNumber(monster.position.tile, { 0, -20 }, fmt::format("{:d}", displayDmg), UiFlags::ColorRed);
+		AddFloatingNumber(monster.position.tile, { 0, -20 }, fmt::format("{:d}", displayDmg), UiFlags::ColorRed, static_cast<int>(monster.getId() + 1), false, displayDmg);
 	}
 
 	if (monster.hasNoLife()) {

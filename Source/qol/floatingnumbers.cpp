@@ -25,6 +25,7 @@ struct FloatingNumber {
 	Displacement startOffset;
 	Displacement endOffset;
 	std::string text;
+	int accumulatedDamage;
 	uint32_t time;
 	uint32_t lastMerge;
 	UiFlags style;
@@ -56,7 +57,7 @@ GameFontTables GetGameFontSize(UiFlags flags)
 
 } // namespace
 
-void AddFloatingNumber(Point pos, Displacement offset, std::string text, UiFlags style, int id, bool reverseDirection)
+void AddFloatingNumber(Point pos, Displacement offset, std::string text, UiFlags style, int id, bool reverseDirection, int addDamage)
 {
 	Displacement endOffset;
 	if (!reverseDirection)
@@ -64,19 +65,26 @@ void AddFloatingNumber(Point pos, Displacement offset, std::string text, UiFlags
 	else
 		endOffset = { 0, 140 };
 
+	const uint32_t now = SDL_GetTicks();
 	for (auto &num : FloatingQueue) {
-		if (id != 0 && num.id == id && (SDL_GetTicks() - static_cast<int>(num.lastMerge)) <= 100) {
-			num.text = text;
-			num.lastMerge = SDL_GetTicks();
-			num.style = style;
+		if (id != 0 && num.id == id && (now - num.lastMerge <= 150)) {
+			if (addDamage > 0 && num.accumulatedDamage > 0) {
+				num.accumulatedDamage += addDamage;
+				num.text = fmt::format("{:d}", num.accumulatedDamage);
+			} else {
+				num.text = text;
+			}
+			num.lastMerge = now;
+			num.style = style | UiFlags::Outlined;
 			num.startPos = pos;
+			num.time = now + 2000;
 			return;
 		}
 	}
 	FloatingNumber num {
-		pos, offset, endOffset, text,
-		static_cast<uint32_t>(SDL_GetTicks() + 2500),
-		static_cast<uint32_t>(SDL_GetTicks()),
+		pos, offset, endOffset, text, addDamage,
+		static_cast<uint32_t>(now + 2500),
+		now,
 		style | UiFlags::Outlined, id, reverseDirection
 	};
 	FloatingQueue.push_back(num);

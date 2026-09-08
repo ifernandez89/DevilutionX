@@ -129,8 +129,8 @@ void DoUnLight(Point position, uint8_t radius)
 
 void DoLighting(Point position, uint8_t radius, DisplacementOf<int8_t> offset)
 {
-	assert(radius >= 0 && radius <= NumLightRadiuses);
-	assert(InDungeonBounds(position));
+	if (!InDungeonBounds(position))
+		return;
 
 	DisplacementOf<int8_t> light = {};
 	DisplacementOf<int8_t> block = {};

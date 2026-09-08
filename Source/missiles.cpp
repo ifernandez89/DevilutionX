@@ -484,18 +484,24 @@ void CheckMissileCol(Missile &missile, DamageType damageType, int minDamage, int
 	bool isMonsterHit = false;
 	int mid = dMonster[position.x][position.y];
 	if (mid != 0) {
-		Monster &monster = Monsters[std::abs(mid) - 1];
-		if (onlyHitWalking.has_value() ? (monster.isWalking() && CheckCanHitOnlyWalking(missile, monster.position, *onlyHitWalking)) : (mid > 0 || monster.mode == MonsterMode::Petrified)) {
-			if (missile.IsTrap()
-			    || (missile._micaster == TARGET_PLAYERS && (                                     // or was fired by a monster and
-			            monster.isPlayerMinion() != Monsters[missile._misource].isPlayerMinion() //  the monsters are on opposing factions
-			            || (Monsters[missile._misource].flags & MFLAG_BERSERK) != 0              //  or the attacker is berserked
-			            || (monster.flags & MFLAG_BERSERK) != 0                                  //  or the target is berserked
-			            ))) {
-				// then the missile can potentially hit this target
-				isMonsterHit = MonsterTrapHit(monster, minDamage, maxDamage, missile._midist, missile._mitype, damageType, isDamageShifted);
-			} else if (IsAnyOf(missile._micaster, TARGET_BOTH, TARGET_MONSTERS)) {
-				isMonsterHit = MonsterMHit(*missile.sourcePlayer(), monster, minDamage, maxDamage, missile._midist, missile._mitype, missile.position.start, damageType, isDamageShifted);
+		const int monsterIdx = std::abs(mid) - 1;
+		if (monsterIdx >= 0 && monsterIdx < static_cast<int>(MaxMonsters)) {
+			Monster &monster = Monsters[monsterIdx];
+			if (onlyHitWalking.has_value() ? (monster.isWalking() && CheckCanHitOnlyWalking(missile, monster.position, *onlyHitWalking)) : (mid > 0 || monster.mode == MonsterMode::Petrified)) {
+				if (missile.IsTrap()
+				    || (missile._micaster == TARGET_PLAYERS && (                                     // or was fired by a monster and
+				            (missile._misource >= 0 && missile._misource < static_cast<int>(MaxMonsters) && monster.isPlayerMinion() != Monsters[missile._misource].isPlayerMinion()) //  the monsters are on opposing factions
+				            || (missile._misource >= 0 && missile._misource < static_cast<int>(MaxMonsters) && (Monsters[missile._misource].flags & MFLAG_BERSERK) != 0)              //  or the attacker is berserked
+				            || (monster.flags & MFLAG_BERSERK) != 0                                  //  or the target is berserked
+				            ))) {
+					// then the missile can potentially hit this target
+					isMonsterHit = MonsterTrapHit(monster, minDamage, maxDamage, missile._midist, missile._mitype, damageType, isDamageShifted);
+				} else if (IsAnyOf(missile._micaster, TARGET_BOTH, TARGET_MONSTERS)) {
+					Player *srcPlayer = missile.sourcePlayer();
+					if (srcPlayer == nullptr)
+						srcPlayer = MyPlayer;
+					isMonsterHit = MonsterMHit(*srcPlayer, monster, minDamage, maxDamage, missile._midist, missile._mitype, missile.position.start, damageType, isDamageShifted);
+				}
 			}
 		}
 	}
@@ -514,7 +520,7 @@ void CheckMissileCol(Missile &missile, DamageType damageType, int minDamage, int
 			if (missile._micaster == TARGET_MONSTERS) {
 				if (player->getId() != missile._misource)
 					isPlayerHit = Plr2PlrMHit(Players[missile._misource], *player, minDamage, maxDamage, missile._midist, missile._mitype, damageType, isDamageShifted, &blocked);
-			} else {
+			} else if (missile._misource >= 0 && missile._misource < static_cast<int>(MaxMonsters)) {
 				Monster &monster = Monsters[missile._misource];
 				isPlayerHit = PlayerMHit(*player, &monster, missile._midist, minDamage, maxDamage, missile._mitype, damageType, isDamageShifted, DeathReason::MonsterOrTrap, &blocked);
 			}
@@ -4035,6 +4041,11 @@ void ProcessInfernoControl(Missile &missile)
 	missile.duration--;
 	missile.position.traveled += missile.position.velocity;
 	UpdateMissilePos(missile);
+	if (!InDungeonBounds(missile.position.tile)) {
+		missile.duration = 0;
+		missile._miDelFlag = true;
+		return;
+	}
 	if (missile.position.tile != Point { missile.var1, missile.var2 }) {
 		if (!TileHasAny(missile.position.tile, TileProperties::BlockMissile)) {
 			AddMissile(

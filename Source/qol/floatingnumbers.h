@@ -14,7 +14,7 @@
 
 namespace devilution {
 
-void AddFloatingNumber(Point pos, Displacement offset, std::string text, UiFlags style, int id = 0, bool reverseDirection = false);
+void AddFloatingNumber(Point pos, Displacement offset, std::string text, UiFlags style, int id = 0, bool reverseDirection = false, int addDamage = 0);
 void DrawFloatingNumbers(const Surface &out, Point viewPosition, Displacement offset);
 void ClearFloatingNumbers();
 

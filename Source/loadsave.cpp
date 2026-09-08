@@ -2455,7 +2455,18 @@ void LoadInvasionState()
 	state.boss_unique_type = static_cast<UniqueMonsterType>(file.NextLE<uint16_t>());
 	state.monster_count = file.NextLE<uint8_t>();
 
+	if (file.IsValid(sizeof(uint32_t) + sizeof(uint16_t) + sizeof(uint8_t) * 4)) {
+		state.total_kills = file.NextLE<uint32_t>();
+		state.pending_reinforcements = file.NextLE<uint16_t>();
+		state.leoric_alive = file.NextLE<uint8_t>() != 0;
+		state.butcher_spawned = file.NextLE<uint8_t>() != 0;
+		state.nakrul_spawned = file.NextLE<uint8_t>() != 0;
+		state.diablo_spawned = file.NextLE<uint8_t>() != 0;
+	}
+
 	for (size_t i = 0; i < nightmare::invasion::MaxInvasionMonsters; i++) {
+		if (!file.IsValid(sizeof(int32_t) + sizeof(uint8_t) * 2 + sizeof(uint16_t) + sizeof(uint8_t) * 2))
+			break;
 		auto &m = state.monsters[i];
 		m.current_hp = file.NextLE<int32_t>();
 		m.x = file.NextLE<uint8_t>();
@@ -2786,7 +2797,15 @@ void SaveInvasionState(SaveWriter &saveWriter)
 	}
 
 	const auto &state = nightmare::invasion::InvasionManager::Get().GetState();
-	SaveHelper file(saveWriter, "tristram_inv", sizeof(uint8_t) * 4 + sizeof(uint32_t) + sizeof(uint16_t) * 2 + sizeof(uint8_t) + (sizeof(int32_t) + sizeof(uint8_t) * 2 + sizeof(uint16_t) + sizeof(uint8_t) * 2) * nightmare::invasion::MaxInvasionMonsters);
+	constexpr size_t stateSize = sizeof(uint8_t) * 4
+	    + sizeof(uint32_t)
+	    + sizeof(uint16_t) * 2
+	    + sizeof(uint32_t)
+	    + sizeof(uint16_t)
+	    + sizeof(uint8_t) * 4
+	    + (sizeof(int32_t) + sizeof(uint8_t) * 2 + sizeof(uint16_t) + sizeof(uint8_t) * 2) * nightmare::invasion::MaxInvasionMonsters;
+
+	SaveHelper file(saveWriter, "tristram_inv", stateSize);
 
 	file.WriteLE<uint8_t>(state.active ? 1 : 0);
 	file.WriteLE<uint8_t>(state.completed ? 1 : 0);
@@ -2795,6 +2814,12 @@ void SaveInvasionState(SaveWriter &saveWriter)
 	file.WriteLE<uint16_t>(static_cast<uint16_t>(state.boss_selected));
 	file.WriteLE<uint16_t>(static_cast<uint16_t>(state.boss_unique_type));
 	file.WriteLE<uint8_t>(state.monster_count);
+	file.WriteLE<uint32_t>(state.total_kills);
+	file.WriteLE<uint16_t>(state.pending_reinforcements);
+	file.WriteLE<uint8_t>(state.leoric_alive ? 1 : 0);
+	file.WriteLE<uint8_t>(state.butcher_spawned ? 1 : 0);
+	file.WriteLE<uint8_t>(state.nakrul_spawned ? 1 : 0);
+	file.WriteLE<uint8_t>(state.diablo_spawned ? 1 : 0);
 
 	for (size_t i = 0; i < nightmare::invasion::MaxInvasionMonsters; i++) {
 		const auto &m = state.monsters[i];

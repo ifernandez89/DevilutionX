@@ -3,6 +3,7 @@
 #include <SDL.h>
 #include <algorithm>
 #include <cstring>
+#include <iterator>
 
 #include "engine/load_file.hpp"
 #include "engine/point.hpp"
@@ -35,110 +36,87 @@ size_t GetMonsterTypeIndex(_monster_id type)
 	return LevelMonsterTypeCount;
 }
 
-const SpawnCoord RegularSpawns[] = {
-	// Cathedral Courtyard & Steps (8 enemies)
-	{ { 27, 31 }, MT_BALROG },
-	{ { 29, 32 }, MT_WINGED },
-	{ { 25, 34 }, MT_BALROG },
-	{ { 29, 36 }, MT_WINGED },
-	{ { 28, 33 }, MT_WSKELAX },
-	{ { 26, 36 }, MT_WSKELAX },
-	{ { 24, 32 }, MT_WSKELAX },
-	{ { 30, 30 }, MT_WSKELAX },
-
-	// Roads to Town & Cemetery Path (10 enemies)
-	{ { 36, 38 }, MT_WINGED },
-	{ { 40, 44 }, MT_BALROG },
-	{ { 45, 48 }, MT_WINGED },
-	{ { 42, 54 }, MT_BALROG },
-	{ { 48, 55 }, MT_WINGED },
-	{ { 38, 41 }, MT_WSKELAX },
-	{ { 43, 46 }, MT_WSKELAX },
-	{ { 45, 52 }, MT_WSKELAX },
-	{ { 34, 40 }, MT_WSKELAX },
-	{ { 40, 48 }, MT_WSKELAX },
-
-	// Town Center, Tavern & Campfire (10 enemies)
-	{ { 54, 62 }, MT_WINGED },
-	{ { 58, 64 }, MT_BALROG },
-	{ { 64, 65 }, MT_WINGED },
-	{ { 53, 68 }, MT_BALROG },
-	{ { 57, 72 }, MT_WINGED },
-	{ { 66, 73 }, MT_BALROG },
-	{ { 56, 66 }, MT_WSKELAX },
-	{ { 62, 68 }, MT_WSKELAX },
-	{ { 50, 64 }, MT_WSKELAX },
-	{ { 60, 60 }, MT_WSKELAX },
-
-	// Blacksmith Area & Southern Road (6 enemies)
-	{ { 65, 52 }, MT_WINGED },
-	{ { 69, 50 }, MT_BALROG },
-	{ { 67, 47 }, MT_WSKELAX },
-	{ { 71, 52 }, MT_WSKELAX },
-	{ { 64, 48 }, MT_BALROG },
-	{ { 68, 55 }, MT_WSKELAX },
-
-	// Lester the farmer & Northern Cow Pasture (16 enemies)
+// Initial squad of exactly 14 minions positioned across key town approaches
+const SpawnCoord InitialSquadSpawns[] = {
 	{ { 60, 20 }, MT_BALROG },
-	{ { 64, 18 }, MT_WINGED },
-	{ { 56, 17 }, MT_WINGED },
-	{ { 62, 24 }, MT_BALROG },
-	{ { 58, 19 }, MT_WSKELAX },
-	{ { 62, 17 }, MT_WSKELAX },
-	{ { 65, 22 }, MT_WSKELAX },
-	{ { 54, 15 }, MT_WSKELAX },
-	{ { 58, 14 }, MT_WSKELAX },
-	{ { 66, 15 }, MT_WSKELAX },
-	{ { 68, 18 }, MT_WINGED },
-	{ { 52, 20 }, MT_WSKELAX },
-	{ { 50, 24 }, MT_BALROG },
-	{ { 68, 24 }, MT_WSKELAX },
-	{ { 56, 26 }, MT_WSKELAX },
-	{ { 70, 20 }, MT_WSKELAX },
-
-	// Adria the witch's shack & Eastern Clearing (7 enemies)
-	{ { 80, 20 }, MT_BALROG },
+	{ { 64, 18 }, MT_SUCCUBUS },
+	{ { 27, 31 }, MT_BALROG },
+	{ { 29, 36 }, MT_WINGED },
+	{ { 36, 38 }, MT_BACID },
+	{ { 40, 44 }, MT_BGOATMC },
+	{ { 65, 52 }, MT_SUCCUBUS },
+	{ { 69, 50 }, MT_BALROG },
+	{ { 80, 20 }, MT_BACID },
 	{ { 83, 22 }, MT_WINGED },
-	{ { 78, 25 }, MT_WINGED },
-	{ { 85, 21 }, MT_BALROG },
-	{ { 82, 18 }, MT_WSKELAX },
-	{ { 79, 23 }, MT_WSKELAX },
-	{ { 84, 25 }, MT_WSKELAX },
-
-	// Bridge Approach (West riverbank) (5 enemies)
-	{ { 72, 58 }, MT_BALROG },
-	{ { 73, 56 }, MT_WINGED },
-	{ { 75, 62 }, MT_BALROG },
-	{ { 74, 60 }, MT_WSKELAX },
-	{ { 76, 63 }, MT_WSKELAX },
-
-	// Peninsula Perimeter Commanders (2 enemies)
-	{ { 81, 62 }, MT_WINGED },
-	{ { 85, 65 }, MT_BALROG },
-
-	// Extra assault wave -- mid-town flankers (10 more enemies)
-	{ { 52, 58 }, MT_BALROG },
-	{ { 55, 56 }, MT_WINGED },
-	{ { 47, 60 }, MT_WSKELAX },
-	{ { 44, 57 }, MT_BALROG },
-	{ { 46, 64 }, MT_WINGED },
-	{ { 70, 44 }, MT_WSKELAX },
-	{ { 72, 40 }, MT_BALROG },
-	{ { 74, 36 }, MT_WINGED },
-	{ { 34, 46 }, MT_WSKELAX },
-	{ { 32, 50 }, MT_BALROG },
+	{ { 72, 58 }, MT_BGOATMC },
+	{ { 54, 62 }, MT_WSKELBW },
+	{ { 58, 64 }, MT_WSKELAX },
+	{ { 64, 65 }, MT_WSKELBW },
 };
 
-const Point GuardPositions[] = {
-	{ 82, 63 },
-	{ 84, 63 },
-	{ 82, 65 },
-	{ 84, 65 },
-	{ 81, 64 },
-	{ 85, 64 },
-	{ 83, 62 },
-	{ 83, 66 }
+// 7 regular minion types for the reinforcement pool
+const _monster_id MinionPool[] = {
+	MT_WSKELAX,
+	MT_WSKELBW,
+	MT_BGOATMC,
+	MT_BACID,
+	MT_WINGED,
+	MT_BALROG,
+	MT_SUCCUBUS,
 };
+
+void ConfigureMinionStats(Monster &monster, _monster_id mtype)
+{
+	monster.intelligence = 2;
+	monster.activeForTicks = 0; // Proximity-based awakening to prevent whole-map pathfinding CPU freeze
+
+	switch (mtype) {
+	case MT_BALROG:
+		monster.maxHitPoints = 2500 << 6;
+		monster.minDamage = 35;
+		monster.maxDamage = 60;
+		monster.armorClass = 65;
+		break;
+	case MT_SUCCUBUS:
+		monster.maxHitPoints = 1600 << 6;
+		monster.minDamage = 30;
+		monster.maxDamage = 50;
+		monster.armorClass = 55;
+		break;
+	case MT_WINGED:
+		monster.maxHitPoints = 1200 << 6;
+		monster.minDamage = 25;
+		monster.maxDamage = 45;
+		monster.armorClass = 50;
+		break;
+	case MT_BACID:
+		monster.maxHitPoints = 1100 << 6;
+		monster.minDamage = 20;
+		monster.maxDamage = 45;
+		monster.armorClass = 45;
+		break;
+	case MT_BGOATMC:
+		monster.maxHitPoints = 1000 << 6;
+		monster.minDamage = 22;
+		monster.maxDamage = 42;
+		monster.armorClass = 50;
+		break;
+	case MT_WSKELBW:
+		monster.maxHitPoints = 750 << 6;
+		monster.minDamage = 18;
+		monster.maxDamage = 35;
+		monster.armorClass = 40;
+		break;
+	case MT_WSKELAX:
+	default:
+		monster.maxHitPoints = 850 << 6;
+		monster.minDamage = 20;
+		monster.maxDamage = 40;
+		monster.armorClass = 50;
+		break;
+	}
+	monster.hitPoints = monster.maxHitPoints;
+}
 
 } // namespace
 
@@ -162,6 +140,12 @@ void InvasionManager::ResetInvasionState()
 	state_.boss_selected = MT_INVALID;
 	state_.boss_unique_type = UniqueMonsterType::None;
 	state_.monster_count = 0;
+	state_.total_kills = 0;
+	state_.pending_reinforcements = 0;
+	state_.leoric_alive = false;
+	state_.butcher_spawned = false;
+	state_.nakrul_spawned = false;
+	state_.diablo_spawned = false;
 }
 
 bool InvasionManager::IsInvaded() const
@@ -187,6 +171,12 @@ void InvasionManager::CheckInvasionTrigger()
 			state_.completed = false;
 			state_.boss_phase = 0;
 			state_.monster_count = 0;
+			state_.total_kills = 0;
+			state_.pending_reinforcements = 0;
+			state_.leoric_alive = true;
+			state_.butcher_spawned = false;
+			state_.nakrul_spawned = false;
+			state_.diablo_spawned = false;
 		}
 	}
 }
@@ -201,7 +191,7 @@ void InvasionManager::OnTownEntry()
 	if (state_.completed)
 		return;
 
-	// Precache required monster GFX before placing monsters
+	// Precache the 11 invasion monster types
 	const auto preloadType = [](auto mtype, placeflag pflag) {
 		const auto typeIndex = AddMonsterType(mtype, pflag);
 		if (typeIndex) {
@@ -210,15 +200,20 @@ void InvasionManager::OnTownEntry()
 		return typeIndex;
 	};
 
-	const UniqueMonsterType bossUnique = (state_.monster_count > 0 && state_.boss_unique_type != UniqueMonsterType::None)
-	    ? state_.boss_unique_type
-	    : ((Quests[Q_SKELKING]._qactive == QUEST_DONE) ? UniqueMonsterType::WarlordOfBlood : UniqueMonsterType::SkeletonKing);
-	const _monster_id bossMType = UniqueMonstersData[static_cast<size_t>(bossUnique)].mtype;
-
+	// Comandante
+	preloadType(MT_SKING, PLACE_UNIQUE);
+	// Heraldos
+	preloadType(MT_CLEAVER, PLACE_UNIQUE);
+	preloadType(MT_NAKRUL, PLACE_SPECIAL);
+	preloadType(MT_DIABLO, PLACE_SPECIAL);
+	// Núcleo de Esbirros
+	preloadType(MT_WSKELAX, PLACE_SCATTER);
+	preloadType(MT_WSKELBW, PLACE_SCATTER);
+	preloadType(MT_BGOATMC, PLACE_SCATTER);
+	preloadType(MT_BACID, PLACE_SCATTER);
 	preloadType(MT_WINGED, PLACE_SCATTER);
 	preloadType(MT_BALROG, PLACE_SCATTER);
-	preloadType(bossMType, PLACE_UNIQUE);
-	preloadType(MT_WSKELAX, PLACE_SCATTER);
+	preloadType(MT_SUCCUBUS, PLACE_SCATTER);
 
 	if (state_.monster_count == 0) {
 		SpawnInitialInvasionForce();
@@ -227,85 +222,21 @@ void InvasionManager::OnTownEntry()
 	}
 }
 
-void InvasionManager::SpawnInitialInvasionForce()
+void InvasionManager::SpawnCommanderLeoric()
 {
-	state_.monster_count = 0;
-
-	// --- Spawn Boss FIRST to guarantee he always gets a slot ---
-	// The boss encounter reserves its own slots before the army fills up.
-	SpawnBossEncounter();
-	state_.boss_phase = 2;
-
-	// --- Then fill remaining slots with the regular invasion army ---
-	for (const auto &spawn : RegularSpawns) {
-		if (state_.monster_count >= MaxInvasionMonsters)
-			break;
-
-		// Skip spawn points that land on solid/unwalkable tiles (rooftops, walls)
-		if (!IsTileWalkable(spawn.pt))
-			continue;
-
-		const size_t typeIdx = GetMonsterTypeIndex(spawn.type);
-		if (typeIdx >= LevelMonsterTypeCount)
-			continue;
-
-		Monster *monster = AddMonster(spawn.pt, Direction::South, typeIdx, true);
-		if (monster != nullptr) {
-			monster->intelligence = 2;
-			monster->activeForTicks = 0; // Proximity-based awakening to prevent WebAssembly CPU pathfinding freeze
-			if (monster->type().type == MT_BALROG) {
-				monster->maxHitPoints = 2500 << 6;
-				monster->hitPoints = monster->maxHitPoints;
-				monster->minDamage = 35;
-				monster->maxDamage = 60;
-				monster->armorClass = 65;
-			} else if (monster->type().type == MT_WINGED) {
-				monster->maxHitPoints = 1200 << 6;
-				monster->hitPoints = monster->maxHitPoints;
-				monster->minDamage = 25;
-				monster->maxDamage = 45;
-				monster->armorClass = 50;
-			} else if (monster->type().type == MT_WSKELAX) {
-				monster->maxHitPoints = 850 << 6;
-				monster->hitPoints = monster->maxHitPoints;
-				monster->minDamage = 20;
-				monster->maxDamage = 40;
-				monster->armorClass = 50;
-			}
-
-			auto &snap = state_.monsters[state_.monster_count++];
-			snap.x = static_cast<uint8_t>(spawn.pt.x);
-			snap.y = static_cast<uint8_t>(spawn.pt.y);
-			snap.type = spawn.type;
-			snap.current_hp = monster->hitPoints;
-			snap.is_boss = false;
-			snap.is_alive = true;
-		}
-	}
-}
-
-void InvasionManager::SpawnBossEncounter()
-{
-	// Primary position on the peninsula. Fallbacks spread nearby in case
-	// the primary tile is blocked by another monster or object.
 	const Point bossCandidates[] = {
 		{ 83, 64 }, { 82, 64 }, { 84, 64 },
 		{ 83, 63 }, { 83, 65 }, { 81, 63 },
 	};
 
-	const bool kingDead = (Quests[Q_SKELKING]._qactive == QUEST_DONE);
-	const UniqueMonsterType bossUnique = kingDead ? UniqueMonsterType::WarlordOfBlood : UniqueMonsterType::SkeletonKing;
-	const _monster_id bossMType = UniqueMonstersData[static_cast<size_t>(bossUnique)].mtype;
+	state_.boss_selected = MT_SKING;
+	state_.boss_unique_type = UniqueMonsterType::SkeletonKing;
 
-	state_.boss_selected = bossMType;
-	state_.boss_unique_type = bossUnique;
-
-	const size_t bossTypeIdx = GetMonsterTypeIndex(bossMType);
+	const size_t bossTypeIdx = GetMonsterTypeIndex(MT_SKING);
 	if (bossTypeIdx < LevelMonsterTypeCount && state_.monster_count < MaxInvasionMonsters) {
 		Monster *boss = nullptr;
 		Point usedPos = bossCandidates[0];
 
-		// Try each candidate position until one succeeds
 		for (const auto &candidate : bossCandidates) {
 			if (!IsTileWalkable(candidate))
 				continue;
@@ -317,8 +248,8 @@ void InvasionManager::SpawnBossEncounter()
 		}
 
 		if (boss != nullptr) {
-			PrepareUniqueMonst(*boss, bossUnique, 0, 0, UniqueMonstersData[static_cast<size_t>(bossUnique)]);
-			boss->maxHitPoints = 18000 << 6;
+			PrepareUniqueMonst(*boss, UniqueMonsterType::SkeletonKing, 0, 0, UniqueMonstersData[static_cast<size_t>(UniqueMonsterType::SkeletonKing)]);
+			boss->maxHitPoints = 25000 << 6;
 			boss->hitPoints = boss->maxHitPoints;
 			boss->intelligence = 3;
 			boss->activeForTicks = UINT8_MAX;
@@ -326,38 +257,56 @@ void InvasionManager::SpawnBossEncounter()
 			boss->maxDamage = 120;
 			boss->armorClass = 95;
 
+			state_.leoric_alive = true;
+
 			auto &snap = state_.monsters[state_.monster_count++];
 			snap.x = static_cast<uint8_t>(usedPos.x);
 			snap.y = static_cast<uint8_t>(usedPos.y);
-			snap.type = bossMType;
+			snap.type = MT_SKING;
 			snap.current_hp = boss->hitPoints;
 			snap.is_boss = true;
 			snap.is_alive = true;
 		}
 	}
+}
 
-	const size_t minionTypeIdx = GetMonsterTypeIndex(MT_WSKELAX);
-	if (minionTypeIdx < LevelMonsterTypeCount) {
-		for (const auto &guardPos : GuardPositions) {
-			if (state_.monster_count >= MaxInvasionMonsters)
-				break;
-			if (!IsTileWalkable(guardPos))
-				continue;
-			Monster *guard = AddMonster(guardPos, Direction::SouthWest, minionTypeIdx, true);
-			if (guard != nullptr) {
-				guard->maxHitPoints = 1000 << 6;
-				guard->hitPoints = guard->maxHitPoints;
-				guard->intelligence = 3;
-				guard->activeForTicks = UINT8_MAX;
-				guard->minDamage = 25;
-				guard->maxDamage = 45;
-				guard->armorClass = 55;
+void InvasionManager::SpawnInitialInvasionForce()
+{
+	state_.monster_count = 0;
+	state_.total_kills = 0;
+	state_.pending_reinforcements = 0;
+	state_.leoric_alive = true;
+	state_.butcher_spawned = false;
+	state_.nakrul_spawned = false;
+	state_.diablo_spawned = false;
 
+	// 1. Spawnea al Comandante
+	SpawnCommanderLeoric();
+	state_.boss_phase = 2;
+
+	// 2. Spawnea el escuadrón inicial de 14 esbirros perimetrales
+	size_t spawnedMinions = 0;
+	for (const auto &spawn : InitialSquadSpawns) {
+		if (spawnedMinions >= TargetInvasionMinions)
+			break;
+		if (!IsTileWalkable(spawn.pt))
+			continue;
+
+		const size_t typeIdx = GetMonsterTypeIndex(spawn.type);
+		if (typeIdx >= LevelMonsterTypeCount)
+			continue;
+
+		Monster *monster = AddMonster(spawn.pt, Direction::South, typeIdx, true);
+		if (monster != nullptr) {
+			ConfigureMinionStats(*monster, spawn.type);
+			spawnedMinions++;
+
+			if (state_.monster_count < MaxInvasionMonsters) {
 				auto &snap = state_.monsters[state_.monster_count++];
-				snap.x = static_cast<uint8_t>(guardPos.x);
-				snap.y = static_cast<uint8_t>(guardPos.y);
-				snap.type = MT_WSKELAX;
-				snap.current_hp = guard->hitPoints;
+				snap.x = static_cast<uint8_t>(spawn.pt.x);
+				snap.y = static_cast<uint8_t>(spawn.pt.y);
+				snap.type = spawn.type;
+				snap.current_hp = monster->hitPoints;
 				snap.is_boss = false;
 				snap.is_alive = true;
 			}
@@ -365,36 +314,180 @@ void InvasionManager::SpawnBossEncounter()
 	}
 }
 
+Point InvasionManager::GetWalkablePerimeterSpawn()
+{
+	static const Point s_perimeter[] = {
+		{ 60, 20 }, { 64, 18 }, { 27, 31 }, { 36, 38 },
+		{ 65, 52 }, { 69, 50 }, { 80, 20 }, { 75, 62 },
+		{ 45, 48 }, { 58, 64 }, { 34, 46 }, { 72, 40 },
+	};
+	static size_t s_idx = 0;
+	for (size_t i = 0; i < std::size(s_perimeter); i++) {
+		Point pt = s_perimeter[(s_idx + i) % std::size(s_perimeter)];
+		if (IsTileWalkable(pt) && dMonster[pt.x][pt.y] == 0) {
+			s_idx = (s_idx + i + 1) % std::size(s_perimeter);
+			return pt;
+		}
+	}
+	return { 58, 64 };
+}
+
+void InvasionManager::SpawnHeraldButcher()
+{
+	const size_t typeIdx = GetMonsterTypeIndex(MT_CLEAVER);
+	if (typeIdx >= LevelMonsterTypeCount || ActiveMonsterCount >= MaxMonsters)
+		return;
+
+	const Point spawnPt = GetWalkablePerimeterSpawn();
+	Monster *butcher = AddMonster(spawnPt, Direction::South, typeIdx, true);
+	if (butcher != nullptr) {
+		PrepareUniqueMonst(*butcher, UniqueMonsterType::Butcher, 0, 0, UniqueMonstersData[static_cast<size_t>(UniqueMonsterType::Butcher)]);
+		butcher->maxHitPoints = 14000 << 6;
+		butcher->hitPoints = butcher->maxHitPoints;
+		butcher->intelligence = 3;
+		butcher->activeForTicks = UINT8_MAX;
+		butcher->minDamage = 65;
+		butcher->maxDamage = 110;
+		butcher->armorClass = 85;
+		PlaySFX(SfxID::ButcherGreeting);
+	}
+}
+
+void InvasionManager::SpawnHeraldNaKrul()
+{
+	const size_t typeIdx = GetMonsterTypeIndex(MT_NAKRUL);
+	if (typeIdx >= LevelMonsterTypeCount || ActiveMonsterCount >= MaxMonsters)
+		return;
+
+	const Point spawnPt = GetWalkablePerimeterSpawn();
+	Monster *nakrul = AddMonster(spawnPt, Direction::South, typeIdx, true);
+	if (nakrul != nullptr) {
+		PrepareUniqueMonst(*nakrul, UniqueMonsterType::NaKrul, 0, 0, UniqueMonstersData[static_cast<size_t>(UniqueMonsterType::NaKrul)]);
+		nakrul->maxHitPoints = 22000 << 6;
+		nakrul->hitPoints = nakrul->maxHitPoints;
+		nakrul->intelligence = 3;
+		nakrul->activeForTicks = UINT8_MAX;
+		nakrul->minDamage = 80;
+		nakrul->maxDamage = 130;
+		nakrul->armorClass = 95;
+		PlaySFX(SfxID::NaKrul4);
+	}
+}
+
+void InvasionManager::SpawnHeraldDiablo()
+{
+	const size_t typeIdx = GetMonsterTypeIndex(MT_DIABLO);
+	if (typeIdx >= LevelMonsterTypeCount || ActiveMonsterCount >= MaxMonsters)
+		return;
+
+	const Point spawnPt = GetWalkablePerimeterSpawn();
+	Monster *diablo = AddMonster(spawnPt, Direction::South, typeIdx, true);
+	if (diablo != nullptr) {
+		diablo->maxHitPoints = 30000 << 6;
+		diablo->hitPoints = diablo->maxHitPoints;
+		diablo->intelligence = 3;
+		diablo->activeForTicks = UINT8_MAX;
+		diablo->minDamage = 90;
+		diablo->maxDamage = 150;
+		diablo->armorClass = 100;
+		PlayEffect(*diablo, MonsterSound::Special);
+		PlaySFX(SfxID::BigExplosion);
+	}
+}
+
+bool InvasionManager::SpawnOneReinforcement()
+{
+	if (ActiveMonsterCount >= MaxMonsters)
+		return false;
+
+	static uint8_t s_reinforceIdx = 0;
+	const _monster_id mtype = MinionPool[s_reinforceIdx % std::size(MinionPool)];
+	s_reinforceIdx++;
+
+	const size_t typeIdx = GetMonsterTypeIndex(mtype);
+	if (typeIdx >= LevelMonsterTypeCount)
+		return false;
+
+	const Point spawnPt = GetWalkablePerimeterSpawn();
+	Monster *monster = AddMonster(spawnPt, Direction::South, typeIdx, true);
+	if (monster != nullptr) {
+		ConfigureMinionStats(*monster, mtype);
+		return true;
+	}
+	return false;
+}
+
 void InvasionManager::Update()
 {
 	if (!IsCombatActive())
 		return;
 
-	// Count all living invasion monsters (skip player golems)
-	int aliveCount = 0;
+	// 1. Count active living invasion monsters
+	size_t activeMinions = 0;
+	size_t activeBosses = 0;
 	for (size_t i = 0; i < ActiveMonsterCount; i++) {
-		const Monster &monster = Monsters[ActiveMonsters[i]];
-		if (monster.type().type == MT_GOLEM || (monster.flags & MFLAG_TARGETS_MONSTER) != 0)
+		const Monster &m = Monsters[ActiveMonsters[i]];
+		if (m.hasNoLife() || m.isInvalid || m.mode == MonsterMode::Death || m.isPlayerMinion())
 			continue;
-		if (monster.hitPoints > 0 && monster.mode != MonsterMode::Death) {
-			aliveCount++;
+		if (m.isUnique() || m.type().type == MT_DIABLO)
+			activeBosses++;
+		else
+			activeMinions++;
+	}
+
+	// 2. Victory Condition: Leoric is dead and all remaining minions/heralds are cleared
+	if (!state_.leoric_alive && activeMinions == 0 && activeBosses == 0 && state_.total_kills > 0) {
+		state_.completed = true;
+		state_.active = false;
+		state_.boss_phase = 3;
+		return;
+	}
+
+	// 3. Persistent Milestone Herald Spawns (Independent of minion replacements)
+	if (state_.leoric_alive) {
+		if (!state_.butcher_spawned && state_.total_kills >= 15) {
+			SpawnHeraldButcher();
+			state_.butcher_spawned = true;
+		} else if (!state_.nakrul_spawned && state_.total_kills >= 35) {
+			SpawnHeraldNaKrul();
+			state_.nakrul_spawned = true;
+		} else if (!state_.diablo_spawned && state_.total_kills >= 55) {
+			SpawnHeraldDiablo();
+			state_.diablo_spawned = true;
 		}
 	}
 
-	// Only end the invasion when every single invasion monster is dead
-	if (aliveCount == 0 && state_.monster_count > 0) {
-		state_.boss_phase = 3;
-		state_.completed = true;
-		state_.active = false;
+	// 4. Elastic Minion Reinforcements (Target: 14, Max: 15)
+	// Only dispatch if Leoric is alive, pending count > 0, and active minions are below Target (14)
+	if (state_.leoric_alive && state_.pending_reinforcements > 0 && activeMinions < TargetInvasionMinions) {
+		if (SpawnOneReinforcement()) {
+			state_.pending_reinforcements--;
+		}
 	}
 }
 
 void InvasionManager::OnMonsterDeath(Monster &monster)
 {
-	// Note boss death for bookkeeping, but do NOT end the invasion here.
-	// Update() is the authority — invasion ends only when ALL monsters are dead.
-	if (monster.isUnique()) {
+	if (!IsCombatActive())
+		return;
+
+	if (monster.isPlayerMinion())
+		return;
+
+	// Did Leoric fall?
+	if (monster.isUnique() && monster.uniqueType == UniqueMonsterType::SkeletonKing) {
+		state_.leoric_alive = false;
 		state_.boss_phase = 3;
+		state_.pending_reinforcements = 0; // Seal the breach immediately!
+		return;
+	}
+
+	state_.total_kills++;
+
+	// Regular minion deaths feed the reinforcement queue while Leoric lives
+	const bool isHeraldBoss = monster.isUnique() || monster.type().type == MT_DIABLO;
+	if (state_.leoric_alive && !isHeraldBoss) {
+		state_.pending_reinforcements++;
 	}
 }
 
@@ -406,12 +499,14 @@ void InvasionManager::SaveInvasionSnapshot()
 	state_.monster_count = 0;
 	for (size_t i = 0; i < ActiveMonsterCount && state_.monster_count < MaxInvasionMonsters; i++) {
 		const Monster &monster = Monsters[ActiveMonsters[i]];
+		if (monster.isPlayerMinion())
+			continue;
 		auto &snap = state_.monsters[state_.monster_count++];
 		snap.current_hp = monster.hitPoints;
 		snap.x = static_cast<uint8_t>(monster.position.tile.x);
 		snap.y = static_cast<uint8_t>(monster.position.tile.y);
 		snap.type = LevelMonsterTypes[monster.levelType].type;
-		snap.is_boss = monster.isUnique();
+		snap.is_boss = monster.isUnique() || snap.type == MT_DIABLO;
 		snap.is_alive = (monster.hitPoints > 0 && monster.mode != MonsterMode::Death);
 	}
 }
@@ -423,7 +518,6 @@ void InvasionManager::RestoreInvasionSnapshot()
 		if (!snap.is_alive || snap.current_hp <= 0)
 			continue;
 
-		// Skip any snapshot positions that are no longer walkable
 		if (!IsTileWalkable(Point { snap.x, snap.y }))
 			continue;
 
@@ -433,37 +527,41 @@ void InvasionManager::RestoreInvasionSnapshot()
 
 		Monster *monster = AddMonster(Point { snap.x, snap.y }, Direction::South, typeIdx, true);
 		if (monster != nullptr) {
-			// Restore aggression and base stats matching initial spawn values
-			monster->intelligence = 2;
-			monster->activeForTicks = 0;
-			if (snap.is_boss && state_.boss_unique_type != UniqueMonsterType::None) {
-				PrepareUniqueMonst(*monster, state_.boss_unique_type, 0, 0, UniqueMonstersData[static_cast<size_t>(state_.boss_unique_type)]);
-				monster->hitPoints = snap.current_hp;
+			if (snap.type == MT_SKING) {
+				PrepareUniqueMonst(*monster, UniqueMonsterType::SkeletonKing, 0, 0, UniqueMonstersData[static_cast<size_t>(UniqueMonsterType::SkeletonKing)]);
+				monster->maxHitPoints = 25000 << 6;
 				monster->intelligence = 3;
-				monster->activeForTicks = 0;
+				monster->activeForTicks = UINT8_MAX;
 				monster->minDamage = 75;
 				monster->maxDamage = 120;
 				monster->armorClass = 95;
+			} else if (snap.type == MT_CLEAVER) {
+				PrepareUniqueMonst(*monster, UniqueMonsterType::Butcher, 0, 0, UniqueMonstersData[static_cast<size_t>(UniqueMonsterType::Butcher)]);
+				monster->maxHitPoints = 14000 << 6;
+				monster->intelligence = 3;
+				monster->activeForTicks = UINT8_MAX;
+				monster->minDamage = 65;
+				monster->maxDamage = 110;
+				monster->armorClass = 85;
+			} else if (snap.type == MT_NAKRUL) {
+				PrepareUniqueMonst(*monster, UniqueMonsterType::NaKrul, 0, 0, UniqueMonstersData[static_cast<size_t>(UniqueMonsterType::NaKrul)]);
+				monster->maxHitPoints = 22000 << 6;
+				monster->intelligence = 3;
+				monster->activeForTicks = UINT8_MAX;
+				monster->minDamage = 80;
+				monster->maxDamage = 130;
+				monster->armorClass = 95;
+			} else if (snap.type == MT_DIABLO) {
+				monster->maxHitPoints = 30000 << 6;
+				monster->intelligence = 3;
+				monster->activeForTicks = UINT8_MAX;
+				monster->minDamage = 90;
+				monster->maxDamage = 150;
+				monster->armorClass = 100;
 			} else {
-				monster->hitPoints = snap.current_hp;
-				// Restore type-specific stats
-				if (snap.type == MT_BALROG) {
-					monster->maxHitPoints = 2500 << 6;
-					monster->minDamage = 35;
-					monster->maxDamage = 60;
-					monster->armorClass = 65;
-				} else if (snap.type == MT_WINGED) {
-					monster->maxHitPoints = 1200 << 6;
-					monster->minDamage = 25;
-					monster->maxDamage = 45;
-					monster->armorClass = 50;
-				} else if (snap.type == MT_WSKELAX) {
-					monster->maxHitPoints = 850 << 6;
-					monster->minDamage = 20;
-					monster->maxDamage = 40;
-					monster->armorClass = 50;
-				}
+				ConfigureMinionStats(*monster, snap.type);
 			}
+			monster->hitPoints = snap.current_hp;
 		}
 	}
 }

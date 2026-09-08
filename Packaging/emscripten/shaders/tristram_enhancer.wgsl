@@ -279,50 +279,62 @@ fn fs_main(in: VertexOutput) -> @location(0) vec4<f32> {
 
     switch (semId) {
         case 1u: {
-            // Wet ground shimmer in Town
-            let wetSpec = pow(NdotH, 18.0) * 0.35 * attenuation;
-            specularContribution = vec3<f32>(1.0, 0.85, 0.6) * wetSpec;
-            diffuseFactor = max(NdotL * 0.82 + 0.18, 0.0);
+            // Soil / Mud / Stone Path: Damp ground sheen & micro-relief
+            let wetSpec = pow(NdotH, 22.0) * 0.42 * attenuation;
+            let pathSpecColor = vec3<f32>(0.92, 0.95, 1.05); // Cool moonlight sheen
+            specularContribution = pathSpecColor * wetSpec;
+            diffuseFactor = max(NdotL * 0.85 + 0.15, 0.0);
         }
         case 2u, 9u: {
-            diffuseFactor = pow(NdotL, 1.22);
+            // Architecture: Stone Masons & Wooden Beams (Roughness 0.85)
+            // Enhanced mortar crease shadow and wood grain relief
+            diffuseFactor = pow(NdotL, 1.30);
+            let stoneGrain = sin(f32(screenPixel.x) * 0.5) * cos(f32(screenPixel.y) * 0.5) * 0.08;
+            diffuseFactor = clamp(diffuseFactor + stoneGrain, 0.0, 1.5);
         }
         case 3u, 4u: {
-            // Player Hero (3u) & Town NPCs (4u):
-            // Differentiate Skin (Face/Beard) vs Metal (Helmet/Armor) vs Cloth (Hood/Robe)
-            let isSkinTone = (origColor.r > origColor.g && origColor.g > origColor.b && origColor.b > 0.12 && (origColor.r - origColor.b) > 0.09);
-            let isGoldMetal = (origColor.r > 0.38 && origColor.g > 0.26 && origColor.b < origColor.g * 0.82 && lum > 0.25);
-            let isSteelMetal = (sat < 0.28 && lum > 0.30);
+            // Characters (Player Hero 3u & NPCs 4u):
+            // Distinct Material Breakdown: Metal Plate vs Gold Trim vs Red Cloth/Tunic vs Skin
+            let isSkinTone = (origColor.r > origColor.g && origColor.g > origColor.b && origColor.b > 0.10 && (origColor.r - origColor.b) > 0.08);
+            let isGoldMetal = (origColor.r > 0.35 && origColor.g > 0.22 && origColor.b < origColor.g * 0.78 && lum > 0.22);
+            let isSteelMetal = (sat < 0.25 && lum > 0.28);
             let isMetal = isGoldMetal || isSteelMetal;
+            let isRedCloth = (origColor.r > 0.32 && origColor.g < 0.22 && origColor.b < 0.22);
 
             if (isHeadRegion && isSkinTone) {
-                // Subsurface Scattering & Soft Facial Contouring
-                let sssColor = vec3<f32>(1.08, 0.94, 0.84);
-                let faceWrap = max(NdotL * 0.65 + 0.35, 0.0);
+                // Head / Visor / Face: Subsurface warmth and gentle volume contour
+                let sssColor = vec3<f32>(1.06, 0.92, 0.82);
+                let faceWrap = max(NdotL * 0.60 + 0.40, 0.0);
                 diffuseFactor = faceWrap;
-                let skinSheen = pow(NdotH, 18.0) * 0.32;
-                specularContribution = sssColor * skinSheen * (mainRadiance + vec3<f32>(0.10));
-                specularContribution += sssColor * (rimFactor * 0.32 * (mainRadiance + vec3<f32>(0.10)));
-                emissiveLight = origColor.rgb * sssColor * 0.08 * attenuation;
+                let skinSheen = pow(NdotH, 16.0) * 0.28;
+                specularContribution = sssColor * skinSheen * (mainRadiance + vec3<f32>(0.12));
+                specularContribution += sssColor * (rimFactor * 0.35 * (mainRadiance + vec3<f32>(0.12)));
+                emissiveLight = origColor.rgb * sssColor * 0.06 * attenuation;
             } else if (isMetal) {
-                // High-reflectance metallic armor / helmet / shield / sword
-                let metalPower = select(36.0, 48.0, isSteelMetal);
-                let helmetBoost = select(1.0, 1.25, isHeadRegion);
-                let metalSpec = pow(NdotH, metalPower) * (2.8 * helmetBoost);
-                let metalColor = select(vec3<f32>(1.0, 0.84, 0.46), vec3<f32>(0.92, 0.96, 1.0), isSteelMetal);
-                specularContribution = metalColor * (metalSpec * mainRadiance + metalSpec * 0.25);
-                specularContribution += metalColor * (rimFactor * 0.60 * (mainRadiance + vec3<f32>(0.18)));
-                diffuseFactor = pow(NdotL, 0.95);
+                // Metallic Armor / Helmet / Pauldrons / Sword (Roughness 0.22)
+                // Crisp highlights, metallic specularity and edge rim
+                let metalPower = select(42.0, 56.0, isSteelMetal);
+                let metalSpec = pow(NdotH, metalPower) * 3.4;
+                let metalColor = select(vec3<f32>(1.0, 0.86, 0.48), vec3<f32>(0.92, 0.96, 1.08), isSteelMetal);
+                specularContribution = metalColor * (metalSpec * mainRadiance + metalSpec * 0.28);
+                specularContribution += metalColor * (rimFactor * 0.65 * (mainRadiance + vec3<f32>(0.20)));
+                diffuseFactor = pow(NdotL, 0.92);
+            } else if (isRedCloth) {
+                // Tunic / Robes / Cloth (Roughness 0.92): Micro-fold shadows and fabric separation
+                let foldShadow = max(NdotL * 0.68 + 0.32, 0.0);
+                diffuseFactor = foldShadow;
+                let clothVelvet = pow(rimFactor, 2.5) * 0.25;
+                specularContribution = origColor.rgb * clothVelvet * mainRadiance;
             } else {
-                // Cloth / Robes / Leather / Tunic
-                diffuseFactor = max(NdotL * 0.72 + 0.28, 0.0);
-                let clothSpec = pow(NdotH, 12.0) * 0.40;
-                specularContribution = origColor.rgb * clothSpec * mainRadiance;
-                specularContribution += origColor.rgb * (rimFactor * 0.40 * (mainRadiance + vec3<f32>(0.12)));
+                // Leather / Boots / Belt: Satin sheen
+                diffuseFactor = max(NdotL * 0.75 + 0.25, 0.0);
+                let leatherSpec = pow(NdotH, 14.0) * 0.38;
+                specularContribution = origColor.rgb * leatherSpec * mainRadiance;
+                specularContribution += origColor.rgb * (rimFactor * 0.38 * (mainRadiance + vec3<f32>(0.10)));
             }
         }
         case 5u: {
-            // Liquid Water / Molten Lava
+            // Liquid River / Water: Specular reflections
             if (u.dungeonBiome == 3u || u.dungeonBiome == 4u) {
                 emissiveLight = vec3<f32>(1.0, 0.42, 0.06) * 0.8;
             } else {
@@ -334,34 +346,35 @@ fn fs_main(in: VertexOutput) -> @location(0) vec4<f32> {
                     let r2 = cos(length(pf - vec2<f32>(335.0, 210.0)) * 0.60 - u.time * 5.2);
                     ripple = (r1 + r2) * 0.12;
                 }
-                let liquidSpec = pow(clamp(NdotH + ripple, 0.0, 1.0), 28.0) * 2.4 * u.waterSpecular;
+                let liquidSpec = pow(clamp(NdotH + ripple, 0.0, 1.0), 32.0) * 2.8 * u.waterSpecular;
                 specularContribution = (vec3<f32>(0.7, 0.85, 1.0) * liquidSpec + vec3<f32>(0.2, 0.4, 0.6) * fresnel) * attenuation;
             }
             diffuseFactor = diffuseFactor * 0.5 + 0.5;
         }
         case 7u: {
-            // Monsters & Bosses (Enemies)
-            let isMonsterArmor = (sat < 0.30 && lum > 0.26) || (origColor.r > 0.40 && origColor.g > 0.28 && origColor.b < 0.25);
+            // Monsters & Bosses: Horns, scales, demon flesh
+            let isMonsterArmor = (sat < 0.28 && lum > 0.24) || (origColor.r > 0.38 && origColor.g > 0.26 && origColor.b < 0.24);
             if (isMonsterArmor) {
-                let hornBoost = select(1.0, 1.30, isHeadRegion);
-                let armorSpec = pow(NdotH, 44.0) * (2.6 * hornBoost);
-                let armorTint = select(vec3<f32>(0.95, 0.85, 0.6), vec3<f32>(0.85, 0.92, 1.0), sat < 0.22);
-                specularContribution = armorTint * (armorSpec * mainRadiance + armorSpec * 0.22);
-                specularContribution += vec3<f32>(0.95, 0.75, 0.65) * (rimFactor * 0.58 * (mainRadiance + vec3<f32>(0.16)));
+                let hornBoost = select(1.0, 1.35, isHeadRegion);
+                let armorSpec = pow(NdotH, 44.0) * (2.8 * hornBoost);
+                let armorTint = select(vec3<f32>(0.95, 0.85, 0.6), vec3<f32>(0.88, 0.94, 1.05), sat < 0.22);
+                specularContribution = armorTint * (armorSpec * mainRadiance + armorSpec * 0.24);
+                specularContribution += vec3<f32>(0.95, 0.75, 0.65) * (rimFactor * 0.60 * (mainRadiance + vec3<f32>(0.18)));
                 diffuseFactor = pow(NdotL, 1.05);
             } else {
-                diffuseFactor = pow(NdotL, 1.12) * 0.95;
-                let skinSpec = pow(NdotH, 16.0) * 0.38;
+                diffuseFactor = pow(NdotL, 1.10) * 0.95;
+                let skinSpec = pow(NdotH, 18.0) * 0.40;
                 specularContribution = vec3<f32>(0.75, 0.45, 0.35) * skinSpec * mainRadiance;
                 let rimTint = vec3<f32>(1.0, 0.45, 0.18);
-                specularContribution += rimTint * (rimFactor * 0.48 * (mainRadiance + vec3<f32>(0.14)));
+                specularContribution += rimTint * (rimFactor * 0.50 * (mainRadiance + vec3<f32>(0.15)));
                 if (isHeadRegion && lum > 0.32 && sat > 0.40) {
-                    emissiveLight += origColor.rgb * 0.30;
+                    emissiveLight += origColor.rgb * 0.35;
                 }
             }
         }
         case 8u: {
-            emissiveLight = origColor.rgb * 1.5;
+            // Emissive Magic, Orbs, Fire: Pure incandescent radiance
+            emissiveLight = origColor.rgb * 1.6;
         }
         default: {}
     }

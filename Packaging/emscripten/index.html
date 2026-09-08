@@ -71,7 +71,7 @@
 
 		/* Cinematic Graphics Remaster Active Presentation */
 		body.remaster-enabled canvas.emscripten {
-			filter: contrast(1.24) saturate(1.20) brightness(0.93);
+			filter: contrast(1.18) saturate(1.16) brightness(0.98);
 			transition: filter 0.3s ease;
 		}
 
@@ -1107,11 +1107,42 @@
 			var nextGustTime = 8.0;
 
 			// Light sources in screen coordinates (normalized 0.0 to 1.0)
+			// Light sources & Architectural windows/doors in screen coordinates (normalized 0.0 to 1.0)
 			var lightSources = [
-				{ x: 0.50, y: 0.48, radius: 0.28, color: [240, 180, 100] }, // Town Bonfire
-				{ x: 0.22, y: 0.35, radius: 0.18, color: [230, 150, 70] },  // Left Forge Torch
-				{ x: 0.78, y: 0.35, radius: 0.18, color: [230, 150, 70] },  // Right Wall Torch
+				{ x: 0.50, y: 0.48, radius: 0.26, color: [255, 175, 75], isFire: true },   // Town Bonfire
+				{ x: 0.21, y: 0.33, radius: 0.20, color: [255, 190, 80], isHouseGlow: true }, // Griswold's Forge Door/Window
+				{ x: 0.77, y: 0.33, radius: 0.18, color: [245, 170, 70], isHouseGlow: true }, // Tavern / East Windows
 			];
+
+			// 1. Preallocated Organic Volumetric Ground Fog Puffs (Bruma Suave Sin Bordes)
+			var FOG_PUFF_COUNT = 10;
+			var fogPuffs = [];
+			for (var fp = 0; fp < FOG_PUFF_COUNT; fp++) {
+				fogPuffs.push({
+					x: (fp / FOG_PUFF_COUNT) * (width + 400) - 200,
+					y: height * 0.40 + (fp % 3) * (height * 0.16),
+					radius: width * 0.20 + (fp % 2) * (width * 0.07),
+					speedX: 0.22 + (fp % 3) * 0.10,
+					pulsePhase: fp * 0.8,
+					alphaBase: 0.075 + (fp % 2) * 0.035
+				});
+			}
+
+			// 2. Preallocated Floating Hot Embers & Fireflies Pool (Ascuas de Fuego)
+			var EMBER_COUNT = 20;
+			var embers = [];
+			for (var em = 0; em < EMBER_COUNT; em++) {
+				embers.push({
+					x: width * 0.2 + Math.random() * (width * 0.6),
+					y: height * 0.45 + Math.random() * (height * 0.45),
+					size: Math.random() * 2.0 + 1.0,
+					speedY: -(Math.random() * 0.75 + 0.35),
+					speedX: (Math.random() - 0.5) * 0.6,
+					life: Math.floor(Math.random() * 120) + 40,
+					maxLife: 160,
+					color: [255, 170 + Math.floor(Math.random() * 60), 40]
+				});
+			}
 
 			// Balanced Particle Pools (47% CPU reduction with full visual density)
 			var FAR_COUNT = 90;
@@ -1207,7 +1238,7 @@
 					// Check local light illumination (torches / bonfire) with fast squared distance
 					var normX = this.x / width;
 					var normY = this.y / height;
-					var r = 195, g = 215, b = 245; // Vibrant cool silver-cyan rain
+					var r = 195, g = 215, b = 245; // Cool silver-cyan rain
 					var boost = 1.0;
 
 					for (var i = 0; i < lightSources.length; i++) {
@@ -1313,7 +1344,7 @@
 			}
 			setTimeout(triggerDiabloLightning, 5000);
 
-			// Main Weather Loop (Active ONLY in Tristram Town during active gameplay)
+			// Main Atmosphere & Weather Loop (Active ONLY in Tristram Town during active gameplay)
 			function weatherLoop() {
 				var isTownBiome = false;
 				if (window.Module) {
@@ -1355,20 +1386,97 @@
 				// Weather Intensity Cycling
 				weatherIntensity = 0.65 + Math.sin(time * 0.04) * 0.25;
 
-				// 1. Draw Puddle Glints (Subtle Wet Ground Reflections)
+				// 1. Render House Interior Light Beams & Campfire Radiance (Door/Window Warm Spill)
+				for (var li = 0; li < lightSources.length; li++) {
+					var src = lightSources[li];
+					var lx = src.x * width;
+					var ly = src.y * height;
+					var flicker = 1.0 + Math.sin(time * 6.5 + li * 2.1) * 0.05 + (Math.random() - 0.5) * 0.02;
+					var rad = src.radius * width * flicker;
+
+					var fireGrad = ctx.createRadialGradient(lx, ly, 4, lx, ly, rad);
+					fireGrad.addColorStop(0, 'rgba(' + src.color[0] + ',' + src.color[1] + ',' + src.color[2] + ', 0.35)');
+					fireGrad.addColorStop(0.35, 'rgba(' + src.color[0] + ',' + src.color[1] + ',' + src.color[2] + ', 0.14)');
+					fireGrad.addColorStop(1, 'rgba(' + src.color[0] + ',' + src.color[1] + ',' + src.color[2] + ', 0.0)');
+					
+					ctx.fillStyle = fireGrad;
+					ctx.beginPath();
+					ctx.arc(lx, ly, rad, 0, Math.PI * 2);
+					ctx.fill();
+
+					// If it's a doorway/window (Griswold or Tavern), cast a directional soft light spill onto the stone & ground
+					if (src.isHouseGlow) {
+						var spillGrad = ctx.createRadialGradient(lx + 15, ly + 25, 2, lx + 25, ly + 35, rad * 0.7);
+						spillGrad.addColorStop(0, 'rgba(255, 210, 110, 0.28)');
+						spillGrad.addColorStop(0.6, 'rgba(230, 160, 60, 0.08)');
+						spillGrad.addColorStop(1, 'rgba(200, 120, 40, 0.0)');
+						ctx.fillStyle = spillGrad;
+						ctx.beginPath();
+						ctx.ellipse(lx + 20, ly + 30, rad * 0.6, rad * 0.35, Math.PI * 0.25, 0, Math.PI * 2);
+						ctx.fill();
+					}
+				}
+
+				// 2. Render Seamless Volumetric Ground Fog Puffs (Cold Gothic Slate Moonlight)
+				var isCrimson = (window.currentWebGPURenderMode === 7);
+				var fogBaseR = isCrimson ? 190 : 125;
+				var fogBaseG = isCrimson ? 40 : 160;
+				var fogBaseB = isCrimson ? 30 : 210;
+
+				for (var p = 0; p < fogPuffs.length; p++) {
+					var puff = fogPuffs[p];
+					puff.x += (puff.speedX + activeWindX * 0.06);
+					if (puff.x > width + puff.radius) {
+						puff.x = -puff.radius;
+					}
+
+					var pulse = Math.sin(time * puff.pulseSpeed + puff.pulsePhase);
+					var curAlpha = puff.alphaBase + pulse * 0.02;
+					var puffGrad = ctx.createRadialGradient(puff.x, puff.y, puff.radius * 0.1, puff.x, puff.y, puff.radius);
+					puffGrad.addColorStop(0, 'rgba(' + fogBaseR + ',' + fogBaseG + ',' + fogBaseB + ',' + curAlpha.toFixed(3) + ')');
+					puffGrad.addColorStop(0.5, 'rgba(' + fogBaseR + ',' + fogBaseG + ',' + fogBaseB + ',' + (curAlpha * 0.45).toFixed(3) + ')');
+					puffGrad.addColorStop(1, 'rgba(' + fogBaseR + ',' + fogBaseG + ',' + fogBaseB + ', 0.0)');
+
+					ctx.fillStyle = puffGrad;
+					ctx.beginPath();
+					ctx.arc(puff.x, puff.y, puff.radius, 0, Math.PI * 2);
+					ctx.fill();
+				}
+
+				// 3. Render Floating Hot Embers & Fireflies (Ascuas Volantes)
+				for (var e = 0; e < embers.length; e++) {
+					var emb = embers[e];
+					emb.y += emb.speedY;
+					emb.x += emb.speedX + activeWindX * 0.12;
+					emb.life--;
+
+					if (emb.life <= 0 || emb.y < height * 0.25) {
+						emb.x = width * 0.25 + Math.random() * (width * 0.5);
+						emb.y = height * 0.55 + Math.random() * (height * 0.35);
+						emb.life = Math.floor(Math.random() * 120) + 40;
+					}
+
+					var embAlpha = Math.sin((emb.life / emb.maxLife) * Math.PI) * 0.85;
+					ctx.fillStyle = 'rgba(' + emb.color[0] + ',' + emb.color[1] + ',' + emb.color[2] + ',' + embAlpha.toFixed(2) + ')';
+					ctx.beginPath();
+					ctx.arc(emb.x, emb.y, emb.size, 0, Math.PI * 2);
+					ctx.fill();
+				}
+
+				// 4. Render Wet Mud Reflections & Puddle Glints
 				for (var pg = 0; pg < puddleGlints.length; pg++) {
 					puddleGlints[pg].update();
 					puddleGlints[pg].draw();
 				}
 
-				// 2. Update & Draw Rain Drops across 3 Depth Layers
+				// 5. Render Rain Drops across 3 Depth Layers
 				var activeDropCount = Math.floor(drops.length * (weatherIntensity / 0.65));
 				for (var d = 0; d < Math.min(drops.length, activeDropCount); d++) {
 					drops[d].update(activeWindX);
 					drops[d].draw(activeWindX);
 				}
 
-				// 3. Update & Draw Splashes (Zero-GC Pool)
+				// 6. Render Ground Splashes (Zero-GC Pool)
 				for (var s = 0; s < MAX_SPLASHES; s++) {
 					var sp = splashPool[s];
 					if (sp.active) {

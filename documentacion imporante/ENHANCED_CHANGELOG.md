@@ -13,6 +13,16 @@
 - ✅ **Niebla Volumétrica Atmosférica:** Bruma multi-octava procedural continua con deriva temporal sobre el suelo de Tristram.
 - ✅ **Atmósfera Carmesí en Invasión:** Adaptación cromática gótica automática al desencadenarse la invasión de Tristram.
 
+#### 🛡️ **NIGHTMARE HD — Vertical Slice de Materiales y Superficies**
+- ✅ **Filosofía de Renderizado:** La tecnología agrega información física de superficie, curvatura y material sin rediseñar ni adulterar los sprites clásicos de 1996.
+- ✅ **Material ID System en Tiempo Real:**
+  - **Metal / Armaduras / Armas (`Roughness 0.22`):** Highlights nítidos en hombreras, coraza y filo de espadas/báculos con micro-reflejos especulares ante fogatas y antorchas.
+  - **Tela / Túnicas (`Roughness 0.92`):** Micro-sombras en pliegues y caída natural de la tela roja del guerrero, separándola visualmente de las placas metálicas.
+  - **Piedra / Mampostería (`Roughness 0.85`):** Profundidad de oclusión en las hendiduras de mortero de la casa de Griswold y la taberna.
+  - **Suelo Húmedo:** Micro-relieve con atenuación de rugosidad ante lluvia para reflejos tenues de antorchas en el barro.
+  - **Ascuas Flotantes:** Partículas incandescentes orgánicas flotando en la noche cerca de fuentes de fuego.
+  - **Emissive Selectivo:** Restringido estrictamente a fuego, ventanas de la catedral y orbes mágicos.
+
 #### 🎛️ **Interfaz Web Limpia y Unificada**
 - ✅ **Control Unificado:** Un único botón limpio `⚡ Neural Render: ON` / `⚔️ Original: 1996` (con tecla rápida `F2`) para alternar instantáneamente entre la experiencia remasterizada y el render retro clásico de 1996, sin botones adicionales redundantes en pantalla.
 

@@ -138,19 +138,24 @@ fn computeMultiBiomeNormal(coords: vec2<i32>, semId: u32, depthVal: f32, isHeadR
         }
         case 3u, 4u, 7u: {
             // Characters (Player 3u, NPCs 4u, Monsters/Enemies 7u):
-            // Efficient 2-tap sprite luminance gradient for armor folds & muscles
+            // 4-tap 2D sprite luminance gradient for micro-relief, muscles and curved plate armor
             let cL = textureLoad(t_rgb, clamp(coords + vec2<i32>(-1, 0), vec2<i32>(0), texDim - 1), 0).rgb;
             let cR = textureLoad(t_rgb, clamp(coords + vec2<i32>( 1, 0), vec2<i32>(0), texDim - 1), 0).rgb;
+            let cU = textureLoad(t_rgb, clamp(coords + vec2<i32>(0, -1), vec2<i32>(0), texDim - 1), 0).rgb;
+            let cD = textureLoad(t_rgb, clamp(coords + vec2<i32>(0,  1), vec2<i32>(0), texDim - 1), 0).rgb;
             let lumL = dot(cL, vec3<f32>(0.299, 0.587, 0.114));
             let lumR = dot(cR, vec3<f32>(0.299, 0.587, 0.114));
-            let spriteGradX = (lumR - lumL) * 3.2;
+            let lumU = dot(cU, vec3<f32>(0.299, 0.587, 0.114));
+            let lumD = dot(cD, vec3<f32>(0.299, 0.587, 0.114));
+            let spriteGradX = (lumR - lumL) * 3.6;
+            let spriteGradY = (lumD - lumU) * 3.6;
 
             var headBowing = vec2<f32>(0.0, 0.0);
             if (isHeadRegion) {
-                headBowing = vec2<f32>(spriteGradX * 0.35, -0.22);
+                headBowing = vec2<f32>(spriteGradX * 0.35, -0.28);
             }
 
-            n = normalize(vec3<f32>(-dz_dx * 1.6 - spriteGradX + headBowing.x, -dz_dy * 1.6 + headBowing.y, 0.70));
+            n = normalize(vec3<f32>(-dz_dx * 1.8 - spriteGradX + headBowing.x, -dz_dy * 1.8 - spriteGradY + headBowing.y, 0.65));
         }
         case 5u: {
             // Water / Lava waves
@@ -214,11 +219,11 @@ fn fs_main(in: VertexOutput) -> @location(0) vec4<f32> {
         return vec4<f32>(normal * 0.5 + 0.5, 1.0);
     }
 
-    // Dynamic Point Light Radiance
+    // Dynamic Point Light Radiance with Virtual 3D Z-Elevation
     let pixelPos = vec2<f32>(screenPixel);
     let distToBonfire = length(pixelPos - u.bonfirePos);
-    let lightDir = normalize(vec3<f32>(u.bonfirePos.x - pixelPos.x, u.bonfirePos.y - pixelPos.y, 44.0));
-    let viewDir = normalize(vec3<f32>(0.0, 0.6, 0.8));
+    let lightDir = normalize(vec3<f32>(u.bonfirePos.x - pixelPos.x, u.bonfirePos.y - pixelPos.y, 58.0));
+    let viewDir = normalize(vec3<f32>(0.0, 0.25, 0.95));
     let halfVec = normalize(lightDir + viewDir);
 
     let NdotL = max(dot(normal, lightDir), 0.0);
@@ -312,13 +317,13 @@ fn fs_main(in: VertexOutput) -> @location(0) vec4<f32> {
                 emissiveLight = origColor.rgb * sssColor * 0.06 * attenuation;
             } else if (isMetal) {
                 // Metallic Armor / Helmet / Pauldrons / Sword (Roughness 0.22)
-                // Crisp highlights, metallic specularity and edge rim
-                let metalPower = select(42.0, 56.0, isSteelMetal);
-                let metalSpec = pow(NdotH, metalPower) * 3.4;
-                let metalColor = select(vec3<f32>(1.0, 0.86, 0.48), vec3<f32>(0.92, 0.96, 1.08), isSteelMetal);
-                specularContribution = metalColor * (metalSpec * mainRadiance + metalSpec * 0.28);
-                specularContribution += metalColor * (rimFactor * 0.65 * (mainRadiance + vec3<f32>(0.20)));
-                diffuseFactor = pow(NdotL, 0.92);
+                // Crisp high-intensity highlights, metallic specularity and edge rim
+                let metalPower = select(64.0, 96.0, isSteelMetal);
+                let metalSpec = pow(NdotH, metalPower) * 3.8;
+                let metalColor = select(vec3<f32>(1.0, 0.88, 0.52), vec3<f32>(0.94, 0.97, 1.10), isSteelMetal);
+                specularContribution = metalColor * (metalSpec * mainRadiance + metalSpec * 0.35);
+                specularContribution += metalColor * (rimFactor * 0.70 * (mainRadiance + vec3<f32>(0.22)));
+                diffuseFactor = pow(NdotL, 0.90);
             } else if (isRedCloth) {
                 // Tunic / Robes / Cloth (Roughness 0.92): Micro-fold shadows and fabric separation
                 let foldShadow = max(NdotL * 0.68 + 0.32, 0.0);

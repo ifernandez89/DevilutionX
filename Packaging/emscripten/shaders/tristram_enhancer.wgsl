@@ -367,59 +367,59 @@ fn fs_main(in: VertexOutput) -> @location(0) vec4<f32> {
     }
 
     // Volumetric Atmospheric Glow & Low Ground Mist
-    let volumetricGlow = biomeLightTint * pow(attenuation, 1.5) * 0.15;
+    let volumetricGlow = biomeLightTint * pow(attenuation, 1.3) * 0.32;
 
     // Composition & Neural Tone Curve
-    var ambientBase = max(lightVal, 0.24);
+    var ambientBase = max(lightVal, 0.20);
     var ambientTint = vec3<f32>(1.0);
     if (u.dungeonBiome == 0u) {
-        ambientBase = max(lightVal * 0.80, 0.18);
-        ambientTint = vec3<f32>(0.84, 0.89, 0.96) * 0.80; // Deeper night immersion in town
+        ambientBase = max(lightVal * 0.72, 0.14);
+        ambientTint = vec3<f32>(0.70, 0.78, 0.95) * 0.72; // Deep, atmospheric gothic night in town
     }
 
     // Multi-Octave Atmospheric Ground Mist 2.5D
     var groundMist = vec3<f32>(0.0);
-    if (u.qualityTier > 0u && semId == 1u) {
+    if (u.qualityTier > 0u && (semId == 1u || semId == 0u)) {
         let pWorld = vec2<f32>(screenPixel);
         // Multi-octave wind-driven low mist
-        let wind1 = vec2<f32>(u.time * 0.08, u.time * 0.02);
-        let wind2 = vec2<f32>(-u.time * 0.04, u.time * 0.06);
-        let n1 = sin(pWorld.x * 0.022 + wind1.x) * cos(pWorld.y * 0.026 + wind1.y);
-        let n2 = sin(pWorld.x * 0.045 + wind2.x) * cos(pWorld.y * 0.038 + wind2.y) * 0.5;
+        let wind1 = vec2<f32>(u.time * 0.09, u.time * 0.03);
+        let wind2 = vec2<f32>(-u.time * 0.05, u.time * 0.07);
+        let n1 = sin(pWorld.x * 0.024 + wind1.x) * cos(pWorld.y * 0.028 + wind1.y);
+        let n2 = sin(pWorld.x * 0.048 + wind2.x) * cos(pWorld.y * 0.042 + wind2.y) * 0.5;
         let mistNoise = clamp((n1 + n2) * 0.5 + 0.5, 0.0, 1.0);
         
-        let fireClear = clamp((distToBonfire - 40.0) / 120.0, 0.0, 1.0);
-        let mistFactor = mistNoise * fireClear * (u.mistDensity * 0.35);
+        let fireClear = clamp((distToBonfire - 35.0) / 100.0, 0.1, 1.0);
+        let mistFactor = mistNoise * fireClear * (u.mistDensity * 0.70);
         
         // Cold moonlight mist tint in town, blood mist in invasion
-        var mistColor = vec3<f32>(0.58, 0.68, 0.82); // Cold Gothic Slate
+        var mistColor = vec3<f32>(0.62, 0.76, 0.94); // Cold Gothic Slate Blue Mist
         if (u.renderMode == 7u) {
-            mistColor = vec3<f32>(0.85, 0.35, 0.25); // Crimson invasion mist
+            mistColor = vec3<f32>(0.92, 0.30, 0.20); // Crimson invasion mist
         } else if (u.dungeonBiome == 5u) {
-            mistColor = vec3<f32>(0.42, 0.65, 0.78); // Crypt ethereal mist
+            mistColor = vec3<f32>(0.40, 0.75, 0.85); // Crypt ethereal mist
         }
-        groundMist = mistColor * mistFactor * ambientBase;
+        groundMist = mistColor * mistFactor * (ambientBase + 0.25);
     }
 
-    let dynamicDiffuse = mainRadiance * diffuseFactor;
+    let dynamicDiffuse = mainRadiance * diffuseFactor * 1.25;
     let totalLight = (ambientTint * ambientBase) + dynamicDiffuse + volumetricGlow;
 
-    var enhanced = (origColor.rgb * totalLight * totalGroundShadow) + specularContribution + emissiveLight + groundMist;
+    var enhanced = (origColor.rgb * totalLight * totalGroundShadow) + (specularContribution * 1.35) + emissiveLight + groundMist;
 
-    // Cinematic Color Grading & Split Toning (Cold Shadows / Warm Highlights)
+    // Cinematic Color Grading & Split Toning (Cold Shadows / Warm Golden Highlights)
     let lumVal = dot(enhanced, vec3<f32>(0.299, 0.587, 0.114));
-    let shadowTone = vec3<f32>(0.85, 0.92, 1.08); // Cold Cyan/Blue in deep shadows
-    let highlightTone = vec3<f32>(1.08, 0.96, 0.84); // Warm Amber in lights
-    let splitTone = mix(shadowTone, highlightTone, smoothstep(0.15, 0.75, lumVal));
+    let shadowTone = vec3<f32>(0.74, 0.86, 1.18); // Cold Gothic Slate in deep shadows
+    let highlightTone = vec3<f32>(1.22, 0.98, 0.76); // Warm Amber / Torch Gold in lights
+    let splitTone = mix(shadowTone, highlightTone, smoothstep(0.12, 0.68, lumVal));
     enhanced = enhanced * splitTone;
 
-    // S-Curve Contrast Enhancement (Rich Black Levels)
+    // S-Curve Contrast Enhancement (Rich, Deep Inky Blacks)
     let contrastS = enhanced * enhanced * (3.0 - 2.0 * clamp(enhanced, vec3<f32>(0.0), vec3<f32>(1.0)));
-    enhanced = mix(enhanced, contrastS, 0.38);
+    enhanced = mix(enhanced, contrastS, 0.56);
 
     // Subtle Vignette in Shader
-    let vigCoord = (in.uv - vec2<f32>(0.5)) * vec2<f32>(1.12, 0.95);
-    let vig = 1.0 - smoothstep(0.38, 0.92, length(vigCoord)) * 0.32;
+    let vigCoord = (in.uv - vec2<f32>(0.5)) * vec2<f32>(1.15, 0.96);
+    let vig = 1.0 - smoothstep(0.35, 0.94, length(vigCoord)) * 0.38;
     enhanced = enhanced * vig;
 
     // Silhouette Invariance Masking

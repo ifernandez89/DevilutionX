@@ -71,7 +71,7 @@
 
 		/* Subtle Graphics Remaster Active Presentation */
 		body.remaster-enabled canvas.emscripten {
-			filter: contrast(1.08) saturate(1.12);
+			filter: contrast(1.18) saturate(1.22) brightness(0.96);
 		}
 
 		/* WebGPU Neural HD Canvas Overlay */
@@ -1035,7 +1035,7 @@
 						uViewF32[10] = 320; // Bonfire center x
 						uViewF32[11] = 240; // Bonfire center y
 						uViewU32[12] = qualityTier;
-						uViewF32[13] = (typeof window.currentMistDensity === 'number') ? window.currentMistDensity : 0.38; // Dynamic 2.5D Mist Density
+						uViewF32[13] = 0.70; // Rich 2.5D Atmospheric Ground Mist
 
 						device.queue.writeBuffer(uniformBuffer, 0, uData);
 

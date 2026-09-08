@@ -324,11 +324,19 @@ Point InvasionManager::GetWalkablePerimeterSpawn()
 	static size_t s_idx = 0;
 	for (size_t i = 0; i < std::size(s_perimeter); i++) {
 		Point pt = s_perimeter[(s_idx + i) % std::size(s_perimeter)];
-		if (IsTileWalkable(pt) && dMonster[pt.x][pt.y] == 0) {
+		if (InDungeonBounds(pt) && IsTileWalkable(pt) && dMonster[pt.x][pt.y] == 0 && dPlayer[pt.x][pt.y] == 0) {
 			s_idx = (s_idx + i + 1) % std::size(s_perimeter);
 			return pt;
 		}
 	}
+
+	auto freePos = FindClosestValidPosition([](Point target) {
+		return InDungeonBounds(target) && IsTileWalkable(target) && dMonster[target.x][target.y] == 0 && dPlayer[target.x][target.y] == 0;
+	}, { 58, 64 }, 1, 8);
+
+	if (freePos)
+		return *freePos;
+
 	return { 58, 64 };
 }
 

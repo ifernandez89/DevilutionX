@@ -523,6 +523,8 @@ void CheckMissileCol(Missile &missile, DamageType damageType, int minDamage, int
 			} else if (missile._misource >= 0 && missile._misource < static_cast<int>(MaxMonsters)) {
 				Monster &monster = Monsters[missile._misource];
 				isPlayerHit = PlayerMHit(*player, &monster, missile._midist, minDamage, maxDamage, missile._mitype, damageType, isDamageShifted, DeathReason::MonsterOrTrap, &blocked);
+			} else {
+				isPlayerHit = PlayerMHit(*player, nullptr, missile._midist, minDamage, maxDamage, missile._mitype, damageType, isDamageShifted, DeathReason::MonsterOrTrap, &blocked);
 			}
 		} else {
 			const DeathReason deathReason = missile.sourceType() == MissileSource::Player ? DeathReason::Player : DeathReason::MonsterOrTrap;
@@ -2345,7 +2347,11 @@ void AddAcidPuddle(Missile &missile, AddMissileParameter & /*parameter*/)
 {
 	missile._miLightFlag = true;
 	const int monst = missile._misource;
-	missile.duration = GenerateRnd(15) + 40 * (Monsters[monst].intelligence + 1);
+	int intel = 1;
+	if (monst >= 0 && monst < static_cast<int>(MaxMonsters)) {
+		intel = Monsters[monst].intelligence;
+	}
+	missile.duration = GenerateRnd(15) + 40 * (intel + 1);
 	missile._miPreFlag = true;
 }
 
@@ -3106,6 +3112,11 @@ void ProcessNovaBall(Missile &missile)
 
 void ProcessAcidPuddle(Missile &missile)
 {
+	if (!InDungeonBounds(missile.position.tile)) {
+		missile.duration = 0;
+		missile._miDelFlag = true;
+		return;
+	}
 	missile.duration--;
 	const int range = missile.duration;
 	CheckMissileCol(missile, GetMissileData(missile._mitype).damageType(), missile._midam, missile._midam, true, missile.position.tile, false);
@@ -3726,7 +3737,10 @@ void ProcessAcidSplate(Missile &missile)
 	if (missile.duration == 0) {
 		missile._miDelFlag = true;
 		const int monst = missile._misource;
-		const int dam = (Monsters[monst].data().level >= 2 ? 2 : 1);
+		int dam = 1;
+		if (monst >= 0 && monst < static_cast<int>(MaxMonsters)) {
+			dam = (Monsters[monst].data().level >= 2 ? 2 : 1);
+		}
 		AddMissile(missile.position.tile, { 0, 0 }, Direction::South, MissileID::AcidPuddle, TARGET_PLAYERS, monst, dam, missile._mispllvl);
 	} else {
 		PutMissile(missile);

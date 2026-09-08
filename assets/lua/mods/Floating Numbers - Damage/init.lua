@@ -49,11 +49,20 @@ local function format_damage(damage_val)
 end
 
 local accumulated_damage = {}
-local MERGE_WINDOW_MS = 100
+local MERGE_WINDOW_MS = 250
+
+local function cleanup_old_entries(now)
+    for id, entry in pairs(accumulated_damage) do
+        if (now - entry.time) > 2000 then
+            accumulated_damage[id] = nil
+        end
+    end
+end
 
 events.OnMonsterTakeDamage.add(function(monster, damage, damage_type)
     local id = monster.id
     local now = system.get_ticks()
+    cleanup_old_entries(now)
     
     local entry = accumulated_damage[id]
     if entry and (now - entry.time) < MERGE_WINDOW_MS then
@@ -73,6 +82,7 @@ events.OnPlayerTakeDamage.add(function(_player, damage, damage_type)
     if _player == player.self() then
         local id = _player.id
         local now = system.get_ticks()
+        cleanup_old_entries(now)
         
         local entry = accumulated_damage[id]
         if entry and (now - entry.time) < MERGE_WINDOW_MS then

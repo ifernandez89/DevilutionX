@@ -1269,10 +1269,13 @@ void MonsterAttackPlayer(Monster &monster, Player &player, int hit, int minDam, 
 void MonsterAttackEnemy(Monster &monster, int hit, int minDam, int maxDam)
 {
 	if ((monster.flags & MFLAG_NO_ENEMY) == 0) {
-		if ((monster.flags & MFLAG_TARGETS_MONSTER) != 0)
-			MonsterAttackMonster(monster, Monsters[monster.enemy], hit, minDam, maxDam);
-		else
-			MonsterAttackPlayer(monster, Players[monster.enemy], hit, minDam, maxDam);
+		if ((monster.flags & MFLAG_TARGETS_MONSTER) != 0) {
+			if (monster.enemy >= 0 && monster.enemy < static_cast<int>(MaxMonsters))
+				MonsterAttackMonster(monster, Monsters[monster.enemy], hit, minDam, maxDam);
+		} else {
+			if (monster.enemy >= 0 && monster.enemy < static_cast<int>(Players.size()))
+				MonsterAttackPlayer(monster, Players[monster.enemy], hit, minDam, maxDam);
+		}
 	}
 }
 
@@ -3838,11 +3841,6 @@ void ApplyMonsterDamage(DamageType damageType, Monster &monster, int damage)
 
 	monster.hitPoints -= damage;
 
-	const int displayDmg = damage >> 6;
-	if (displayDmg > 0) {
-		AddFloatingNumber(monster.position.tile, { 0, -20 }, fmt::format("{:d}", displayDmg), UiFlags::ColorRed, static_cast<int>(monster.getId() + 1), false, displayDmg);
-	}
-
 	if (monster.hasNoLife()) {
 		delta_kill_monster(monster, monster.position.tile, *MyPlayer);
 		NetSendCmdLocParam1(false, CMD_MONSTDEATH, monster.position.tile, static_cast<uint16_t>(monster.getId()));
@@ -4142,32 +4140,34 @@ void GolumAi(Monster &golem)
 	}
 
 	if ((golem.flags & MFLAG_NO_ENEMY) == 0) {
-		Monster &enemy = Monsters[golem.enemy];
-		const int mex = golem.position.tile.x - enemy.position.future.x;
-		const int mey = golem.position.tile.y - enemy.position.future.y;
-		golem.direction = GetDirection(golem.position.tile, enemy.position.tile);
-		if (std::abs(mex) < 2 && std::abs(mey) < 2) {
-			golem.enemyPosition = enemy.position.tile;
-			if (enemy.activeForTicks == 0) {
-				enemy.activeForTicks = UINT8_MAX;
-				enemy.position.last = golem.position.tile;
-				for (int j = 0; j < 5; j++) {
-					for (int k = 0; k < 5; k++) {
-						const int mx = golem.position.tile.x + k - 2;
-						const int my = golem.position.tile.y + j - 2;
-						if (!InDungeonBounds({ mx, my }))
-							continue;
-						const int enemyId = dMonster[mx][my];
-						if (enemyId > 0)
-							Monsters[enemyId - 1].activeForTicks = UINT8_MAX;
+		if (golem.enemy >= 0 && golem.enemy < static_cast<int>(MaxMonsters)) {
+			Monster &enemy = Monsters[golem.enemy];
+			const int mex = golem.position.tile.x - enemy.position.future.x;
+			const int mey = golem.position.tile.y - enemy.position.future.y;
+			golem.direction = GetDirection(golem.position.tile, enemy.position.tile);
+			if (std::abs(mex) < 2 && std::abs(mey) < 2) {
+				golem.enemyPosition = enemy.position.tile;
+				if (enemy.activeForTicks == 0) {
+					enemy.activeForTicks = UINT8_MAX;
+					enemy.position.last = golem.position.tile;
+					for (int j = 0; j < 5; j++) {
+						for (int k = 0; k < 5; k++) {
+							const int mx = golem.position.tile.x + k - 2;
+							const int my = golem.position.tile.y + j - 2;
+							if (!InDungeonBounds({ mx, my }))
+								continue;
+							const int enemyId = dMonster[mx][my];
+							if (enemyId > 0)
+								Monsters[enemyId - 1].activeForTicks = UINT8_MAX;
+						}
 					}
 				}
+				StartAttack(golem);
+				return;
 			}
-			StartAttack(golem);
-			return;
+			if (AiPlanPath(golem))
+				return;
 		}
-		if (AiPlanPath(golem))
-			return;
 	}
 
 	if (isSinglePlayerEasterEgg && owner.plractive && owner.isOnActiveLevel()) {

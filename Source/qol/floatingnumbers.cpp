@@ -37,13 +37,10 @@ std::deque<FloatingNumber> FloatingQueue;
 
 void ClearExpiredNumbers()
 {
-	while (!FloatingQueue.empty()) {
-		const FloatingNumber &num = FloatingQueue.front();
-		if (num.time > SDL_GetTicks())
-			break;
-
-		FloatingQueue.pop_front();
-	}
+	const uint32_t now = SDL_GetTicks();
+	std::erase_if(FloatingQueue, [now](const FloatingNumber &num) {
+		return num.time <= now;
+	});
 }
 
 GameFontTables GetGameFontSize(UiFlags flags)
@@ -59,6 +56,8 @@ GameFontTables GetGameFontSize(UiFlags flags)
 
 void AddFloatingNumber(Point pos, Displacement offset, std::string text, UiFlags style, int id, bool reverseDirection, int addDamage)
 {
+	ClearExpiredNumbers();
+
 	Displacement endOffset;
 	if (!reverseDirection)
 		endOffset = { 0, -140 };
@@ -67,7 +66,7 @@ void AddFloatingNumber(Point pos, Displacement offset, std::string text, UiFlags
 
 	const uint32_t now = SDL_GetTicks();
 	for (auto &num : FloatingQueue) {
-		if (id != 0 && num.id == id && (now - num.lastMerge <= 150)) {
+		if (id != 0 && num.id == id && (now - num.lastMerge <= 300)) {
 			if (addDamage > 0 && num.accumulatedDamage > 0) {
 				num.accumulatedDamage += addDamage;
 				num.text = fmt::format("{:d}", num.accumulatedDamage);
@@ -81,6 +80,11 @@ void AddFloatingNumber(Point pos, Displacement offset, std::string text, UiFlags
 			return;
 		}
 	}
+
+	if (FloatingQueue.size() >= 50) {
+		FloatingQueue.pop_front();
+	}
+
 	FloatingNumber num {
 		pos, offset, endOffset, text, addDamage,
 		static_cast<uint32_t>(now + 2500),
@@ -92,7 +96,11 @@ void AddFloatingNumber(Point pos, Displacement offset, std::string text, UiFlags
 
 void DrawFloatingNumbers(const Surface &out, Point viewPosition, Displacement offset)
 {
+	const uint32_t now = SDL_GetTicks();
 	for (auto &floatingNum : FloatingQueue) {
+		if (floatingNum.time <= now)
+			continue;
+
 		Displacement worldOffset = viewPosition - floatingNum.startPos;
 		worldOffset = worldOffset.worldToScreen() + offset + Displacement { TILE_WIDTH / 2, -TILE_HEIGHT / 2 } + floatingNum.startOffset;
 
@@ -104,8 +112,8 @@ void DrawFloatingNumbers(const Surface &out, Point viewPosition, Displacement of
 
 		const int lineWidth = GetLineWidth(floatingNum.text, GetGameFontSize(floatingNum.style));
 		screenPosition.x -= lineWidth / 2;
-		const uint32_t timeLeft = floatingNum.time - SDL_GetTicks();
-		const float mul = 1 - (timeLeft / 2500.0f);
+		const uint32_t timeLeft = floatingNum.time - now;
+		const float mul = std::clamp(1.0f - (static_cast<float>(timeLeft) / 2500.0f), 0.0f, 1.0f);
 		screenPosition += floatingNum.endOffset * mul;
 
 		DrawString(out, floatingNum.text, Rectangle { screenPosition, { lineWidth, 0 } },

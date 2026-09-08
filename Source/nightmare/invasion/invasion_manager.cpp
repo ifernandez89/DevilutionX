@@ -159,6 +159,7 @@ void InvasionManager::ResetInvasionState()
 	state_.active = false;
 	state_.completed = false;
 	state_.boss_phase = 0;
+	state_.boss_selected = MT_INVALID;
 	state_.boss_unique_type = UniqueMonsterType::None;
 	state_.monster_count = 0;
 }
@@ -209,9 +210,14 @@ void InvasionManager::OnTownEntry()
 		return typeIndex;
 	};
 
+	const UniqueMonsterType bossUnique = (state_.monster_count > 0 && state_.boss_unique_type != UniqueMonsterType::None)
+	    ? state_.boss_unique_type
+	    : ((Quests[Q_SKELKING]._qactive == QUEST_DONE) ? UniqueMonsterType::WarlordOfBlood : UniqueMonsterType::SkeletonKing);
+	const _monster_id bossMType = UniqueMonstersData[static_cast<size_t>(bossUnique)].mtype;
+
 	preloadType(MT_WINGED, PLACE_SCATTER);
 	preloadType(MT_BALROG, PLACE_SCATTER);
-	preloadType(MT_SKING, PLACE_UNIQUE);
+	preloadType(bossMType, PLACE_UNIQUE);
 	preloadType(MT_WSKELAX, PLACE_SCATTER);
 
 	if (state_.monster_count == 0) {
@@ -225,7 +231,7 @@ void InvasionManager::SpawnInitialInvasionForce()
 {
 	state_.monster_count = 0;
 
-	// --- Spawn Leoric FIRST to guarantee he always gets a slot ---
+	// --- Spawn Boss FIRST to guarantee he always gets a slot ---
 	// The boss encounter reserves its own slots before the army fills up.
 	SpawnBossEncounter();
 	state_.boss_phase = 2;
@@ -287,40 +293,44 @@ void InvasionManager::SpawnBossEncounter()
 		{ 83, 63 }, { 83, 65 }, { 81, 63 },
 	};
 
-	state_.boss_selected = MT_SKING;
-	state_.boss_unique_type = UniqueMonsterType::SkeletonKing;
+	const bool kingDead = (Quests[Q_SKELKING]._qactive == QUEST_DONE);
+	const UniqueMonsterType bossUnique = kingDead ? UniqueMonsterType::WarlordOfBlood : UniqueMonsterType::SkeletonKing;
+	const _monster_id bossMType = UniqueMonstersData[static_cast<size_t>(bossUnique)].mtype;
 
-	const size_t kingTypeIdx = GetMonsterTypeIndex(MT_SKING);
-	if (kingTypeIdx < LevelMonsterTypeCount && state_.monster_count < MaxInvasionMonsters) {
-		Monster *king = nullptr;
+	state_.boss_selected = bossMType;
+	state_.boss_unique_type = bossUnique;
+
+	const size_t bossTypeIdx = GetMonsterTypeIndex(bossMType);
+	if (bossTypeIdx < LevelMonsterTypeCount && state_.monster_count < MaxInvasionMonsters) {
+		Monster *boss = nullptr;
 		Point usedPos = bossCandidates[0];
 
 		// Try each candidate position until one succeeds
 		for (const auto &candidate : bossCandidates) {
 			if (!IsTileWalkable(candidate))
 				continue;
-			king = AddMonster(candidate, Direction::SouthWest, kingTypeIdx, true);
-			if (king != nullptr) {
+			boss = AddMonster(candidate, Direction::SouthWest, bossTypeIdx, true);
+			if (boss != nullptr) {
 				usedPos = candidate;
 				break;
 			}
 		}
 
-		if (king != nullptr) {
-			PrepareUniqueMonst(*king, UniqueMonsterType::SkeletonKing, 0, 0, UniqueMonstersData[static_cast<size_t>(UniqueMonsterType::SkeletonKing)]);
-			king->maxHitPoints = 18000 << 6;
-			king->hitPoints = king->maxHitPoints;
-			king->intelligence = 3;
-			king->activeForTicks = UINT8_MAX;
-			king->minDamage = 75;
-			king->maxDamage = 120;
-			king->armorClass = 95;
+		if (boss != nullptr) {
+			PrepareUniqueMonst(*boss, bossUnique, 0, 0, UniqueMonstersData[static_cast<size_t>(bossUnique)]);
+			boss->maxHitPoints = 18000 << 6;
+			boss->hitPoints = boss->maxHitPoints;
+			boss->intelligence = 3;
+			boss->activeForTicks = UINT8_MAX;
+			boss->minDamage = 75;
+			boss->maxDamage = 120;
+			boss->armorClass = 95;
 
 			auto &snap = state_.monsters[state_.monster_count++];
 			snap.x = static_cast<uint8_t>(usedPos.x);
 			snap.y = static_cast<uint8_t>(usedPos.y);
-			snap.type = MT_SKING;
-			snap.current_hp = king->hitPoints;
+			snap.type = bossMType;
+			snap.current_hp = boss->hitPoints;
 			snap.is_boss = true;
 			snap.is_alive = true;
 		}

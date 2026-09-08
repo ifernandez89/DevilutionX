@@ -2344,7 +2344,19 @@ void LeoricAi(Monster &monster)
 		monster.goal = MonsterGoal::Normal;
 	}
 	if (monster.goal == MonsterGoal::Normal) {
-		if (!UseMultiplayerQuests()
+		bool allowSummon = true;
+		if (leveltype == DTYPE_TOWN) {
+			int skelCount = 0;
+			for (size_t i = 0; i < ActiveMonsterCount; i++) {
+				const Monster &m = Monsters[ActiveMonsters[i]];
+				if (IsSkel(m.type().type) && m.hitPoints > 0 && m.mode != MonsterMode::Death && m.distanceToEnemy() <= 15) {
+					skelCount++;
+				}
+			}
+			if (skelCount >= 5)
+				allowSummon = false;
+		}
+		if (allowSummon && !UseMultiplayerQuests()
 		    && ((distanceToEnemy >= 3 && v < 4 * monster.intelligence + 35) || v < 6)
 		    && LineClearMissile(monster.position.tile, monster.enemyPosition)) {
 			const Point newPosition = monster.position.tile + md;
@@ -3785,9 +3797,12 @@ void InitializeSpawnedMonster(Point position, Direction dir, size_t typeIndex, s
 		return {};
 	});
 
-	assert(freePosition);
-	assert(!MyPlayer->isLevelOwnedByLocalClient() || (freePosition && position == *freePosition));
-	position = freePosition.value_or(position);
+	if (!freePosition) {
+		if (ActiveMonsterCount > 0)
+			ActiveMonsterCount -= 1;
+		return;
+	}
+	position = *freePosition;
 
 	monster.occupyTile(position, false);
 	InitMonster(monster, dir, typeIndex, position);
@@ -4108,7 +4123,7 @@ void GolumAi(Monster &golem)
 		const int distToOwner = golem.position.tile.WalkingDistance(owner.position.tile);
 		if (distToOwner > 8) {
 			auto newPos = FindClosestValidPosition(
-			    [start = owner.position.tile](Point target) {
+			    [](Point target) {
 				    return !IsTileOccupied(target);
 			    },
 			    owner.position.tile, 1, 6);
@@ -4248,7 +4263,7 @@ void ProcessMonsters()
 		}
 
 		const bool isMonsterVisible = (leveltype == DTYPE_TOWN)
-		    ? (monster.distanceToEnemy() <= 22)
+		    ? (monster.distanceToEnemy() <= 15)
 		    : IsTileVisible(monster.position.tile);
 		if (isMonsterVisible && monster.activeForTicks == 0) {
 			if (monster.type().type == MT_CLEAVER) {

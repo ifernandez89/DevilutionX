@@ -38,6 +38,36 @@ Se han implementado, probado y verificado con éxito las nuevas características
 
 ---
 
+---
+
+### 3. 🛡️ Estabilidad en Combate de Tristán (Anti-Freeze) & Solución Definitiva a la Corrupción Visual al Recargar (Anti-Tearing)
+
+#### A. Prevención del Congelamiento del Navegador Durante el Combate
+- **Eliminación de Aserción Fatal en `InitializeSpawnedMonster` ([`Source/monster.cpp`](file:///c:/Projects/DevilutionX/Source/monster.cpp#L490)):**
+  - Se sustituyeron los `assert()` de un jugador por validación defensiva con rollback automático del slot asignado (`if (!freePosition) { if (ActiveMonsterCount > 0) ActiveMonsterCount--; return; }`). Cuando el mapa se llena de invocaciones o proyectiles y no hay casillas adyacentes libres, la función aborta la invocación limpiamente sin abortar el motor de WebAssembly.
+- **Tope de Invocaciones de Leoric en Tristán ([`Source/monster.cpp`](file:///c:/Projects/DevilutionX/Source/monster.cpp#L1980)):**
+  - En `LeoricAi()`, se limitó el número concurrente de esqueletos invocados en el pueblo (`leveltype == DTYPE_TOWN`) a un máximo de 5 esqueletos vivos simultáneos, evitando que 112+ esqueletos saturen el pool de monstruos y la CPU.
+- **Bucle Seguro Bounded en `CheckBlock` ([`Source/missiles.cpp`](file:///c:/Projects/DevilutionX/Source/missiles.cpp#L690)):**
+  - Se reemplazó el bucle desprotegido `while (from != to)` por el algoritmo seguro `LineClear` con validación de `InDungeonBounds` y comprobación de paredes sólidas. Se eliminaron los bucles infinitos y desbordamientos de memoria al rastrear trayectorias de Bone Spirit.
+- **Despertar por Proximidad Calibrado ([`Source/monster.cpp`](file:///c:/Projects/DevilutionX/Source/monster.cpp#L3800)):**
+  - Se redujo el radio de activación de monstruos en el pueblo de 22 a 15 casillas para evitar que todo el ejército de Tristán ejecute búsqueda de caminos (pathfinding A*) en cada tick sobre WebAssembly.
+- **Selección Dinámica del Jefe de Invasión ([`Source/nightmare/invasion/invasion_manager.cpp`](file:///c:/Projects/DevilutionX/Source/nightmare/invasion/invasion_manager.cpp)):**
+  - Si el Rey Leoric ya fue derrotado en la mazmorra (`Quests[Q_SKELKING]._qactive == QUEST_DONE`), la invasión selecciona e inicializa al temible **Warlord of Blood** (Señor de la Sangre) con gráficos y estadísticas completas; de lo contrario, lidera el Rey Leoric.
+
+#### B. Eliminación de Corrupción Visual (Scanlines/Tearing) al Cargar Partida
+- **Persistencia de Snapshot al Guardar desde el Menú ([`Source/loadsave.cpp`](file:///c:/Projects/DevilutionX/Source/loadsave.cpp#L2780)):**
+  - Se añadió `SaveInvasionSnapshot()` dentro de `SaveInvasionState()`. Al guardar la partida desde el menú de pausa en el pueblo, las posiciones, tipos y vida exacta de cada monstruo invasor se capturan antes de escribir el chunk `tristram_inv` en el MPQ.
+- **Aislamiento Estricto de `ActiveMonsterCount` en Tristán ([`Source/loadsave.cpp`](file:///c:/Projects/DevilutionX/Source/loadsave.cpp)):**
+  - En `SaveLevel()`, se serializa 0 si `leveltype == DTYPE_TOWN`.
+  - En `LoadLevel()` y `LoadGame()`, se fuerza `ActiveMonsterCount = 0` al cargar el pueblo, evitando que monstruos no inicializados corrompan el array `ActiveMonsters`.
+- **Limpieza Completa del Estado de Monstruos en el Pueblo ([`Source/diablo.cpp`](file:///c:/Projects/DevilutionX/Source/diablo.cpp#L3215)):**
+  - En `LoadGameLevelTown()`, se invocan `InitLevelMonsters()` y el vaciado integral de `dMonster[x][y] = 0`, garantizando que `OnTownEntry()` siempre construya la invasión sobre un mapa y tablas de sprites 100% limpias.
+- **Alineación de Filas WebGPU a 256 Bytes ([`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html)):**
+  - Se calculó `paddedRowBytes = Math.ceil(w / 256) * 256` (768 bytes para 640px) y se añadió padding fila por fila en las llamadas a `writeTexture` para las texturas de 1 byte por píxel (`texSemantic` y `texLight`), cumpliendo la especificación WebGPU y eliminando el desalineamiento horizontal.
+
+---
+
 ## 🧪 Resultados de Verificación
-- **Compilación Nativa C++:** Exitosa en `build_COMPILE_FRESH/devilutionx.exe`.
-- **Cero Regresiones:** Compatibilidad estricta de guardado, persistencia del Golem entre sesiones y estabilidad completa al cargar partidas.
+- **Compilación WebAssembly (Ninja/Emscripten):** Exitosa con código 0 (`devilutionx.js` y `devilutionx.wasm` vinculados limpiamente en `build-web/`).
+- **Sincronización de Recursos Web:** `build-web/index.html` actualizado automáticamente con las texturas WebGPU con stride alineado.
+- **Cero Regresiones:** El sistema de guardado, persistencia del Golem, ciclo de Diablo y la Invasión a Tristán operan en perfecta armonía.

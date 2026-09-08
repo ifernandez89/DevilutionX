@@ -5,6 +5,7 @@
  */
 #include <array>
 #include <cstdint>
+#include <numeric>
 #include <string_view>
 
 #ifdef USE_SDL3
@@ -3215,8 +3216,11 @@ tl::expected<void, std::string> LoadGameLevelTown(bool firstflag, lvl_entry lvld
 		for (int j = 0; j < MAXDUNY; j++) {
 			dFlags[i][j] |= DungeonFlag::Lit;
 			dCorpse[i][j] = 0;
+			dMonster[i][j] = 0;
 		}
 	}
+
+	InitLevelMonsters();
 
 	if (!gbIsMultiplayer && myPlayer._persistentGolemSpellLevel > 0) {
 		const auto typeIndex = AddMonsterType(MT_GOLEM, PLACE_SPECIAL);
@@ -3465,7 +3469,7 @@ tl::expected<void, std::string> LoadGameLevel(bool firstflag, lvl_entry lvldir)
 
 	if (!gbIsMultiplayer && MyPlayer->_persistentGolemSpellLevel > 0) {
 		std::optional<Point> spawnPosition = FindClosestValidPosition(
-		    [start = MyPlayer->position.tile](Point target) {
+		    [](Point target) {
 			    return !IsTileOccupied(target);
 		    },
 		    MyPlayer->position.tile, 1, 10);
@@ -3491,7 +3495,7 @@ tl::expected<void, std::string> LoadGameLevel(bool firstflag, lvl_entry lvldir)
 
 	if (!gbIsMultiplayer && MyPlayer->_persistentBoneSpiritSpellLevel > 0) {
 		std::optional<Point> spawnPosition = FindClosestValidPosition(
-		    [start = MyPlayer->position.tile](Point target) {
+		    [](Point target) {
 			    return !IsTileOccupied(target);
 		    },
 		    MyPlayer->position.tile, 1, 6);

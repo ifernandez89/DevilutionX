@@ -143,13 +143,7 @@ int GenerateRndSum(int range, int iterations)
 
 bool CheckBlock(Point from, Point to)
 {
-	while (from != to) {
-		from += GetDirection(from, to);
-		if (TileHasAny(from, TileProperties::Solid))
-			return true;
-	}
-
-	return false;
+	return !LineClear([](Point position) { return InDungeonBounds(position) && !TileHasAny(position, TileProperties::Solid); }, from, to);
 }
 
 Monster *FindClosest(Point source, int rad)

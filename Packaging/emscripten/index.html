@@ -1011,23 +1011,26 @@
 				const texSemantic = device.createTexture(desc('r8unorm'));
 
 				// Pre-populate default synthetic depth and semantic maps
+				const paddedRowBytes = Math.ceil(w / 256) * 256;
 				const numPixels = w * h;
 				const depthData = new Float32Array(numPixels);
-				const lightData = new Uint8Array(numPixels);
-				const semanticData = new Uint8Array(numPixels);
+				const lightData = new Uint8Array(paddedRowBytes * h);
+				const semanticData = new Uint8Array(paddedRowBytes * h);
+				const semPadded = new Uint8Array(paddedRowBytes * h);
 
 				for (let y = 0; y < h; y++) {
 					for (let x = 0; x < w; x++) {
 						const idx = y * w + x;
 						depthData[idx] = ((x + y * 1.2) / (w + h)) * 0.7 + 0.15;
-						lightData[idx] = 180;
-						semanticData[idx] = (y < 240) ? 2 : 1; // Top walls, bottom floor
+						const dstIdx = y * paddedRowBytes + x;
+						lightData[dstIdx] = 180;
+						semanticData[dstIdx] = (y < 240) ? 2 : 1; // Top walls, bottom floor
 					}
 				}
 
 				device.queue.writeTexture({ texture: texDepth }, depthData, { bytesPerRow: w * 4 }, [w, h]);
-				device.queue.writeTexture({ texture: texLight }, lightData, { bytesPerRow: w }, [w, h]);
-				device.queue.writeTexture({ texture: texSemantic }, semanticData, { bytesPerRow: w }, [w, h]);
+				device.queue.writeTexture({ texture: texLight }, lightData, { bytesPerRow: paddedRowBytes }, [w, h]);
+				device.queue.writeTexture({ texture: texSemantic }, semanticData, { bytesPerRow: paddedRowBytes }, [w, h]);
 
 				const pipeline = device.createRenderPipeline({
 					layout: 'auto',
@@ -1114,7 +1117,10 @@
 								if (semPtr && depthPtr) {
 									const semView = new Uint8Array(Module.HEAPU8.buffer, semPtr, w * h);
 									const depthView = new Float32Array(Module.HEAPU8.buffer, depthPtr, w * h);
-									device.queue.writeTexture({ texture: texSemantic }, semView, { bytesPerRow: w }, [w, h]);
+									for (let y = 0; y < h; y++) {
+										semPadded.set(semView.subarray(y * w, (y + 1) * w), y * paddedRowBytes);
+									}
+									device.queue.writeTexture({ texture: texSemantic }, semPadded, { bytesPerRow: paddedRowBytes }, [w, h]);
 									device.queue.writeTexture({ texture: texDepth }, depthView, { bytesPerRow: w * 4 }, [w, h]);
 								}
 							} catch(e) {}

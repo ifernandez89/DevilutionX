@@ -1952,7 +1952,7 @@ void SaveLevel(SaveWriter &saveWriter, LevelConversionData *levelConversionData)
 		}
 	}
 
-	file.WriteBE(static_cast<int32_t>(ActiveMonsterCount));
+	file.WriteBE(static_cast<int32_t>(leveltype == DTYPE_TOWN ? 0 : ActiveMonsterCount));
 	file.WriteBE<int32_t>(ActiveItemCount);
 	file.WriteBE<int32_t>(ActiveObjectCount);
 
@@ -2031,6 +2031,8 @@ tl::expected<void, std::string> LoadLevel(LevelConversionData *levelConversionDa
 	}
 
 	ActiveMonsterCount = file.NextBE<int32_t>();
+	if (leveltype == DTYPE_TOWN)
+		ActiveMonsterCount = 0;
 	auto savedItemCount = file.NextBE<uint32_t>();
 	ActiveObjectCount = file.NextBE<int32_t>();
 
@@ -2600,6 +2602,8 @@ tl::expected<void, std::string> LoadGame(bool firstflag)
 	ViewPosition = { viewX, viewY };
 	if (leveltype != DTYPE_TOWN)
 		ActiveMonsterCount = tmpNummonsters;
+	else
+		ActiveMonsterCount = 0;
 	ActiveObjectCount = tmpNobjects;
 
 	for (size_t i = 0; i < MonstersData.size(); ++i) {
@@ -2777,6 +2781,10 @@ void SaveBoneSpiritState(SaveWriter &saveWriter, const Player &player)
 
 void SaveInvasionState(SaveWriter &saveWriter)
 {
+	if (leveltype == DTYPE_TOWN && nightmare::invasion::InvasionManager::Get().IsCombatActive()) {
+		nightmare::invasion::InvasionManager::Get().SaveInvasionSnapshot();
+	}
+
 	const auto &state = nightmare::invasion::InvasionManager::Get().GetState();
 	SaveHelper file(saveWriter, "tristram_inv", sizeof(uint8_t) * 4 + sizeof(uint32_t) + sizeof(uint16_t) * 2 + sizeof(uint8_t) + (sizeof(int32_t) + sizeof(uint8_t) * 2 + sizeof(uint16_t) + sizeof(uint8_t) * 2) * nightmare::invasion::MaxInvasionMonsters);
 

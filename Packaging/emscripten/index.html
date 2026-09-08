@@ -1462,67 +1462,9 @@
 				// Weather Intensity Cycling
 				weatherIntensity = 0.65 + Math.sin(time * 0.04) * 0.25;
 
-				// 1. Render House Interior Light Beams & Campfire Radiance (Door/Window Warm Spill)
-				for (var li = 0; li < lightSources.length; li++) {
-					var src = lightSources[li];
-					var lx = src.x * width;
-					var ly = src.y * height;
-					var flicker = 1.0 + Math.sin(time * 6.5 + li * 2.1) * 0.05 + (Math.random() - 0.5) * 0.02;
-					var rad = src.radius * width * flicker;
+				// 1. Clean Atmospheric Ambient (No static screen-space fake lights)
 
-					var fireGrad = ctx.createRadialGradient(lx, ly, 4, lx, ly, rad);
-					fireGrad.addColorStop(0, 'rgba(' + src.color[0] + ',' + src.color[1] + ',' + src.color[2] + ', 0.35)');
-					fireGrad.addColorStop(0.35, 'rgba(' + src.color[0] + ',' + src.color[1] + ',' + src.color[2] + ', 0.14)');
-					fireGrad.addColorStop(1, 'rgba(' + src.color[0] + ',' + src.color[1] + ',' + src.color[2] + ', 0.0)');
-					
-					ctx.fillStyle = fireGrad;
-					ctx.beginPath();
-					ctx.arc(lx, ly, rad, 0, Math.PI * 2);
-					ctx.fill();
 
-					// If it's a doorway/window (Griswold or Tavern), cast a directional soft light spill onto the stone & ground
-					if (src.isHouseGlow) {
-						var spillGrad = ctx.createRadialGradient(lx + 15, ly + 25, 2, lx + 25, ly + 35, rad * 0.7);
-						spillGrad.addColorStop(0, 'rgba(255, 210, 110, 0.28)');
-						spillGrad.addColorStop(0.6, 'rgba(230, 160, 60, 0.08)');
-						spillGrad.addColorStop(1, 'rgba(200, 120, 40, 0.0)');
-						ctx.fillStyle = spillGrad;
-						ctx.beginPath();
-						ctx.ellipse(lx + 20, ly + 30, rad * 0.6, rad * 0.35, Math.PI * 0.25, 0, Math.PI * 2);
-						ctx.fill();
-					}
-				}
-
-				// 2. Render Seamless Volumetric Ground Fog Puffs (Cold Gothic Slate Moonlight)
-				var isCrimson = (window.currentWebGPURenderMode === 7);
-				var fogBaseR = isCrimson ? 190 : 125;
-				var fogBaseG = isCrimson ? 40 : 160;
-				var fogBaseB = isCrimson ? 30 : 210;
-
-				for (var p = 0; p < fogPuffs.length; p++) {
-					var puff = fogPuffs[p];
-					puff.x += (puff.speedX + activeWindX * 0.06);
-					if (puff.x > width + puff.radius) {
-						puff.x = -puff.radius;
-					}
-
-					var pSpeed = puff.pulseSpeed || 1.2;
-					var pPhase = puff.pulsePhase || 0.0;
-					var pulse = Math.sin(time * pSpeed + pPhase);
-					var curAlpha = (puff.alphaBase || 0.075) + pulse * 0.02;
-					if (isNaN(curAlpha) || curAlpha < 0.001) curAlpha = 0.05;
-					if (curAlpha > 1.0) curAlpha = 1.0;
-
-					var puffGrad = ctx.createRadialGradient(puff.x, puff.y, puff.radius * 0.1, puff.x, puff.y, puff.radius);
-					puffGrad.addColorStop(0, 'rgba(' + fogBaseR + ',' + fogBaseG + ',' + fogBaseB + ',' + curAlpha.toFixed(3) + ')');
-					puffGrad.addColorStop(0.5, 'rgba(' + fogBaseR + ',' + fogBaseG + ',' + fogBaseB + ',' + (curAlpha * 0.45).toFixed(3) + ')');
-					puffGrad.addColorStop(1, 'rgba(' + fogBaseR + ',' + fogBaseG + ',' + fogBaseB + ', 0.0)');
-
-					ctx.fillStyle = puffGrad;
-					ctx.beginPath();
-					ctx.arc(puff.x, puff.y, puff.radius, 0, Math.PI * 2);
-					ctx.fill();
-				}
 
 				// 3. Render Floating Hot Embers & Fireflies (Ascuas Volantes)
 				for (var e = 0; e < embers.length; e++) {

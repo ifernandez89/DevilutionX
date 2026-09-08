@@ -1,6 +1,25 @@
 # 📋 DEVILUTIONX ENHANCED - CHANGELOG
 ## Registro Completo de Características Implementadas
 
+## 🚀 Versión Enhanced v1.2 - Septiembre 8, 2026
+
+### 🧠 **NEURAL RENDER 2.5D & ESTABILIDAD WEB / WASM**
+
+#### 🐛 **Bug Fixes — Estabilidad WebAssembly & IA**
+- 🐛 **FIX (CPU Hang / Freeze en Navegador):** Corregido congelamiento total al entrar en combate con grupos grandes en *"La Caída de Tristram"*. Se cambió `activeForTicks = UINT8_MAX` (255 ticks forzados simultáneos en 74 enemigos) por `activeForTicks = 0` (activación reactiva estándar por proximidad/campo visual). Esto elimina la saturación de cálculos de pathfinding en el hilo monohilo de WebAssembly manteniendo la agresividad de la IA.
+
+#### 🎬 **Shader Cinemático 2.5D (WebGPU / WGSL)**
+- ✅ **Cinematic Split-Toning & S-Curve:** Contraste dinámico profundo con sombras viradas a tonos fríos/pizarra y realce cálido en fuentes de luz (antorchas, fogatas, ventanas de la catedral).
+- ✅ **Niebla Volumétrica Atmosférica:** Bruma multi-octava procedural continua con deriva temporal sobre el suelo de Tristram.
+- ✅ **Atmósfera Carmesí en Invasión:** Adaptación cromática gótica automática al desencadenarse la invasión de Tristram.
+
+#### 🎛️ **Interfaz Web Limpia y Unificada**
+- ✅ **Control Unificado:** Un único botón limpio `⚡ Neural Render: ON` / `⚔️ Original: 1996` (con tecla rápida `F2`) para alternar instantáneamente entre la experiencia remasterizada y el render retro clásico de 1996, sin botones adicionales redundantes en pantalla.
+
+#### ⚙️ **Pipeline de Compilación Web**
+- ✅ **Script Automatizado:** Incorporado `build_wasm.bat` en la raíz del proyecto para compilación paralela con Ninja y Emscripten SDK `3.1.53`.
+- ✅ **Binarios Desplegados:** Actualizados `devilutionx.wasm` y `devilutionx.js` en `Packaging/emscripten/`.
+
 ---
 
 ## 🚀 Versión Enhanced v1.1 - Septiembre 7, 2026

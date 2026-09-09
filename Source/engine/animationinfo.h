@@ -63,15 +63,11 @@ public:
 
 	[[nodiscard]] ClxSprite currentSprite() const
 	{
-		if (!sprites)
-			return ClxSprite {};
 		const uint32_t count = sprites->numSprites();
-		if (count == 0)
-			return ClxSprite {};
 		int8_t frame = getFrameToUseForRendering();
 		if (frame < 0)
 			frame = 0;
-		else if (static_cast<uint32_t>(frame) >= count)
+		else if (count > 0 && static_cast<uint32_t>(frame) >= count)
 			frame = static_cast<int8_t>(count - 1);
 		return (*sprites)[frame];
 	}

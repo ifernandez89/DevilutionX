@@ -2321,10 +2321,16 @@ void AddAcid(Missile &missile, AddMissileParameter &parameter)
 {
 	UpdateMissileVelocity(missile, parameter.dst, 16);
 	missile.setDirection(GetDirection16(missile.position.start, parameter.dst));
-	if (!gbIsHellfire || (missile.position.velocity.deltaX & 0xFFFF0000) != 0 || (missile.position.velocity.deltaY & 0xFFFF0000) != 0)
-		missile.duration = 5 * (Monsters[missile._misource].intelligence + 4);
-	else
+	if (!gbIsHellfire || (missile.position.velocity.deltaX & 0xFFFF0000) != 0 || (missile.position.velocity.deltaY & 0xFFFF0000) != 0) {
+		const int monst = missile._misource;
+		int intel = 1;
+		if (missile.sourceType() == MissileSource::Monster && monst >= 0 && monst < static_cast<int>(MaxMonsters)) {
+			intel = Monsters[monst].intelligence;
+		}
+		missile.duration = 5 * (intel + 4);
+	} else {
 		missile.duration = 1;
+	}
 	missile._mlid = NO_LIGHT;
 	missile.var1 = missile.position.start.x;
 	missile.var2 = missile.position.start.y;

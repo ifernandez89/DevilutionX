@@ -1504,12 +1504,12 @@ void UpdateMonsterLights()
 	for (size_t i = 0; i < ActiveMonsterCount; i++) {
 		Monster &monster = Monsters[ActiveMonsters[i]];
 
-		if ((monster.flags & MFLAG_BERSERK) != 0) {
+		if ((monster.flags & MFLAG_BERSERK) != 0 && monster.lightId == NO_LIGHT) {
 			const int lightRadius = leveltype == DTYPE_NEST ? 9 : 3;
 			monster.lightId = AddLight(monster.position.tile, lightRadius);
 		}
 
-		if (monster.lightId != NO_LIGHT) {
+		if (monster.lightId != NO_LIGHT && monster.lightId >= 0 && monster.lightId < MAXLIGHTS) {
 			if (monster.lightId == MyPlayer->lightId) { // Fix old saves where some monsters had 0 instead of NO_LIGHT
 				monster.lightId = NO_LIGHT;
 				continue;

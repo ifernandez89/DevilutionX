@@ -10,6 +10,7 @@
 #include <cmath>
 #include <cstddef>
 #include <cstdint>
+#include <memory>
 #include <optional>
 #include <utility>
 
@@ -138,10 +139,11 @@ CostType GetHeuristicCost(PointT startPosition, PointT destinationPosition)
 	// This function needs to be admissible, i.e. it should never over-estimate
 	// the distance.
 	//
-	// This calculation assumes we can take diagonal steps until we reach
-	// the same row or column and then take the remaining axis-aligned steps.
-	const int dx = std::abs(static_cast<int>(startPosition.x) - static_cast<int>(destinationPosition.x));
-	const int dy = std::abs(static_cast<int>(startPosition.y) - static_cast<int>(destinationPosition.y));
+	// It also needs to be consistent (satisfying the triangle inequality):
+	// `h(n) <= c(n, p) + h(p)`.
+	const int dx = std::abs(static_cast<int>(startPosition.x) - destinationPosition.x);
+	const int dy = std::abs(static_cast<int>(startPosition.y) - destinationPosition.y);
+
 	const int diagSteps = std::min(dx, dy);
 
 	// After we've taken `diagSteps`, the remaining steps in one coordinate
@@ -158,7 +160,10 @@ int ReconstructPath(const ExploredNodes &explored, PointT dest, int8_t *path, si
 	PointT cur = dest;
 	while (true) {
 		const auto *const it = explored.find(cur);
-		if (it == explored.end()) app_fatal("Failed to reconstruct path");
+		if (it == explored.end()) {
+			len = 0;
+			break;
+		}
 		if (it->second.g == 0) break; // reached start
 		if (len == maxPathLength) {
 			// Path too long.
@@ -192,11 +197,11 @@ int FindPath(tl::function_ref<bool(Point, Point)> canStep, tl::function_ref<bool
 		return 0;
 	}
 
-	StaticVector<FrontierNode, MaxPathNodes> frontier;
-	ExploredNodes explored;
+	auto frontier = std::make_unique<StaticVector<FrontierNode, MaxPathNodes>>();
+	auto explored = std::make_unique<ExploredNodes>();
 	{
-		frontier.emplace_back(FrontierNode { .position = start, .f = initialHeuristicCost });
-		explored.emplace(start, ExploredNode { .prev = {}, .g = 0 });
+		frontier->emplace_back(FrontierNode { .position = start, .f = initialHeuristicCost });
+		explored->emplace(start, ExploredNode { .prev = {}, .g = 0 });
 	}
 
 	const auto frontierComparator = [&explored, &dest](const FrontierNode &a, const FrontierNode &b) {
@@ -211,8 +216,8 @@ int FindPath(tl::function_ref<bool(Point, Point)> canStep, tl::function_ref<bool
 		if (hA != hB) return hA > hB;
 
 		// Prefer diagonal steps first.
-		const ExploredNode &aInfo = explored.find(a.position)->second;
-		const ExploredNode &bInfo = explored.find(b.position)->second;
+		const ExploredNode &aInfo = explored->find(a.position)->second;
+		const ExploredNode &bInfo = explored->find(b.position)->second;
 		const bool isDiagonalA = IsDiagonalStep(aInfo.prev, a.position);
 		const bool isDiagonalB = IsDiagonalStep(bInfo.prev, b.position);
 		if (isDiagonalA != isDiagonalB) return isDiagonalB;
@@ -222,16 +227,16 @@ int FindPath(tl::function_ref<bool(Point, Point)> canStep, tl::function_ref<bool
 		return a.position.y > b.position.y;
 	};
 
-	while (!frontier.empty()) {
-		const FrontierNode cur = frontier.front(); // argmin(node.f) for node in openSet
+	while (!frontier->empty()) {
+		const FrontierNode cur = frontier->front(); // argmin(node.f) for node in openSet
 
 		if (cur.position == destinationPosition) {
-			return ReconstructPath(explored, cur.position, path, maxPathLength);
+			return ReconstructPath(*explored, cur.position, path, maxPathLength);
 		}
 
-		std::pop_heap(frontier.begin(), frontier.end(), frontierComparator);
-		frontier.pop_back();
-		const CostType curG = explored.find(cur.position)->second.g;
+		std::pop_heap(frontier->begin(), frontier->end(), frontierComparator);
+		frontier->pop_back();
+		const CostType curG = explored->find(cur.position)->second.g;
 
 		// Discard invalid nodes.
 
@@ -257,9 +262,9 @@ int FindPath(tl::function_ref<bool(Point, Point)> canStep, tl::function_ref<bool
 			const CostType g = curG + GetDistance(cur.position, neighborPos);
 			if (curG >= PathDiagonalStepCost * maxPathLength) continue;
 			bool improved = false;
-			if (auto *it = explored.find(neighborPos); it == explored.end()) {
-				if (explored.canInsert(neighborPos)) {
-					explored.emplace(neighborPos, ExploredNode { .prev = cur.position, .g = g });
+			if (auto *it = explored->find(neighborPos); it == explored->end()) {
+				if (explored->canInsert(neighborPos)) {
+					explored->emplace(neighborPos, ExploredNode { .prev = cur.position, .g = g });
 					improved = true;
 				}
 			} else if (it->second.g > g) {
@@ -269,11 +274,11 @@ int FindPath(tl::function_ref<bool(Point, Point)> canStep, tl::function_ref<bool
 			}
 			if (improved) {
 				const CostType f = g + GetHeuristicCost(neighborPos, dest);
-				if (frontier.size() < MaxPathNodes) {
+				if (frontier->size() < MaxPathNodes) {
 					// We always push the node to the heap, even if the same position already exists in it.
 					// When popping from the heap, we discard invalid nodes by checking that `g + h <= f`.
-					frontier.emplace_back(FrontierNode { .position = neighborPos, .f = f });
-					std::push_heap(frontier.begin(), frontier.end(), frontierComparator);
+					frontier->emplace_back(FrontierNode { .position = neighborPos, .f = f });
+					std::push_heap(frontier->begin(), frontier->end(), frontierComparator);
 				}
 			}
 		}

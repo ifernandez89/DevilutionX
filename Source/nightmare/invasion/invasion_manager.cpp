@@ -437,7 +437,8 @@ void InvasionManager::Update()
 		const Monster &m = Monsters[ActiveMonsters[i]];
 		if (m.hasNoLife() || m.isInvalid || m.mode == MonsterMode::Death || m.isPlayerMinion())
 			continue;
-		if (m.isUnique() || m.type().type == MT_DIABLO)
+		const bool isDiablo = (m.levelType < LevelMonsterTypeCount && LevelMonsterTypes[m.levelType].type == MT_DIABLO);
+		if (m.isUnique() || isDiablo)
 			activeBosses++;
 		else
 			activeMinions++;
@@ -513,7 +514,7 @@ void InvasionManager::SaveInvasionSnapshot()
 		snap.current_hp = monster.hitPoints;
 		snap.x = static_cast<uint8_t>(monster.position.tile.x);
 		snap.y = static_cast<uint8_t>(monster.position.tile.y);
-		snap.type = LevelMonsterTypes[monster.levelType].type;
+		snap.type = (monster.levelType < LevelMonsterTypeCount) ? LevelMonsterTypes[monster.levelType].type : MT_INVALID;
 		snap.is_boss = monster.isUnique() || snap.type == MT_DIABLO;
 		snap.is_alive = (monster.hitPoints > 0 && monster.mode != MonsterMode::Death);
 	}

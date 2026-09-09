@@ -1578,7 +1578,6 @@
 					layout: pipeline.getBindGroupLayout(0),
 					entries: [
 						{ binding: 0, resource: { buffer: uniformBuffer } },
-						{ binding: 1, resource: sampler },
 						{ binding: 2, resource: texRGB.createView() },
 						{ binding: 3, resource: texDepth.createView() },
 						{ binding: 4, resource: texLight.createView() },
@@ -1662,13 +1661,15 @@
 						}
 
 						// Copy live SDL game frame into WebGPU Texture
-						try {
-							device.queue.copyExternalImageToTexture(
-								{ source: gameCanvas },
-								{ texture: texRGB },
-								[w, h]
-							);
-						} catch(e) {}
+						if (window.latestGamePixels || (window.DiagnosticSystem && window.DiagnosticSystem.totalFrames > 0)) {
+							try {
+								device.queue.copyExternalImageToTexture(
+									{ source: gameCanvas },
+									{ texture: texRGB },
+									[w, h]
+								);
+							} catch(e) {}
+						}
 
 						// Render WGSL Shader pass
 						const commandEncoder = device.createCommandEncoder();
@@ -2142,7 +2143,7 @@
 		window.checkMpqError = function(str) {
 			if (!str) return;
 			var s = String(str).toLowerCase();
-			if (s.indexOf('diabdat') !== -1 || s.indexOf('spawn.mpq') !== -1 || s.indexOf('main data archive') !== -1 || s.indexOf('insertcddlg') !== -1 || s.indexOf('data file error') !== -1) {
+			if (s.indexOf('diabdat') !== -1 || s.indexOf('spawn.mpq') !== -1 || s.indexOf('main data archive') !== -1 || s.indexOf('insertcddlg') !== -1 || s.indexOf('data file error') !== -1 || s.indexOf('missing file:') !== -1) {
 				showMissingMpqModal();
 			}
 		};
@@ -2246,7 +2247,7 @@
 	<script src="https://cdn.jsdelivr.net/npm/onnxruntime-web/dist/ort.min.js"></script>
 	<script src="neural_infer.js"></script>
 	<script type='text/javascript' src="file-manager.js"></script>
-	<script async type="text/javascript" src="devilutionx.js?v=nightmare-v2"></script>
+	<script async type="text/javascript" src="devilutionx.js?v=nightmare-v3"></script>
 </body>
 
 </html>

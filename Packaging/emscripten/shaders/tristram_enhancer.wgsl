@@ -17,7 +17,6 @@ struct Uniforms {
 };
 
 @group(0) @binding(0) var<uniform> u: Uniforms;
-@group(0) @binding(1) var s_sampler: sampler;
 @group(0) @binding(2) var t_rgb: texture_2d<f32>;
 @group(0) @binding(3) var t_depth: texture_2d<f32>;
 @group(0) @binding(4) var t_light: texture_2d<f32>;

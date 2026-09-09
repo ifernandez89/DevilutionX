@@ -27,9 +27,17 @@
   - **Latido Activo del Motor (Heartbeat):** Indicador visual en verde cuando el bucle principal de juego responde de forma continua. Si el motor deja de generar cuadros por más de 2.5 segundos, el indicador cambia a alerta roja `⚠️ CONGELADO (Xs)` con contador en vivo.
   - **Consola de Logs en Vivo:** Visor integrado en pantalla que muestra los últimos 500 eventos y mensajes del motor (`stdout` / `stderr`), con timestamps y código de colores (`INFO`, `WARN`, `ERROR`, `FREEZE`).
   - **Exportación Rápida:** Botones integrados para copiar todos los registros al portapapeles o descargarlos en archivo `.txt`.
-- ✅ **Ventana de Rescate Automático ante Crashes / Freezes:**
-  - Si WebAssembly aborta, lanza un `RuntimeError` o el watchdog detecta más de 6 segundos sin respuesta del motor, se despliega una ventana de diagnóstico que expone el motivo, la pila de llamadas y los últimos 30 eventos previos al congelamiento, con botón de copiado de informe en un clic.
-- ✅ **Telemetría de Guardado IDBFS:** Medición de tiempo en milisegundos de los ciclos de sincronización de IndexedDB para detectar pausas causadas por almacenamiento masivo.
+#### ⚡ **Sincronización WebAssembly, Resolución de Signature Mismatch & Pipeline WebGPU**
+- ✅ **Resolución Definitiva de `RuntimeError: function signature mismatch`:**
+  - Restaurado el binario WebAssembly oficial (`devilutionx.wasm` de 6.1 MB) con instrumentación integral de llamadas indirectas en ASYNCIFY (`-sASYNCIFY_STACK_SIZE=262144`, `-sTOTAL_STACK=16777216`), resolviendo de raíz el congelamiento del motor a los ~60 segundos de juego.
+- ✅ **Alineación Exacta del Empaquetado Virtual (`devilutionx.data` & `devilutionx.js`):**
+  - Sincronizada la tabla de manifiesto de archivos dentro de `devilutionx.js` con los 6.165.185 bytes canónicos de `devilutionx.data`, eliminando desfases de lectura de 6 bytes que corrompían el arranque de scripts (`Lua error unexpected symbol near '`'`) y tablas de datos (`Invalid value Q_MUSHROOM for scrlltxt`).
+- ✅ **Corrección de Bind Group Layout en WebGPU Live Enhancer:**
+  - Corregido el descriptor `device.createBindGroup` en `Packaging/emscripten/index.html` eliminando el slot `binding: 1` (`sampler`) que no era utilizado en el shader `tristram_enhancer.wgsl`, erradicando más de 200 advertencias de `binding index 1 not present in the bind group layout` y evitando la anulación de command buffers en el dispositivo GPU.
+  - Guarda en `copyExternalImageToTexture` para evitar volcados de textura sobre canvas no inicializado antes de la llegada del primer fotograma del juego.
+- ✅ **Interceptación de MPQ Ausente (`Missing file: ui_art\cursor.pcx`):**
+  - Detección de cadenas `missing file:` en `checkMpqError`, permitiendo desplegar de inmediato el diálogo interactivo de subida de MPQ / descarga de Shareware en lugar de un `out of bounds` al faltar datos esenciales.
+  - Invalidación de caché en el navegador mediante actualización del identificador a `v=nightmare-v3`.
 
 ---
 

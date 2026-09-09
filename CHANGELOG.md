@@ -17,8 +17,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Panel visual de diagnóstico en el File Manager con comprobación del estado de los 4 MPQs requeridos y los opcionales.
   - Selector interactivo de Modo de Juego en la interfaz para alternar entre **⚔️ Diablo 1** y **🔥 Hellfire** persistiendo en `diablo.ini`.
   - Soporte para subida y arrastrar/soltar por lotes (multi-archivo).
-- **Corrección de Arranque WebAssembly ([`CMakeLists.txt`](file:///c:/Projects/DevilutionX/CMakeLists.txt))**:
-  - Se retiró `-sASYNCIFY_IGNORE_INDIRECT=1`, restaurando la instrumentación de llamadas indirectas (vtables y punteros a función de StormLib y SDL) en el arranque de archivos MPQ.
+- **Sincronización WebAssembly & Erradicación de `function signature mismatch` ([`CMakeLists.txt`](file:///c:/Projects/DevilutionX/CMakeLists.txt), [`Packaging/emscripten/devilutionx.wasm`](file:///c:/Projects/DevilutionX/Packaging/emscripten/devilutionx.wasm), [`Packaging/emscripten/devilutionx.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/devilutionx.js))**:
+  - Se restauró el binario WebAssembly (`devilutionx.wasm` de 6.1 MB) compilado con soporte integral de llamadas indirectas en ASYNCIFY (`-sASYNCIFY_STACK_SIZE=262144`, `-sTOTAL_STACK=16777216`), eliminando el congelamiento a los ~60 segundos de juego.
+  - Se sincronizó el manifiesto de archivos en `devilutionx.js` con el tamaño exacto de `devilutionx.data` (6.165.185 bytes), corrigiendo desfases de lectura de datos que afectaban la carga de scripts Lua y tablas TSV.
+- **Corrección de Pipeline WebGPU & Bind Group Layout ([`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html), [`Packaging/emscripten/shaders/tristram_enhancer.wgsl`](file:///c:/Projects/DevilutionX/Packaging/emscripten/shaders/tristram_enhancer.wgsl))**:
+  - Se retiró el `binding: 1` (`sampler`) innecesario en `createBindGroup`, resolviendo el fallo de validación WebGPU contra el layout generado automáticamente.
+  - Guarda en `copyExternalImageToTexture` para prevenir transferencias antes del primer cuadro renderizado.
+  - Detección de `missing file:` en `checkMpqError` para abrir el modal interactivo de MPQ ante assets faltantes.
 - **HUD de Diagnóstico en Vivo, Watchdog y Reporte de Congelamientos ([`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html), [`Packaging/emscripten/emscripten_pre.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/emscripten_pre.js))**:
   - Se implementó un panel HUD flotante (tecla `F3` o botón `📊 Debug HUD`) con FPS en tiempo real, latido del motor (`Heartbeat`), uso de memoria de WebAssembly y consola de eventos en vivo.
   - Watchdog que detecta si el hilo principal deja de generar cuadros por más de 2.5s y despliega un informe de error automático si se congela por más de 6s con opción de copiado en un clic (`DiagnosticSystem.copyReport`).

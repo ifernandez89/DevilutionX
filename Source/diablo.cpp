@@ -946,6 +946,17 @@ void RunGameLoop(interface_mode uMsg)
 		if (run_game_iteration++ == 0)
 			HeapProfilerDump("first_game_iteration");
 #endif
+#if defined(__EMSCRIPTEN__)
+		// Cooperative yield for WebAssembly ASYNCIFY:
+		// Regularly yield to the browser event loop so input events, DOM rendering,
+		// and the watchdog heartbeat continue running smoothly even in intense combat.
+		static uint32_t s_lastEmscriptenYield = 0;
+		const uint32_t currentTicks = SDL_GetTicks();
+		if (currentTicks - s_lastEmscriptenYield >= 16) {
+			s_lastEmscriptenYield = currentTicks;
+			SDL_Delay(1);
+		}
+#endif
 	}
 
 	demo::NotifyGameLoopEnd();

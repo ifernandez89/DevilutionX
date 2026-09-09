@@ -238,7 +238,14 @@ bool nthread_has_500ms_passed(bool *drawGame /*= nullptr*/)
 		// This can happen when we run a low-end device that can't render fast enough (typically 20fps).
 		// If this happens, try to speed-up the game by skipping the rendering.
 		// This avoids desyncs and hourglasses when running multiplayer and slowdowns in singleplayer.
+#if defined(__EMSCRIPTEN__)
+		// In WebAssembly / Emscripten, ALWAYS keep *drawGame = true.
+		// Skipping rendering starves the browser's render pipeline, suppresses WebGL/WebGPU texture uploads,
+		// triggers watchdog timeout (>6s without frames), and prevents yielding to the event loop.
+		*drawGame = true;
+#else
 		*drawGame = ticksElapsed <= gnTickDelay;
+#endif
 	}
 	return ticksElapsed >= 0;
 }

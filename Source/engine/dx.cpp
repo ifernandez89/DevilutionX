@@ -87,14 +87,29 @@ bool CanRenderDirectlyToOutputSurface()
  */
 void LimitFrameRate()
 {
+#if !defined(__EMSCRIPTEN__)
 	if (*GetOptions().Graphics.frameRateControl != FrameRateControl::CPUSleep)
 		return;
+#endif
 	static uint32_t frameDeadline = 0;
 	const uint32_t tc = SDL_GetTicks() * 1000;
 	if (frameDeadline > tc) {
 		const uint32_t delayUs = frameDeadline - tc;
 		SDL_Delay(delayUs / 1000 + 1); // ceil
 	}
+#if defined(__EMSCRIPTEN__)
+	else {
+		// When frameDeadline <= tc (under heavy combat load / frame drops),
+		// we STILL must yield at least 1ms so ASYNCIFY allows the browser to process input
+		// and the watchdog timer doesn't report an engine hang.
+		static uint32_t s_lastEmscriptenFrameYield = 0;
+		const uint32_t nowMs = SDL_GetTicks();
+		if (nowMs - s_lastEmscriptenFrameYield >= 16) {
+			s_lastEmscriptenFrameYield = nowMs;
+			SDL_Delay(1);
+		}
+	}
+#endif
 	frameDeadline = SDL_GetTicks() * 1000 + (refreshDelay > 0 ? static_cast<uint32_t>(refreshDelay) : 16666);
 }
 
@@ -265,9 +280,13 @@ void RenderPresent()
 		}
 		SDL_RenderPresent(renderer);
 
+#if defined(__EMSCRIPTEN__)
+		LimitFrameRate();
+#else
 		if (*GetOptions().Graphics.frameRateControl != FrameRateControl::VerticalSync) {
 			LimitFrameRate();
 		}
+#endif
 	} else {
 		if (ControlMode == ControlTypes::VirtualGamepad) {
 			RenderVirtualGamepad(surface);

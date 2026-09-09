@@ -3,6 +3,22 @@
 
 ## 🚀 Versión Enhanced v1.5 - Septiembre 9, 2026
 
+### 🛡️ **ERRADICACIÓN DE CONGELAMIENTO EN BATALLAS ÉPICAS & BUCLE COOPERATIVO WEBASSEMBLY**
+
+#### ⏱️ **Flujo Continuo de Cuadros y Erradicación de Frame Skipping en WebAssembly (`Source/nthread.cpp`)**
+- ✅ **Problema Raíz Descubierto:** En clientes de escritorio, `*drawGame = ticksElapsed <= gnTickDelay;` omite la llamada a `DrawAndBlit()` cuando un tick excede los 50ms para recuperar tiempo. Sin embargo, en WebAssembly monohilo en navegador, omitir el renderizado suprime las transferencias de textura a WebGL/WebGPU (`texSubImage2D`) y el ciclo de refresco (`SDL_RenderPresent`), engañando al Watchdog de telemetría que registraba >6 segundos sin cuadros (`Congelamiento prolongado (>6s sin cuadros)`).
+- ✅ **Solución Aplicada:** Se forzó `*drawGame = true;` incondicionalmente en Emscripten (`#if defined(__EMSCRIPTEN__)`), garantizando que cada ciclo del motor actualice texturas en GPU y presente el cuadro sin saltarse nunca el renderizado por sobrecarga de CPU.
+
+#### 🔄 **Pausa Cooperativa al Event Loop de JavaScript (`Source/diablo.cpp`, `Source/engine/dx.cpp`)**
+- ✅ **Cesión Periódica en `while (gbRunGame)`:** En combates colosales (Golem vs Rey Leoric vs Na-Krul y docenas de esbirros), los ticks de IA y proyectiles pueden tomar 50-100ms. Al ejecutarse en un hilo único sin concesión, el navegador marcaba la pestaña como no responsiva. Se integró una cesión cooperativa (`SDL_Delay(1)`) cada 16ms en el bucle principal de `RunGameLoop()`, permitiendo que ASYNCIFY devuelva control al event loop del navegador para procesar eventos de entrada del mouse/teclado, repintados del DOM y latidos del HUD.
+- ✅ **Cesión Garantizada en `LimitFrameRate()`:** Anteriormente, `LimitFrameRate()` solo se invocaba si `frameRateControl != VerticalSync` y solo si `frameDeadline > tc`. Durante caídas de fotogramas, `frameDeadline <= tc` anulaba `SDL_Delay`, haciendo que el motor girara síncronamente al 100% de CPU. Ahora se invoca siempre en Emscripten y garantiza una cesión mínima de 1ms cada 16ms cuando la tasa de cuadros decae.
+
+#### 🧠 **Optimización de Pathfinding A* e IA del Golem (`Source/monster.cpp`)**
+- ✅ **Validación Universal de `GolemHoldingCell`:** Se extrajo la validación `if (monster.position.tile == GolemHoldingCell) return false;` fuera del condicional exclusivo de no-golems (`if (monster.type().type != MT_GOLEM)`), asegurando que los golems inactivos en celdas de espera nunca intenten trazar trayectorias con `LineClear`.
+- ✅ **Reseteo de `pathCount` en el Golem:** Se subsanó la exclusión `if (monster.type().type != MT_GOLEM) monster.pathCount = 0;` que impedía reiniciar el contador del Golem, junto con el bucle forzado de `golem.pathCount = 5;` en `GolumAi()`. Esto provocaba que el Golem ejecutara algoritmos completos de búsqueda de caminos `FindPath` (de hasta 1024 nodos de A*) en cada tick ininterrumpidamente.
+- ✅ **Eliminación de Doble Búsqueda hacia el Jugador:** En `GolumAi()`, se evitó ejecutar un segundo `AiPlanPath(golem)` hacia el héroe en el mismo tick si el Golem ya está trabado en combate activo cuerpo a cuerpo con un enemigo.
+- ✅ **Actualización de Cachebuster:** Cachebuster de script incrementado a `v=nightmare-v5` en `Packaging/emscripten/index.html`.
+
 ### 📁 **FILE MANAGER ROBUSTO, NORMALIZACIÓN HELLFIRE Y REINICIO DE ALMACENAMIENTO**
 
 #### 🗑️ **Borrado Exhaustivo & Erradicación de Resurrección de MPQs en IndexedDB**

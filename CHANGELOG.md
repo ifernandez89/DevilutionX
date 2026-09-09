@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### 🛡️ Erradicación Definitiva de Congelamiento en Batallas Épicas & Rendición Cooperativa WebAssembly
+- **Preservación Continua de Renderizado en WebAssembly ([`Source/nthread.cpp`](file:///c:/Projects/DevilutionX/Source/nthread.cpp))**:
+  - Se corrigió `nthread_has_500ms_passed`: la lógica de omisión de cuadros (`*drawGame = ticksElapsed <= gnTickDelay;`) omitía `DrawAndBlit()` ante picos de carga de CPU (>50ms/cuadro). En WebAssembly monohilo, omitir cuadros suprime las transferencias de textura WebGL/WebGPU (`texSubImage2D`) e impide el ciclo de refresco, provocando que el watchdog reporte congelamientos prolongados (>6s) y el navegador bloquee la pestaña. En Emscripten, `*drawGame = true;` permanece siempre activo para garantizar flujo constante de cuadros.
+- **Bucle de Rendición Cooperativa Periódica ([`Source/diablo.cpp`](file:///c:/Projects/DevilutionX/Source/diablo.cpp))**:
+  - Implementación de cesión cooperativa al bucle de eventos del navegador cada 16ms (`SDL_Delay(1)`) en el bucle principal `while (gbRunGame)` en WebAssembly. A través de ASYNCIFY, el motor permite al navegador procesar eventos del DOM, clics, teclado y la telemetría del HUD sin interrupciones incluso durante las batallas más intensas.
+- **Cesión Garantizada en `RenderPresent` y `LimitFrameRate` ([`Source/engine/dx.cpp`](file:///c:/Projects/DevilutionX/Source/engine/dx.cpp))**:
+  - En `dx.cpp`, `LimitFrameRate()` solo se invocaba si `frameRateControl != VerticalSync` y solo si `frameDeadline > tc`. Durante caídas de cuadros en combates intensos, `frameDeadline <= tc` omitía `SDL_Delay`, haciendo que el motor girara síncronamente al 100% de CPU sin ceder turnos al navegador. Ahora se invoca siempre en Emscripten garantizando una cesión mínima de 1ms cada 16ms ante sobrecarga de CPU.
+- **Optimización de Pathfinding A* e IA del Golem ([`Source/monster.cpp`](file:///c:/Projects/DevilutionX/Source/monster.cpp))**:
+  - Corrección en `AiPlanPath()`: la verificación de `GolemHoldingCell` ahora se valida universalmente para evitar cálculos de línea de visión en golems inactivos.
+  - Se corrigió la omisión del reseteo de `monster.pathCount = 0;` en el Golem, evitando que ejecute búsquedas pesadas de A* de hasta 1024 nodos en cada tick consecutivo.
+  - En `GolumAi()`, se evitó la doble búsqueda de camino hacia el jugador en el mismo tick cuando el Golem ya está trabado en combate cuerpo a cuerpo con un enemigo.
+- **Cachebuster Actualizado a `v=nightmare-v5` ([`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html))**:
+  - Actualizada la referencia de script a `devilutionx.js?v=nightmare-v5` para entrega inmediata a todos los clientes.
+
 ### 📁 File Manager Robusto, Normalización Hellfire & Gestión Limpia de IndexedDB
 - **Erradicación de Resurrección de MPQs y Borrado Multiruta ([`Packaging/emscripten/file-manager.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/file-manager.js), [`Packaging/emscripten/emscripten_pre.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/emscripten_pre.js), [`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html))**:
   - Se eliminó la duplicación de casing mayúsculas/minúsculas en `/libsdl/diasurgical/devilution/` que provocaba que los archivos eliminados siguieran existiendo en IndexedDB y resucitaran al refrescar (`Ctrl+F5`).

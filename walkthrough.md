@@ -67,7 +67,26 @@ Se han implementado, probado y verificado con éxito las nuevas características
 
 ---
 
+### 4. ⚔️ Batallas Épicas en WebAssembly sin Congelamiento (Solución al Freeze en Combates Masivos)
+
+#### A. Erradicación de Omisión de Cuadros (`drawGame` Skipping)
+- **Causa Raíz:** `nthread_has_500ms_passed()` implementaba `*drawGame = ticksElapsed <= gnTickDelay;`. Si un tick de combate complejo tardaba >50ms, el motor omitía completamente la llamada a `DrawAndBlit()`. Al no renderizar cuadros sucesivos, se suspendían las subidas de textura WebGL/WebGPU (`texSubImage2D`), haciendo que el watchdog de telemetría detectara >6s sin fotogramas y reportara falsamente un cuelgue del motor.
+- **Solución ([`Source/nthread.cpp`](file:///c:/Projects/DevilutionX/Source/nthread.cpp)):** Se forzó `*drawGame = true;` en `#if defined(__EMSCRIPTEN__)`, garantizando que el ciclo de presentación y refresco de pantalla permanezca siempre activo sin importar la carga de CPU.
+
+#### B. Rendición Cooperativa al Bucle del Navegador (Yield ASYNCIFY)
+- **Bucle Principal ([`Source/diablo.cpp`](file:///c:/Projects/DevilutionX/Source/diablo.cpp)):** Se introdujo una pausa cooperativa (`SDL_Delay(1)`) cada 16ms en el bucle principal `while (gbRunGame)` en WebAssembly. Esto permite que ASYNCIFY ceda temporalmente el control al event loop del navegador, procesando clics del mouse, teclado, repintados del DOM y manteniendo el navegador totalmente receptivo durante los enfrentamientos más densos.
+- **Control de FPS y Sobrecarga ([`Source/engine/dx.cpp`](file:///c:/Projects/DevilutionX/Source/engine/dx.cpp)):** Anteriormente, `LimitFrameRate()` se saltaba cuando los fotogramas caían por debajo de 60 FPS (`frameDeadline <= tc`). Ahora, en WebAssembly siempre se asegura una pausa mínima de 1ms cada 16ms para prevenir que el motor gire al 100% de CPU en bucles síncronos cerrados.
+
+#### C. Optimización de Búsqueda de Rutas A* del Golem
+- **Corrección de Holding Cell & Reseteo de Rutas ([`Source/monster.cpp`](file:///c:/Projects/DevilutionX/Source/monster.cpp)):**
+  - Se movió la guarda `if (monster.position.tile == GolemHoldingCell) return false;` a nivel global en `AiPlanPath()`, impidiendo que golems inactivos en celdas de espera consuman CPU calculando líneas de visión.
+  - Se restableció `monster.pathCount = 0;` para el Golem (antes omitido intencionalmente), evitando que `AiPlanWalk()` ejecute de forma forzada búsquedas A* de 1024 nodos en cada tick ininterrumpidamente.
+  - En `GolumAi()`, se suprimió la doble búsqueda de camino hacia el jugador en el mismo tick cuando el Golem ya se encuentra trabado en combate cuerpo a cuerpo con un monstruo enemigo.
+
+---
+
 ## 🧪 Resultados de Verificación
-- **Compilación WebAssembly (Ninja/Emscripten):** Exitosa con código 0 (`devilutionx.js` y `devilutionx.wasm` vinculados limpiamente en `build-web/`).
-- **Sincronización de Recursos Web:** `build-web/index.html` actualizado automáticamente con las texturas WebGPU con stride alineado.
-- **Cero Regresiones:** El sistema de guardado, persistencia del Golem, ciclo de Diablo y la Invasión a Tristán operan en perfecta armonía.
+- **Bucle Principal WebAssembly:** Rendición periódica activa (`SDL_Delay(1)`) cada 16ms y renderizado continuo garantizado (`*drawGame = true`).
+- **Watchdog y Telemetría:** Heartbeat continuo sin interrupciones ni falsos positivos por encima de 6 segundos.
+- **Cachebuster Actualizado:** Referencia actualizada a `v=nightmare-v5` en `Packaging/emscripten/index.html`.
+- **Cero Regresiones:** Compatibilidad íntegra conservada para la invasión de Tristán, persistencia del Golem y compilación multiplataforma.

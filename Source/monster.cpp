@@ -1807,14 +1807,15 @@ bool RoundWalk(Monster &monster, Direction direction, int8_t *dir)
 
 bool AiPlanPath(Monster &monster)
 {
+	if (monster.position.tile == GolemHoldingCell)
+		return false;
+
 	if (monster.type().type != MT_GOLEM) {
 		if (monster.activeForTicks == 0)
 			return false;
 		if (monster.mode != MonsterMode::Stand)
 			return false;
 		if (IsNoneOf(monster.goal, MonsterGoal::Normal, MonsterGoal::Move, MonsterGoal::Attack))
-			return false;
-		if (monster.position.tile == GolemHoldingCell)
 			return false;
 	}
 
@@ -1832,8 +1833,7 @@ bool AiPlanPath(Monster &monster)
 			return true;
 	}
 
-	if (monster.type().type != MT_GOLEM)
-		monster.pathCount = 0;
+	monster.pathCount = 0;
 
 	return false;
 }
@@ -4172,7 +4172,7 @@ void GolumAi(Monster &golem)
 
 	if (isSinglePlayerEasterEgg && owner.plractive && owner.isOnActiveLevel()) {
 		const int distToOwner = golem.position.tile.WalkingDistance(owner.position.tile);
-		if (distToOwner > 2) {
+		if (distToOwner > 2 && ((golem.flags & MFLAG_NO_ENEMY) != 0 || golem.enemy < 0)) {
 			golem.enemyPosition = owner.position.future;
 			if (AiPlanPath(golem))
 				return;
@@ -4181,7 +4181,7 @@ void GolumAi(Monster &golem)
 
 	golem.pathCount++;
 	if (golem.pathCount > 8)
-		golem.pathCount = 5;
+		golem.pathCount = 0;
 
 	if (RandomWalk(golem, Players[golem.goalVar3]._pdir))
 		return;

@@ -27,7 +27,10 @@
   - **Latido Activo del Motor (Heartbeat):** Indicador visual en verde cuando el bucle principal de juego responde de forma continua. Si el motor deja de generar cuadros por más de 2.5 segundos, el indicador cambia a alerta roja `⚠️ CONGELADO (Xs)` con contador en vivo.
   - **Consola de Logs en Vivo:** Visor integrado en pantalla que muestra los últimos 500 eventos y mensajes del motor (`stdout` / `stderr`), con timestamps y código de colores (`INFO`, `WARN`, `ERROR`, `FREEZE`).
   - **Exportación Rápida:** Botones integrados para copiar todos los registros al portapapeles o descargarlos en archivo `.txt`.
-#### ⚡ **Sincronización WebAssembly, Resolución de Signature Mismatch & Pipeline WebGPU**
+#### ⚡ **Sincronización WebAssembly, Expansión de Memoria a 512MB, Erradicación de Crash & Pipeline WebGPU**
+- ✅ **Preasignación de Memoria WebAssembly a 512 MB (`INITIAL_MEMORY=536870912`):**
+  - En combates de alta intensidad prolongados (Invasión de Tristán con los jefes Na-Krul, El Carnicero y variedad completa de monstruos clásicos, proyectiles y efectos simultáneos), la memoria de WebAssembly alcanzaba el tope inicial de 256 MB. Al activarse el crecimiento dinámico de memoria (`ALLOW_MEMORY_GROWTH=1`), el mecanismo de rebobinado de pila de ASYNCIFY (`doRewind`) sufría desacoples de buffer en memoria lineal generando `RuntimeError: memory access out of bounds`.
+  - Se incrementó `INITIAL_MEMORY` a 512 MB (536.870.912 bytes) en `CMakeLists.txt`, proveyendo el doble de memoria inicial contigua para operar sin necesidad de redimensionamiento dinámico en tiempo de ejecución.
 - ✅ **Resolución Definitiva de `RuntimeError: function signature mismatch`:**
   - Habilitada la bandera de enlace `-sEMULATE_FUNCTION_POINTER_CASTS=1` en `CMakeLists.txt`. En WebAssembly/Emscripten, esta directiva genera thunks de adaptación dinámica para llamadas indirectas a través de punteros a función con firmas heterogéneas o durante el proceso de rebobinado de pila (`doRewind` de ASYNCIFY), erradicando las trampas de incompatibilidad de tipos del motor.
   - Ampliación de la pila de ASYNCIFY a 1 MB (`-sASYNCIFY_STACK_SIZE=1048576`) y la pila total a 32 MB (`-sTOTAL_STACK=33554432`), garantizando margen suficiente ante secuencias de combate profundo y llamadas recursivas de IA.
@@ -35,12 +38,13 @@
   - Implementada guarda de límites estricta en `AnimationInfo::currentSprite()` (`Source/engine/animationinfo.h`) acotando el índice de fotograma calculado contra el número total de sprites disponibles (`numSprites()`). Previene lecturas fuera de rango en la memoria lineal de WebAssembly cuando `ticksSinceSequenceStarted_` experimenta subdesbordamientos temporales (`-128`) entre cuadros de animación.
 - ✅ **Alineación Exacta del Empaquetado Virtual (`devilutionx.data` & `devilutionx.js`):**
   - Sincronizada la tabla de manifiesto de archivos dentro de `devilutionx.js` con los 6.165.185 bytes canónicos de `devilutionx.data`, eliminando desfases de lectura de 6 bytes que corrompían el arranque de scripts (`Lua error unexpected symbol near '`'`) y tablas de datos (`Invalid value Q_MUSHROOM for scrlltxt`).
-- ✅ **Corrección de Bind Group Layout en WebGPU Live Enhancer:**
+- ✅ **Corrección de Bind Group Layout y Guardas de Límites en G-Buffer WebGPU:**
   - Corregido el descriptor `device.createBindGroup` en `Packaging/emscripten/index.html` eliminando el slot `binding: 1` (`sampler`) que no era utilizado en el shader `tristram_enhancer.wgsl`, erradicando más de 200 advertencias de `binding index 1 not present in the bind group layout` y evitando la anulación de command buffers en el dispositivo GPU.
+  - Guardas estrictas de límites de memoria (`semPtr + w * h <= maxByte`, `depthPtr + w * h * 4 <= maxByte`) y alineación a 4 bytes (`depthPtr % 4 === 0`) antes de transferir buffers semánticos y de profundidad al dispositivo WebGPU.
   - Guarda en `copyExternalImageToTexture` para evitar volcados de textura sobre canvas no inicializado antes de la llegada del primer fotograma del juego.
 - ✅ **Interceptación de MPQ Ausente (`Missing file: ui_art\cursor.pcx`):**
   - Detección de cadenas `missing file:` en `checkMpqError`, permitiendo desplegar de inmediato el diálogo interactivo de subida de MPQ / descarga de Shareware en lugar de un `out of bounds` al faltar datos esenciales.
-  - Invalidación de caché en el navegador mediante actualización del identificador a `v=nightmare-v3`.
+  - Invalidación estricta de caché en navegadores mediante actualización a `v=nightmare-v4`.
 
 ---
 

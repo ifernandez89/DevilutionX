@@ -1641,15 +1641,16 @@
 						device.queue.writeBuffer(uniformBuffer, 0, uData);
 
 						// Stream live C++ G-Buffer (Semantic & Depth) into WebGPU Textures
-						if (window.Module && Module.HEAPU8 && typeof Module._Nightmare_GBuffer_GetSemantic === 'function') {
+						if (window.Module && Module.HEAPU8 && Module.HEAPU8.byteLength > 0 && typeof Module._Nightmare_GBuffer_GetSemantic === 'function') {
 							try {
 								if (typeof Module._Nightmare_GBuffer_IsEnabled === 'function' && !Module._Nightmare_GBuffer_IsEnabled()) {
 									Module._Nightmare_GBuffer_SetEnabled(1);
 								}
 								const semPtr = Module._Nightmare_GBuffer_GetSemantic();
 								const depthPtr = Module._Nightmare_GBuffer_GetDepth();
-								if (semPtr && depthPtr) {
-									const semView = new Uint8Array(Module.HEAPU8.buffer, semPtr, w * h);
+								const maxByte = Module.HEAPU8.byteLength;
+								if (semPtr > 0 && depthPtr > 0 && (depthPtr % 4 === 0) && semPtr + w * h <= maxByte && depthPtr + w * h * 4 <= maxByte) {
+									const semView = Module.HEAPU8.subarray(semPtr, semPtr + w * h);
 									const depthView = new Float32Array(Module.HEAPU8.buffer, depthPtr, w * h);
 									for (let y = 0; y < h; y++) {
 										semPadded.set(semView.subarray(y * w, (y + 1) * w), y * paddedRowBytes);
@@ -2247,7 +2248,7 @@
 	<script src="https://cdn.jsdelivr.net/npm/onnxruntime-web/dist/ort.min.js"></script>
 	<script src="neural_infer.js"></script>
 	<script type='text/javascript' src="file-manager.js"></script>
-	<script async type="text/javascript" src="devilutionx.js?v=nightmare-v3"></script>
+	<script async type="text/javascript" src="devilutionx.js?v=nightmare-v4"></script>
 </body>
 
 </html>

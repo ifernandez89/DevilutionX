@@ -29,7 +29,10 @@
   - **Exportación Rápida:** Botones integrados para copiar todos los registros al portapapeles o descargarlos en archivo `.txt`.
 #### ⚡ **Sincronización WebAssembly, Resolución de Signature Mismatch & Pipeline WebGPU**
 - ✅ **Resolución Definitiva de `RuntimeError: function signature mismatch`:**
-  - Restaurado el binario WebAssembly oficial (`devilutionx.wasm` de 6.1 MB) con instrumentación integral de llamadas indirectas en ASYNCIFY (`-sASYNCIFY_STACK_SIZE=262144`, `-sTOTAL_STACK=16777216`), resolviendo de raíz el congelamiento del motor a los ~60 segundos de juego.
+  - Habilitada la bandera de enlace `-sEMULATE_FUNCTION_POINTER_CASTS=1` en `CMakeLists.txt`. En WebAssembly/Emscripten, esta directiva genera thunks de adaptación dinámica para llamadas indirectas a través de punteros a función con firmas heterogéneas o durante el proceso de rebobinado de pila (`doRewind` de ASYNCIFY), erradicando las trampas de incompatibilidad de tipos del motor.
+  - Ampliación de la pila de ASYNCIFY a 1 MB (`-sASYNCIFY_STACK_SIZE=1048576`) y la pila total a 32 MB (`-sTOTAL_STACK=33554432`), garantizando margen suficiente ante secuencias de combate profundo y llamadas recursivas de IA.
+- ✅ **Protección Defensiva de Animaciones (`memory access out of bounds`):**
+  - Implementada guarda de límites estricta en `AnimationInfo::currentSprite()` (`Source/engine/animationinfo.h`) acotando el índice de fotograma calculado contra el número total de sprites disponibles (`numSprites()`). Previene lecturas fuera de rango en la memoria lineal de WebAssembly cuando `ticksSinceSequenceStarted_` experimenta subdesbordamientos temporales (`-128`) entre cuadros de animación.
 - ✅ **Alineación Exacta del Empaquetado Virtual (`devilutionx.data` & `devilutionx.js`):**
   - Sincronizada la tabla de manifiesto de archivos dentro de `devilutionx.js` con los 6.165.185 bytes canónicos de `devilutionx.data`, eliminando desfases de lectura de 6 bytes que corrompían el arranque de scripts (`Lua error unexpected symbol near '`'`) y tablas de datos (`Invalid value Q_MUSHROOM for scrlltxt`).
 - ✅ **Corrección de Bind Group Layout en WebGPU Live Enhancer:**

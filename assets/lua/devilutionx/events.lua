@@ -25,15 +25,10 @@ local function CreateEvent()
     ---The arguments are forwarded to handlers.
     ---@param ... any
     trigger = function(...)
-      local args = {...}
-      if #args > 0 then
-        for _, func in ipairs(functions) do
-          func(table.unpack(args))
-        end
-      else
-        for _, func in ipairs(functions) do
-          func()
-        end
+      local count = #functions
+      if count == 0 then return end
+      for i = 1, count do
+        functions[i](...)
       end
     end,
     __sig_trigger = "(...)",

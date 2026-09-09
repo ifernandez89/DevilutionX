@@ -50,8 +50,11 @@ end
 
 local accumulated_damage = {}
 local MERGE_WINDOW_MS = 250
+local last_cleanup = 0
 
 local function cleanup_old_entries(now)
+    if (now - last_cleanup) < 500 then return end
+    last_cleanup = now
     for id, entry in pairs(accumulated_damage) do
         if (now - entry.time) > 2000 then
             accumulated_damage[id] = nil

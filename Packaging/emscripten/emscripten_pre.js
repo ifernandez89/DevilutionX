@@ -237,26 +237,31 @@ Module['saveToIndexedDB'] = function() {
   });
 };
 
-// Auto-sync to IndexedDB every 30 seconds as a fallback
+// Auto-sync to IndexedDB every 45 seconds as a fallback
 Module['postRun'] = Module['postRun'] || [];
 Module['postRun'].push(function() {
   setInterval(function() {
     if (!syncInProgress) {
       syncInProgress = true;
+      var t0 = performance.now();
+      console.log('[IDBFS] Auto-sync periódico iniciado...');
       FS.syncfs(false, function(err) {
         syncInProgress = false;
+        var elapsed = Math.round(performance.now() - t0);
         if (err) {
-          console.error('Auto-sync error:', err);
+          console.error('[IDBFS] Error en auto-sync (' + elapsed + 'ms):', err);
+        } else {
+          console.log('[IDBFS] Auto-sync completado con éxito (' + elapsed + 'ms).');
         }
       });
     }
-  }, 30000);
+  }, 45000);
 
   // Sync when the page is about to close
   window.addEventListener('beforeunload', function() {
     if (!syncInProgress) {
       FS.syncfs(false, function(err) {
-        if (err) console.error('Error syncing on page unload:', err);
+        if (err) console.error('[IDBFS] Error en sincronización de cierre:', err);
       });
     }
   });

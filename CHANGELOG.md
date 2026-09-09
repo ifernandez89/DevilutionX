@@ -19,6 +19,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Soporte para subida y arrastrar/soltar por lotes (multi-archivo).
 - **Corrección de Arranque WebAssembly ([`CMakeLists.txt`](file:///c:/Projects/DevilutionX/CMakeLists.txt))**:
   - Se retiró `-sASYNCIFY_IGNORE_INDIRECT=1`, restaurando la instrumentación de llamadas indirectas (vtables y punteros a función de StormLib y SDL) en el arranque de archivos MPQ.
+- **HUD de Diagnóstico en Vivo, Watchdog y Reporte de Congelamientos ([`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html), [`Packaging/emscripten/emscripten_pre.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/emscripten_pre.js))**:
+  - Se implementó un panel HUD flotante (tecla `F3` o botón `📊 Debug HUD`) con FPS en tiempo real, latido del motor (`Heartbeat`), uso de memoria de WebAssembly y consola de eventos en vivo.
+  - Watchdog que detecta si el hilo principal deja de generar cuadros por más de 2.5s y despliega un informe de error automático si se congela por más de 6s con opción de copiado en un clic (`DiagnosticSystem.copyReport`).
+  - Telemetría y medición en milisegundos de los ciclos de auto-sync en IndexedDB para detectar cuelgues causados por I/O.
 
 ### 🩸 NIGHTMARE: La Invasión Demoníaca de Tristán (Post-Na-Krul Town Incursion)
 - **Evento Demoníaco Desencadenado al Derrotar a Na-Krul ([`Source/nightmare/invasion/invasion_manager.cpp`](file:///c:/Projects/DevilutionX/Source/nightmare/invasion/invasion_manager.cpp), [`Source/nightmare/invasion/invasion_manager.hpp`](file:///c:/Projects/DevilutionX/Source/nightmare/invasion/invasion_manager.hpp))**:

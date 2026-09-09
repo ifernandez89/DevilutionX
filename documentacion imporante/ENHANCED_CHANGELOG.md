@@ -21,8 +21,15 @@
 - ✅ **Restablecimiento Total de Fábrica:** Botón de limpieza absoluta que invoca `indexedDB.deleteDatabase('/libsdl')` y limpia `localStorage`/`sessionStorage`, garantizando un reinicio 100% limpio ante corrupciones de almacenamiento.
 - ✅ **Salvaguarda de `spawn.mpq` en Servidor:** Al eliminar `spawn.mpq`, se registra una directiva en `localStorage` para evitar que el fetch automático en `preRun` vuelva a inyectar la versión shareware en cada inicio.
 
-#### ⚙️ **Corrección de Arranque WebAssembly (ASYNCIFY)**
-- 🐛 **FIX (Falla de Arranque de MPQ por `ASYNCIFY_IGNORE_INDIRECT`):** Eliminada la bandera `-sASYNCIFY_IGNORE_INDIRECT=1` en `CMakeLists.txt` que impedía instrumentar llamadas indirectas (vtables y punteros a función de StormLib y SDL) durante la apertura de archivos MPQ, restaurando el arranque fluido del motor.
+#### 📊 **HUD de Diagnóstico en Pantalla, Watchdog de Congelamientos & Captura de Logs**
+- ✅ **Debug HUD Flotante (Tecla `F3` o Botón Superior `📊 Debug HUD`):**
+  - Monitor en tiempo real de FPS, tiempo de cuadro (`ms`), uso de memoria WebAssembly (`MB`), bioma actual y modo de render.
+  - **Latido Activo del Motor (Heartbeat):** Indicador visual en verde cuando el bucle principal de juego responde de forma continua. Si el motor deja de generar cuadros por más de 2.5 segundos, el indicador cambia a alerta roja `⚠️ CONGELADO (Xs)` con contador en vivo.
+  - **Consola de Logs en Vivo:** Visor integrado en pantalla que muestra los últimos 500 eventos y mensajes del motor (`stdout` / `stderr`), con timestamps y código de colores (`INFO`, `WARN`, `ERROR`, `FREEZE`).
+  - **Exportación Rápida:** Botones integrados para copiar todos los registros al portapapeles o descargarlos en archivo `.txt`.
+- ✅ **Ventana de Rescate Automático ante Crashes / Freezes:**
+  - Si WebAssembly aborta, lanza un `RuntimeError` o el watchdog detecta más de 6 segundos sin respuesta del motor, se despliega una ventana de diagnóstico que expone el motivo, la pila de llamadas y los últimos 30 eventos previos al congelamiento, con botón de copiado de informe en un clic.
+- ✅ **Telemetría de Guardado IDBFS:** Medición de tiempo en milisegundos de los ciclos de sincronización de IndexedDB para detectar pausas causadas por almacenamiento masivo.
 
 ---
 

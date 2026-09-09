@@ -487,6 +487,158 @@
 			display: none;
 		}
 
+		/* Debug Diagnostic HUD */
+		#debugHud {
+			position: fixed;
+			top: 52px;
+			left: 16px;
+			width: 440px;
+			max-width: calc(100vw - 32px);
+			max-height: 80vh;
+			background: rgba(14, 12, 10, 0.94);
+			border: 1px solid #73592f;
+			box-shadow: 0 8px 30px rgba(0,0,0,0.9), 0 0 15px rgba(115,89,47,0.3);
+			border-radius: 6px;
+			z-index: 2500;
+			font-family: 'Consolas', 'Lucida Console', Monaco, monospace;
+			font-size: 11px;
+			color: #e2d2a4;
+			display: none;
+			flex-direction: column;
+			overflow: hidden;
+			backdrop-filter: blur(6px);
+		}
+
+		#debugHud.show {
+			display: flex;
+		}
+
+		.hud-header {
+			background: linear-gradient(180deg, #2b2318 0%, #17130f 100%);
+			padding: 8px 12px;
+			border-bottom: 1px solid #3d3222;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			font-weight: bold;
+			letter-spacing: 0.5px;
+			color: #d4af37;
+		}
+
+		.hud-body {
+			padding: 10px 12px;
+			display: flex;
+			flex-direction: column;
+			gap: 8px;
+			overflow-y: auto;
+		}
+
+		.hud-stat-grid {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 6px;
+			background: #110e0b;
+			padding: 8px;
+			border-radius: 4px;
+			border: 1px solid #292117;
+		}
+
+		.hud-stat-item {
+			display: flex;
+			justify-content: space-between;
+		}
+
+		.hud-stat-label {
+			color: #8c8270;
+		}
+
+		.hud-stat-value {
+			font-weight: bold;
+			color: #fff2c8;
+		}
+
+		.hud-console {
+			height: 160px;
+			background: #080605;
+			border: 1px solid #2b2318;
+			border-radius: 4px;
+			padding: 6px 8px;
+			overflow-y: auto;
+			font-size: 10px;
+			line-height: 1.35;
+			color: #cbd5e1;
+			white-space: pre-wrap;
+			word-break: break-all;
+		}
+
+		.hud-console .log-info { color: #cbd5e1; }
+		.hud-console .log-warn { color: #fbbf24; font-weight: bold; }
+		.hud-console .log-error { color: #f87171; font-weight: bold; }
+		.hud-console .log-freeze { color: #ef4444; background: rgba(239,68,68,0.2); font-weight: bold; padding: 2px 4px; border-radius: 2px; }
+
+		.hud-actions {
+			display: flex;
+			gap: 6px;
+			padding-top: 4px;
+		}
+
+		/* Crash / Freeze Recovery Modal */
+		#crashRecoveryModal {
+			position: fixed;
+			inset: 0;
+			background: rgba(0, 0, 0, 0.88);
+			backdrop-filter: blur(10px);
+			z-index: 999999;
+			display: none;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.crash-box {
+			background: #110c0c;
+			border: 2px solid #ef4444;
+			box-shadow: 0 0 40px rgba(239, 68, 68, 0.5), inset 0 0 20px rgba(239, 68, 68, 0.2);
+			border-radius: 8px;
+			max-width: 640px;
+			width: 92%;
+			max-height: 85vh;
+			display: flex;
+			flex-direction: column;
+			padding: 20px;
+			color: #fca5a5;
+			font-family: 'Consolas', monospace;
+		}
+
+		.crash-box h2 {
+			color: #f87171;
+			margin: 0 0 10px 0;
+			font-size: 1.25rem;
+			display: flex;
+			align-items: center;
+			gap: 8px;
+		}
+
+		.crash-detail-area {
+			background: #080404;
+			border: 1px solid #451a1a;
+			border-radius: 4px;
+			padding: 10px;
+			max-height: 220px;
+			overflow-y: auto;
+			font-size: 11px;
+			color: #fecaca;
+			white-space: pre-wrap;
+			word-break: break-all;
+			margin: 10px 0;
+		}
+
+		.crash-actions {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 8px;
+			margin-top: 10px;
+		}
+
 		/* Tab Background Pause Modal */
 		#tabPauseOverlay {
 			position: fixed;
@@ -666,10 +818,76 @@
 		<button class="ui-btn" id="remasterToggleBtn" title="Alternar Modo Neural Render (F2)">⚡ Neural Render: ON</button>
 		<button class="ui-btn" id="tinyCoreBtn" title="Lanzar Tiny Core Linux (WebAssembly)" onclick="if(document.exitPointerLock) document.exitPointerLock(); window.open('minixp/index.html', '_blank', 'noopener,noreferrer')">🐧 Tiny Core Linux</button>
 		<button class="ui-btn" id="fileManagerBtn" title="Administrador de Archivos">📁 File Manager</button>
+		<button class="ui-btn" id="debugHudBtn" title="Mostrar/Ocultar Métricas y Consola de Depuración (F3)">📊 Debug HUD</button>
 		<button class="ui-btn" id="fullscreenBtn" title="Pantalla Completa">⛶ Pantalla Completa</button>
 	</div>
 
 	<div id="toast"></div>
+
+	<!-- Live Diagnostic HUD -->
+	<div id="debugHud">
+		<div class="hud-header">
+			<span>📊 DIAGNÓSTICO & LOGS EN VIVO (F3)</span>
+			<button class="close-btn" id="closeDebugHud" style="padding: 2px 6px; font-size: 14px;">&times;</button>
+		</div>
+		<div class="hud-body">
+			<div class="hud-stat-grid">
+				<div class="hud-stat-item">
+					<span class="hud-stat-label">FPS / Cuadro:</span>
+					<span class="hud-stat-value" id="hudFps">-- FPS</span>
+				</div>
+				<div class="hud-stat-item">
+					<span class="hud-stat-label">Latido Motor:</span>
+					<span class="hud-stat-value" id="hudHeartbeat" style="color: #86efac;">🟢 Activo</span>
+				</div>
+				<div class="hud-stat-item">
+					<span class="hud-stat-label">Memoria WASM:</span>
+					<span class="hud-stat-value" id="hudWasmMem">-- MB</span>
+				</div>
+				<div class="hud-stat-item">
+					<span class="hud-stat-label">Modo / Bioma:</span>
+					<span class="hud-stat-value" id="hudRenderMode">Diablo / Pueblo</span>
+				</div>
+			</div>
+
+			<div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px;">
+				<span style="font-weight: bold; color: #d4af37;">📜 Flujo de Registro del Motor:</span>
+				<span style="font-size: 10px; color: #8c8270;" id="hudLogCount">0 eventos</span>
+			</div>
+			<div class="hud-console" id="hudConsoleFeed"></div>
+
+			<div class="hud-actions">
+				<button class="ui-btn" id="hudCopyBtn" style="font-size: 11px; padding: 5px 10px;">📋 Copiar Todo</button>
+				<button class="ui-btn" id="hudDownloadBtn" style="font-size: 11px; padding: 5px 10px;">💾 Descargar Log</button>
+				<button class="ui-btn" id="hudClearBtn" style="font-size: 11px; padding: 5px 10px;">🧹 Limpiar</button>
+			</div>
+		</div>
+	</div>
+
+	<!-- Crash / Freeze Recovery Modal -->
+	<div id="crashRecoveryModal">
+		<div class="crash-box">
+			<h2>🚨 DETENCIÓN / ERROR DEL MOTOR DETECTADO</h2>
+			<div style="font-size: 12px; color: #fca5a5; line-height: 1.4;">
+				El hilo principal del juego se detuvo o arrojó una excepción. A continuación se detallan los datos técnicos capturados:
+			</div>
+			<div class="crash-detail-area" id="crashDetailArea">Analizando estado del motor...</div>
+			<div class="crash-actions">
+				<button class="ui-btn" id="crashCopyReportBtn" style="background: linear-gradient(180deg, #7f1d1d 0%, #450a0a 100%); border-color: #ef4444; color: #ffffff; padding: 8px 16px;">
+					📋 Copiar Informe de Error al Portapapeles
+				</button>
+				<button class="ui-btn" id="crashDownloadBtn" style="background: #1e293b; border-color: #3b82f6; color: #93c5fd; padding: 8px 16px;">
+					💾 Descargar Informe (.txt)
+				</button>
+				<button class="ui-btn" onclick="location.reload();" style="background: #1c1917; border-color: #78716c; color: #e7e5e4; padding: 8px 16px;">
+					🔄 Recargar Juego
+				</button>
+				<button class="ui-btn" onclick="document.getElementById('fileManagerModal').classList.add('show');" style="background: #2b2318; border-color: #d4af37; color: #fff2c8; padding: 8px 16px;">
+					📁 Abrir File Manager
+				</button>
+			</div>
+		</div>
+	</div>
 
 	<div id="fileManagerModal">
 		<div class="modal-content">
@@ -822,6 +1040,216 @@
 		var spinnerElement = document.getElementById('spinner');
 		var loadingOverlay = document.getElementById('loading-overlay');
 
+		// ============================================================
+		//  LIVE DIAGNOSTIC & TELEMETRY SYSTEM + WATCHDOG
+		// ============================================================
+		window.DiagnosticSystem = {
+			logs: [],
+			maxLogs: 500,
+			totalFrames: 0,
+			lastFrameTime: performance.now(),
+			lastFpsUpdate: performance.now(),
+			frameCountSinceUpdate: 0,
+			currentFps: 0,
+			avgFrameTime: 16.6,
+			isFrozen: false,
+			freezeSeconds: 0,
+			hudVisible: false,
+			gameHasStarted: false,
+
+			addLog: function(level, msg) {
+				if (!msg) return;
+				var str = String(msg);
+				var timestamp = new Date().toTimeString().split(' ')[0];
+				var entry = { time: timestamp, level: level, text: str };
+				this.logs.push(entry);
+				if (this.logs.length > this.maxLogs) {
+					this.logs.shift();
+				}
+
+				// Check for fatal WASM / engine keywords
+				var s = str.toLowerCase();
+				if (s.indexOf('runtimeerror') !== -1 || s.indexOf('out of memory') !== -1 || s.indexOf('assertion failed') !== -1 || s.indexOf('abort(') !== -1 || s.indexOf('memory access out of bounds') !== -1) {
+					this.triggerCrashReport('Excepción Fatal en WebAssembly', str, null);
+				}
+
+				this.appendLogToHud(entry);
+			},
+
+			appendLogToHud: function(entry) {
+				var feed = document.getElementById('hudConsoleFeed');
+				if (feed) {
+					var el = document.createElement('div');
+					var cls = 'log-info';
+					if (entry.level === 'WARN') cls = 'log-warn';
+					else if (entry.level === 'ERROR') cls = 'log-error';
+					else if (entry.level === 'FREEZE') cls = 'log-freeze';
+					el.className = cls;
+					el.textContent = `[${entry.time}] [${entry.level}] ${entry.text}`;
+					feed.appendChild(el);
+					if (feed.childNodes.length > 100) {
+						feed.removeChild(feed.firstChild);
+					}
+					feed.scrollTop = feed.scrollHeight;
+				}
+				var countEl = document.getElementById('hudLogCount');
+				if (countEl) {
+					countEl.textContent = this.logs.length + ' eventos';
+				}
+			},
+
+			recordFrame: function() {
+				var now = performance.now();
+				this.gameHasStarted = true;
+				this.totalFrames++;
+				this.frameCountSinceUpdate++;
+
+				var delta = now - this.lastFrameTime;
+				this.lastFrameTime = now;
+
+				if (delta > 0 && delta < 500) {
+					this.avgFrameTime = this.avgFrameTime * 0.92 + delta * 0.08;
+				}
+
+				if (now - this.lastFpsUpdate >= 500) {
+					var elapsed = (now - this.lastFpsUpdate) / 1000;
+					this.currentFps = Math.round(this.frameCountSinceUpdate / elapsed);
+					this.frameCountSinceUpdate = 0;
+					this.lastFpsUpdate = now;
+					this.updateHudMetrics();
+				}
+
+				if (this.isFrozen) {
+					this.isFrozen = false;
+					this.freezeSeconds = 0;
+					this.addLog('INFO', '▶️ Motor reanudado tras congelamiento.');
+				}
+			},
+
+			updateHudMetrics: function() {
+				var fpsEl = document.getElementById('hudFps');
+				if (fpsEl) {
+					var color = this.currentFps >= 50 ? '#86efac' : (this.currentFps >= 25 ? '#fbbf24' : '#f87171');
+					fpsEl.innerHTML = `<span style="color:${color}">${this.currentFps} FPS</span> (${this.avgFrameTime.toFixed(1)}ms)`;
+				}
+
+				var wasmMemEl = document.getElementById('hudWasmMem');
+				if (wasmMemEl && window.Module && Module.HEAPU8) {
+					var mb = (Module.HEAPU8.byteLength / 1048576).toFixed(1);
+					wasmMemEl.textContent = mb + ' MB';
+				}
+
+				var renderModeEl = document.getElementById('hudRenderMode');
+				if (renderModeEl) {
+					var mode = (window.currentWebGPURenderMode === 1) ? '⚡ Neural HD' : '⚔️ Original';
+					renderModeEl.textContent = mode;
+				}
+			},
+
+			triggerCrashReport: function(title, errorMsg, stack) {
+				var modal = document.getElementById('crashRecoveryModal');
+				var area = document.getElementById('crashDetailArea');
+				if (modal && area) {
+					var report = this.generateReportText(title, errorMsg, stack);
+					area.textContent = report;
+					modal.style.display = 'flex';
+				}
+			},
+
+			generateReportText: function(title, errorMsg, stack) {
+				var now = new Date().toISOString();
+				var wasmBytes = (window.Module && Module.HEAPU8) ? (Module.HEAPU8.byteLength / 1048576).toFixed(1) + ' MB' : 'Desconocido';
+				var ua = navigator.userAgent;
+				var lines = [];
+				lines.push('================================================================');
+				lines.push('  ⚔️ DEVILUTIONX WEB: INFORME DE ERROR O CONGELAMIENTO');
+				lines.push('================================================================');
+				lines.push('FECHA/HORA: ' + now);
+				lines.push('MOTIVO: ' + title);
+				lines.push('DETALLE DEL ERROR: ' + (errorMsg || 'Sin mensaje de error explícito'));
+				if (stack) {
+					lines.push('\nPILA DE LLAMADAS (STACK TRACE):\n' + stack);
+				}
+				lines.push('\nESTADO DEL SISTEMA:');
+				lines.push('- FPS Promedio: ' + this.currentFps + ' (' + this.avgFrameTime.toFixed(1) + ' ms)');
+				lines.push('- Memoria WebAssembly: ' + wasmBytes);
+				lines.push('- Render Mode: ' + ((window.currentWebGPURenderMode === 1) ? 'Neural HD' : 'Original'));
+				lines.push('- User Agent: ' + ua);
+				lines.push('\nÚLTIMOS 30 EVENTOS DEL MOTOR:');
+				var recent = this.logs.slice(-30);
+				recent.forEach(function(r) {
+					lines.push(`[${r.time}] [${r.level}] ${r.text}`);
+				});
+				lines.push('================================================================');
+				return lines.join('\n');
+			},
+
+			copyReport: function() {
+				var area = document.getElementById('crashDetailArea');
+				var text = area ? area.textContent : this.generateReportText('Informe Manual', '', null);
+				if (navigator.clipboard && navigator.clipboard.writeText) {
+					navigator.clipboard.writeText(text).then(function() {
+						showToast('¡Informe copiado al portapapeles! Listo para pegar.');
+					});
+				} else {
+					showToast('Por favor selecciona y copia el texto manualmente.');
+				}
+			},
+
+			downloadReport: function() {
+				var area = document.getElementById('crashDetailArea');
+				var text = area ? area.textContent : this.generateReportText('Informe de Sesión', '', null);
+				var blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+				var url = URL.createObjectURL(blob);
+				var a = document.createElement('a');
+				a.href = url;
+				a.download = 'devilutionx_debug_report_' + Date.now() + '.txt';
+				document.body.appendChild(a);
+				a.click();
+				document.body.removeChild(a);
+				URL.revokeObjectURL(url);
+				showToast('¡Informe descargado!');
+			},
+
+			toggleHud: function() {
+				var hud = document.getElementById('debugHud');
+				if (hud) {
+					hud.classList.toggle('show');
+					this.hudVisible = hud.classList.contains('show');
+					if (this.hudVisible) {
+						this.updateHudMetrics();
+						showToast('📊 Debug HUD Activado (F3 para alternar)');
+					}
+				}
+			}
+		};
+
+		// Watchdog Heartbeat Checker (Runs every 1000ms)
+		setInterval(function() {
+			if (!window.DiagnosticSystem || !window.DiagnosticSystem.gameHasStarted) return;
+			var now = performance.now();
+			var elapsedSinceFrame = (now - window.DiagnosticSystem.lastFrameTime) / 1000;
+
+			var hbEl = document.getElementById('hudHeartbeat');
+			if (elapsedSinceFrame > 2.5) {
+				var sec = elapsedSinceFrame.toFixed(1);
+				if (hbEl) {
+					hbEl.innerHTML = `<span style="color:#ef4444; font-weight:bold;">⚠️ CONGELADO (${sec}s)</span>`;
+				}
+				if (!window.DiagnosticSystem.isFrozen) {
+					window.DiagnosticSystem.isFrozen = true;
+					window.DiagnosticSystem.addLog('FREEZE', '⚠️ ALERTA: El motor no ha generado cuadros durante ' + sec + 's.');
+				}
+				if (elapsedSinceFrame > 6.0) {
+					window.DiagnosticSystem.triggerCrashReport('Congelamiento prolongado (>6s sin cuadros)', 'El bucle principal del motor dejó de responder.', null);
+				}
+			} else {
+				if (hbEl) {
+					hbEl.innerHTML = `<span style="color:#86efac;">🟢 Activo (${Math.round(elapsedSinceFrame * 1000)}ms)</span>`;
+				}
+			}
+		}, 1000);
+
 		// Immediate Module & Canvas Registration for Emscripten
 		var gameCanvasEl = document.getElementById('canvas');
 		var Module = window.Module = window.Module || {
@@ -850,6 +1278,7 @@
 				return function (text) {
 					if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
 					console.log(text);
+					if (window.DiagnosticSystem) window.DiagnosticSystem.addLog('INFO', text);
 					if (window.checkMpqError) window.checkMpqError(text);
 					if (element) {
 						element.value += text + "\n";
@@ -860,13 +1289,16 @@
 			printErr: function(text) {
 				if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
 				console.error(text);
+				if (window.DiagnosticSystem) window.DiagnosticSystem.addLog('ERROR', text);
 				if (window.checkMpqError) window.checkMpqError(text);
 			},
 			canvas: (function () {
 				if (!gameCanvasEl) gameCanvasEl = document.getElementById('canvas');
 				if (gameCanvasEl) {
 					gameCanvasEl.addEventListener("webglcontextlost", function (e) {
-						alert('WebGL context lost. Recarga la página.');
+						var msg = 'WebGL context lost. El hardware o controlador de gráficos restableció el contexto.';
+						if (window.DiagnosticSystem) window.DiagnosticSystem.triggerCrashReport('WebGL Context Lost', msg, null);
+						alert(msg + ' Recarga la página.');
 						e.preventDefault();
 					}, false);
 					gameCanvasEl.addEventListener("dragstart", function (e) { e.preventDefault(); }, false);
@@ -906,6 +1338,7 @@
 					}
 				}
 				if (statusElement) statusElement.innerHTML = text || '';
+				if (text && window.DiagnosticSystem) window.DiagnosticSystem.addLog('INFO', text);
 			},
 			locateFile: function(path, prefix) {
 				if (path.endsWith('.wasm')) {
@@ -921,18 +1354,37 @@
 		};
 
 		Module.setStatus('Iniciando...');
-		window.onerror = function (event) {
+
+		window.onerror = function (event, source, lineno, colno, error) {
 			if (spinnerElement) spinnerElement.style.display = 'none';
+			var msg = (typeof event === 'string') ? event : (error ? error.message : 'Error no especificado');
+			var stack = error ? error.stack : (source ? `${source}:${lineno}:${colno}` : null);
+			if (window.DiagnosticSystem) {
+				window.DiagnosticSystem.addLog('ERROR', msg);
+				window.DiagnosticSystem.triggerCrashReport('Error en WebAssembly / Script', msg, stack);
+			}
 			if (window.checkMpqError) window.checkMpqError(event);
 			if (document.getElementById('missingMpqModal') && document.getElementById('missingMpqModal').style.display !== 'flex') {
 				Module.setStatus('Error al ejecutar WebAssembly.');
 			}
 		};
 
+		window.addEventListener('unhandledrejection', function(e) {
+			var reason = e.reason ? (e.reason.message || e.reason) : 'Promesa rechazada no manejada';
+			var stack = e.reason && e.reason.stack ? e.reason.stack : null;
+			if (window.DiagnosticSystem) {
+				window.DiagnosticSystem.addLog('ERROR', 'Unhandled Rejection: ' + reason);
+				window.DiagnosticSystem.triggerCrashReport('Unhandled Promise Rejection', reason, stack);
+			}
+		});
+
 		// 100% Reliable In-Game Detector (Hooks SDL2 WebGL texture uploads)
 		window.latestGamePixels = null;
 		var oldTexSub = WebGLRenderingContext.prototype.texSubImage2D;
 		WebGLRenderingContext.prototype.texSubImage2D = function() {
+			if (window.DiagnosticSystem) {
+				window.DiagnosticSystem.recordFrame();
+			}
 			if (arguments.length >= 9 && arguments[8] && arguments[8].length >= 640 * 480 * 3) {
 				window.latestGamePixels = arguments[8];
 			}
@@ -941,6 +1393,9 @@
 		if (typeof WebGL2RenderingContext !== 'undefined') {
 			var oldTexSub2 = WebGL2RenderingContext.prototype.texSubImage2D;
 			WebGL2RenderingContext.prototype.texSubImage2D = function() {
+				if (window.DiagnosticSystem) {
+					window.DiagnosticSystem.recordFrame();
+				}
 				if (arguments.length >= 9 && arguments[8] && arguments[8].length >= 640 * 480 * 3) {
 					window.latestGamePixels = arguments[8];
 				}
@@ -993,8 +1448,61 @@
 			if (e.key === 'F2') {
 				e.preventDefault();
 				toggleRemaster();
+			} else if (e.key === 'F3') {
+				e.preventDefault();
+				if (window.DiagnosticSystem) window.DiagnosticSystem.toggleHud();
 			}
 		});
+
+		// Bind Diagnostic HUD & Crash Modal UI Buttons
+		var debugHudBtn = document.getElementById('debugHudBtn');
+		if (debugHudBtn) {
+			debugHudBtn.addEventListener('click', function() {
+				if (window.DiagnosticSystem) window.DiagnosticSystem.toggleHud();
+			});
+		}
+		var closeDebugHud = document.getElementById('closeDebugHud');
+		if (closeDebugHud) {
+			closeDebugHud.addEventListener('click', function() {
+				if (window.DiagnosticSystem) window.DiagnosticSystem.toggleHud();
+			});
+		}
+		var hudCopyBtn = document.getElementById('hudCopyBtn');
+		if (hudCopyBtn) {
+			hudCopyBtn.addEventListener('click', function() {
+				if (window.DiagnosticSystem) window.DiagnosticSystem.copyReport();
+			});
+		}
+		var hudDownloadBtn = document.getElementById('hudDownloadBtn');
+		if (hudDownloadBtn) {
+			hudDownloadBtn.addEventListener('click', function() {
+				if (window.DiagnosticSystem) window.DiagnosticSystem.downloadReport();
+			});
+		}
+		var hudClearBtn = document.getElementById('hudClearBtn');
+		if (hudClearBtn) {
+			hudClearBtn.addEventListener('click', function() {
+				if (window.DiagnosticSystem) {
+					window.DiagnosticSystem.logs = [];
+					var feed = document.getElementById('hudConsoleFeed');
+					if (feed) feed.innerHTML = '';
+					var countEl = document.getElementById('hudLogCount');
+					if (countEl) countEl.textContent = '0 eventos';
+				}
+			});
+		}
+		var crashCopyReportBtn = document.getElementById('crashCopyReportBtn');
+		if (crashCopyReportBtn) {
+			crashCopyReportBtn.addEventListener('click', function() {
+				if (window.DiagnosticSystem) window.DiagnosticSystem.copyReport();
+			});
+		}
+		var crashDownloadBtn = document.getElementById('crashDownloadBtn');
+		if (crashDownloadBtn) {
+			crashDownloadBtn.addEventListener('click', function() {
+				if (window.DiagnosticSystem) window.DiagnosticSystem.downloadReport();
+			});
+		}
 
 		// Live WebGPU Neural HD Engine
 		(async function initLiveWebGPUEngine() {

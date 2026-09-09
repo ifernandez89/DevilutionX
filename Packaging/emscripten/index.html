@@ -709,6 +709,29 @@
 				<input type="file" id="fileInput" accept=".mpq,.MPQ,.sv,.SV,.hsv,.HSV,.dsv,.DSV,.ini,.INI" multiple>
 			</div>
 
+			<!-- Hellfire Diagnostic Status Panel -->
+			<div class="section" style="border: 1px solid #73592f; background: #16120e; padding: 14px; border-radius: 6px; margin-bottom: 16px;">
+				<h3 style="margin-top: 0; color: #e5c158; display: flex; align-items: center; gap: 8px;">
+					🔥 Estado de Expansión Hellfire
+				</h3>
+				<div class="info-text">
+					Hellfire requiere los siguientes MPQs en tu navegador además de <strong>diabdat.mpq</strong> (o spawn.mpq):
+				</div>
+				<div id="hellfireStatus" style="margin-top: 8px;"></div>
+			</div>
+
+			<!-- Active Game Mode Selector -->
+			<div class="section" style="border: 1px solid #73592f; background: #16120e; padding: 14px; border-radius: 6px; margin-bottom: 16px;">
+				<h3 style="margin-top: 0; color: #e5c158;">⚔️ Modo de Juego Activo</h3>
+				<div class="info-text">
+					Alterna entre la campaña clásica de Diablo 1 y la expansión Hellfire (Guarda tu selección en diablo.ini):
+				</div>
+				<div style="display: flex; gap: 10px; margin-top: 8px;">
+					<button class="ui-btn" id="gameModeDiabloBtn" style="flex: 1; justify-content: center; padding: 10px;">⚔️ Diablo 1 (Original)</button>
+					<button class="ui-btn" id="gameModeHellfireBtn" style="flex: 1; justify-content: center; padding: 10px;">🔥 Hellfire (Expansión)</button>
+				</div>
+			</div>
+
 			<div class="section">
 				<div class="file-list">
 					<h3>Partidas Guardadas (.sv / .hsv)</h3>
@@ -718,17 +741,21 @@
 
 			<div class="section">
 				<div class="file-list">
-					<h3>Archivos de Datos MPQ</h3>
+					<h3>Archivos de Datos MPQ Instalados</h3>
 					<div id="mpqFilesList"></div>
 				</div>
 			</div>
 
 			<div class="section" style="border-top: 1px solid #3d3222; padding-top: 14px; margin-top: 14px;">
-				<h3>Configuración</h3>
+				<h3>Configuración y Reinicio de Almacenamiento</h3>
 				<div class="info-text">
-					Restablecer la configuración (diablo.ini) si tienes problemas gráficos. No elimina tus partidas guardadas.
+					Herramientas de recuperación en caso de datos corruptos, reaparición de MPQs antiguos o problemas gráficos:
 				</div>
-				<button class="ui-btn btn-reset" id="resetSettingsBtn">Restablecer Configuración</button>
+				<div style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">
+					<button class="ui-btn btn-reset" id="resetSettingsBtn">⚙️ Restablecer Configuración Gráfica (diablo.ini)</button>
+					<button class="ui-btn btn-delete" id="purgeMpqsBtn" style="background: linear-gradient(180deg, #631c1c 0%, #380d0d 100%); border-color: #a82e2e; color: #ffe4e4;">🧨 Purgar Todos los Archivos MPQ (Conservar Partidas Guardadas)</button>
+					<button class="ui-btn btn-delete" id="factoryResetBtn" style="background: linear-gradient(180deg, #821111 0%, #4a0808 100%); border-color: #ef4444; color: #ffffff;">🧹 Restablecimiento de Fábrica Total (Limpiar IndexedDB & Cache)</button>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -1701,52 +1728,8 @@
 		window.addEventListener('drop', function(e) {
 			e.preventDefault();
 			if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-				var files = Array.from(e.dataTransfer.files).filter(function(f) {
-					var name = f.name.toLowerCase();
-					return name.endsWith('.mpq') || name.endsWith('.sv') || name.endsWith('.hsv') || name.endsWith('.ini');
-				});
-				if (files.length > 0) {
-					var f = files[0];
-					showToast('📁 Guardando ' + f.name + '...');
-					var reader = new FileReader();
-					reader.onload = function(evt) {
-						try {
-							var data = new Uint8Array(evt.target.result);
-							if (typeof FS !== 'undefined') {
-								try { FS.mkdir('/libsdl'); } catch(e){}
-								try { FS.mkdir('/libsdl/diasurgical'); } catch(e){}
-								try { FS.mkdir('/libsdl/diasurgical/devilution'); } catch(e){}
-								var lowerName = f.name.toLowerCase();
-								FS.writeFile('/libsdl/diasurgical/devilution/' + f.name, data);
-								if (lowerName === 'diabdat.mpq') {
-									try { FS.writeFile('/libsdl/diasurgical/devilution/DIABDAT.MPQ', data); } catch(e){}
-									try { FS.writeFile('/libsdl/diasurgical/devilution/diabdat.mpq', data); } catch(e){}
-									try { FS.writeFile('/DIABDAT.MPQ', data); } catch(e){}
-									try { FS.writeFile('/diabdat.mpq', data); } catch(e){}
-								} else if (lowerName === 'spawn.mpq') {
-									try { FS.writeFile('/libsdl/diasurgical/devilution/spawn.mpq', data); } catch(e){}
-									try { FS.writeFile('/libsdl/diasurgical/devilution/SPAWN.MPQ', data); } catch(e){}
-									try { FS.writeFile('/spawn.mpq', data); } catch(e){}
-									try { FS.writeFile('/SPAWN.MPQ', data); } catch(e){}
-								} else if (lowerName === 'hellfire.mpq') {
-									try { FS.writeFile('/libsdl/diasurgical/devilution/hellfire.mpq', data); } catch(e){}
-									try { FS.writeFile('/libsdl/diasurgical/devilution/HELLFIRE.MPQ', data); } catch(e){}
-									try { FS.writeFile('/hellfire.mpq', data); } catch(e){}
-									try { FS.writeFile('/HELLFIRE.MPQ', data); } catch(e){}
-								} else {
-									try { FS.writeFile('/' + f.name, data); } catch(e){}
-								}
-								FS.syncfs(false, function(err) {
-									showToast('¡' + f.name + ' instalado con éxito! Recargando...');
-									setTimeout(function() { location.reload(); }, 600);
-								});
-							}
-						} catch(err) {
-							console.error('Global drop error:', err);
-							showToast('Error al procesar archivo: ' + err.message);
-						}
-					};
-					reader.readAsArrayBuffer(f);
+				if (typeof window.handleDevilutionFiles === 'function') {
+					window.handleDevilutionFiles(e.dataTransfer.files);
 				}
 			}
 		});

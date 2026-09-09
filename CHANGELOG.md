@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### 📁 File Manager Robusto, Normalización Hellfire & Gestión Limpia de IndexedDB
+- **Erradicación de Resurrección de MPQs y Borrado Multiruta ([`Packaging/emscripten/file-manager.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/file-manager.js), [`Packaging/emscripten/emscripten_pre.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/emscripten_pre.js), [`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html))**:
+  - Se eliminó la duplicación de casing mayúsculas/minúsculas en `/libsdl/diasurgical/devilution/` que provocaba que los archivos eliminados siguieran existiendo en IndexedDB y resucitaran al refrescar (`Ctrl+F5`).
+  - La función `deleteFile` ahora elimina simultáneamente todas las variantes de casing en el directorio persistente IDBFS y en la raíz virtual `/`, sincronizando de forma atómica con `FS.syncfs(false)`.
+  - Se añadieron botones de **"Purgar Todos los Archivos MPQ"** y **"Restablecimiento Total de Fábrica"** (`indexedDB.deleteDatabase('/libsdl')`).
+- **Soporte Completo y Diagnóstico de Hellfire**:
+  - Normalización estricta de nombres a minúsculas (`hellfire.mpq`, `hfmonk.mpq`, `hfmusic.mpq`, `hfvoice.mpq`), resolviendo la incompatibilidad con la sensibilidad de mayúsculas en WebAssembly (`assets.cpp`).
+  - Panel visual de diagnóstico en el File Manager con comprobación del estado de los 4 MPQs requeridos y los opcionales.
+  - Selector interactivo de Modo de Juego en la interfaz para alternar entre **⚔️ Diablo 1** y **🔥 Hellfire** persistiendo en `diablo.ini`.
+  - Soporte para subida y arrastrar/soltar por lotes (multi-archivo).
+- **Corrección de Arranque WebAssembly ([`CMakeLists.txt`](file:///c:/Projects/DevilutionX/CMakeLists.txt))**:
+  - Se retiró `-sASYNCIFY_IGNORE_INDIRECT=1`, restaurando la instrumentación de llamadas indirectas (vtables y punteros a función de StormLib y SDL) en el arranque de archivos MPQ.
+
 ### 🩸 NIGHTMARE: La Invasión Demoníaca de Tristán (Post-Na-Krul Town Incursion)
 - **Evento Demoníaco Desencadenado al Derrotar a Na-Krul ([`Source/nightmare/invasion/invasion_manager.cpp`](file:///c:/Projects/DevilutionX/Source/nightmare/invasion/invasion_manager.cpp), [`Source/nightmare/invasion/invasion_manager.hpp`](file:///c:/Projects/DevilutionX/Source/nightmare/invasion/invasion_manager.hpp))**:
   - Tras la caída del demonio ancestral Na-Krul (`Quests[Q_NAKRUL]._qactive == QUEST_DONE`), una brecha dimensional se abre sobre el pueblo de Tristán, desatando una invasión demoníaca total en la superficie.

@@ -101,36 +101,55 @@ Module['preRun'].push(function() {
             FS.syncfs(false, function() {});
           }
 
-          // Mirror all MPQs from IndexedDB into root virtual filesystem with casing variants
+          // Deduplicate and normalize all MPQs in IndexedDB to clean lowercase
           try {
             var files = FS.readdir('/libsdl/diasurgical/devilution');
+            var needSync = false;
+            var lowerMap = {};
             files.forEach(function(fname) {
               if (fname === '.' || fname === '..') return;
               var lower = fname.toLowerCase();
               if (lower.endsWith('.mpq')) {
-                var content = FS.readFile('/libsdl/diasurgical/devilution/' + fname);
-                if (lower === 'diabdat.mpq') {
-                  try { FS.writeFile('/libsdl/diasurgical/devilution/DIABDAT.MPQ', content); } catch(e) {}
-                  try { FS.writeFile('/libsdl/diasurgical/devilution/diabdat.mpq', content); } catch(e) {}
-                  try { FS.writeFile('/DIABDAT.MPQ', content); } catch(e) {}
-                  try { FS.writeFile('/diabdat.mpq', content); } catch(e) {}
-                } else if (lower === 'spawn.mpq') {
-                  try { FS.writeFile('/libsdl/diasurgical/devilution/spawn.mpq', content); } catch(e) {}
-                  try { FS.writeFile('/libsdl/diasurgical/devilution/SPAWN.MPQ', content); } catch(e) {}
-                  try { FS.writeFile('/spawn.mpq', content); } catch(e) {}
-                  try { FS.writeFile('/SPAWN.MPQ', content); } catch(e) {}
-                } else if (lower === 'hellfire.mpq') {
-                  try { FS.writeFile('/libsdl/diasurgical/devilution/hellfire.mpq', content); } catch(e) {}
-                  try { FS.writeFile('/libsdl/diasurgical/devilution/HELLFIRE.MPQ', content); } catch(e) {}
-                  try { FS.writeFile('/hellfire.mpq', content); } catch(e) {}
-                  try { FS.writeFile('/HELLFIRE.MPQ', content); } catch(e) {}
-                } else {
-                  try { FS.writeFile('/' + fname, content); } catch(e) {}
+                if (!lowerMap[lower]) {
+                  lowerMap[lower] = [];
                 }
+                lowerMap[lower].push(fname);
               }
             });
+
+            for (var lower in lowerMap) {
+              var list = lowerMap[lower];
+              var targetPath = '/libsdl/diasurgical/devilution/' + lower;
+              if (list.indexOf(lower) === -1) {
+                // Only non-lowercase exists, rename the first to lowercase
+                var sourcePath = '/libsdl/diasurgical/devilution/' + list[0];
+                var data = FS.readFile(sourcePath);
+                FS.writeFile(targetPath, data);
+                needSync = true;
+              }
+              // Delete all non-lowercase duplicate files
+              list.forEach(function(fname) {
+                if (fname !== lower) {
+                  try { FS.unlink('/libsdl/diasurgical/devilution/' + fname); } catch(e) {}
+                  needSync = true;
+                }
+              });
+
+              // Mirror lowercase into root virtual memory filesystem
+              try {
+                var content = FS.readFile(targetPath);
+                FS.writeFile('/' + lower, content);
+                if (lower === 'diabdat.mpq') {
+                  try { FS.writeFile('/DIABDAT.MPQ', content); } catch(e) {}
+                }
+              } catch(e) {}
+            }
+
+            if (needSync) {
+              FS.syncfs(false, function() {});
+            }
           } catch(e) {
-            console.warn('Error mirroring MPQ files from IDBFS:', e);
+            console.warn('Error normalizing MPQ files from IDBFS:', e);
           }
         } catch(e) {
           console.error('Error during IDBFS post-sync:', e);
@@ -143,14 +162,35 @@ Module['preRun'].push(function() {
   }
 });
 
-// Load MPQ files from the server directory
+// Load MPQ files from the server directory only if no user MPQs exist and not deleted
 Module['preRun'].push(function() {
-  // List of MPQ files to try loading (in priority order)
-  var mpqFiles = [
-    'spawn.mpq',
-  ];
+  var userDeletedSpawn = false;
+  try {
+    userDeletedSpawn = (localStorage.getItem('devilutionx_deleted_spawn') === 'true');
+  } catch(e) {}
 
-  // Create a promise-based loading system
+  if (userDeletedSpawn) {
+    console.log('User previously removed spawn.mpq, skipping server download.');
+    return;
+  }
+
+  // Check if any MPQ already exists in IndexedDB directory
+  var hasLocalMpq = false;
+  try {
+    var files = FS.readdir('/libsdl/diasurgical/devilution');
+    files.forEach(function(f) {
+      if (f.toLowerCase().endsWith('.mpq') && f !== '.' && f !== '..') {
+        hasLocalMpq = true;
+      }
+    });
+  } catch(e) {}
+
+  if (hasLocalMpq) {
+    console.log('Local MPQ archive found in IDBFS, skipping server fallback.');
+    return;
+  }
+
+  var mpqFiles = ['spawn.mpq'];
   var loadPromises = mpqFiles.map(function(filename) {
     return new Promise(function(resolve) {
       fetch(filename)
@@ -161,26 +201,18 @@ Module['preRun'].push(function() {
           throw new Error('File not found');
         })
         .then(function(data) {
-          console.log('Loading ' + filename + ' into virtual filesystem...');
+          console.log('Loading ' + filename + ' into virtual filesystem (RAM only)...');
           var u8 = new Uint8Array(data);
-          FS.writeFile('/' + filename, u8);
+          FS.writeFile('/' + filename.toLowerCase(), u8);
           try { FS.writeFile('/' + filename.toUpperCase(), u8); } catch(e) {}
-          try {
-            mkdirSafe('/libsdl/diasurgical/devilution');
-            FS.writeFile('/libsdl/diasurgical/devilution/' + filename, u8);
-            FS.writeFile('/libsdl/diasurgical/devilution/' + filename.toUpperCase(), u8);
-          } catch(e) {}
-          console.log('Successfully loaded ' + filename);
           resolve();
         })
         .catch(function() {
-          // File doesn't exist on server, skip silently (may exist in IndexedDB)
           resolve();
         });
     });
   });
 
-  // Wait for all MPQ files to load before continuing
   Module.addRunDependency('loadMPQs');
   Promise.all(loadPromises).then(function() {
     Module.removeRunDependency('loadMPQs');

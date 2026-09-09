@@ -1,6 +1,31 @@
 # 📋 DEVILUTIONX ENHANCED - CHANGELOG
 ## Registro Completo de Características Implementadas
 
+## 🚀 Versión Enhanced v1.5 - Septiembre 9, 2026
+
+### 📁 **FILE MANAGER ROBUSTO, NORMALIZACIÓN HELLFIRE Y REINICIO DE ALMACENAMIENTO**
+
+#### 🗑️ **Borrado Exhaustivo & Erradicación de Resurrección de MPQs en IndexedDB**
+- ✅ **Desincronización y Resurrección Corregidas:** Solucionado el problema por el cual los archivos MPQ eliminados en el File Manager reaparecían tras refrescar con `Ctrl+F5`. Los archivos se guardaban duplicados con mayúsculas y minúsculas (`diabdat.mpq` y `DIABDAT.MPQ`), de modo que un `unlink` individual dejaba la variante gemela en `/libsdl/diasurgical/devilution/`, la cual era resucitada automáticamente por `emscripten_pre.js` al recargar.
+- ✅ **Borrado Multiruta y Multi-casing (`deleteFile`):** Al eliminar un archivo, se purgan simultáneamente todas sus variantes de mayúsculas/minúsculas en el directorio persistente `/libsdl/diasurgical/devilution/` y en la raíz virtual `/`, asegurando persistencia atómica con `FS.syncfs(false)`.
+- ✅ **Normalización Estricta de Nombres a Minúsculas:** Toda subida de archivos (vía selector o arrastrar y soltar) normaliza automáticamente la extensión y el nombre de los MPQs a minúsculas canónicas (`diabdat.mpq`, `spawn.mpq`, `hellfire.mpq`, `hfmonk.mpq`, `hfmusic.mpq`, `hfvoice.mpq`, `hfbard.mpq`, `hfbarb.mpq`), evitando duplicación redundante que agotaba la cuota de IndexedDB del navegador.
+- ✅ **Soporte Multi-Archivo en Arrastrar y Soltar:** Corregido fallo crítico en el evento `drop` global de `index.html` que solo procesaba el primer archivo (`files[0]`). Ahora procesa por lotes la totalidad de archivos arrastrados.
+
+#### 🔥 **Soporte Completo para Hellfire y Diagnóstico en Tiempo Real**
+- ✅ **Carga Fiable de Hellfire en Entorno Web Sensible a Mayúsculas:** El motor C++ (`assets.cpp`) busca estrictamente archivos en minúsculas. Al normalizar todos los MPQs a minúsculas, se erradica el error fatal `Some Hellfire MPQs are missing`.
+- ✅ **Panel de Diagnóstico Hellfire:** Indicador visual en tiempo real dentro del modal del File Manager que chequea y reporta individualmente el estado de los 4 archivos requeridos (`hellfire.mpq`, `hfmonk.mpq`, `hfmusic.mpq`, `hfvoice.mpq`) y los opcionales (`hfbard.mpq`, `hfbarb.mpq`).
+- ✅ **Selector Directo de Modo de Juego:** Botones interactivos para alternar al instante entre **⚔️ Diablo 1 (Original)** y **🔥 Hellfire (Expansión)** directamente en `diablo.ini` (`Game Mode=Diablo` / `Game Mode=Hellfire`).
+
+#### 🧨 **Herramientas de Purgado y Reinicio Forzado**
+- ✅ **Purgar Todos los MPQs:** Botón dedicado para eliminar todos los archivos de datos `.mpq` de IndexedDB conservando intactas las partidas guardadas (`.sv` / `.hsv`).
+- ✅ **Restablecimiento Total de Fábrica:** Botón de limpieza absoluta que invoca `indexedDB.deleteDatabase('/libsdl')` y limpia `localStorage`/`sessionStorage`, garantizando un reinicio 100% limpio ante corrupciones de almacenamiento.
+- ✅ **Salvaguarda de `spawn.mpq` en Servidor:** Al eliminar `spawn.mpq`, se registra una directiva en `localStorage` para evitar que el fetch automático en `preRun` vuelva a inyectar la versión shareware en cada inicio.
+
+#### ⚙️ **Corrección de Arranque WebAssembly (ASYNCIFY)**
+- 🐛 **FIX (Falla de Arranque de MPQ por `ASYNCIFY_IGNORE_INDIRECT`):** Eliminada la bandera `-sASYNCIFY_IGNORE_INDIRECT=1` en `CMakeLists.txt` que impedía instrumentar llamadas indirectas (vtables y punteros a función de StormLib y SDL) durante la apertura de archivos MPQ, restaurando el arranque fluido del motor.
+
+---
+
 ## 🚀 Versión Enhanced v1.4 - Septiembre 8, 2026
 
 ### 💀 **TRISTRAM INVASION 2.0: HORDA INFINITA CONTROLADA & HERALDOS LEGENDARIOS**

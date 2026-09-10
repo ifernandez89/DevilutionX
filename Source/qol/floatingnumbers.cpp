@@ -116,6 +116,10 @@ void DrawFloatingNumbers(const Surface &out, Point viewPosition, Displacement of
 		const float mul = std::clamp(1.0f - (static_cast<float>(timeLeft) / 2500.0f), 0.0f, 1.0f);
 		screenPosition += floatingNum.endOffset * mul;
 
+		if (screenPosition.x + lineWidth <= 0 || screenPosition.x >= out.w() ||
+		    screenPosition.y + 40 <= 0 || screenPosition.y >= out.h())
+			continue;
+
 		DrawString(out, floatingNum.text, Rectangle { screenPosition, { lineWidth, 0 } },
 		    { .flags = floatingNum.style });
 	}

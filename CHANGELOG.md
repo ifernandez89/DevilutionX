@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### 🛡️ Corrección Crítica de Acceso a Memoria Fuera de Límites (WASM 0x4cc1aa) en Batallas y Renderizado
+- **Protección de Regiones y Recorte en Superficies ([`Source/engine/surface.hpp`](file:///c:/Projects/DevilutionX/Source/engine/surface.hpp))**:
+  - `subregion()`, `subregionX()` y `subregionY()` ahora delimitan estrictamente sus coordenadas `(rx, ry)` y dimensiones `(rw, rh)` dentro de `[0, surface->w]` y `[0, surface->h]`. Esto previene desbordamientos de enteros (underflows) de 32 bits a `~0xFFFFFF00` cuando se calculan posiciones relativas fuera de la pantalla.
+- **Recorte Seguro de Texto y Números Flotantes de Daño ([`Source/engine/render/text_render.cpp`](file:///c:/Projects/DevilutionX/Source/engine/render/text_render.cpp), [`Source/qol/floatingnumbers.cpp`](file:///c:/Projects/DevilutionX/Source/qol/floatingnumbers.cpp))**:
+  - `ClipSurface()` ahora sujeta (`std::clamp`) el ancho y alto a `>= 0`, impidiendo subregiones de ancho negativo causadas por combatientes en los bordes de la pantalla (ej. Golem vs Leoric y Na-Krul).
+  - `DrawString()` y `DrawStringWithColors()` abortan inmediatamente si el área recortada tiene dimensiones `<= 0`, previniendo procesamiento de glifos en regiones vacías.
+  - `DrawFloatingNumbers()` descarta números completamente fuera de pantalla (`screenPosition.x + lineWidth <= 0`, etc.) antes de intentar renderizarlos.
+- **Validación de Límites en el Blitter de Pantalla y Cursor ([`Source/engine/render/scrollrt.cpp`](file:///c:/Projects/DevilutionX/Source/engine/render/scrollrt.cpp), [`Source/engine/dx.cpp`](file:///c:/Projects/DevilutionX/Source/engine/dx.cpp), [`Source/engine/render/clx_render.cpp`](file:///c:/Projects/DevilutionX/Source/engine/render/clx_render.cpp))**:
+  - `DoBlitScreen()` recorta el rectángulo de blit contra `gnScreenWidth` y `gnScreenHeight`, descartando áreas no positivas antes de llamar a `BltFast()`.
+  - `UndrawCursor()` valida `cursor.rect.size.width > 0 && cursor.rect.size.height > 0` antes de invocar `BlitCursor()`.
+  - `Blit()` en `dx.cpp` verifica que ni `srcRect` ni `dstRect` contengan dimensiones `<= 0` para evitar fallos de lectura en `SDL_Blit8to4`.
+  - `DoRenderBackwards()` y `RenderClxOutline()` validan `out.w() > 0 && out.h() > 0` al inicio para abortar cualquier renderizado de sprites CLX fuera de búfer.
+- **Cachebuster Actualizado a `v=nightmare-v6` ([`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html))**:
+  - Actualizada la referencia a `devilutionx.js?v=nightmare-v6`.
+
 ### 🛡️ Erradicación Definitiva de Congelamiento en Batallas Épicas & Rendición Cooperativa WebAssembly
 - **Preservación Continua de Renderizado en WebAssembly ([`Source/nthread.cpp`](file:///c:/Projects/DevilutionX/Source/nthread.cpp))**:
   - Se corrigió `nthread_has_500ms_passed`: la lógica de omisión de cuadros (`*drawGame = ticksElapsed <= gnTickDelay;`) omitía `DrawAndBlit()` ante picos de carga de CPU (>50ms/cuadro). En WebAssembly monohilo, omitir cuadros suprime las transferencias de textura WebGL/WebGPU (`texSubImage2D`) e impide el ciclo de refresco, provocando que el watchdog reporte congelamientos prolongados (>6s) y el navegador bloquee la pestaña. En Emscripten, `*drawGame = true;` permanece siempre activo para garantizar flujo constante de cuadros.

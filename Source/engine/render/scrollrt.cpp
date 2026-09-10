@@ -219,6 +219,10 @@ void BlitCursor(uint8_t *dst, uint32_t dstPitch, uint8_t *src, uint32_t srcPitch
 void UndrawCursor(const Surface &out)
 {
 	DrawnCursor &cursor = GetDrawnCursor();
+	if (cursor.rect.size.width <= 0 || cursor.rect.size.height <= 0) {
+		PrevCursorRect = {};
+		return;
+	}
 	BlitCursor(&out[cursor.rect.position], out.pitch(), cursor.behindBuffer, cursor.rect.size.width, cursor.rect.size.width, cursor.rect.size.height);
 	PrevCursorRect = cursor.rect;
 }
@@ -1568,6 +1572,23 @@ void DrawFPS(const Surface &out)
  */
 void DoBlitScreen(Rectangle area)
 {
+	if (area.position.x < 0) {
+		area.size.width += area.position.x;
+		area.position.x = 0;
+	}
+	if (area.position.y < 0) {
+		area.size.height += area.position.y;
+		area.position.y = 0;
+	}
+	if (area.position.x + area.size.width > gnScreenWidth) {
+		area.size.width = gnScreenWidth - area.position.x;
+	}
+	if (area.position.y + area.size.height > gnScreenHeight) {
+		area.size.height = gnScreenHeight - area.position.y;
+	}
+	if (area.size.width <= 0 || area.size.height <= 0)
+		return;
+
 #ifdef DEBUG_DO_BLIT_SCREEN
 	const Surface &out = GlobalBackBuffer();
 	const uint8_t debugColor = PAL8_RED;

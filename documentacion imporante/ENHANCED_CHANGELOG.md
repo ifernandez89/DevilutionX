@@ -1,6 +1,31 @@
 # 📋 DEVILUTIONX ENHANCED - CHANGELOG
 ## Registro Completo de Características Implementadas
 
+## 🚀 Versión Enhanced v1.6 - Septiembre 9, 2026
+
+### 🛡️ **CORRECCIÓN CRÍTICA DE ACCESO A MEMORIA FUERA DE LÍMITES (WASM 0x4cc1aa) EN BATALLAS Y RENDERIZADO**
+
+#### 💥 **Diagnóstico y Origen Exacto del Fallo en Combates Prolongados (Golem vs Leoric vs Na-Krul)**
+- ✅ **Análisis del Desensamblado WebAssembly (Función 6476 en `0x4cc1aa`):**
+  El error `RuntimeError: memory access out of bounds at devilutionx.wasm:0x4cc1aa` fue rastreado directamente al blitter de 8 a 32 bits de SDL2 (`Blit8to4`) usando Duff's device, ejecutando `i32.load8_u align=0 offset=0` para leer píxeles indexados de la paleta.
+- ✅ **Causa Raíz #1: Subregiones de Superficie con Coordenadas Negativas (`ClipSurface` en `Source/engine/render/text_render.cpp`):**
+  Durante batallas caóticas con números de daño flotantes (`FloatingNumbers`) o combatientes en los bordes de la pantalla, `rect.position.x + rect.size.width` puede volverse negativo. `ClipSurface()` ejecutaba `std::min(rect.position.x + rect.size.width, out.w())` sin limitar a 0. Esto generaba una subregión con ancho o alto negativo (`region.w < 0`), provocando que el puntero `at(x, y)` realizara aritmética de punteros con enteros sin signo de 32 bits que envolvían a `0xFFFFFF00` (fuera del heap lineal de 512 MB de WebAssembly).
+- ✅ **Causa Raíz #2: Ausencia de Recorte en Números Flotantes (`Source/qol/floatingnumbers.cpp`):**
+  `DrawFloatingNumbers()` calculaba `screenPosition` desde las posiciones de mundo de los monstruos sin ninguna verificación de límites visibles de pantalla antes de pasar el rectángulo a `DrawString()`.
+- ✅ **Causa Raíz #3: Blit de Pantalla y Cursor Sin Delimitación (`Source/engine/render/scrollrt.cpp`, `Source/engine/dx.cpp`):**
+  `DoBlitScreen()` pasaba `area` directamente a `MakeSdlRect()` y `BltFast()` sin recortar las coordenadas ni verificar que el ancho y alto fueran positivos. Del mismo modo, `UndrawCursor()` no comprobaba si `cursor.rect.size.width <= 0`.
+
+#### 🛠️ **Soluciones Aplicadas en el Núcleo del Motor**
+- ✅ **Aislamiento y Recorte Estricto en `Surface::subregion` (`Source/engine/surface.hpp`):**
+  `subregion()`, `subregionX()` y `subregionY()` ahora delimitan estrictamente `rx`, `ry` y limitan `rw`, `rh` contra los límites físicos del búfer de la superficie de SDL (`[0, surface->w - rx]`, `[0, surface->h - ry]`). Es físicamente imposible que un objeto `Surface` posea dimensiones negativas o punteros desbordados.
+- ✅ **Recorte Seguro en `ClipSurface` y Salida Rápida en `DrawString` (`Source/engine/render/text_render.cpp`):**
+  `ClipSurface()` emplea `std::clamp` para asegurar `clampedW >= 0` y `clampedH >= 0`. `DrawString()` y `DrawStringWithColors()` descartan de inmediato la operación si `clippedOut.w() <= 0 || clippedOut.h() <= 0`.
+- ✅ **Descarte de Números Flotantes Fuera de Pantalla (`Source/qol/floatingnumbers.cpp`):**
+  Se agregó validación previa de coordenadas de pantalla en `DrawFloatingNumbers()`, omitiendo cualquier número que se encuentre fuera del marco visible antes de llamar a `DrawString()`.
+- ✅ **Validación de Límites en `DoBlitScreen`, `UndrawCursor` y `Blit` (`Source/engine/render/scrollrt.cpp`, `Source/engine/dx.cpp`, `Source/engine/render/clx_render.cpp`):**
+  `DoBlitScreen()` sujeta el área contra `gnScreenWidth` y `gnScreenHeight`, descartando áreas no positivas. `UndrawCursor()` valida que el ancho y alto sean mayores a cero. `Blit()` en `dx.cpp` descarta rectángulos no positivos antes de invocar a SDL. `DoRenderBackwards()` y `RenderClxOutline()` abortan si el búfer de destino tiene dimensiones no positivas.
+- ✅ **Cachebuster Actualizado:** Incrementado a `v=nightmare-v6` en `Packaging/emscripten/index.html`.
+
 ## 🚀 Versión Enhanced v1.5 - Septiembre 9, 2026
 
 ### 🛡️ **ERRADICACIÓN DE CONGELAMIENTO EN BATALLAS ÉPICAS & BUCLE COOPERATIVO WEBASSEMBLY**

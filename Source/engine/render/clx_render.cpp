@@ -218,6 +218,8 @@ void DoRenderBackwards(
     const Surface &out, Point position, const uint8_t *src, size_t srcSize,
     unsigned srcWidth, unsigned srcHeight, BlitFn &&blitFn)
 {
+	if (out.w() <= 0 || out.h() <= 0)
+		return;
 	if (position.y < 0 || position.y + 1 >= static_cast<int>(out.h() + srcHeight))
 		return;
 	const ClipX clipX = CalculateClipX(position.x, srcWidth, out);
@@ -404,6 +406,8 @@ void UpdateOutlinePixelsCache(ClxSprite sprite)
 template <bool SkipColorIndexZero>
 void RenderClxOutline(const Surface &out, Point position, ClxSprite sprite, uint8_t color)
 {
+	if (out.w() <= 0 || out.h() <= 0)
+		return;
 	UpdateOutlinePixelsCache<SkipColorIndexZero>(sprite);
 	--position.x;
 	position.y -= sprite.height();

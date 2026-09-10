@@ -1,5 +1,6 @@
 #pragma once
 
+#include <algorithm>
 #include <cstddef>
 #include <cstdint>
 
@@ -110,7 +111,15 @@ struct Surface {
 	 */
 	Surface subregion(int x, int y, int w, int h) const
 	{
-		return Surface(surface, MakeSdlRect(region.x + x, region.y + y, w, h));
+		if (surface == nullptr)
+			return Surface();
+		const int rx = std::clamp(region.x + x, 0, static_cast<int>(surface->w));
+		const int ry = std::clamp(region.y + y, 0, static_cast<int>(surface->h));
+		const int maxW = std::max(0, static_cast<int>(surface->w) - rx);
+		const int maxH = std::max(0, static_cast<int>(surface->h) - ry);
+		const int rw = std::clamp(w, 0, maxW);
+		const int rh = std::clamp(h, 0, maxH);
+		return Surface(surface, MakeSdlRect(rx, ry, rw, rh));
 	}
 
 	/**
@@ -118,10 +127,7 @@ struct Surface {
 	 */
 	Surface subregionX(int x, int w) const
 	{
-		SDL_Rect subregion = region;
-		subregion.x += static_cast<decltype(SDL_Rect {}.x)>(x);
-		subregion.w = static_cast<decltype(SDL_Rect {}.w)>(w);
-		return Surface(surface, subregion);
+		return subregion(x, 0, w, region.h);
 	}
 
 	/**
@@ -129,10 +135,7 @@ struct Surface {
 	 */
 	Surface subregionY(int y, int h) const
 	{
-		SDL_Rect subregion = region;
-		subregion.y += static_cast<decltype(SDL_Rect {}.y)>(y);
-		subregion.h = static_cast<decltype(SDL_Rect {}.h)>(h);
-		return Surface(surface, subregion);
+		return subregion(0, y, region.w, h);
 	}
 
 	/**

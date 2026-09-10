@@ -400,12 +400,9 @@ int GetLineHeight(std::string_view fmt, DrawStringFormatArg *args, std::size_t a
 
 Surface ClipSurface(const Surface &out, Rectangle rect)
 {
-	if (rect.size.height == 0) {
-		return out.subregion(0, 0, std::min(rect.position.x + rect.size.width, out.w()), out.h());
-	}
-	return out.subregion(0, 0,
-	    std::min(rect.position.x + rect.size.width, out.w()),
-	    std::min(rect.position.y + rect.size.height, out.h()));
+	const int clampedW = std::clamp(rect.position.x + rect.size.width, 0, out.w());
+	const int clampedH = (rect.size.height == 0) ? out.h() : std::clamp(rect.position.y + rect.size.height, 0, out.h());
+	return out.subregion(0, 0, clampedW, clampedH);
 }
 
 int AdjustSpacingToFitHorizontally(int &lineWidth, int maxSpacing, int charactersInLine, int availableWidth)
@@ -860,6 +857,8 @@ uint32_t DrawString(const Surface &out, std::string_view text, const Rectangle &
 	const bool outlined = HasAnyOf(opts.flags, UiFlags::Outlined);
 
 	const Surface clippedOut = ClipSurface(out, rect);
+	if (clippedOut.w() <= 0 || clippedOut.h() <= 0)
+		return 0;
 
 	// Only draw the PentaCursor if the cursor is not at the end.
 	if (HasAnyOf(opts.flags, UiFlags::PentaCursor) && static_cast<size_t>(opts.cursorPosition) == text.size()) {
@@ -907,6 +906,8 @@ void DrawStringWithColors(const Surface &out, std::string_view fmt, DrawStringFo
 	const bool outlined = HasAnyOf(opts.flags, UiFlags::Outlined);
 
 	const Surface clippedOut = ClipSurface(out, rect);
+	if (clippedOut.w() <= 0 || clippedOut.h() <= 0)
+		return;
 
 	CurrentFont currentFont;
 	const int originalSpacing = opts.spacing;

@@ -194,6 +194,12 @@ void Blit(SDL_Surface *src, SDL_Rect *srcRect, SDL_Rect *dstRect)
 {
 	if (HeadlessMode)
 		return;
+	if (src == nullptr)
+		return;
+	if (srcRect != nullptr && (srcRect->w <= 0 || srcRect->h <= 0))
+		return;
+	if (dstRect != nullptr && (dstRect->w <= 0 || dstRect->h <= 0))
+		return;
 
 	SDL_Surface *dst = GetOutputSurface();
 #if defined(USE_SDL3)

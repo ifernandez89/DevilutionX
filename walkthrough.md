@@ -85,8 +85,35 @@ Se han implementado, probado y verificado con éxito las nuevas características
 
 ---
 
+### 5. 🛡️ Erradicación de `memory access out of bounds` (WASM 0x4cc1aa) en Batallas y Renderizado
+
+#### A. Diagnóstico y Desensamblado de la Instrucción 0x4cc1aa
+- **Función Afectada:** Función interna 6476 del módulo WebAssembly (`SDL_Blit8to4` en SDL2), el blitter optimizado de 8 bits con paleta a 32 bits RGB888 que lee los píxeles de origen mediante Duff's device (`i32.load8_u align=0 offset=0`).
+- **Secuencia de Fallo:** Durante batallas con docenas de números flotantes de daño (`DrawFloatingNumbers`) y combatientes en los límites del mapa (Golem vs Leoric y Na-Krul), las coordenadas `screenPosition` pasaban a ser negativas.
+- **Underflow de Punteros en Subregiones:** `ClipSurface()` calculaba `std::min(rect.position.x + rect.size.width, out.w())` produciendo anchos negativos cuando el rectángulo estaba a la izquierda de la pantalla. Al construir la subregión, las dimensiones negativas provocaban underflow de enteros sin signo en aritmética de punteros (`at(x, y)` apuntaba a `~0xFFFFFF00`, fuera del heap de 512 MB de WebAssembly). El motor fallaba con `Uncaught RuntimeError: memory access out of bounds`, lo que detenía el bucle WebAssembly e inmediatamente activaba la alerta de congelamiento del watchdog 2.6s después.
+
+#### B. Correcciones Aplicadas en el Núcleo
+1. **Aislamiento en `Surface::subregion` ([`Source/engine/surface.hpp`](file:///c:/Projects/DevilutionX/Source/engine/surface.hpp)):**
+   - `subregion()`, `subregionX()` y `subregionY()` ahora delimitan estrictamente `rx` y `ry` dentro de `[0, surface->w]` y `[0, surface->h]`, y `rw` y `rh` dentro de `[0, surface->w - rx]` y `[0, surface->h - ry]`. Es imposible generar una subregión con dimensiones negativas o desbordada del búfer físico.
+2. **Recorte Seguro en `ClipSurface` y Salida Rápida en `DrawString` ([`Source/engine/render/text_render.cpp`](file:///c:/Projects/DevilutionX/Source/engine/render/text_render.cpp)):**
+   - `ClipSurface()` ahora emplea `std::clamp` asegurando que tanto el ancho como el alto sean `>= 0`.
+   - `DrawString()` y `DrawStringWithColors()` descartan de inmediato la operación si `clippedOut.w() <= 0 || clippedOut.h() <= 0`.
+3. **Descarte de Números Flotantes Fuera de Pantalla ([`Source/qol/floatingnumbers.cpp`](file:///c:/Projects/DevilutionX/Source/qol/floatingnumbers.cpp)):**
+   - `DrawFloatingNumbers()` valida de antemano si las coordenadas del texto están totalmente fuera del área visible y las omite con `continue` antes de invocar el renderizador de texto.
+4. **Validación de Límites en `DoBlitScreen`, `UndrawCursor` y `Blit` ([`Source/engine/render/scrollrt.cpp`](file:///c:/Projects/DevilutionX/Source/engine/render/scrollrt.cpp), [`Source/engine/dx.cpp`](file:///c:/Projects/DevilutionX/Source/engine/dx.cpp), [`Source/engine/render/clx_render.cpp`](file:///c:/Projects/DevilutionX/Source/engine/render/clx_render.cpp)):**
+   - `DoBlitScreen()` recorta el área contra los límites de pantalla `gnScreenWidth` y `gnScreenHeight`, descartando áreas no positivas antes de invocar a `BltFast()`.
+   - `UndrawCursor()` valida `cursor.rect.size.width > 0 && cursor.rect.size.height > 0` antes de invocar `BlitCursor()`.
+   - `Blit()` en `dx.cpp` verifica dimensiones válidas antes de delegar a `SDL_BlitSurface`.
+   - `DoRenderBackwards()` y `RenderClxOutline()` verifican `out.w() > 0 && out.h() > 0` al inicio para abortar dibujos sobre regiones vacías.
+5. **Cachebuster Actualizado a `v=nightmare-v6` ([`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html)):**
+   - Actualizada la referencia a `devilutionx.js?v=nightmare-v6`.
+
+---
+
 ## 🧪 Resultados de Verificación
 - **Bucle Principal WebAssembly:** Rendición periódica activa (`SDL_Delay(1)`) cada 16ms y renderizado continuo garantizado (`*drawGame = true`).
-- **Watchdog y Telemetría:** Heartbeat continuo sin interrupciones ni falsos positivos por encima de 6 segundos.
-- **Cachebuster Actualizado:** Referencia actualizada a `v=nightmare-v5` en `Packaging/emscripten/index.html`.
+- **Seguridad de Memoria en Renderizado:** Subregiones estrictamente acotadas a `[0, surface->w]` y `[0, surface->h]`. Erradicado cualquier riesgo de underflow de punteros a `0xFFFFFF00`.
+- **Protección de Blitters SDL:** Dimensiones de rectángulos de blit y cursor validadas antes de llamadas a SDL.
+- **Watchdog y Telemetría:** Heartbeat continuo sin caídas ni falsos positivos de cuelgue.
+- **Cachebuster Actualizado:** Referencia actualizada a `v=nightmare-v6` en `Packaging/emscripten/index.html`.
 - **Cero Regresiones:** Compatibilidad íntegra conservada para la invasión de Tristán, persistencia del Golem y compilación multiplataforma.

@@ -12,6 +12,7 @@
 #include "appfat.h"
 #include "effects.h"
 #include "engine/assets.hpp"
+#include "engine/point.hpp"
 #include "lua/modules/audio.hpp"
 #include "lua/modules/floatingnumbers.hpp"
 #include "lua/modules/hellfire.hpp"
@@ -272,6 +273,18 @@ void LuaInitialize()
 	    sol::lib::string,
 	    sol::lib::table,
 	    sol::lib::utf8);
+
+	// Register Point as a sol2 usertype so it can be passed between C++ and Lua correctly.
+	// Without this, monster.position / player.position return an opaque userdata that cannot
+	// be passed back into C++ functions that expect a Point (e.g. floatingnumbers.add), causing
+	// a type-check failure and a Lua panic on the first frame a damage/XP event fires.
+	{
+		sol::usertype<Point> pointType = lua.new_usertype<Point>(
+		    "Point",
+		    sol::constructors<Point(int, int)>());
+		pointType["x"] = &Point::x;
+		pointType["y"] = &Point::y;
+	}
 
 	// Registering devilutionx object table
 	SafeCallResult(lua.safe_script(RequireGenSrc), /*optional=*/false);

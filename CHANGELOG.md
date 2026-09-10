@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### 🐛 Corrección Crítica: Pánico de Lua al Arrancar — `Point` no registrado como usertype de sol2 ([`Source/lua/lua_global.cpp`](file:///c:/Projects/DevilutionX/Source/lua/lua_global.cpp))
+- **Causa raíz**: El tipo `Point` (coordenadas del mapa, `PointOf<int>`) nunca se registraba como `sol::usertype` en el estado Lua de sol2. Los módulos `Floating Numbers - Damage` y `Floating Numbers - XP` (activos por defecto) usaban `monster.position` / `player.position` como argumento de `floatingnumbers.add(...)`. Al pasar ese valor de vuelta a C++, sol2 no podía verificar la compatibilidad de tipo y lanzaba el error `stack index 1, expected table, received nil: value is not a table or a userdata that can behave like one (type check failed in constructor)`, lo que provocaba un pánico de Lua → `abort()` → `RuntimeError: Aborted()` en WebAssembly **antes de cargar cualquier MPQ**.
+- **Síntoma**: El juego era completamente injugable; se abortaba en el primer frame posterior a la inicialización de Lua con FPS=0, sin posibilidad de cargar ningún archivo de juego.
+- **Solución**: Se registra `Point` como `sol::usertype<Point>` con constructor `Point(int, int)` y propiedades `x` e `y` en `LuaInitialize()`, justo antes de inicializar los módulos, garantizando que sol2 resuelva correctamente el tipo en todos los bindings (`floatingnumbers.add`, `player.position`, `monster.position`).
+- Se añade `#include "engine/point.hpp"` en `lua_global.cpp`.
+
 ### 🛡️ Corrección Crítica de Acceso a Memoria Fuera de Límites (WASM 0x4cc1aa) en Batallas y Renderizado
 - **Protección de Regiones y Recorte en Superficies ([`Source/engine/surface.hpp`](file:///c:/Projects/DevilutionX/Source/engine/surface.hpp))**:
   - `subregion()`, `subregionX()` y `subregionY()` ahora delimitan estrictamente sus coordenadas `(rx, ry)` y dimensiones `(rw, rh)` dentro de `[0, surface->w]` y `[0, surface->h]`. Esto previene desbordamientos de enteros (underflows) de 32 bits a `~0xFFFFFF00` cuando se calculan posiciones relativas fuera de la pantalla.

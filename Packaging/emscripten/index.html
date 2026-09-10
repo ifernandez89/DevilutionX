@@ -1982,6 +1982,18 @@
 			setTimeout(triggerDiabloLightning, 5000);
 
 			// Main Atmosphere & Weather Loop (Diablo Rain 2.0 & Thunderstorm Engine)
+			// ------------------------------------------------------------
+			// Combat load detection: track how long the WASM engine spends
+			// between browser frames so the rain loop can self-throttle.
+			// DiagnosticSystem.avgFrameTime is maintained by the WebGL hook.
+			// ------------------------------------------------------------
+			var _rainHeavyLoad = false;       // true when WASM frame budget is exceeded
+			var _rainSkipCounter = 0;         // how many RAF frames have been skipped
+			var _RAIN_SKIP_MAX = 2;           // skip at most this many consecutive frames
+			var _RAIN_BUDGET_MS = 28;         // ms — above this we consider the game "busy"
+			// When heavy load is detected, clamp active drop count to this fraction.
+			var _RAIN_THROTTLE_FACTOR = 0.45; // 45% of full pool (~111 drops vs 246)
+
 			function weatherLoop() {
 				if (!document.body.classList.contains('remaster-enabled') || document.hidden) {
 					ctx.clearRect(0, 0, width, height);
@@ -1989,6 +2001,25 @@
 					requestAnimationFrame(weatherLoop);
 					return;
 				}
+
+				// -- Frame budget check ----------------------------------------
+				// Use DiagnosticSystem's rolling average frame time (updated every
+				// 500 ms by the WebGL hook) as a lightweight proxy for WASM load.
+				var _diagAvg = (window.DiagnosticSystem && window.DiagnosticSystem.avgFrameTime)
+					? window.DiagnosticSystem.avgFrameTime
+					: 16.6;
+				_rainHeavyLoad = (_diagAvg > _RAIN_BUDGET_MS);
+
+				// If the game is currently burning through its frame budget, skip
+				// expensive canvas work for up to _RAIN_SKIP_MAX consecutive frames
+				// (canvas stays as-is — rain appears to slow down rather than vanish).
+				if (_rainHeavyLoad && _rainSkipCounter < _RAIN_SKIP_MAX) {
+					_rainSkipCounter++;
+					requestAnimationFrame(weatherLoop);
+					return;
+				}
+				_rainSkipCounter = 0;
+				// -- End frame budget check ------------------------------------
 
 				resizeRain();
 				ctx.clearRect(0, 0, width, height);
@@ -2007,42 +2038,53 @@
 
 				// 1. Clean Atmospheric Ambient (No static screen-space fake lights)
 
-
-
 				// 3. Render Floating Hot Embers & Fireflies (Ascuas Volantes)
-				for (var e = 0; e < embers.length; e++) {
-					var emb = embers[e];
-					emb.y += emb.speedY;
-					emb.x += emb.speedX + activeWindX * 0.12;
-					emb.life--;
+				// Skip embers entirely when the engine is under combat load.
+				if (!_rainHeavyLoad) {
+					for (var e = 0; e < embers.length; e++) {
+						var emb = embers[e];
+						emb.y += emb.speedY;
+						emb.x += emb.speedX + activeWindX * 0.12;
+						emb.life--;
 
-					if (emb.life <= 0 || emb.y < height * 0.25) {
-						emb.x = width * 0.25 + Math.random() * (width * 0.5);
-						emb.y = height * 0.55 + Math.random() * (height * 0.35);
-						emb.life = Math.floor(Math.random() * 120) + 40;
+						if (emb.life <= 0 || emb.y < height * 0.25) {
+							emb.x = width * 0.25 + Math.random() * (width * 0.5);
+							emb.y = height * 0.55 + Math.random() * (height * 0.35);
+							emb.life = Math.floor(Math.random() * 120) + 40;
+						}
+
+						var embAlpha = Math.sin((emb.life / emb.maxLife) * Math.PI) * 0.85;
+						ctx.fillStyle = 'rgba(' + emb.color[0] + ',' + emb.color[1] + ',' + emb.color[2] + ',' + embAlpha.toFixed(2) + ')';
+						ctx.beginPath();
+						ctx.arc(emb.x, emb.y, emb.size, 0, Math.PI * 2);
+						ctx.fill();
 					}
-
-					var embAlpha = Math.sin((emb.life / emb.maxLife) * Math.PI) * 0.85;
-					ctx.fillStyle = 'rgba(' + emb.color[0] + ',' + emb.color[1] + ',' + emb.color[2] + ',' + embAlpha.toFixed(2) + ')';
-					ctx.beginPath();
-					ctx.arc(emb.x, emb.y, emb.size, 0, Math.PI * 2);
-					ctx.fill();
 				}
 
 				// 4. Render Wet Mud Reflections & Puddle Glints
-				for (var pg = 0; pg < puddleGlints.length; pg++) {
-					puddleGlints[pg].update();
-					puddleGlints[pg].draw();
+				// Skip puddle glints under load — they're the least visible effect.
+				if (!_rainHeavyLoad) {
+					for (var pg = 0; pg < puddleGlints.length; pg++) {
+						puddleGlints[pg].update();
+						puddleGlints[pg].draw();
+					}
 				}
 
 				// 5. Render Rain Drops across 3 Depth Layers
-				var activeDropCount = Math.floor(drops.length * (weatherIntensity / 0.65));
+				// Under heavy load, clamp the active drop count to a reduced fraction
+				// of the pool so the core rain effect stays visible but costs less.
+				var fullDropCount = Math.floor(drops.length * (weatherIntensity / 0.65));
+				var activeDropCount = _rainHeavyLoad
+					? Math.floor(fullDropCount * _RAIN_THROTTLE_FACTOR)
+					: fullDropCount;
 				for (var d = 0; d < Math.min(drops.length, activeDropCount); d++) {
 					drops[d].update(activeWindX);
 					drops[d].draw(activeWindX);
 				}
 
 				// 6. Render Ground Splashes (Zero-GC Pool)
+				// Keep splashes even under load — they're cheap (just ellipse strokes)
+				// and contribute to the grounded feel of the rain.
 				for (var s = 0; s < MAX_SPLASHES; s++) {
 					var sp = splashPool[s];
 					if (sp.active) {

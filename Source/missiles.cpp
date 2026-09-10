@@ -4472,6 +4472,11 @@ void SetUpMissileAnimationData()
 			continue;
 		}
 
+		// Guard against stale source index: the monster may have died and its slot
+		// been cleared or reused since the Rhino missile was created.
+		if (missile._misource < 0 || missile._misource >= static_cast<int>(MaxMonsters))
+			continue;
+
 		const CMonster &mon = Monsters[missile._misource].type();
 
 		MonsterGraphic graphic;

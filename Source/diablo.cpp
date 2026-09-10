@@ -3552,6 +3552,15 @@ bool game_loop(bool bStartup)
 
 		if (!gbRunGame || !gbIsMultiplayer || demo::IsRunning() || demo::IsRecording() || !nthread_has_500ms_passed())
 			break;
+
+#if defined(__EMSCRIPTEN__)
+		// When running multiple GameLogic ticks in a single call (multiplayer catch-up),
+		// yield to the browser event loop between ticks so RAF callbacks (rain engine,
+		// neural canvas, input events) and the watchdog heartbeat continue running.
+		// Without this the inner loop can hold the JS thread for 100+ ms during heavy
+		// invasion combat, which the watchdog correctly identifies as a freeze.
+		SDL_Delay(1);
+#endif
 	}
 	return true;
 }

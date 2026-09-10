@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### 🐛 Corrección Crítica: Pánico de Lua al Arrancar — `Point` no registrado como usertype de sol2 ([`Source/lua/lua_global.cpp`](file:///c:/Projects/DevilutionX/Source/lua/lua_global.cpp))
+- **Causa raíz**: El tipo `Point` (`PointOf<int>`, coordenadas del mapa) nunca se registraba como `sol::usertype` en el estado Lua de sol2. Los módulos `Floating Numbers - Damage` y `Floating Numbers - XP` (activos por defecto) pasaban `monster.position` / `player.position` como argumento a `floatingnumbers.add(...)`. Al devolver ese valor de C++ a Lua y volver a pasarlo a C++, sol2 fallaba el type-check con el error `stack index 1, expected table, received nil: value is not a table or a userdata that can behave like one (type check failed in constructor)`, provocando pánico de Lua → `abort()` → `RuntimeError: Aborted()` en WebAssembly **antes de cargar cualquier MPQ**.
+- **Síntoma**: El juego era completamente injugable desde el arranque, FPS=0, sin posibilidad de cargar ningún archivo de juego.
+- **Solución**: Se registra `Point` como `sol::usertype<Point>` con constructor `Point(int, int)` y propiedades `x` e `y` en `LuaInitialize()`, antes de registrar cualquier módulo, garantizando que sol2 resuelva el tipo correctamente en todos los bindings (`floatingnumbers.add`, `player.position`, `monster.position`).
+- Se añade `#include "engine/point.hpp"` en `lua_global.cpp`.
+
 ### 🛡️ Corrección Crítica de Acceso a Memoria Fuera de Límites (WASM 0x4cc1aa) en Batallas y Renderizado
 - **Protección de Regiones y Recorte en Superficies ([`Source/engine/surface.hpp`](file:///c:/Projects/DevilutionX/Source/engine/surface.hpp))**:
   - `subregion()`, `subregionX()` y `subregionY()` ahora delimitan estrictamente sus coordenadas `(rx, ry)` y dimensiones `(rw, rh)` dentro de `[0, surface->w]` y `[0, surface->h]`. Esto previene desbordamientos de enteros (underflows) de 32 bits a `~0xFFFFFF00` cuando se calculan posiciones relativas fuera de la pantalla.

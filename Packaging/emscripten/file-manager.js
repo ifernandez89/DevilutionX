@@ -100,8 +100,33 @@
 		try { FS.mkdir('/libsdl/diasurgical'); } catch (e) {}
 		try { FS.mkdir('/libsdl/diasurgical/devilution'); } catch (e) {}
 
+		// Collect existing files in IDBFS directory
+		let existingFiles = [];
+		try {
+			existingFiles = FS.readdir('/libsdl/diasurgical/devilution') || [];
+		} catch (e) {}
+
+		// Track occupied files in lowercase
+		const occupiedFiles = new Set(existingFiles.map(f => f.toLowerCase()));
+
+		// Check if retail diabdat.mpq is present or being uploaded in this batch
+		const hasDiabdat = existingFiles.some(f => f.toLowerCase() === 'diabdat.mpq') ||
+		                   validFiles.some(f => f.name.toLowerCase() === 'diabdat.mpq');
+
+		function getNextFreeSlot(prefix, ext) {
+			for (let i = 0; i < 99; i++) {
+				const candidate = (prefix + i + '.' + ext).toLowerCase();
+				if (!occupiedFiles.has(candidate)) {
+					occupiedFiles.add(candidate);
+					return i;
+				}
+			}
+			return 98;
+		}
+
 		let processed = 0;
 		let errors = [];
+		let installedSummaries = [];
 
 		validFiles.forEach(file => {
 			const reader = new FileReader();
@@ -109,21 +134,75 @@
 				try {
 					const data = new Uint8Array(e.target.result);
 					const lowerName = file.name.toLowerCase();
-					// Normalize MPQs strictly to lowercase for Unix/Emscripten case sensitivity
-					const destFilename = lowerName.endsWith('.mpq') ? lowerName : file.name;
+					let destFilename = lowerName;
+
+					if (lowerName.endsWith('.mpq')) {
+						destFilename = lowerName; // Strictly lowercase for Unix/Emscripten case sensitivity
+					} else if (lowerName.endsWith('.ini')) {
+						destFilename = 'diablo.ini';
+					} else {
+						// Save game file (.sv, .hsv, .dsv)
+						let ext = 'sv';
+						if (lowerName.endsWith('.hsv')) {
+							ext = 'hsv';
+						} // .dsv and .sv both normalize to .sv
+
+						// Determine prefix
+						let prefix = 'single_';
+						if (lowerName.startsWith('multi_')) prefix = 'multi_';
+						else if (lowerName.startsWith('share_')) prefix = 'share_';
+						else if (lowerName.startsWith('spawn_')) prefix = 'spawn_';
+						else if (!hasDiabdat && !lowerName.startsWith('single_')) prefix = 'spawn_';
+
+						// Match slot number: e.g. single_0.sv, single_1 (1).sv, etc.
+						const standardMatch = lowerName.match(/^(?:single|spawn|multi|share)_(\d+)\.(?:sv|hsv|dsv)$/);
+						const copyMatch = lowerName.match(/^(?:single|spawn|multi|share)_(\d+)\s*\(\d+\)\.(?:sv|hsv|dsv)$/);
+
+						let chosenSlot = null;
+
+						if (standardMatch) {
+							const requestedSlot = parseInt(standardMatch[1], 10);
+							const candidate = (prefix + requestedSlot + '.' + ext).toLowerCase();
+
+							if (occupiedFiles.has(candidate)) {
+								const confirmOverwrite = confirm(
+									`Ya existe una partida guardada en la casilla ${requestedSlot} (${prefix}${requestedSlot}.${ext}).\n\n` +
+									`• Pulsa ACEPTAR para SOBRESCRIBIR la casilla ${requestedSlot}.\n` +
+									`• Pulsa CANCELAR para GUARDARLA EN UNA CASILLA LIBRE sin perder tu partida actual.`
+								);
+								if (confirmOverwrite) {
+									chosenSlot = requestedSlot;
+								} else {
+									chosenSlot = getNextFreeSlot(prefix, ext);
+								}
+							} else {
+								chosenSlot = requestedSlot;
+								occupiedFiles.add(candidate);
+							}
+						} else if (copyMatch) {
+							// Downloaded duplicate copy like "single_0 (1).sv": auto-assign to free slot
+							chosenSlot = getNextFreeSlot(prefix, ext);
+						} else {
+							// Arbitrary name (e.g. "guerrero.sv", "save.dsv"): auto-assign to free slot
+							chosenSlot = getNextFreeSlot(prefix, ext);
+						}
+
+						destFilename = `${prefix}${chosenSlot}.${ext}`;
+					}
+
 					const destPath = '/libsdl/diasurgical/devilution/' + destFilename;
 
 					// Remove any conflicting uppercase or mixed-case variant from IDBFS directory
 					try {
-						const existing = FS.readdir('/libsdl/diasurgical/devilution');
-						existing.forEach(f => {
-							if (f.toLowerCase() === lowerName && f !== destFilename) {
+						const currentFiles = FS.readdir('/libsdl/diasurgical/devilution');
+						currentFiles.forEach(f => {
+							if (f.toLowerCase() === destFilename.toLowerCase() && f !== destFilename) {
 								try { FS.unlink('/libsdl/diasurgical/devilution/' + f); } catch (err) {}
 							}
 						});
 					} catch (err) {}
 
-					// Write single normalized file to IDBFS persistent directory
+					// Write normalized file to IDBFS persistent directory
 					FS.writeFile(destPath, data);
 
 					// Mirror to virtual RAM root
@@ -137,6 +216,7 @@
 						try { localStorage.removeItem('devilutionx_deleted_spawn'); } catch (err) {}
 					}
 
+					installedSummaries.push(file.name + (file.name !== destFilename ? ' ➔ ' + destFilename : ''));
 					console.log('[File Manager] Instalado con éxito:', destFilename, '(' + formatBytes(file.size) + ')');
 				} catch (err) {
 					console.error('[File Manager] Error al escribir ' + file.name + ':', err);
@@ -148,18 +228,23 @@
 					if (typeof showToast === 'function') {
 						showToast('Guardando ' + validFiles.length + ' archivo(s) en IndexedDB...');
 					}
+					window.syncInProgress = true;
 					// Persist atomic sync to IndexedDB
 					FS.syncfs(false, function(err) {
+						window.syncInProgress = false;
 						if (err) {
 							console.error('[File Manager] Error sincronizando a IndexedDB:', err);
 							alert('Error guardando archivos en el almacenamiento del navegador.');
 						} else {
+							let msg = '';
 							if (errors.length > 0) {
-								alert('Se cargaron ' + (validFiles.length - errors.length) + ' archivo(s). Hubo errores con: ' + errors.join(', '));
+								msg = 'Se cargaron ' + (validFiles.length - errors.length) + ' archivo(s). Hubo errores con: ' + errors.join(', ');
 							} else {
-								alert('¡' + validFiles.length + ' archivo(s) instalados con éxito! Recargando el juego...');
+								msg = '¡' + validFiles.length + ' archivo(s) instalados y normalizados con éxito!\n\n' +
+								      installedSummaries.map(s => '• ' + s).join('\n') + '\n\nRecargando el juego...';
 							}
-							setTimeout(() => location.reload(), 400);
+							alert(msg);
+							setTimeout(() => location.reload(), 300);
 						}
 					});
 				}
@@ -326,7 +411,17 @@
 
 		const nameSpan = document.createElement('span');
 		nameSpan.className = 'file-item-name';
-		nameSpan.textContent = filename;
+
+		let displayName = filename;
+		if (isSaveFile) {
+			const m = filename.toLowerCase().match(/^(single|spawn|multi|share)_(\d+)\.(sv|hsv)$/);
+			if (m) {
+				const modeLabel = (m[1] === 'single' ? 'Un Jugador' : (m[1] === 'spawn' ? 'Shareware' : 'Multijugador'));
+				const expLabel = (m[3] === 'hsv' ? '🔥 Hellfire' : '⚔️ Diablo');
+				displayName = `${filename} (${modeLabel} • Casilla ${m[2]} • ${expLabel})`;
+			}
+		}
+		nameSpan.textContent = displayName;
 
 		const sizeSpan = document.createElement('span');
 		sizeSpan.className = 'file-item-size';
@@ -481,29 +576,23 @@
 			localStorage.clear();
 			sessionStorage.clear();
 
-			const req = indexedDB.deleteDatabase('/libsdl');
-			req.onsuccess = function() {
-				alert('¡Almacenamiento e IndexedDB restablecidos de fábrica al 100%! Recargando...');
-				location.reload();
-			};
-			req.onerror = function() {
-				// Fallback: manually unlink everything
-				try {
-					const files = FS.readdir('/libsdl/diasurgical/devilution');
-					files.forEach(f => {
-						if (f !== '.' && f !== '..') {
-							try { FS.unlink('/libsdl/diasurgical/devilution/' + f); } catch (e) {}
-						}
-					});
-					FS.syncfs(false, function() {
-						alert('¡Datos restablecidos! Recargando...');
-						location.reload();
-					});
-				} catch (e) {
+			const req1 = indexedDB.deleteDatabase('/libsdl/diasurgical');
+			const req2 = indexedDB.deleteDatabase('/libsdl');
+
+			let doneCount = 0;
+			function checkDone() {
+				doneCount++;
+				if (doneCount >= 2) {
+					alert('¡Almacenamiento e IndexedDB restablecidos de fábrica al 100%! Recargando...');
 					location.reload();
 				}
-			};
-			req.onblocked = function() {
+			}
+
+			req1.onsuccess = checkDone;
+			req1.onerror = checkDone;
+			req2.onsuccess = checkDone;
+			req2.onerror = checkDone;
+			req1.onblocked = function() {
 				alert('Por favor cierra otras pestañas abiertas de DevilutionX para finalizar el reseteo.');
 				location.reload();
 			};

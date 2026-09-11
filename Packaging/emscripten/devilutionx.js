@@ -146,6 +146,80 @@ Module['preRun'].push(function() {
               } catch(e) {}
             }
 
+            // Auto-heal and normalize all save files (.sv, .hsv, .dsv) in IDBFS to clean lowercase slots
+            try {
+              var allFiles = FS.readdir('/libsdl/diasurgical/devilution');
+              var saveRegex = /^(single|spawn|multi|share)_(\d+)\.(sv|hsv)$/;
+              var standardOccupied = {};
+              var irregularSaves = [];
+
+              allFiles.forEach(function(fname) {
+                if (fname === '.' || fname === '..') return;
+                var lower = fname.toLowerCase();
+                if (lower.endsWith('.sv') || lower.endsWith('.hsv') || lower.endsWith('.dsv')) {
+                  var cleanExtLower = lower;
+                  if (cleanExtLower.endsWith('.dsv')) {
+                    cleanExtLower = cleanExtLower.substring(0, cleanExtLower.length - 4) + '.sv';
+                  }
+                  var m = cleanExtLower.match(saveRegex);
+                  if (m && fname === cleanExtLower) {
+                    standardOccupied[cleanExtLower] = true;
+                    // Mirror valid save into root virtual memory
+                    try {
+                      var sc = FS.readFile('/libsdl/diasurgical/devilution/' + fname);
+                      FS.writeFile('/' + fname, sc);
+                    } catch(e) {}
+                  } else {
+                    irregularSaves.push({ original: fname, normalizedLower: cleanExtLower });
+                  }
+                }
+              });
+
+              if (irregularSaves.length > 0) {
+                irregularSaves.forEach(function(item) {
+                  var targetFilename = '';
+                  var m = item.normalizedLower.match(saveRegex);
+                  if (m && !standardOccupied[item.normalizedLower]) {
+                    targetFilename = item.normalizedLower;
+                  } else {
+                    var prefix = 'single_';
+                    if (item.normalizedLower.indexOf('spawn_') === 0) prefix = 'spawn_';
+                    else if (item.normalizedLower.indexOf('multi_') === 0) prefix = 'multi_';
+                    else if (item.normalizedLower.indexOf('share_') === 0) prefix = 'share_';
+
+                    var ext = item.normalizedLower.endsWith('.hsv') ? '.hsv' : '.sv';
+                    for (var s = 0; s < 99; s++) {
+                      var candidate = prefix + s + ext;
+                      if (!standardOccupied[candidate]) {
+                        targetFilename = candidate;
+                        break;
+                      }
+                    }
+                  }
+
+                  if (targetFilename) {
+                    try {
+                      var oldPath = '/libsdl/diasurgical/devilution/' + item.original;
+                      var newPath = '/libsdl/diasurgical/devilution/' + targetFilename;
+                      var saveContent = FS.readFile(oldPath);
+                      FS.writeFile(newPath, saveContent);
+                      if (item.original !== targetFilename) {
+                        try { FS.unlink(oldPath); } catch(e) {}
+                      }
+                      standardOccupied[targetFilename] = true;
+                      needSync = true;
+                      console.log('[IDBFS] Partida reparada/normalizada:', item.original, '->', targetFilename);
+                      try { FS.writeFile('/' + targetFilename, saveContent); } catch(e) {}
+                    } catch(err) {
+                      console.warn('[IDBFS] Error reparando partida ' + item.original + ':', err);
+                    }
+                  }
+                });
+              }
+            } catch(e) {
+              console.warn('Error auto-healing save files from IDBFS:', e);
+            }
+
             if (needSync) {
               FS.syncfs(false, function() {});
             }
@@ -222,16 +296,19 @@ Module['preRun'].push(function() {
 
 // Track if a sync is in progress to prevent overlapping operations
 var syncInProgress = false;
+window.syncInProgress = false;
 
 // Expose function to manually save to IndexedDB
 Module['saveToIndexedDB'] = function() {
-  if (syncInProgress) {
+  if (syncInProgress || window.syncInProgress) {
     return;
   }
 
   syncInProgress = true;
+  window.syncInProgress = true;
   FS.syncfs(false, function(err) {
     syncInProgress = false;
+    window.syncInProgress = false;
     if (err) {
       console.error('Error persisting saves to IndexedDB:', err);
     }
@@ -242,12 +319,14 @@ Module['saveToIndexedDB'] = function() {
 Module['postRun'] = Module['postRun'] || [];
 Module['postRun'].push(function() {
   setInterval(function() {
-    if (!syncInProgress) {
+    if (!syncInProgress && !window.syncInProgress) {
       syncInProgress = true;
+      window.syncInProgress = true;
       var t0 = performance.now();
       console.log('[IDBFS] Auto-sync periódico iniciado...');
       FS.syncfs(false, function(err) {
         syncInProgress = false;
+        window.syncInProgress = false;
         var elapsed = Math.round(performance.now() - t0);
         if (err) {
           console.error('[IDBFS] Error en auto-sync (' + elapsed + 'ms):', err);
@@ -260,7 +339,7 @@ Module['postRun'].push(function() {
 
   // Sync when the page is about to close
   window.addEventListener('beforeunload', function() {
-    if (!syncInProgress) {
+    if (!syncInProgress && !window.syncInProgress) {
       FS.syncfs(false, function(err) {
         if (err) console.error('[IDBFS] Error en sincronización de cierre:', err);
       });

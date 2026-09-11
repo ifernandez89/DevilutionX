@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### 💾 Corrección y Normalización Inteligente de Partidas en WebAssembly / File Manager ([`Packaging/emscripten/file-manager.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/file-manager.js), [`Packaging/emscripten/emscripten_pre.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/emscripten_pre.js), [`Packaging/emscripten/devilutionx.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/devilutionx.js), [`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html))
+- **Causa raíz**:
+  1. *Sensibilidad a mayúsculas (Case-Sensitivity en Emscripten VFS)*: El File Manager anteriormente solo convertía a minúsculas archivos `.mpq`, dejando las partidas guardadas con el nombre exacto de origen (ej. `SINGLE_0.SV`, `Single_0.sv`). Como el motor C++ (`pfile.cpp`) busca estrictamente `single_X.sv` en minúsculas en el VFS POSIX, la comprobación `FileExists` fallaba y las partidas no se detectaban en el menú de personajes.
+  2. *Nombres arbitrarios o duplicados del navegador*: Archivos descargados con nombres como `single_0 (1).sv` o renombrados por usuarios (`guerrero.sv`, `char.dsv`, etc.) se guardaban con ese nombre textual. El File Manager los mostraba en la interfaz pero el motor del juego sólo escanea casillas fijas `single_0.sv` a `single_98.sv`.
+  3. *Carrera de sincronización en `location.reload()`*: Al recargar tras subir una partida, el evento `beforeunload` lanzaba un segundo `FS.syncfs` concurrente antes de que la transacción de IndexedDB concluyera.
+- **Solución**:
+  - **Normalización y Asignación Inteligente de Casillas en `file-manager.js`**:
+    - Todo archivo de partida (`.sv`, `.hsv`, `.dsv`) se normaliza estrictamente a minúsculas (`.sv` o `.hsv`).
+    - Detección inteligente de casillas: si el archivo se llama `single_0 (1).sv` o tiene un nombre personalizado, busca automáticamente la primera casilla libre (`single_0.sv`, `single_1.sv`, etc.) y la asigna.
+    - Protección contra sobrescritura: si la casilla ya está ocupada, consulta interactivamente si se desea sobrescribir o reasignar a una casilla libre para no perder la partida existente.
+    - Limpieza automática de variantes en mayúsculas huérfanas en `/libsdl/diasurgical/devilution/` y espejo en `/`.
+    - Presentación clara de casillas en la lista visual del File Manager (ej. `single_0.sv (Un Jugador • Casilla 0 • ⚔️ Diablo)`).
+  - **Auto-Reparación en el Arranque (`emscripten_pre.js` y `devilutionx.js`)**:
+    - Durante la sincronización inicial de IndexedDB en el arranque del juego, se analizan todas las partidas guardadas existentes. Si hay partidas con mayúsculas (`SINGLE_0.SV`), copias con paréntesis o extensiones `.dsv`, el script las repara y normaliza automáticamente a casillas estándar en minúsculas en memoria e IndexedDB.
+  - **Control de Concurrencia de Sincronización**:
+    - La variable `window.syncInProgress` ahora coordina el proceso de guardado entre el File Manager, el auto-sync de 45 segundos y el listener de `beforeunload`, previniendo colisiones en IndexedDB.
+  - **Limpieza Completa de BD en Restablecimiento de Fábrica**:
+    - `factoryResetAll()` ahora elimina explícitamente ambas bases de datos (`/libsdl/diasurgical` y `/libsdl`).
+  - **Cachebuster Actualizado a `v=nightmare-v8`**:
+    - Actualizado en `index.html` para `file-manager.js` y `devilutionx.js`.
+
 ### 🐛 Corrección Crítica: Pánico de Lua al Arrancar — `Point` no registrado como usertype de sol2 ([`Source/lua/lua_global.cpp`](file:///c:/Projects/DevilutionX/Source/lua/lua_global.cpp))
 - **Causa raíz**: El tipo `Point` (`PointOf<int>`, coordenadas del mapa) nunca se registraba como `sol::usertype` en el estado Lua de sol2. Los módulos `Floating Numbers - Damage` y `Floating Numbers - XP` (activos por defecto) pasaban `monster.position` / `player.position` como argumento a `floatingnumbers.add(...)`. Al devolver ese valor de C++ a Lua y volver a pasarlo a C++, sol2 fallaba el type-check con el error `stack index 1, expected table, received nil: value is not a table or a userdata that can behave like one (type check failed in constructor)`, provocando pánico de Lua → `abort()` → `RuntimeError: Aborted()` en WebAssembly **antes de cargar cualquier MPQ**.
 - **Síntoma**: El juego era completamente injugable desde el arranque, FPS=0, sin posibilidad de cargar ningún archivo de juego.

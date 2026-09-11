@@ -648,7 +648,7 @@ std::optional<SaveReader> OpenStashArchive()
 {
 	std::string primaryPath = GetStashSavePath();
 	if (FileExists(primaryPath.c_str()))
-		return CreateSaveReader(primaryPath);
+		return CreateSaveReader(std::move(primaryPath));
 
 	if (gbIsSpawn) {
 #ifdef UNPACKED_SAVES

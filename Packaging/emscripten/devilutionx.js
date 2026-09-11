@@ -98,19 +98,36 @@ Module['preRun'].push(function() {
             }
           }
 
+          // Migrate corrupted string values to proper integer enum values
+          // Previous versions wrote Game=Hellfire/Game=Diablo instead of Game=1/Game=2
+          if (currentIni.indexOf('Game=Hellfire') !== -1) {
+            currentIni = currentIni.replace(/Game=Hellfire/g, 'Game=1');
+            modified = true;
+          }
+          if (currentIni.indexOf('Game=Diablo') !== -1) {
+            currentIni = currentIni.replace(/Game=Diablo/g, 'Game=2');
+            modified = true;
+          }
+          // Remove legacy Game Mode keys that the C++ parser doesn't understand
+          if (currentIni.indexOf('Game Mode=') !== -1) {
+            currentIni = currentIni.replace(/^Game Mode=.*$/gm, '');
+            modified = true;
+          }
+
           // If Hellfire MPQs or .hsv saves exist, and no explicit Diablo mode was chosen, configure Hellfire mode
+          // StartUpGameMode enum: Ask=0, Hellfire=1, Diablo=2
           try {
             var devFiles = FS.readdir('/libsdl/diasurgical/devilution') || [];
             var hasHf = devFiles.some(function(f) {
               var low = f.toLowerCase();
               return low === 'hellfire.mpq' || low.endsWith('.hsv');
             });
-            if (hasHf && currentIni.indexOf('Game=Diablo') === -1) {
+            if (hasHf && currentIni.indexOf('Game=2') === -1) {
               if (currentIni.indexOf('[GameMode]') === -1) {
-                currentIni += "\n[GameMode]\nGame=Hellfire\n";
+                currentIni += "\n[GameMode]\nGame=1\n";
                 modified = true;
-              } else if (currentIni.indexOf('Game=Hellfire') === -1) {
-                currentIni = currentIni.replace('[GameMode]', "[GameMode]\nGame=Hellfire");
+              } else if (currentIni.indexOf('Game=1') === -1) {
+                currentIni = currentIni.replace('[GameMode]', "[GameMode]\nGame=1");
                 modified = true;
               }
               if (currentIni.indexOf('[Mods]') === -1) {

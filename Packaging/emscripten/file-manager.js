@@ -129,9 +129,9 @@
 				if (!iniText || iniText.trim().length === 0) {
 					iniText = "[Game]\nTest Barbarian=1\nTest Bard=1\nRun in Town=1\nCow Quest=1\nTheo Quest=1\n";
 				}
-				iniText = setIniKey(iniText, 'GameMode', 'Game', 'Hellfire');
+				// StartUpGameMode enum: Hellfire=1, Diablo=2
+				iniText = setIniKey(iniText, 'GameMode', 'Game', '1');
 				iniText = setIniKey(iniText, 'Mods', 'Hellfire', '1');
-				iniText = setIniKey(iniText, 'Game', 'Game Mode', 'Hellfire');
 				FS.writeFile(iniPath, iniText);
 				try { FS.writeFile('/diablo.ini', iniText); } catch (e) {}
 				console.log('[File Manager] Auto-configurado diablo.ini a modo Hellfire por carga de archivo .hsv');
@@ -464,20 +464,17 @@
 	}
 
 	function getCurrentGameMode() {
+		// StartUpGameMode enum: Ask=0, Hellfire=1, Diablo=2
 		try {
 			const iniPath = '/libsdl/diasurgical/devilution/diablo.ini';
 			const ini = new TextDecoder().decode(FS.readFile(iniPath));
-			const gmMatch = ini.match(/\[GameMode\][\s\S]*?^Game\s*=\s*(\w+)/im);
+			const gmMatch = ini.match(/\[GameMode\][\s\S]*?^Game\s*=\s*(\d+)/im);
 			if (gmMatch && gmMatch[1]) {
-				return gmMatch[1].toLowerCase();
+				return gmMatch[1] === '1' ? 'hellfire' : 'diablo';
 			}
-			const modMatch = ini.match(/\[Mods\][\s\S]*?^Hellfire\s*=\s*(\d+|true)/im);
-			if (modMatch && (modMatch[1] === '1' || modMatch[1].toLowerCase() === 'true')) {
+			const modMatch = ini.match(/\[Mods\][\s\S]*?^Hellfire\s*=\s*(\d+)/im);
+			if (modMatch && modMatch[1] === '1') {
 				return 'hellfire';
-			}
-			const match = ini.match(/Game Mode\s*=\s*(\w+)/i);
-			if (match && match[1]) {
-				return match[1].toLowerCase();
 			}
 		} catch (e) {}
 		return 'diablo';
@@ -728,10 +725,9 @@
 			}
 
 			// Configure canonical C++ DevilutionX options
-			currentIni = setIniKey(currentIni, 'GameMode', 'Game', mode);
+			// StartUpGameMode enum: Hellfire=1, Diablo=2
+			currentIni = setIniKey(currentIni, 'GameMode', 'Game', mode === 'Hellfire' ? '1' : '2');
 			currentIni = setIniKey(currentIni, 'Mods', 'Hellfire', mode === 'Hellfire' ? '1' : '0');
-			// Backwards compatibility with legacy keys
-			currentIni = setIniKey(currentIni, 'Game', 'Game Mode', mode);
 
 			FS.writeFile(iniPath, currentIni);
 			try { FS.writeFile('/diablo.ini', currentIni); } catch (e) {}

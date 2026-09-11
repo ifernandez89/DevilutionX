@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### 🔥 Soporte Completo para Carga de Partidas Hellfire (.hsv) y Fallback de Desencriptación Retail/Spawn ([`Source/pfile.cpp`](file:///c:/Projects/DevilutionX/Source/pfile.cpp), [`Packaging/emscripten/file-manager.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/file-manager.js), [`Packaging/emscripten/emscripten_pre.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/emscripten_pre.js), [`Packaging/emscripten/devilutionx.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/devilutionx.js), [`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html))
+- **Causa raíz identificada**:
+  1. *Diferencia de Contraseña de Cifrado (Retail vs Spawn)*: En PC (`devilutionx.exe`), las partidas de Hellfire (`single_*.hsv`) se cifran con la clave comercial (`PASSWORD_SINGLE = "xrgyrkj1"`). En el navegador web, si no se ha subido `DIABDAT.MPQ`, el motor arranca en modo demostración (`spawn.mpq`), usando la clave de shareware (`PASSWORD_SPAWN_SINGLE = "adslhfb1"`). Al decodificar el archivo en `ReadArchive()`, el checksum fallaba y el personaje era descartado silenciosamente.
+  2. *Búsqueda estricta de prefijo `spawn_` vs `single_`*: Al estar en modo spawn, `OpenSaveArchive()` únicamente buscaba archivos `spawn_0.hsv`, ignorando por completo cualquier archivo `single_*.hsv` subido desde PC.
+  3. *Incompatibilidad de sección en `diablo.ini`*: El botón de alternar modo en el File Manager web escribía `[Game] Game Mode=Hellfire`, mientras que DevilutionX requiere canónicamente `[GameMode] Game=Hellfire` y `[Mods] Hellfire=1`. Por ello, el motor no reconocía la activación de Hellfire desde la web.
+- **Solución implementada**:
+  - **Fallback Dual de Desencriptación en C++ (`Source/pfile.cpp`)**:
+    - `ReadArchive()` ahora implementa una copia de seguridad en memoria del búfer encriptado. Si la desencriptación con la clave activa falla (ej. partida Retail cargada en modo Spawn), intenta automáticamente desencriptar con la clave alternativa (`PASSWORD_SINGLE` / `PASSWORD_SPAWN_SINGLE`).
+    - `OpenSaveArchive()` y `OpenStashArchive()` ahora buscan automáticamente partidas `single_` y el baúl `stash` de la versión Retail si el juego está en modo Spawn y no encuentra partidas `spawn_`.
+  - **Alineación de `diablo.ini` y Activación Automática de Hellfire (`Packaging/emscripten/file-manager.js`)**:
+    - Función auxiliar `setIniKey()` que preserva comentarios y formatea correctamente las secciones `[GameMode] Game=...` y `[Mods] Hellfire=...`.
+    - Detección automática al subir partidas `.hsv`: activa inmediatamente el modo Hellfire en `diablo.ini`.
+    - Clona automáticamente partidas `single_` a `spawn_` si se opera en modo demostración para compatibilidad retroactiva total.
+    - Avisos proactivos claros en pantalla si se detecta que faltan los archivos esenciales de datos (`hellfire.mpq` y `diabdat.mpq`).
+  - **Detección en el Arranque Web (`emscripten_pre.js` y `devilutionx.js`)**:
+    - Durante la sincronización de arranque, si se detectan archivos `.hsv` o `hellfire.mpq`, el script asegura automáticamente que `[GameMode] Game=Hellfire` y `[Mods] Hellfire=1` estén presentes en `diablo.ini`.
+  - Actualización del cachebuster a `v=nightmare-v9` en `Packaging/emscripten/index.html`.
+
 ### 💾 Corrección y Normalización Inteligente de Partidas en WebAssembly / File Manager ([`Packaging/emscripten/file-manager.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/file-manager.js), [`Packaging/emscripten/emscripten_pre.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/emscripten_pre.js), [`Packaging/emscripten/devilutionx.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/devilutionx.js), [`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html))
 - **Causa raíz**:
   1. *Sensibilidad a mayúsculas (Case-Sensitivity en Emscripten VFS)*: El File Manager anteriormente solo convertía a minúsculas archivos `.mpq`, dejando las partidas guardadas con el nombre exacto de origen (ej. `SINGLE_0.SV`, `Single_0.sv`). Como el motor C++ (`pfile.cpp`) busca estrictamente `single_X.sv` en minúsculas en el VFS POSIX, la comprobación `FileExists` fallaba y las partidas no se detectaban en el menú de personajes.

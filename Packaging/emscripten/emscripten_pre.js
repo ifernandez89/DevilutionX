@@ -96,8 +96,35 @@ Module['preRun'].push(function() {
               modified = true;
             }
           }
+
+          // If Hellfire MPQs or .hsv saves exist, and no explicit Diablo mode was chosen, configure Hellfire mode
+          try {
+            var devFiles = FS.readdir('/libsdl/diasurgical/devilution') || [];
+            var hasHf = devFiles.some(function(f) {
+              var low = f.toLowerCase();
+              return low === 'hellfire.mpq' || low.endsWith('.hsv');
+            });
+            if (hasHf && currentIni.indexOf('Game=Diablo') === -1) {
+              if (currentIni.indexOf('[GameMode]') === -1) {
+                currentIni += "\n[GameMode]\nGame=Hellfire\n";
+                modified = true;
+              } else if (currentIni.indexOf('Game=Hellfire') === -1) {
+                currentIni = currentIni.replace('[GameMode]', "[GameMode]\nGame=Hellfire");
+                modified = true;
+              }
+              if (currentIni.indexOf('[Mods]') === -1) {
+                currentIni += "\n[Mods]\nHellfire=1\n";
+                modified = true;
+              } else if (currentIni.indexOf('Hellfire=1') === -1) {
+                currentIni = currentIni.replace('[Mods]', "[Mods]\nHellfire=1");
+                modified = true;
+              }
+            }
+          } catch(e) {}
+
           if (modified) {
             FS.writeFile(iniPath, currentIni);
+            try { FS.writeFile('/diablo.ini', currentIni); } catch(e) {}
             FS.syncfs(false, function() {});
           }
 

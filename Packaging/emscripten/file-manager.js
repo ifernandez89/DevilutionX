@@ -112,6 +112,33 @@
 		// Check if retail diabdat.mpq is present or being uploaded in this batch
 		const hasDiabdat = existingFiles.some(f => f.toLowerCase() === 'diabdat.mpq') ||
 		                   validFiles.some(f => f.name.toLowerCase() === 'diabdat.mpq');
+		const hasHellfireMpq = existingFiles.some(f => f.toLowerCase() === 'hellfire.mpq') ||
+		                       validFiles.some(f => f.name.toLowerCase() === 'hellfire.mpq');
+		const hasHsvFiles = validFiles.some(f => f.name.toLowerCase().endsWith('.hsv'));
+		const hasRetailSaves = validFiles.some(f => {
+			const n = f.name.toLowerCase();
+			return (n.startsWith('single_') || n.startsWith('multi_')) && (n.endsWith('.sv') || n.endsWith('.hsv') || n.endsWith('.dsv'));
+		});
+
+		// Auto-configure Hellfire in diablo.ini if .hsv files are uploaded
+		if (hasHsvFiles) {
+			try {
+				const iniPath = '/libsdl/diasurgical/devilution/diablo.ini';
+				let iniText = '';
+				try { iniText = new TextDecoder().decode(FS.readFile(iniPath)); } catch (e) {}
+				if (!iniText || iniText.trim().length === 0) {
+					iniText = "[Game]\nTest Barbarian=1\nTest Bard=1\nRun in Town=1\nCow Quest=1\nTheo Quest=1\n";
+				}
+				iniText = setIniKey(iniText, 'GameMode', 'Game', 'Hellfire');
+				iniText = setIniKey(iniText, 'Mods', 'Hellfire', '1');
+				iniText = setIniKey(iniText, 'Game', 'Game Mode', 'Hellfire');
+				FS.writeFile(iniPath, iniText);
+				try { FS.writeFile('/diablo.ini', iniText); } catch (e) {}
+				console.log('[File Manager] Auto-configurado diablo.ini a modo Hellfire por carga de archivo .hsv');
+			} catch (err) {
+				console.warn('[File Manager] No se pudo auto-configurar diablo.ini a Hellfire:', err);
+			}
+		}
 
 		function getNextFreeSlot(prefix, ext) {
 			for (let i = 0; i < 99; i++) {
@@ -211,6 +238,16 @@
 						try { FS.writeFile('/DIABDAT.MPQ', data); } catch (err) {}
 					}
 
+					// If running in spawn mode, also mirror single_ to spawn_ as an extra compatibility fallback
+					if (!hasDiabdat && destFilename.startsWith('single_')) {
+						const spawnFilename = 'spawn_' + destFilename.substring('single_'.length);
+						try {
+							FS.writeFile('/libsdl/diasurgical/devilution/' + spawnFilename, data);
+							try { FS.writeFile('/' + spawnFilename, data); } catch (e) {}
+							console.log('[File Manager] Clonado de compatibilidad para modo spawn:', spawnFilename);
+						} catch (e) {}
+					}
+
 					// Clear deleted spawn flag if user uploaded a new spawn.mpq
 					if (lowerName === 'spawn.mpq') {
 						try { localStorage.removeItem('devilutionx_deleted_spawn'); } catch (err) {}
@@ -236,13 +273,25 @@
 							console.error('[File Manager] Error sincronizando a IndexedDB:', err);
 							alert('Error guardando archivos en el almacenamiento del navegador.');
 						} else {
+							let warnings = [];
+							if (hasHsvFiles && !hasHellfireMpq) {
+								warnings.push('⚠️ AVISO HELLFIRE: Has subido partidas Hellfire (.hsv), pero no se detectaron los archivos de Hellfire (hellfire.mpq, hfmonk.mpq, etc.). Recuerda subirlos para que el juego pueda cargar tus personajes de Hellfire.');
+							}
+							if (hasRetailSaves && !hasDiabdat) {
+								warnings.push('⚠️ AVISO PARTIDA PC: Has subido partidas de la versión comercial de PC (single_*). Sin DIABDAT.MPQ en el navegador, el juego corre en modo Demo/Shareware y podría no desencriptar los personajes de PC.');
+							}
+
 							let msg = '';
 							if (errors.length > 0) {
 								msg = 'Se cargaron ' + (validFiles.length - errors.length) + ' archivo(s). Hubo errores con: ' + errors.join(', ');
 							} else {
 								msg = '¡' + validFiles.length + ' archivo(s) instalados y normalizados con éxito!\n\n' +
-								      installedSummaries.map(s => '• ' + s).join('\n') + '\n\nRecargando el juego...';
+								      installedSummaries.map(s => '• ' + s).join('\n');
 							}
+							if (warnings.length > 0) {
+								msg += '\n\n' + warnings.join('\n\n');
+							}
+							msg += '\n\nRecargando el juego...';
 							alert(msg);
 							setTimeout(() => location.reload(), 300);
 						}
@@ -365,10 +414,67 @@
 		hellfireStatusEl.innerHTML = html;
 	}
 
+	function setIniKey(iniText, section, key, value) {
+		let lines = (iniText || '').split(/\r?\n/);
+		let targetSection = '[' + section.toLowerCase() + ']';
+		let currentSection = '';
+		let sectionFound = false;
+		let keyFound = false;
+		let newLines = [];
+
+		for (let i = 0; i < lines.length; i++) {
+			let line = lines[i];
+			let trimmed = line.trim();
+			if (trimmed.startsWith('[') && trimmed.endsWith(']')) {
+				if (currentSection === targetSection && !keyFound) {
+					newLines.push(key + '=' + value);
+					keyFound = true;
+				}
+				currentSection = trimmed.toLowerCase();
+				if (currentSection === targetSection) {
+					sectionFound = true;
+				}
+			} else if (currentSection === targetSection && trimmed.length > 0 && !trimmed.startsWith(';') && !trimmed.startsWith('#')) {
+				let eqIdx = line.indexOf('=');
+				if (eqIdx !== -1) {
+					let k = line.substring(0, eqIdx).trim();
+					if (k.toLowerCase() === key.toLowerCase()) {
+						line = key + '=' + value;
+						keyFound = true;
+					}
+				}
+			}
+			newLines.push(line);
+		}
+
+		if (currentSection === targetSection && !keyFound) {
+			newLines.push(key + '=' + value);
+			keyFound = true;
+		}
+
+		if (!sectionFound) {
+			if (newLines.length > 0 && newLines[newLines.length - 1].trim().length > 0) {
+				newLines.push('');
+			}
+			newLines.push('[' + section + ']');
+			newLines.push(key + '=' + value);
+		}
+
+		return newLines.join('\n');
+	}
+
 	function getCurrentGameMode() {
 		try {
 			const iniPath = '/libsdl/diasurgical/devilution/diablo.ini';
 			const ini = new TextDecoder().decode(FS.readFile(iniPath));
+			const gmMatch = ini.match(/\[GameMode\][\s\S]*?^Game\s*=\s*(\w+)/im);
+			if (gmMatch && gmMatch[1]) {
+				return gmMatch[1].toLowerCase();
+			}
+			const modMatch = ini.match(/\[Mods\][\s\S]*?^Hellfire\s*=\s*(\d+|true)/im);
+			if (modMatch && (modMatch[1] === '1' || modMatch[1].toLowerCase() === 'true')) {
+				return 'hellfire';
+			}
 			const match = ini.match(/Game Mode\s*=\s*(\w+)/i);
 			if (match && match[1]) {
 				return match[1].toLowerCase();
@@ -618,18 +724,18 @@
 			} catch (e) {}
 
 			if (!currentIni || currentIni.trim().length === 0) {
-				currentIni = "[Game]\nTest Barbarian=1\nTest Bard=1\nRun in Town=1\nCow Quest=1\nTheo Quest=1\nGame Mode=" + mode + "\n";
-			} else {
-				if (currentIni.indexOf('Game Mode=') !== -1) {
-					currentIni = currentIni.replace(/Game Mode\s*=\s*\w+/i, 'Game Mode=' + mode);
-				} else if (currentIni.indexOf('[Game]') !== -1) {
-					currentIni = currentIni.replace('[Game]', "[Game]\nGame Mode=" + mode);
-				} else {
-					currentIni += "\n[Game]\nGame Mode=" + mode + "\n";
-				}
+				currentIni = "[Game]\nTest Barbarian=1\nTest Bard=1\nRun in Town=1\nCow Quest=1\nTheo Quest=1\n";
 			}
 
+			// Configure canonical C++ DevilutionX options
+			currentIni = setIniKey(currentIni, 'GameMode', 'Game', mode);
+			currentIni = setIniKey(currentIni, 'Mods', 'Hellfire', mode === 'Hellfire' ? '1' : '0');
+			// Backwards compatibility with legacy keys
+			currentIni = setIniKey(currentIni, 'Game', 'Game Mode', mode);
+
 			FS.writeFile(iniPath, currentIni);
+			try { FS.writeFile('/diablo.ini', currentIni); } catch (e) {}
+
 			FS.syncfs(false, function(err) {
 				alert('¡Modo de juego configurado a ' + (mode === 'Hellfire' ? '🔥 Hellfire' : '⚔️ Diablo 1') + '! Recargando...');
 				setTimeout(() => location.reload(), 300);

@@ -620,13 +620,47 @@ std::optional<SaveReader> OpenSaveArchive(uint32_t saveNum)
 		}
 	}
 
+	// Fallback: If running in spawn mode, also check for retail single_/multi_ saves
+	if (gbIsSpawn) {
+		std::string retailPrimary = StrCat(paths::PrefPath(),
+		    gbIsMultiplayer ? "multi_" : "single_",
+		    saveNum,
+		    primaryExt);
+		if (FileExists(retailPrimary.c_str())) {
+			gbIsHellfireSaveGame = gbIsHellfire;
+			return CreateSaveReader(std::move(retailPrimary));
+		}
+		std::string retailAlt = StrCat(paths::PrefPath(),
+		    gbIsMultiplayer ? "multi_" : "single_",
+		    saveNum,
+		    altExt);
+		if (FileExists(retailAlt.c_str())) {
+			gbIsHellfireSaveGame = !gbIsHellfire;
+			return CreateSaveReader(std::move(retailAlt));
+		}
+	}
+
 	gbIsHellfireSaveGame = gbIsHellfire;
 	return CreateSaveReader(std::move(primaryPath));
 }
 
 std::optional<SaveReader> OpenStashArchive()
 {
-	return CreateSaveReader(GetStashSavePath());
+	std::string primaryPath = GetStashSavePath();
+	if (FileExists(primaryPath.c_str()))
+		return CreateSaveReader(primaryPath);
+
+	if (gbIsSpawn) {
+#ifdef UNPACKED_SAVES
+		std::string retailStash = StrCat(paths::PrefPath(), "stash", gbIsHellfire ? "_hsv" DIRECTORY_SEPARATOR_STR : "_sv" DIRECTORY_SEPARATOR_STR);
+#else
+		std::string retailStash = StrCat(paths::PrefPath(), "stash", gbIsHellfire ? ".hsv" : ".sv");
+#endif
+		if (FileExists(retailStash.c_str()))
+			return CreateSaveReader(std::move(retailStash));
+	}
+
+	return CreateSaveReader(std::move(primaryPath));
 }
 
 std::unique_ptr<std::byte[]> ReadArchive(SaveReader &archive, const char *pszName, size_t *pdwLen)
@@ -638,7 +672,23 @@ std::unique_ptr<std::byte[]> ReadArchive(SaveReader &archive, const char *pszNam
 	if (error != 0)
 		return nullptr;
 
-	const std::size_t decodedLength = codec_decode(result.get(), length, pfile_get_password());
+	const char *primaryPassword = pfile_get_password();
+	const char *fallbackPassword = gbIsSpawn
+	    ? (gbIsMultiplayer ? PASSWORD_MULTI : PASSWORD_SINGLE)
+	    : (gbIsMultiplayer ? PASSWORD_SPAWN_MULTI : PASSWORD_SPAWN_SINGLE);
+
+	std::unique_ptr<std::byte[]> backupBuffer;
+	if (fallbackPassword != nullptr && strcmp(primaryPassword, fallbackPassword) != 0) {
+		backupBuffer.reset(new std::byte[length]);
+		memcpy(backupBuffer.get(), result.get(), length);
+	}
+
+	std::size_t decodedLength = codec_decode(result.get(), length, primaryPassword);
+	if (decodedLength == 0 && backupBuffer != nullptr) {
+		memcpy(result.get(), backupBuffer.get(), length);
+		decodedLength = codec_decode(result.get(), length, fallbackPassword);
+	}
+
 	if (decodedLength == 0)
 		return nullptr;
 

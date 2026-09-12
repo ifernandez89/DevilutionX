@@ -7,11 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-### 🐛 Corrección Crítica: Crash "unreachable" en WebAssembly por callback incompatible con ASYNCIFY ([`Source/discord/discord.cpp`](file:///c:/Projects/DevilutionX/Source/discord/discord.cpp))
-- **Causa raíz**: El callback `ModChanged` registrado con `AddModsChangedHandler(ModChanged)` usaba `tl::function_ref<void()>`, un puntero de función non-owning. Cuando ASYNCIFY hacía `emscripten_sleep(1)` en el bucle principal y luego `doRewind` para restaurar el stack, el puntero de función quedaba inválido, causando un `RuntimeError: unreachable` inmediatamente después de la inicialización.
-- **Síntoma**: El juego crasheaba al arrancar con "unreachable" después del mensaje "GPU Pipeline initialized successfully", sin posibilidad de llegar al menú principal.
-- **Solución**: Deshabilitar el registro del callback de Discord (`ModChangedHandler`) en builds de Emscripten con `#ifndef __EMSCRIPTEN__`. La integración de Discord no es funcional en WebAssembly de todos modos.
-- **Impacto**: El juego ahora arranca correctamente en el navegador.
+### 🐛 Erradicación Definitiva de `RuntimeError: unreachable` en WebAssembly (`doRewind` ASYNCIFY) ([`CMakeLists.txt`](file:///c:/Projects/DevilutionX/CMakeLists.txt), [`Packaging/emscripten/devilutionx.wasm`](file:///c:/Projects/DevilutionX/Packaging/emscripten/devilutionx.wasm), [`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html))
+- **Causa raíz identificada**:
+  - En un commit previo se había configurado `-sASYNCIFY_IGNORE_INDIRECT=1` en `CMakeLists.txt` y se había reemplazado el binario `Packaging/emscripten/devilutionx.wasm` por uno reducido (4.79 MB) sin instrumentación de llamadas indirectas.
+  - En WebAssembly, Emscripten Asyncify necesita registrar los marcos de pila para poder desenrollar (`unwind`) y rebobinar (`doRewind`) la ejecución cuando se invocan funciones asíncronas (`emscripten_sleep`).
+  - Dado que DevilutionX utiliza llamadas indirectas de C++ (métodos virtuales, punteros de función, callbacks de render y lambdas), al producirse el rebobinado tras el primer frame (`RenderPresent -> Sleep -> emscripten_sleep(1)`), la máquina de estados de Asyncify no encontraba los puntos de reingreso para las llamadas indirectas omitidas, disparando inmediatamente la instrucción WebAssembly `unreachable` dentro de `doRewind`.
+- **Solución implementada**:
+  1. Se eliminó `-sASYNCIFY_IGNORE_INDIRECT=1` y `-sASSERTIONS=1` de [`CMakeLists.txt`](file:///c:/Projects/DevilutionX/CMakeLists.txt).
+  2. Se restauró el binario canónico probado [`Packaging/emscripten/devilutionx.wasm`](file:///c:/Projects/DevilutionX/Packaging/emscripten/devilutionx.wasm) (6.64 MB / 6.647.125 bytes) con soporte e instrumentación completa de llamadas indirectas para ASYNCIFY.
+  3. Se incrementó el identificador de caché a `v=nightmare-v19` en [`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html) para forzar la recarga inmediata del binario y scripts sin colisiones de caché en los navegadores.
+
 
 ### 🛡️ Erradicación de `RuntimeError: table index is out of bounds` (Asyncify Indirect Calls), Activación del Reloj por Defecto y Despliegue Ultrarrápido en GitHub Pages (~35s) ([`CMakeLists.txt`](file:///c:/Projects/DevilutionX/CMakeLists.txt), [`Source/diablo.cpp`](file:///c:/Projects/DevilutionX/Source/diablo.cpp), [`.github/workflows/deploy-pages.yml`](file:///c:/Projects/DevilutionX/.github/workflows/deploy-pages.yml), [`Packaging/emscripten/emscripten_pre.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/emscripten_pre.js), [`Packaging/emscripten/file-manager.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/file-manager.js), [`tools/patch_devilutionx_js.py`](file:///c:/Projects/DevilutionX/tools/patch_devilutionx_js.py), [`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html))
 - **Causas raíz identificadas y solucionadas**:

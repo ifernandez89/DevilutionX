@@ -132,6 +132,7 @@
 				// StartUpGameMode enum: Hellfire=1, Diablo=2
 				iniText = setIniKey(iniText, 'GameMode', 'Game', '1');
 				iniText = setIniKey(iniText, 'Mods', 'Hellfire', '1');
+				iniText = setIniKey(iniText, 'Mods', 'clock', '1');
 				FS.writeFile(iniPath, iniText);
 				try { FS.writeFile('/diablo.ini', iniText); } catch (e) {}
 				console.log('[File Manager] Auto-configurado diablo.ini a modo Hellfire por carga de archivo .hsv');

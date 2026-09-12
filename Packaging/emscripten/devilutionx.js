@@ -131,11 +131,17 @@ Module['preRun'].push(function() {
                 modified = true;
               }
               if (currentIni.indexOf('[Mods]') === -1) {
-                currentIni += "\n[Mods]\nHellfire=1\n";
+                currentIni += "\n[Mods]\nHellfire=1\nclock=1\n";
                 modified = true;
-              } else if (currentIni.indexOf('Hellfire=1') === -1) {
-                currentIni = currentIni.replace('[Mods]', "[Mods]\nHellfire=1");
-                modified = true;
+              } else {
+                if (currentIni.indexOf('Hellfire=1') === -1) {
+                  currentIni = currentIni.replace('[Mods]', "[Mods]\nHellfire=1");
+                  modified = true;
+                }
+                if (currentIni.indexOf('clock=') === -1) {
+                  currentIni = currentIni.replace('[Mods]', "[Mods]\nclock=1");
+                  modified = true;
+                }
               }
             }
           } catch(e) {}

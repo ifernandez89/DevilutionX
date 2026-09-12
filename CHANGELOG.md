@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### ⏱️ Reloj / Contador de Sesión Habilitado por Defecto ([`Source/options.cpp`](file:///c:/Projects/DevilutionX/Source/options.cpp), [`Packaging/emscripten/emscripten_pre.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/emscripten_pre.js), [`Packaging/emscripten/devilutionx.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/devilutionx.js), [`Packaging/emscripten/file-manager.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/file-manager.js))
+- Se activa el mod de reloj (`clock`) por defecto en la inicialización de opciones (`name == "clock"` en `ModOptions::ModEntry`).
+- Se asegura la inyección de `clock=1` dentro de la sección `[Mods]` en `diablo.ini` para la versión web y el File Manager.
+- Permite ver en todo momento la hora / duración de la sesión en la esquina superior derecha sin configuración manual.
+
+### 🏛️ Restauración de Estética Original: Puente y Entrada al Nido (Hive/Nest) de Hellfire en Tristán ([`Source/levels/town.cpp`](file:///c:/Projects/DevilutionX/Source/levels/town.cpp), [`Source/levels/town.h`](file:///c:/Projects/DevilutionX/Source/levels/town.h))
+- Se retiró la modificación artificial `TownOpenPeninsulaPassage()` que sustituía el capullo orgánico del Nido por un camino plano adoquinado durante la invasión de Tristán.
+- Al permitir el uso de magia y teletransporte en el pueblo, ya no se requiere aplanar el terreno: se preserva íntegramente la estética, textura y ubicación original de Hellfire del río, el puente de madera/piedra y la entrada al Nido (Hive).
+- Cachebuster web actualizado a `v=nightmare-v13` en [`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html).
+
 ### 🛡️ Corrección Crítica: Error `table index is out of bounds` en WebAssembly y Blindaje de Diagnóstico ([`Source/engine/sound.cpp`](file:///c:/Projects/DevilutionX/Source/engine/sound.cpp), [`Source/monster.cpp`](file:///c:/Projects/DevilutionX/Source/monster.cpp), [`Source/tables/misdat.cpp`](file:///c:/Projects/DevilutionX/Source/tables/misdat.cpp), [`Source/tables/spelldat.h`](file:///c:/Projects/DevilutionX/Source/tables/spelldat.h), [`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html))
 - **Causa raíz**:
   1. *Use-After-Free en el Callback de Sonido Duplicado (`Source/engine/sound.cpp`)*: En `DuplicateSound()`, se asignaba un callback de finalización `result->SetFinishCallback([it](...) { duplicateSounds.erase(it); })`. Cuando un sonido duplicado (ej. efectos repetidos en combate o magia) terminaba de reproducirse, `Aulib::Stream` invocaba su propio callback. Al ejecutarse `duplicateSounds.erase(it)`, el objeto `unique_ptr<SoundSample>` y su `Aulib::Stream` subyacente eran destruidos *desde dentro de la propia llamada del Stream*. Al retornar del callback, la máquina de audio intentaba despachar llamadas virtuales (`call_indirect` en WASM) sobre un puntero ya liberado/corrupto, provocando inmediatamente la excepción fatal `RuntimeError: table index is out of bounds`.

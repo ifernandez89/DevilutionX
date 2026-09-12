@@ -1626,7 +1626,7 @@ std::forward_list<ModOptions::ModEntry> &ModOptions::GetModEntries()
 
 ModOptions::ModEntry::ModEntry(std::string_view name)
     : name(name)
-    , enabled(this->name, OptionEntryFlags::RecreateUI, this->name.c_str(), "", false)
+    , enabled(this->name, OptionEntryFlags::RecreateUI, this->name.c_str(), "", name == "clock")
 {
 }
 

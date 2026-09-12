@@ -158,13 +158,27 @@ Se han implementado, probado y verificado con éxito las nuevas características
 5. **Cachebuster Actualizado a `v=nightmare-v12` ([`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html)):**
    - Actualizadas las referencias a `devilutionx.js?v=nightmare-v12` y `file-manager.js?v=nightmare-v12`.
 
+### 8. ⏱️ Reloj por Defecto & Restauración Estética Original del Puente y Nido (Hive)
+
+#### A. Reloj de Sesión por Defecto ([`Source/options.cpp`](file:///c:/Projects/DevilutionX/Source/options.cpp), [`Packaging/emscripten/emscripten_pre.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/emscripten_pre.js), [`Packaging/emscripten/devilutionx.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/devilutionx.js), [`Packaging/emscripten/file-manager.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/file-manager.js))
+- En `ModOptions::ModEntry`, el estado habilitado por defecto se configuró en `name == "clock"`, permitiendo que el mod Lua nativo de reloj se active automáticamente tanto en PC como en Web sin requerir activación manual en menús o archivos de configuración.
+- Los inicializadores web de `diablo.ini` aseguran la presencia de `clock=1` bajo la sección `[Mods]`.
+- Muestra de manera permanente la hora y duración de la sesión en el HUD sin obstruir el juego.
+
+#### B. Restauración del Puente y Entrada al Nido de Hellfire ([`Source/levels/town.cpp`](file:///c:/Projects/DevilutionX/Source/levels/town.cpp), [`Source/levels/town.h`](file:///c:/Projects/DevilutionX/Source/levels/town.h))
+- Se retiró la función `TownOpenPeninsulaPassage()` que sustituía el capullo orgánico del Nido por un pasaje plano durante la invasión de Tristán.
+- Dado que el jugador dispone de magia y teletransporte en el pueblo para sortear obstáculos y navegar libremente, se restauró al 100% el diseño, tiles, río, puente y la entrada original del Nido de Hellfire (Hive/Nest).
+- Cachebuster web actualizado a `v=nightmare-v13` en [`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html).
+
 ---
 
 ## 🧪 Resultados de Verificación
+- **Reloj Activo por Defecto:** Visualización inmediata del reloj/contador en pantalla sin intervención del usuario.
+- **Estética de Tristán Fidedigna:** Retención íntegra de la geografía y gráficos originales del Nido y el puente de Hellfire durante la invasión.
 - **Transición de Niveles a Tristán:** Retorno seguro desde la Cripta 24 a Tristán sin fuga de luces ni lecturas desbordadas.
 - **Bucle de Audio Seguro:** Poda no destructiva de streams de audio duplicados sin colisión de callbacks.
 - **Integridad de Despacho WASM:** `call_indirect` protegido en IA, proyectiles y hechizos mediante validación previa de índices y punteros no nulos.
 - **Telemetría y Diagnóstico:** El watchdog preserva íntegramente las excepciones y trazas de pila sin sobrescribirlas.
-- **Cachebuster Actualizado:** Referencia actualizada a `v=nightmare-v12` en `Packaging/emscripten/index.html`.
+- **Cachebuster Actualizado:** Referencia actualizada a `v=nightmare-v13` en `Packaging/emscripten/index.html`.
 - **Cero Regresiones:** Compatibilidad conservada en todas las plataformas.
 

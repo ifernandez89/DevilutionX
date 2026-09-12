@@ -38,7 +38,6 @@ void OpenGrave();
  * @brief Update the map to show the open hive
  */
 void TownOpenHive();
-void TownOpenPeninsulaPassage();
 
 /**
  * @brief Update the map to show the open grave

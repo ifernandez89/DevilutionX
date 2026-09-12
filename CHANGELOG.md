@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### 🐛 Corrección Crítica: Crash "unreachable" en WebAssembly por callback incompatible con ASYNCIFY ([`Source/discord/discord.cpp`](file:///c:/Projects/DevilutionX/Source/discord/discord.cpp))
+- **Causa raíz**: El callback `ModChanged` registrado con `AddModsChangedHandler(ModChanged)` usaba `tl::function_ref<void()>`, un puntero de función non-owning. Cuando ASYNCIFY hacía `emscripten_sleep(1)` en el bucle principal y luego `doRewind` para restaurar el stack, el puntero de función quedaba inválido, causando un `RuntimeError: unreachable` inmediatamente después de la inicialización.
+- **Síntoma**: El juego crasheaba al arrancar con "unreachable" después del mensaje "GPU Pipeline initialized successfully", sin posibilidad de llegar al menú principal.
+- **Solución**: Deshabilitar el registro del callback de Discord (`ModChangedHandler`) en builds de Emscripten con `#ifndef __EMSCRIPTEN__`. La integración de Discord no es funcional en WebAssembly de todos modos.
+- **Impacto**: El juego ahora arranca correctamente en el navegador.
+
 ### 🛡️ Erradicación de `RuntimeError: table index is out of bounds` (Asyncify Indirect Calls), Activación del Reloj por Defecto y Despliegue Ultrarrápido en GitHub Pages (~35s) ([`CMakeLists.txt`](file:///c:/Projects/DevilutionX/CMakeLists.txt), [`Source/diablo.cpp`](file:///c:/Projects/DevilutionX/Source/diablo.cpp), [`.github/workflows/deploy-pages.yml`](file:///c:/Projects/DevilutionX/.github/workflows/deploy-pages.yml), [`Packaging/emscripten/emscripten_pre.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/emscripten_pre.js), [`Packaging/emscripten/file-manager.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/file-manager.js), [`tools/patch_devilutionx_js.py`](file:///c:/Projects/DevilutionX/tools/patch_devilutionx_js.py), [`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html))
 - **Causas raíz identificadas y solucionadas**:
   1. *Corrupción de tabla de llamadas indirectas por instrumentación universal de Asyncify (`CMakeLists.txt`)*:

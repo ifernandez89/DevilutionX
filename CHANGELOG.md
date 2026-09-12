@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### 🛡️ Corrección Crítica: Error `memory access out of bounds` al Volver al Pueblo tras Derrotar a Na-Krul ([`Source/diablo.cpp`](file:///c:/Projects/DevilutionX/Source/diablo.cpp), [`Source/lighting.cpp`](file:///c:/Projects/DevilutionX/Source/lighting.cpp), [`Source/levels/gendung.h`](file:///c:/Projects/DevilutionX/Source/levels/gendung.h), [`Source/cursor.cpp`](file:///c:/Projects/DevilutionX/Source/cursor.cpp), [`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html))
+- **Causa raíz**:
+  1. *Fuga de Luces del Nivel 24 por Evaluación Tardía de Invasión*: En `LoadGameLevel()` (`diablo.cpp:3454`), `InitLighting()` sólo se ejecutaba si `leveltype != DTYPE_TOWN || InvasionManager::Get().IsCombatActive()`. Al volver desde la Cripta 24 (tras derrotar a Na-Krul), el trigger de invasión (`CheckInvasionTrigger()`) aún no se había evaluado (se llamaba mucho después en `LoadGameLevelTown:3250`). Como resultado, `InitLighting()` se saltaba y todas las luces del nivel 24 (antorchas, proyectiles, monstruos) quedaban residuales en `ActiveLights`.
+  2. *Desbordamiento de Memoria en `TileHasAny` y `ProcessLightList`*: Al terminar la carga, `LoadGameLevelLightVision()` ejecutaba `ProcessLightList()` (ya que la invasión ya figuraba como activa). En `lighting.cpp:516`, se consultaba `TileHasAny(light.position.tile, TileProperties::Solid)` sobre las posiciones del nivel 24 sin validar `InDungeonBounds()`. En `levels/gendung.h:298`, `TileHasAny()` indexaba directamente `SOLData[dPiece[coords.x][coords.y]]` sin comprobación de límites. Al consultar coordenadas fuera de los límites de Tristán, `dPiece` devolvía valores basura y `SOLData` desbordaba la memoria lineal de 512 MB de WebAssembly, lanzando inmediatamente `Uncaught RuntimeError: memory access out of bounds`.
+  3. *Acceso desprotegido en cursor*: `cursor.cpp` indexaba `Monsters[monsterId]` sin verificar `monsterId < MaxMonsters`.
+- **Solución implementada**:
+  - **Ejecución Temprana del Trigger y Limpieza de Iluminación en `Source/diablo.cpp`**:
+    - Se invoca `nightmare::invasion::InvasionManager::Get().CheckInvasionTrigger()` al inicio de `LoadGameLevel()`.
+    - `InitLighting()` ahora se ejecuta incondicionalmente en toda transición de nivel (`lvldir != ENTRY_LOAD`), garantizando que ninguna luz huérfana de niveles anteriores contamine el nuevo nivel o el pueblo.
+  - **Blindaje Estricto de Límites en `TileHasAny` (`Source/levels/gendung.h`)**:
+    - `TileHasAny()` valida de inmediato `if (!InDungeonBounds(coords)) return HasAnyOf(property, TileProperties::Solid);`. Es físicamente imposible que una coordenada fuera del mapa indexe `dPiece` o `SOLData`.
+  - **Protección Adicional en `Source/lighting.cpp`**:
+    - Se añade validación `!InDungeonBounds(light.position.tile)` antes de llamar a `TileHasAny` en `ProcessLightList()`.
+  - **Protección de Selección en `Source/cursor.cpp`**:
+    - Se asegura `static_cast<size_t>(monsterId) < MaxMonsters` antes de indexar `Monsters[monsterId]`.
+  - **Cachebuster Actualizado**:
+    - Incrementado a `v=nightmare-v11` en `Packaging/emscripten/index.html`.
+
 ### 🔥 Soporte Completo para Carga de Partidas Hellfire (.hsv) y Fallback de Desencriptación Retail/Spawn ([`Source/pfile.cpp`](file:///c:/Projects/DevilutionX/Source/pfile.cpp), [`Packaging/emscripten/file-manager.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/file-manager.js), [`Packaging/emscripten/emscripten_pre.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/emscripten_pre.js), [`Packaging/emscripten/devilutionx.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/devilutionx.js), [`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html))
 - **Causa raíz identificada**:
   1. *Diferencia de Contraseña de Cifrado (Retail vs Spawn)*: En PC (`devilutionx.exe`), las partidas de Hellfire (`single_*.hsv`) se cifran con la clave comercial (`PASSWORD_SINGLE = "xrgyrkj1"`). En el navegador web, si no se ha subido `DIABDAT.MPQ`, el motor arranca en modo demostración (`spawn.mpq`), usando la clave de shareware (`PASSWORD_SPAWN_SINGLE = "adslhfb1"`). Al decodificar el archivo en `ReadArchive()`, el checksum fallaba y el personaje era descartado silenciosamente.

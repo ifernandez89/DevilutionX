@@ -295,6 +295,8 @@ struct Miniset {
 
 [[nodiscard]] DVL_ALWAYS_INLINE bool TileHasAny(Point coords, TileProperties property)
 {
+	if (!InDungeonBounds(coords))
+		return HasAnyOf(property, TileProperties::Solid);
 	return HasAnyOf(SOLData[dPiece[coords.x][coords.y]], property);
 }
 

@@ -513,7 +513,7 @@ void ProcessLightList()
 			i--;
 			continue;
 		}
-		if (TileHasAny(light.position.tile, TileProperties::Solid))
+		if (!InDungeonBounds(light.position.tile) || TileHasAny(light.position.tile, TileProperties::Solid))
 			continue; // Monster hidden in a wall, don't spoil the surprise
 		DoLighting(light.position.tile, light.radius, light.position.offset);
 	}

@@ -3420,6 +3420,7 @@ tl::expected<void, std::string> LoadGameLevel(bool firstflag, lvl_entry lvldir)
 	LoadGameLevelResetCursor();
 	SetRndSeedForDungeonLevel();
 	NaKrulTomeSequence = 0;
+	nightmare::invasion::InvasionManager::Get().CheckInvasionTrigger();
 
 	IncProgress();
 
@@ -3451,7 +3452,7 @@ tl::expected<void, std::string> LoadGameLevel(bool firstflag, lvl_entry lvldir)
 
 	InitAutomap();
 
-	if ((leveltype != DTYPE_TOWN || nightmare::invasion::InvasionManager::Get().IsCombatActive()) && lvldir != ENTRY_LOAD) {
+	if (lvldir != ENTRY_LOAD) {
 		InitLighting();
 	}
 

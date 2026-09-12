@@ -328,7 +328,7 @@ bool TrySelectPixelBased(Point tile)
 						}
 					}
 				}
-			} else {
+			} else if (static_cast<size_t>(monsterId) < MaxMonsters) {
 				const Monster &monster = Monsters[monsterId];
 				if (IsTileLit(adjacentTile) && IsValidMonsterForSelection(monster)) {
 					const ClxSprite sprite = monster.animInfo.currentSprite();

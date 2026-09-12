@@ -108,12 +108,38 @@ Se han implementado, probado y verificado con éxito las nuevas características
 5. **Cachebuster Actualizado a `v=nightmare-v6` ([`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html)):**
    - Actualizada la referencia a `devilutionx.js?v=nightmare-v6`.
 
+### 6. 🛡️ Erradicación de `memory access out of bounds` al Volver al Pueblo tras Derrotar a Na-Krul
+
+#### A. Diagnóstico y Causa Raíz
+- **Fuga de Luces y Desincronización de Invasión ([`Source/diablo.cpp`](file:///c:/Projects/DevilutionX/Source/diablo.cpp)):**
+  - Al derrotar a Na-Krul en la Cripta 24 y tomar el portal a Tristán, `LoadGameLevel()` saltaba `InitLighting()` porque `CheckInvasionTrigger()` aún no se había evaluado.
+  - Esto dejaba el arreglo global `ActiveLights` contaminado con todas las fuentes de luz del nivel 24 anterior con coordenadas de la mazmorra.
+  - Al concluir la carga, `LoadGameLevelLightVision()` activaba `ProcessLightList()`, iterando sobre luces de la mazmorra con coordenadas inexistentes en el pueblo.
+- **Acceso Fuera de Límites en `TileHasAny` ([`Source/levels/gendung.h`](file:///c:/Projects/DevilutionX/Source/levels/gendung.h), [`Source/lighting.cpp`](file:///c:/Projects/DevilutionX/Source/lighting.cpp)):**
+  - `ProcessLightList()` llamaba a `TileHasAny(light.position.tile, TileProperties::Solid)` sin validar `InDungeonBounds()`.
+  - En `gendung.h:298`, `TileHasAny` indexaba `dPiece[coords.x][coords.y]` y `SOLData[...]` sin chequeo de límites, provocando lectura fuera de la memoria lineal WASM (512 MB) y crash inmediato (`Uncaught RuntimeError: memory access out of bounds`).
+
+#### B. Correcciones Aplicadas en el Núcleo
+1. **Trigger Temprano y Reseteo Incondicional de Luces ([`Source/diablo.cpp`](file:///c:/Projects/DevilutionX/Source/diablo.cpp)):**
+   - Se ejecuta `nightmare::invasion::InvasionManager::Get().CheckInvasionTrigger()` al inicio de `LoadGameLevel()`.
+   - `InitLighting()` ahora se ejecuta siempre en toda transición de nivel (`lvldir != ENTRY_LOAD`), vaciando por completo `ActiveLights` antes de inicializar entidades en el nuevo nivel o pueblo.
+2. **Blindaje Estricto en `TileHasAny` ([`Source/levels/gendung.h`](file:///c:/Projects/DevilutionX/Source/levels/gendung.h)):**
+   - `TileHasAny()` ahora valida `if (!InDungeonBounds(coords)) return HasAnyOf(property, TileProperties::Solid);`. Garantiza que coordenadas fuera de límites nunca indexen `dPiece` ni `SOLData`.
+3. **Validación Previa en `ProcessLightList` ([`Source/lighting.cpp`](file:///c:/Projects/DevilutionX/Source/lighting.cpp)):**
+   - Se añadió `!InDungeonBounds(light.position.tile)` antes de invocar `TileHasAny`.
+4. **Protección en Cursor ([`Source/cursor.cpp`](file:///c:/Projects/DevilutionX/Source/cursor.cpp)):**
+   - Validación `static_cast<size_t>(monsterId) < MaxMonsters` antes de indexar `Monsters[monsterId]`.
+5. **Cachebuster Actualizado a `v=nightmare-v11` ([`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html)):**
+   - Asegura la recarga inmediata de scripts en el navegador del usuario.
+
 ---
 
 ## 🧪 Resultados de Verificación
+- **Transición de Niveles a Tristán:** Retorno seguro desde la Cripta 24 a Tristán sin fuga de luces ni lecturas desbordadas.
 - **Bucle Principal WebAssembly:** Rendición periódica activa (`SDL_Delay(1)`) cada 16ms y renderizado continuo garantizado (`*drawGame = true`).
 - **Seguridad de Memoria en Renderizado:** Subregiones estrictamente acotadas a `[0, surface->w]` y `[0, surface->h]`. Erradicado cualquier riesgo de underflow de punteros a `0xFFFFFF00`.
 - **Protección de Blitters SDL:** Dimensiones de rectángulos de blit y cursor validadas antes de llamadas a SDL.
 - **Watchdog y Telemetría:** Heartbeat continuo sin caídas ni falsos positivos de cuelgue.
-- **Cachebuster Actualizado:** Referencia actualizada a `v=nightmare-v6` en `Packaging/emscripten/index.html`.
+- **Cachebuster Actualizado:** Referencia actualizada a `v=nightmare-v11` en `Packaging/emscripten/index.html`.
 - **Cero Regresiones:** Compatibilidad íntegra conservada para la invasión de Tristán, persistencia del Golem y compilación multiplataforma.
+

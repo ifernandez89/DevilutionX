@@ -269,7 +269,12 @@ extern std::vector<SpellData> SpellsData;
 
 inline const SpellData &GetSpellData(SpellID spellId)
 {
-	return SpellsData[static_cast<std::underlying_type<SpellID>::type>(spellId)];
+	const auto idx = static_cast<std::underlying_type<SpellID>::type>(spellId);
+	if (idx < 0 || static_cast<size_t>(idx) >= SpellsData.size()) {
+		static const SpellData nullSpellData = {};
+		return nullSpellData;
+	}
+	return SpellsData[idx];
 }
 
 void LoadSpellData();

@@ -132,14 +132,39 @@ Se han implementado, probado y verificado con éxito las nuevas características
 5. **Cachebuster Actualizado a `v=nightmare-v11` ([`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html)):**
    - Asegura la recarga inmediata de scripts en el navegador del usuario.
 
+### 7. 🛡️ Erradicación de `table index is out of bounds` en WebAssembly & Preservación de Diagnóstico
+
+#### A. Diagnóstico y Causa Raíz
+- **Use-After-Free en el Callback de Sonido Duplicado ([`Source/engine/sound.cpp`](file:///c:/Projects/DevilutionX/Source/engine/sound.cpp)):**
+  - Durante el combate, sonidos repetidos usan `DuplicateSound()`. En la implementación anterior, `result->SetFinishCallback([it](...) { duplicateSounds.erase(it); })` eliminaba el `SoundSample` desde *dentro* de la propia ejecución del callback de `Aulib::Stream`.
+  - Al retornar de la lambda, el objeto `Stream` y su tabla de métodos virtuales estaban destruidos. La máquina de audio intentaba realizar un salto indirecto (`call_indirect` en WASM), lo que en WebAssembly lanzaba inmediatamente `RuntimeError: table index is out of bounds`.
+- **Despacho Indirecto de Funciones sin Comprobación de Límites ([`Source/monster.cpp`](file:///c:/Projects/DevilutionX/Source/monster.cpp), [`Source/tables/misdat.cpp`](file:///c:/Projects/DevilutionX/Source/tables/misdat.cpp), [`Source/tables/spelldat.h`](file:///c:/Projects/DevilutionX/Source/tables/spelldat.h)):**
+  - `AiProc[monster.ai](monster)` se ejecutaba sin validar si `monster.ai` era negativo o sobrepasaba el tamaño de la tabla de IA.
+  - `GetMissileData(missileId)` no comprobaba límites. Para `MissileID::Null` (-1) o IDs corruptos, accedía memoria no inicializada con punteros basura a `processFn` y `addFn`, provocando fallos en `call_indirect`.
+  - `GetSpellData(spellId)` indexaba `SpellsData` sin validar el tamaño del vector.
+- **Sobrescritura de la Pila de Llamadas por el Watchdog ([`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html)):**
+  - Al estrellarse el motor WebAssembly por una excepción, el modal capturaba la traza. Pero 6 segundos más tarde, el watchdog detectaba la falta de cuadros y llamaba a `triggerCrashReport('Congelamiento prolongado (>6s sin cuadros)', ...)`, sustituyendo la traza real por `null`.
+
+#### B. Correcciones Aplicadas en el Núcleo
+1. **Poda Segura de Sonidos Duplicados ([`Source/engine/sound.cpp`](file:///c:/Projects/DevilutionX/Source/engine/sound.cpp)):**
+   - Se eliminó el callback que borraba el iterador desde dentro de `Stream`.
+   - `DuplicateSound()` ahora poda de forma sincronizada con mutex los sonidos inactivos (`!(*it)->IsPlaying()`) al inicio antes de insertar nuevos elementos.
+2. **Validación de Límites en Rutinas de IA ([`Source/monster.cpp`](file:///c:/Projects/DevilutionX/Source/monster.cpp)):**
+   - Comprobación estricta de índice y puntero nulo: `aiIndex >= 0 && aiIndex < std::size(AiProc) && AiProc[aiIndex] != nullptr`.
+3. **Tablas Bounded para Proyectiles y Hechizos ([`Source/tables/misdat.cpp`](file:///c:/Projects/DevilutionX/Source/tables/misdat.cpp), [`Source/tables/spelldat.h`](file:///c:/Projects/DevilutionX/Source/tables/spelldat.h)):**
+   - `GetMissileData()` y `GetSpellData()` ahora devuelven estructuras estáticas seguras vacías en lugar de acceder memoria fuera de límites.
+4. **Protección Contra Sobrescritura en el Watchdog ([`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html)):**
+   - Bandera `hasFatalError` que impide al watchdog reemplazar un crash report con pila de llamadas real.
+5. **Cachebuster Actualizado a `v=nightmare-v12` ([`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html)):**
+   - Actualizadas las referencias a `devilutionx.js?v=nightmare-v12` y `file-manager.js?v=nightmare-v12`.
+
 ---
 
 ## 🧪 Resultados de Verificación
 - **Transición de Niveles a Tristán:** Retorno seguro desde la Cripta 24 a Tristán sin fuga de luces ni lecturas desbordadas.
-- **Bucle Principal WebAssembly:** Rendición periódica activa (`SDL_Delay(1)`) cada 16ms y renderizado continuo garantizado (`*drawGame = true`).
-- **Seguridad de Memoria en Renderizado:** Subregiones estrictamente acotadas a `[0, surface->w]` y `[0, surface->h]`. Erradicado cualquier riesgo de underflow de punteros a `0xFFFFFF00`.
-- **Protección de Blitters SDL:** Dimensiones de rectángulos de blit y cursor validadas antes de llamadas a SDL.
-- **Watchdog y Telemetría:** Heartbeat continuo sin caídas ni falsos positivos de cuelgue.
-- **Cachebuster Actualizado:** Referencia actualizada a `v=nightmare-v11` en `Packaging/emscripten/index.html`.
-- **Cero Regresiones:** Compatibilidad íntegra conservada para la invasión de Tristán, persistencia del Golem y compilación multiplataforma.
+- **Bucle de Audio Seguro:** Poda no destructiva de streams de audio duplicados sin colisión de callbacks.
+- **Integridad de Despacho WASM:** `call_indirect` protegido en IA, proyectiles y hechizos mediante validación previa de índices y punteros no nulos.
+- **Telemetría y Diagnóstico:** El watchdog preserva íntegramente las excepciones y trazas de pila sin sobrescribirlas.
+- **Cachebuster Actualizado:** Referencia actualizada a `v=nightmare-v12` en `Packaging/emscripten/index.html`.
+- **Cero Regresiones:** Compatibilidad conservada en todas las plataformas.
 

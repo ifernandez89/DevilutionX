@@ -448,7 +448,12 @@ void LoadMissileData()
 
 const MissileData &GetMissileData(MissileID missileId)
 {
-	return MissilesData[static_cast<std::underlying_type_t<MissileID>>(missileId)];
+	const auto idx = static_cast<std::underlying_type_t<MissileID>>(missileId);
+	if (idx < 0 || static_cast<size_t>(idx) >= std::size(MissilesData)) {
+		static const MissileData nullMissileData = {};
+		return nullMissileData;
+	}
+	return MissilesData[idx];
 }
 
 tl::expected<void, std::string> InitMissileGFX()

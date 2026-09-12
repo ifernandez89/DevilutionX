@@ -1146,7 +1146,15 @@
 				}
 			},
 
-			triggerCrashReport: function(title, errorMsg, stack) {
+			hasFatalError: false,
+
+			triggerCrashReport: function(title, errorMsg, stack, isWatchdog) {
+				if (this.hasFatalError && isWatchdog) {
+					return;
+				}
+				if (!isWatchdog) {
+					this.hasFatalError = true;
+				}
 				var modal = document.getElementById('crashRecoveryModal');
 				var area = document.getElementById('crashDetailArea');
 				if (modal && area) {
@@ -1241,7 +1249,7 @@
 					window.DiagnosticSystem.addLog('FREEZE', '⚠️ ALERTA: El motor no ha generado cuadros durante ' + sec + 's.');
 				}
 				if (elapsedSinceFrame > 6.0) {
-					window.DiagnosticSystem.triggerCrashReport('Congelamiento prolongado (>6s sin cuadros)', 'El bucle principal del motor dejó de responder.', null);
+					window.DiagnosticSystem.triggerCrashReport('Congelamiento prolongado (>6s sin cuadros)', 'El bucle principal del motor dejó de responder.', null, true);
 				}
 			} else {
 				if (hbEl) {
@@ -2289,8 +2297,8 @@
 	</script>
 	<script src="https://cdn.jsdelivr.net/npm/onnxruntime-web/dist/ort.min.js"></script>
 	<script src="neural_infer.js"></script>
-	<script type='text/javascript' src="file-manager.js?v=nightmare-v11"></script>
-	<script async type="text/javascript" src="devilutionx.js?v=nightmare-v11"></script>
+	<script type='text/javascript' src="file-manager.js?v=nightmare-v12"></script>
+	<script async type="text/javascript" src="devilutionx.js?v=nightmare-v12"></script>
 </body>
 
 </html>

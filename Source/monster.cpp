@@ -4297,7 +4297,10 @@ void ProcessMonsters()
 
 		for (int loopLimit = 0; loopLimit < 100; loopLimit++) {
 			if ((monster.flags & MFLAG_SEARCH) == 0 || !AiPlanPath(monster)) {
-				AiProc[static_cast<int8_t>(monster.ai)](monster);
+				const auto aiIndex = static_cast<int8_t>(monster.ai);
+				if (aiIndex >= 0 && static_cast<size_t>(aiIndex) < std::size(AiProc) && AiProc[aiIndex] != nullptr) {
+					AiProc[aiIndex](monster);
+				}
 			}
 
 			if (!UpdateModeStance(monster))

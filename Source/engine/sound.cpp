@@ -128,17 +128,17 @@ SoundSample *DuplicateSound(const SoundSample &sound)
 	if (duplicate->DuplicateFrom(sound) != 0)
 		return nullptr;
 	auto *result = duplicate.get();
-	decltype(duplicateSounds.begin()) it;
 	{
 		const std::lock_guard<SdlMutex> lock(*duplicateSoundsMutex);
+		for (auto it = duplicateSounds.begin(); it != duplicateSounds.end();) {
+			if (!(*it)->IsPlaying()) {
+				it = duplicateSounds.erase(it);
+			} else {
+				++it;
+			}
+		}
 		duplicateSounds.push_back(std::move(duplicate));
-		it = duplicateSounds.end();
-		--it;
 	}
-	result->SetFinishCallback([it]([[maybe_unused]] Aulib::Stream &stream) {
-		const std::lock_guard<SdlMutex> lock(*duplicateSoundsMutex);
-		duplicateSounds.erase(it);
-	});
 	return result;
 #endif
 }

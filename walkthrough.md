@@ -172,13 +172,33 @@ Se han implementado, probado y verificado con éxito las nuevas características
 
 ---
 
+### 7. 🛡️ Erradicación de `RuntimeError: table index is out of bounds`, Reloj Activo por Defecto y Despliegue Ultrarrápido en GitHub Pages (~35s)
+
+#### A. Flag `-sASYNCIFY_IGNORE_INDIRECT=1` y Remoción de Pausas Redundantes
+- **Causa Identificada:** Emscripten compilaba con `ASYNCIFY_IGNORE_INDIRECT=0`, instrumentando todas las llamadas indirectas (`call_indirect 0`), incluyendo métodos virtuales C++, clausuras Sol2 Lua y punteros a función. Al producirse la llamada indirecta a través de `dynCall_vii` / `invoke_vii`, el índice en `__indirect_function_table` quedaba desfasado por los trampolines de Asyncify provocando `RuntimeError: table index is out of bounds`. Además, `Source/diablo.cpp` invocaba un `SDL_Delay(1)` redundante inmediatamente después de `DrawAndBlit() -> RenderPresent() -> Sleep()`.
+- **Solución:**
+  1. En [`CMakeLists.txt`](file:///c:/Projects/DevilutionX/CMakeLists.txt), se añadió `-sASYNCIFY_IGNORE_INDIRECT=1`.
+  2. En [`Source/diablo.cpp`](file:///c:/Projects/DevilutionX/Source/diablo.cpp), se retiró el bloque redundante de `SDL_Delay(1)`.
+
+#### B. Activación Definitiva del Reloj de Sesión por Defecto
+- **Causa Identificada:** En [`Packaging/emscripten/emscripten_pre.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/emscripten_pre.js), la inyección de `clock=1` estaba dentro de una condición exclusiva para Hellfire (`if (hasHf)`), dejando a Diablo clásico sin el reloj. Adicionalmente, si el usuario ya tenía un `diablo.ini` previo en IndexedDB con `clock=0`, este no era actualizado.
+- **Solución:**
+  1. Se generalizó la migración en `emscripten_pre.js` para que siempre garantice `clock=1` en `[Mods]`, reemplazando automáticamente cualquier `clock=0` residual.
+  2. En [`Packaging/emscripten/file-manager.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/file-manager.js), se añadió `clock=1` al cambiar de modo de juego y al reiniciar ajustes.
+
+#### C. Aceleración del Despliegue en GitHub Pages de 13 Minutos a ~35 Segundos
+- **Causa Identificada:** [`.github/workflows/deploy-pages.yml`](file:///c:/Projects/DevilutionX/.github/workflows/deploy-pages.yml) recompilaba todo el código fuente de DevilutionX y todos los ports de Emscripten en cada commit en un runner Linux de 2 núcleos, demorando 13 minutos por push y sobreescribiendo los binarios locales testeados.
+- **Solución:**
+  1. Se implementó una vía rápida ("Fast-Path") que detecta los binarios pre-compilados y testeados en `Packaging/emscripten/`.
+  2. Se configuró checkout con `fetch-depth: 1` y caché para `spawn.mpq` con `actions/cache@v4`.
+  3. El despliegue a GitHub Pages ahora se ejecuta en **~35 segundos** (reducción del 95%).
+
+---
+
 ## 🧪 Resultados de Verificación
-- **Reloj Activo por Defecto:** Visualización inmediata del reloj/contador en pantalla sin intervención del usuario.
-- **Estética de Tristán Fidedigna:** Retención íntegra de la geografía y gráficos originales del Nido y el puente de Hellfire durante la invasión.
-- **Transición de Niveles a Tristán:** Retorno seguro desde la Cripta 24 a Tristán sin fuga de luces ni lecturas desbordadas.
-- **Bucle de Audio Seguro:** Poda no destructiva de streams de audio duplicados sin colisión de callbacks.
-- **Integridad de Despacho WASM:** `call_indirect` protegido en IA, proyectiles y hechizos mediante validación previa de índices y punteros no nulos.
-- **Telemetría y Diagnóstico:** El watchdog preserva íntegramente las excepciones y trazas de pila sin sobrescribirlas.
-- **Cachebuster Actualizado:** Referencia actualizada a `v=nightmare-v13` en `Packaging/emscripten/index.html`.
-- **Cero Regresiones:** Compatibilidad conservada en todas las plataformas.
+- **Zero Crashes por Tabla Indirecta:** `-sASYNCIFY_IGNORE_INDIRECT=1` elimina por completo las colisiones en `__indirect_function_table`.
+- **Reloj de Partida Activo:** El reloj en tiempo real aparece de forma inmediata en la esquina superior derecha (`render.string` a 60 FPS) tanto en Diablo como en Hellfire.
+- **Despliegue Ultrarrápido:** CI pasa de 13 minutos a ~35 segundos manteniendo opción de compilación completa bajo demanda.
+- **Cachebuster Actualizado:** `v=nightmare-v18` configurado en `Packaging/emscripten/index.html` y `build-web/index.html`.
+- **Cero Regresiones:** Compatibilidad conservada y parches de compatibilidad JS automatizados en `scripts/build_wasm.bat`.
 

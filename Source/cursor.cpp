@@ -641,7 +641,7 @@ void InitLevelCursor()
 void CheckTown()
 {
 	for (auto &missile : Missiles) {
-		if (missile._mitype == MissileID::TownPortal) {
+		if (missile._mitype == MissileID::TownPortal || (leveltype == DTYPE_TOWN && missile._mitype == MissileID::RedPortal)) {
 			if (EntranceBoundaryContains(missile.position.tile, cursPosition)) {
 				trigflag = true;
 				InfoString = _("Town Portal");
@@ -654,6 +654,9 @@ void CheckTown()
 
 void CheckRportal()
 {
+	if (leveltype == DTYPE_TOWN)
+		return;
+
 	for (auto &missile : Missiles) {
 		if (missile._mitype == MissileID::RedPortal) {
 			if (EntranceBoundaryContains(missile.position.tile, cursPosition)) {

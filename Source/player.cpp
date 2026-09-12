@@ -3271,7 +3271,7 @@ void SyncInitPlrPos(Player &player)
 		    1, // skip the starting tile since that was checked in the previous loop
 		    50);
 
-		return nearPosition.value_or(Point { 0, 0 });
+		return nearPosition.value_or(leveltype == DTYPE_TOWN ? Point { 58, 41 } : Point { 0, 0 });
 	}();
 
 	player.position.tile = position;

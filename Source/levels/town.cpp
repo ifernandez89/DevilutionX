@@ -13,6 +13,7 @@
 #include "quests.h"
 #include "nightmare/invasion/invasion_manager.hpp"
 #include "nightmare/world/ambient_animals.hpp"
+#include "portal.h"
 #include "utils/endian_swap.hpp"
 
 namespace devilution {
@@ -363,27 +364,32 @@ void CreateTown(lvl_entry entry)
 	dminPosition = { 10, 10 };
 	dmaxPosition = { 84, 84 };
 
+	// Safe town center default (near portal pad)
+	ViewPosition = { 58, 41 };
+
 	if (entry == ENTRY_MAIN) { // New game
 		nightmare::invasion::InvasionManager::Get().ResetInvasionState();
 		ViewPosition = { 75, 68 };
 	} else if (entry == ENTRY_PREV) { // Cathedral
 		ViewPosition = { 25, 31 };
+	} else if (entry == ENTRY_WARPLVL) { // Town Portal
+		GetPortalLvlPos();
 	} else if (entry == ENTRY_TWARPUP) {
 		if (TWarpFrom == 5) {
 			ViewPosition = { 49, 22 };
-		}
-		if (TWarpFrom == 9) {
+		} else if (TWarpFrom == 9) {
 			ViewPosition = { 18, 69 };
-		}
-		if (TWarpFrom == 13) {
+		} else if (TWarpFrom == 13) {
 			ViewPosition = { 41, 81 };
-		}
-		if (TWarpFrom == 21) {
+		} else if (TWarpFrom == 21 || (TWarpFrom >= 21 && TWarpFrom <= 24)) {
 			ViewPosition = { 36, 25 };
-		}
-		if (TWarpFrom == 17) {
+		} else if (TWarpFrom == 17 || (TWarpFrom >= 17 && TWarpFrom <= 20)) {
 			ViewPosition = { 79, 62 };
+		} else {
+			ViewPosition = { 25, 31 };
 		}
+	} else {
+		ViewPosition = { 58, 41 };
 	}
 
 	DrlgTPass3();

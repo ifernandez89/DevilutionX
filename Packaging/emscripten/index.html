@@ -1035,6 +1035,28 @@
 
 	<textarea id="output" rows="8"></textarea>
 	<script type='text/javascript'>
+		// ============================================================
+		//  DEFENSIVE EMSCRIPTEN QUERYSELECTOR GUARD
+		// ============================================================
+		// Prevents SyntaxError: Failed to execute 'querySelector' on 'Document': '0' is not a valid selector
+		// and the resulting division by zero when Emscripten queries CSS dimensions for default target (0).
+		(function() {
+			var _origQuerySelector = Document.prototype.querySelector;
+			Document.prototype.querySelector = function(selector) {
+				if (selector === 0 || selector === '0' || selector === 0x0 || !selector) {
+					return document.getElementById('canvas');
+				}
+				try {
+					return _origQuerySelector.call(this, selector);
+				} catch (err) {
+					if (selector === 0 || selector === '0') {
+						return document.getElementById('canvas');
+					}
+					throw err;
+				}
+			};
+		})();
+
 		var statusElement = document.getElementById('status');
 		var progressElement = document.getElementById('progress');
 		var spinnerElement = document.getElementById('spinner');
@@ -2358,8 +2380,8 @@
 	</script>
 	<script src="https://cdn.jsdelivr.net/npm/onnxruntime-web/dist/ort.min.js"></script>
 	<script src="neural_infer.js"></script>
-	<script type='text/javascript' src="file-manager.js?v=nightmare-v14"></script>
-	<script async type="text/javascript" src="devilutionx.js?v=nightmare-v14"></script>
+	<script type='text/javascript' src="file-manager.js?v=nightmare-v15"></script>
+	<script async type="text/javascript" src="devilutionx.js?v=nightmare-v15"></script>
 </body>
 
 </html>

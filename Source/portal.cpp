@@ -49,11 +49,11 @@ void SetPortalStats(int i, bool o, Point position, int lvl, dungeon_type lvltype
 
 void AddPortalMissile(const Player &player, Point position, bool sync)
 {
-	auto *missile = AddMissile({ 0, 0 }, position, Direction::South, MissileID::RedPortal, TARGET_MONSTERS, player, 0, 0, /*parent=*/nullptr, SfxID::None);
+	auto *missile = AddMissile({ 0, 0 }, position, Direction::South, MissileID::TownPortal, TARGET_MONSTERS, player, 0, 0, /*parent=*/nullptr, SfxID::None);
 	if (missile != nullptr) {
 		// Don't show portal opening animation if we sync existing portals
 		if (sync)
-			missile->setFrameGroup<RedPortalFrame>(RedPortalFrame::Idle);
+			missile->setFrameGroup<PortalFrame>(PortalFrame::Idle);
 
 		if (leveltype != DTYPE_TOWN)
 			missile->_mlid = AddLight(missile->position.tile, 15);
@@ -62,9 +62,6 @@ void AddPortalMissile(const Player &player, Point position, bool sync)
 
 void SyncPortals()
 {
-	if (!Portals[MyPlayerId].open) {
-		ActivatePortal(Players[MyPlayerId], { 25, 29 }, 1, DTYPE_CATHEDRAL, false);
-	}
 	for (int i = 0; i < MAXPORTAL; i++) {
 		if (!Portals[i].open)
 			continue;
@@ -117,7 +114,7 @@ void RemovePortalMissile(const Player &player)
 {
 	const size_t id = player.getId();
 	Missiles.remove_if([id](Missile &missile) {
-		if (missile._mitype == MissileID::TownPortal && missile._misource == static_cast<int>(id)) {
+		if ((missile._mitype == MissileID::TownPortal || missile._mitype == MissileID::RedPortal) && missile._misource == static_cast<int>(id)) {
 			dFlags[missile.position.tile.x][missile.position.tile.y] &= ~DungeonFlag::Missile;
 
 			if (Portals[id].level != 0)
@@ -144,20 +141,22 @@ void GetPortalLevel()
 		return;
 	}
 
-	if (Portals[portalindex].setlvl) {
+	const size_t idx = (portalindex < MAXPORTAL) ? portalindex : 0;
+
+	if (Portals[idx].setlvl) {
 		setlevel = true;
-		setlvlnum = (_setlevels)Portals[portalindex].level;
-		currlevel = Portals[portalindex].level;
+		setlvlnum = (_setlevels)Portals[idx].level;
+		currlevel = Portals[idx].level;
 		MyPlayer->setLevel(setlvlnum);
-		setlvltype = leveltype = Portals[portalindex].ltype;
+		setlvltype = leveltype = Portals[idx].ltype;
 	} else {
 		setlevel = false;
-		currlevel = Portals[portalindex].level;
+		currlevel = Portals[idx].level;
 		MyPlayer->setLevel(currlevel);
-		leveltype = Portals[portalindex].ltype;
+		leveltype = Portals[idx].ltype;
 	}
 
-	if (portalindex == MyPlayerId) {
+	if (idx == MyPlayerId) {
 		NetSendCmd(true, CMD_DEACTIVATEPORTAL);
 		DeactivatePortal(*MyPlayer);
 	}
@@ -165,12 +164,13 @@ void GetPortalLevel()
 
 void GetPortalLvlPos()
 {
+	const size_t idx = (portalindex < MAXPORTAL) ? portalindex : 0;
 	if (leveltype == DTYPE_TOWN) {
-		ViewPosition = PortalTownPosition[portalindex] + Displacement { 1, 1 };
+		ViewPosition = PortalTownPosition[idx] + Displacement { 1, 1 };
 	} else {
-		ViewPosition = Portals[portalindex].position;
+		ViewPosition = Portals[idx].position;
 
-		if (portalindex != MyPlayerId) {
+		if (idx != MyPlayerId) {
 			ViewPosition.x++;
 			ViewPosition.y++;
 		}

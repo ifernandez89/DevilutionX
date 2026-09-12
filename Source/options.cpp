@@ -549,6 +549,8 @@ OptionEntryResolution::OptionEntryResolution()
 void OptionEntryResolution::LoadFromIni(std::string_view category)
 {
 	size_ = { ini->getInt(category, "Width", DEFAULT_WIDTH), ini->getInt(category, "Height", DEFAULT_HEIGHT) };
+	if (size_.width <= 0) size_.width = DEFAULT_WIDTH;
+	if (size_.height <= 0) size_.height = DEFAULT_HEIGHT;
 }
 void OptionEntryResolution::SaveToIni(std::string_view category) const
 {

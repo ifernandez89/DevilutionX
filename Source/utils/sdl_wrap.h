@@ -34,6 +34,8 @@ T NullErrDlg(T x, const char *file, int line)
 
 inline SDLSurfaceUniquePtr CreateRGBSurface(Uint32 flags, int width, int height, int depth, Uint32 Rmask, Uint32 Gmask, Uint32 Bmask, Uint32 Amask)
 {
+	if (width <= 0) width = 640;
+	if (height <= 0) height = 480;
 #ifdef USE_SDL3
 	return SDLSurfaceUniquePtr { NonNull(SDL_CreateSurface(width, height, SDL_GetPixelFormatForMasks(depth, Rmask, Gmask, Bmask, Amask))) };
 #else
@@ -44,11 +46,15 @@ inline SDLSurfaceUniquePtr CreateRGBSurface(Uint32 flags, int width, int height,
 #ifdef USE_SDL3
 inline SDLSurfaceUniquePtr CreateRGBSurfaceWithFormat(Uint32 flags, int width, int height, int depth, SDL_PixelFormat format)
 {
+	if (width <= 0) width = 640;
+	if (height <= 0) height = 480;
 	return SDLSurfaceUniquePtr { NonNull(SDL_CreateSurface(width, height, format)) };
 }
 #else
 inline SDLSurfaceUniquePtr CreateRGBSurfaceWithFormat(Uint32 flags, int width, int height, int depth, Uint32 format)
 {
+	if (width <= 0) width = 640;
+	if (height <= 0) height = 480;
 	return SDLSurfaceUniquePtr { NonNull(SDL_CreateRGBSurfaceWithFormat(flags, width, height, depth, format)) };
 }
 #endif

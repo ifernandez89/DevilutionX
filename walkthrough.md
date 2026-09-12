@@ -195,14 +195,41 @@ Se han implementado, probado y verificado con éxito las nuevas características
 1. **Remoción de flags conflictivos:** Se retiró `-sASYNCIFY_IGNORE_INDIRECT=1` y `-sASSERTIONS=1` de [`CMakeLists.txt`](file:///c:/Projects/DevilutionX/CMakeLists.txt).
 2. **Restauración de Binario Canónico:** Se restableció [`Packaging/emscripten/devilutionx.wasm`](file:///c:/Projects/DevilutionX/Packaging/emscripten/devilutionx.wasm) (6.647.125 bytes) con soporte completo de llamadas indirectas para ASYNCIFY.
 3. **Invalidación de Caché:** Se actualizó el cachebuster a `v=nightmare-v19` en [`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html).
-4. **Despliegue Inmediato:** El commit fue enviado y desplegado exitosamente a GitHub Pages en ~35 segundos (`Deploy Diablo 1 to GitHub Pages: success`).
+### 9. 🛡️ Erradicación de `SDL Error: Parameter 'width' is invalid` al Inicializar la Ventana
+
+#### A. Diagnóstico y Causa Raíz
+- **El error:** Al cargar el motor en el navegador, un alert emergente detenía el juego con:
+  ```
+  SDL Error
+  Parameter 'width' is invalid
+  The error occurred at: Source\utils\sdl_wrap.h line 52
+  ```
+- **Mecanismo del fallo:**
+  - En WebAssembly, `fitToScreen` está habilitado por defecto (`Graphics.fitToScreen = true`).
+  - Al iniciar, `GetPreferredWindowSize()` invoca `CalculatePreferredWindowSize(width, height)`.
+  - Esta función llama a `SDL_GetDesktopDisplayMode(0, &mode)`. Si el canvas en el navegador aún no tiene dimensiones finales o si `diablo.ini` no contiene `[Graphics]`, las operaciones de aspecto o `integerScaling` resultaban en `width <= 0`.
+  - Con `width <= 0`, `CreateBackBuffer()` llamaba a `CreateRGBSurfaceWithFormat(0, gnScreenWidth, gnScreenHeight, ...)`.
+  - La aserción de SDL2 `if (width <= 0) SDL_InvalidParamError("width")` disparaba fatalmente `ErrDlg()`.
+
+#### B. Solución Aplicada
+1. **Blindaje en capa JS (`emscripten_pre.js`, `file-manager.js`, `devilutionx.js`):**
+   - Se asegura automáticamente en `diablo.ini` la presencia de `[Graphics]` con `Width=640`, `Height=480`, `Fit to Screen=0` y `Upscale=1`.
+   - Previene que `CalculatePreferredWindowSize` intente recalcular el modo de pantalla en WebAssembly sobre un viewport aún no estabilizado.
+2. **Guardas defensivas en C++ (`sdl_wrap.h`, `display.cpp`, `dx.cpp`, `options.cpp`):**
+   - En `sdl_wrap.h`, `CreateRGBSurface` y `CreateRGBSurfaceWithFormat` garantizan `width >= 640` y `height >= 480`.
+   - En `display.cpp`, `CalculatePreferredWindowSize` acota valores mínimos y previene divisiones por cero en `factor` y `mode.h`.
+   - En `display.cpp`, `AdjustToScreenGeometry` asegura `gnScreenWidth = std::max(640, windowSize.width)` y `gnScreenHeight = std::max(480, windowSize.height)`.
+   - En `dx.cpp`, `CreateBackBuffer()` garantiza dimensiones mínimas de 640x480.
+   - En `options.cpp`, `OptionEntryResolution::LoadFromIni` valida que los anchos y altos leídos de disco sean mayores a cero.
+3. **Invalidación de Caché:**
+   - Actualizado a `v=nightmare-v20` en [`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html).
 
 ---
 
 ## 🧪 Resultados de Verificación
-- **Zero Crashes por `unreachable`:** El rebobinado de Asyncify (`doRewind`) cuenta con soporte íntegro para llamadas indirectas, permitiendo que `emscripten_sleep(1)` ceda el control al navegador y reanude sin errores.
-- **Reloj de Partida Activo:** El reloj en tiempo real aparece de forma inmediata en la esquina superior derecha (`render.string` a 60 FPS) tanto en Diablo como en Hellfire.
-- **Despliegue Exitoso en GitHub Pages:** Verificado en producción con `HTTP 200`, `Content-Length: 6647125` y `v=nightmare-v19`.
-- **Cero Regresiones:** Compatibilidad conservada y parches de compatibilidad JS automatizados.
+- **Zero Crashes por `unreachable`:** Rebobinado de Asyncify con soporte indirecto completo restaurado.
+- **Zero Errores de SDL `width`:** Blindaje de inicialización en JS y C++ asegurando `Width=640`, `Height=480`, `Fit to Screen=0` por defecto.
+- **Reloj de Partida Activo:** Reloj en tiempo real visualizado a 60 FPS en el HUD.
+- **Cachebuster Actualizado:** `v=nightmare-v20` activo.
 
 

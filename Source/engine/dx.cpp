@@ -155,6 +155,9 @@ void dx_cleanup()
 
 void CreateBackBuffer()
 {
+	if (gnScreenWidth < 640) gnScreenWidth = 640;
+	if (gnScreenHeight < 480) gnScreenHeight = 480;
+
 	if (CanRenderDirectlyToOutputSurface()) {
 		Log("{}", "Will render directly to the SDL output surface");
 		PalSurface = GetOutputSurface();

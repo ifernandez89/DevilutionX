@@ -116,10 +116,17 @@ void CalculatePreferredWindowSize(int &width, int &height)
 		std::swap(mode.w, mode.h);
 	}
 
+	if (width <= 0) width = 640;
+	if (height <= 0) height = 480;
+
+	if (mode.w <= 0 || mode.h <= 0) {
+		return;
+	}
+
 	if (*GetOptions().Graphics.integerScaling) {
-		const int factor = std::min(mode.w / width, mode.h / height);
-		width = mode.w / factor;
-		height = mode.h / factor;
+		const int factor = std::max(1, std::min(mode.w / width, mode.h / height));
+		width = std::max(640, mode.w / factor);
+		height = std::max(480, mode.h / factor);
 		return;
 	}
 
@@ -127,9 +134,9 @@ void CalculatePreferredWindowSize(int &width, int &height)
 	const float hFactor = (float)mode.h / height;
 
 	if (wFactor > hFactor) {
-		width = mode.w * height / mode.h;
+		width = std::max(640, (int)(mode.w * height / mode.h));
 	} else {
-		height = mode.h * width / mode.w;
+		height = std::max(480, (int)(mode.h * width / mode.w));
 	}
 }
 #endif
@@ -424,8 +431,8 @@ SDL_DisplayMode GetNearestDisplayMode(Size preferredSize,
 
 void AdjustToScreenGeometry(Size windowSize)
 {
-	gnScreenWidth = windowSize.width;
-	gnScreenHeight = windowSize.height;
+	gnScreenWidth = std::max(640, windowSize.width);
+	gnScreenHeight = std::max(480, windowSize.height);
 	CalculateUIRectangle();
 	CalculatePanelAreas();
 }

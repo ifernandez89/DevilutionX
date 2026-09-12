@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### 🛡️ Erradicación de `SDL Error: Parameter 'width' is invalid` al Inicializar la Ventana ([`Packaging/emscripten/devilutionx.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/devilutionx.js), [`Packaging/emscripten/emscripten_pre.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/emscripten_pre.js), [`Packaging/emscripten/file-manager.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/file-manager.js), [`Source/utils/display.cpp`](file:///c:/Projects/DevilutionX/Source/utils/display.cpp), [`Source/utils/sdl_wrap.h`](file:///c:/Projects/DevilutionX/Source/utils/sdl_wrap.h), [`Source/engine/dx.cpp`](file:///c:/Projects/DevilutionX/Source/engine/dx.cpp), [`Source/options.cpp`](file:///c:/Projects/DevilutionX/Source/options.cpp), [`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html))
+- **Causa raíz identificada**:
+  - En WebAssembly, `fitToScreen` está habilitado por defecto en la configuración gráfica (`Graphics.fitToScreen`). Al arrancar el motor, `GetPreferredWindowSize()` llama a `CalculatePreferredWindowSize(width, height)`, la cual invoca `SDL_GetDesktopDisplayMode(0, &mode)`.
+  - En navegadores web, antes de que el canvas o viewport establezca su diseño geométrico completo o cuando `diablo.ini` persistido en IndexedDB carece de `[Graphics]`, `mode.w` / `mode.h` o la división por aspecto produce `width <= 0`.
+  - Al recibir `width = 0`, `AdjustToScreenGeometry()` asignaba `gnScreenWidth = 0`. Acto seguido, `CreateBackBuffer()` invocaba `SDL_CreateRGBSurfaceWithFormat(0, gnScreenWidth, gnScreenHeight, 8, SDL_PIXELFORMAT_INDEX8)`.
+  - SDL2 rechaza cualquier superficie con ancho no positivo (`if (width <= 0) SDL_InvalidParamError("width")`), disparando el cuadro de diálogo fatal `SDL Error: Parameter 'width' is invalid at Source\utils\sdl_wrap.h line 52`.
+- **Solución implementada**:
+  1. *Blindaje perimétrico en JS (`emscripten_pre.js`, `file-manager.js`, `devilutionx.js`)*: Se asegura automáticamente en `diablo.ini` la sección `[Graphics]` con `Width=640`, `Height=480`, `Fit to Screen=0` y `Upscale=1`. Esto evita que `CalculatePreferredWindowSize` intente recalcular la geometría contra el modo de escritorio del navegador antes de tiempo, garantizando una resolución inicial canónica y estable.
+  2. *Guardas defensivas en C++ (`display.cpp`, `dx.cpp`, `sdl_wrap.h`, `options.cpp`)*:
+     - `sdl_wrap.h`: `CreateRGBSurface` y `CreateRGBSurfaceWithFormat` ahora validan `if (width <= 0) width = 640; if (height <= 0) height = 480;`, haciendo físicamente imposible que SDL2 reciba un parámetro de dimensión inválido.
+     - `display.cpp`: `CalculatePreferredWindowSize` y `AdjustToScreenGeometry` acotan las dimensiones mínimas a 640x480 y previenen divisiones por cero en `factor` y `mode.h`.
+     - `dx.cpp`: `CreateBackBuffer()` verifica `gnScreenWidth >= 640` y `gnScreenHeight >= 480`.
+     - `options.cpp`: `OptionEntryResolution::LoadFromIni` previene la carga de anchos o altos menores o iguales a cero desde archivos de configuración corruptos.
+  3. *Actualización de Cachebuster*: Se incrementó a `v=nightmare-v20` en `Packaging/emscripten/index.html`.
+
 ### 🐛 Erradicación Definitiva de `RuntimeError: unreachable` en WebAssembly (`doRewind` ASYNCIFY) ([`CMakeLists.txt`](file:///c:/Projects/DevilutionX/CMakeLists.txt), [`Packaging/emscripten/devilutionx.wasm`](file:///c:/Projects/DevilutionX/Packaging/emscripten/devilutionx.wasm), [`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html))
 - **Causa raíz identificada**:
   - En un commit previo se había configurado `-sASYNCIFY_IGNORE_INDIRECT=1` en `CMakeLists.txt` y se había reemplazado el binario `Packaging/emscripten/devilutionx.wasm` por uno reducido (4.79 MB) sin instrumentación de llamadas indirectas.

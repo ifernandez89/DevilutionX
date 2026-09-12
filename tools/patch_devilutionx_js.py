@@ -18,17 +18,29 @@ def patch_file(filepath):
     target_str = 'specialHTMLTargets=[0,typeof document!="undefined"?document:0,typeof window!="undefined"?window:0];var findEventTarget=target=>{target=maybeCStringToJsString(target);var domElement=specialHTMLTargets[target]||(typeof document!="undefined"?document.querySelector(target):undefined);return domElement};'
     replace_str = 'specialHTMLTargets=[typeof Module!="undefined"&&Module["canvas"]?Module["canvas"]:(typeof document!="undefined"?(document.getElementById("canvas")||0):0),typeof document!="undefined"?document:0,typeof window!="undefined"?window:0];var findEventTarget=target=>{target=maybeCStringToJsString(target);if(!target||target===0||target==="0")return specialHTMLTargets[0]||(typeof Module!="undefined"&&Module["canvas"])||(typeof document!="undefined"?document.getElementById("canvas"):undefined);var domElement=specialHTMLTargets[target]||(typeof document!="undefined"?document.querySelector(target):undefined);return domElement};'
 
+    modified = False
     if target_str in content:
         content = content.replace(target_str, replace_str)
+        modified = True
+        print(f"[SUCCESS] Patched findEventTarget in {filepath}")
+
+    target_ini_block = 'else{currentIni+="\\n[Mods]\\nclock=1\\n"}modified=true}}'
+    replace_ini_block = 'else{currentIni+="\\n[Mods]\\nclock=1\\n"}modified=true}if(currentIni.indexOf("[Graphics]")===-1){currentIni+="\\n[Graphics]\\nWidth=640\\nHeight=480\\nFit to Screen=0\\nUpscale=1\\n";modified=true}else{if(currentIni.indexOf("Fit to Screen=0")===-1){if(currentIni.indexOf("Fit to Screen")!==-1){currentIni=currentIni.replace(/Fit to Screen\\s*=\\s*\\d+/i,"Fit to Screen=0")}else{currentIni=currentIni.replace("[Graphics]","[Graphics]\\nFit to Screen=0")}modified=true}}}'
+
+    if target_ini_block in content and 'Fit to Screen=0' not in content:
+        content = content.replace(target_ini_block, replace_ini_block)
+        modified = True
+        print(f"[SUCCESS] Patched Graphics settings in {filepath}")
+
+    if modified:
         with open(filepath, 'w', encoding='utf-8') as f:
             f.write(content)
-        print(f"[SUCCESS] Patched findEventTarget in {filepath}")
         return True
     elif replace_str in content:
-        print(f"[ALREADY PATCHED] {filepath} already has findEventTarget fix")
+        print(f"[ALREADY PATCHED] {filepath} already has fixes applied")
         return True
     else:
-        print(f"[INFO] Target pattern not found in {filepath} (may be using different Emscripten format)")
+        print(f"[INFO] Target pattern not found in {filepath}")
         return False
 
 if __name__ == '__main__':

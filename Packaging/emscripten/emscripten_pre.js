@@ -107,6 +107,21 @@ Module['preRun'].push(function() {
             }
           }
 
+          // Enforce safe Graphics configuration to prevent SDL "Parameter 'width' is invalid"
+          if (currentIni.indexOf('[Graphics]') === -1) {
+            currentIni += "\n[Graphics]\nWidth=640\nHeight=480\nFit to Screen=0\nUpscale=1\n";
+            modified = true;
+          } else {
+            if (currentIni.indexOf('Fit to Screen=0') === -1) {
+              if (currentIni.indexOf('Fit to Screen') !== -1) {
+                currentIni = currentIni.replace(/Fit to Screen\s*=\s*\d+/i, 'Fit to Screen=0');
+              } else {
+                currentIni = currentIni.replace('[Graphics]', "[Graphics]\nFit to Screen=0");
+              }
+              modified = true;
+            }
+          }
+
           // Migrate corrupted string values to proper integer enum values
           // Previous versions wrote Game=Hellfire/Game=Diablo instead of Game=1/Game=2
           if (currentIni.indexOf('Game=Hellfire') !== -1) {

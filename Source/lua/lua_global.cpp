@@ -219,8 +219,12 @@ void AddModsChangedHandler(tl::function_ref<void()> callback)
 
 void LuaReloadActiveMods()
 {
-	// Loaded without a sandbox.
-	CurrentLuaState->events = RunScript(/*env=*/std::nullopt, "devilutionx.events", /*optional=*/false);
+	sol::object eventsObj = RunScript(/*env=*/std::nullopt, "devilutionx.events", /*optional=*/false);
+	if (eventsObj.valid() && eventsObj.get_type() == sol::type::table) {
+		CurrentLuaState->events = eventsObj.as<sol::table>();
+	} else {
+		CurrentLuaState->events = CurrentLuaState->sol.create_table();
+	}
 	CurrentLuaState->commonPackages["devilutionx.events"] = CurrentLuaState->events;
 
 	gbIsHellfire = false;
@@ -334,12 +338,24 @@ void CallLuaEvent(std::string_view name, Args &&...args)
 		return;
 	}
 
-	const auto trigger = CurrentLuaState->events.traverse_get<std::optional<sol::object>>(name, "trigger");
-	if (!trigger.has_value() || !trigger->is<sol::protected_function>()) {
-		LogError("events.{}.trigger is not a function", name);
+	const sol::table &events = CurrentLuaState->events;
+	if (!events.valid()) {
 		return;
 	}
-	const sol::protected_function fn = trigger->as<sol::protected_function>();
+
+	const std::string nameStr(name);
+	const sol::object eventObj = events[nameStr];
+	if (!eventObj.valid() || eventObj.get_type() != sol::type::table) {
+		return;
+	}
+
+	const sol::table eventTable = eventObj.as<sol::table>();
+	const sol::object triggerObj = eventTable["trigger"];
+	if (!triggerObj.valid() || !triggerObj.is<sol::protected_function>()) {
+		return;
+	}
+
+	const sol::protected_function fn = triggerObj.as<sol::protected_function>();
 	SafeCallResult(fn(std::forward<Args>(args)...), /*optional=*/true);
 }
 
@@ -365,17 +381,7 @@ void LuaEvent(std::string_view name, const Player *player, uint32_t arg1)
 
 void LuaEvent(std::string_view name, std::string_view arg)
 {
-	if (!CurrentLuaState.has_value()) {
-		return;
-	}
-
-	const auto trigger = CurrentLuaState->events.traverse_get<std::optional<sol::object>>(name, "trigger");
-	if (!trigger.has_value() || !trigger->is<sol::protected_function>()) {
-		LogError("events.{}.trigger is not a function", name);
-		return;
-	}
-	const sol::protected_function fn = trigger->as<sol::protected_function>();
-	SafeCallResult(fn(arg), /*optional=*/true);
+	CallLuaEvent(name, arg);
 }
 
 sol::state &GetLuaState()

@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### 🛡️ Erradicación de `events.GameDrawComplete.trigger is not a function` y Desbordamiento Fatal de Pila WebAssembly (`table index is out of bounds`) ([`Source/lua/lua_global.cpp`](file:///c:/Projects/DevilutionX/Source/lua/lua_global.cpp), [`Source/lua/modules/render.cpp`](file:///c:/Projects/DevilutionX/Source/lua/modules/render.cpp), [`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html), [`Packaging/emscripten/devilutionx.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/devilutionx.js), [`Packaging/emscripten/devilutionx.wasm`](file:///c:/Projects/DevilutionX/Packaging/emscripten/devilutionx.wasm))
+- **Causas raíz identificadas y solucionadas**:
+  1. *Fallo de indexación `traverse_get` con `std::string_view` y fuga acumulativa en la pila de Lua (`Source/lua/lua_global.cpp`)*:
+     - En `CallLuaEvent(std::string_view name, Args &&...args)`, se utilizaba `CurrentLuaState->events.traverse_get<std::optional<sol::object>>(name, "trigger")`.
+     - En la biblioteca `sol2`, `std::string_view` no está tipificado como C-string ni `std::string` en los traits de búsqueda directa (`meta::is_c_str_or_string_v`). Como consecuencia, `sol2` trataba la clave como un objeto genérico, empujándola a la cima de la pila Lua (`push(L, key)`) y llamando luego a `lua_gettable(L, -1)` sobre la propia cadena recién empujada en vez de sobre la tabla de eventos.
+     - Dicha búsqueda fallaba sistemáticamente devolviendo `nullopt`, disparando el mensaje `LogError("events.{}.trigger is not a function", name)` a 60 cuadros por segundo en cada fotograma del bucle de dibujado (`GameDrawComplete`).
+     - Al retornar en fallo, `sol2` no retiraba los elementos empujados en la pila interna de Lua (`popcount` nunca se desapilaba en rutas de fallo opcional), acumulando más de 120 referencias huérfanas por segundo en la pila de ejecución.
+     - Tras cientos de cuadros, el desbordamiento de la pila de Lua corrompía la memoria contigua y las tablas de despacho indirecto, provocando que cualquier invocación a través de `call_indirect 0` detonara inmediatamente el error fatal de WebAssembly `RuntimeError: table index is out of bounds`.
+     - **Solución**: Se refactorizó `CallLuaEvent` para acceder de forma segura a través de `events[std::string(name)]`, utilizando `std::string` para resolver directamente mediante `lua_getfield` sin alterar la cima de la pila. Se verifica la validez de la tabla y la existencia del método protegido `trigger` sin emitir falsos errores repetitivos por cuadro. Se unificó `LuaEvent(name, arg)` delegando en `CallLuaEvent`, y se garantizó la inicialización segura de `CurrentLuaState->events` como tabla válida en `LuaReloadActiveMods()`.
+  2. *Blindaje perimétrico y de superficie en `render.string` (`Source/lua/modules/render.cpp`)*:
+     - La función de renderizado de texto expuesta a Lua invocaba `DrawString(GlobalBackBuffer(), text, { x, y })` sin validar previamente la existencia de la superficie de destino ni los límites rectangulares de pantalla.
+     - **Solución**: Se añadieron comprobaciones estrictas de validez de superficie (`out.surface != nullptr && out.w() > 0 && out.h() > 0`) y recorte de coordenadas (`x >= 0 && y >= 0 && x < out.w() && y < out.h()`), previniendo cualquier recorte degenerado o violación de memoria.
+  3. *Actualización de Cachebuster a `v=nightmare-v16` (`Packaging/emscripten/index.html`)*:
+     - Se incrementó el número de versión a `v=nightmare-v16` para forzar la invalidación inmediata de caché de scripts y binarios en los navegadores de los usuarios.
+
+
 ### 🛡️ Erradicación de `querySelector('0')`, `divide by zero`, Portal "Perdido" y Reaparición en el Vacío Fuera de Límites ([`Packaging/emscripten/devilutionx.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/devilutionx.js), [`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html), [`Source/portal.cpp`](file:///c:/Projects/DevilutionX/Source/portal.cpp), [`Source/levels/town.cpp`](file:///c:/Projects/DevilutionX/Source/levels/town.cpp), [`Source/player.cpp`](file:///c:/Projects/DevilutionX/Source/player.cpp), [`Source/cursor.cpp`](file:///c:/Projects/DevilutionX/Source/cursor.cpp))
 - **Causas raíz identificadas y solucionadas**:
   1. *Fallo de selector en Emscripten/SDL2 (`SyntaxError: Failed to execute 'querySelector' on 'Document': '0' is not a valid selector` y `RuntimeError: divide by zero`)*:

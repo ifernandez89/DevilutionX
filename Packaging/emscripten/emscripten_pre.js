@@ -107,13 +107,6 @@ Module['preRun'].push(function() {
             }
           }
 
-          // Strip any corrupted [Graphics] section injected by previous bad commits,
-          // restoring pristine, canonical native scaling as in commit a915d6fce.
-          if (currentIni.indexOf('[Graphics]') !== -1) {
-            currentIni = currentIni.replace(/\[Graphics\][\s\S]*?(?=\n\[|$)/g, '');
-            modified = true;
-          }
-
           // Migrate corrupted string values to proper integer enum values
           // Previous versions wrote Game=Hellfire/Game=Diablo instead of Game=1/Game=2
           if (currentIni.indexOf('Game=Hellfire') !== -1) {
@@ -227,6 +220,31 @@ Module['preRun'].push(function() {
                   if (cleanExtLower.endsWith('.dsv')) {
                     cleanExtLower = cleanExtLower.substring(0, cleanExtLower.length - 4) + '.sv';
                   }
+
+                  // STASH / ALIJO COMPARTIDO: Preservar y sincronizar sin alterar como personaje
+                  if (cleanExtLower.indexOf('stash') === 0) {
+                    var canonicalStash = cleanExtLower.endsWith('.hsv') ? 'stash.hsv' : 'stash.sv';
+                    var spawnStash = cleanExtLower.endsWith('.hsv') ? 'stash_spawn.hsv' : 'stash_spawn.sv';
+                    try {
+                      var stashData = FS.readFile('/libsdl/diasurgical/devilution/' + fname);
+                      // Asegurar versión canónica y spawn en IDBFS
+                      FS.writeFile('/libsdl/diasurgical/devilution/' + canonicalStash, stashData);
+                      FS.writeFile('/libsdl/diasurgical/devilution/' + spawnStash, stashData);
+                      // Espejear en raíz RAM virtual
+                      try { FS.writeFile('/' + canonicalStash, stashData); } catch(e) {}
+                      try { FS.writeFile('/' + spawnStash, stashData); } catch(e) {}
+                      // Eliminar nombre con mayúsculas o no estándar si aplica
+                      if (fname !== canonicalStash && fname !== spawnStash) {
+                        try { FS.unlink('/libsdl/diasurgical/devilution/' + fname); } catch(e) {}
+                        needSync = true;
+                      }
+                      console.log('[IDBFS] Alijo compartido protegido y sincronizado:', canonicalStash, '/', spawnStash);
+                    } catch(e) {
+                      console.warn('[IDBFS] Error sincronizando alijo compartido:', fname, e);
+                    }
+                    return; // No clasificar como partida irregular ni renombrar a single_X.sv
+                  }
+
                   var m = cleanExtLower.match(saveRegex);
                   if (m && fname === cleanExtLower) {
                     standardOccupied[cleanExtLower] = true;

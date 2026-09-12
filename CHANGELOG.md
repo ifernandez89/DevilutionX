@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### 📦 Corrección y Protección Integral de Alijo Compartido (`stash.sv` / `stash.hsv`) en WebAssembly & File Manager (`v=nightmare-v24`) ([`Source/pfile.cpp`](file:///c:/Projects/DevilutionX/Source/pfile.cpp), [`Packaging/emscripten/emscripten_pre.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/emscripten_pre.js), [`Packaging/emscripten/devilutionx.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/devilutionx.js), [`Packaging/emscripten/file-manager.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/file-manager.js), [`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html))
+- **Causas raíz identificadas y solucionadas**:
+  1. *Eliminación y corrupción destructiva en el arranque por Auto-Heal (`emscripten_pre.js`, `devilutionx.js`)*:
+     - Durante la inicialización del sistema de persistencia IDBFS, la rutina de saneamiento empleaba la expresión regular de personajes `/^(single|spawn|multi|share)_(\d+)\.(sv|hsv)$/`.
+     - Al detectar `stash.sv` o `stash.hsv`, no coincidía con el patrón de héroe y era catalogado como partida irregular. El script lo renombraba a una casilla de personaje disponible (ej: `single_0.sv`) y **borraba permanentemente el archivo original con `FS.unlink()`**.
+     - En consecuencia: el alijo desaparecía, el File Manager no lo listaba y en su lugar aparecía una partida de héroe corrupta en la casilla 0.
+     - **Solución**: Se protegió explícitamente cualquier archivo que inicie con `stash` en `emscripten_pre.js` y `devilutionx.js`. Se excluyen categóricamente del proceso de renombrado como héroes, se normalizan sus nombres en minúsculas y se mantienen espejeados de manera bidireccional (`stash.sv` <-> `stash_spawn.sv` y `stash.hsv` <-> `stash_spawn.hsv`).
+  2. *Normalización y subida errónea en el File Manager (`file-manager.js`)*:
+     - Al arrastrar o cargar `stash.sv` o `stash.hsv` en la zona de subida, el analizador forzaba un prefijo `single_` o `spawn_` asignándole una casilla numérica.
+     - **Solución**: Se añadió reconocimiento nativo de archivos de alijo en `file-manager.js`, preservando `stash.sv` (Diablo) o `stash.hsv` (Hellfire), consultando al usuario en caso de sobrescritura de alijo existente y espejeando automáticamente las variantes de compatibilidad retail y spawn en IndexedDB y memoria RAM.
+  3. *Panel y Sección Dedicada en el File Manager (`index.html`, `file-manager.js`)*:
+     - Se añadió un contenedor visual exclusivo `📦 Alijo Compartido / Stash (stash.sv / stash.hsv)` independiente de las partidas de los héroes, con tamaño, botón de descarga directa (`💾 Descargar`) y eliminación limpia (`🗑️ Eliminar`), separando los personajes individuales del baúl compartido de Tristram.
+  4. *Fallback Bidireccional en el Motor C++ (`Source/pfile.cpp`)*:
+     - `OpenStashArchive()` en modo Retail solo intentaba abrir `stash.sv` sin comprobar `stash_spawn.sv` si el usuario provenía de la versión Shareware o viceversa.
+     - **Solución**: Se implementó la búsqueda alternativa recíproca entre `stash` y `stash_spawn` tanto para Diablo como para Hellfire.
+  5. *Actualización de Cachebuster a `v=nightmare-v24`*:
+     - Se actualizó el parámetro de versión en `index.html` para asegurar la recarga inmediata de los nuevos scripts y estilos en los clientes.
+
 ### 🎯 Erradicación Definitiva de `Parameter 'width' is invalid at sdl_wrap.h line 52` y Restauración Canónica de Resolución (`v=nightmare-v23`) ([`Packaging/emscripten/devilutionx.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/devilutionx.js), [`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html), [`Packaging/emscripten/emscripten_pre.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/emscripten_pre.js), [`Packaging/emscripten/file-manager.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/file-manager.js), [`tools/patch_devilutionx_js.py`](file:///c:/Projects/DevilutionX/tools/patch_devilutionx_js.py))
 
 #### 📋 Diagnóstico Forense y Causa Raíz Exacta:

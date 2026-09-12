@@ -650,15 +650,18 @@ std::optional<SaveReader> OpenStashArchive()
 	if (FileExists(primaryPath.c_str()))
 		return CreateSaveReader(std::move(primaryPath));
 
-	if (gbIsSpawn) {
+	// Fallback between retail ('stash') and spawn ('stash_spawn')
 #ifdef UNPACKED_SAVES
-		std::string retailStash = StrCat(paths::PrefPath(), "stash", gbIsHellfire ? "_hsv" DIRECTORY_SEPARATOR_STR : "_sv" DIRECTORY_SEPARATOR_STR);
+	std::string alternateModePath = StrCat(paths::PrefPath(),
+	    gbIsSpawn ? "stash" : "stash_spawn",
+	    gbIsHellfire ? "_hsv" DIRECTORY_SEPARATOR_STR : "_sv" DIRECTORY_SEPARATOR_STR);
 #else
-		std::string retailStash = StrCat(paths::PrefPath(), "stash", gbIsHellfire ? ".hsv" : ".sv");
+	std::string alternateModePath = StrCat(paths::PrefPath(),
+	    gbIsSpawn ? "stash" : "stash_spawn",
+	    gbIsHellfire ? ".hsv" : ".sv");
 #endif
-		if (FileExists(retailStash.c_str()))
-			return CreateSaveReader(std::move(retailStash));
-	}
+	if (FileExists(alternateModePath.c_str()))
+		return CreateSaveReader(std::move(alternateModePath));
 
 	return CreateSaveReader(std::move(primaryPath));
 }

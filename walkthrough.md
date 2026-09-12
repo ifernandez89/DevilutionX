@@ -4,6 +4,19 @@ Se han implementado, probado y verificado con éxito las nuevas características
 
 ## 🛠️ Cambios Implementados y Verificados
 
+### 📦 Protección Integral y Soporte de Alijo Compartido (`stash.sv` / `stash.hsv`) en WebAssembly & File Manager (`v=nightmare-v24`)
+- **Diagnóstico del problema:**
+  - El motor web borraba y convertía automáticamente el archivo de alijo (`stash.sv` / `stash.hsv`) en una partida de héroe corrupta (`single_0.sv`) durante la rutina de auto-sanación de IndexedDB (`emscripten_pre.js` y `devilutionx.js`).
+  - El File Manager (`file-manager.js`) no tenía reglas de nombres para `stash`, forzando cualquier alijo cargado a renombrarse a `single_0.sv` o `spawn_0.sv`.
+  - La interfaz carecía de un contenedor visual dedicado para el alijo, mezclándolo con los personajes.
+  - El motor C++ (`Source/pfile.cpp:OpenStashArchive()`) no contaba con fallback recíproco hacia `stash_spawn.sv` en modo Retail.
+- **Soluciones implementadas:**
+  1. **Protección en IDBFS (`emscripten_pre.js`, `devilutionx.js`)**: Los archivos que empiezan por `stash` son reconocidos, preservados y nunca catalogados como partidas de héroe irregulares. Se mantienen espejeados entre `stash.sv` y `stash_spawn.sv` (y sus variantes `.hsv`).
+  2. **Carga y normalización en File Manager (`file-manager.js`)**: Detección nativa de `stash.sv` y `stash.hsv`, aviso de sobrescritura de alijo previo y espejeo automático entre retail y spawn.
+  3. **Panel Visual Exclusivo (`index.html`, `file-manager.js`)**: Nueva sección `📦 Alijo Compartido / Stash` con etiquetas claras (`⚔️ Diablo Clásico` / `🔥 Hellfire`), visor de tamaño, botón de descarga directa (`💾 Descargar`) y eliminación limpia (`🗑️ Eliminar`).
+  4. **Fallback Bidireccional en C++ (`Source/pfile.cpp`)**: `OpenStashArchive()` busca indistintamente `stash` o `stash_spawn` según estén disponibles.
+  5. **Versión y Cachebuster**: Se actualizó a `v=nightmare-v24` en `index.html`.
+
 ### 1. 🗿 Easter Egg: Golem Acompañante Permanente & Inmortal (Single Player)
 - **Persistencia en Partidas Guardadas ([`Source/loadsave.cpp`](file:///c:/Projects/DevilutionX/Source/loadsave.cpp), [`Source/loadsave.h`](file:///c:/Projects/DevilutionX/Source/loadsave.h), [`Source/pfile.cpp`](file:///c:/Projects/DevilutionX/Source/pfile.cpp))**:
   - Se implementaron `SaveGolemState()` y `LoadGolemState()`.

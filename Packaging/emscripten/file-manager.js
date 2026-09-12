@@ -10,6 +10,7 @@
 	const purgeMpqsBtn = document.getElementById('purgeMpqsBtn');
 	const factoryResetBtn = document.getElementById('factoryResetBtn');
 	const mpqFilesList = document.getElementById('mpqFilesList');
+	const stashFilesList = document.getElementById('stashFilesList');
 	const saveFilesList = document.getElementById('saveFilesList');
 	const hellfireStatusEl = document.getElementById('hellfireStatus');
 	const gameModeDiabloBtn = document.getElementById('gameModeDiabloBtn');
@@ -156,6 +157,43 @@
 		let errors = [];
 		let installedSummaries = [];
 
+		function checkFinishSync() {
+			if (typeof showToast === 'function') {
+				showToast('Guardando ' + validFiles.length + ' archivo(s) en IndexedDB...');
+			}
+			window.syncInProgress = true;
+			// Persist atomic sync to IndexedDB
+			FS.syncfs(false, function(err) {
+				window.syncInProgress = false;
+				if (err) {
+					console.error('[File Manager] Error sincronizando a IndexedDB:', err);
+					alert('Error guardando archivos en el almacenamiento del navegador.');
+				} else {
+					let warnings = [];
+					if (hasHsvFiles && !hasHellfireMpq) {
+						warnings.push('⚠️ AVISO HELLFIRE: Has subido partidas Hellfire (.hsv), pero no se detectaron los archivos de Hellfire (hellfire.mpq, hfmonk.mpq, etc.). Recuerda subirlos para que el juego pueda cargar tus personajes de Hellfire.');
+					}
+					if (hasRetailSaves && !hasDiabdat) {
+						warnings.push('⚠️ AVISO PARTIDA PC: Has subido partidas de la versión comercial de PC (single_*). Sin DIABDAT.MPQ en el navegador, el juego corre en modo Demo/Shareware y podría no desencriptar los personajes de PC.');
+					}
+
+					let msg = '';
+					if (errors.length > 0) {
+						msg = 'Se cargaron ' + (validFiles.length - errors.length) + ' archivo(s). Hubo errores con: ' + errors.join(', ');
+					} else {
+						msg = '¡' + validFiles.length + ' archivo(s) instalados y normalizados con éxito!\n\n' +
+						      installedSummaries.map(s => '• ' + s).join('\n');
+					}
+					if (warnings.length > 0) {
+						msg += '\n\n' + warnings.join('\n\n');
+					}
+					msg += '\n\nRecargando el juego...';
+					alert(msg);
+					setTimeout(() => location.reload(), 300);
+				}
+			});
+		}
+
 		validFiles.forEach(file => {
 			const reader = new FileReader();
 			reader.onload = function(e) {
@@ -168,8 +206,31 @@
 						destFilename = lowerName; // Strictly lowercase for Unix/Emscripten case sensitivity
 					} else if (lowerName.endsWith('.ini')) {
 						destFilename = 'diablo.ini';
+					} else if (lowerName.startsWith('stash')) {
+						// Stash / Alijo Compartido (.sv, .hsv, .dsv)
+						const isHellfire = lowerName.endsWith('.hsv');
+						destFilename = isHellfire ? 'stash.hsv' : 'stash.sv';
+						const modeName = isHellfire ? 'Hellfire' : 'Diablo Clásico';
+
+						if (occupiedFiles.has(destFilename)) {
+							const confirmOverwrite = confirm(
+								`Ya existe un Alijo Compartido (${destFilename}) de ${modeName}.\n\n` +
+								`¿Deseas SOBRESCRIBIR tu alijo con el archivo que estás subiendo (${file.name})?\n\n` +
+								`• Pulsa ACEPTAR para sobrescribir el alijo.\n` +
+								`• Pulsa CANCELAR para omitir este archivo.`
+							);
+							if (!confirmOverwrite) {
+								console.log('[File Manager] Carga de alijo omitida por el usuario:', file.name);
+								processed++;
+								if (processed === validFiles.length) {
+									checkFinishSync();
+								}
+								return;
+							}
+						}
+						occupiedFiles.add(destFilename);
 					} else {
-						// Save game file (.sv, .hsv, .dsv)
+						// Save game file (.sv, .hsv, .dsv) for heroes
 						let ext = 'sv';
 						if (lowerName.endsWith('.hsv')) {
 							ext = 'hsv';
@@ -239,6 +300,21 @@
 						try { FS.writeFile('/DIABDAT.MPQ', data); } catch (err) {}
 					}
 
+					// Stash compatibility: mirror between retail and spawn variants
+					if (destFilename === 'stash.sv') {
+						try {
+							FS.writeFile('/libsdl/diasurgical/devilution/stash_spawn.sv', data);
+							try { FS.writeFile('/stash_spawn.sv', data); } catch (e) {}
+							console.log('[File Manager] Alijo espejeado para modo spawn: stash_spawn.sv');
+						} catch (e) {}
+					} else if (destFilename === 'stash.hsv') {
+						try {
+							FS.writeFile('/libsdl/diasurgical/devilution/stash_spawn.hsv', data);
+							try { FS.writeFile('/stash_spawn.hsv', data); } catch (e) {}
+							console.log('[File Manager] Alijo espejeado para modo spawn: stash_spawn.hsv');
+						} catch (e) {}
+					}
+
 					// If running in spawn mode, also mirror single_ to spawn_ as an extra compatibility fallback
 					if (!hasDiabdat && destFilename.startsWith('single_')) {
 						const spawnFilename = 'spawn_' + destFilename.substring('single_'.length);
@@ -263,40 +339,7 @@
 
 				processed++;
 				if (processed === validFiles.length) {
-					if (typeof showToast === 'function') {
-						showToast('Guardando ' + validFiles.length + ' archivo(s) en IndexedDB...');
-					}
-					window.syncInProgress = true;
-					// Persist atomic sync to IndexedDB
-					FS.syncfs(false, function(err) {
-						window.syncInProgress = false;
-						if (err) {
-							console.error('[File Manager] Error sincronizando a IndexedDB:', err);
-							alert('Error guardando archivos en el almacenamiento del navegador.');
-						} else {
-							let warnings = [];
-							if (hasHsvFiles && !hasHellfireMpq) {
-								warnings.push('⚠️ AVISO HELLFIRE: Has subido partidas Hellfire (.hsv), pero no se detectaron los archivos de Hellfire (hellfire.mpq, hfmonk.mpq, etc.). Recuerda subirlos para que el juego pueda cargar tus personajes de Hellfire.');
-							}
-							if (hasRetailSaves && !hasDiabdat) {
-								warnings.push('⚠️ AVISO PARTIDA PC: Has subido partidas de la versión comercial de PC (single_*). Sin DIABDAT.MPQ en el navegador, el juego corre en modo Demo/Shareware y podría no desencriptar los personajes de PC.');
-							}
-
-							let msg = '';
-							if (errors.length > 0) {
-								msg = 'Se cargaron ' + (validFiles.length - errors.length) + ' archivo(s). Hubo errores con: ' + errors.join(', ');
-							} else {
-								msg = '¡' + validFiles.length + ' archivo(s) instalados y normalizados con éxito!\n\n' +
-								      installedSummaries.map(s => '• ' + s).join('\n');
-							}
-							if (warnings.length > 0) {
-								msg += '\n\n' + warnings.join('\n\n');
-							}
-							msg += '\n\nRecargando el juego...';
-							alert(msg);
-							setTimeout(() => location.reload(), 300);
-						}
-					});
+					checkFinishSync();
 				}
 			};
 			reader.readAsArrayBuffer(file);
@@ -306,6 +349,7 @@
 	// Refresh file list & system status
 	function refreshFileList() {
 		if (typeof Module === 'undefined' || typeof FS === 'undefined') {
+			if (stashFilesList) stashFilesList.innerHTML = '<p class="info-text">El juego se está cargando...</p>';
 			if (mpqFilesList) mpqFilesList.innerHTML = '<p class="info-text">El juego se está cargando...</p>';
 			if (saveFilesList) saveFilesList.innerHTML = '<p class="info-text">El juego se está cargando...</p>';
 			return;
@@ -316,6 +360,7 @@
 			try {
 				FS.stat('/libsdl/diasurgical/devilution');
 			} catch (e) {
+				if (stashFilesList) stashFilesList.innerHTML = '<p class="info-text">No se encontró archivo de alijo compartido.</p>';
 				if (mpqFilesList) mpqFilesList.innerHTML = '<p class="info-text">No se encontraron archivos MPQ.</p>';
 				if (saveFilesList) saveFilesList.innerHTML = '<p class="info-text">No se encontraron partidas guardadas.</p>';
 				updateHellfireStatus([]);
@@ -325,10 +370,42 @@
 
 			const files = FS.readdir('/libsdl/diasurgical/devilution');
 			const mpqFiles = files.filter(f => f.toLowerCase().endsWith('.mpq') && f !== '.' && f !== '..');
-			const saveFiles = files.filter(f => {
+			const allSaveFiles = files.filter(f => {
 				const name = f.toLowerCase();
 				return (name.endsWith('.sv') || name.endsWith('.hsv') || name.endsWith('.dsv')) && f !== '.' && f !== '..';
 			});
+
+			// Group into Stash files vs Hero Save files
+			const stashFiles = [];
+			const heroSaveFiles = [];
+			const seenStash = new Set();
+
+			allSaveFiles.forEach(f => {
+				const lower = f.toLowerCase();
+				if (lower.startsWith('stash')) {
+					// Prefer canonical name: stash.sv or stash.hsv
+					const canonical = lower.endsWith('.hsv') ? 'stash.hsv' : 'stash.sv';
+					if (!seenStash.has(canonical)) {
+						seenStash.add(canonical);
+						const realFilename = files.includes(canonical) ? canonical : f;
+						stashFiles.push(realFilename);
+					}
+				} else {
+					heroSaveFiles.push(f);
+				}
+			});
+
+			// Render Stash list
+			if (stashFilesList) {
+				if (stashFiles.length === 0) {
+					stashFilesList.innerHTML = '<p class="info-text" style="color: #b0a080;">No se encontró archivo de Alijo Compartido (stash.sv / stash.hsv). Se creará automáticamente al guardar objetos en el baúl o puedes subir uno arriba.</p>';
+				} else {
+					stashFilesList.innerHTML = '';
+					stashFiles.sort().forEach(filename => {
+						renderFileRow(stashFilesList, filename, true, true);
+					});
+				}
+			}
 
 			// Render MPQ list
 			if (mpqFilesList) {
@@ -338,19 +415,19 @@
 					mpqFilesList.innerHTML = '';
 					// Sort alphabetically
 					mpqFiles.sort().forEach(filename => {
-						renderFileRow(mpqFilesList, filename, false);
+						renderFileRow(mpqFilesList, filename, false, false);
 					});
 				}
 			}
 
-			// Render Saves list
+			// Render Saves list (heroes)
 			if (saveFilesList) {
-				if (saveFiles.length === 0) {
-					saveFilesList.innerHTML = '<p class="info-text" style="color: #b0a080;">No hay partidas guardadas (.sv / .hsv).</p>';
+				if (heroSaveFiles.length === 0) {
+					saveFilesList.innerHTML = '<p class="info-text" style="color: #b0a080;">No hay partidas de personajes guardadas (.sv / .hsv).</p>';
 				} else {
 					saveFilesList.innerHTML = '';
-					saveFiles.sort().forEach(filename => {
-						renderFileRow(saveFilesList, filename, true);
+					heroSaveFiles.sort().forEach(filename => {
+						renderFileRow(saveFilesList, filename, true, false);
 					});
 				}
 			}
@@ -502,7 +579,7 @@
 		}
 	}
 
-	function renderFileRow(container, filename, isSaveFile) {
+	function renderFileRow(container, filename, isSaveFile, isStash) {
 		const path = '/libsdl/diasurgical/devilution/' + filename;
 		let size = 0;
 		try {
@@ -517,8 +594,14 @@
 		nameSpan.className = 'file-item-name';
 
 		let displayName = filename;
-		if (isSaveFile) {
-			const m = filename.toLowerCase().match(/^(single|spawn|multi|share)_(\d+)\.(sv|hsv)$/);
+		const lower = filename.toLowerCase();
+
+		if (isStash || lower.startsWith('stash')) {
+			const isHellfire = lower.endsWith('.hsv');
+			const expLabel = isHellfire ? '🔥 Hellfire' : '⚔️ Diablo Clásico';
+			displayName = `📦 Alijo Compartido (${expLabel}) • ${filename}`;
+		} else if (isSaveFile) {
+			const m = lower.match(/^(single|spawn|multi|share)_(\d+)\.(sv|hsv)$/);
 			if (m) {
 				const modeLabel = (m[1] === 'single' ? 'Un Jugador' : (m[1] === 'spawn' ? 'Shareware' : 'Multijugador'));
 				const expLabel = (m[3] === 'hsv' ? '🔥 Hellfire' : '⚔️ Diablo');
@@ -585,6 +668,19 @@
 
 		try {
 			const lower = filename.toLowerCase();
+
+			// If deleting a stash file, also remove its spawn twin and uppercase variants
+			if (lower === 'stash.sv' || lower === 'stash_spawn.sv') {
+				['stash.sv', 'stash_spawn.sv', 'STASH.SV', 'STASH_SPAWN.SV'].forEach(f => {
+					try { FS.unlink('/libsdl/diasurgical/devilution/' + f); } catch (e) {}
+					try { FS.unlink('/' + f); } catch (e) {}
+				});
+			} else if (lower === 'stash.hsv' || lower === 'stash_spawn.hsv') {
+				['stash.hsv', 'stash_spawn.hsv', 'STASH.HSV', 'STASH_SPAWN.HSV'].forEach(f => {
+					try { FS.unlink('/libsdl/diasurgical/devilution/' + f); } catch (e) {}
+					try { FS.unlink('/' + f); } catch (e) {}
+				});
+			}
 
 			// 1. Delete all casing variants from persistent IDBFS directory
 			try {

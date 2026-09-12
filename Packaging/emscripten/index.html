@@ -1024,7 +1024,7 @@
 	<!-- Game Canvas -->
 	<div class="game-container">
 		<div class="emscripten_border">
-			<canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" tabindex="-1"></canvas>
+			<canvas class="emscripten" id="canvas" width="640" height="480" oncontextmenu="event.preventDefault()" tabindex="-1"></canvas>
 			<canvas id="webgpuNeuralCanvas"></canvas>
 			<canvas id="rain-canvas"></canvas>
 			<div id="lightning-overlay"></div>
@@ -1036,10 +1036,10 @@
 	<textarea id="output" rows="8"></textarea>
 	<script type='text/javascript'>
 		// ============================================================
-		//  DEFENSIVE EMSCRIPTEN QUERYSELECTOR GUARD
+		//  DEFENSIVE EMSCRIPTEN QUERYSELECTOR & CANVAS GEOMETRY GUARD
 		// ============================================================
 		// Prevents SyntaxError: Failed to execute 'querySelector' on 'Document': '0' is not a valid selector
-		// and the resulting division by zero when Emscripten queries CSS dimensions for default target (0).
+		// and prevents division by zero when Emscripten queries CSS dimensions for desktop mode.
 		(function() {
 			var _origQuerySelector = Document.prototype.querySelector;
 			Document.prototype.querySelector = function(selector) {
@@ -1055,6 +1055,28 @@
 					throw err;
 				}
 			};
+
+			var canvasEl = document.getElementById('canvas');
+			if (canvasEl) {
+				var _origGetBoundingClientRect = canvasEl.getBoundingClientRect;
+				canvasEl.getBoundingClientRect = function() {
+					var r = _origGetBoundingClientRect.call(this);
+					var w = r.width || canvasEl.clientWidth || window.innerWidth || 640;
+					var h = r.height || canvasEl.clientHeight || window.innerHeight || 480;
+					if (w <= 0) w = 640;
+					if (h <= 0) h = 480;
+					return {
+						top: r.top || 0,
+						left: r.left || 0,
+						right: (r.left || 0) + w,
+						bottom: (r.top || 0) + h,
+						width: w,
+						height: h,
+						x: r.x || 0,
+						y: r.y || 0
+					};
+				};
+			}
 		})();
 
 		var statusElement = document.getElementById('status');
@@ -2380,8 +2402,8 @@
 	</script>
 	<script src="https://cdn.jsdelivr.net/npm/onnxruntime-web/dist/ort.min.js"></script>
 	<script src="neural_infer.js"></script>
-	<script type='text/javascript' src="file-manager.js?v=nightmare-v22"></script>
-	<script async type="text/javascript" src="devilutionx.js?v=nightmare-v22"></script>
+	<script type='text/javascript' src="file-manager.js?v=nightmare-v23"></script>
+	<script async type="text/javascript" src="devilutionx.js?v=nightmare-v23"></script>
 </body>
 
 </html>

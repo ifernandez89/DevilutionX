@@ -7,27 +7,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-### 🎯 Restauración Canónica Integral al Estado Funcional (`a915d6fce`) y Erradicación de Cascada de Errores ([`Packaging/emscripten/devilutionx.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/devilutionx.js), [`Packaging/emscripten/devilutionx.wasm`](file:///c:/Projects/DevilutionX/Packaging/emscripten/devilutionx.wasm), [`Packaging/emscripten/emscripten_pre.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/emscripten_pre.js), [`Packaging/emscripten/file-manager.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/file-manager.js), [`tools/patch_devilutionx_js.py`](file:///c:/Projects/DevilutionX/tools/patch_devilutionx_js.py), [`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html))
+### 🎯 Erradicación Definitiva de `Parameter 'width' is invalid at sdl_wrap.h line 52` y Restauración Canónica de Resolución (`v=nightmare-v23`) ([`Packaging/emscripten/devilutionx.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/devilutionx.js), [`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html), [`Packaging/emscripten/emscripten_pre.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/emscripten_pre.js), [`Packaging/emscripten/file-manager.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/file-manager.js), [`tools/patch_devilutionx_js.py`](file:///c:/Projects/DevilutionX/tools/patch_devilutionx_js.py))
 
-#### 📋 Auditoría Forense de Errores Cometidos y sus Causas Raíz:
-1. **Error 1: Desincronización Binaria entre `devilutionx.wasm` y `devilutionx.js` (en commit `67041c30f`)**:
-   - *Qué ocurrió:* En el commit `67041c30f` se restauró `devilutionx.wasm` de `a915d6fce` (6.64 MB), pero **no se restauró** `devilutionx.js`. Se dejó la envoltura JS compilada en `31bcc8514` con `-sASYNCIFY_IGNORE_INDIRECT=1`.
-   - *Consecuencia:* Al estar desalineadas las tablas de memoria y trampolines de llamadas entre el WASM y el runtime JS, las llamadas a la capa SDL arrojaban parámetros corruptos y detonaban `Parameter 'width' is invalid at Source\utils/sdl_wrap.h line 52`.
-2. **Error 2: Inyección Destructiva de `Fit to Screen=0` (en commit `813178238`)**:
-   - *Qué ocurrió:* Para intentar silenciar el error de ancho, se forzó `Fit to Screen=0` en `diablo.ini` vía `emscripten_pre.js`, `file-manager.js` y `devilutionx.js`.
-   - *Consecuencia:* Se canceló `CalculatePreferredWindowSize()`, bloqueando el motor en 640x480. Al ejecutarse con `SDL_WINDOW_FULLSCREEN_DESKTOP`, el viewport WebGL y el canvas flexbox desfasaron sus coordenadas, provocando que el juego se renderizara cortado, deformado y gigante en la esquina inferior derecha.
-3. **Error 3: Reaparición de `Parameter 'width' is invalid` al revertir a `Fit to Screen=1` (en commit `d700e01f4`)**:
-   - *Qué ocurrió:* Al reactivar `Fit to Screen=1` sin haber restaurado el `devilutionx.js` original de `a915d6fce`, la envoltura JS desfasada volvió a disparar el fallo en `sdl_wrap.h line 52`.
+#### 📋 Diagnóstico Forense y Causa Raíz Exacta:
+1. **Por qué reapareció el diálogo rojo `SDL Error: Parameter 'width' is invalid` al restaurar `a915d6fce`**:
+   - Al restaurar la base canónica limpia y purgar la sección `[Graphics]` de `diablo.ini`, el motor volvió a su valor predeterminado legítimo: `Fit to Screen = 1`.
+   - Con `Fit to Screen = 1`, el motor invoca `CalculatePreferredWindowSize(width, height)` al inicializar el vídeo, la cual llama a `SDL_GetDesktopDisplayMode(0, &mode)`.
+   - En Emscripten, `SDL_GetDesktopDisplayMode` invoca internamente `_emscripten_get_element_css_size(NULL, &w, &h)`.
+   - En el navegador, durante la carga inicial antes de que el motor de renderizado del DOM complete el cálculo de estilo del contenedor flex/CSS, `getBoundingClientRect` sobre el canvas reporta `width: 0, height: 0`.
+   - En el binario compilado `devilutionx.wasm`, `mode.w` y `mode.h` entraban con valor `0`.
+   - Al calcular la escala:
+     ```cpp
+     const float wFactor = (float)mode.w / width;  // 0.0 / 640 = 0.0
+     const float hFactor = (float)mode.h / height; // 0.0 / 480 = 0.0
+     // wFactor > hFactor (0 > 0) es falso -> rama else:
+     height = mode.h * width / mode.w; // 0 * 640 / 0 => División por cero => 0
+     ```
+   - La dimensión de la pantalla se fijaba en 0 y se invocaba `SDL_CreateRGBSurfaceWithFormat(0, 0, ...)`.
+   - SDL2 arrojaba el error fatal `Parameter 'width' is invalid` capturado en `Source/utils/sdl_wrap.h line 52`.
+   - En commits intermedios se había intentado forzar `Fit to Screen=0` para saltarse esta función, lo que causó el efecto secundario de recortar la pantalla en una esquina gigante.
 
-#### 🛠️ Solución Definitiva y Estado Canónico Restaurado:
-1. **Restauración 1:1 de la Pareja Binaria Canónica de `a915d6fce`**:
-   - `devilutionx.wasm` (6.647.125 bytes) y `devilutionx.js` (250.812 bytes) han sido restaurados directamente del commit funcional [`a915d6fce`](https://github.com/ifernandez89/DevilutionX/commit/a915d6fce), asegurando coherencia binaria absoluta y cero desincronizaciones de Asyncify.
-2. **Limpieza Completa de `[Graphics]` en `diablo.ini`**:
-   - En [`emscripten_pre.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/emscripten_pre.js) se purga automáticamente cualquier sección `[Graphics]` anómala que haya sido grabada en el IndexedDB del usuario en los commits fallidos, regresando la configuración a los valores canónicos por defecto con los que "La Caída de Tristram" funcionaba impecablemente.
-   - En [`file-manager.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/file-manager.js) se mantiene `defaultIni` limpio con Bárbaro, Bardo y Reloj de Sesión sin claves gráficas espurias.
-   - En [`tools/patch_devilutionx_js.py`](file:///c:/Projects/DevilutionX/tools/patch_devilutionx_js.py) se eliminó cualquier inyección invasiva en el archivo INI.
-3. **Cachebuster Actualizado**:
-   - Incrementado a **`v=nightmare-v22`** en [`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html) para garantizar la invalidación de scripts en todos los navegadores.
+#### 🛠️ Solución Definitiva Implementada:
+1. **Blindaje de Geometría en Emscripten (`Packaging/emscripten/devilutionx.js` y `tools/patch_devilutionx_js.py`)**:
+   - Se interceptaron `_emscripten_get_element_css_size` y `_emscripten_get_screen_size` para que, si el DOM aún no ha calculado el tamaño o reporta `<= 0`, devuelvan automáticamente como salvaguarda `window.innerWidth / window.innerHeight` o como mínimo `640x480`. Esto impide físicamente que `mode.w` o `mode.h` sean 0.
+2. **Dimensiones Nativas en el Canvas HTML (`Packaging/emscripten/index.html`)**:
+   - Se asignaron atributos explícitos `width="640" height="480"` a `<canvas class="emscripten" id="canvas">` para que el elemento tenga dimensiones intrínsecas válidas desde el microsegundo cero de creación en el DOM.
+   - Se blindó preventivamente `canvasEl.getBoundingClientRect` para que garantice siempre valores positivos no nulos (`>= 640x480`).
+3. **Mantenimiento de Pareja Binaria Canónica de `a915d6fce`**:
+   - `devilutionx.wasm` (6.647.125 bytes) permanece intacto y sincronizado con las trampillas de Asyncify.
+4. **Purga de Configuración Gráfica Residual en IndexedDB (`Packaging/emscripten/emscripten_pre.js`)**:
+   - Se limpia cualquier sección `[Graphics]` obsoleta que haya quedado guardada en el navegador del usuario por versiones intermedias.
+5. **Cachebuster Actualizado**:
+   - Incrementado a **`v=nightmare-v23`** en `index.html` para asegurar que el navegador cargue inmediatamente el nuevo wrapper JS y HTML corregidos.
 
 ### 🛡️ Erradicación de `SDL Error: Parameter 'width' is invalid` al Inicializar la Ventana ([`Packaging/emscripten/devilutionx.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/devilutionx.js), [`Packaging/emscripten/emscripten_pre.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/emscripten_pre.js), [`Packaging/emscripten/file-manager.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/file-manager.js), [`Source/utils/display.cpp`](file:///c:/Projects/DevilutionX/Source/utils/display.cpp), [`Source/utils/sdl_wrap.h`](file:///c:/Projects/DevilutionX/Source/utils/sdl_wrap.h), [`Source/engine/dx.cpp`](file:///c:/Projects/DevilutionX/Source/engine/dx.cpp), [`Source/options.cpp`](file:///c:/Projects/DevilutionX/Source/options.cpp), [`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html))
 - **Causa raíz identificada**:

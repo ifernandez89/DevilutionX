@@ -24,7 +24,19 @@ def patch_file(filepath):
         modified = True
         print(f"[SUCCESS] Patched findEventTarget in {filepath}")
 
-    # No graphics injection - diablo.ini uses canonical native defaults
+    target_css_size = 'var _emscripten_get_element_css_size=(target,width,height)=>{target=findEventTarget(target);if(!target)return-4;var rect=getBoundingClientRect(target);HEAPF64[width>>3]=rect.width;HEAPF64[height>>3]=rect.height;return 0};'
+    replace_css_size = 'var _emscripten_get_element_css_size=(target,width,height)=>{target=findEventTarget(target);if(!target)return-4;var rect=getBoundingClientRect(target);var w=rect.width||(target&&target.clientWidth)||(typeof window!="undefined"?window.innerWidth:640)||640;var h=rect.height||(target&&target.clientHeight)||(typeof window!="undefined"?window.innerHeight:480)||480;if(w<=0)w=640;if(h<=0)h=480;HEAPF64[width>>3]=w;HEAPF64[height>>3]=h;return 0};'
+    if target_css_size in content:
+        content = content.replace(target_css_size, replace_css_size)
+        modified = True
+        print(f"[SUCCESS] Patched _emscripten_get_element_css_size in {filepath}")
+
+    target_screen_size = 'var _emscripten_get_screen_size=(width,height)=>{HEAP32[width>>2]=screen.width;HEAP32[height>>2]=screen.height};'
+    replace_screen_size = 'var _emscripten_get_screen_size=(width,height)=>{var sw=(typeof screen!="undefined"&&screen.width>0)?screen.width:(typeof window!="undefined"?window.innerWidth:640)||640;var sh=(typeof screen!="undefined"&&screen.height>0)?screen.height:(typeof window!="undefined"?window.innerHeight:480)||480;if(sw<=0)sw=640;if(sh<=0)sh=480;HEAP32[width>>2]=sw;HEAP32[height>>2]=sh};'
+    if target_screen_size in content:
+        content = content.replace(target_screen_size, replace_screen_size)
+        modified = True
+        print(f"[SUCCESS] Patched _emscripten_get_screen_size in {filepath}")
 
     if modified:
         with open(filepath, 'w', encoding='utf-8') as f:

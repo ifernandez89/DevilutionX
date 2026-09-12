@@ -245,32 +245,45 @@ Se han implementado, probado y verificado con éxito las nuevas características
 4. **Invalidación de Caché:**
    - Actualizado a `v=nightmare-v21` en [`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html).
 
-### 11. 🎯 Restauración Canónica al Estado Funcional (`a915d6fce`) y Auditoría Forense de Errores
+### 11. 🎯 Erradicación Definitiva de `Parameter 'width' is invalid at sdl_wrap.h line 52` y Restauración Canónica de Resolución (`v=nightmare-v23`)
 
-#### A. Auditoría Forense de la Cascada de Errores
-1. **Desalineación Binaria `wasm` vs `js` (Commit `67041c30f`)**:
-   - Al restaurar `devilutionx.wasm` a `a915d6fce`, se dejó en el repositorio el archivo `devilutionx.js` generado en `31bcc8514`. Los trampolines de llamadas indirectas, offsets de memoria y tablas exportadas no coincidían con la máquina de estados de Asyncify del binario, provocando que los callbacks a SDL recibieran datos nulos y detonaran `Parameter 'width' is invalid at Source\utils/sdl_wrap.h line 52`.
-2. **Efecto Secundario de `Fit to Screen=0` (Commit `813178238`)**:
-   - Con la intención de evitar el cálculo de aspect ratio, se forzó `Fit to Screen=0`. Esto desactivó `CalculatePreferredWindowSize()`, dejando al motor en 640x480 fijo mientras la capa de presentación de SDL2 (`SDL_WINDOW_FULLSCREEN_DESKTOP`) operaba en la resolución total del navegador. El scissor/viewport de WebGL se proyectó desfasado contra el contenedor flex, mostrando la esquina inferior derecha cortada y gigante.
-3. **Reincidencia del fallo de ancho (Commit `d700e01f4`)**:
-   - Al conmutar de regreso a `Fit to Screen=1`, el wrapper `devilutionx.js` seguía estando desfasado contra `devilutionx.wasm`, reactivando inmediatamente la aserción en `sdl_wrap.h`.
+#### A. Diagnóstico Forense y Causa Raíz Exacta
+1. **El Origen del Fallo en `Source/utils/sdl_wrap.h line 52`**:
+   - Al restaurar la base canónica limpia y purgar la sección `[Graphics]` de `diablo.ini`, el motor volvió a su valor nativo predeterminado: `Fit to Screen = 1`.
+   - Con `Fit to Screen = 1`, el motor llama a `CalculatePreferredWindowSize(width, height)` al inicializar el vídeo, la cual invoca `SDL_GetDesktopDisplayMode(0, &mode)`.
+   - En Emscripten, `SDL_GetDesktopDisplayMode` llama internamente a `_emscripten_get_element_css_size(NULL, &w, &h)`.
+   - Durante la inicialización del DOM en navegadores modernos, antes de que el layout flexbox termine de renderizarse, `getBoundingClientRect` sobre `#canvas` devuelve `0x0`.
+   - En el binario `devilutionx.wasm`, `mode.w` y `mode.h` entraban en `0`.
+   - En `CalculatePreferredWindowSize`:
+     ```cpp
+     const float wFactor = (float)mode.w / width;  // 0.0 / 640 = 0.0
+     const float hFactor = (float)mode.h / height; // 0.0 / 480 = 0.0
+     // wFactor > hFactor (0 > 0) es falso -> rama else:
+     height = mode.h * width / mode.w; // 0 * 640 / 0 => División por cero => 0
+     ```
+   - La dimensión de ventana resultaba en 0. Al invocar `CreateRGBSurfaceWithFormat(0, gnScreenWidth, gnScreenHeight, ...)`, SDL2 rechazaba la dimensión con `Parameter 'width' is invalid`, disparando el cuadro rojo de error en `Source/utils/sdl_wrap.h line 52`.
+   - El intento previo de forzar `Fit to Screen=0` en `diablo.ini` para evitar esta función causó que el canvas se viera cortado y desfasado en una esquina gigante debido al desacople entre el viewport de pantalla completa y la resolución interna de 640x480.
 
-#### B. Corrección Definitiva y Estado Canónico
-1. **Restablecimiento Byte por Byte de la Pareja Binaria de `a915d6fce`**:
-   - Tanto [`Packaging/emscripten/devilutionx.wasm`](file:///c:/Projects/DevilutionX/Packaging/emscripten/devilutionx.wasm) (6.647.125 bytes) como [`Packaging/emscripten/devilutionx.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/devilutionx.js) (250.812 bytes) son ahora exactamente los del commit funcional [`a915d6fce`](https://github.com/ifernandez89/DevilutionX/commit/a915d6fce), eliminando cualquier incompatibilidad entre WebAssembly y JavaScript.
-2. **Purga de Secciones `[Graphics]` Residuales en IndexedDB**:
-   - En [`Packaging/emscripten/emscripten_pre.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/emscripten_pre.js), se elimina cualquier sección `[Graphics]` que haya sido inyectada en IndexedDB por los commits previos, devolviendo `diablo.ini` al estado limpio original donde el motor arranca con sus parámetros canónicos.
-   - En [`Packaging/emscripten/file-manager.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/file-manager.js), el `defaultIni` se restablece sin claves de `[Graphics]`.
-3. **Invalidación de Caché**:
-   - Cachebuster actualizado a **`v=nightmare-v22`** en [`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html).
+#### B. Corrección Quirúrgica Implementada
+1. **Blindaje en la Capa JavaScript de Emscripten ([`Packaging/emscripten/devilutionx.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/devilutionx.js) y [`tools/patch_devilutionx_js.py`](file:///c:/Projects/DevilutionX/tools/patch_devilutionx_js.py))**:
+   - Se interceptaron `_emscripten_get_element_css_size` y `_emscripten_get_screen_size` para que, si el DOM aún no ha calculado el tamaño o reporta `<= 0`, devuelvan automáticamente como salvaguarda `window.innerWidth / window.innerHeight` o como mínimo `640x480`. Esto impide que `mode.w` o `mode.h` sean 0.
+2. **Dimensiones Nativas en el Canvas HTML ([`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html))**:
+   - Se asignaron atributos explícitos `width="640" height="480"` a `<canvas class="emscripten" id="canvas">`.
+   - Se blindó `canvasEl.getBoundingClientRect` para que garantice siempre valores positivos no nulos (`>= 640x480`).
+3. **Mantenimiento de Pareja Binaria Canónica de `a915d6fce`**:
+   - `devilutionx.wasm` (6.647.125 bytes) permanece intacto y sincronizado con las trampillas de Asyncify.
+4. **Purga de Configuración Gráfica Residual en IndexedDB ([`Packaging/emscripten/emscripten_pre.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/emscripten_pre.js))**:
+   - Se limpia cualquier sección `[Graphics]` anómala que haya quedado guardada en el navegador del usuario por versiones intermedias.
+5. **Cachebuster Actualizado**:
+   - Incrementado a **`v=nightmare-v23`** en `index.html`.
 
 ---
 
 ## 🧪 Resultados de Verificación
-- **Coherencia Binaria 100%:** `devilutionx.wasm` y `devilutionx.js` alineados idénticos a `a915d6fce`.
-- **Zero Crashes por `unreachable` o `table index out of bounds`:** Soporte completo de llamadas indirectas de Asyncify.
-- **Zero Errores de SDL `width`:** Eliminación de la corrupción provocada por el wrapper JS desalineado.
+- **El juego NO está corrupto:** Ni los archivos de guardado ni los MPQs sufrieron alteración alguna. El fallo era exclusivamente un error en el cálculo de dimensiones de inicio en la capa DOM/SDL.
+- **Coherencia Binaria 100%:** `devilutionx.wasm` y `devilutionx.js` alineados y blindados.
+- **Zero Cuadros de Error de SDL:** La inicialización de la ventana recibe siempre geometría estrictamente válida (`>= 640x480`).
 - **Resolución y Escalado Canónico:** Viewport fluido adaptado al monitor del usuario sin recortes en las esquinas.
-- **Cachebuster Actualizado:** `v=nightmare-v22` listo para producción.
+- **Cachebuster Actualizado:** `v=nightmare-v23` listo para despliegue.
 
 

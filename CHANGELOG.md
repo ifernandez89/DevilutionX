@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### 🛡️ Eliminación de Bucle Infinito en Proyectiles y Congelamiento de Pestaña ("La página no responde") ([`Source/missiles.cpp`](file:///c:/Projects/DevilutionX/Source/missiles.cpp), [`Source/monster.cpp`](file:///c:/Projects/DevilutionX/Source/monster.cpp), [`Source/engine/sound.cpp`](file:///c:/Projects/DevilutionX/Source/engine/sound.cpp), [`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html))
+- **Causa raíz del congelamiento con zumbido de audio persistente**:
+  1. *Bucle `do-while(true)` no acotado en `MoveMissile()` (`Source/missiles.cpp:587`)*:
+     - Durante combates prolongados con jefes y proyectiles simultáneos (como Na-Krul lanzando hechizos continuos), `MoveMissile()` calcula sub-pasos (`substepping`) para proyectiles de alta velocidad utilizando un bucle `do { ... } while(true)`.
+     - Si el proyectil tenía `velocity == 0` o el `denominator <= 0.0f`, o si el vector incremental `incVelocity` redondeaba a `{0, 0}`, o si las coordenadas de subpaso no alternaban el signo de la diferencia entre vectores por truncamiento entero, la condición de ruptura `if ((initialDiff.deltaX < 0) ^ (incDiff.deltaX < 0) ...)` nunca se cumplía.
+     - Como consecuencia, el hilo principal de WebAssembly entraba en un bucle infinito síncrono al 100% de CPU. Esto impedía ceder el control al event loop del navegador (`SDL_Delay(1)` o `emscripten_sleep`), congelando la pestaña de Microsoft Edge / Chrome por completo ("La página no responde") y dejando el búfer de Web Audio en un bucle repetitivo continuo (zumbido metálico / cuelgue sonoro).
+  2. *Desbordamiento de coordenadas en `LineClear()` (`Source/monster.cpp`)*:
+     - En el algoritmo Bresenham para verificar visibilidad y trayectorias (`LineClear()`), la condición de parada era `while (!done && position != endPoint)`. Si por aproximación de pendiente un paso sobrepasaba la coordenada destino sin igualar exactamente el `Point`, el bucle continuaba incrementando sin fin hasta desbordar enteros.
+  3. *Saturación de Streams de Sonido Concurrentes en Combate (`Source/engine/sound.cpp`)*:
+     - La acumulación ilimitada de instancias de sonido en `duplicateSounds` durante ráfagas de proyectiles saturaba los búferes de mezcla de Web Audio / SDL.
+- **Solución implementada**:
+  - **Acotación estricta de subpasos en `MoveMissile()`**:
+    - Se añade guarda inmediata: si `denominator <= 0.0f` o `incVelocity == {0, 0}`, retorna `false` de inmediato.
+    - Se reemplaza el bucle potencialmente infinito `do-while(true)` por un bucle acotado: `const int maxSubsteps = std::min(std::max(possibleVisitTiles * 4 + 8, 16), 64); for (int substep = 0; substep < maxSubsteps; substep++)`. El proyectil jamás puede bloquear el hilo de ejecución del navegador.
+  - **Límites estrictos en `LineClear()`**:
+    - Se sustituye `position != endPoint` por `position.x < endPoint.x` y `position.y < endPoint.y`, garantizando matemáticamente la terminación en a lo sumo `dx` o `dy` iteraciones.
+  - **Límite de Sonidos Duplicados Concurrentes**:
+    - Se limita la lista de reproducción simultánea en `DuplicateSound()` a 32 streams concurrentes (`duplicateSounds.size() >= 32 -> return nullptr`), previniendo saturación de memoria de audio.
+  - **Cachebuster Actualizado**:
+    - Se incrementa la versión de scripts a `v=nightmare-v14` en `Packaging/emscripten/index.html`.
+
 ### ⏱️ Reloj / Contador de Sesión Habilitado por Defecto ([`Source/options.cpp`](file:///c:/Projects/DevilutionX/Source/options.cpp), [`Packaging/emscripten/emscripten_pre.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/emscripten_pre.js), [`Packaging/emscripten/devilutionx.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/devilutionx.js), [`Packaging/emscripten/file-manager.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/file-manager.js))
 - Se activa el mod de reloj (`clock`) por defecto en la inicialización de opciones (`name == "clock"` en `ModOptions::ModEntry`).
 - Se asegura la inyección de `clock=1` dentro de la sección `[Mods]` en `diablo.ini` para la versión web y el File Manager.

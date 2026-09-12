@@ -577,14 +577,19 @@ bool MoveMissile(Missile &missile, tl::function_ref<bool(Point)> checkTile, bool
 	if (possibleVisitTiles > 1) {
 		auto speed = abs(missile.position.velocity);
 		const auto denominator = static_cast<float>((2 * speed.deltaY >= speed.deltaX) ? 2 * speed.deltaY : speed.deltaX);
+		if (denominator <= 0.0f)
+			return false;
 		auto incVelocity = missile.position.velocity * ((32 << 16) / denominator);
+		if (incVelocity.deltaX == 0 && incVelocity.deltaY == 0)
+			return false;
 		auto traveled = missile.position.traveled - missile.position.velocity;
 		// Adjust the traveled vector to start on the next smallest multiple of incVelocity
 		if (incVelocity.deltaY != 0)
 			traveled.deltaY = (traveled.deltaY / incVelocity.deltaY) * incVelocity.deltaY;
 		if (incVelocity.deltaX != 0)
 			traveled.deltaX = (traveled.deltaX / incVelocity.deltaX) * incVelocity.deltaX;
-		do {
+		const int maxSubsteps = std::min(std::max(possibleVisitTiles * 4 + 8, 16), 64);
+		for (int substep = 0; substep < maxSubsteps; substep++) {
 			auto initialDiff = missile.position.traveled - traveled;
 			traveled += incVelocity;
 			auto incDiff = missile.position.traveled - traveled;
@@ -629,8 +634,7 @@ bool MoveMissile(Missile &missile, tl::function_ref<bool(Point)> checkTile, bool
 				}
 				return true;
 			}
-
-		} while (true);
+		}
 	}
 
 	if (!checkTile(missile.position.tile) && ifCheckTileFailsDontMoveToTile) {

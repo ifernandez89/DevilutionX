@@ -137,6 +137,9 @@ SoundSample *DuplicateSound(const SoundSample &sound)
 				++it;
 			}
 		}
+		if (duplicateSounds.size() >= 32) {
+			return nullptr;
+		}
 		duplicateSounds.push_back(std::move(duplicate));
 	}
 	return result;

@@ -4399,7 +4399,7 @@ bool LineClear(tl::function_ref<bool(Point)> clear, Point startPoint, Point endP
 			yincD = -1;
 		}
 		bool done = false;
-		while (!done && position != endPoint) {
+		while (!done && position.x < endPoint.x) {
 			if ((d <= 0) ^ (yincD < 0)) {
 				d += dincD;
 			} else {
@@ -4431,7 +4431,7 @@ bool LineClear(tl::function_ref<bool(Point)> clear, Point startPoint, Point endP
 			xincD = -1;
 		}
 		bool done = false;
-		while (!done && position != endPoint) {
+		while (!done && position.y < endPoint.y) {
 			if ((d <= 0) ^ (xincD < 0)) {
 				d += dincD;
 			} else {

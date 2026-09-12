@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### 🖥️ Restauración de Resolución y Escalado Centrado en WebAssembly (`Fit to Screen=1`) ([`Packaging/emscripten/devilutionx.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/devilutionx.js), [`Packaging/emscripten/emscripten_pre.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/emscripten_pre.js), [`Packaging/emscripten/file-manager.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/file-manager.js), [`tools/patch_devilutionx_js.py`](file:///c:/Projects/DevilutionX/tools/patch_devilutionx_js.py), [`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html))
+- **Causa raíz identificada**:
+  - Al forzar `Fit to Screen=0` en `diablo.ini` en el commit anterior para evitar el cálculo de aspect ratio antes de tiempo, DevilutionX dejó de llamar a `CalculatePreferredWindowSize()`.
+  - Como consecuencia, la resolución interna del juego quedó fija en 640x480 sin adaptarse a la relación de aspecto panorámica del monitor ni del canvas.
+  - Al estar activo el modo pantalla completa / reescalado de SDL2 (`SDL_WINDOW_FULLSCREEN_DESKTOP | SDL_WINDOW_RESIZABLE`), la capa de presentación y viewport de WebGL desfasó las coordenadas contra el tamaño CSS del contenedor flex, proyectando el renderizado de 640x480 sobredimensionado y cortado hacia la esquina inferior derecha.
+- **Solución implementada**:
+  1. *Restablecimiento de `Fit to Screen=1`*:
+     - En `emscripten_pre.js`, `file-manager.js`, `devilutionx.js` y `tools/patch_devilutionx_js.py` se retiró la inyección forzada de `Fit to Screen=0`.
+     - Se implementó un auto-saneamiento activo que detecta si el usuario ya tenía guardado `Fit to Screen=0` en su `diablo.ini` en IndexedDB y lo migra inmediatamente a `Fit to Screen=1`.
+     - Se corrigen automáticamente posibles valores nulos (`Width=0` -> 640, `Height=0` -> 480).
+  2. *Retención de las protecciones robustas C++*:
+     - Se mantienen las guardas defensivas añadidas en `sdl_wrap.h`, `display.cpp`, `dx.cpp` y `options.cpp` que garantizan `width >= 640` y `height >= 480`, previniendo cualquier excepción de `Parameter 'width' is invalid`.
+  3. *Actualización de Cachebuster*:
+     - Incrementado a `v=nightmare-v21` en `Packaging/emscripten/index.html`.
+
 ### 🛡️ Erradicación de `SDL Error: Parameter 'width' is invalid` al Inicializar la Ventana ([`Packaging/emscripten/devilutionx.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/devilutionx.js), [`Packaging/emscripten/emscripten_pre.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/emscripten_pre.js), [`Packaging/emscripten/file-manager.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/file-manager.js), [`Source/utils/display.cpp`](file:///c:/Projects/DevilutionX/Source/utils/display.cpp), [`Source/utils/sdl_wrap.h`](file:///c:/Projects/DevilutionX/Source/utils/sdl_wrap.h), [`Source/engine/dx.cpp`](file:///c:/Projects/DevilutionX/Source/engine/dx.cpp), [`Source/options.cpp`](file:///c:/Projects/DevilutionX/Source/options.cpp), [`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html))
 - **Causa raíz identificada**:
   - En WebAssembly, `fitToScreen` está habilitado por defecto en la configuración gráfica (`Graphics.fitToScreen`). Al arrancar el motor, `GetPreferredWindowSize()` llama a `CalculatePreferredWindowSize(width, height)`, la cual invoca `SDL_GetDesktopDisplayMode(0, &mode)`.

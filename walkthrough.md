@@ -224,12 +224,34 @@ Se han implementado, probado y verificado con éxito las nuevas características
 3. **Invalidación de Caché:**
    - Actualizado a `v=nightmare-v20` en [`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html).
 
+### 10. 🖥️ Restauración de Resolución y Escalado Centrado en WebAssembly (`Fit to Screen=1`)
+
+#### A. Diagnóstico y Causa Raíz
+- **El error visual:** La pantalla del juego aparecía cortada, desproporcionada y empujada en escala gigante hacia la esquina inferior derecha del navegador (con la mitad izquierda en negro o desfasada).
+- **Mecanismo del fallo:**
+  - En el commit anterior, al forzar `Fit to Screen=0` en `diablo.ini`, `GetPreferredWindowSize()` omitió la llamada a `CalculatePreferredWindowSize()`.
+  - Como resultado, DevilutionX mantuvo su resolución nativa fija de 640x480 en lugar de adaptarse al aspect ratio de pantalla del usuario.
+  - Al operar bajo `SDL_WINDOW_FULLSCREEN_DESKTOP | SDL_WINDOW_RESIZABLE` con `object-fit: contain` en el contenedor flex, el viewport y scissor rect de WebGL se proyectaron desfasados contra la resolución física/DPI del canvas, recortando el juego hacia el cuadrante inferior.
+
+#### B. Solución Aplicada
+1. **Auto-Saneamiento Activo en Capa JS (`emscripten_pre.js`, `devilutionx.js`, `tools/patch_devilutionx_js.py`):**
+   - Se retiró la inyección destructiva de `Fit to Screen=0`.
+   - Se implementó un algoritmo de auto-curación que escanea el `diablo.ini` persistido en IndexedDB y migra automáticamente cualquier valor previo `Fit to Screen=0` a `Fit to Screen=1`.
+   - Se sanean dimensiones anómalas (`Width=0` -> 640, `Height=0` -> 480).
+2. **Restablecimiento en File Manager (`file-manager.js`):**
+   - El `defaultIni` al restablecer ajustes ahora define `Fit to Screen=1` y `Upscale=1`.
+3. **Preservación de las Defensas C++:**
+   - Se mantienen intactas las guardas en `Source/utils/sdl_wrap.h`, `Source/utils/display.cpp`, `Source/engine/dx.cpp` y `Source/options.cpp` que garantizan que el cálculo de `CalculatePreferredWindowSize()` y `CreateRGBSurfaceWithFormat()` nunca produzcan `width <= 0` ni divisiones por cero.
+4. **Invalidación de Caché:**
+   - Actualizado a `v=nightmare-v21` en [`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html).
+
 ---
 
 ## 🧪 Resultados de Verificación
-- **Zero Crashes por `unreachable`:** Rebobinado de Asyncify con soporte indirecto completo restaurado.
-- **Zero Errores de SDL `width`:** Blindaje de inicialización en JS y C++ asegurando `Width=640`, `Height=480`, `Fit to Screen=0` por defecto.
-- **Reloj de Partida Activo:** Reloj en tiempo real visualizado a 60 FPS en el HUD.
-- **Cachebuster Actualizado:** `v=nightmare-v20` activo.
+- **Escalado y Centrado Perfecto:** La ventana del juego se adapta armónicamente al aspect ratio del navegador/monitor (`Fit to Screen=1`), centrando la interfaz y el renderizado sin recortes ni desfasajes en esquinas.
+- **Zero Crashes por `unreachable`:** Rebobinado de Asyncify con soporte indirecto completo operativo.
+- **Zero Errores de SDL `width`:** Blindaje C++ en `sdl_wrap.h` y `display.cpp` previniendo dimensiones no positivas.
+- **Reloj de Partida Activo:** Reloj en tiempo real a 60 FPS en el HUD.
+- **Cachebuster Actualizado:** `v=nightmare-v21` activo.
 
 

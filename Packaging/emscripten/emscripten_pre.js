@@ -107,19 +107,20 @@ Module['preRun'].push(function() {
             }
           }
 
-          // Enforce safe Graphics configuration to prevent SDL "Parameter 'width' is invalid"
-          if (currentIni.indexOf('[Graphics]') === -1) {
-            currentIni += "\n[Graphics]\nWidth=640\nHeight=480\nFit to Screen=0\nUpscale=1\n";
+          // Auto-heal resolution and graphics settings:
+          // Ensure Fit to Screen is enabled (Fit to Screen=1) so the game viewport scales properly
+          // to browser window geometry instead of remaining stuck at 640x480 in the corner.
+          if (currentIni.indexOf('Fit to Screen=0') !== -1) {
+            currentIni = currentIni.replace(/Fit to Screen\s*=\s*0/gi, 'Fit to Screen=1');
             modified = true;
-          } else {
-            if (currentIni.indexOf('Fit to Screen=0') === -1) {
-              if (currentIni.indexOf('Fit to Screen') !== -1) {
-                currentIni = currentIni.replace(/Fit to Screen\s*=\s*\d+/i, 'Fit to Screen=0');
-              } else {
-                currentIni = currentIni.replace('[Graphics]', "[Graphics]\nFit to Screen=0");
-              }
-              modified = true;
-            }
+          }
+          if (/Width\s*=\s*0/i.test(currentIni)) {
+            currentIni = currentIni.replace(/Width\s*=\s*0/gi, 'Width=640');
+            modified = true;
+          }
+          if (/Height\s*=\s*0/i.test(currentIni)) {
+            currentIni = currentIni.replace(/Height\s*=\s*0/gi, 'Height=480');
+            modified = true;
           }
 
           // Migrate corrupted string values to proper integer enum values

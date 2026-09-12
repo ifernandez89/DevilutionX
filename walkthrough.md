@@ -245,13 +245,32 @@ Se han implementado, probado y verificado con éxito las nuevas características
 4. **Invalidación de Caché:**
    - Actualizado a `v=nightmare-v21` en [`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html).
 
+### 11. 🎯 Restauración Canónica al Estado Funcional (`a915d6fce`) y Auditoría Forense de Errores
+
+#### A. Auditoría Forense de la Cascada de Errores
+1. **Desalineación Binaria `wasm` vs `js` (Commit `67041c30f`)**:
+   - Al restaurar `devilutionx.wasm` a `a915d6fce`, se dejó en el repositorio el archivo `devilutionx.js` generado en `31bcc8514`. Los trampolines de llamadas indirectas, offsets de memoria y tablas exportadas no coincidían con la máquina de estados de Asyncify del binario, provocando que los callbacks a SDL recibieran datos nulos y detonaran `Parameter 'width' is invalid at Source\utils/sdl_wrap.h line 52`.
+2. **Efecto Secundario de `Fit to Screen=0` (Commit `813178238`)**:
+   - Con la intención de evitar el cálculo de aspect ratio, se forzó `Fit to Screen=0`. Esto desactivó `CalculatePreferredWindowSize()`, dejando al motor en 640x480 fijo mientras la capa de presentación de SDL2 (`SDL_WINDOW_FULLSCREEN_DESKTOP`) operaba en la resolución total del navegador. El scissor/viewport de WebGL se proyectó desfasado contra el contenedor flex, mostrando la esquina inferior derecha cortada y gigante.
+3. **Reincidencia del fallo de ancho (Commit `d700e01f4`)**:
+   - Al conmutar de regreso a `Fit to Screen=1`, el wrapper `devilutionx.js` seguía estando desfasado contra `devilutionx.wasm`, reactivando inmediatamente la aserción en `sdl_wrap.h`.
+
+#### B. Corrección Definitiva y Estado Canónico
+1. **Restablecimiento Byte por Byte de la Pareja Binaria de `a915d6fce`**:
+   - Tanto [`Packaging/emscripten/devilutionx.wasm`](file:///c:/Projects/DevilutionX/Packaging/emscripten/devilutionx.wasm) (6.647.125 bytes) como [`Packaging/emscripten/devilutionx.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/devilutionx.js) (250.812 bytes) son ahora exactamente los del commit funcional [`a915d6fce`](https://github.com/ifernandez89/DevilutionX/commit/a915d6fce), eliminando cualquier incompatibilidad entre WebAssembly y JavaScript.
+2. **Purga de Secciones `[Graphics]` Residuales en IndexedDB**:
+   - En [`Packaging/emscripten/emscripten_pre.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/emscripten_pre.js), se elimina cualquier sección `[Graphics]` que haya sido inyectada en IndexedDB por los commits previos, devolviendo `diablo.ini` al estado limpio original donde el motor arranca con sus parámetros canónicos.
+   - En [`Packaging/emscripten/file-manager.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/file-manager.js), el `defaultIni` se restablece sin claves de `[Graphics]`.
+3. **Invalidación de Caché**:
+   - Cachebuster actualizado a **`v=nightmare-v22`** en [`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html).
+
 ---
 
 ## 🧪 Resultados de Verificación
-- **Escalado y Centrado Perfecto:** La ventana del juego se adapta armónicamente al aspect ratio del navegador/monitor (`Fit to Screen=1`), centrando la interfaz y el renderizado sin recortes ni desfasajes en esquinas.
-- **Zero Crashes por `unreachable`:** Rebobinado de Asyncify con soporte indirecto completo operativo.
-- **Zero Errores de SDL `width`:** Blindaje C++ en `sdl_wrap.h` y `display.cpp` previniendo dimensiones no positivas.
-- **Reloj de Partida Activo:** Reloj en tiempo real a 60 FPS en el HUD.
-- **Cachebuster Actualizado:** `v=nightmare-v21` activo.
+- **Coherencia Binaria 100%:** `devilutionx.wasm` y `devilutionx.js` alineados idénticos a `a915d6fce`.
+- **Zero Crashes por `unreachable` o `table index out of bounds`:** Soporte completo de llamadas indirectas de Asyncify.
+- **Zero Errores de SDL `width`:** Eliminación de la corrupción provocada por el wrapper JS desalineado.
+- **Resolución y Escalado Canónico:** Viewport fluido adaptado al monitor del usuario sin recortes en las esquinas.
+- **Cachebuster Actualizado:** `v=nightmare-v22` listo para producción.
 
 

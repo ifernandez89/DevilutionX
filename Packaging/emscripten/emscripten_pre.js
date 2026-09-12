@@ -107,19 +107,10 @@ Module['preRun'].push(function() {
             }
           }
 
-          // Auto-heal resolution and graphics settings:
-          // Ensure Fit to Screen is enabled (Fit to Screen=1) so the game viewport scales properly
-          // to browser window geometry instead of remaining stuck at 640x480 in the corner.
-          if (currentIni.indexOf('Fit to Screen=0') !== -1) {
-            currentIni = currentIni.replace(/Fit to Screen\s*=\s*0/gi, 'Fit to Screen=1');
-            modified = true;
-          }
-          if (/Width\s*=\s*0/i.test(currentIni)) {
-            currentIni = currentIni.replace(/Width\s*=\s*0/gi, 'Width=640');
-            modified = true;
-          }
-          if (/Height\s*=\s*0/i.test(currentIni)) {
-            currentIni = currentIni.replace(/Height\s*=\s*0/gi, 'Height=480');
+          // Strip any corrupted [Graphics] section injected by previous bad commits,
+          // restoring pristine, canonical native scaling as in commit a915d6fce.
+          if (currentIni.indexOf('[Graphics]') !== -1) {
+            currentIni = currentIni.replace(/\[Graphics\][\s\S]*?(?=\n\[|$)/g, '');
             modified = true;
           }
 

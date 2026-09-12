@@ -24,13 +24,7 @@ def patch_file(filepath):
         modified = True
         print(f"[SUCCESS] Patched findEventTarget in {filepath}")
 
-    bad_graphics_block = 'if(currentIni.indexOf("[Graphics]")===-1){currentIni+="\\n[Graphics]\\nWidth=640\\nHeight=480\\nFit to Screen=0\\nUpscale=1\\n";modified=true}else{if(currentIni.indexOf("Fit to Screen=0")===-1){if(currentIni.indexOf("Fit to Screen")!==-1){currentIni=currentIni.replace(/Fit to Screen\\s*=\\s*\\d+/i,"Fit to Screen=0")}else{currentIni=currentIni.replace("[Graphics]","[Graphics]\\nFit to Screen=0")}modified=true}}}'
-    heal_graphics_block = 'if(currentIni.indexOf("Fit to Screen=0")!==-1){currentIni=currentIni.replace(/Fit to Screen\\s*=\\s*0/gi,"Fit to Screen=1");modified=true}if(/Width\\s*=\\s*0/i.test(currentIni)){currentIni=currentIni.replace(/Width\\s*=\\s*0/gi,"Width=640");modified=true}if(/Height\\s*=\\s*0/i.test(currentIni)){currentIni=currentIni.replace(/Height\\s*=\\s*0/gi,"Height=480");modified=true}}'
-
-    if bad_graphics_block in content:
-        content = content.replace(bad_graphics_block, heal_graphics_block)
-        modified = True
-        print(f"[SUCCESS] Healed Graphics settings (Fit to Screen=1) in {filepath}")
+    # No graphics injection - diablo.ini uses canonical native defaults
 
     if modified:
         with open(filepath, 'w', encoding='utf-8') as f:

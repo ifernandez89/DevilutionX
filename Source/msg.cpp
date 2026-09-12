@@ -2350,7 +2350,7 @@ size_t OnActivatePortal(const TCmdLocParam3 &message, Player &player)
 			} else if (player.isOnActiveLevel()) {
 				bool addPortal = true;
 				for (auto &missile : Missiles) {
-					if (missile._mitype == MissileID::TownPortal && &Players[missile._misource] == &player) {
+					if (missile._mitype == MissileID::TownPortal && missile._misource >= 0 && static_cast<size_t>(missile._misource) < Players.size() && &Players[missile._misource] == &player) {
 						addPortal = false;
 						break;
 					}

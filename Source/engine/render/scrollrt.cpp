@@ -989,7 +989,7 @@ void DrawDungeon(const Surface &out, const Lightmap &lightmap, Point tilePositio
 	if (leveltype != DTYPE_TOWN) {
 		const bool perPixelLighting = *GetOptions().Graphics.perPixelLighting;
 		const int8_t bArch = dSpecial[tilePosition.x][tilePosition.y] - 1;
-		if (bArch >= 0) {
+		if (bArch >= 0 && pSpecialCels && static_cast<size_t>(bArch) < pSpecialCels->numSprites()) {
 			bool transparency = TransList[bMap];
 #ifdef _DEBUG
 			// Turn transparency off here for debugging
@@ -1016,7 +1016,7 @@ void DrawDungeon(const Surface &out, const Lightmap &lightmap, Point tilePositio
 		// This could probably have been better solved by sprites in screen space.
 		if (tilePosition.x > 0 && tilePosition.y > 0 && targetBufferPosition.y > TILE_HEIGHT) {
 			const int8_t bArch = dSpecial[tilePosition.x - 1][tilePosition.y - 1] - 1;
-			if (bArch >= 0)
+			if (bArch >= 0 && pSpecialCels && static_cast<size_t>(bArch) < pSpecialCels->numSprites())
 				ClxDraw(out, targetBufferPosition + Displacement { 0, -TILE_HEIGHT }, (*pSpecialCels)[bArch]);
 		}
 	}

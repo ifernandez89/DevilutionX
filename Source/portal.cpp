@@ -40,6 +40,8 @@ void InitPortals()
 
 void SetPortalStats(int i, bool o, Point position, int lvl, dungeon_type lvltype, bool isSetLevel)
 {
+	if (i < 0 || i >= MAXPORTAL)
+		return;
 	Portals[i].open = o;
 	Portals[i].position = position;
 	Portals[i].level = lvl;
@@ -80,12 +82,18 @@ void SyncPortals()
 
 void AddPortalInTown(const Player &player)
 {
-	AddPortalMissile(player, PortalTownPosition[player.getId()], false);
+	const size_t id = player.getId();
+	if (id >= MAXPORTAL)
+		return;
+	AddPortalMissile(player, PortalTownPosition[id], false);
 }
 
 void ActivatePortal(const Player &player, Point position, int lvl, dungeon_type dungeonType, bool isSetLevel)
 {
-	Portal &portal = Portals[player.getId()];
+	const size_t id = player.getId();
+	if (id >= MAXPORTAL)
+		return;
+	Portal &portal = Portals[id];
 	portal.open = true;
 
 	if (lvl != 0) {
@@ -98,12 +106,18 @@ void ActivatePortal(const Player &player, Point position, int lvl, dungeon_type 
 
 void DeactivatePortal(const Player &player)
 {
-	Portals[player.getId()].open = false;
+	const size_t id = player.getId();
+	if (id >= MAXPORTAL)
+		return;
+	Portals[id].open = false;
 }
 
 bool PortalOnLevel(const Player &player)
 {
-	const Portal &portal = Portals[player.getId()];
+	const size_t id = player.getId();
+	if (id >= MAXPORTAL)
+		return false;
+	const Portal &portal = Portals[id];
 	if (portal.setlvl == setlevel && portal.level == (setlevel ? static_cast<int>(setlvlnum) : currlevel))
 		return true;
 
@@ -113,9 +127,13 @@ bool PortalOnLevel(const Player &player)
 void RemovePortalMissile(const Player &player)
 {
 	const size_t id = player.getId();
+	if (id >= MAXPORTAL)
+		return;
 	Missiles.remove_if([id](Missile &missile) {
 		if ((missile._mitype == MissileID::TownPortal || missile._mitype == MissileID::RedPortal) && missile._misource == static_cast<int>(id)) {
-			dFlags[missile.position.tile.x][missile.position.tile.y] &= ~DungeonFlag::Missile;
+			if (InDungeonBounds(missile.position.tile)) {
+				dFlags[missile.position.tile.x][missile.position.tile.y] &= ~DungeonFlag::Missile;
+			}
 
 			if (Portals[id].level != 0)
 				AddUnLight(missile._mlid);
@@ -168,11 +186,13 @@ void GetPortalLvlPos()
 	if (leveltype == DTYPE_TOWN) {
 		ViewPosition = PortalTownPosition[idx] + Displacement { 1, 1 };
 	} else {
-		ViewPosition = Portals[idx].position;
-
+		Point pos = Portals[idx].position;
 		if (idx != MyPlayerId) {
-			ViewPosition.x++;
-			ViewPosition.y++;
+			pos.x++;
+			pos.y++;
+		}
+		if (InDungeonBounds(pos)) {
+			ViewPosition = pos;
 		}
 	}
 }

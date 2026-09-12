@@ -73,10 +73,10 @@ struct RenderSrc {
 };
 
 DVL_ALWAYS_INLINE DVL_ATTRIBUTE_HOT const uint8_t *SkipRestOfLineWithOverrun(
-    const uint8_t *src, int_fast16_t srcWidth, SkipSize &skipSize)
+    const uint8_t *src, const uint8_t *srcEndBuf, int_fast16_t srcWidth, SkipSize &skipSize)
 {
 	int_fast16_t remainingWidth = srcWidth - skipSize.xOffset;
-	while (remainingWidth > 0) {
+	while (remainingWidth > 0 && (!srcEndBuf || src < srcEndBuf)) {
 		const auto [srcEnd, length] = ClxBlitInfo(src);
 		src = srcEnd;
 		remainingWidth -= length;
@@ -90,9 +90,9 @@ DVL_ALWAYS_INLINE DVL_ATTRIBUTE_HOT int_fast16_t SkipLinesForRenderBackwardsWith
     Point &position, RenderSrc &src, int_fast16_t dstHeight)
 {
 	SkipSize skipSize { 0, 0 };
-	while (position.y >= dstHeight && src.begin != src.end) {
+	while (position.y >= dstHeight && src.begin < src.end) {
 		src.begin = SkipRestOfLineWithOverrun(
-		    src.begin, static_cast<int_fast16_t>(src.width), skipSize);
+		    src.begin, src.end, static_cast<int_fast16_t>(src.width), skipSize);
 		position.y -= static_cast<int>(skipSize.wholeLines);
 	}
 	return skipSize.xOffset;
@@ -104,25 +104,32 @@ void DoRenderBackwardsClipY(
 {
 	// Skip the bottom clipped lines.
 	int_fast16_t xOffset = SkipLinesForRenderBackwardsWithOverrun(position, src, out.h());
-	if (src.begin >= src.end)
+	if (src.begin >= src.end || position.y >= out.h() || position.y < 0)
 		return;
 
 	auto *dst = &out[position];
 	const auto *dstBegin = out.begin();
+	const auto *dstEnd = out.end();
 	const int dstPitch = out.pitch();
-	while (src.begin != src.end && dst >= dstBegin) {
+	while (src.begin < src.end && dst >= dstBegin) {
 		auto remainingWidth = static_cast<int_fast16_t>(src.width) - xOffset;
 		dst += xOffset;
-		while (remainingWidth > 0) {
+		while (remainingWidth > 0 && src.begin < src.end) {
 			uint8_t v = *src.begin++;
 			if (IsClxOpaque(v)) {
 				if (IsClxOpaqueFill(v)) {
 					v = GetClxOpaqueFillWidth(v);
+					if (src.begin >= src.end)
+						return;
 					const uint8_t color = *src.begin++;
-					blitFn(v, color, dst);
+					if (dst >= dstBegin && dst + v <= dstEnd)
+						blitFn(v, color, dst);
 				} else {
 					v = GetClxOpaquePixelsWidth(v);
-					blitFn(v, dst, src.begin);
+					if (src.begin + v > src.end)
+						return;
+					if (dst >= dstBegin && dst + v <= dstEnd)
+						blitFn(v, dst, src.begin);
 					src.begin += v;
 				}
 			}
@@ -142,15 +149,19 @@ void DoRenderBackwardsClipXY(
 {
 	// Skip the bottom clipped lines.
 	int_fast16_t xOffset = SkipLinesForRenderBackwardsWithOverrun(position, src, out.h());
-	if (src.begin >= src.end)
+	if (src.begin >= src.end || position.y >= out.h() || position.y < 0)
 		return;
 
 	position.x += static_cast<int>(clipX.left);
+	if (position.x < 0 || position.x >= out.w())
+		return;
+
 	auto *dst = &out[position];
 	const auto *dstBegin = out.begin();
+	const auto *dstEnd = out.end();
 	const int dstPitch = out.pitch();
 
-	while (src.begin != src.end && dst >= dstBegin) {
+	while (src.begin < src.end && dst >= dstBegin) {
 		// Skip initial src if clipping on the left.
 		// Handles overshoot, i.e. when the RLE segment goes into the unclipped area.
 		int_fast16_t remainingWidth = clipX.width;
@@ -159,17 +170,21 @@ void DoRenderBackwardsClipXY(
 			dst += std::min<unsigned>(remainingWidth, -remainingLeftClip);
 			remainingWidth += remainingLeftClip;
 		}
-		while (remainingLeftClip > 0) {
+		while (remainingLeftClip > 0 && src.begin < src.end) {
 			auto [srcEnd, length] = ClxBlitInfo(src.begin);
+			if (srcEnd > src.end)
+				return;
 			if (static_cast<int_fast16_t>(length) > remainingLeftClip) {
 				const uint8_t control = *src.begin;
 				const auto overshoot = static_cast<int>(length - remainingLeftClip);
 				length = std::min<unsigned>(remainingWidth, overshoot);
 				if (IsClxOpaque(control)) {
-					if (IsClxOpaqueFill(control)) {
-						blitFn(length, src.begin[1], dst);
-					} else {
-						blitFn(length, dst, src.begin + 1 + remainingLeftClip);
+					if (dst >= dstBegin && dst + length <= dstEnd) {
+						if (IsClxOpaqueFill(control)) {
+							blitFn(length, src.begin[1], dst);
+						} else {
+							blitFn(length, dst, src.begin + 1 + remainingLeftClip);
+						}
 					}
 				}
 				dst += length;
@@ -180,16 +195,20 @@ void DoRenderBackwardsClipXY(
 			src.begin = srcEnd;
 			remainingLeftClip -= length;
 		}
-		while (remainingWidth > 0) {
+		while (remainingWidth > 0 && src.begin < src.end) {
 			auto [srcEnd, length] = ClxBlitInfo(src.begin);
+			if (srcEnd > src.end)
+				return;
 			const uint8_t control = *src.begin;
 			const unsigned unclippedLength = length;
 			length = std::min<unsigned>(remainingWidth, length);
 			if (IsClxOpaque(control)) {
-				if (IsClxOpaqueFill(control)) {
-					blitFn(length, src.begin[1], dst);
-				} else {
-					blitFn(length, dst, src.begin + 1);
+				if (dst >= dstBegin && dst + length <= dstEnd) {
+					if (IsClxOpaqueFill(control)) {
+						blitFn(length, src.begin[1], dst);
+					} else {
+						blitFn(length, dst, src.begin + 1);
+					}
 				}
 			}
 			src.begin = srcEnd;
@@ -204,7 +223,7 @@ void DoRenderBackwardsClipXY(
 		if (remainingWidth > 0) {
 			skipSize.xOffset = static_cast<int_fast16_t>(src.width) - remainingWidth;
 			src.begin = SkipRestOfLineWithOverrun(
-			    src.begin, static_cast<int_fast16_t>(src.width), skipSize);
+			    src.begin, src.end, static_cast<int_fast16_t>(src.width), skipSize);
 		} else {
 			skipSize = GetSkipSize(remainingWidth, static_cast<int_fast16_t>(src.width));
 		}
@@ -218,7 +237,7 @@ void DoRenderBackwards(
     const Surface &out, Point position, const uint8_t *src, size_t srcSize,
     unsigned srcWidth, unsigned srcHeight, BlitFn &&blitFn)
 {
-	if (out.w() <= 0 || out.h() <= 0)
+	if (out.w() <= 0 || out.h() <= 0 || src == nullptr || srcSize == 0 || srcWidth == 0 || srcHeight == 0)
 		return;
 	if (position.y < 0 || position.y + 1 >= static_cast<int>(out.h() + srcHeight))
 		return;
@@ -476,7 +495,7 @@ bool IsPointWithinClx(Point position, ClxSprite clx)
 		if (yCur != position.y) {
 			SkipSize skipSize {};
 			skipSize.xOffset = xCur;
-			src = SkipRestOfLineWithOverrun(src, width, skipSize);
+			src = SkipRestOfLineWithOverrun(src, end, width, skipSize);
 			yCur -= skipSize.wholeLines;
 			xCur = skipSize.xOffset;
 			if (yCur < position.y)
@@ -484,7 +503,7 @@ bool IsPointWithinClx(Point position, ClxSprite clx)
 			continue;
 		}
 
-		while (xCur < width) {
+		while (xCur < width && src < end) {
 			uint8_t val = *src++;
 			if (!IsClxOpaque(val)) {
 				// ignore transparent
@@ -496,12 +515,16 @@ bool IsPointWithinClx(Point position, ClxSprite clx)
 
 			if (IsClxOpaqueFill(val)) {
 				val = GetClxOpaqueFillWidth(val);
+				if (src >= end)
+					return false;
 				const uint8_t color = *src++;
 				if (xCur <= position.x && position.x < xCur + val)
 					return color != 0; // ignore shadows
 				xCur += val;
 			} else {
 				val = GetClxOpaquePixelsWidth(val);
+				if (src + val > end)
+					return false;
 				for (uint8_t pixel = 0; pixel < val; pixel++) {
 					const uint8_t color = *src++;
 					if (xCur == position.x)

@@ -33,7 +33,11 @@ void ModChanged()
 {
 	discord_manager::UpdateMenu(true);
 }
+#ifndef __EMSCRIPTEN__
+// ASYNCIFY cannot handle function_ref callbacks correctly during stack rewind.
+// Discord integration is disabled in WebAssembly builds to avoid "unreachable" crash.
 const auto ModChangedHandler = (AddModsChangedHandler(ModChanged), true);
+#endif
 } // namespace
 
 namespace discord_manager {

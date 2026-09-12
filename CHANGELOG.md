@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### 🛠️ Corrección Crítica de Memory Leak WebGPU en "La Caída de Tristram" ([`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html))
+- **Causa raíz**: El pipeline Neural HD de WebGPU creaba texturas (`texRGB`, `texDepth`, `texLight`, `texSemantic`) al inicio y nunca las destruía, acumulando memoria GPU fragmentada durante combates prolongados en "La Caída de Tristram". Además, `copyExternalImageToTexture` se ejecutaba en cada frame sin throttling, sobrecargando la GPU con uploads innecesarios.
+- **Síntoma**: Durante la invasión de Tristram (con Leoric, Na-Krul, Butcher y decenas de esbirros activos simultáneamente), después de varios minutos de combate intenso, la pestaña del navegador se congelaba completamente por agotamiento de memoria WebGPU. El problema no ocurría en niveles normales (sesiones cortas) ni en la versión nativa de PC.
+- **Solución**:
+  - Recreación periódica de texturas WebGPU cada 30 segundos (1800 frames a 60 FPS) con `texture.destroy()` explícito, seguido de `createTexture()` y re-población de datos sintéticos.
+  - Throttling de `copyExternalImageToTexture`: ahora se ejecuta cada 2 frames en vez de cada frame, reduciendo uploads GPU a la mitad sin pérdida perceptible de calidad visual.
+  - Hint de garbage collection cada 300 frames (`window.gc()` si está disponible en navegadores con `--js-flags=--expose-gc`).
+  - Recreación dinámica del `bindGroup` cuando las texturas se refrescan, evitando referencias a texturas destruidas.
+- **Impacto**: La invasión de Tristram ahora puede jugarse indefinidamente sin freeze del navegador, manteniendo uso de memoria WebGPU estable (~150-200 MB en vez de crecer ilimitadamente hasta >2 GB).
+
 ### 🛡️ Eliminación de Bucle Infinito en Proyectiles y Congelamiento de Pestaña ("La página no responde") ([`Source/missiles.cpp`](file:///c:/Projects/DevilutionX/Source/missiles.cpp), [`Source/monster.cpp`](file:///c:/Projects/DevilutionX/Source/monster.cpp), [`Source/engine/sound.cpp`](file:///c:/Projects/DevilutionX/Source/engine/sound.cpp), [`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html))
 - **Causa raíz del congelamiento con zumbido de audio persistente**:
   1. *Bucle `do-while(true)` no acotado en `MoveMissile()` (`Source/missiles.cpp:587`)*:

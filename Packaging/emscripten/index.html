@@ -1552,6 +1552,36 @@
 				const texDepth = device.createTexture(desc('r32float'));
 				const texLight = device.createTexture(desc('r8unorm'));
 				const texSemantic = device.createTexture(desc('r8unorm'));
+				
+				var textureRefreshCounter = 0;
+				var activeTextures = { texRGB, texDepth, texLight, texSemantic };
+
+				// Periodic texture recreation to prevent WebGPU memory fragmentation
+				function refreshTexturesIfNeeded() {
+					textureRefreshCounter++;
+					if (textureRefreshCounter >= 1800) { // Every 30 seconds at 60 FPS
+						textureRefreshCounter = 0;
+						try {
+							activeTextures.texRGB.destroy();
+							activeTextures.texDepth.destroy();
+							activeTextures.texLight.destroy();
+							activeTextures.texSemantic.destroy();
+						} catch(e) {}
+						
+						activeTextures.texRGB = device.createTexture(desc('rgba8unorm'));
+						activeTextures.texDepth = device.createTexture(desc('r32float'));
+						activeTextures.texLight = device.createTexture(desc('r8unorm'));
+						activeTextures.texSemantic = device.createTexture(desc('r8unorm'));
+						
+						// Re-populate synthetic data
+						device.queue.writeTexture({ texture: activeTextures.texDepth }, depthData, { bytesPerRow: w * 4 }, [w, h]);
+						device.queue.writeTexture({ texture: activeTextures.texLight }, lightData, { bytesPerRow: paddedRowBytes }, [w, h]);
+						device.queue.writeTexture({ texture: activeTextures.texSemantic }, semanticData, { bytesPerRow: paddedRowBytes }, [w, h]);
+						
+						return true;
+					}
+					return false;
+				}
 
 				// Pre-populate default synthetic depth and semantic maps
 				const paddedRowBytes = Math.ceil(w / 256) * 256;
@@ -1592,6 +1622,9 @@
 						{ binding: 5, resource: texSemantic.createView() },
 					]
 				});
+				
+				var activeBindGroup = bindGroup;
+				var bindGroupRefreshNeeded = false;
 
 				var currentRenderMode = 1;
 				window.setWebGPURenderMode = function(mode) {
@@ -1602,12 +1635,20 @@
 				var lastFrameTime = performance.now();
 				var avgFrameTime = 16.0;
 				var qualityTier = 1;
+				var frameCount = 0;
 
 				function renderWebGPUFrame() {
 					if (document.body.classList.contains('remaster-enabled') && gameCanvas.width > 0 && gameCanvas.height > 0) {
 						const now = performance.now();
 						const delta = now - lastFrameTime;
 						lastFrameTime = now;
+						frameCount++;
+						
+						// Periodic garbage collection hint every 300 frames (~5 seconds at 60 FPS)
+						if (frameCount % 300 === 0 && window.gc) {
+							try { window.gc(); } catch(e) {}
+						}
+						
 						if (delta > 0 && delta < 200) {
 							avgFrameTime = avgFrameTime * 0.95 + delta * 0.05;
 							if (avgFrameTime > 18.5) {
@@ -1648,6 +1689,26 @@
 
 						device.queue.writeBuffer(uniformBuffer, 0, uData);
 
+						// Check if textures need refresh
+						if (refreshTexturesIfNeeded()) {
+							bindGroupRefreshNeeded = true;
+						}
+						
+						// Recreate bind group if textures were refreshed
+						if (bindGroupRefreshNeeded) {
+							activeBindGroup = device.createBindGroup({
+								layout: pipeline.getBindGroupLayout(0),
+								entries: [
+									{ binding: 0, resource: { buffer: uniformBuffer } },
+									{ binding: 2, resource: activeTextures.texRGB.createView() },
+									{ binding: 3, resource: activeTextures.texDepth.createView() },
+									{ binding: 4, resource: activeTextures.texLight.createView() },
+									{ binding: 5, resource: activeTextures.texSemantic.createView() },
+								]
+							});
+							bindGroupRefreshNeeded = false;
+						}
+
 						// Stream live C++ G-Buffer (Semantic & Depth) into WebGPU Textures
 						if (window.Module && Module.HEAPU8 && Module.HEAPU8.byteLength > 0 && typeof Module._Nightmare_GBuffer_GetSemantic === 'function') {
 							try {
@@ -1663,18 +1724,18 @@
 									for (let y = 0; y < h; y++) {
 										semPadded.set(semView.subarray(y * w, (y + 1) * w), y * paddedRowBytes);
 									}
-									device.queue.writeTexture({ texture: texSemantic }, semPadded, { bytesPerRow: paddedRowBytes }, [w, h]);
-									device.queue.writeTexture({ texture: texDepth }, depthView, { bytesPerRow: w * 4 }, [w, h]);
+									device.queue.writeTexture({ texture: activeTextures.texSemantic }, semPadded, { bytesPerRow: paddedRowBytes }, [w, h]);
+									device.queue.writeTexture({ texture: activeTextures.texDepth }, depthView, { bytesPerRow: w * 4 }, [w, h]);
 								}
 							} catch(e) {}
 						}
 
-						// Copy live SDL game frame into WebGPU Texture
-						if (window.latestGamePixels || (window.DiagnosticSystem && window.DiagnosticSystem.totalFrames > 0)) {
+						// Copy live SDL game frame into WebGPU Texture (throttled to avoid excessive GPU uploads)
+						if ((frameCount % 2 === 0) && (window.latestGamePixels || (window.DiagnosticSystem && window.DiagnosticSystem.totalFrames > 0))) {
 							try {
 								device.queue.copyExternalImageToTexture(
 									{ source: gameCanvas },
-									{ texture: texRGB },
+									{ texture: activeTextures.texRGB },
 									[w, h]
 								);
 							} catch(e) {}
@@ -1694,7 +1755,7 @@
 						});
 
 						renderPass.setPipeline(pipeline);
-						renderPass.setBindGroup(0, bindGroup);
+						renderPass.setBindGroup(0, activeBindGroup);
 						renderPass.draw(3, 1, 0, 0);
 						renderPass.end();
 

@@ -729,6 +729,7 @@
 			// StartUpGameMode enum: Hellfire=1, Diablo=2
 			currentIni = setIniKey(currentIni, 'GameMode', 'Game', mode === 'Hellfire' ? '1' : '2');
 			currentIni = setIniKey(currentIni, 'Mods', 'Hellfire', mode === 'Hellfire' ? '1' : '0');
+			currentIni = setIniKey(currentIni, 'Mods', 'clock', '1');
 
 			FS.writeFile(iniPath, currentIni);
 			try { FS.writeFile('/diablo.ini', currentIni); } catch (e) {}
@@ -761,7 +762,7 @@
 				const iniPath1 = '/libsdl/diasurgical/devilution/diablo.ini';
 				const iniPath2 = '/libsdl/diasurgical/diablo.ini';
 
-				const defaultIni = "[Game]\nTest Barbarian=1\nTest Bard=1\nRun in Town=1\nCow Quest=1\nTheo Quest=1\n";
+				const defaultIni = "[Game]\nTest Barbarian=1\nTest Bard=1\nRun in Town=1\nCow Quest=1\nTheo Quest=1\n\n[Mods]\nclock=1\n";
 				try { FS.writeFile(iniPath1, defaultIni); } catch (e) {}
 				try { FS.writeFile(iniPath2, defaultIni); } catch (e) {}
 				try { FS.unlink('/diablo.ini'); } catch (e) {}

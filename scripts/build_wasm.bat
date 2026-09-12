@@ -41,8 +41,8 @@ if %ERRORLEVEL% equ 0 (
     echo.
     echo ===================================================
     echo   COMPILACION WASM EXITOSA!
-    echo   Sincronizando binarios con Packaging\emscripten...
-    echo ===================================================
+    echo Aplicando parches de compatibilidad en devilutionx.js...
+    python tools\patch_devilutionx_js.py build-web\devilutionx.js Packaging\emscripten\devilutionx.js
     copy /y "build-web\devilutionx.wasm" "Packaging\emscripten\devilutionx.wasm"
     copy /y "build-web\devilutionx.js"   "Packaging\emscripten\devilutionx.js"
     if exist "build-web\devilutionx.data" (

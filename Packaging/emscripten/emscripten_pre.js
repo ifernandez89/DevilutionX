@@ -95,6 +95,16 @@ Module['preRun'].push(function() {
               }
               modified = true;
             }
+            if (currentIni.indexOf('clock=1') === -1) {
+              if (currentIni.indexOf('clock') !== -1) {
+                currentIni = currentIni.replace(/clock\s*=\s*\d+/i, 'clock=1');
+              } else if (currentIni.indexOf('[Mods]') !== -1) {
+                currentIni = currentIni.replace('[Mods]', "[Mods]\nclock=1");
+              } else {
+                currentIni += "\n[Mods]\nclock=1\n";
+              }
+              modified = true;
+            }
           }
 
           // Migrate corrupted string values to proper integer enum values

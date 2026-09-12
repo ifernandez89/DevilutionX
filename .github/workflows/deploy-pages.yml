@@ -6,6 +6,12 @@ on:
       - testing
       - master
   workflow_dispatch:
+    inputs:
+      force_rebuild:
+        description: 'Force clean WebAssembly build on Linux runner (slow, ~12 min)'
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -26,23 +32,38 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
 
-      - name: Setup Emscripten
+      - name: Check for Prebuilt Binaries (Fast-Path)
+        id: check-binaries
+        run: |
+          if [ "${{ inputs.force_rebuild }}" != "true" ] && [ -f "Packaging/emscripten/devilutionx.wasm" ] && [ -f "Packaging/emscripten/devilutionx.js" ]; then
+            echo "prebuilt=true" >> $GITHUB_OUTPUT
+            echo "Prebuilt WebAssembly binaries detected. Using FAST-PATH deployment (~35 seconds)!"
+          else
+            echo "prebuilt=false" >> $GITHUB_OUTPUT
+            echo "Prebuilt binaries not found or force_rebuild=true. Running full compile on runner..."
+          fi
+
+      - name: Setup Emscripten (Full Build only)
+        if: steps.check-binaries.outputs.prebuilt != 'true'
         uses: mymindstorm/setup-emsdk@v14
         with:
           version: 3.1.53
 
-      - name: Install Build Tools & Dependencies
+      - name: Install Build Tools & Dependencies (Full Build only)
+        if: steps.check-binaries.outputs.prebuilt != 'true'
         run: |
           sudo apt-get update
           sudo apt-get install -y gettext cmake ninja-build genisoimage
 
-      - name: Prebuild Emscripten Ports Cache
+      - name: Prebuild Emscripten Ports Cache (Full Build only)
+        if: steps.check-binaries.outputs.prebuilt != 'true'
         run: |
           embuilder build zlib bzip2 libpng sdl2 sdl2_image sdl2_image_png || embuilder build zlib bzip2 libpng sdl2 sdl2_image
 
-      - name: Configure CMake with Emscripten
+      - name: Configure CMake with Emscripten (Full Build only)
+        if: steps.check-binaries.outputs.prebuilt != 'true'
         run: |
           emcmake cmake -B build-web -G Ninja \
             -DCMAKE_BUILD_TYPE=Release \
@@ -57,33 +78,48 @@ jobs:
             -DDEVILUTIONX_SYSTEM_LIBFMT=OFF \
             -DDEVILUTIONX_SYSTEM_BZIP2=OFF
 
-      - name: Build DevilutionX WebAssembly
+      - name: Build DevilutionX WebAssembly (Full Build only)
+        if: steps.check-binaries.outputs.prebuilt != 'true'
         run: |
           cmake --build build-web --target devilutionx
+          python3 tools/patch_devilutionx_js.py build-web/devilutionx.js Packaging/emscripten/devilutionx.js
 
-      - name: Build Virtual PC & MiniXP Images
+      - name: Cache spawn.mpq (Shareware Data)
+        id: cache-spawn-mpq
+        uses: actions/cache@v4
+        with:
+          path: ./cached_mpq/spawn.mpq
+          key: spawn-mpq-v2
+
+      - name: Download spawn.mpq if not cached
+        if: steps.cache-spawn-mpq.outputs.cache-hit != 'true'
         run: |
-          mkdir -p Packaging/minixp-wasm
-          pip install pycdlib
-          python3 Packaging/minixp-wasm/build_retro_tinycore.py || true
-          python3 Packaging/minixp-wasm/fetch_freedoom.py || true
-          python3 Packaging/minixp-wasm/build_perfect_retro_iso.py || true
-          python3 tools/build_minixp_iso.py MiniXp Packaging/minixp-wasm/minixp.iso || true
-          echo "Checking Packaging/minixp-wasm contents:"
-          ls -la Packaging/minixp-wasm/
-
+          mkdir -p cached_mpq
+          curl -L -f -s -S --retry 3 -o cached_mpq/spawn.mpq https://github.com/diasurgical/devilutionx-assets/releases/download/v2/spawn.mpq || true
 
       - name: Prepare GitHub Pages Distribution
         run: |
           mkdir -p dist
-          cp -v build-web/devilutionx.js dist/
-          cp -v build-web/devilutionx.wasm dist/
-          if [ -f build-web/devilutionx.data ]; then cp -v build-web/devilutionx.data dist/; fi
+          # Copy WASM and JS from build-web if full build, else from Packaging/emscripten
+          if [ -d "build-web" ] && [ -f "build-web/devilutionx.wasm" ]; then
+            cp -v build-web/devilutionx.wasm dist/
+            cp -v build-web/devilutionx.js dist/
+            if [ -f build-web/devilutionx.data ]; then cp -v build-web/devilutionx.data dist/; fi
+          else
+            cp -v Packaging/emscripten/devilutionx.wasm dist/
+            cp -v Packaging/emscripten/devilutionx.js dist/
+            if [ -f Packaging/emscripten/devilutionx.data ]; then cp -v Packaging/emscripten/devilutionx.data dist/; fi
+          fi
+
+          # Copy Web UI and Assets
           cp -v Packaging/emscripten/index.html dist/index.html
           cp -v Packaging/emscripten/file-manager.js dist/file-manager.js
           if [ -f Packaging/emscripten/neural_infer.js ]; then cp -v Packaging/emscripten/neural_infer.js dist/neural_infer.js; fi
           if [ -d Packaging/emscripten/shaders ]; then
             cp -rv Packaging/emscripten/shaders dist/shaders
+          fi
+          if [ -d Packaging/emscripten/assets ]; then
+            cp -rv Packaging/emscripten/assets dist/assets
           fi
           if [ -d Packaging/neural_harness ]; then
             cp -rv Packaging/neural_harness dist/harness
@@ -92,12 +128,19 @@ jobs:
             cp -rv Packaging/minixp-wasm dist/minixp
             cp -rv Packaging/minixp-wasm dist/tinycore
           fi
-          echo "Fetching official spawn.mpq (shareware) into dist/..."
-          curl -L -f -s -S --retry 3 -o dist/spawn.mpq https://github.com/diasurgical/devilutionx-assets/releases/download/v2/spawn.mpq || true
-          echo "Listing dist/ and dist/minixp/ directory:"
+
+          # Copy cached spawn.mpq
+          if [ -f "cached_mpq/spawn.mpq" ]; then
+            cp -v cached_mpq/spawn.mpq dist/spawn.mpq
+          else
+            curl -L -f -s -S --retry 3 -o dist/spawn.mpq https://github.com/diasurgical/devilutionx-assets/releases/download/v2/spawn.mpq || true
+          fi
+
+          # Ensure JS compatibility patch is applied to dist
+          python3 tools/patch_devilutionx_js.py dist/devilutionx.js || true
+
+          echo "Listing dist/ directory:"
           ls -la dist/
-          ls -la dist/minixp/
-          ls -la dist/tinycore/
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

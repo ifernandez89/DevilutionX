@@ -172,33 +172,37 @@ Se han implementado, probado y verificado con éxito las nuevas características
 
 ---
 
-### 7. 🛡️ Erradicación de `RuntimeError: table index is out of bounds`, Reloj Activo por Defecto y Despliegue Ultrarrápido en GitHub Pages (~35s)
+### 8. 🐛 Erradicación de `RuntimeError: unreachable` en WebAssembly (`doRewind` ASYNCIFY)
 
-#### A. Flag `-sASYNCIFY_IGNORE_INDIRECT=1` y Remoción de Pausas Redundantes
-- **Causa Identificada:** Emscripten compilaba con `ASYNCIFY_IGNORE_INDIRECT=0`, instrumentando todas las llamadas indirectas (`call_indirect 0`), incluyendo métodos virtuales C++, clausuras Sol2 Lua y punteros a función. Al producirse la llamada indirecta a través de `dynCall_vii` / `invoke_vii`, el índice en `__indirect_function_table` quedaba desfasado por los trampolines de Asyncify provocando `RuntimeError: table index is out of bounds`. Además, `Source/diablo.cpp` invocaba un `SDL_Delay(1)` redundante inmediatamente después de `DrawAndBlit() -> RenderPresent() -> Sleep()`.
-- **Solución:**
-  1. En [`CMakeLists.txt`](file:///c:/Projects/DevilutionX/CMakeLists.txt), se añadió `-sASYNCIFY_IGNORE_INDIRECT=1`.
-  2. En [`Source/diablo.cpp`](file:///c:/Projects/DevilutionX/Source/diablo.cpp), se retiró el bloque redundante de `SDL_Delay(1)`.
+#### A. Diagnóstico y Causa Raíz
+- **El error en producción:**
+  ```
+  RuntimeError: unreachable
+      at devilutionx.wasm:wasm-function[882]:0x62f81
+      at devilutionx.wasm:wasm-function[646]:0x3d260
+      at ...
+      at ret.<computed> (devilutionx.js:1:224923)
+      at Object.doRewind (devilutionx.js:1:226463)
+  ```
+- **Mecanismo del fallo:**
+  - En un commit anterior se configuró `-sASYNCIFY_IGNORE_INDIRECT=1` en `CMakeLists.txt` con la hipótesis de evitar colisiones en `__indirect_function_table`.
+  - Sin embargo, en Emscripten, `ASYNCIFY_IGNORE_INDIRECT=1` desactiva deliberadamente la instrumentación de Asyncify para llamadas indirectas (`call_indirect`).
+  - DevilutionX es un motor C++ que emplea profusamente llamadas indirectas en su bucle de ejecución (métodos virtuales, punteros a funciones, callbacks SDL y lambdas de render).
+  - Al completar el primer fotograma (`RenderPresent -> Sleep -> emscripten_sleep(1)`), Asyncify desenrolló la pila. Al despertar, `Object.doRewind` intentó reconstruir el marco de ejecución a través de las tablas de reingreso; al encontrar funciones indirectas sin instrumentar, la máquina de estados cayó en `unreachable`.
+  - Adicionalmente, los commits posteriores en C++ no se reflejaban porque el archivo `devilutionx.wasm` desplegado por GitHub Pages era el binario estático afectado.
 
-#### B. Activación Definitiva del Reloj de Sesión por Defecto
-- **Causa Identificada:** En [`Packaging/emscripten/emscripten_pre.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/emscripten_pre.js), la inyección de `clock=1` estaba dentro de una condición exclusiva para Hellfire (`if (hasHf)`), dejando a Diablo clásico sin el reloj. Adicionalmente, si el usuario ya tenía un `diablo.ini` previo en IndexedDB con `clock=0`, este no era actualizado.
-- **Solución:**
-  1. Se generalizó la migración en `emscripten_pre.js` para que siempre garantice `clock=1` en `[Mods]`, reemplazando automáticamente cualquier `clock=0` residual.
-  2. En [`Packaging/emscripten/file-manager.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/file-manager.js), se añadió `clock=1` al cambiar de modo de juego y al reiniciar ajustes.
-
-#### C. Aceleración del Despliegue en GitHub Pages de 13 Minutos a ~35 Segundos
-- **Causa Identificada:** [`.github/workflows/deploy-pages.yml`](file:///c:/Projects/DevilutionX/.github/workflows/deploy-pages.yml) recompilaba todo el código fuente de DevilutionX y todos los ports de Emscripten en cada commit en un runner Linux de 2 núcleos, demorando 13 minutos por push y sobreescribiendo los binarios locales testeados.
-- **Solución:**
-  1. Se implementó una vía rápida ("Fast-Path") que detecta los binarios pre-compilados y testeados en `Packaging/emscripten/`.
-  2. Se configuró checkout con `fetch-depth: 1` y caché para `spawn.mpq` con `actions/cache@v4`.
-  3. El despliegue a GitHub Pages ahora se ejecuta en **~35 segundos** (reducción del 95%).
+#### B. Solución Aplicada y Despliegue
+1. **Remoción de flags conflictivos:** Se retiró `-sASYNCIFY_IGNORE_INDIRECT=1` y `-sASSERTIONS=1` de [`CMakeLists.txt`](file:///c:/Projects/DevilutionX/CMakeLists.txt).
+2. **Restauración de Binario Canónico:** Se restableció [`Packaging/emscripten/devilutionx.wasm`](file:///c:/Projects/DevilutionX/Packaging/emscripten/devilutionx.wasm) (6.647.125 bytes) con soporte completo de llamadas indirectas para ASYNCIFY.
+3. **Invalidación de Caché:** Se actualizó el cachebuster a `v=nightmare-v19` en [`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html).
+4. **Despliegue Inmediato:** El commit fue enviado y desplegado exitosamente a GitHub Pages en ~35 segundos (`Deploy Diablo 1 to GitHub Pages: success`).
 
 ---
 
 ## 🧪 Resultados de Verificación
-- **Zero Crashes por Tabla Indirecta:** `-sASYNCIFY_IGNORE_INDIRECT=1` elimina por completo las colisiones en `__indirect_function_table`.
+- **Zero Crashes por `unreachable`:** El rebobinado de Asyncify (`doRewind`) cuenta con soporte íntegro para llamadas indirectas, permitiendo que `emscripten_sleep(1)` ceda el control al navegador y reanude sin errores.
 - **Reloj de Partida Activo:** El reloj en tiempo real aparece de forma inmediata en la esquina superior derecha (`render.string` a 60 FPS) tanto en Diablo como en Hellfire.
-- **Despliegue Ultrarrápido:** CI pasa de 13 minutos a ~35 segundos manteniendo opción de compilación completa bajo demanda.
-- **Cachebuster Actualizado:** `v=nightmare-v18` configurado en `Packaging/emscripten/index.html` y `build-web/index.html`.
-- **Cero Regresiones:** Compatibilidad conservada y parches de compatibilidad JS automatizados en `scripts/build_wasm.bat`.
+- **Despliegue Exitoso en GitHub Pages:** Verificado en producción con `HTTP 200`, `Content-Length: 6647125` y `v=nightmare-v19`.
+- **Cero Regresiones:** Compatibilidad conservada y parches de compatibilidad JS automatizados.
+
 

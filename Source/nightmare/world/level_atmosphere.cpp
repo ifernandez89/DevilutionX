@@ -48,6 +48,41 @@ namespace {
 // Level 23: Crypt 3 - Cripta de Huesos = 4
 // Level 24: Crypt 4 - Santuario de Na-Krul / Pesadilla = 3
 // =============================================================================
+// 1. NIGHTMARE INTENSITY CURVE BY DUNGEON LEVEL (0 to 24)
+// =============================================================================
+// Normalized factor from 0.00 (peace) to 1.00 (hell / total nightmare).
+// Drives monster density, pack sizes, light radius, and atmospheric tension.
+constexpr float NightmareIntensityByLevel[25] = {
+	0.00f, // Level 0: Town (Base tranquility)
+	0.15f, // Level 1: Cathedral - Horror
+	0.25f, // Level 2: Cathedral - Infección
+	0.38f, // Level 3: Cathedral - Francotiro
+	0.50f, // Level 4: Cathedral - Umbral (Leoric / Butcher)
+	0.58f, // Level 5: Catacombs - Invasión
+	0.65f, // Level 6: Catacombs - Hierro (Melee)
+	0.75f, // Level 7: Catacombs - Hambre (Escasez Severa)
+	0.78f, // Level 8: Catacombs - Señores (Loot / Recompensa)
+	0.80f, // Level 9: Caves - Profundidades
+	0.85f, // Level 10: Caves - Fuego
+	0.88f, // Level 11: Caves - Silencio Opresivo (Sin Música)
+	0.90f, // Level 12: Caves - Ríos de Lava
+	0.92f, // Level 13: Hell - El Descenso
+	0.95f, // Level 14: Hell - Ríos Negros (Escasez)
+	0.98f, // Level 15: Hell - Salón de Sombras
+	1.00f, // Level 16: Hell - Cámara de Diablo (Peligro Máximo)
+	0.70f, // Level 17: Nest 1 - Entrada
+	0.78f, // Level 18: Nest 2 - Enjambre
+	0.85f, // Level 19: Nest 3 - Nido de Sombras
+	0.90f, // Level 20: Nest 4 - Defiler
+	0.65f, // Level 21: Crypt 1 - Tumbas
+	0.75f, // Level 22: Crypt 2 - Tesoro
+	0.85f, // Level 23: Crypt 3 - Cripta de Huesos
+	0.95f  // Level 24: Crypt 4 - Na-Krul / Pesadilla
+};
+
+// =============================================================================
+// 2. LIGHT RADIUS OVERRIDES BY DUNGEON LEVEL (0 to 24)
+// =============================================================================
 constexpr int8_t NightmareBaseLightByLevel[25] = {
 	12, // Level 0: Town
 	8,  // Level 1: Cathedral - Horror
@@ -78,11 +113,35 @@ constexpr int8_t NightmareBaseLightByLevel[25] = {
 
 } // namespace
 
+float GetNightmareIntensity(uint8_t level)
+{
+	if (level < sizeof(NightmareIntensityByLevel) / sizeof(NightmareIntensityByLevel[0])) {
+		return NightmareIntensityByLevel[level];
+	}
+	return 0.50f;
+}
+
+int GetNightmareMonsterDensityDivisor(uint8_t level)
+{
+	// Vanilla baseline: 30
+	// NIGHTMARE: scales down from 28 to 21 based on intensity (+15% to +40% monsters)
+	float intensity = GetNightmareIntensity(level);
+	int divisor = 28 - static_cast<int>(intensity * 7.0f);
+	return std::clamp(divisor, 20, 30);
+}
+
+int GetNightmareExtraPackSize(uint8_t level)
+{
+	float intensity = GetNightmareIntensity(level);
+	if (intensity >= 0.80f)
+		return 2;
+	if (intensity >= 0.50f)
+		return 1;
+	return 0;
+}
+
 int GetNightmareBaseLightRadius(uint8_t level)
 {
-	// Vanilla fallback:
-	// return 12;
-
 	if (level < sizeof(NightmareBaseLightByLevel) / sizeof(NightmareBaseLightByLevel[0])) {
 		return NightmareBaseLightByLevel[level];
 	}
@@ -118,10 +177,10 @@ _music_id GetNightmareLevelMusic(dungeon_type dungeonType, uint8_t level, bool i
 		// Lords: Catacombs with Hell music indicates proximity to the abyss
 		return TMUSIC_HELL;
 	case 11:
-		// Silence: Caves with Caves ambient music
-		return TMUSIC_CAVES;
+		// Silence: Caves with oppressive total silence (step & monster sounds only)
+		return NUM_MUSIC;
 	case 14:
-		// Black Rivers: Caves music
+		// Black Rivers: Caves ambient music
 		return TMUSIC_CAVES;
 	case 15:
 		// Shadow Hell: Hell with Crypt haunting soundtrack
@@ -152,26 +211,53 @@ _music_id GetNightmareLevelMusic(dungeon_type dungeonType, uint8_t level, bool i
 
 void GetNightmareChestCounts(uint8_t level, int &c1min, int &c1max, int &c2min, int &c2max, int &c3min, int &c3max)
 {
-	// Vanilla baseline defaults:
-	// c1min = 5; c1max = 10;
-	// c2min = 3; c2max = 6;
-	// c3min = 1; c3max = 5;
-
+	// Survival loot cycles (Abundant, Normal, Scarcity, Reward, Hunger, Silence)
 	switch (level) {
-	case 7: // Level 7: Hunger (Scarcity)
+	case 1: // Level 1: Abundant initial provisioning
+		c1min = 6; c1max = 10;
+		c2min = 4; c2max = 6;
+		c3min = 2; c3max = 4;
+		break;
+	case 3: // Level 3: Early scarcity - survival tension
 		c1min = 2; c1max = 4;
-		c2min = 1; c2max = 3;
-		c3min = 0; c3max = 2;
+		c2min = 1; c2max = 2;
+		c3min = 0; c3max = 1;
+		break;
+	case 4: // Level 4: Threshold reward before Catacombs
+		c1min = 6; c1max = 10;
+		c2min = 4; c2max = 7;
+		c3min = 2; c3max = 5;
+		break;
+	case 5: // Level 5: Catacombs shock - reduced supplies
+		c1min = 2; c1max = 3;
+		c2min = 1; c2max = 2;
+		c3min = 0; c3max = 1;
+		break;
+	case 7: // Level 7: Hunger (Scarcity)
+		c1min = 1; c1max = 3;
+		c2min = 0; c2max = 2;
+		c3min = 0; c3max = 0;
+		break;
+	case 8: // Level 8: Lords (Reward)
+		c1min = 7; c1max = 12;
+		c2min = 4; c2max = 8;
+		c3min = 2; c3max = 6;
 		break;
 	case 11: // Level 11: Silence (Minimal objects)
 		c1min = 2; c1max = 4;
 		c2min = 1; c2max = 2;
 		c3min = 0; c3max = 1;
 		break;
-	case 8: // Level 8: Lords (Reward)
-		c1min = 7; c1max = 12;
+	case 14: // Level 14: Black Rivers scarcity
+		c1min = 2; c1max = 3;
+		c2min = 1; c2max = 2;
+		c3min = 0; c3max = 1;
+		break;
+	case 15: // Level 15: Shadows reward
+	case 16: // Level 16: Diablo final armory
+		c1min = 6; c1max = 12;
 		c2min = 4; c2max = 8;
-		c3min = 2; c3max = 6;
+		c3min = 3; c3max = 6;
 		break;
 	case 22: // Level 22: Treasure Chamber (Massive Loot)
 		c1min = 10; c1max = 18;
@@ -185,9 +271,9 @@ void GetNightmareChestCounts(uint8_t level, int &c1min, int &c1max, int &c2min, 
 		break;
 	default:
 		// Standard baseline
-		c1min = 5; c1max = 10;
-		c2min = 3; c2max = 6;
-		c3min = 1; c3max = 5;
+		c1min = 4; c1max = 8;
+		c2min = 3; c2max = 5;
+		c3min = 1; c3max = 3;
 		break;
 	}
 }

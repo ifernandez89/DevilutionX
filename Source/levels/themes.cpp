@@ -615,15 +615,37 @@ void Theme_Torture(int t)
 
 /**
  * Theme_BloodFountain initializes the blood fountain theme.
+ * NIGHTMARE: Guarded healing site creating high-risk tactical decisions.
  * @param t Theme number (index into themes array).
  */
 void Theme_BloodFountain(int t)
 {
-	const int monstrnd[4] = { 6, 8, 3, 9 };
+	const int monstrnd[4] = { 4, 5, 2, 6 };
 
 	TFit_Obj5(t);
 	AddObject(OBJ_BLOODFTN, { themex, themey });
 	PlaceThemeMonsts(t, monstrnd[leveltype - 1]);
+
+	// NIGHTMARE: Spawn close perimeter sentinels directly surrounding the blood fountain
+	// Turning the fountain into a perilous room: "Need to heal... but entering could be lethal."
+	size_t scattertypes[138];
+	int numscattypes = 0;
+	for (size_t i = 0; i < LevelMonsterTypeCount; i++) {
+		if ((LevelMonsterTypes[i].placeFlags & PLACE_SCATTER) != 0) {
+			scattertypes[numscattypes] = i;
+			numscattypes++;
+		}
+	}
+	if (numscattypes > 0) {
+		const size_t guardType = scattertypes[GenerateRnd(numscattypes)];
+		constexpr Displacement offsets[] = { { -1, -1 }, { 1, -1 }, { -1, 1 }, { 1, 1 }, { 0, -2 }, { 0, 2 } };
+		for (const auto &disp : offsets) {
+			Point p = Point { themex, themey } + disp;
+			if (InDungeonBounds(p) && dTransVal[p.x][p.y] == themes[t].ttval && IsTileNotSolid(p) && !IsObjectAtPosition(p) && dMonster[p.x][p.y] == 0) {
+				AddMonster(p, static_cast<Direction>(GenerateRnd(8)), guardType, true);
+			}
+		}
+	}
 }
 
 /**

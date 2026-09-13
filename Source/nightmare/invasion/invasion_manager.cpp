@@ -14,6 +14,7 @@
 #include "loadsave.h"
 #include "monster.h"
 #include "pfile.h"
+#include "player.h"
 #include "quests.h"
 
 namespace devilution {
@@ -136,6 +137,8 @@ void InvasionManager::ResetInvasionState()
 	std::memset(&state_, 0, sizeof(state_));
 	state_.active = false;
 	state_.completed = false;
+	state_.current_tier = InvasionTier::None;
+	state_.highest_tier_completed = 0;
 	state_.boss_phase = 0;
 	state_.boss_selected = MT_INVALID;
 	state_.boss_unique_type = UniqueMonsterType::None;
@@ -165,19 +168,34 @@ bool InvasionManager::IsCompleted() const
 
 void InvasionManager::CheckInvasionTrigger()
 {
-	if (!state_.active && !state_.completed) {
-		if (Quests[Q_NAKRUL]._qactive == QUEST_DONE) {
-			state_.active = true;
-			state_.completed = false;
-			state_.boss_phase = 0;
-			state_.monster_count = 0;
-			state_.total_kills = 0;
-			state_.pending_reinforcements = 0;
-			state_.leoric_alive = true;
-			state_.butcher_spawned = false;
-			state_.nakrul_spawned = false;
-			state_.diablo_spawned = false;
+	if (state_.active)
+		return;
+
+	InvasionTier targetTier = InvasionTier::None;
+	if (MyPlayer != nullptr) {
+		if (Quests[Q_NAKRUL]._qactive == QUEST_DONE || MyPlayer->_pLvlVisited[16]) {
+			targetTier = InvasionTier::GrandSiege;
+		} else if (MyPlayer->_pLvlVisited[9] || MyPlayer->_pLvlVisited[13]) {
+			targetTier = InvasionTier::MajorAssault;
+		} else if (MyPlayer->_pLvlVisited[5] || MyPlayer->_pLvlVisited[7]) {
+			targetTier = InvasionTier::MediumRaid;
+		} else if (MyPlayer->_pLvlVisited[2] || MyPlayer->_pLvlVisited[3]) {
+			targetTier = InvasionTier::MinorScout;
 		}
+	}
+
+	if (static_cast<uint8_t>(targetTier) > state_.highest_tier_completed) {
+		state_.active = true;
+		state_.completed = false;
+		state_.current_tier = targetTier;
+		state_.boss_phase = (targetTier == InvasionTier::GrandSiege) ? 0 : 3;
+		state_.monster_count = 0;
+		state_.total_kills = 0;
+		state_.pending_reinforcements = 0;
+		state_.leoric_alive = (targetTier == InvasionTier::GrandSiege);
+		state_.butcher_spawned = false;
+		state_.nakrul_spawned = false;
+		state_.diablo_spawned = false;
 	}
 }
 
@@ -275,37 +293,61 @@ void InvasionManager::SpawnInitialInvasionForce()
 	state_.monster_count = 0;
 	state_.total_kills = 0;
 	state_.pending_reinforcements = 0;
-	state_.leoric_alive = true;
 	state_.butcher_spawned = false;
 	state_.nakrul_spawned = false;
 	state_.diablo_spawned = false;
 
-	// 1. Spawnea al Comandante
-	SpawnCommanderLeoric();
-	state_.boss_phase = 2;
+	size_t targetMinions = 14;
+	switch (state_.current_tier) {
+	case InvasionTier::MinorScout:
+		targetMinions = 4;
+		state_.leoric_alive = false;
+		break;
+	case InvasionTier::MediumRaid:
+		targetMinions = 8;
+		state_.leoric_alive = false;
+		break;
+	case InvasionTier::MajorAssault:
+		targetMinions = 12;
+		state_.leoric_alive = false;
+		break;
+	case InvasionTier::GrandSiege:
+	default:
+		targetMinions = TargetInvasionMinions;
+		state_.leoric_alive = true;
+		SpawnCommanderLeoric();
+		state_.boss_phase = 2;
+		break;
+	}
 
-	// 2. Spawnea el escuadrón inicial de 14 esbirros perimetrales
 	size_t spawnedMinions = 0;
 	for (const auto &spawn : InitialSquadSpawns) {
-		if (spawnedMinions >= TargetInvasionMinions)
+		if (spawnedMinions >= targetMinions)
 			break;
 		if (!IsTileWalkable(spawn.pt))
 			continue;
 
-		const size_t typeIdx = GetMonsterTypeIndex(spawn.type);
+		_monster_id mtype = spawn.type;
+		if (state_.current_tier == InvasionTier::MinorScout) {
+			mtype = FlipCoin() ? MT_WSKELAX : MT_WSKELBW;
+		} else if (state_.current_tier == InvasionTier::MediumRaid) {
+			mtype = FlipCoin() ? MT_BGOATMC : MT_BACID;
+		}
+
+		const size_t typeIdx = GetMonsterTypeIndex(mtype);
 		if (typeIdx >= LevelMonsterTypeCount)
 			continue;
 
 		Monster *monster = AddMonster(spawn.pt, Direction::South, typeIdx, true);
 		if (monster != nullptr) {
-			ConfigureMinionStats(*monster, spawn.type);
+			ConfigureMinionStats(*monster, mtype);
 			spawnedMinions++;
 
 			if (state_.monster_count < MaxInvasionMonsters) {
 				auto &snap = state_.monsters[state_.monster_count++];
 				snap.x = static_cast<uint8_t>(spawn.pt.x);
 				snap.y = static_cast<uint8_t>(spawn.pt.y);
-				snap.type = spawn.type;
+				snap.type = mtype;
 				snap.current_hp = monster->hitPoints;
 				snap.is_boss = false;
 				snap.is_alive = true;
@@ -468,10 +510,17 @@ void InvasionManager::Update()
 
 	// 4. Elastic Minion Reinforcements (Target: 14, Max: 15)
 	// Only dispatch if Leoric is alive, pending count > 0, and active minions are below Target (14)
-	if (state_.leoric_alive && state_.pending_reinforcements > 0 && activeMinions < TargetInvasionMinions) {
+	if (state_.current_tier == InvasionTier::GrandSiege && state_.leoric_alive && state_.pending_reinforcements > 0 && activeMinions < TargetInvasionMinions) {
 		if (SpawnOneReinforcement()) {
 			state_.pending_reinforcements--;
 		}
+	}
+
+	// 5. Progressive Tier victory condition: all active minions defeated!
+	if (state_.current_tier != InvasionTier::GrandSiege && activeMinions == 0 && state_.monster_count > 0) {
+		state_.active = false;
+		state_.completed = true;
+		state_.highest_tier_completed = std::max(state_.highest_tier_completed, static_cast<uint8_t>(state_.current_tier));
 	}
 }
 

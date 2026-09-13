@@ -15,6 +15,23 @@ namespace devilution {
 namespace nightmare {
 
 /**
+ * @brief Returns the normalized NIGHTMARE intensity factor (0.00f to 1.00f) for a given level.
+ * Central driver for lighting, monster density, group sizes, and survival dynamics.
+ */
+float GetNightmareIntensity(uint8_t level);
+
+/**
+ * @brief Returns the monster placement density divisor for na / divisor.
+ * Vanilla baseline was static 30. NIGHTMARE scales dynamically from 28 to 21.
+ */
+int GetNightmareMonsterDensityDivisor(uint8_t level);
+
+/**
+ * @brief Returns additional monsters to append to each spawned pack (0, +1, +2).
+ */
+int GetNightmareExtraPackSize(uint8_t level);
+
+/**
  * @brief Returns the base player light radius (in tiles) for the given dungeon level.
  * Vanilla baseline was static 12 for all levels.
  */

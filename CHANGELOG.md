@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### 🩸 NIGHTMARE Intensity System & Rediseño de Supervivencia (Fuentes Tácticas, Ciclos de Botín e Invasión Escalonada) ([`Source/nightmare/world/level_atmosphere.hpp`](file:///c:/Projects/DevilutionX/Source/nightmare/world/level_atmosphere.hpp), [`Source/nightmare/world/level_atmosphere.cpp`](file:///c:/Projects/DevilutionX/Source/nightmare/world/level_atmosphere.cpp), [`Source/monster.cpp`](file:///c:/Projects/DevilutionX/Source/monster.cpp), [`Source/levels/themes.cpp`](file:///c:/Projects/DevilutionX/Source/levels/themes.cpp), [`Source/nightmare/invasion/invasion_manager.hpp`](file:///c:/Projects/DevilutionX/Source/nightmare/invasion/invasion_manager.hpp), [`Source/nightmare/invasion/invasion_manager.cpp`](file:///c:/Projects/DevilutionX/Source/nightmare/invasion/invasion_manager.cpp))
+- **Controlador Central `NightmareIntensity(level)` ($0.00$ a $1.00$)**:
+  - Implementada curva matemática continua que modula centralizadamente radio de luz, densidad de hordas, multiplicadores de grupos de monstruos y tensión ambiental sin condicionales dispersos.
+  - Escalado dinámico del divisor de densidad de monstruos de $28$ a $21$ ($+15\%$ a $+40\%$ enemigos) con adición de $+1$ o $+2$ esbirros a cada pack en niveles de intensidad media y alta ($\ge 0.50$), respetando el límite seguro `MaxMonsters - 10`.
+- **Ciclos Ondulantes de Botín ("Zonas de Supervivencia")**:
+  - `GetNightmareChestCounts`: Alternancia planificada entre niveles de abundancia/recompensa (Niveles 1, 4, 8, 15, 16) y pisos de hambruna crítica de suministros (Niveles 3, 5, 7, 11, 14), forzando una gestión estricta de pociones y evitando la inflación de poder.
+- **Fuentes de Sangre con Riesgo Táctico Real**:
+  - `Theme_BloodFountain`: Eliminada la curación pasiva gratuita; las fuentes de sangre ahora generan automáticamente un anillo perimetral cerrado de centinelas de élite, convirtiendo la curación en un dilema táctico de alto riesgo.
+- **Invasión Progresiva de Tristram (`InvasionTier`)**:
+  - El asedio al pueblo ahora escala orgánicamente con la profundidad explorada por el jugador:
+    - *MinorScout (Catedral):* 4 exploradores esqueletos.
+    - *MediumRaid (Catacumbas):* 8 invasores cabra y bestias ácidas.
+    - *MajorAssault (Cuevas / Infierno):* 12 demonios alados, súcubos y balrogs.
+    - *GrandSiege (Endgame / Na-Krul):* Asedio total de 14+ esbirros comandados por el Rey Leoric y Heraldos Únicos.
+- **Paisaje Sonoro y Silencio Atmosférico**:
+  - Desactivación de música (`NUM_MUSIC`) en el Nivel 11 (Cuevas) para generar silencio diegético absoluto donde solo resuenan pasos, puertas y gruñidos de monstruos en la oscuridad.
+- **Estabilidad Absoluta**:
+  - Tickrate de 20 TPS, generadores DRLG, física y combate base intactos al 100%.
+
+
 ### 🔮 NIGHTMARE Neural HD v2 & Silhouette Lock 2.0 (Multi-Scale 2× / 3× / 4× & 4K Presentation) ([`tools/neural/model.py`](file:///c:/Projects/DevilutionX/tools/neural/model.py), [`tools/neural/export_onnx.py`](file:///c:/Projects/DevilutionX/tools/neural/export_onnx.py), [`tools/neural/teacher_renderer.py`](file:///c:/Projects/DevilutionX/tools/neural/teacher_renderer.py), [`Packaging/neural_harness/shaders/tristram_enhancer.wgsl`](file:///c:/Projects/DevilutionX/Packaging/neural_harness/shaders/tristram_enhancer.wgsl), [`Packaging/neural_harness/neural_infer.js`](file:///c:/Projects/DevilutionX/Packaging/neural_harness/neural_infer.js), [`Packaging/neural_harness/harness.js`](file:///c:/Projects/DevilutionX/Packaging/neural_harness/harness.js), [`Packaging/neural_harness/index.html`](file:///c:/Projects/DevilutionX/Packaging/neural_harness/index.html), [`Source/nightmare/neural/gbuffer.hpp`](file:///c:/Projects/DevilutionX/Source/nightmare/neural/gbuffer.hpp), [`Source/nightmare/neural/gbuffer.cpp`](file:///c:/Projects/DevilutionX/Source/nightmare/neural/gbuffer.cpp))
 - **TinyNeuralRenderer v2 & Arquitectura Multiescala**:
   - Ampliado el tronco de características a 8 bloques residuales con activación SiLU y atención de canales *Squeeze-and-Excitation* (SE).

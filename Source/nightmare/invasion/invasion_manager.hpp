@@ -19,6 +19,14 @@ constexpr size_t TargetInvasionMinions = 14;
 constexpr size_t MaxInvasionMinions = 15;
 constexpr size_t MaxInvasionMonsters = 100;
 
+enum class InvasionTier : uint8_t {
+	None = 0,
+	MinorScout = 1,   // Cathedral explored: 4 scouts
+	MediumRaid = 2,   // Catacombs explored: 8 raiders
+	MajorAssault = 3, // Caves/Hell explored: 12 assault demons
+	GrandSiege = 4,   // Endgame: full siege with Leoric and Heralds
+};
+
 struct InvasionMonsterSnapshot {
 	int32_t current_hp;
 	uint8_t x;
@@ -31,6 +39,8 @@ struct InvasionMonsterSnapshot {
 struct TristramInvasionState {
 	bool active;
 	bool completed;
+	InvasionTier current_tier;
+	uint8_t highest_tier_completed;
 	uint8_t boss_phase; // 0: not spawned, 1: dramatic pause, 2: spawned/fighting, 3: dead
 	uint32_t dramatic_pause_start_tick;
 	_monster_id boss_selected;

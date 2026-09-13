@@ -37,6 +37,7 @@
 #include "automap.h"
 #include "nightmare/invasion/invasion_manager.hpp"
 #include "nightmare/npcs/tremain.hpp"
+#include "nightmare/world/level_atmosphere.hpp"
 #include "control/control.hpp"
 #include "crawl.hpp"
 #include "cursor.h"
@@ -3668,7 +3669,8 @@ tl::expected<void, std::string> InitMonsters()
 					na++;
 			}
 		}
-		size_t numplacemonsters = na / 30;
+		const int densityDivisor = nightmare::GetNightmareMonsterDensityDivisor(currlevel);
+		size_t numplacemonsters = na / densityDivisor;
 		if (gbIsMultiplayer)
 			numplacemonsters += numplacemonsters / 2;
 		if (ActiveMonsterCount + numplacemonsters > MaxMonsters - 10)
@@ -3682,6 +3684,7 @@ tl::expected<void, std::string> InitMonsters()
 				numscattypes++;
 			}
 		}
+		const int extraPack = nightmare::GetNightmareExtraPackSize(currlevel);
 		if (numscattypes > 0) {
 			while (ActiveMonsterCount < totalmonsters) {
 				const size_t typeIndex = scattertypes[GenerateRnd(numscattypes)];
@@ -3691,6 +3694,7 @@ tl::expected<void, std::string> InitMonsters()
 					na = GenerateRnd(2) + 2;
 				else
 					na = GenerateRnd(3) + 3;
+				na += extraPack;
 				PlaceGroup(typeIndex, na);
 			}
 		}

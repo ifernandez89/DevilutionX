@@ -1,0 +1,642 @@
+/**
+ * SNES Web — Super Nintendo 16-Bit WebAssembly Stylesheet
+ * Integrates the proven 800p / 980p / 1180p responsive screen scaling
+ * with an authentic Super Nintendo / Super Famicom 16-bit aesthetic.
+ */
+
+:root {
+    --snes-purple: #7c3aed;
+    --snes-purple-light: #a78bfa;
+    --snes-purple-dark: #5b21b6;
+    --snes-purple-deep: #3b0764;
+    --snes-purple-glow: rgba(124, 58, 237, 0.4);
+    --snes-lavender: #c4b5fd;
+    --sfc-red: #ef4444;
+    --sfc-yellow: #eab308;
+    --sfc-blue: #3b82f6;
+    --sfc-green: #22c55e;
+    --bg-main: #0a0b0e;
+    --bg-surface: #12141a;
+    --bg-surface-elevated: #1a1d26;
+    --border-color: #2a2e3d;
+    --border-hover: #7c3aed;
+    --text-primary: #f1f5f9;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+/* Header */
+header {
+    background: linear-gradient(180deg, rgba(24, 18, 36, 0.95) 0%, rgba(10, 11, 14, 0.95) 100%);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-color);
+    padding: 12px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.brand-badge {
+    background: linear-gradient(135deg, var(--snes-purple) 0%, var(--snes-purple-deep) 100%);
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 900;
+    padding: 4px 10px;
+    border-radius: 4px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    box-shadow: 0 0 12px var(--snes-purple-glow);
+    border: 1px solid rgba(167, 139, 250, 0.3);
+}
+
+.brand-title {
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #ffffff;
+}
+
+.brand-title span {
+    color: var(--snes-lavender);
+    font-weight: 900;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Common Buttons */
+.btn {
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 700;
+    border-radius: var(--radius-sm);
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    color: var(--text-primary);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--snes-purple) 0%, var(--snes-purple-dark) 100%);
+    color: #ffffff;
+    border: 1px solid rgba(167, 139, 250, 0.4);
+    box-shadow: 0 2px 8px var(--snes-purple-glow);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(124, 58, 237, 0.6);
+}
+
+.btn-secondary {
+    background-color: var(--bg-surface-elevated);
+    border-color: var(--border-color);
+    color: var(--text-secondary);
+}
+
+.btn-secondary:hover {
+    background-color: #242938;
+    color: var(--text-primary);
+    border-color: var(--border-hover);
+}
+
+/* Main Layout */
+.main-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Super Famicom Dots */
+.sfc-dots {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+    width: 32px;
+    height: 32px;
+    align-items: center;
+    justify-items: center;
+    background: #1e2029;
+    padding: 4px;
+    border-radius: 8px;
+    border: 1px solid #33384a;
+}
+
+.sfc-dots .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: 0 0 6px currentColor;
+}
+
+.dot-red { background-color: var(--sfc-red); color: var(--sfc-red); }
+.dot-yellow { background-color: var(--sfc-yellow); color: var(--sfc-yellow); }
+.dot-blue { background-color: var(--sfc-blue); color: var(--sfc-blue); }
+.dot-green { background-color: var(--sfc-green); color: var(--sfc-green); }
+
+/* Emulator Section (Active Game Viewport) */
+#emulator-section {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 24px;
+}
+
+.screen-card {
+    background: #000000;
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(124, 58, 237, 0.15);
+    transition: width 0.3s ease, height 0.3s ease, max-width 0.3s ease;
+    margin: 0 auto;
+}
+
+/* Screen Size Presets (100% faithful to 4:3 SNES aspect ratio) */
+.screen-card.size-normal {
+    width: 800px;
+    height: 600px;
+    max-width: 95vw;
+}
+
+.screen-card.size-large {
+    width: 980px;
+    height: 735px;
+    max-width: 95vw;
+}
+
+.screen-card.size-cinema {
+    width: 1180px;
+    height: 885px;
+    max-width: 98vw;
+}
+
+#canvas-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #000000;
+}
+
+#canvas-container canvas {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    display: block;
+    outline: none;
+}
+
+/* CRT Scanlines Filter */
+.scanlines-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    background: linear-gradient(rgba(18, 16, 26, 0) 50%, rgba(0, 0, 0, 0.35) 50%),
+                linear-gradient(90deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.04));
+    background-size: 100% 4px, 6px 100%;
+    z-index: 10;
+}
+
+.scanlines-overlay.active {
+    opacity: 1;
+}
+
+/* Toolbar below the screen */
+.screen-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-top: none;
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
+    padding: 10px 16px;
+    margin: 0 auto;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+    flex-wrap: wrap;
+    gap: 8px;
+    transition: width 0.3s ease, max-width 0.3s ease;
+}
+
+.screen-toolbar.size-normal { width: 800px; max-width: 95vw; }
+.screen-toolbar.size-large  { width: 980px; max-width: 95vw; }
+.screen-toolbar.size-cinema { width: 1180px; max-width: 98vw; }
+
+.toolbar-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-tool {
+    background: var(--bg-surface-elevated);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.btn-tool:hover {
+    background: #242938;
+    color: #ffffff;
+    border-color: var(--snes-purple);
+}
+
+.btn-tool.btn-accent {
+    background: rgba(239, 68, 68, 0.15);
+    color: #f87171;
+    border-color: rgba(239, 68, 68, 0.4);
+}
+
+.btn-tool.btn-accent:hover {
+    background: rgba(239, 68, 68, 0.3);
+    color: #ffffff;
+    border-color: #ef4444;
+}
+
+/* Hub Grid (Cards View) */
+.hub-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 100%;
+}
+
+.cartridge-card {
+    background: linear-gradient(135deg, rgba(26, 22, 38, 0.8) 0%, rgba(18, 20, 26, 0.9) 100%);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.cartridge-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--sfc-red), var(--sfc-yellow), var(--sfc-blue), var(--sfc-green), var(--snes-purple));
+}
+
+.cartridge-badge {
+    color: var(--snes-lavender);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    margin-bottom: 12px;
+}
+
+.cartridge-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.cartridge-title {
+    font-size: 24px;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 4px;
+}
+
+.cartridge-subtitle {
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.cartridge-desc {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #cbd5e1;
+    margin-bottom: 20px;
+}
+
+.cartridge-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 24px;
+}
+
+.meta-tag {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-secondary);
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+/* Drag & Drop Zone */
+.dropzone {
+    border: 2px dashed var(--border-color);
+    background: rgba(18, 20, 26, 0.6);
+    border-radius: var(--radius-lg);
+    padding: 36px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.dropzone:hover, .dropzone.dragover {
+    border-color: var(--snes-purple);
+    background: rgba(124, 58, 237, 0.08);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(124, 58, 237, 0.2);
+}
+
+.dropzone-icon {
+    font-size: 44px;
+    margin-bottom: 12px;
+    filter: drop-shadow(0 2px 8px var(--snes-purple-glow));
+}
+
+.dropzone-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 6px;
+}
+
+.dropzone-subtitle {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.dropzone-subtitle strong {
+    color: var(--snes-lavender);
+}
+
+.dropzone-subtitle code {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: #e2e8f0;
+}
+
+/* Features & Controls Card */
+.features-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+}
+
+.features-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.controls-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.control-item {
+    background: var(--bg-surface-elevated);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.control-label {
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.control-key {
+    font-size: 12px;
+    font-weight: 700;
+    color: #ffffff;
+    background: #242938;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 1px solid #3b4256;
+}
+
+.gamepad-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    background: rgba(255, 255, 255, 0.03);
+    padding: 10px 14px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
+}
+
+.gamepad-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #64748b;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+
+.gamepad-dot.connected {
+    background-color: var(--sfc-green);
+    box-shadow: 0 0 8px var(--sfc-green);
+}
+
+.features-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 12px;
+}
+
+.feature-item {
+    display: flex;
+    gap: 10px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--text-secondary);
+    background: var(--bg-surface-elevated);
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
+}
+
+.feature-check {
+    color: var(--sfc-green);
+    font-weight: 900;
+}
+
+.feature-item strong {
+    color: #ffffff;
+    display: block;
+    margin-bottom: 2px;
+}
+
+/* Loading Overlay */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(10, 11, 14, 0.9);
+    backdrop-filter: blur(8px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid rgba(124, 58, 237, 0.2);
+    border-top-color: var(--snes-purple);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-bottom: 20px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.loading-text {
+    font-size: 18px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 6px;
+}
+
+.loading-subtext {
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+/* Toast Notifications */
+.toast-notification {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--bg-surface-elevated);
+    border: 1px solid var(--snes-purple);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6), 0 0 16px var(--snes-purple-glow);
+    padding: 12px 18px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 1100;
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.toast-icon { font-size: 18px; }
+.toast-message { font-size: 13px; font-weight: 600; color: #ffffff; }
+
+/* Responsive adjustments */
+@media (max-width: 860px) {
+    header {
+        flex-direction: column;
+        gap: 12px;
+        align-items: flex-start;
+    }
+    .header-actions {
+        width: 100%;
+        overflow-x: auto;
+        padding-bottom: 4px;
+    }
+    .screen-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .toolbar-group {
+        justify-content: center;
+    }
+}

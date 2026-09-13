@@ -131,8 +131,11 @@ jobs:
           if [ -d Packaging/emscripten/gens ]; then
             cp -rv Packaging/emscripten/gens dist/gens
           fi
-          if [ -d Packaging/emscripten/nes ]; then
+          if [ -d "Packaging/emscripten/nes" ]; then
             cp -rv Packaging/emscripten/nes dist/nes
+          fi
+          if [ -d "Packaging/emscripten/snes" ]; then
+            cp -rv Packaging/emscripten/snes dist/snes
           fi
           if [ -d Packaging/emscripten/doom ]; then
             cp -rv Packaging/emscripten/doom dist/doom

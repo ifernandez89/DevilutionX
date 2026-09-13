@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### 🎮 Super Nintendo (SNES / 16-Bit) WebAssembly & Universal Retro Hub Integration ([`Packaging/emscripten/snes/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/snes/index.html), [`Packaging/emscripten/snes/style.css`](file:///c:/Projects/DevilutionX/Packaging/emscripten/snes/style.css), [`Packaging/emscripten/snes/app.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/snes/app.js), [`Packaging/emscripten/assets/retro-nav/retro-nav.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/assets/retro-nav/retro-nav.js))
+- **Nuevo Emulador Super Nintendo 16-Bit**:
+  - Implementado módulo de ejecución WebAssembly para Super Nintendo Entertainment System (SNES) y Super Famicom a 60 FPS continuos con motor `Snes9x` (y respaldo local de `Snes9x 2010`).
+  - **Soporte de Chips y Gráficos Avanzados**: Procesamiento completo de Modo 7 (rotación y escala de fondos), transparencias y chips coprocesadores en cartucho (SuperFX, DSP, SA-1, CX4).
+  - **Sonido Sony SPC700 Estéreo**: Emulación completa de 8 canales de sonido y reverberación DSP a 32 kHz.
+  - **Persistencia Offline en IndexedDB (`RetroHub_Saves_v1`)**: Almacenamiento local persistente para partidas con pila (SRAM) y estados de guardado rápido (`F5`/`F7`). Autoguardado periódico y sincronización al cerrar la ventana (`beforeunload`/`pagehide`), permitiendo jugar 100% sin conexión.
+  - **Mapeo Completo de 8 Botones**: Cruceta con Flechas, Botones B (`X`/`S`), A (`C`/`D`), Y (`Z`/`A`), X (`V`/`W`), Gatillos L (`Q`) y R (`E`), Select (`Shift`/`Tab`), Start (`Enter`) y soporte automático para mandos USB/Bluetooth.
+  - **Soporte de Cabeceras Copistas (512b)**: Detección inteligente de ROMs de copiado (Doctor SF, Super WildCard) y compatibilidad con toda la colección normalizada de 679 juegos en `D:\Hours of Fun\Roms\Super NS`.
+  - **Integración Global**: Registrado en el menú desplegable global `RETRO HUB` y en el Administrador de Archivos de DevilutionX.
+
 ### 🔴 Nintendo NES & Famicom (8-Bit) WebAssembly & Universal Retro Hub Integration ([`Packaging/emscripten/nes/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/nes/index.html), [`Packaging/emscripten/nes/style.css`](file:///c:/Projects/DevilutionX/Packaging/emscripten/nes/style.css), [`Packaging/emscripten/nes/app.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/nes/app.js), [`Packaging/emscripten/assets/retro-nav/retro-nav.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/assets/retro-nav/retro-nav.js))
 - **Nuevo Emulador NES / Famicom 8-Bit**:
   - Implementado módulo independiente de ejecución WebAssembly para Nintendo NES y Family Computer a 60 FPS continuos con ciclo exacto (`Nestopia` con respaldo local de `FCEUmm`).

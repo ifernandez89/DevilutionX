@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SNES Web — Super Nintendo 16-Bit (WebAssembly)</title>
+    <meta name="description" content="Emulador Super Nintendo / Super Famicom de 16 bits en WebAssembly directo en el navegador con soporte de ROMs .SFC y .SMC, motor Snes9x / Snes9x2010, sonido SPC700 estéreo, Modo 7, guardado offline en IndexedDB y mandos USB/Bluetooth.">
+    <link rel="stylesheet" href="../assets/retro-nav/retro-nav.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Top Navigation -->
+    <header>
+        <div class="brand">
+            <div class="brand-badge">SNES 16-BIT</div>
+            <div class="brand-title">
+                SUPER NINTENDO <span>WASM</span>
+            </div>
+        </div>
+        <div class="header-actions">
+            <!-- Retro Hub Global Dropdown Slot -->
+            <div id="retro-nav-slot"></div>
+
+            <a href="../nes/index.html" class="btn btn-secondary" title="Emulador Nintendo NES / Famicom (8-Bit)">
+                🎮 NES (8-Bit)
+            </a>
+            <a href="../gens/index.html" class="btn btn-secondary" title="Emulador Sega Genesis / Mega Drive (16-Bit)">
+                ⚡ Genesis (16-Bit)
+            </a>
+            <a href="../doom/index.html" class="btn btn-secondary" title="Jugar a DOOM & Freedoom">
+                🔥 DOOM
+            </a>
+            <a href="../index.html" class="btn btn-secondary" title="Volver al juego DevilutionX / Diablo">
+                ⚔️ Diablo
+            </a>
+            <button class="btn btn-primary" id="topUploadBtn">
+                📁 Cargar ROM (.SFC / .SMC)
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-wrapper">
+
+        <!-- Active Emulator Display (Hidden initially, visible when playing) -->
+        <section id="emulator-section">
+            <div class="screen-card size-large">
+                <div id="canvas-container">
+                    <!-- Canvas will be created/attached here -->
+                    <div id="scanlines" class="scanlines-overlay"></div>
+                </div>
+            </div>
+
+            <!-- In-Game Controls Toolbar -->
+            <div class="screen-toolbar">
+                <div class="toolbar-group">
+                    <button class="btn-tool" id="pauseResumeBtn" title="Pausar o Continuar (P)">
+                        ⏸️ Pausar
+                    </button>
+                    <button class="btn-tool" id="resetBtn" title="Reiniciar Emulación (R)">
+                        🔄 Reiniciar
+                    </button>
+                    <button class="btn-tool" id="crtToggleBtn" title="Alternar Filtro CRT Scanlines">
+                        📺 Scanlines: OFF
+                    </button>
+                </div>
+
+                <div class="toolbar-group">
+                    <button class="btn-tool" id="saveStateBtn" title="Guardar Estado Rápido (F5) - Persiste Offline en IndexedDB">
+                        💾 Guardar (F5)
+                    </button>
+                    <button class="btn-tool" id="loadStateBtn" title="Cargar Estado Rápido (F7) - Persiste Offline en IndexedDB">
+                        📂 Cargar (F7)
+                    </button>
+                    <button class="btn-tool" id="screenshotBtn" title="Captura de Pantalla">
+                        📸 Captura
+                    </button>
+                </div>
+
+                <div class="toolbar-group">
+                    <button class="btn-tool" id="screenSizeBtn" title="Alternar tamaño de pantalla (Normal 800px / Grande 980px / Cinema 1180px)">
+                        🖥️ Tamaño: Grande
+                    </button>
+                    <button class="btn-tool" id="fullscreenBtn" title="Pantalla Completa">
+                        ⛶ Fullscreen
+                    </button>
+                    <button class="btn-tool btn-accent" id="exitGameBtn" title="Cerrar juego actual">
+                        ⏹ Salir
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ROMs Hub & Cartridges (Visible when no game is active) -->
+        <section id="hub-section" class="hub-grid">
+
+            <!-- SNES 16-Bit Info & Action Card -->
+            <div class="cartridge-card">
+                <div>
+                    <div class="cartridge-badge">16-BIT WASM • SNES9X CYCLE-ACCURATE • MODE 7</div>
+                    <div class="cartridge-header">
+                        <div class="sfc-dots">
+                            <span class="dot dot-red"></span>
+                            <span class="dot dot-yellow"></span>
+                            <span class="dot dot-blue"></span>
+                            <span class="dot dot-green"></span>
+                        </div>
+                        <div>
+                            <h2 class="cartridge-title">Super Nintendo Entertainment System</h2>
+                            <div class="cartridge-subtitle">Motor Snes9x WASM • 60 FPS • Audio SPC700 Estéreo</div>
+                        </div>
+                    </div>
+                    <p class="cartridge-desc">
+                        Emulador universal de cartuchos SNES y Super Famicom de 16 bits en WebAssembly. Reproducción nativa a 60 FPS con precisión de ciclo, procesamiento Modo 7, sonido Sony SPC700 de 8 canales con reverberación DSP y guardado offline permanente en IndexedDB. Tus partidas guardadas en batería (SRAM) y estados rápidos se conservan automáticamente incluso al cerrar el navegador o jugar sin internet.
+                    </p>
+                    <div class="cartridge-meta">
+                        <span class="meta-tag">Formatos: .SFC, .SMC, .FIG, .SWC, .ZIP</span>
+                        <span class="meta-tag">Guardado: IndexedDB Offline (SRAM + States)</span>
+                        <span class="meta-tag">Audio: Sony SPC700 DSP Estéreo</span>
+                        <span class="meta-tag">Gráficos: Modo 7, SuperFX, Transparencias</span>
+                    </div>
+                </div>
+                <div class="cartridge-actions" style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <button class="btn btn-primary" id="hubBrowseBtn" style="font-size: 14px; padding: 12px 20px;">
+                        📁 Explorar ROM en PC...
+                    </button>
+                    <a href="../nes/index.html" class="btn btn-secondary" style="font-size: 14px; padding: 12px 20px; text-decoration: none;">
+                        🎮 Ir a NES 8-Bit
+                    </a>
+                    <a href="../gens/index.html" class="btn btn-secondary" style="font-size: 14px; padding: 12px 20px; text-decoration: none;">
+                        ⚡ Ir a Sega Genesis
+                    </a>
+                </div>
+            </div>
+
+            <!-- Drag & Drop Zone -->
+            <div class="dropzone" id="dropzone">
+                <div class="dropzone-icon">📥</div>
+                <div class="dropzone-title">Arrastra tu ROM de Super Nintendo aquí</div>
+                <div class="dropzone-subtitle">
+                    Compatible con archivos <strong>.sfc</strong>, <strong>.smc</strong>, <strong>.fig</strong>, <strong>.swc</strong> y <strong>.zip</strong><br>
+                    Compatible con toda tu colección normalizada en <code>D:\Hours of Fun\Roms\Super NS</code> (679 títulos)
+                </div>
+                <input type="file" id="fileInput" accept=".sfc,.smc,.fig,.swc,.zip,*" style="display: none;">
+            </div>
+
+            <!-- Controls & Features Card -->
+            <div class="features-card">
+                <h3 class="features-title">🎮 Controles y Asignación de Teclas (Super Nintendo)</h3>
+                <div class="controls-grid">
+                    <div class="control-item">
+                        <span class="control-label">Cruceta Direccional (D-Pad)</span>
+                        <span class="control-key">Flechas (↑ ↓ ← →)</span>
+                    </div>
+                    <div class="control-item">
+                        <span class="control-label">Botón B (Inferior)</span>
+                        <span class="control-key">X / S</span>
+                    </div>
+                    <div class="control-item">
+                        <span class="control-label">Botón A (Derecha)</span>
+                        <span class="control-key">C / D</span>
+                    </div>
+                    <div class="control-item">
+                        <span class="control-label">Botón Y (Izquierda)</span>
+                        <span class="control-key">Z / A</span>
+                    </div>
+                    <div class="control-item">
+                        <span class="control-label">Botón X (Superior)</span>
+                        <span class="control-key">V / W</span>
+                    </div>
+                    <div class="control-item">
+                        <span class="control-label">Gatillos L y R</span>
+                        <span class="control-key">Q (L) / E (R)</span>
+                    </div>
+                    <div class="control-item">
+                        <span class="control-label">Select / Moneda</span>
+                        <span class="control-key">Shift / Tab</span>
+                    </div>
+                    <div class="control-item">
+                        <span class="control-label">Start / Pausa</span>
+                        <span class="control-key">Enter</span>
+                    </div>
+                </div>
+                <div class="gamepad-status" id="gamepadStatus">
+                    <span class="gamepad-dot" id="gamepadDot"></span>
+                    <span id="gamepadText">Mando USB/Bluetooth: Esperando conexión (conecta y presiona cualquier botón)</span>
+                </div>
+            </div>
+
+            <!-- Technical Architecture Card -->
+            <div class="features-card">
+                <h3 class="features-title">⚙️ Especificaciones Técnicas del Núcleo</h3>
+                <div class="features-list">
+                    <div class="feature-item">
+                        <span class="feature-check">✔</span>
+                        <div>
+                            <strong>Motor Snes9x 16-Bit WebAssembly:</strong>
+                            Compilado a código nativo de navegador sin intermediarios. Tasa de refresco sincronizada a 60 FPS con V-Sync.
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-check">✔</span>
+                        <div>
+                            <strong>Modo 7 & Chips Especiales:</strong>
+                            Soporte completo para efectos tridimensionales y escalado de Modo 7 (F-Zero, Super Mario Kart, Pilotwings) y coprocesadores en cartucho.
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-check">✔</span>
+                        <div>
+                            <strong>Persistencia Total Offline (IndexedDB):</strong>
+                            Almacenamiento local para partidas con pila (SRAM) y estados de guardado rápido. No requiere internet para conservar tus avances.
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-check">✔</span>
+                        <div>
+                            <strong>Trimmer Automático de Copiador:</strong>
+                            Detecta y procesa cabeceras de copiado de 512 bytes (Doctor SF, Super WildCard) de forma transparente.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Overlay Loading Spinner -->
+    <div id="loading-overlay" class="loading-overlay" style="display: none;">
+        <div class="spinner"></div>
+        <div class="loading-text" id="loadingText">Iniciando Super Nintendo...</div>
+        <div class="loading-subtext" id="loadingSubtext">Cargando motor Snes9x WebAssembly</div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="toast-notification" style="display: none;">
+        <span class="toast-icon" id="toastIcon">💾</span>
+        <span class="toast-message" id="toastMessage">Partida guardada</span>
+    </div>
+
+    <!-- Vendor Scripts: Nostalgist & RetroNav -->
+    <script src="vendor/nostalgist.umd.js"></script>
+    <script src="../assets/retro-nav/retro-nav.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -130,6 +130,21 @@
             ]
         },
         {
+            category: '🎮 NINTENDO 16-BIT (Motor Snes9x WASM)',
+            items: [
+                {
+                    id: 'snes',
+                    title: 'Super Nintendo (SNES)',
+                    subtitle: 'Lector Universal .SFC / .SMC • Modo 7 • 60 FPS',
+                    badge: '16-BIT WASM',
+                    badgeClass: 'badge-wasm',
+                    icon: '🎮',
+                    url: `${BASE_PATH}snes/index.html`,
+                    activeMatcher: (p) => p.includes('/snes/')
+                }
+            ]
+        },
+        {
             category: '⚔️ ACTION RPG (Motor DevilutionX WASM)',
             items: [
                 {
@@ -140,7 +155,7 @@
                     badgeClass: 'badge-wasm',
                     icon: '⚔️',
                     url: `${BASE_PATH}index.html`,
-                    activeMatcher: (p) => !p.includes('/doom/') && !p.includes('/wolf3d/') && !p.includes('/gens/') && !p.includes('/minixp/') && !p.includes('/quake/') && !p.includes('/cavestory/') && !p.includes('/nes/')
+                    activeMatcher: (p) => !p.includes('/doom/') && !p.includes('/wolf3d/') && !p.includes('/gens/') && !p.includes('/minixp/') && !p.includes('/quake/') && !p.includes('/cavestory/') && !p.includes('/nes/') && !p.includes('/snes/')
                 }
             ]
         },

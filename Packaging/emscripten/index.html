@@ -818,8 +818,6 @@
 	<div class="top-toolbar">
 		<div id="retro-nav-slot"></div>
 		<button class="ui-btn" id="doomBtn" title="Lanzar DOOM & Freedoom (WebAssembly)" onclick="if(document.exitPointerLock) document.exitPointerLock(); window.open('doom/index.html', '_blank', 'noopener,noreferrer')">💀 DOOM</button>
-		<button class="ui-btn" id="quakeBtn" title="Lanzar Quake 1 3D (WebAssembly)" onclick="if(document.exitPointerLock) document.exitPointerLock(); window.open('quake/index.html', '_blank', 'noopener,noreferrer')">🌋 Quake 1</button>
-		<button class="ui-btn" id="wolfBtn" title="Lanzar Wolfenstein 3D (WebAssembly)" onclick="if(document.exitPointerLock) document.exitPointerLock(); window.open('wolf3d/index.html', '_blank', 'noopener,noreferrer')">🐺 Wolfenstein 3D</button>
 		<button class="ui-btn" id="caveBtn" title="Lanzar Cave Story (WebAssembly)" onclick="if(document.exitPointerLock) document.exitPointerLock(); window.open('cavestory/index.html', '_blank', 'noopener,noreferrer')">🐰 Cave Story</button>
 		<button class="ui-btn" id="gensBtn" title="Lanzar Gens Sega Genesis (WebAssembly)" onclick="if(document.exitPointerLock) document.exitPointerLock(); window.open('gens/index.html', '_blank', 'noopener,noreferrer')">🎮 Gens</button>
 		<button class="ui-btn" id="tinyCoreBtn" title="Lanzar Tiny Core Linux (WebAssembly)" onclick="if(document.exitPointerLock) document.exitPointerLock(); window.open('minixp/index.html', '_blank', 'noopener,noreferrer')">🐧 Tiny Core</button>
@@ -930,14 +928,14 @@
 					<span style="background: #991b1b; color: #ffffff; font-size: 11px; padding: 2px 8px; border-radius: 10px; font-weight: bold;">Genesis / MD WASM</span>
 				</div>
 				<div class="info-text" style="color: #cbd5e1;">
-					Emulador Sega Genesis / Mega Drive de 16 bits directo en WebAssembly. Soporta ROMs (<strong>.smd</strong>, <strong>.bin</strong>, <strong>.gen</strong>, <strong>.md</strong>, <strong>.zip</strong>) con síntesis FM YM2612 y mandos USB. Incluye <strong>Road Rash 3</strong> listo para jugar.
+					Emuladores retro directos en WebAssembly. Soporte de ROMs para <strong>Sega Genesis / Mega Drive (16-bit)</strong> y <strong>Nintendo NES / Famicom (8-bit)</strong> con guardado automático offline, sonido fiel y mandos USB.
 				</div>
 				<div style="margin-top: 10px; display: flex; gap: 10px; flex-wrap: wrap;">
 					<a href="gens/index.html" target="_blank" rel="noopener noreferrer" class="ui-btn" id="launchGensModalBtn" style="background: linear-gradient(180deg, #dc2626 0%, #991b1b 100%); border-color: #ef4444; color: #ffffff; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; font-size: 13px; padding: 8px 16px;">
-						🕹️ Abrir Gens Emulator & ROMs
+						🎮 Lector Sega Genesis (16-Bit)
 					</a>
-					<a href="gens/index.html?rom=roadrash3" target="_blank" rel="noopener noreferrer" class="ui-btn" id="launchRoadRashModalBtn" style="background: linear-gradient(180deg, #334155 0%, #1e293b 100%); border-color: #64748b; color: #ffffff; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; font-size: 13px; padding: 8px 16px;">
-						🏍️ Jugar Road Rash 3
+					<a href="nes/index.html" target="_blank" rel="noopener noreferrer" class="ui-btn" id="launchNesModalBtn" style="background: linear-gradient(180deg, #b91c1c 0%, #7f1d1d 100%); border-color: #f87171; color: #ffffff; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; font-size: 13px; padding: 8px 16px;">
+						🔴 Lector Nintendo NES (8-Bit)
 					</a>
 				</div>
 			</div>

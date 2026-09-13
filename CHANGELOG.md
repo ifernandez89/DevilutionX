@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### 🔴 Nintendo NES & Famicom (8-Bit) WebAssembly & Universal Retro Hub Integration ([`Packaging/emscripten/nes/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/nes/index.html), [`Packaging/emscripten/nes/style.css`](file:///c:/Projects/DevilutionX/Packaging/emscripten/nes/style.css), [`Packaging/emscripten/nes/app.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/nes/app.js), [`Packaging/emscripten/assets/retro-nav/retro-nav.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/assets/retro-nav/retro-nav.js))
+- **Nuevo Emulador NES / Famicom 8-Bit**:
+  - Implementado módulo independiente de ejecución WebAssembly para Nintendo NES y Family Computer a 60 FPS continuos con ciclo exacto (`Nestopia` con respaldo local de `FCEUmm`).
+  - **Soporte Universal de ROMs**: Ingesta instantánea mediante Drag & Drop y explorador de archivos para `.nes`, `.unf`, `.fds` y `.zip`.
+  - **Relación de Aspecto y Tamaños de Pantalla Calibrados**: Replicado exactamente el dimensionamiento y formato visual de Sega Genesis: Normal (800p), Grande (980p, por defecto) y Cinema (1180p), con aspect ratio nativo 4:3 y pantalla completa (`Fullscreen`).
+  - **Persistencia Offline en IndexedDB (`RetroHub_Saves_v1`)**: Los estados de guardado manuales (`F5`), la última partida jugada y los autoguardados periódicos/al salir se sincronizan en IndexedDB local. Permite cerrar el navegador, reiniciar el equipo y reanudar el juego sin requerir conexión a internet (`F7`).
+  - **Controles y Mandos B/A**: Mapeo nativo de teclado (Cruceta con Flechas, Botón B con `Z`/`A`, Botón A con `X`/`S`, Select con `Shift`/`Tab`, Start con `Enter`, Turbo B/A con `Q`/`W`) y soporte plug-and-play para mandos USB/Bluetooth.
+  - **Filtro CRT Scanlines**: Emulación óptica de líneas de escaneo de tubo analógico conmutable.
+
+### 🛡️ Auditoría de Derechos de Autor, Limpieza de ROMs Comerciales y Depuración de UI ([`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html), [`Packaging/emscripten/gens/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/gens/index.html), [`Packaging/emscripten/gens/app.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/gens/app.js))
+- **Eliminación Total de ROMs con Copyright**:
+  - Eliminados del repositorio y distribución los binarios de la ROM comercial de Road Rash 3 (`RoadRash3.bin`, `RoadRash3.gen`, `RoadRash3.smd`).
+  - El lector de Sega Genesis ahora se presenta como un centro de emulación limpio para ROMs de usuario y homebrews de código abierto.
+- **Limpieza de Botones Duplicados en Toolbar**:
+  - Removidos los botones redundantes de Quake 1 y Wolfenstein 3D de la barra de herramientas superior de `index.html`, consolidándolos en el selector global unificado `retro-nav`.
+- **Persistencia Offline en Sega Genesis**:
+  - Actualizado `gens/app.js` con almacenamiento persistente en IndexedDB para partidas guardadas (`F5`/`F7`) y autoguardado al cerrar la pestaña.
+- **Redirección Cruzada Inteligente**:
+  - Si se arrastra una ROM de NES en el lector de Sega Genesis (o viceversa), el sistema detecta la extensión y ofrece redirigir automáticamente al reproductor correspondiente.
+
+
 ### 🎮 Gens / Sega Genesis (Mega Drive) WebAssembly & File Manager Integration ([`Packaging/emscripten/gens/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/gens/index.html), [`Packaging/emscripten/gens/style.css`](file:///c:/Projects/DevilutionX/Packaging/emscripten/gens/style.css), [`Packaging/emscripten/gens/app.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/gens/app.js), [`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html), [`build-web/index.html`](file:///c:/Projects/DevilutionX/build-web/index.html), [`Packaging/emscripten/server.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/server.js))
 - **Integración Nativa en File Manager y Barra de Herramientas**:
   - Incorporado botón de acceso directo `🎮 Gens (Mega Drive)` en la barra superior web de DevilutionX junto al lanzador de Tiny Core Linux.

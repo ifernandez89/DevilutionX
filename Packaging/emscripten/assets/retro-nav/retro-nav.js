@@ -9,7 +9,7 @@
     // Calculate relative path to root Packaging/emscripten/ directory
     function getRootRelativePath() {
         const path = window.location.pathname.toLowerCase();
-        if (path.includes('/doom/') || path.includes('/wolf3d/') || path.includes('/gens/') || path.includes('/minixp/') || path.includes('/tinycore/') || path.includes('/quake/') || path.includes('/cavestory/')) {
+        if (path.includes('/doom/') || path.includes('/wolf3d/') || path.includes('/gens/') || path.includes('/minixp/') || path.includes('/tinycore/') || path.includes('/quake/') || path.includes('/cavestory/') || path.includes('/nes/')) {
             return '../';
         }
         return './';
@@ -100,17 +100,32 @@
             ]
         },
         {
-            category: '🏍️ SEGA 16-BIT (Motor Gens WASM)',
+            category: '🎮 SEGA 16-BIT (Motor Genesis Plus GX WASM)',
             items: [
                 {
-                    id: 'gens-roadrash',
-                    title: 'Road Rash 3: Tour de Force',
-                    subtitle: 'Sega Genesis / Mega Drive (1995)',
+                    id: 'gens',
+                    title: 'Sega Genesis & Mega Drive',
+                    subtitle: 'Lector Universal de ROMs 16-bit • 60 FPS WASM',
                     badge: '60 FPS WASM',
                     badgeClass: 'badge-wasm',
-                    icon: '🏍️',
-                    url: `${BASE_PATH}gens/index.html?rom=roadrash3`,
+                    icon: '🎮',
+                    url: `${BASE_PATH}gens/index.html`,
                     activeMatcher: (p) => p.includes('/gens/')
+                }
+            ]
+        },
+        {
+            category: '🔴 NINTENDO 8-BIT (Motor Nestopia WASM)',
+            items: [
+                {
+                    id: 'nes',
+                    title: 'Nintendo NES & Famicom',
+                    subtitle: 'Lector Universal de ROMs .NES • Ciclo Exacto 60 FPS',
+                    badge: '8-BIT WASM',
+                    badgeClass: 'badge-wasm',
+                    icon: '🔴',
+                    url: `${BASE_PATH}nes/index.html`,
+                    activeMatcher: (p) => p.includes('/nes/')
                 }
             ]
         },
@@ -125,7 +140,7 @@
                     badgeClass: 'badge-wasm',
                     icon: '⚔️',
                     url: `${BASE_PATH}index.html`,
-                    activeMatcher: (p) => !p.includes('/doom/') && !p.includes('/wolf3d/') && !p.includes('/gens/') && !p.includes('/minixp/') && !p.includes('/quake/') && !p.includes('/cavestory/')
+                    activeMatcher: (p) => !p.includes('/doom/') && !p.includes('/wolf3d/') && !p.includes('/gens/') && !p.includes('/minixp/') && !p.includes('/quake/') && !p.includes('/cavestory/') && !p.includes('/nes/')
                 }
             ]
         },

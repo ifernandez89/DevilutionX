@@ -22,6 +22,9 @@
             <!-- Retro Hub Global Dropdown Slot -->
             <div id="retro-nav-slot"></div>
 
+            <a href="../nes/index.html" class="btn btn-secondary" title="Emulador Nintendo NES / Famicom (8-Bit)">
+                🔴 NES (8-Bit)
+            </a>
             <a href="../doom/index.html" class="btn btn-secondary" title="Jugar a DOOM & Freedoom">
                 💀 DOOM
             </a>
@@ -61,10 +64,10 @@
                 </div>
 
                 <div class="toolbar-group">
-                    <button class="btn-tool" id="saveStateBtn" title="Guardar Estado Rápido (F5)">
+                    <button class="btn-tool" id="saveStateBtn" title="Guardar Estado Rápido (F5) - Persiste Offline">
                         💾 Guardar (F5)
                     </button>
-                    <button class="btn-tool" id="loadStateBtn" title="Cargar Estado Rápido (F7)">
+                    <button class="btn-tool" id="loadStateBtn" title="Cargar Estado Rápido (F7) - Persiste Offline">
                         📂 Cargar (F7)
                     </button>
                     <button class="btn-tool" id="screenshotBtn" title="Captura de Pantalla">
@@ -89,31 +92,34 @@
         <!-- ROMs Hub & Cartridges (Visible when no game is active) -->
         <section id="hub-section" class="hub-grid">
 
-            <!-- Pre-loaded Cartridge Card: Road Rash 3 -->
+            <!-- Genesis 16-Bit Info & Quick Start Card -->
             <div class="cartridge-card">
                 <div>
-                    <div class="cartridge-badge">ROM Incluida • Lista para Jugar</div>
+                    <div class="cartridge-badge">16-BIT WASM • GUARDADO OFFLINE</div>
                     <div class="cartridge-header">
-                        <div class="cartridge-icon">🏍️</div>
+                        <div class="cartridge-icon">🎮</div>
                         <div>
-                            <h2 class="cartridge-title">Road Rash 3</h2>
-                            <div class="cartridge-subtitle">Tour de Force (1995) • Electronic Arts</div>
+                            <h2 class="cartridge-title">Sega Genesis & Mega Drive</h2>
+                            <div class="cartridge-subtitle">Motor Genesis Plus GX • 60 FPS • Audio YM2612</div>
                         </div>
                     </div>
                     <p class="cartridge-desc">
-                        El aclamado clásico de combate y carreras en motocicleta por todo el mundo. Gráficos digitalizados, música estéreo con síntesis FM YM2612 y toda la velocidad a 60 FPS nativos en WebAssembly.
+                        Lector universal de cartuchos Genesis de 16 bits directo en tu navegador. Tus partidas y estados de guardado se sincronizan permanentemente en tu equipo (IndexedDB), disponibles incluso al cerrar el navegador o jugar 100% sin conexión a internet.
                     </p>
                     <div class="cartridge-meta">
-                        <span class="meta-tag">Formato: SMD / BIN</span>
-                        <span class="meta-tag">Tamaño: 2.0 MB</span>
-                        <span class="meta-tag">Región: World / NTSC</span>
-                        <span class="meta-tag">Soporte: 1-2 Jugadores</span>
+                        <span class="meta-tag">Formatos: SMD, BIN, GEN, MD, ZIP</span>
+                        <span class="meta-tag">Guardado: IndexedDB Offline</span>
+                        <span class="meta-tag">Audio: FM Estéreo YM2612</span>
+                        <span class="meta-tag">Mandos: 3 & 6 Botones / USB</span>
                     </div>
                 </div>
-                <div class="cartridge-actions">
-                    <button class="btn btn-accent" id="playRoadRashBtn" style="font-size: 15px; padding: 12px 24px;">
-                        ▶ JUGAR ROAD RASH 3
+                <div class="cartridge-actions" style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <button class="btn btn-primary" id="hubBrowseBtn" style="font-size: 14px; padding: 12px 20px;">
+                        📂 Explorar ROM en PC...
                     </button>
+                    <a href="../nes/index.html" class="btn btn-secondary" style="font-size: 14px; padding: 12px 20px; text-decoration: none;">
+                        🔴 Ir a Emulador NES (8-Bit)
+                    </a>
                 </div>
             </div>
 

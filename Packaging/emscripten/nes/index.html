@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NES Web — Nintendo 8-Bit & Famicom (WebAssembly)</title>
+    <meta name="description" content="Emulador Nintendo NES / Famicom de 8 bits en WebAssembly directo en el navegador con soporte de ROMs .NES, motor Nestopia / FCEUmm, sonido APU, guardado offline en IndexedDB y mandos USB.">
+    <link rel="stylesheet" href="../assets/retro-nav/retro-nav.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Top Navigation -->
+    <header>
+        <div class="brand">
+            <div class="brand-badge">NES WASM</div>
+            <div class="brand-title">
+                NINTENDO <span>8-BIT</span>
+            </div>
+        </div>
+        <div class="header-actions">
+            <!-- Retro Hub Global Dropdown Slot -->
+            <div id="retro-nav-slot"></div>
+
+            <a href="../gens/index.html" class="btn btn-secondary" title="Emulador Sega Genesis / Mega Drive (16-Bit)">
+                🎮 Genesis (16-Bit)
+            </a>
+            <a href="../doom/index.html" class="btn btn-secondary" title="Jugar a DOOM & Freedoom">
+                💀 DOOM
+            </a>
+            <a href="../index.html" class="btn btn-secondary" title="Volver al juego DevilutionX / Diablo">
+                ⚔️ Diablo
+            </a>
+            <button class="btn btn-primary" id="topUploadBtn">
+                📂 Cargar ROM (.NES)
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-wrapper">
+
+        <!-- Active Emulator Display (Hidden initially, visible when playing) -->
+        <section id="emulator-section">
+            <div class="screen-card size-large">
+                <div id="canvas-container">
+                    <!-- Canvas will be created/attached here -->
+                    <div id="scanlines" class="scanlines-overlay"></div>
+                </div>
+            </div>
+
+            <!-- In-Game Controls Toolbar -->
+            <div class="screen-toolbar">
+                <div class="toolbar-group">
+                    <button class="btn-tool" id="pauseResumeBtn" title="Pausar o Continuar (P)">
+                        ⏸️ Pausar
+                    </button>
+                    <button class="btn-tool" id="resetBtn" title="Reiniciar Emulación (R)">
+                        🔄 Reiniciar
+                    </button>
+                    <button class="btn-tool" id="crtToggleBtn" title="Alternar Filtro CRT Scanlines">
+                        📺 Scanlines: OFF
+                    </button>
+                </div>
+
+                <div class="toolbar-group">
+                    <button class="btn-tool" id="saveStateBtn" title="Guardar Estado Rápido (F5) - Persiste Offline en IndexedDB">
+                        💾 Guardar (F5)
+                    </button>
+                    <button class="btn-tool" id="loadStateBtn" title="Cargar Estado Rápido (F7) - Persiste Offline en IndexedDB">
+                        📂 Cargar (F7)
+                    </button>
+                    <button class="btn-tool" id="screenshotBtn" title="Captura de Pantalla">
+                        📸 Captura
+                    </button>
+                </div>
+
+                <div class="toolbar-group">
+                    <button class="btn-tool" id="screenSizeBtn" title="Alternar tamaño de pantalla (Normal 800px / Grande 980px / Cinema 1180px)">
+                        📐 Tamaño: Grande
+                    </button>
+                    <button class="btn-tool" id="fullscreenBtn" title="Pantalla Completa">
+                        ⛶ Fullscreen
+                    </button>
+                    <button class="btn-tool btn-accent" id="exitGameBtn" title="Cerrar juego actual">
+                        ❌ Salir
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ROMs Hub & Cartridges (Visible when no game is active) -->
+        <section id="hub-section" class="hub-grid">
+
+            <!-- NES 8-Bit Info & Action Card -->
+            <div class="cartridge-card">
+                <div>
+                    <div class="cartridge-badge">8-BIT WASM • NESTOPIA CYCLE-ACCURATE</div>
+                    <div class="cartridge-header">
+                        <div class="cartridge-icon">🔴</div>
+                        <div>
+                            <h2 class="cartridge-title">Nintendo Entertainment System</h2>
+                            <div class="cartridge-subtitle">Motor Nestopia WASM (con FCEUmm) • 60 FPS • Audio APU</div>
+                        </div>
+                    </div>
+                    <p class="cartridge-desc">
+                        Emulador universal de cartuchos NES y Famicom de 8 bits en WebAssembly. Emulación fiel con ciclo exacto, soporte completo de mappers (1 a 255), audio APU estéreo y guardado offline permanente en IndexedDB. Al cerrar o volver a abrir tu navegador, tus partidas continúan exactamente donde las dejaste sin requerir conexión a internet.
+                    </p>
+                    <div class="cartridge-meta">
+                        <span class="meta-tag">Formatos: .NES, .FDS, .UNF, .ZIP</span>
+                        <span class="meta-tag">Guardado: IndexedDB Offline</span>
+                        <span class="meta-tag">Audio: APU 2A03 Fiel</span>
+                        <span class="meta-tag">Mandos: D-Pad, B, A, Select, Start</span>
+                    </div>
+                </div>
+                <div class="cartridge-actions" style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <button class="btn btn-primary" id="hubBrowseBtn" style="font-size: 14px; padding: 12px 20px;">
+                        📂 Explorar ROM en PC...
+                    </button>
+                    <a href="../gens/index.html" class="btn btn-secondary" style="font-size: 14px; padding: 12px 20px; text-decoration: none;">
+                        🎮 Ir a Sega Genesis (16-Bit)
+                    </a>
+                </div>
+            </div>
+
+            <!-- Drag & Drop ROM Ingestion Area -->
+            <div class="dropzone-card" id="dropzone">
+                <input type="file" id="fileInput" accept=".nes,.NES,.fds,.FDS,.unf,.UNF,.zip,.ZIP" style="display: none;">
+                <div class="dropzone-icon">🕹️</div>
+                <h3 class="dropzone-title">Arrastrá tu ROM de NES</h3>
+                <p class="dropzone-subtitle">
+                    Arrastrá y soltá cualquier archivo de juego aquí o hacé clic para explorar desde tu PC (por ejemplo desde tu colección de ROMs).
+                </p>
+                <div class="dropzone-exts">
+                    <span class="ext-badge">.NES</span>
+                    <span class="ext-badge">.FDS</span>
+                    <span class="ext-badge">.UNF</span>
+                    <span class="ext-badge">.ZIP</span>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Hardware & Keybindings Guide -->
+        <section class="controls-section">
+            <h3 class="controls-title">🎮 CONFIGURACIÓN DE CONTROLES & HARDWARE (NES 8-BIT)</h3>
+            <div class="controls-grid">
+                
+                <!-- NES Controller Mapping -->
+                <div class="control-box">
+                    <div class="control-box-title">
+                        <span>🔴 Mando NES / Famicom</span>
+                        <span class="tag">Mapeo Universal</span>
+                    </div>
+                    <ul class="control-list">
+                        <li><span>D-Pad (Cruceta):</span> <code>Flechas del Teclado</code> / <code>D-Pad Mando</code></li>
+                        <li><span>Botón B (Disparo / Acción):</span> <code>Z</code> o <code>A</code> / <code>Botón X / Cuadrado</code></li>
+                        <li><span>Botón A (Salto / Aceptar):</span> <code>X</code> o <code>S</code> / <code>Botón A / Cruz</code></li>
+                        <li><span>Select:</span> <code>Shift</code> o <code>Tab</code> / <code>Select / Back</code></li>
+                        <li><span>Start (Pausa / Comenzar):</span> <code>Enter</code> / <code>Start</code></li>
+                        <li><span>Turbo B / Turbo A:</span> <code>Q</code> / <code>W</code></li>
+                    </ul>
+                </div>
+
+                <!-- Emulator Hotkeys -->
+                <div class="control-box">
+                    <div class="control-box-title">
+                        <span>⚡ Atajos del Emulador</span>
+                        <span class="tag">Atajos de Teclado</span>
+                    </div>
+                    <ul class="control-list">
+                        <li><span>Guardar Estado Rápido:</span> <code>F5</code> (Permanente en IndexedDB)</li>
+                        <li><span>Cargar Estado Rápido:</span> <code>F7</code> (Persiste Offline)</li>
+                        <li><span>Pausar / Reanudar:</span> <code>P</code></li>
+                        <li><span>Reiniciar Emulación:</span> <code>R</code></li>
+                        <li><span>Captura de Pantalla:</span> <code>📸 Botón de Captura</code></li>
+                        <li><span>Tamaño de Pantalla:</span> <code>Normal (800p)</code> / <code>Grande (980p)</code> / <code>Cinema (1180p)</code></li>
+                    </ul>
+                </div>
+
+                <!-- Gamepad Status -->
+                <div class="control-box" id="gamepadStatus">
+                    <div class="control-box-title">
+                        <span>🔌 Estado de Mandos USB / Bluetooth</span>
+                        <span class="tag">Plug & Play</span>
+                    </div>
+                    <div class="gamepad-indicator">
+                        <span class="status-dot" id="gamepadDot"></span>
+                        <span id="gamepadText">Sin gamepad detectado (conectá uno USB o Bluetooth y presioná cualquier botón)</span>
+                    </div>
+                    <p style="font-size: 12px; color: var(--text-muted); margin-top: 10px; line-height: 1.5;">
+                        Detecta automáticamente mandos Xbox, PlayStation, 8BitDo y genéricos USB. Los botones se configuran al instante sin software adicional.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Fullscreen Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="spinner"></div>
+        <div class="loading-title" id="loadingText">Iniciando Emulación NES...</div>
+        <div class="loading-desc" id="loadingSubtext">Cargando motor Nestopia (WebAssembly)...</div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="toast">
+        <span id="toastIcon">ℹ️</span>
+        <span id="toastMessage">Mensaje</span>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../assets/retro-nav/retro-nav.js"></script>
+    <script src="vendor/nostalgist.umd.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

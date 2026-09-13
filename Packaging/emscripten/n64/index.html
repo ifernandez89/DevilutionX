@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>N64 Web — Nintendo 64 3D (WebAssembly)</title>
+    <meta name="description" content="Emulador Nintendo 64 de 64 bits en WebAssembly directo en el navegador con soporte para ROMs .Z64, .V64 y .N64, motor Mupen64Plus 3D con aceleración WebGL, sonido de alta fidelidad, guardado offline en IndexedDB y mandos USB/Bluetooth.">
+    <link rel="stylesheet" href="../assets/retro-nav/retro-nav.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Top Navigation -->
+    <header>
+        <div class="brand">
+            <div class="brand-badge">N64 64-BIT</div>
+            <div class="brand-title">
+                NINTENDO <span>64 WASM</span>
+            </div>
+        </div>
+        <div class="header-actions">
+            <!-- Retro Hub Global Dropdown Slot -->
+            <div id="retro-nav-slot"></div>
+
+            <a href="../snes/index.html" class="btn btn-secondary" title="Emulador Super Nintendo (16-Bit)">
+                🎮 SNES (16-Bit)
+            </a>
+            <a href="../nes/index.html" class="btn btn-secondary" title="Emulador Nintendo NES / Famicom (8-Bit)">
+                🔴 NES (8-Bit)
+            </a>
+            <a href="../gens/index.html" class="btn btn-secondary" title="Emulador Sega Genesis / Mega Drive (16-Bit)">
+                ⚡ Genesis (16-Bit)
+            </a>
+            <a href="../doom/index.html" class="btn btn-secondary" title="Jugar a DOOM & Freedoom">
+                🔥 DOOM
+            </a>
+            <a href="../index.html" class="btn btn-secondary" title="Volver al juego DevilutionX / Diablo">
+                ⚔️ Diablo
+            </a>
+            <button class="btn btn-primary" id="topUploadBtn">
+                📁 Cargar ROM (.Z64 / .V64 / .N64)
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-wrapper">
+
+        <!-- Active Emulator Display (Hidden initially, visible when playing) -->
+        <section id="emulator-section">
+            <div class="screen-card size-large" id="screenCard">
+                <div id="canvas-container">
+                    <div id="game-player" style="width: 100%; height: 100%;"></div>
+                </div>
+            </div>
+
+            <!-- In-Game Controls Toolbar -->
+            <div class="screen-toolbar" id="screenToolbar">
+                <div class="toolbar-group">
+                    <button class="btn-tool" id="screenSizeBtn" title="Alternar tamaño de pantalla (Normal 800px / Grande 980px / Cinema 1180px)">
+                        🖥️ Tamaño: Grande (980p)
+                    </button>
+                    <button class="btn-tool" id="fullscreenBtn" title="Pantalla Completa (F11)">
+                        ⛶ Fullscreen
+                    </button>
+                </div>
+
+                <div class="toolbar-group">
+                    <span class="toolbar-status" id="activeGameLabel">🎮 Juego cargado en Mupen64Plus</span>
+                </div>
+
+                <div class="toolbar-group">
+                    <button class="btn-tool btn-accent" id="exitGameBtn" title="Cerrar juego actual y volver al menú">
+                        ⏹ Salir al Menú
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ROMs Hub & Cartridges (Visible when no game is active) -->
+        <section id="hub-section" class="hub-grid">
+
+            <!-- N64 64-Bit Info & Action Card -->
+            <div class="cartridge-card">
+                <div>
+                    <div class="cartridge-badge">64-BIT WASM • MUPEN64PLUS NEXT • 3D HARDWARE ACCELERATED</div>
+                    <div class="cartridge-header">
+                        <div class="n64-logo-badge">
+                            <span class="cube-face red"></span>
+                            <span class="cube-face yellow"></span>
+                            <span class="cube-face blue"></span>
+                            <span class="cube-face green"></span>
+                        </div>
+                        <div>
+                            <h2 class="cartridge-title">Nintendo 64 Entertainment System</h2>
+                            <div class="cartridge-subtitle">Motor Mupen64Plus WebAssembly • WebGL2 Acelerado • 60 FPS</div>
+                        </div>
+                    </div>
+                    <p class="cartridge-desc">
+                        Plataforma de emulación 3D de 64 bits directa en el navegador. Compatible con gráficos poligonales acelerados por hardware en WebGL, sonido de alta resolución y soporte universal para formatos <strong>.z64</strong> (Big-Endian nativo), <strong>.v64</strong> (Doctor V64 byte-swapped) y <strong>.n64</strong> (Little-Endian). Con conversor automático de endianness en memoria para tus 13 títulos legendarios en <code>D:\Hours of Fun\Roms\N64 Roms</code>.
+                    </p>
+                    <div class="cartridge-meta">
+                        <span class="meta-tag">Formatos: .Z64, .V64, .N64, .ROM, .ZIP</span>
+                        <span class="meta-tag">Aceleración: WebGL2 3D / Hardware</span>
+                        <span class="meta-tag">Conversor: Byte-Swapper al vuelo en RAM</span>
+                        <span class="meta-tag">Guardado: IndexedDB Offline (SRAM + EEPROM)</span>
+                    </div>
+                </div>
+                <div class="cartridge-actions" style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <button class="btn btn-primary" id="hubBrowseBtn" style="font-size: 14px; padding: 12px 20px;">
+                        📁 Explorar ROM en PC (.z64 / .v64)...
+                    </button>
+                    <a href="../snes/index.html" class="btn btn-secondary" style="font-size: 14px; padding: 12px 20px; text-decoration: none;">
+                        🎮 Ir a Super Nintendo (16-Bit)
+                    </a>
+                    <a href="../nes/index.html" class="btn btn-secondary" style="font-size: 14px; padding: 12px 20px; text-decoration: none;">
+                        🔴 Ir a NES (8-Bit)
+                    </a>
+                </div>
+            </div>
+
+            <!-- Drag & Drop Zone -->
+            <div class="dropzone" id="dropzone">
+                <div class="dropzone-icon">📥</div>
+                <div class="dropzone-title">Arrastra tu ROM de Nintendo 64 aquí</div>
+                <div class="dropzone-subtitle">
+                    Compatible con archivos <strong>.z64</strong>, <strong>.v64</strong>, <strong>.n64</strong>, <strong>.rom</strong> y <strong>.zip</strong><br>
+                    Conversión automática de <em>Endianness</em> en memoria (Doctor V64, CD64, Mr. Backup Z64)
+                </div>
+                <input type="file" id="fileInput" accept=".z64,.v64,.n64,.rom,.zip,*" style="display: none;">
+            </div>
+
+            <!-- Controls & Features Card -->
+            <div class="features-card">
+                <h3 class="features-title">🎮 Controles de Nintendo 64 (Mando y Teclado)</h3>
+                <div class="controls-grid">
+                    <div class="control-item">
+                        <span class="control-label">Stick Analógico 3D</span>
+                        <span class="control-key">Flechas / W A S D</span>
+                    </div>
+                    <div class="control-item">
+                        <span class="control-label">Botón A</span>
+                        <span class="control-key">X</span>
+                    </div>
+                    <div class="control-item">
+                        <span class="control-label">Botón B</span>
+                        <span class="control-key">Z</span>
+                    </div>
+                    <div class="control-item">
+                        <span class="control-label">Gatillo Z (Inferior)</span>
+                        <span class="control-key">Espacio / Control</span>
+                    </div>
+                    <div class="control-item">
+                        <span class="control-label">Botones C (C-Pad Amarillo)</span>
+                        <span class="control-key">I (↑) K (↓) J (←) L (→)</span>
+                    </div>
+                    <div class="control-item">
+                        <span class="control-label">Gatillos L y R</span>
+                        <span class="control-key">Q (L) / E (R)</span>
+                    </div>
+                    <div class="control-item">
+                        <span class="control-label">Start / Pausa</span>
+                        <span class="control-key">Enter</span>
+                    </div>
+                    <div class="control-item">
+                        <span class="control-label">Cruceta D-Pad</span>
+                        <span class="control-key">Teclado Numérico / 8 4 6 2</span>
+                    </div>
+                </div>
+                <div class="gamepad-status" id="gamepadStatus">
+                    <span class="gamepad-dot" id="gamepadDot"></span>
+                    <span id="gamepadText">Mando USB/Bluetooth: Compatible automáticamente (Xbox, PlayStation, 8BitDo o réplica N64)</span>
+                </div>
+            </div>
+
+            <!-- Technical Architecture Card -->
+            <div class="features-card">
+                <h3 class="features-title">⚙️ Arquitectura de Ejecución Nintendo 64</h3>
+                <div class="features-list">
+                    <div class="feature-item">
+                        <span class="feature-check">✔</span>
+                        <div>
+                            <strong>Procesador MIPS VR4300 64-Bit & RCP:</strong>
+                            Emulación del coprocesador de realidad (RSP/RDP) para renderizado 3D de alta velocidad directamente en el navegador.
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-check">✔</span>
+                        <div>
+                            <strong>Conversor Universal de Endianness:</strong>
+                            Detección binaria de la cabecera mágica (<code>80 37 12 40</code> vs <code>37 80 40 12</code>). Si el juego es un volcado Byte-Swapped de Doctor V64, se permuta en memoria RAM en menos de 15 milisegundos.
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-check">✔</span>
+                        <div>
+                            <strong>Guardado con Batería y EEPROM (IndexedDB):</strong>
+                            Las partidas guardadas de cartuchos como Zelda Majora's Mask, Super Mario 64 y Mario Kart se almacenan de forma local en tu navegador.
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-check">✔</span>
+                        <div>
+                            <strong>Opción de Escritorio Nativa:</strong>
+                            Para máxima potencia gráfica sin límites de navegador, también tienes disponible <code>Project64 1.6</code> en tu carpeta de emuladores locales.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Overlay Loading Spinner -->
+    <div id="loading-overlay" class="loading-overlay" style="display: none;">
+        <div class="spinner"></div>
+        <div class="loading-text" id="loadingText">Iniciando Nintendo 64...</div>
+        <div class="loading-subtext" id="loadingSubtext">Cargando motor Mupen64Plus 3D (WebAssembly)</div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="toast-notification" style="display: none;">
+        <span class="toast-icon" id="toastIcon">🎮</span>
+        <span class="toast-message" id="toastMessage">Iniciando juego...</span>
+    </div>
+
+    <!-- RetroNav & App Controller -->
+    <script src="../assets/retro-nav/retro-nav.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

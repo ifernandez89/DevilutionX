@@ -145,6 +145,21 @@
             ]
         },
         {
+            category: '🕹️ NINTENDO 64-BIT (Motor Mupen64Plus 3D WASM)',
+            items: [
+                {
+                    id: 'n64',
+                    title: 'Nintendo 64 (N64)',
+                    subtitle: 'Lector Universal .Z64 / .V64 / .N64 • WebGL2 3D',
+                    badge: '64-BIT WASM',
+                    badgeClass: 'badge-wasm',
+                    icon: '🕹️',
+                    url: `${BASE_PATH}n64/index.html`,
+                    activeMatcher: (p) => p.includes('/n64/')
+                }
+            ]
+        },
+        {
             category: '⚔️ ACTION RPG (Motor DevilutionX WASM)',
             items: [
                 {
@@ -155,7 +170,7 @@
                     badgeClass: 'badge-wasm',
                     icon: '⚔️',
                     url: `${BASE_PATH}index.html`,
-                    activeMatcher: (p) => !p.includes('/doom/') && !p.includes('/wolf3d/') && !p.includes('/gens/') && !p.includes('/minixp/') && !p.includes('/quake/') && !p.includes('/cavestory/') && !p.includes('/nes/') && !p.includes('/snes/')
+                    activeMatcher: (p) => !p.includes('/doom/') && !p.includes('/wolf3d/') && !p.includes('/gens/') && !p.includes('/minixp/') && !p.includes('/quake/') && !p.includes('/cavestory/') && !p.includes('/nes/') && !p.includes('/snes/') && !p.includes('/n64/')
                 }
             ]
         },

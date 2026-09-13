@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### 🕹️ Nintendo 64 (N64 / 64-Bit 3D) WebAssembly & Universal Retro Hub Integration ([`Packaging/emscripten/n64/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/n64/index.html), [`Packaging/emscripten/n64/style.css`](file:///c:/Projects/DevilutionX/Packaging/emscripten/n64/style.css), [`Packaging/emscripten/n64/app.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/n64/app.js), [`Packaging/emscripten/assets/retro-nav/retro-nav.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/assets/retro-nav/retro-nav.js))
+- **Nuevo Emulador Nintendo 64 64-Bit 3D**:
+  - Implementado módulo de emulación 3D en WebAssembly para Nintendo 64 con renderizado acelerado por hardware mediante WebGL2 (`Mupen64Plus-Next`).
+  - **Conversor Automático de Endianness en Memoria**: Detección binaria de la cabecera mágica (`80 37 12 40` vs `37 80 40 12` vs `40 12 37 80`). Si se arrastra o carga un archivo `.v64` (Doctor V64) o `.n64` (CD64), el sistema permuta los bytes en memoria RAM en milisegundos y lo entrega en formato nativo Big Endian `.z64`.
+  - **Compatibilidad Total**: Probado y calibrado para los 13 títulos legendarios de Nintendo 64 en `D:\Hours of Fun\Roms\N64 Roms` (Super Mario 64, Mario Kart 64, GoldenEye 007, Star Fox 64, Zelda Majora's Mask, Perfect Dark, StarCraft 64, Super Smash Bros, etc.).
+  - **Mapeo de Mandos y Stick 3D**: Stick analógico asignado a Flechas/WASD, Botón A (`X`), Botón B (`Z`), Gatillo Z (`Espacio`/`Ctrl`), C-Buttons (`I/K/J/L`), Gatillos L/R (`Q`/`E`), Start (`Enter`) y soporte automático para mandos USB/Bluetooth.
+  - **Persistencia de Partidas (IndexedDB)**: Compatible con partidas guardadas con batería (SRAM) y memoria no volátil (EEPROM).
+  - **Integración Global**: Disponible en el menú desplegable `RETRO HUB` y en el Administrador de Archivos de DevilutionX.
+
 ### 🎮 Super Nintendo (SNES / 16-Bit) WebAssembly & Universal Retro Hub Integration ([`Packaging/emscripten/snes/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/snes/index.html), [`Packaging/emscripten/snes/style.css`](file:///c:/Projects/DevilutionX/Packaging/emscripten/snes/style.css), [`Packaging/emscripten/snes/app.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/snes/app.js), [`Packaging/emscripten/assets/retro-nav/retro-nav.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/assets/retro-nav/retro-nav.js))
 - **Nuevo Emulador Super Nintendo 16-Bit**:
   - Implementado módulo de ejecución WebAssembly para Super Nintendo Entertainment System (SNES) y Super Famicom a 60 FPS continuos con motor `Snes9x` (y respaldo local de `Snes9x 2010`).

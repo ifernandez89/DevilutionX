@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOOM WASM — UAC Phobos Terminal & Freedoom (WebAssembly)</title>
+    <meta name="description" content="Juega DOOM y Freedoom en tu navegador a 60 FPS con WebAssembly. Compatible con teclado, ratón y gamepad. 100% libre y de código abierto.">
+    <link rel="stylesheet" href="../assets/retro-nav/retro-nav.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Top Navigation Header -->
+    <header>
+        <div class="brand">
+            <div class="brand-badge">UAC TERMINAL</div>
+            <div class="brand-title">
+                DOOM <span>WASM 1993</span>
+            </div>
+        </div>
+        <div class="header-actions">
+            <!-- Retro Hub Global Dropdown Slot -->
+            <div id="retro-nav-slot"></div>
+            
+            <a href="../index.html" class="btn btn-secondary" title="Volver al juego DevilutionX / Diablo">
+                ⚔️ Diablo
+            </a>
+            <a href="../gens/index.html" class="btn btn-secondary" title="Emulador Sega Genesis">
+                🏍️ Genesis
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-wrapper">
+
+        <!-- Active Emulator Display -->
+        <section id="emulator-section">
+            <div class="screen-card">
+                <div id="canvas-container">
+                    <div id="scanlines" class="scanlines-overlay"></div>
+                </div>
+            </div>
+
+            <!-- In-Game Controls Toolbar -->
+            <div class="screen-toolbar">
+                <div class="toolbar-group">
+                    <button class="btn-tool" id="pauseResumeBtn" title="Pausar o Continuar (P)">
+                        ⏸️ Pausar
+                    </button>
+                    <button class="btn-tool" id="resetBtn" title="Reiniciar Partida">
+                        🔄 Reiniciar
+                    </button>
+                    <button class="btn-tool" id="crtToggleBtn" title="Alternar Filtro CRT Scanlines">
+                        📺 Scanlines: OFF
+                    </button>
+                </div>
+
+                <div class="toolbar-group">
+                    <button class="btn-tool" id="saveStateBtn" title="Guardar Estado Rápido (F5)">
+                        💾 Guardar (F5)
+                    </button>
+                    <button class="btn-tool" id="loadStateBtn" title="Cargar Estado Rápido (F7)">
+                        📂 Cargar (F7)
+                    </button>
+                    <button class="btn-tool" id="screenshotBtn" title="Captura de Pantalla">
+                        📸 Captura
+                    </button>
+                </div>
+
+                <div class="toolbar-group">
+                    <button class="btn-tool" id="screenSizeBtn" title="Alternar tamaño de pantalla (Normal 800p / Grande 980p / Cinema 1180p)">
+                        📺 Tamaño: Grande
+                    </button>
+                    <button class="btn-tool" id="fullscreenBtn" title="Pantalla Completa">
+                        ⛶ Fullscreen
+                    </button>
+                    <button class="btn-tool btn-accent" id="exitGameBtn" title="Cerrar juego actual y volver al menú">
+                        ❌ Salir
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Native Cartridges Hub -->
+        <section id="hub-section">
+            <div class="hub-header">
+                <h2>💀 Catálogo Nativo de DOOM (100% Open Source & Shareware)</h2>
+                <p>Selecciona un cartucho nativo listo para jugar con 1 clic en WebAssembly a 60 FPS:</p>
+            </div>
+
+            <div class="cartridges-grid">
+
+                <!-- Cartridge 1: DOOM 1 Shareware -->
+                <div class="cartridge-card">
+                    <div class="cartridge-badge badge-shareware">Oficial id Software • Shareware v1.9</div>
+                    <div class="cartridge-header">
+                        <div class="cartridge-icon">🪖</div>
+                        <div>
+                            <h3 class="cartridge-title">DOOM 1: Shareware</h3>
+                            <div class="cartridge-subtitle">Episode 1: Knee-Deep in the Dead (1993)</div>
+                        </div>
+                    </div>
+                    <p class="cartridge-desc">
+                        El clásico absoluto que revolucionó la historia del videojuego. Explora la base militar de Phobos en 9 niveles legendarios con E1M1, música sintetizada FM y toda la velocidad original.
+                    </p>
+                    <div class="cartridge-meta">
+                        <span class="meta-tag">Formato: IWAD (DOOM1.WAD)</span>
+                        <span class="meta-tag">Tamaño: 4.2 MB (Arranque ultra rápido)</span>
+                        <span class="meta-tag">Motor: PrBoom WASM</span>
+                    </div>
+                    <div class="cartridge-actions">
+                        <button class="btn btn-doom" id="playDoom1Btn">
+                            ▶ JUGAR DOOM 1 SHAREWARE
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Cartridge 2: Freedoom Phase 1 -->
+                <div class="cartridge-card">
+                    <div class="cartridge-badge badge-opensource">100% Open Source • Licencia BSD 3-Clause</div>
+                    <div class="cartridge-header">
+                        <div class="cartridge-icon">💀</div>
+                        <div>
+                            <h3 class="cartridge-title">Freedoom: Phase 1</h3>
+                            <div class="cartridge-subtitle">Campaña Completa • 30 Niveles Libres (2024)</div>
+                        </div>
+                    </div>
+                    <p class="cartridge-desc">
+                        Juego completo de software libre con cuatro episodios y 30 niveles. Texturas, mapas, música y monstruos originales diseñados por la comunidad open source compatible con el motor de Ultimate Doom.
+                    </p>
+                    <div class="cartridge-meta">
+                        <span class="meta-tag">Formato: IWAD (freedoom1.wad)</span>
+                        <span class="meta-tag">Tamaño: 28.7 MB</span>
+                        <span class="meta-tag">Niveles: 30 completos</span>
+                    </div>
+                    <div class="cartridge-actions">
+                        <button class="btn btn-doom" id="playFreedoom1Btn">
+                            ▶ JUGAR FREEDOOM FASE 1
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Cartridge 3: Freedoom Phase 2 -->
+                <div class="cartridge-card">
+                    <div class="cartridge-badge badge-opensource">100% Open Source • Licencia BSD 3-Clause</div>
+                    <div class="cartridge-header">
+                        <div class="cartridge-icon">🔥</div>
+                        <div>
+                            <h3 class="cartridge-title">Freedoom: Phase 2</h3>
+                            <div class="cartridge-subtitle">Super Shotgun • 32 Niveles Complejos</div>
+                        </div>
+                    </div>
+                    <p class="cartridge-desc">
+                        Campaña masiva de 32 niveles lineales compatible con Doom II. Incluye la emblemática Super Escopeta de doble cañón, todo el arsenal avanzado y hordas masivas de criaturas del averno.
+                    </p>
+                    <div class="cartridge-meta">
+                        <span class="meta-tag">Formato: IWAD (freedoom2.wad)</span>
+                        <span class="meta-tag">Tamaño: 28.7 MB</span>
+                        <span class="meta-tag">Armas: Arsenal Completo</span>
+                    </div>
+                    <div class="cartridge-actions">
+                        <button class="btn btn-doom" id="playFreedoom2Btn">
+                            ▶ JUGAR FREEDOOM FASE 2
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Hardware & Keybindings Guide -->
+        <section class="controls-section">
+            <div class="controls-header">
+                <h3>🎮 Mapeo de Controles (DOOM FPS Layout)</h3>
+                <div class="gamepad-status" id="gamepadStatus">
+                    <span class="status-dot" id="gamepadDot"></span>
+                    <span id="gamepadText">Sin gamepad detectado (conectá uno USB/Bluetooth)</span>
+                </div>
+            </div>
+
+            <div class="keys-grid">
+                <div class="key-card">
+                    <span class="key-label">Movimiento (Caminar)</span>
+                    <span class="key-badge">W, A, S, D &nbsp;o&nbsp; Flechas</span>
+                </div>
+                <div class="key-card">
+                    <span class="key-label">Disparar Arma</span>
+                    <span class="key-badge">Clic Izquierdo &nbsp;o&nbsp; Ctrl</span>
+                </div>
+                <div class="key-card">
+                    <span class="key-label">Abrir Puertas / Accionar Switches</span>
+                    <span class="key-badge">Espacio &nbsp;o&nbsp; Tecla E</span>
+                </div>
+                <div class="key-card">
+                    <span class="key-label">Correr / Turbo</span>
+                    <span class="key-badge">Shift</span>
+                </div>
+                <div class="key-card">
+                    <span class="key-label">Selección de Armas</span>
+                    <span class="key-badge">Teclas 1 al 7 &nbsp;o&nbsp; Rueda</span>
+                </div>
+                <div class="key-card">
+                    <span class="key-label">Mapa Automático (Automap)</span>
+                    <span class="key-badge">Tab</span>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay">
+        <div class="spinner"></div>
+        <div class="loading-text" id="loadingText">Iniciando DOOM WebAssembly...</div>
+        <div class="loading-subtext" id="loadingSubtext">Cargando motor PrBoom y WAD</div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast">
+        <span id="toastIcon">ℹ️</span>
+        <span id="toastMessage">Notificación</span>
+    </div>
+
+    <!-- Vendor Dependencies -->
+    <script src="vendor/nostalgist.umd.js"></script>
+    <script src="../assets/retro-nav/retro-nav.js"></script>
+    <!-- DOOM Main Controller -->
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wolfenstein 3D WASM — Castle Wolfenstein (WebAssembly)</title>
+    <meta name="description" content="Juega Wolfenstein 3D Episode 1 Shareware en tu navegador a 60 FPS con WebAssembly. El pionero de los FPS por id Software. 100% legal y de código abierto.">
+    <link rel="stylesheet" href="../assets/retro-nav/retro-nav.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="brand">
+            <div class="brand-badge">ECWOLF WASM</div>
+            <div class="brand-title">
+                WOLFENSTEIN <span>3D 1992</span>
+            </div>
+        </div>
+        <div class="header-actions">
+            <div id="retro-nav-slot"></div>
+            <a href="../doom/index.html" class="btn btn-secondary" title="Jugar a DOOM & Freedoom">
+                💀 DOOM
+            </a>
+            <a href="../index.html" class="btn btn-secondary" title="Volver a DevilutionX / Diablo">
+                ⚔️ Diablo
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-wrapper">
+
+        <!-- Active Emulator Display -->
+        <section id="emulator-section">
+            <div class="screen-card">
+                <div id="canvas-container">
+                    <div id="scanlines" class="scanlines-overlay"></div>
+                </div>
+            </div>
+
+            <!-- In-Game Controls Toolbar -->
+            <div class="screen-toolbar">
+                <div class="toolbar-group">
+                    <button class="btn-tool" id="pauseResumeBtn" title="Pausar o Continuar (P)">
+                        ⏸️ Pausar
+                    </button>
+                    <button class="btn-tool" id="resetBtn" title="Reiniciar Partida">
+                        🔄 Reiniciar
+                    </button>
+                    <button class="btn-tool" id="crtToggleBtn" title="Alternar Filtro CRT Scanlines">
+                        📺 Scanlines: OFF
+                    </button>
+                </div>
+
+                <div class="toolbar-group">
+                    <button class="btn-tool" id="saveStateBtn" title="Guardar Estado Rápido (F5)">
+                        💾 Guardar (F5)
+                    </button>
+                    <button class="btn-tool" id="loadStateBtn" title="Cargar Estado Rápido (F7)">
+                        📂 Cargar (F7)
+                    </button>
+                    <button class="btn-tool" id="screenshotBtn" title="Captura de Pantalla">
+                        📸 Captura
+                    </button>
+                </div>
+
+                <div class="toolbar-group">
+                    <button class="btn-tool" id="screenSizeBtn" title="Alternar tamaño de pantalla (Normal 800p / Grande 980p / Cinema 1180p)">
+                        📺 Tamaño: Grande
+                    </button>
+                    <button class="btn-tool" id="fullscreenBtn" title="Pantalla Completa">
+                        ⛶ Fullscreen
+                    </button>
+                    <button class="btn-tool btn-accent" id="exitGameBtn" title="Cerrar juego actual">
+                        ❌ Salir
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Native Cartridges Hub -->
+        <section id="hub-section">
+            <div class="hub-header">
+                <h2>🐺 Wolfenstein 3D: El Origen de los First-Person Shooters</h2>
+                <p>Juega al clásico fundacional de id Software directamente en WebAssembly a 60 FPS:</p>
+            </div>
+
+            <div class="cartridge-card">
+                <div>
+                    <div class="cartridge-badge">Oficial id Software / Apogee • Shareware v1.4</div>
+                    <div class="cartridge-header">
+                        <div class="cartridge-icon">🏰</div>
+                        <div>
+                            <h3 class="cartridge-title">Wolfenstein 3D: Episode 1</h3>
+                            <div class="cartridge-subtitle">Escape from Castle Wolfenstein (1992)</div>
+                        </div>
+                    </div>
+                    <p class="cartridge-desc">
+                        Encarna al espía aliado B.J. Blazkowicz y escapa de las mazmorras del castillo nazi. Descubre pasajes secretos, cuadros ocultos, tesoros de oro y enfréntate al temible Hans Grosse en el piso 10. Con música AdLib FM original y sonido digitalizado.
+                    </p>
+                    <div class="cartridge-meta">
+                        <span class="meta-tag">Episodio: 1 Completo (10 Pisos)</span>
+                        <span class="meta-tag">Motor: ECWolf WebAssembly</span>
+                        <span class="meta-tag">Audio: AdLib FM Synth</span>
+                        <span class="meta-tag">Estado: 100% Nativo</span>
+                    </div>
+                </div>
+                <div class="cartridge-actions">
+                    <button class="btn btn-wolf" id="playWolfBtn">
+                        ▶ JUGAR WOLFENSTEIN 3D EPISODIO 1
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hardware & Keybindings Guide -->
+        <section class="controls-section">
+            <div class="controls-header">
+                <h3>🎮 Mapeo de Controles (Wolfenstein Classic)</h3>
+                <div class="gamepad-status" id="gamepadStatus">
+                    <span class="status-dot" id="gamepadDot"></span>
+                    <span id="gamepadText">Sin gamepad detectado (conectá uno USB/Bluetooth)</span>
+                </div>
+            </div>
+
+            <div class="keys-grid">
+                <div class="key-card">
+                    <span class="key-label">Movimiento (Caminar y Girar)</span>
+                    <span class="key-badge">W, A, S, D &nbsp;o&nbsp; Flechas</span>
+                </div>
+                <div class="key-card">
+                    <span class="key-label">Disparar Arma</span>
+                    <span class="key-badge">Ctrl &nbsp;o&nbsp; Clic Izquierdo</span>
+                </div>
+                <div class="key-card">
+                    <span class="key-label">Abrir Puertas y Muros Secretos</span>
+                    <span class="key-badge">Espacio &nbsp;o&nbsp; Tecla E</span>
+                </div>
+                <div class="key-card">
+                    <span class="key-label">Correr</span>
+                    <span class="key-badge">Shift</span>
+                </div>
+                <div class="key-card">
+                    <span class="key-label">Selección de Armas (Cuchillo, Pistola, Ametralladora, Chaingun)</span>
+                    <span class="key-badge">Teclas 1, 2, 3, 4</span>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay">
+        <div class="spinner"></div>
+        <div class="loading-text" id="loadingText">Iniciando Wolfenstein 3D...</div>
+        <div class="loading-subtext" id="loadingSubtext">Cargando motor ECWolf WebAssembly</div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast">
+        <span id="toastIcon">ℹ️</span>
+        <span id="toastMessage">Notificación</span>
+    </div>
+
+    <!-- Vendor Dependencies -->
+    <script src="vendor/nostalgist.umd.js"></script>
+    <script src="../assets/retro-nav/retro-nav.js"></script>
+    <!-- Wolfenstein Main Controller -->
+    <script src="app.js"></script>
+</body>
+</html>

@@ -7,6 +7,7 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <title>Retro Virtual PC & WASM Lab — WebAssembly Edition</title>
+    <link rel="stylesheet" href="../assets/retro-nav/retro-nav.css">
     <link rel="stylesheet" href="style.css?v=11">
     <script src="libv86.js?v=22"></script>
 </head>
@@ -19,6 +20,8 @@
         </div>
 
         <div class="toolbar">
+            <!-- Retro Hub Global Dropdown Slot -->
+            <div id="retro-nav-slot"></div>
             <!-- OS Profile Selector -->
             <div class="profile-selector-container">
                 <label for="select_os_profile" class="os-label">Sistema:</label>
@@ -172,6 +175,7 @@
         </section>
     </main>
 
+    <script src="../assets/retro-nav/retro-nav.js"></script>
     <script src="app.js?v=26"></script>
 </body>
 </html>

@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### 🔮 NIGHTMARE Neural HD v2 & Silhouette Lock 2.0 (Multi-Scale 2× / 3× / 4× & 4K Presentation) ([`tools/neural/model.py`](file:///c:/Projects/DevilutionX/tools/neural/model.py), [`tools/neural/export_onnx.py`](file:///c:/Projects/DevilutionX/tools/neural/export_onnx.py), [`tools/neural/teacher_renderer.py`](file:///c:/Projects/DevilutionX/tools/neural/teacher_renderer.py), [`Packaging/neural_harness/shaders/tristram_enhancer.wgsl`](file:///c:/Projects/DevilutionX/Packaging/neural_harness/shaders/tristram_enhancer.wgsl), [`Packaging/neural_harness/neural_infer.js`](file:///c:/Projects/DevilutionX/Packaging/neural_harness/neural_infer.js), [`Packaging/neural_harness/harness.js`](file:///c:/Projects/DevilutionX/Packaging/neural_harness/harness.js), [`Packaging/neural_harness/index.html`](file:///c:/Projects/DevilutionX/Packaging/neural_harness/index.html), [`Source/nightmare/neural/gbuffer.hpp`](file:///c:/Projects/DevilutionX/Source/nightmare/neural/gbuffer.hpp), [`Source/nightmare/neural/gbuffer.cpp`](file:///c:/Projects/DevilutionX/Source/nightmare/neural/gbuffer.cpp))
+- **TinyNeuralRenderer v2 & Arquitectura Multiescala**:
+  - Ampliado el tronco de características a 8 bloques residuales con activación SiLU y atención de canales *Squeeze-and-Excitation* (SE).
+  - Implementado generador de modulación *FiLM* (*Feature-wise Linear Modulation*) condicionado dinámicamente por la clase semántica (`Floor`, `Wall`, `Player`, `Water`, etc.) y la profundidad lógica axonométrica.
+  - Cabezales sub-píxel modulares con `PixelShuffle` dedicados para HD $2\times$ ($1280\times 960$), Ultra HD $3\times$ ($1920\times 1440$, sweet-spot para 1440p) y Extreme HD $4\times$ ($2560\times 1920$/4K).
+- **Silhouette Lock 2.0**:
+  - Evolución del sistema de bloqueo de silueta: combina una compuerta dura exterior para impedir cualquier tipo de alucinación geométrica o sangrado fuera de los contornos de los sprites con un gradiente interior sub-píxel para suavizado de bordes anti-aliased.
+  - Modo diagnóstico interactivo integrado en shaders WGSL (`SilLock 2.0`).
+- **Motor de Inferencia WebGPU y Degradación Dinámica**:
+  - Caché de sesiones ONNX por escala en `neural_infer.js`.
+  - Escalera de degradación automática progresiva: `EXTREME_4X` $\to$ `ULTRA_3X` $\to$ `HD_2X` $\to$ `WebGPU Shaders` $\to$ `Original 1996` ante caídas de framerate ($>20\,\text{ms}$), con recuperación automática al estabilizarse ($<13\,\text{ms}$).
+- **Shader WGSL y Normales 2.5D**:
+  - Escalado proporcional de derivadas espaciales $dz/dx$ y $dz/dy$ con `scaleFactor`.
+  - Estructura de uniformes alineada a 64 bytes para paso de parámetros de escala y modo de silueta.
+- **Pipeline C++ Nativo / WebAssembly**:
+  - Exportadas funciones C-API `Nightmare_GBuffer_GetTargetScale()` y `Nightmare_GBuffer_SetTargetScale()` para sincronización bidireccional entre el motor de Diablo y el harness web.
+
+
 ### 📦 Corrección y Protección Integral de Alijo Compartido (`stash.sv` / `stash.hsv`) en WebAssembly & File Manager (`v=nightmare-v24`) ([`Source/pfile.cpp`](file:///c:/Projects/DevilutionX/Source/pfile.cpp), [`Packaging/emscripten/emscripten_pre.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/emscripten_pre.js), [`Packaging/emscripten/devilutionx.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/devilutionx.js), [`Packaging/emscripten/file-manager.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/file-manager.js), [`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html))
 - **Causas raíz identificadas y solucionadas**:
   1. *Eliminación y corrupción destructiva en el arranque por Auto-Heal (`emscripten_pre.js`, `devilutionx.js`)*:

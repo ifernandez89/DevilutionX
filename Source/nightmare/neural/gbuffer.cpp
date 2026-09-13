@@ -194,6 +194,16 @@ DVL_WASM_API int Nightmare_GBuffer_GetHeight()
 	return devilution::nightmare::neural::GBufferManager::Instance().GetHeight();
 }
 
+DVL_WASM_API int Nightmare_GBuffer_GetTargetScale()
+{
+	return devilution::nightmare::neural::GBufferManager::Instance().GetTargetScale();
+}
+
+DVL_WASM_API void Nightmare_GBuffer_SetTargetScale(int scale)
+{
+	devilution::nightmare::neural::GBufferManager::Instance().SetTargetScale(scale);
+}
+
 DVL_WASM_API int Nightmare_GBuffer_GetBiome()
 {
 	return static_cast<int>(devilution::nightmare::neural::GBufferManager::Instance().GetCurrentBiome());

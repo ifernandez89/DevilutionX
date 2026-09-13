@@ -2,7 +2,7 @@
 // Optimized Version: Fused Multi-Pass Texture Lookups, Low-Overhead Normals & Quality-Tiered Shadows
 
 struct Uniforms {
-    renderMode: u32,             // 0: Original, 1: Enhanced, 2: Split A/B, 3: Depth, 4: Light, 5: Semantic, 6: Normals
+    renderMode: u32,             // 0: Original, 1: Enhanced, 2: Split A/B, 3: Depth, 4: Light, 5: Semantic, 6: Normals, 7: SilLock2
     splitPos: f32,               // 0.0 to 1.0 for A/B Split slider
     lightIntensity: f32,         // Point light boost multiplier
     bonfireFlicker: f32,         // Animated flicker amplitude
@@ -10,10 +10,12 @@ struct Uniforms {
     waterSpecular: f32,          // Water/Liquid specular intensity
     time: f32,                   // Current time in seconds
     dungeonBiome: u32,           // 0: Town, 1: Cathedral, 2: Catacombs, 3: Caves, 4: Hell, 5: Crypt, 6: Hive
-    resolution: vec2<f32>,       // Screen dimensions (640.0, 480.0)
+    resolution: vec2<f32>,       // Screen dimensions (e.g. 640.0, 480.0)
     bonfirePos: vec2<f32>,       // Light source position
     qualityTier: u32,            // 0: Safe Baseline (60FPS), 1: Rich Atmospheric (Shadows, Heat, Mist)
     mistDensity: f32,            // Ground mist density
+    scaleFactor: f32,            // 2.0, 3.0, 4.0
+    silhouetteLock2: u32,        // 0: Classic lock, 1: Silhouette Lock 2.0 active
 };
 
 @group(0) @binding(0) var<uniform> u: Uniforms;
@@ -118,8 +120,9 @@ fn computeMultiBiomeNormal(coords: vec2<i32>, semId: u32, depthVal: f32, isHeadR
     let dU = textureLoad(t_depth, clamp(coords + vec2<i32>(0, -1), vec2<i32>(0), texDim - 1), 0).r;
     let dD = textureLoad(t_depth, clamp(coords + vec2<i32>(0,  1), vec2<i32>(0), texDim - 1), 0).r;
 
-    let dz_dx = (dR - dL) * 28.0;
-    let dz_dy = (dD - dU) * 28.0;
+    let scaleMult = select(1.0, u.scaleFactor * 0.5, u.scaleFactor > 1.0);
+    let dz_dx = (dR - dL) * 28.0 * scaleMult;
+    let dz_dy = (dD - dU) * 28.0 * scaleMult;
 
     var n = vec3<f32>(-dz_dx, -dz_dy, 1.0);
     let p = vec2<f32>(coords);
@@ -196,6 +199,11 @@ fn fs_main(in: VertexOutput) -> @location(0) vec4<f32> {
         return vec4<f32>(lightVal, lightVal * 0.88, lightVal * 0.7, 1.0);
     } else if (u.renderMode == 5u) {
         return vec4<f32>(getSemanticColor(semId), 1.0);
+    } else if (u.renderMode == 7u) {
+        // Silhouette Lock 2.0 visualization: outer lock boundary + subpixel edge glow
+        let semColor = getSemanticColor(semId);
+        let edgeSoftness = clamp(depthVal * 0.8 + 0.2, 0.0, 1.0);
+        return vec4<f32>(semColor * 0.5 + vec3<f32>(0.0, 0.85, 0.95) * edgeSoftness, 1.0);
     }
 
     // Single-tap Head / Facial Region Detection (~top 12px border of character entity)

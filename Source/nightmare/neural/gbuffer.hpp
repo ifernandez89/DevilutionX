@@ -55,6 +55,9 @@ public:
 	bool IsEnabled() const { return enabled_; }
 	void SetEnabled(bool enable) { enabled_ = enable; }
 
+	void SetTargetScale(int scale) { targetScale_ = scale; }
+	int GetTargetScale() const { return targetScale_; }
+
 	void SetCurrentBiome(DungeonBiome biome) { currentBiome_ = biome; }
 	DungeonBiome GetCurrentBiome() const { return currentBiome_; }
 
@@ -92,6 +95,7 @@ private:
 	bool enabled_ = true;
 	int width_ = 640;
 	int height_ = 480;
+	int targetScale_ = 3; // Default Ultra HD 3x (1440p)
 
 	DungeonBiome currentBiome_ = static_cast<DungeonBiome>(255);
 	SemanticId currentSemantic_ = SemanticId::Floor;
@@ -113,6 +117,8 @@ extern "C" {
 	int Nightmare_GBuffer_IsEnabled();
 	int Nightmare_GBuffer_GetWidth();
 	int Nightmare_GBuffer_GetHeight();
+	int Nightmare_GBuffer_GetTargetScale();
+	void Nightmare_GBuffer_SetTargetScale(int scale);
 	int Nightmare_GBuffer_GetBiome();
 	const uint32_t* Nightmare_GBuffer_GetRGB();
 	const float* Nightmare_GBuffer_GetDepth();

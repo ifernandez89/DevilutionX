@@ -237,12 +237,12 @@
             text-align: center;
         }
 
-        .mode-btn:hover, .biome-btn:hover {
+        .mode-btn:hover, .biome-btn:hover, .scale-btn:hover {
             border-color: var(--border-gold);
             background: #1c1c24;
         }
 
-        .mode-btn.active, .biome-btn.active {
+        .mode-btn.active, .biome-btn.active, .scale-btn.active {
             background: linear-gradient(135deg, rgba(179, 143, 77, 0.25), rgba(139, 24, 27, 0.25));
             border-color: var(--gold-bright);
             color: var(--gold-bright);
@@ -368,11 +368,21 @@
             </div>
 
             <div class="panel-group">
+                <h3>Resolution Scale Tier (v2)</h3>
+                <div class="mode-grid">
+                    <button class="scale-btn" data-scale="2">HD 2× (960p)</button>
+                    <button class="scale-btn active" data-scale="3">ULTRA 3× (1440p)</button>
+                    <button class="scale-btn" data-scale="4">EXTREME 4× (1920p)</button>
+                </div>
+            </div>
+
+            <div class="panel-group">
                 <h3>Render Mode / G-Buffer</h3>
                 <div class="mode-grid">
                     <button class="mode-btn active" data-mode="2">Split A/B</button>
                     <button class="mode-btn" data-mode="1">Enhanced</button>
                     <button class="mode-btn" data-mode="0">Original 1996</button>
+                    <button class="mode-btn" data-mode="7">SilLock 2.0</button>
                     <button class="mode-btn" data-mode="6">Pseudo-Normals</button>
                     <button class="mode-btn" data-mode="3">Logical Depth</button>
                     <button class="mode-btn" data-mode="4">Lightmap</button>

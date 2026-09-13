@@ -1,10 +1,12 @@
-// NIGHTMARE Neural HD — Phase 5 In-Browser WebGPU Neural Inference Engine
-// Uses onnxruntime-web (WebGPU Execution Provider) with Dynamic Degradation Fallback
+// NIGHTMARE Neural HD — Phase 5 In-Browser WebGPU Neural Inference Engine v2
+// Multi-Scale ONNX Inference (2x: 960p, 3x: 1440p, 4x: 1920p/4K) with Silhouette Lock 2.0
+// and Multi-Tier Dynamic Degradation Fallback (EXTREME_4X -> ULTRA_3X -> HD_2X -> SHADERS -> RETRO)
 
 class NightmareNeuralInference {
     constructor(harness) {
         this.harness = harness;
-        this.session = null;
+        this.sessions = {}; // Cache of loaded ONNX sessions by scale
+        this.currentScale = 2; // Default scale: 2x (HD), 3x (Ultra), 4x (Extreme)
         this.isLoaded = false;
         this.isInferencing = false;
         this.width = 640;
@@ -14,40 +16,79 @@ class NightmareNeuralInference {
         this.frameTimeHistory = [];
         this.highLoadCounter = 0;
         this.lowLoadCounter = 0;
-        this.currentQualityLevel = 'HIGH'; // 'HIGH' (Neural 2x), 'MEDIUM' (WebGPU Shaders 1x), 'LOW' (Original 1996)
+        this.currentQualityLevel = 'HD_2X'; // 'EXTREME_4X', 'ULTRA_3X', 'HD_2X', 'MEDIUM' (Shaders), 'LOW' (1996)
+        this.targetQualityLevel = 'ULTRA_3X'; // Preferred quality requested by user
         this.onQualityChangeCallback = null;
 
         // Reusable input tensor buffer (1 x 6 x 480 x 640)
         this.inputBuffer = new Float32Array(1 * 6 * this.height * this.width);
     }
 
-    async init(modelPath = 'models/nightmare_neural_hd.onnx') {
+    async init(initialScale = 2) {
+        this.currentScale = initialScale;
+        return await this.loadModelForScale(this.currentScale);
+    }
+
+    async loadModelForScale(scale) {
         if (typeof ort === 'undefined') {
-            console.warn("[NIGHTMARE Neural] ONNX Runtime Web not found. Running in WebGPU Shader mode.");
+            console.warn("[NIGHTMARE Neural v2] ONNX Runtime Web not found. Running in WebGPU Shader mode.");
             return false;
         }
 
-        try {
-            console.log(`[NIGHTMARE Neural] Loading Neural Model from ${modelPath}...`);
-            
-            // Configure ONNX Runtime to use WebGPU Execution Provider with fallback to WASM
-            const options = {
-                executionProviders: ['webgpu', 'wasm'],
-                graphOptimizationLevel: 'all',
-            };
-
-            this.session = await ort.InferenceSession.create(modelPath, options);
+        if (this.sessions[scale]) {
+            this.currentScale = scale;
             this.isLoaded = true;
-            console.log("[NIGHTMARE Neural] Model successfully loaded on WebGPU execution provider!");
             return true;
-        } catch (err) {
-            console.warn("[NIGHTMARE Neural] Could not load ONNX model directly (will use high-quality WebGPU Shader fallback):", err.message);
-            return false;
         }
+
+        const modelPaths = [
+            `models/nightmare_neural_${scale}x.onnx`,
+            `models/nightmare_neural_hd.onnx` // Fallback for 2x
+        ];
+
+        for (const modelPath of modelPaths) {
+            try {
+                console.log(`[NIGHTMARE Neural v2] Attempting to load ONNX Model (${scale}x) from ${modelPath}...`);
+                const options = {
+                    executionProviders: ['webgpu', 'wasm'],
+                    graphOptimizationLevel: 'all',
+                };
+
+                const session = await ort.InferenceSession.create(modelPath, options);
+                this.sessions[scale] = session;
+                this.currentScale = scale;
+                this.isLoaded = true;
+                console.log(`[NIGHTMARE Neural v2] Model ${scale}x successfully loaded on WebGPU execution provider!`);
+                return true;
+            } catch (err) {
+                console.warn(`[NIGHTMARE Neural v2] Could not load ${modelPath}: ${err.message}`);
+            }
+        }
+
+        console.warn(`[NIGHTMARE Neural v2] Model ${scale}x not available. WebGPU procedural shaders will be used as high-fidelity fallback.`);
+        return false;
+    }
+
+    async setScale(scale) {
+        if (scale === this.currentScale && this.sessions[scale]) return true;
+        console.log(`[NIGHTMARE Neural v2] Switching scale to ${scale}x...`);
+        const ok = await this.loadModelForScale(scale);
+        if (ok) {
+            this.currentScale = scale;
+            if (scale === 4) this.currentQualityLevel = 'EXTREME_4X';
+            else if (scale === 3) this.currentQualityLevel = 'ULTRA_3X';
+            else this.currentQualityLevel = 'HD_2X';
+            this.targetQualityLevel = this.currentQualityLevel;
+            if (this.onQualityChangeCallback) {
+                this.onQualityChangeCallback(this.currentQualityLevel, `Switched scale to ${scale}x`);
+            }
+        }
+        return ok;
     }
 
     async runInference(rgbView, depthView, lightView, semanticView) {
-        if (!this.isLoaded || !this.session || this.isInferencing) {
+        const session = this.sessions[this.currentScale];
+        if (!this.isLoaded || !session || this.isInferencing) {
             return null;
         }
 
@@ -75,13 +116,17 @@ class NightmareNeuralInference {
         try {
             const inputTensor = new ort.Tensor('float32', this.inputBuffer, [1, 6, this.height, this.width]);
             const feeds = { gbuffer_input: inputTensor };
-            const results = await this.session.run(feeds);
-            const outputTensor = results.enhanced_2x_output;
+            const results = await session.run(feeds);
+
+            // Handle output names for 2x, 3x, 4x or legacy
+            const outputTensor = results[`enhanced_${this.currentScale}x_output`] || 
+                                 results.enhanced_2x_output || 
+                                 Object.values(results)[0];
 
             this.isInferencing = false;
-            return outputTensor; // Shape: [1, 3, 960, 1280]
+            return outputTensor; // Shape: [1, 3, 480*scale, 640*scale]
         } catch (err) {
-            console.error("[NIGHTMARE Neural] Inference pass failed:", err);
+            console.error(`[NIGHTMARE Neural v2] Inference pass failed at ${this.currentScale}x:`, err);
             this.isInferencing = false;
             return null;
         }
@@ -95,29 +140,42 @@ class NightmareNeuralInference {
 
         const avgFrametime = this.frameTimeHistory.reduce((a, b) => a + b, 0) / this.frameTimeHistory.length;
 
-        // If frametime exceeds 20.0ms continuously (> 60 frames under heavy load)
+        // Progressive degradation ladder when under heavy GPU load (> 20ms = < 50 FPS)
         if (avgFrametime > 20.0) {
             this.highLoadCounter++;
             this.lowLoadCounter = 0;
 
-            if (this.highLoadCounter > 60) {
-                if (this.currentQualityLevel === 'HIGH') {
+            if (this.highLoadCounter > 45) {
+                if (this.currentQualityLevel === 'EXTREME_4X') {
+                    this.setScale(3);
+                    this.setQualityLevel('ULTRA_3X', 'Frametime > 20ms: Auto-Degrading from 4x to 3x');
+                } else if (this.currentQualityLevel === 'ULTRA_3X') {
+                    this.setScale(2);
+                    this.setQualityLevel('HD_2X', 'Frametime > 20ms: Auto-Degrading from 3x to 2x');
+                } else if (this.currentQualityLevel === 'HD_2X') {
                     this.setQualityLevel('MEDIUM', 'Frametime > 20ms: Auto-Degrading to WebGPU Shaders');
                 } else if (this.currentQualityLevel === 'MEDIUM') {
                     this.setQualityLevel('LOW', 'Frametime > 25ms: Auto-Degrading to Original 1996');
                 }
                 this.highLoadCounter = 0;
             }
-        } else if (avgFrametime < 14.0) {
-            // If system has plenty of headroom (< 14.0ms), restore high quality
+        } else if (avgFrametime < 13.0) {
+            // Restore towards target quality when GPU headroom is ample (< 13ms = > 75 FPS)
             this.lowLoadCounter++;
             this.highLoadCounter = 0;
 
-            if (this.lowLoadCounter > 120) {
+            if (this.lowLoadCounter > 100) {
                 if (this.currentQualityLevel === 'LOW') {
                     this.setQualityLevel('MEDIUM', 'Performance stabilized: Restoring WebGPU Shaders');
-                } else if (this.currentQualityLevel === 'MEDIUM' && this.isLoaded) {
-                    this.setQualityLevel('HIGH', 'Performance optimal: Restoring Neural HD 2x');
+                } else if (this.currentQualityLevel === 'MEDIUM') {
+                    this.setScale(2);
+                    this.setQualityLevel('HD_2X', 'Performance optimal: Restoring Neural HD 2x');
+                } else if (this.currentQualityLevel === 'HD_2X' && (this.targetQualityLevel === 'ULTRA_3X' || this.targetQualityLevel === 'EXTREME_4X')) {
+                    this.setScale(3);
+                    this.setQualityLevel('ULTRA_3X', 'High performance headroom: Restoring Ultra HD 3x');
+                } else if (this.currentQualityLevel === 'ULTRA_3X' && this.targetQualityLevel === 'EXTREME_4X') {
+                    this.setScale(4);
+                    this.setQualityLevel('EXTREME_4X', 'Maximum performance headroom: Restoring Extreme 4x');
                 }
                 this.lowLoadCounter = 0;
             }

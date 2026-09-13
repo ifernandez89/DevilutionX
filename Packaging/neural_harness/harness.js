@@ -20,7 +20,7 @@ class NightmareHarness {
 
         // Shader parameters & Biomes
         this.state = {
-            renderMode: 2, // 0: Original, 1: Enhanced, 2: Split A/B, 3: Depth, 4: Light, 5: Semantic, 6: Normals, 7: Neural HD 2x
+            renderMode: 2, // 0: Original, 1: Enhanced, 2: Split A/B, 3: Depth, 4: Light, 5: Semantic, 6: Normals, 7: SilLock 2.0
             splitPos: 0.5,
             lightIntensity: 1.4,
             bonfireFlicker: 1.0,
@@ -30,6 +30,8 @@ class NightmareHarness {
             bonfirePos: [320, 240],
             qualityTier: 1, // 1: Full effects (directional shadows, heat shimmer, mist), 0: Fallback low-tier
             mistDensity: 0.35,
+            scaleFactor: 3.0, // 2.0 (HD), 3.0 (Ultra HD - Sweet Spot), 4.0 (Extreme HD)
+            silhouetteLock2: 1, // Silhouette Lock 2.0 active
         };
 
         // Neural Inference Engine (Phase 5)
@@ -280,6 +282,8 @@ class NightmareHarness {
         uViewF32[11] = this.state.bonfirePos[1];
         uViewU32[12] = this.state.qualityTier;
         uViewF32[13] = this.state.mistDensity;
+        uViewF32[14] = this.state.scaleFactor;
+        uViewU32[15] = this.state.silhouetteLock2;
 
         this.device.queue.writeBuffer(this.uniformBuffer, 0, uData);
     }
@@ -358,6 +362,21 @@ class NightmareHarness {
     }
 
     setupUI() {
+        // Scale Selector Buttons (v2)
+        document.querySelectorAll('.scale-btn').forEach(btn => {
+            btn.addEventListener('click', async (e) => {
+                document.querySelectorAll('.scale-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const scale = parseInt(btn.dataset.scale, 10);
+                this.state.scaleFactor = scale;
+                if (this.neuralEngine) {
+                    await this.neuralEngine.setScale(scale);
+                }
+                const label = scale === 4 ? "EXTREME (4× 1920p)" : (scale === 3 ? "ULTRA (3× 1440p)" : "HD (2× 960p)");
+                if (this.qualityBadgeEl) this.qualityBadgeEl.textContent = label;
+            });
+        });
+
         // Mode Selector Buttons
         document.querySelectorAll('.mode-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {

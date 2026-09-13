@@ -1,0 +1,8 @@
+# Local gitignore for nightmare_sega
+# Unignore 68000 assembly source files ignored by root DevilutionX .gitignore
+!*.asm
+!src/*.asm
+
+# Ignore build artifacts
+build/
+*.tmp

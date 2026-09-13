@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Quake 1 WASM — Slipgate Dimension 3D WebAssembly</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌋</text></svg>">
+    
+    <!-- Google Fonts: Orbitron & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800;900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    
+    <!-- Retro Nav Global Styles -->
+    <link rel="stylesheet" href="../assets/retro-nav/retro-nav.css">
+    
+    <!-- Quake Styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Header -->
+        <header class="quake-header">
+            <div class="header-left">
+                <!-- Retro Hub dropdown slot -->
+                <div id="retro-nav-slot"></div>
+                <div class="logo-box">
+                    <span class="logo-icon">🌋</span>
+                    <div class="logo-text">
+                        <h1>QUAKE <span>3D WASM</span></h1>
+                        <span class="logo-sub">TYRQUAKE 60 FPS • SLIPGATE DIMENSION</span>
+                    </div>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="status-badge live">
+                    <span class="status-dot"></span>
+                    <span id="engineStatus">TYRQUAKE 3D LISTO</span>
+                </div>
+                <div class="gamepad-status" id="gamepadIndicator" title="Conecta un gamepad para jugar">
+                    <span class="gp-dot" id="gamepadDot"></span>
+                    <span class="gp-text" id="gamepadText">GAMEPAD DESCONECTADO</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="quake-main">
+            <!-- Hub / Cartridge Selection Section -->
+            <section class="hub-section" id="hub-section">
+                <div class="hub-hero">
+                    <div class="hero-badge">REVOLUCIÓN 3D • ID SOFTWARE 1996</div>
+                    <h2>DIMENSION OF THE DOOMED</h2>
+                    <p>Adéntrate en los portales slipgate para purgar a las hordas del caos cósmico. Motor 3D real con iluminación por polígonos, física fluida y combate visceral a 60 FPS directamente en tu navegador.</p>
+                </div>
+
+                <div class="cartridges-grid">
+                    <!-- Native Quake Shareware Cartridge -->
+                    <div class="cartridge-card active" id="cardQuake1">
+                        <div class="cartridge-header">
+                            <span class="badge-tag shareware">SHAREWARE OFICIAL</span>
+                            <span class="badge-size">18.6 MB PAK</span>
+                        </div>
+                        <div class="cartridge-body">
+                            <div class="cartridge-cover quake1-cover">
+                                <div class="cover-overlay">
+                                    <span class="cover-icon">⚡</span>
+                                    <span class="cover-episode">EPISODIO 1 COMPLETO</span>
+                                </div>
+                            </div>
+                            <div class="cartridge-info">
+                                <h3>Quake: Episode 1</h3>
+                                <p class="cart-subtitle">Dimension of the Doomed</p>
+                                <p class="cart-desc">El legendario primer episodio completo con 8 niveles clásicos, el Ogre, el Shambler, escopetas, lanzaclavos y el portal slipgate final.</p>
+                                <div class="cart-tags">
+                                    <span>🔫 3D Poligonal</span>
+                                    <span>🔊 Sonido Digital</span>
+                                    <span>💾 Save / Load</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cartridge-footer">
+                            <button class="btn-primary play-btn" id="playQuakeBtn">
+                                <span class="btn-icon">▶</span>
+                                <span class="btn-label">JUGAR EPISODIO 1 (1 CLIC)</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Custom PAK Loader Card -->
+                    <div class="cartridge-card custom-card" id="cardCustom">
+                        <div class="cartridge-header">
+                            <span class="badge-tag custom">PERSONALIZADO</span>
+                            <span class="badge-size">ARRASTRA TU PAK</span>
+                        </div>
+                        <div class="cartridge-body">
+                            <div class="cartridge-cover custom-cover">
+                                <div class="cover-overlay">
+                                    <span class="cover-icon">📁</span>
+                                    <span class="cover-episode">CARGAR ARCHIVO</span>
+                                </div>
+                            </div>
+                            <div class="cartridge-info">
+                                <h3>Tu Propio PAK</h3>
+                                <p class="cart-subtitle">Juego completo o expansiones</p>
+                                <p class="cart-desc">¿Tienes tu archivo <code>pak0.pak</code> y <code>pak1.pak</code> completo, o expansiones como <em>Scourge of Armagon</em> o <em>Dissolution</em>? Arrástralo aquí.</p>
+                                <div class="dropzone-area" id="quakeDropzone">
+                                    <input type="file" id="pakFileInput" accept=".pak,.zip" style="display:none">
+                                    <span class="dz-icon">📥</span>
+                                    <span class="dz-text">Arrastra un archivo .PAK o .ZIP aquí</span>
+                                    <button class="btn-browse" id="browsePakBtn" type="button">Examinar equipo</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Controls Guide Box -->
+                <div class="guide-box">
+                    <h3>🕹️ GUÍA DE CONTROLES QUAKE</h3>
+                    <div class="controls-grid">
+                        <div class="ctrl-item"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd><span>Moverse / Strafe</span></div>
+                        <div class="ctrl-item"><kbd>Ratón</kbd> / <kbd>Flechas</kbd><span>Mirar / Girar 3D</span></div>
+                        <div class="ctrl-item"><kbd>Click Izq</kbd> / <kbd>Ctrl</kbd><span>Disparar Arma</span></div>
+                        <div class="ctrl-item"><kbd>Espacio</kbd><span>Saltar</span></div>
+                        <div class="ctrl-item"><kbd>Shift</kbd><span>Correr</span></div>
+                        <div class="ctrl-item"><kbd>1</kbd> - <kbd>8</kbd><span>Seleccionar Armas</span></div>
+                        <div class="ctrl-item"><kbd>F5</kbd> / <kbd>F9</kbd><span>Guardado / Carga Rápida</span></div>
+                        <div class="ctrl-item"><kbd>Esc</kbd> / <kbd>~</kbd><span>Menú / Consola</span></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Emulator View Section -->
+            <section class="emulator-section" id="emulator-section" style="display:none;">
+                <div class="screen-card size-large">
+                    <div class="screen-header">
+                        <div class="screen-title">
+                            <span class="screen-dot"></span>
+                            <span id="activeGameTitle">Quake 1: Episode 1 (Shareware)</span>
+                        </div>
+                        <div class="screen-actions">
+                            <button class="screen-btn" id="screenSizeBtn" title="Cambiar tamaño de pantalla">📺 Tamaño: Grande (980p)</button>
+                            <button class="screen-btn" id="crtToggleBtn" title="Activar/Desactivar filtro CRT">📺 Filtro CRT: OFF</button>
+                            <button class="screen-btn" id="fullscreenBtn" title="Pantalla Completa">⛶ Pantalla Completa</button>
+                        </div>
+                    </div>
+
+                    <!-- Canvas Container -->
+                    <div class="canvas-container" id="canvas-container">
+                        <div class="scanlines-overlay" id="scanlines" style="display:none;"></div>
+                    </div>
+
+                    <!-- Toolbar -->
+                    <div class="screen-toolbar size-large">
+                        <div class="tb-group">
+                            <button class="tb-btn" id="pauseResumeBtn" title="Pausar / Continuar">⏸ Pausa</button>
+                            <button class="tb-btn" id="resetBtn" title="Reiniciar">🔄 Reiniciar</button>
+                        </div>
+                        <div class="tb-group">
+                            <button class="tb-btn" id="saveStateBtn" title="Guardar Estado">💾 Guardar Estado</button>
+                            <button class="tb-btn" id="loadStateBtn" title="Cargar Estado">📂 Cargar Estado</button>
+                            <button class="tb-btn" id="screenshotBtn" title="Captura de Pantalla">📷 Captura</button>
+                        </div>
+                        <div class="tb-group">
+                            <button class="tb-btn exit-btn" id="exitGameBtn" title="Salir al Hub">🚪 Salir al Hub</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Loading Overlay -->
+        <div class="loading-overlay" id="loading-overlay" style="display:none;">
+            <div class="spinner-box">
+                <div class="slipgate-spinner"></div>
+                <h3 id="loadingText">Iniciando Portal Slipgate...</h3>
+                <p id="loadingSubtext">Cargando motor TyrQuake WebAssembly & PAK0...</p>
+            </div>
+        </div>
+
+        <!-- Toast Notifications -->
+        <div class="toast" id="toast" style="display:none;">
+            <span class="toast-icon" id="toastIcon">ℹ️</span>
+            <span class="toast-message" id="toastMessage">Mensaje</span>
+        </div>
+    </div>
+
+    <!-- Nostalgist Vendor -->
+    <script src="vendor/nostalgist.umd.js"></script>
+    <!-- Retro Nav Global Script -->
+    <script src="../assets/retro-nav/retro-nav.js"></script>
+    <!-- Quake Controller -->
+    <script src="app.js"></script>
+</body>
+</html>

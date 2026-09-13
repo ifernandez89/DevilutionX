@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Cave Story WASM — Doukutsu Monogatari WebAssembly</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐰</text></svg>">
+    
+    <!-- Google Fonts: Press Start 2P & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    
+    <!-- Retro Nav Global Styles -->
+    <link rel="stylesheet" href="../assets/retro-nav/retro-nav.css">
+    
+    <!-- Cave Story Styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Header -->
+        <header class="cs-header">
+            <div class="header-left">
+                <!-- Retro Hub dropdown slot -->
+                <div id="retro-nav-slot"></div>
+                <div class="logo-box">
+                    <span class="logo-icon">🐰</span>
+                    <div class="logo-text">
+                        <h1>CAVE STORY <span>WASM</span></h1>
+                        <span class="logo-sub">DOUKUTSU MONOGATARI • NXENGINE 60 FPS</span>
+                    </div>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="status-badge live">
+                    <span class="status-dot"></span>
+                    <span id="engineStatus">NXENGINE LISTO</span>
+                </div>
+                <div class="gamepad-status" id="gamepadIndicator" title="Conecta un gamepad para jugar">
+                    <span class="gp-dot" id="gamepadDot"></span>
+                    <span class="gp-text" id="gamepadText">GAMEPAD DESCONECTADO</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="cs-main">
+            <!-- Hub / Cartridge Selection Section -->
+            <section class="hub-section" id="hub-section">
+                <div class="hub-hero">
+                    <div class="hero-badge">OBRA MAESTRA INDIE • 100% FREEWARE</div>
+                    <h2>DOUKUTSU MONOGATARI</h2>
+                    <p>La inolvidable aventura de plataformas y exploración creada por Daisuke "Pixel" Amaya. Despierta en una caverna misteriosa, rescata a los Mimigas y descubre los oscuros secretos de la isla flotante con música chiptune original y combate frenético.</p>
+                </div>
+
+                <div class="cartridges-grid">
+                    <!-- Native Cave Story Cartridge -->
+                    <div class="cartridge-card active" id="cardCaveStory">
+                        <div class="cartridge-header">
+                            <span class="badge-tag freeware">FREEWARE ORIGINAL</span>
+                            <span class="badge-size">1.15 MB NATIVO</span>
+                        </div>
+                        <div class="cartridge-body">
+                            <div class="cartridge-cover cs-cover">
+                                <div class="cover-overlay">
+                                    <span class="cover-icon">⭐</span>
+                                    <span class="cover-episode">AVENTURA COMPLETA (EN)</span>
+                                </div>
+                            </div>
+                            <div class="cartridge-info">
+                                <h3>Cave Story (English)</h3>
+                                <p class="cart-subtitle">Traducción oficial de Aeon Genesis</p>
+                                <p class="cart-desc">Juego completo con todos los jefes, múltiples finales, armas mejorables (Polar Star, Machine Gun, Blade), sintetizador de audio Organya y controles ultra precisos.</p>
+                                <div class="cart-tags">
+                                    <span>🗡️ Metroidvania</span>
+                                    <span>🎵 Música Chiptune</span>
+                                    <span>💾 Guardado Automático</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cartridge-footer">
+                            <button class="btn-primary play-btn" id="playCaveBtn">
+                                <span class="btn-icon">▶</span>
+                                <span class="btn-label">JUGAR CAVE STORY (1 CLIC)</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Custom Cave Story Mod Loader -->
+                    <div class="cartridge-card custom-card" id="cardCustom">
+                        <div class="cartridge-header">
+                            <span class="badge-tag custom">MODS & PARCHES</span>
+                            <span class="badge-size">ARRASTRA TU ZIP</span>
+                        </div>
+                        <div class="cartridge-body">
+                            <div class="cartridge-cover custom-cover">
+                                <div class="cover-overlay">
+                                    <span class="cover-icon">📦</span>
+                                    <span class="cover-episode">MOD PERSONALIZADO</span>
+                                </div>
+                            </div>
+                            <div class="cartridge-info">
+                                <h3>Mods de Cave Story</h3>
+                                <p class="cart-subtitle">Traducción al español o mods de la comunidad</p>
+                                <p class="cart-desc">¿Tienes una versión en español o un mod como <em>Jenka's Nightmare</em> o <em>Kero Blaster</em> en archivo <code>.zip</code>? Arrástralo aquí para ejecutarlo.</p>
+                                <div class="dropzone-area" id="csDropzone">
+                                    <input type="file" id="csFileInput" accept=".zip" style="display:none">
+                                    <span class="dz-icon">📥</span>
+                                    <span class="dz-text">Arrastra un archivo .ZIP aquí</span>
+                                    <button class="btn-browse" id="browseCsBtn" type="button">Examinar equipo</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Controls Guide Box -->
+                <div class="guide-box">
+                    <h3>🕹️ GUÍA DE CONTROLES CAVE STORY</h3>
+                    <div class="controls-grid">
+                        <div class="ctrl-item"><kbd>←</kbd><kbd>→</kbd> / <kbd>A</kbd><kbd>D</kbd><span>Moverse Izq / Der</span></div>
+                        <div class="ctrl-item"><kbd>↓</kbd> / <kbd>S</kbd><span>Examinar / Interactuar</span></div>
+                        <div class="ctrl-item"><kbd>↑</kbd> / <kbd>W</kbd><span>Apuntar hacia arriba</span></div>
+                        <div class="ctrl-item"><kbd>Z</kbd> / <kbd>K</kbd> / <kbd>Espacio</kbd><span>Saltar</span></div>
+                        <div class="ctrl-item"><kbd>X</kbd> / <kbd>J</kbd><span>Disparar Arma</span></div>
+                        <div class="ctrl-item"><kbd>A</kbd> / <kbd>S</kbd> / <kbd>Q</kbd><kbd>E</kbd><span>Cambiar Arma</span></div>
+                        <div class="ctrl-item"><kbd>Q</kbd> / <kbd>I</kbd><span>Inventario de Ítems</span></div>
+                        <div class="ctrl-item"><kbd>W</kbd> / <kbd>M</kbd><span>Mapa del Sistema</span></div>
+                        <div class="ctrl-item"><kbd>F5</kbd> / <kbd>F7</kbd><span>Guardar / Cargar Estado</span></div>
+                        <div class="ctrl-item"><kbd>Esc</kbd> / <kbd>Enter</kbd><span>Pausa / Menú</span></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Emulator View Section -->
+            <section class="emulator-section" id="emulator-section" style="display:none;">
+                <div class="screen-card size-large">
+                    <div class="screen-header">
+                        <div class="screen-title">
+                            <span class="screen-dot"></span>
+                            <span id="activeGameTitle">Cave Story (English Deluxe)</span>
+                        </div>
+                        <div class="screen-actions">
+                            <button class="screen-btn" id="screenSizeBtn" title="Cambiar tamaño de pantalla">📺 Tamaño: Grande (980p)</button>
+                            <button class="screen-btn" id="crtToggleBtn" title="Activar/Desactivar filtro CRT">📺 Filtro CRT: OFF</button>
+                            <button class="screen-btn" id="fullscreenBtn" title="Pantalla Completa">⛶ Pantalla Completa</button>
+                        </div>
+                    </div>
+
+                    <!-- Canvas Container -->
+                    <div class="canvas-container" id="canvas-container">
+                        <div class="scanlines-overlay" id="scanlines" style="display:none;"></div>
+                    </div>
+
+                    <!-- Toolbar -->
+                    <div class="screen-toolbar size-large">
+                        <div class="tb-group">
+                            <button class="tb-btn" id="pauseResumeBtn" title="Pausar / Continuar">⏸ Pausa</button>
+                            <button class="tb-btn" id="resetBtn" title="Reiniciar">🔄 Reiniciar</button>
+                        </div>
+                        <div class="tb-group">
+                            <button class="tb-btn" id="saveStateBtn" title="Guardar Estado">💾 Guardar Estado</button>
+                            <button class="tb-btn" id="loadStateBtn" title="Cargar Estado">📂 Cargar Estado</button>
+                            <button class="tb-btn" id="screenshotBtn" title="Captura de Pantalla">📷 Captura</button>
+                        </div>
+                        <div class="tb-group">
+                            <button class="tb-btn exit-btn" id="exitGameBtn" title="Salir al Hub">🚪 Salir al Hub</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Loading Overlay -->
+        <div class="loading-overlay" id="loading-overlay" style="display:none;">
+            <div class="spinner-box">
+                <div class="cs-spinner"></div>
+                <h3 id="loadingText">Entrando a la Caverna...</h3>
+                <p id="loadingSubtext">Cargando motor NXEngine WebAssembly & Cave Story...</p>
+            </div>
+        </div>
+
+        <!-- Toast Notifications -->
+        <div class="toast" id="toast" style="display:none;">
+            <span class="toast-icon" id="toastIcon">ℹ️</span>
+            <span class="toast-message" id="toastMessage">Mensaje</span>
+        </div>
+    </div>
+
+    <!-- Nostalgist Vendor -->
+    <script src="vendor/nostalgist.umd.js"></script>
+    <!-- Retro Nav Global Script -->
+    <script src="../assets/retro-nav/retro-nav.js"></script>
+    <!-- Cave Story Controller -->
+    <script src="app.js"></script>
+</body>
+</html>

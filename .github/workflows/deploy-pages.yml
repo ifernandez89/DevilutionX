@@ -137,6 +137,12 @@ jobs:
           if [ -d Packaging/emscripten/wolf3d ]; then
             cp -rv Packaging/emscripten/wolf3d dist/wolf3d
           fi
+          if [ -d Packaging/emscripten/quake ]; then
+            cp -rv Packaging/emscripten/quake dist/quake
+          fi
+          if [ -d Packaging/emscripten/cavestory ]; then
+            cp -rv Packaging/emscripten/cavestory dist/cavestory
+          fi
 
           # Copy cached spawn.mpq
           if [ -f "cached_mpq/spawn.mpq" ]; then

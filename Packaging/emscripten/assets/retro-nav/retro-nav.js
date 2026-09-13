@@ -9,7 +9,7 @@
     // Calculate relative path to root Packaging/emscripten/ directory
     function getRootRelativePath() {
         const path = window.location.pathname.toLowerCase();
-        if (path.includes('/doom/') || path.includes('/wolf3d/') || path.includes('/gens/') || path.includes('/minixp/') || path.includes('/tinycore/')) {
+        if (path.includes('/doom/') || path.includes('/wolf3d/') || path.includes('/gens/') || path.includes('/minixp/') || path.includes('/tinycore/') || path.includes('/quake/') || path.includes('/cavestory/')) {
             return '../';
         }
         return './';
@@ -55,6 +55,21 @@
             ]
         },
         {
+            category: '🌋 3D FPS REVOLUTION (Motor TyrQuake WASM)',
+            items: [
+                {
+                    id: 'quake1',
+                    title: 'Quake 1: Episode 1',
+                    subtitle: 'Dimension of the Doomed (id Software 1996)',
+                    badge: 'SHAREWARE',
+                    badgeClass: 'badge-shareware',
+                    icon: '🌋',
+                    url: `${BASE_PATH}quake/index.html`,
+                    activeMatcher: (p) => p.includes('/quake/')
+                }
+            ]
+        },
+        {
             category: '🐺 FPS CLASSICS (Motor ECWolf WASM)',
             items: [
                 {
@@ -66,6 +81,21 @@
                     icon: '🐺',
                     url: `${BASE_PATH}wolf3d/index.html`,
                     activeMatcher: (p) => p.includes('/wolf3d/')
+                }
+            ]
+        },
+        {
+            category: '🐰 INDIE ADVENTURE (Motor NXEngine WASM)',
+            items: [
+                {
+                    id: 'cavestory',
+                    title: 'Cave Story (Doukutsu)',
+                    subtitle: 'Pixel Amaya • Aventura Completa en Inglés',
+                    badge: 'FREEWARE',
+                    badgeClass: 'badge-open-source',
+                    icon: '🐰',
+                    url: `${BASE_PATH}cavestory/index.html`,
+                    activeMatcher: (p) => p.includes('/cavestory/')
                 }
             ]
         },
@@ -95,7 +125,7 @@
                     badgeClass: 'badge-wasm',
                     icon: '⚔️',
                     url: `${BASE_PATH}index.html`,
-                    activeMatcher: (p) => !p.includes('/doom/') && !p.includes('/wolf3d/') && !p.includes('/gens/') && !p.includes('/minixp/')
+                    activeMatcher: (p) => !p.includes('/doom/') && !p.includes('/wolf3d/') && !p.includes('/gens/') && !p.includes('/minixp/') && !p.includes('/quake/') && !p.includes('/cavestory/')
                 }
             ]
         },

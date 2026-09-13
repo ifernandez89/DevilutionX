@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### 🎮 Gens / Sega Genesis (Mega Drive) WebAssembly & File Manager Integration ([`Packaging/emscripten/gens/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/gens/index.html), [`Packaging/emscripten/gens/style.css`](file:///c:/Projects/DevilutionX/Packaging/emscripten/gens/style.css), [`Packaging/emscripten/gens/app.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/gens/app.js), [`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html), [`build-web/index.html`](file:///c:/Projects/DevilutionX/build-web/index.html), [`Packaging/emscripten/server.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/server.js))
+- **Integración Nativa en File Manager y Barra de Herramientas**:
+  - Incorporado botón de acceso directo `🎮 Gens (Mega Drive)` en la barra superior web de DevilutionX junto al lanzador de Tiny Core Linux.
+  - Diseñada tarjeta dedicada de emulación Sega Genesis / Mega Drive dentro del modal del Administrador de Archivos (`fileManagerModal`), preservando intacta la estética y funcionalidad original de la interfaz.
+  - Enlaces rápidos de 1 clic: `🕹️ Abrir Gens Emulator & ROMs` y `🏍️ Jugar Road Rash 3`.
+- **Gens Web / Centro de Emulación y ROMs WebAssembly**:
+  - Plataforma de ejecución directa en el navegador a 60 FPS con motor Genesis Plus GX compilado a WebAssembly.
+  - **Cartucho Destacado Incluido**: Incorporado `RoadRash3.smd` (Electronic Arts, 1995) listo para jugar inmediatamente con síntesis de sonido FM estéreo YM2612.
+  - **Zona Drag & Drop Universal**: Soporte para arrastrar y soltar cualquier ROM de Mega Drive / Genesis en formatos `.smd`, `.bin`, `.gen`, `.md` o `.zip`.
+  - **Controles y Hardware**: Mapeo completo para pad arcade de 6 botones (D-Pad, A, B, C, X, Y, Z, Start, Mode) con detección plug-and-play de Gamepads USB/Bluetooth (HTML5 Gamepad API).
+  - **Herramientas de Juego**: Guardado rápido de estados (`F5`), carga rápida (`F7`), pausa (`P`), reinicio rápido (`R`), filtro de tubo de rayos catódicos con líneas de escaneo CRT activable (`Scanlines`), capturas de pantalla instantáneas y pantalla completa.
+  - **Arquitectura Offline**: Almacenamiento local del núcleo WebAssembly (`genesis_plus_gx_libretro.wasm`) y dependencias vendor para funcionamiento sin conexión a internet, con soporte de HTTP Range y tipos MIME en `server.js`.
+
 ### 🩸 NIGHTMARE Intensity System & Rediseño de Supervivencia (Fuentes Tácticas, Ciclos de Botín e Invasión Escalonada) ([`Source/nightmare/world/level_atmosphere.hpp`](file:///c:/Projects/DevilutionX/Source/nightmare/world/level_atmosphere.hpp), [`Source/nightmare/world/level_atmosphere.cpp`](file:///c:/Projects/DevilutionX/Source/nightmare/world/level_atmosphere.cpp), [`Source/monster.cpp`](file:///c:/Projects/DevilutionX/Source/monster.cpp), [`Source/levels/themes.cpp`](file:///c:/Projects/DevilutionX/Source/levels/themes.cpp), [`Source/nightmare/invasion/invasion_manager.hpp`](file:///c:/Projects/DevilutionX/Source/nightmare/invasion/invasion_manager.hpp), [`Source/nightmare/invasion/invasion_manager.cpp`](file:///c:/Projects/DevilutionX/Source/nightmare/invasion/invasion_manager.cpp))
 - **Controlador Central `NightmareIntensity(level)` ($0.00$ a $1.00$)**:
   - Implementada curva matemática continua que modula centralizadamente radio de luz, densidad de hordas, multiplicadores de grupos de monstruos y tensión ambiental sin condicionales dispersos.

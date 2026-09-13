@@ -473,4 +473,6 @@ uwp-project/Assets/ui_art
 /compile_commands.json
 *.iso
 /deps/
+Packaging/emscripten/minixp/
+gens-win32-bin-2.14/
 

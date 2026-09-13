@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gens Web — Sega Genesis & Mega Drive (WebAssembly)</title>
+    <meta name="description" content="Emulador Sega Genesis / Mega Drive de 16 bits en WebAssembly directo en el navegador con soporte de ROMs, sonido FM YM2612 y mandos USB.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Top Navigation -->
+    <header>
+        <div class="brand">
+            <div class="brand-badge">GENS WASM</div>
+            <div class="brand-title">
+                SEGA GENESIS <span>16-BIT</span>
+            </div>
+        </div>
+        <div class="header-actions">
+            <a href="../index.html" class="btn btn-secondary" title="Volver al juego DevilutionX / Diablo">
+                ⚔️ Volver a Diablo
+            </a>
+            <a href="../minixp/index.html" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" title="Lanzar Tiny Core Linux VM">
+                🐧 Tiny Core Linux
+            </a>
+            <button class="btn btn-primary" id="topUploadBtn">
+                📂 Cargar ROM
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-wrapper">
+
+        <!-- Active Emulator Display (Hidden initially, visible when playing) -->
+        <section id="emulator-section">
+            <div class="screen-card">
+                <div id="canvas-container">
+                    <!-- Canvas will be created/attached here -->
+                    <div id="scanlines" class="scanlines-overlay"></div>
+                </div>
+            </div>
+
+            <!-- In-Game Controls Toolbar -->
+            <div class="screen-toolbar">
+                <div class="toolbar-group">
+                    <button class="btn-tool" id="pauseResumeBtn" title="Pausar o Continuar (P)">
+                        ⏸️ Pausar
+                    </button>
+                    <button class="btn-tool" id="resetBtn" title="Reiniciar Emulación (R)">
+                        🔄 Reiniciar
+                    </button>
+                    <button class="btn-tool" id="crtToggleBtn" title="Alternar Filtro CRT Scanlines">
+                        📺 Scanlines: OFF
+                    </button>
+                </div>
+
+                <div class="toolbar-group">
+                    <button class="btn-tool" id="saveStateBtn" title="Guardar Estado Rápido (F5)">
+                        💾 Guardar (F5)
+                    </button>
+                    <button class="btn-tool" id="loadStateBtn" title="Cargar Estado Rápido (F7)">
+                        📂 Cargar (F7)
+                    </button>
+                    <button class="btn-tool" id="screenshotBtn" title="Captura de Pantalla">
+                        📸 Captura
+                    </button>
+                </div>
+
+                <div class="toolbar-group">
+                    <button class="btn-tool" id="fullscreenBtn" title="Pantalla Completa">
+                        ⛶ Fullscreen
+                    </button>
+                    <button class="btn-tool btn-accent" id="exitGameBtn" title="Cerrar juego actual">
+                        ❌ Salir
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ROMs Hub & Cartridges (Visible when no game is active) -->
+        <section id="hub-section" class="hub-grid">
+
+            <!-- Pre-loaded Cartridge Card: Road Rash 3 -->
+            <div class="cartridge-card">
+                <div>
+                    <div class="cartridge-badge">ROM Incluida • Lista para Jugar</div>
+                    <div class="cartridge-header">
+                        <div class="cartridge-icon">🏍️</div>
+                        <div>
+                            <h2 class="cartridge-title">Road Rash 3</h2>
+                            <div class="cartridge-subtitle">Tour de Force (1995) • Electronic Arts</div>
+                        </div>
+                    </div>
+                    <p class="cartridge-desc">
+                        El aclamado clásico de combate y carreras en motocicleta por todo el mundo. Gráficos digitalizados, música estéreo con síntesis FM YM2612 y toda la velocidad a 60 FPS nativos en WebAssembly.
+                    </p>
+                    <div class="cartridge-meta">
+                        <span class="meta-tag">Formato: SMD</span>
+                        <span class="meta-tag">Tamaño: 2.0 MB</span>
+                        <span class="meta-tag">Región: World / NTSC</span>
+                        <span class="meta-tag">Soporte: 1-2 Jugadores</span>
+                    </div>
+                </div>
+                <div class="cartridge-actions">
+                    <button class="btn btn-accent" id="playRoadRashBtn" style="font-size: 15px; padding: 12px 24px;">
+                        ▶ JUGAR ROAD RASH 3
+                    </button>
+                </div>
+            </div>
+
+            <!-- Drag & Drop ROM Ingestion Area -->
+            <div class="dropzone-card" id="dropzone">
+                <input type="file" id="fileInput" accept=".smd,.bin,.gen,.md,.zip" style="display: none;">
+                <div class="dropzone-icon">🕹️</div>
+                <h3 class="dropzone-title">Arrastrá tu ROM de Genesis</h3>
+                <p class="dropzone-subtitle">
+                    Arrastrá y soltá cualquier archivo de juego aquí o hacé clic para explorar desde tu PC.
+                </p>
+                <div class="dropzone-exts">
+                    <span class="ext-badge">.SMD</span>
+                    <span class="ext-badge">.BIN</span>
+                    <span class="ext-badge">.GEN</span>
+                    <span class="ext-badge">.MD</span>
+                    <span class="ext-badge">.ZIP</span>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Hardware & Keybindings Guide -->
+        <section class="controls-section">
+            <div class="controls-header">
+                <h3>🎮 Mapeo de Controles (Sega 6-Button Arcade Pad)</h3>
+                <div class="gamepad-status" id="gamepadStatus">
+                    <span class="status-dot" id="gamepadDot"></span>
+                    <span id="gamepadText">Sin gamepad detectado (conectá uno USB/Bluetooth)</span>
+                </div>
+            </div>
+
+            <div class="keys-grid">
+                <div class="key-card">
+                    <span class="key-label">Dirección (D-Pad)</span>
+                    <span class="key-badge">⬆️ ⬇️ ⬅️ ➡️ Flechas</span>
+                </div>
+                <div class="key-card">
+                    <span class="key-label">Botón A (Frenar / Golpear Izq.)</span>
+                    <span class="key-badge">A</span>
+                </div>
+                <div class="key-card">
+                    <span class="key-label">Botón B (Acelerar / Golpear Der.)</span>
+                    <span class="key-badge">S</span>
+                </div>
+                <div class="key-card">
+                    <span class="key-label">Botón C (Turbo Nitro / Saltar)</span>
+                    <span class="key-badge">D</span>
+                </div>
+                <div class="key-card">
+                    <span class="key-label">Botón X</span>
+                    <span class="key-badge">Q</span>
+                </div>
+                <div class="key-card">
+                    <span class="key-label">Botón Y</span>
+                    <span class="key-badge">W</span>
+                </div>
+                <div class="key-card">
+                    <span class="key-label">Botón Z</span>
+                    <span class="key-badge">E</span>
+                </div>
+                <div class="key-card">
+                    <span class="key-label">Start / Pausa</span>
+                    <span class="key-badge">Enter</span>
+                </div>
+                <div class="key-card">
+                    <span class="key-label">Mode / Selección</span>
+                    <span class="key-badge">Shift</span>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay">
+        <div class="spinner"></div>
+        <div class="loading-text" id="loadingText">Iniciando Gens WebAssembly...</div>
+        <div class="loading-subtext" id="loadingSubtext">Cargando núcleo Genesis Plus GX</div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast">
+        <span id="toastIcon">ℹ️</span>
+        <span id="toastMessage">Notificación</span>
+    </div>
+
+    <!-- Vendor Dependencies -->
+    <script src="vendor/nostalgist.umd.js"></script>
+    <!-- Emulator Main Script -->
+    <script src="app.js"></script>
+</body>
+</html>

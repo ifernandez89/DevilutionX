@@ -817,6 +817,7 @@
 	<div class="top-toolbar">
 		<button class="ui-btn" id="remasterToggleBtn" title="Alternar Modo Neural Render (F2)">⚡ Neural Render: ON</button>
 		<button class="ui-btn" id="tinyCoreBtn" title="Lanzar Tiny Core Linux (WebAssembly)" onclick="if(document.exitPointerLock) document.exitPointerLock(); window.open('minixp/index.html', '_blank', 'noopener,noreferrer')">🐧 Tiny Core Linux</button>
+		<button class="ui-btn" id="gensBtn" title="Lanzar Gens Sega Genesis (WebAssembly)" onclick="if(document.exitPointerLock) document.exitPointerLock(); window.open('gens/index.html', '_blank', 'noopener,noreferrer')">🎮 Gens (Mega Drive)</button>
 		<button class="ui-btn" id="fileManagerBtn" title="Administrador de Archivos">📁 File Manager</button>
 		<button class="ui-btn" id="debugHudBtn" title="Mostrar/Ocultar Métricas y Consola de Depuración (F3)">📊 Debug HUD</button>
 		<button class="ui-btn" id="fullscreenBtn" title="Pantalla Completa">⛶ Pantalla Completa</button>
@@ -910,6 +911,27 @@
 				<div style="margin-top: 10px; display: flex; gap: 10px;">
 					<a href="minixp/index.html" target="_blank" rel="noopener noreferrer" class="ui-btn" id="launchTinyCoreModalBtn" style="background: linear-gradient(180deg, #1d4ed8 0%, #1e3a8a 100%); border-color: #3b82f6; color: #ffffff; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; font-size: 13px; padding: 8px 16px;">
 						🚀 Lanzar Tiny Core Linux (Nueva Pestaña)
+					</a>
+				</div>
+			</div>
+
+			<!-- Gens Sega Genesis WebAssembly Launcher Section -->
+			<div class="section" style="border: 1px solid #991b1b; background: linear-gradient(180deg, #221019 0%, #13080e 100%); padding: 14px; border-radius: 6px; margin-bottom: 16px;">
+				<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+					<h3 style="margin: 0; color: #f87171; display: flex; align-items: center; gap: 8px;">
+						🎮 Gens / Sega Genesis (WebAssembly)
+					</h3>
+					<span style="background: #991b1b; color: #ffffff; font-size: 11px; padding: 2px 8px; border-radius: 10px; font-weight: bold;">Genesis / MD WASM</span>
+				</div>
+				<div class="info-text" style="color: #cbd5e1;">
+					Emulador Sega Genesis / Mega Drive de 16 bits directo en WebAssembly. Soporta ROMs (<strong>.smd</strong>, <strong>.bin</strong>, <strong>.gen</strong>, <strong>.md</strong>, <strong>.zip</strong>) con síntesis FM YM2612 y mandos USB. Incluye <strong>Road Rash 3</strong> listo para jugar.
+				</div>
+				<div style="margin-top: 10px; display: flex; gap: 10px; flex-wrap: wrap;">
+					<a href="gens/index.html" target="_blank" rel="noopener noreferrer" class="ui-btn" id="launchGensModalBtn" style="background: linear-gradient(180deg, #dc2626 0%, #991b1b 100%); border-color: #ef4444; color: #ffffff; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; font-size: 13px; padding: 8px 16px;">
+						🕹️ Abrir Gens Emulator & ROMs
+					</a>
+					<a href="gens/index.html?rom=roadrash3" target="_blank" rel="noopener noreferrer" class="ui-btn" id="launchRoadRashModalBtn" style="background: linear-gradient(180deg, #334155 0%, #1e293b 100%); border-color: #64748b; color: #ffffff; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; font-size: 13px; padding: 8px 16px;">
+						🏍️ Jugar Road Rash 3
 					</a>
 				</div>
 			</div>

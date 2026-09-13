@@ -197,16 +197,27 @@
 			transform: translateX(-50%) translateY(0);
 		}
 
+		/* Retro Hub Floating Top-Left Selector */
+		.retro-nav-top-slot {
+			position: fixed;
+			top: 12px;
+			left: 16px;
+			z-index: 100000;
+		}
+
 		/* Floating Top-Right Action Toolbar */
 		.top-toolbar {
 			position: fixed;
 			top: 12px;
 			right: 16px;
 			display: flex;
-			gap: 10px;
+			gap: 8px;
 			z-index: 1000;
 			opacity: 0.85;
 			transition: opacity 0.2s ease;
+			flex-wrap: wrap;
+			justify-content: flex-end;
+			max-width: calc(100vw - 220px);
 		}
 
 		.top-toolbar:hover {
@@ -815,8 +826,10 @@
 </head>
 
 <body class="remaster-enabled">
+	<!-- Retro Hub Global Dropdown Slot (Top-Left Fixed) -->
+	<div id="retro-nav-slot" class="retro-nav-top-slot"></div>
+
 	<div class="top-toolbar">
-		<div id="retro-nav-slot"></div>
 		<button class="ui-btn" id="doomBtn" title="Lanzar DOOM & Freedoom (WebAssembly)" onclick="if(document.exitPointerLock) document.exitPointerLock(); window.open('doom/index.html', '_blank', 'noopener,noreferrer')">💀 DOOM</button>
 		<button class="ui-btn" id="caveBtn" title="Lanzar Cave Story (WebAssembly)" onclick="if(document.exitPointerLock) document.exitPointerLock(); window.open('cavestory/index.html', '_blank', 'noopener,noreferrer')">🐰 Cave Story</button>
 		<button class="ui-btn" id="gensBtn" title="Lanzar Gens Sega Genesis (WebAssembly)" onclick="if(document.exitPointerLock) document.exitPointerLock(); window.open('gens/index.html', '_blank', 'noopener,noreferrer')">🎮 Gens</button>
@@ -939,6 +952,9 @@
 					</a>
 					<a href="nes/index.html" target="_blank" rel="noopener noreferrer" class="ui-btn" id="launchNesModalBtn" style="background: linear-gradient(180deg, #b91c1c 0%, #7f1d1d 100%); border-color: #f87171; color: #ffffff; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; font-size: 13px; padding: 8px 16px;">
 						🔴 Lector Nintendo NES (8-Bit)
+					</a>
+					<a href="psx/index.html" target="_blank" rel="noopener noreferrer" class="ui-btn" id="launchPsxModalBtn" style="background: linear-gradient(180deg, #2563eb 0%, #1e40af 100%); border-color: #60a5fa; color: #ffffff; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; font-size: 13px; padding: 8px 16px;">
+						💿 Lector Sony PlayStation (32-Bit)
 					</a>
 					<a href="gens/index.html" target="_blank" rel="noopener noreferrer" class="ui-btn" id="launchGensModalBtn" style="background: linear-gradient(180deg, #dc2626 0%, #991b1b 100%); border-color: #ef4444; color: #ffffff; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; font-size: 13px; padding: 8px 16px;">
 						⚡ Lector Sega Genesis (16-Bit)

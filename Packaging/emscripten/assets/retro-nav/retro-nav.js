@@ -9,7 +9,7 @@
     // Calculate relative path to root Packaging/emscripten/ directory
     function getRootRelativePath() {
         const path = window.location.pathname.toLowerCase();
-        if (path.includes('/doom/') || path.includes('/wolf3d/') || path.includes('/gens/') || path.includes('/minixp/') || path.includes('/tinycore/') || path.includes('/quake/') || path.includes('/cavestory/') || path.includes('/nes/')) {
+        if (path.includes('/doom/') || path.includes('/wolf3d/') || path.includes('/gens/') || path.includes('/minixp/') || path.includes('/tinycore/') || path.includes('/quake/') || path.includes('/cavestory/') || path.includes('/nes/') || path.includes('/snes/') || path.includes('/n64/') || path.includes('/psx/')) {
             return '../';
         }
         return './';
@@ -160,6 +160,21 @@
             ]
         },
         {
+            category: '💿 SONY 32-BIT (Motor PCSX ReARMed 3D WASM)',
+            items: [
+                {
+                    id: 'psx',
+                    title: 'Sony PlayStation (PS1 / PSX)',
+                    subtitle: 'Lector Universal .CUE / .BIN / .ISO / .CHD • WebGL2 3D',
+                    badge: '32-BIT WASM',
+                    badgeClass: 'badge-wasm',
+                    icon: '💿',
+                    url: `${BASE_PATH}psx/index.html`,
+                    activeMatcher: (p) => p.includes('/psx/')
+                }
+            ]
+        },
+        {
             category: '⚔️ ACTION RPG (Motor DevilutionX WASM)',
             items: [
                 {
@@ -170,7 +185,7 @@
                     badgeClass: 'badge-wasm',
                     icon: '⚔️',
                     url: `${BASE_PATH}index.html`,
-                    activeMatcher: (p) => !p.includes('/doom/') && !p.includes('/wolf3d/') && !p.includes('/gens/') && !p.includes('/minixp/') && !p.includes('/quake/') && !p.includes('/cavestory/') && !p.includes('/nes/') && !p.includes('/snes/') && !p.includes('/n64/')
+                    activeMatcher: (p) => !p.includes('/doom/') && !p.includes('/wolf3d/') && !p.includes('/gens/') && !p.includes('/minixp/') && !p.includes('/quake/') && !p.includes('/cavestory/') && !p.includes('/nes/') && !p.includes('/snes/') && !p.includes('/n64/') && !p.includes('/psx/')
                 }
             ]
         },
@@ -267,8 +282,23 @@
 
         trigger.addEventListener('click', (e) => {
             e.stopPropagation();
+            const dropdown = document.getElementById('retroNavDropdown');
             const isActive = wrapper.classList.toggle('active');
             trigger.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+            if (isActive && dropdown) {
+                const rect = trigger.getBoundingClientRect();
+                if (rect.left < window.innerWidth / 2) {
+                    dropdown.classList.add('align-left');
+                    dropdown.classList.remove('align-right');
+                } else {
+                    dropdown.classList.add('align-right');
+                    dropdown.classList.remove('align-left');
+                }
+                const availableHeight = window.innerHeight - rect.bottom - 24;
+                if (availableHeight > 200) {
+                    dropdown.style.maxHeight = `${Math.min(availableHeight, 650)}px`;
+                }
+            }
         });
 
         // Close when clicking outside

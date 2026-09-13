@@ -7,7 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-### 🕹️ Nintendo 64 (N64 / 64-Bit 3D) WebAssembly & Universal Retro Hub Integration ([`Packaging/emscripten/n64/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/n64/index.html), [`Packaging/emscripten/n64/style.css`](file:///c:/Projects/DevilutionX/Packaging/emscripten/n64/style.css), [`Packaging/emscripten/n64/app.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/n64/app.js), [`Packaging/emscripten/assets/retro-nav/retro-nav.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/assets/retro-nav/retro-nav.js))
+### 💿 Sony PlayStation (PS1 / PSX 32-Bit) WebAssembly & Universal Retro Hub Integration ([`Packaging/emscripten/psx/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/psx/index.html), [`Packaging/emscripten/psx/style.css`](file:///c:/Projects/DevilutionX/Packaging/emscripten/psx/style.css), [`Packaging/emscripten/psx/app.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/psx/app.js), [`Packaging/emscripten/assets/retro-nav/retro-nav.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/assets/retro-nav/retro-nav.js))
+- **Nuevo Emulador Sony PlayStation (PS1 / PSX) 32-Bit**:
+  - Implementado módulo de emulación 3D en WebAssembly para Sony PlayStation 1 con aceleración WebGL por GPU y núcleo `PCSX-ReARMed`.
+  - **Soporte de Formatos CD-ROM**: Carga de imágenes de disco completas en formatos `.CUE` + `.BIN`, `.ISO`, `.CHD` y `.PBP`.
+  - **Optimización Específica para Diablo PS1**: Probado y calibrado para la imagen de disco `Diablo.bin` + `Diablo.cue` (`SLUS-006.19`), permitiendo disfrutar del modo cooperativo local para 2 jugadores simultáneos con dos mandos conectados y acceso directo a pociones/hechizos.
+  - **Memory Card 1 (.mcr) Persistente en IndexedDB**: Almacenamiento local para partidas de Diablo y progreso de personajes (15 bloques de memoria virtual persistentes).
+  - **Mapeo de Mandos DualShock**: Botones geométricos (▲ Triángulo, ● Círculo, ✖ Cruz, ■ Cuadrado), Gatillos L1/R1/L2/R2, D-Pad y soporte de controles USB y Bluetooth.
+  - **Catálogo Local**: Organizada la carpeta `D:\Hours of Fun\Roms\PSX` con `Diablo.bin`, `Diablo.cue` y generado `lista_juegos_psx.md`.
+
+### 🎨 Corrección de Posicionamiento y Desborde de Retro Hub en Pantalla Principal ([`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html), [`Packaging/emscripten/assets/retro-nav/retro-nav.css`](file:///c:/Projects/DevilutionX/Packaging/emscripten/assets/retro-nav/retro-nav.css), [`Packaging/emscripten/assets/retro-nav/retro-nav.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/assets/retro-nav/retro-nav.js))
+- **Solución al bug visual del selector Retro Hub en `index.html`**:
+  - Movido `#retro-nav-slot` fuera de `.top-toolbar` a una posición fija superior izquierda (`top: 12px; left: 16px; z-index: 100000;`), eliminando el corte y la compresión en la mitad de la pantalla provocada por la barra flotante derecha.
+  - **Alineación Inteligente Dinámica (`align-left` / `align-right`)**: El dropdown ahora detecta su posición en el viewport en tiempo de ejecución. Si se encuentra en la mitad izquierda de la pantalla se expande elegantemente hacia la derecha (`left: 0; right: auto;`), y si está a la derecha se abre hacia la izquierda, evitando desbordamientos o recortes horizontales.
+  - Ajuste de `maxHeight` dinámico según la altura disponible en ventana para evitar que la lista se corte inferiormente en resoluciones bajas.
+  - Ajuste de `max-width` en `.top-toolbar` para garantizar que la barra de herramientas derecha nunca colisione con el menú retro en pantallas estrechas.
 - **Nuevo Emulador Nintendo 64 64-Bit 3D**:
   - Implementado módulo de emulación 3D en WebAssembly para Nintendo 64 con renderizado acelerado por hardware mediante WebGL2 (`Mupen64Plus-Next`).
   - **Conversor Automático de Endianness en Memoria**: Detección binaria de la cabecera mágica (`80 37 12 40` vs `37 80 40 12` vs `40 12 37 80`). Si se arrastra o carga un archivo `.v64` (Doctor V64) o `.n64` (CD64), el sistema permuta los bytes en memoria RAM en milisegundos y lo entrega en formato nativo Big Endian `.z64`.

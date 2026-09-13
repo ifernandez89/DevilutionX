@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PSX Web — Sony PlayStation 32-Bit (WebAssembly)</title>
+    <meta name="description" content="Emulador Sony PlayStation 1 (PS1 / PSX) de 32 bits en WebAssembly directo en el navegador con soporte para imágenes .CUE + .BIN, .ISO, .CHD y .PBP, motor PCSX-ReARMed con aceleración WebGL 3D, audio CD-XA, Memory Card persistente en IndexedDB y soporte DualShock.">
+    <link rel="stylesheet" href="../assets/retro-nav/retro-nav.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Top Navigation -->
+    <header>
+        <div class="brand">
+            <div class="brand-badge">PS1 32-BIT</div>
+            <div class="brand-title">
+                SONY <span>PLAYSTATION</span>
+            </div>
+        </div>
+        <div class="header-actions">
+            <!-- Retro Hub Global Dropdown Slot -->
+            <div id="retro-nav-slot"></div>
+
+            <a href="../n64/index.html" class="btn btn-secondary" title="Emulador Nintendo 64 (64-Bit 3D)">
+                🕹️ N64 (64-Bit)
+            </a>
+            <a href="../snes/index.html" class="btn btn-secondary" title="Emulador Super Nintendo (16-Bit)">
+                🎮 SNES (16-Bit)
+            </a>
+            <a href="../nes/index.html" class="btn btn-secondary" title="Emulador Nintendo NES / Famicom (8-Bit)">
+                🔴 NES (8-Bit)
+            </a>
+            <a href="../gens/index.html" class="btn btn-secondary" title="Emulador Sega Genesis / Mega Drive (16-Bit)">
+                ⚡ Genesis (16-Bit)
+            </a>
+            <a href="../doom/index.html" class="btn btn-secondary" title="Jugar a DOOM & Freedoom">
+                🔥 DOOM
+            </a>
+            <a href="../index.html" class="btn btn-secondary" title="Volver al juego DevilutionX / Diablo">
+                ⚔️ Diablo
+            </a>
+            <button class="btn btn-primary" id="topUploadBtn">
+                📁 Cargar Juego (.CUE / .BIN / .ISO)
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-wrapper">
+
+        <!-- Active Emulator Display (Hidden initially, visible when playing) -->
+        <section id="emulator-section">
+            <div class="screen-card size-large" id="screenCard">
+                <div id="canvas-container">
+                    <div id="game-player" style="width: 100%; height: 100%;"></div>
+                </div>
+            </div>
+
+            <!-- In-Game Controls Toolbar -->
+            <div class="screen-toolbar" id="screenToolbar">
+                <div class="toolbar-group">
+                    <button class="btn-tool" id="screenSizeBtn" title="Alternar tamaño de pantalla (Normal 800px / Grande 980px / Cinema 1180px)">
+                        🖥️ Tamaño: Grande (980p)
+                    </button>
+                    <button class="btn-tool" id="fullscreenBtn" title="Pantalla Completa (F11)">
+                        ⛶ Fullscreen
+                    </button>
+                </div>
+
+                <div class="toolbar-group">
+                    <span class="toolbar-status" id="activeGameLabel">💿 Juego cargado en PCSX ReARMed</span>
+                </div>
+
+                <div class="toolbar-group">
+                    <button class="btn-tool btn-accent" id="exitGameBtn" title="Cerrar juego actual y volver al menú">
+                        ⏹ Salir al Menú
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hub & Disc Loader (Visible when no game is active) -->
+        <section id="hub-section" class="hub-grid">
+
+            <!-- PSX Console Card -->
+            <div class="cartridge-card">
+                <div>
+                    <div class="cartridge-badge">32-BIT WASM • PCSX-REARMED • WEBGL 3D HARDWARE ACCELERATED</div>
+                    <div class="cartridge-header">
+                        <div class="psx-symbols">
+                            <span class="psx-btn-sym sym-triangle" title="Triángulo">▲</span>
+                            <span class="psx-btn-sym sym-circle" title="Círculo">●</span>
+                            <span class="psx-btn-sym sym-cross" title="Cruz">✖</span>
+                            <span class="psx-btn-sym sym-square" title="Cuadrado">■</span>
+                        </div>
+                        <div>
+                            <h2 class="cartridge-title">Sony PlayStation (PS1 / PSX 32-Bit)</h2>
+                            <div class="cartridge-subtitle">Motor PCSX-ReARMed WebAssembly • Aceleración WebGL 3D • 60 FPS</div>
+                        </div>
+                    </div>
+                    <p class="cartridge-desc">
+                        Emulador PlayStation 1 de 32 bits de alta compatibilidad directo en tu navegador web. Diseñado para ejecutar imágenes de CD-ROM en formatos <strong>.CUE + .BIN</strong>, <strong>.ISO</strong>, <strong>.CHD</strong> y <strong>.PBP</strong> con renderizado poligonal 3D por GPU, emulación de audio CD-XA y persistencia automática de <strong>Memory Card 1 (.mcr)</strong> en IndexedDB. Totalmente optimizado para tu copia de <strong>Diablo (PS1 SLUS-006.19)</strong> con soporte de 2 jugadores en simultáneo.
+                    </p>
+                    <div class="cartridge-meta">
+                        <span class="meta-tag">Formatos: .CUE + .BIN, .ISO, .CHD, .PBP</span>
+                        <span class="meta-tag">Aceleración: WebGL2 3D / Hardware</span>
+                        <span class="meta-tag">Memory Card: 15 Bloques (.mcr) IndexedDB</span>
+                        <span class="meta-tag">Mandos: DualShock USB / Bluetooth</span>
+                        <span class="meta-tag">Multijugador: 2 Jugadores Locales</span>
+                    </div>
+                </div>
+                <div class="cartridge-actions" style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <button class="btn btn-primary" id="hubBrowseBtn" style="font-size: 14px; padding: 12px 20px;">
+                        📁 Seleccionar Archivo .CUE / .BIN en PC...
+                    </button>
+                    <a href="../n64/index.html" class="btn btn-secondary" style="font-size: 14px; padding: 12px 20px; text-decoration: none;">
+                        🕹️ Ir a Nintendo 64 (64-Bit)
+                    </a>
+                    <a href="../snes/index.html" class="btn btn-secondary" style="font-size: 14px; padding: 12px 20px; text-decoration: none;">
+                        🎮 Ir a Super Nintendo (16-Bit)
+                    </a>
+                </div>
+            </div>
+
+            <!-- Intelligent Drag & Drop Zone -->
+            <div class="dropzone-container" id="dropzone">
+                <span class="dropzone-icon">💿</span>
+                <div class="dropzone-title">Arrastra y suelta tu juego de PlayStation aquí</div>
+                <div class="dropzone-sub">
+                    Soporta arrastrar juntos <strong>Diablo.cue + Diablo.bin</strong> (o solo el archivo <strong>.BIN / .ISO / .CHD</strong>)
+                </div>
+                <button class="btn btn-primary" style="pointer-events: none;">
+                    O haz clic para explorar en el disco local
+                </button>
+            </div>
+
+            <!-- Detailed Technical & Control Cards -->
+            <div class="info-grid">
+                <!-- DualShock Controls Mapping Card -->
+                <div class="info-card">
+                    <div class="info-card-header">
+                        <span style="font-size: 18px;">🎮</span>
+                        <span class="info-card-title">Mapeo de Teclado & Mandos DualShock</span>
+                    </div>
+                    <table class="info-table">
+                        <tbody>
+                            <tr>
+                                <td>Cruz ✖ (Acción / Atacar / Hablar):</td>
+                                <td><span class="badge-key">X</span> o <span class="badge-key">Espacio</span> / Botón Sur Mando</td>
+                            </tr>
+                            <tr>
+                                <td>Círculo ● (Inventario / Cancelar):</td>
+                                <td><span class="badge-key">C</span> / Botón Este Mando</td>
+                            </tr>
+                            <tr>
+                                <td>Cuadrado ■ (Hechizos / Habilidades):</td>
+                                <td><span class="badge-key">Z</span> / Botón Oeste Mando</td>
+                            </tr>
+                            <tr>
+                                <td>Triángulo ▲ (Mapa Automático / Menú):</td>
+                                <td><span class="badge-key">A</span> / Botón Norte Mando</td>
+                            </tr>
+                            <tr>
+                                <td>Gatillos L1 / R1:</td>
+                                <td><span class="badge-key">Q</span> / <span class="badge-key">E</span> (Pociones de Vida / Maná)</td>
+                            </tr>
+                            <tr>
+                                <td>Gatillos L2 / R2:</td>
+                                <td><span class="badge-key">1</span> / <span class="badge-key">3</span></td>
+                            </tr>
+                            <tr>
+                                <td>START / SELECT:</td>
+                                <td><span class="badge-key">Enter</span> / <span class="badge-key">Shift</span></td>
+                            </tr>
+                            <tr>
+                                <td>D-Pad (Movimiento):</td>
+                                <td><span class="badge-key">Flechas</span> o Stick Analógico</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Memory Card & Diablo PS1 Special Features -->
+                <div class="info-card">
+                    <div class="info-card-header">
+                        <span style="font-size: 18px;">💾</span>
+                        <span class="info-card-title">Tarjeta de Memoria & Modo 2 Jugadores</span>
+                    </div>
+                    <table class="info-table">
+                        <tbody>
+                            <tr>
+                                <td>Memory Card 1:</td>
+                                <td><span class="badge-key">IndexedDB Offline</span> (Persistente)</td>
+                            </tr>
+                            <tr>
+                                <td>Capacidad:</td>
+                                <td>15 Bloques estándar (128 KB)</td>
+                            </tr>
+                            <tr>
+                                <td>Partidas de Diablo:</td>
+                                <td>Guerrero, Pícaro, Hechicero y Mazmorras</td>
+                            </tr>
+                            <tr>
+                                <td>Multijugador Cooperativo:</td>
+                                <td>2 Mandos USB simultáneos en pantalla compartida</td>
+                            </tr>
+                            <tr>
+                                <td>Ubicación en disco:</td>
+                                <td><code>D:\Hours of Fun\Roms\PSX</code></td>
+                            </tr>
+                            <tr>
+                                <td>Audio CD-XA:</td>
+                                <td>Banda sonora orquestal de Matt Uelmen activa</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Hidden Multi-File Input -->
+    <input type="file" id="fileInput" accept=".cue,.CUE,.bin,.BIN,.iso,.ISO,.chd,.CHD,.pbp,.PBP,.img,.IMG,.mdf,.MDF,.zip,.ZIP" multiple style="display: none;">
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay">
+        <div class="spinner"></div>
+        <div class="loading-text" id="loadingText">Iniciando PlayStation...</div>
+        <div class="loading-subtext" id="loadingSubtext">Cargando núcleo PCSX-ReARMed WebAssembly...</div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toast">
+        <span id="toastIcon">💿</span>
+        <span id="toastMessage">Listo</span>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../assets/retro-nav/retro-nav.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

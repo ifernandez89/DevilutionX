@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### 📜 Plan de Restauración: Atmósfera, Fauna y Efectos Visuales de PlayStation 1 (Nightmare Edition) ([`Source/nightmare/world/ambient_animals.cpp`](file:///c:/Projects/DevilutionX/Source/nightmare/world/ambient_animals.cpp), [`Source/levels/town.cpp`](file:///c:/Projects/DevilutionX/Source/levels/town.cpp))
+- **Diseño Técnico para Incorporar las Mejoras de PS1 en DevilutionX Nightmare**:
+  - **Bandadas de Cuervos Reactivos en Tristram**: Extensión de `Source/nightmare/world/ambient_animals.cpp` con la entidad `TristramCrow` para posicionar bandadas en árboles y ruinas de Tristram, con detección de proximidad del jugador/proyectiles, graznidos estéreo espaciales y animación de despegue y vuelo.
+  - **Reflejos Dinámicos en el Río de Tristram**: Implementación de proyección de silueta invertida verticalmente (`flip_y`) sobre baldosas de agua con semitransparencia (50% de opacidad) y ondulación sinusoidal en tiempo real dependiente del reloj del motor.
+  - **Flora Acuática Fluvial**: Siembra de baldosas y objetos decorativos de juncos y algas meciéndose en las orillas del río en `levels/town.cpp`.
+  - **Herramienta de Extracción de Assets PS1**: Script decodificador para extraer y convertir sprites de `LUMP.BIN` (`TOWNGFX.DAT`) y audios `.VAG` de `STREAM1.BIN` desde la imagen oficial `Diablo.bin` (`D:\Hours of Fun\Roms\PSX`).
+  - **Conmutador en Ajustes Gráficos**: Opción configurable para alternar entre la atmósfera clásica de PC (1996) o la enriquecida de PlayStation 1 (1998).
+
 ### 💿 Sony PlayStation (PS1 / PSX 32-Bit) WebAssembly & Universal Retro Hub Integration ([`Packaging/emscripten/psx/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/psx/index.html), [`Packaging/emscripten/psx/style.css`](file:///c:/Projects/DevilutionX/Packaging/emscripten/psx/style.css), [`Packaging/emscripten/psx/app.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/psx/app.js), [`Packaging/emscripten/assets/retro-nav/retro-nav.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/assets/retro-nav/retro-nav.js))
 - **Nuevo Emulador Sony PlayStation (PS1 / PSX) 32-Bit**:
   - Implementado módulo de emulación 3D en WebAssembly para Sony PlayStation 1 con aceleración WebGL por GPU y núcleo `PCSX-ReARMed`.

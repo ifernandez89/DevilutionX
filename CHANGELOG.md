@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### 🌀 Corrección de Despliegue en GitHub Pages y Enlaces Cruzados para Sega Dreamcast 128-Bit ([`.github/workflows/deploy-pages.yml`](file:///c:/Projects/DevilutionX/.github/workflows/deploy-pages.yml), [`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html), [`Packaging/emscripten/assets/retro-nav/retro-nav.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/assets/retro-nav/retro-nav.js))
+- **Solución al error 404 de GitHub Pages en `dreamcast/index.html`**:
+  - Incorporada la copia de `Packaging/emscripten/dreamcast` hacia `dist/dreamcast` en el flujo de GitHub Actions ([`deploy-pages.yml`](file:///c:/Projects/DevilutionX/.github/workflows/deploy-pages.yml)), asegurando la publicación de todos los archivos del reproductor WebAssembly (`app.js`, `index.html`, `style.css`).
+- **Botones de Navegación Directa entre Consolas**:
+  - Añadido el botón de acceso directo `🌀 Dreamcast (128-Bit)` en la barra superior de los reproductores de PS1, N64, SNES, NES, Genesis, DOOM y Wolfenstein 3D.
+  - Añadido el botón `🌀 Lector Sega Dreamcast (128-Bit)` en el diálogo modal de consolas retro del inicio (`Packaging/emscripten/index.html`).
+- **Invalidación de Caché de Navegador (Cache-Busting)**:
+  - Añadido el identificador de versión `?v=dreamcast-128` a `retro-nav.js` y `retro-nav.css` en todas las páginas web del proyecto, evitando que los navegadores sirvan versiones cacheadas del menú sin la categoría Dreamcast.
+
+
 ### 📜 Plan de Restauración: Atmósfera, Fauna y Efectos Visuales de PlayStation 1 (Nightmare Edition) ([`Source/nightmare/world/ambient_animals.cpp`](file:///c:/Projects/DevilutionX/Source/nightmare/world/ambient_animals.cpp), [`Source/levels/town.cpp`](file:///c:/Projects/DevilutionX/Source/levels/town.cpp))
 - **Diseño Técnico para Incorporar las Mejoras de PS1 en DevilutionX Nightmare**:
   - **Bandadas de Cuervos Reactivos en Tristram**: Extensión de `Source/nightmare/world/ambient_animals.cpp` con la entidad `TristramCrow` para posicionar bandadas en árboles y ruinas de Tristram, con detección de proximidad del jugador/proyectiles, graznidos estéreo espaciales y animación de despegue y vuelo.

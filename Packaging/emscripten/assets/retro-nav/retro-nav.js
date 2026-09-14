@@ -272,7 +272,7 @@
             const link = document.createElement('link');
             link.id = 'retro-nav-css';
             link.rel = 'stylesheet';
-            link.href = `${BASE_PATH}assets/retro-nav/retro-nav.css`;
+            link.href = `${BASE_PATH}assets/retro-nav/retro-nav.css?v=dreamcast-128`;
             document.head.appendChild(link);
         }
 

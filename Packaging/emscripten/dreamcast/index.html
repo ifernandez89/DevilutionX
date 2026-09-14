@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dreamcast Web — Sega Dreamcast 128-Bit (Flycast WebAssembly)</title>
+    <meta name="description" content="Emulador Sega Dreamcast 128-Bit en WebAssembly directo en el navegador con soporte para imágenes .CDI, .GDI, .CHD y .CUE. Motor Flycast / EmulatorJS con aceleración WebGL2 3D, audio estéreo AICA, Virtual Memory Unit (VMU) persistente en IndexedDB y soporte para mandos analógicos y teclado.">
+    <link rel="stylesheet" href="../assets/retro-nav/retro-nav.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Top Navigation -->
+    <header>
+        <div class="brand">
+            <div class="brand-swirl" title="Sega Dreamcast Spiral">🌀</div>
+            <div class="brand-badge">DREAMCAST 128-BIT</div>
+            <div class="brand-title">
+                SEGA <span>DREAMCAST</span>
+            </div>
+        </div>
+        <div class="header-actions">
+            <!-- Retro Hub Global Dropdown Slot -->
+            <div id="retro-nav-slot"></div>
+
+            <a href="../psx/index.html" class="btn btn-secondary" title="Emulador Sony PlayStation 1 (32-Bit)">
+                💿 PS1 (32-Bit)
+            </a>
+            <a href="../n64/index.html" class="btn btn-secondary" title="Emulador Nintendo 64 (64-Bit 3D)">
+                🕹️ N64 (64-Bit)
+            </a>
+            <a href="../gens/index.html" class="btn btn-secondary" title="Emulador Sega Genesis / Mega Drive (16-Bit)">
+                ⚡ Genesis (16-Bit)
+            </a>
+            <a href="../snes/index.html" class="btn btn-secondary" title="Emulador Super Nintendo (16-Bit)">
+                🎮 SNES (16-Bit)
+            </a>
+            <a href="../nes/index.html" class="btn btn-secondary" title="Emulador Nintendo NES / Famicom (8-Bit)">
+                🔴 NES (8-Bit)
+            </a>
+            <a href="../index.html" class="btn btn-secondary" title="Volver a DevilutionX / Diablo">
+                ⚔️ Diablo
+            </a>
+            <button class="btn btn-primary" id="topUploadBtn">
+                📁 Cargar Juego (.CDI / .GDI / .CHD)
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-wrapper">
+
+        <!-- Active Emulator Display (Hidden initially, visible when playing) -->
+        <section id="emulator-section">
+            <div class="screen-card size-large" id="screenCard">
+                <div id="canvas-container">
+                    <div id="game-player" style="width: 100%; height: 100%;"></div>
+                </div>
+            </div>
+
+            <!-- In-Game Controls Toolbar -->
+            <div class="screen-toolbar" id="screenToolbar">
+                <div class="toolbar-group">
+                    <button class="btn-tool" id="screenSizeBtn" title="Alternar tamaño de pantalla (Normal 800px / Grande 980px / Cinema 1180px)">
+                        🖥️ Tamaño: Grande (980p)
+                    </button>
+                    <button class="btn-tool" id="fullscreenBtn" title="Pantalla Completa (F11)">
+                        ⛶ Fullscreen
+                    </button>
+                </div>
+
+                <div class="toolbar-group">
+                    <span class="toolbar-status" id="activeGameLabel">🌀 Juego cargado en Sega Dreamcast</span>
+                </div>
+
+                <div class="toolbar-group">
+                    <button class="btn-tool btn-accent" id="exitGameBtn" title="Cerrar juego actual y volver al menú">
+                        ⏹ Salir al Menú
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hub & Disc Loader (Visible when no game is active) -->
+        <section id="hub-section" class="hub-grid">
+
+            <!-- Dreamcast Showcase Card -->
+            <div class="cartridge-card">
+                <div>
+                    <div class="cartridge-badge">128-BIT WASM • FLYCAST MOTOR • POWERVR 3D ACCELERATED</div>
+                    <div class="cartridge-header">
+                        <div class="dc-swirl-icon">🌀</div>
+                        <div>
+                            <h2 class="cartridge-title">Sega Dreamcast (128-Bit PowerVR)</h2>
+                            <div class="cartridge-subtitle">Motor Flycast WebAssembly • Render WebGL2 3D • 60 FPS • Audio DSP AICA</div>
+                        </div>
+                    </div>
+
+                    <p class="cartridge-desc">
+                        Ejecuta imágenes de disco oficiales y homebrew de la legendaria consola de 128 bits de SEGA directamente en tu navegador o mediante el lanzador nativo de escritorio de alto rendimiento. Soporta formatos <strong>.CDI</strong>, <strong>.GDI</strong>, <strong>.CHD</strong> e <strong>.ISO</strong> con emulación de mando y tarjeta de memoria VMU (Visual Memory Unit).
+                    </p>
+
+                    <!-- Featured Games Ribbon -->
+                    <div class="featured-ribbon">
+                        <div class="featured-tag">🐬 Ecco the Dolphin: Defender of the Future</div>
+                        <div class="featured-tag">🦔 Sonic Adventure 1 & 2</div>
+                        <div class="featured-tag">🚕 Crazy Taxi</div>
+                        <div class="featured-tag">🌸 Shenmue</div>
+                        <div class="featured-tag">⚔️ Soulcalibur</div>
+                        <div class="featured-tag">🧟 Resident Evil: Code Veronica</div>
+                    </div>
+
+                    <!-- Dropzone -->
+                    <div class="dropzone" id="dropzone">
+                        <div class="dropzone-icon">💿</div>
+                        <div class="dropzone-title">Arrastra tu juego de Dreamcast aquí</div>
+                        <div class="dropzone-subtitle">
+                            Soporta imágenes de disco <code>.CDI</code>, <code>.GDI</code>, <code>.CHD</code>, <code>.ISO</code> o carpetas de pistas
+                        </div>
+                        <div class="dropzone-actions">
+                            <button class="btn btn-primary" id="hubBrowseBtn" type="button">
+                                📂 Explorar Archivos locales
+                            </button>
+                            <input type="file" id="fileInput" accept=".cdi,.gdi,.chd,.iso,.cue,.bin,.raw" multiple style="display: none;">
+                        </div>
+                    </div>
+
+                    <!-- Native Flycast Desktop Recommendation Box -->
+                    <div class="native-box">
+                        <div class="native-box-header">
+                            <span class="native-box-icon">⚡</span>
+                            <strong>¿Quieres jugar en tu PC a 4K / 60 FPS con Flycast Nativo?</strong>
+                        </div>
+                        <p class="native-box-text">
+                            Para títulos 3D masivos como <em>Ecco the Dolphin - Defender of the Future</em> (imagen CDI de 730MB), se ha configurado <strong>Flycast x64</strong> en el proyecto:
+                        </p>
+                        <div class="native-commands">
+                            <code>play_ecco_dreamcast.bat</code> &nbsp;—&nbsp; Inicia Ecco en 1 clic directamente desde tus descargas.<br>
+                            <code>run_flycast.bat</code> &nbsp;—&nbsp; Abre la GUI de Flycast con Vulkan/DirectX y configuración de mandos.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer Features -->
+                <div class="features-bar">
+                    <div class="feature-item">
+                        <span class="feature-icon">🎮</span>
+                        <span class="feature-text">Mando Dreamcast & Gamepads USB</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">💾</span>
+                        <span class="feature-text">VMU 128KB Saves en IndexedDB</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">📐</span>
+                        <span class="feature-text">Resolución Ajustable Normal / Grande / Cinema</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VMU & Controls Info Card -->
+            <div class="side-card">
+                <div class="side-card-title">
+                    <span>📟</span> Visual Memory Unit (VMU)
+                </div>
+                <div class="vmu-screen">
+                    <div class="vmu-lcd-header">DREAMCAST VMU — 128KB</div>
+                    <div class="vmu-lcd-content">
+                        <div class="vmu-lcd-icon">🐬</div>
+                        <div class="vmu-lcd-text">ECCO THE DOLPHIN</div>
+                        <div class="vmu-lcd-status">AUTOSAVE ACTIVE • SLOT 1</div>
+                    </div>
+                </div>
+                <p class="side-desc">
+                    Tus partidas guardadas se preservan en la memoria local protegida del navegador. Puedes exportar o importar tus archivos <code>.vmu</code> o <code>.bin</code> en cualquier momento.
+                </p>
+                <div class="side-actions">
+                    <button class="btn btn-secondary btn-full" id="exportVmuBtn">
+                        💾 Respaldar Partidas VMU (.bin)
+                    </button>
+                </div>
+
+                <hr class="divider">
+
+                <div class="side-card-title">
+                    <span>🕹️</span> Controles Predeterminados
+                </div>
+                <div class="controls-grid">
+                    <div class="ctrl-row">
+                        <span class="ctrl-key">D-Pad / Stick</span>
+                        <span class="ctrl-action">Flechas del Teclado</span>
+                    </div>
+                    <div class="ctrl-row">
+                        <span class="ctrl-key">Botón A</span>
+                        <span class="ctrl-action">X</span>
+                    </div>
+                    <div class="ctrl-row">
+                        <span class="ctrl-key">Botón B</span>
+                        <span class="ctrl-action">Z</span>
+                    </div>
+                    <div class="ctrl-row">
+                        <span class="ctrl-key">Botón X</span>
+                        <span class="ctrl-action">S</span>
+                    </div>
+                    <div class="ctrl-row">
+                        <span class="ctrl-key">Botón Y</span>
+                        <span class="ctrl-action">A</span>
+                    </div>
+                    <div class="ctrl-row">
+                        <span class="ctrl-key">Gatillo L</span>
+                        <span class="ctrl-action">Q</span>
+                    </div>
+                    <div class="ctrl-row">
+                        <span class="ctrl-key">Gatillo R</span>
+                        <span class="ctrl-action">E / W</span>
+                    </div>
+                    <div class="ctrl-row">
+                        <span class="ctrl-key">Start</span>
+                        <span class="ctrl-action">Enter</span>
+                    </div>
+                </div>
+                <div class="gamepad-notice">
+                    🎮 <em>Mandos de Xbox / PlayStation se detectan automáticamente por Bluetooth o USB.</em>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Loading Modal Overlay -->
+    <div id="loading-overlay" class="overlay" style="display: none;">
+        <div class="overlay-card">
+            <div class="spinner"></div>
+            <div class="overlay-title" id="loadingText">Iniciando Sega Dreamcast...</div>
+            <div class="overlay-subtext" id="loadingSubtext">Cargando núcleo WebAssembly y montando imagen GD-ROM...</div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="toast" style="display: none;">
+        <span class="toast-icon" id="toastIcon">🌀</span>
+        <span class="toast-message" id="toastMessage">Acción completada</span>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../assets/retro-nav/retro-nav.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

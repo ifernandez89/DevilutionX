@@ -475,4 +475,5 @@ uwp-project/Assets/ui_art
 /deps/
 Packaging/emscripten/minixp/
 gens-win32-bin-2.14/
+flycast-win64/
 

@@ -35,6 +35,8 @@
     const loadingOverlay = document.getElementById('loading-overlay');
     const loadingText = document.getElementById('loadingText');
     const loadingSubtext = document.getElementById('loadingSubtext');
+    const noticeOverlay = document.getElementById('notice-overlay');
+    const closeNoticeBtn = document.getElementById('closeNoticeBtn');
     const toast = document.getElementById('toast');
     const toastIcon = document.getElementById('toastIcon');
     const toastMessage = document.getElementById('toastMessage');
@@ -126,67 +128,9 @@
         const cleanName = primaryFile.name.replace(/\.[^/.]+$/, '');
         activeRomName = cleanName;
 
-        const sizeMB = (primaryFile.size / (1024 * 1024)).toFixed(1);
-        showLoading(`Iniciando ${cleanName}...`, `Preparando imagen GD-ROM (${sizeMB} MB) y cargando núcleo WebAssembly...`);
-
-        try {
-            // Create Blob URL for the primary disc image
-            const blobUrl = URL.createObjectURL(primaryFile);
-            currentBlobUrls.push(blobUrl);
-
-            // Switch to game screen
-            hubSection.style.display = 'none';
-            emulatorSection.style.display = 'flex';
-            updateScreenSizeUI();
-
-            if (activeGameLabel) {
-                activeGameLabel.textContent = `🌀 ${cleanName} (Sega Dreamcast 128-Bit)`;
-            }
-
-            // Clear previous player element
-            gamePlayer.innerHTML = '';
-            const playerContainer = document.createElement('div');
-            playerContainer.id = 'ejs-game-container';
-            playerContainer.style.width = '100%';
-            playerContainer.style.height = '100%';
-            gamePlayer.appendChild(playerContainer);
-
-            // Configure EmulatorJS globals for Sega Dreamcast (Flycast core)
-            window.EJS_player = '#ejs-game-container';
-            window.EJS_core = 'segaDC';
-            window.EJS_gameUrl = blobUrl;
-            window.EJS_gameName = cleanName;
-            window.EJS_pathtodata = 'https://cdn.emulatorjs.org/stable/data/';
-            window.EJS_startOnLoaded = true;
-            window.EJS_language = 'es-ES';
-            window.EJS_align = 'center';
-            window.EJS_color = '#ff5000';
-
-            // Remove existing loader script if any, and reinject
-            const oldScript = document.getElementById('ejs-loader-script');
-            if (oldScript) oldScript.remove();
-
-            const script = document.createElement('script');
-            script.id = 'ejs-loader-script';
-            script.src = 'https://cdn.emulatorjs.org/stable/data/loader.js';
-            script.onload = () => {
-                hideLoading();
-                showToast(`¡${cleanName} ejecutándose en Sega Dreamcast!`, '🌀');
-            };
-            script.onerror = (e) => {
-                hideLoading();
-                console.warn('[Dreamcast Loader] CDN loader error:', e);
-                alert(`Para imágenes Dreamcast de gran tamaño (>500MB) como Ecco the Dolphin, recomendamos usar el lanzador nativo 'play_ecco_dreamcast.bat' con Flycast x64 para máximo rendimiento y fluidez a 60 FPS.`);
-                exitToHub();
-            };
-
-            document.body.appendChild(script);
-
-        } catch (err) {
-            hideLoading();
-            console.error('[Dreamcast Launcher] Error:', err);
-            alert(`Error al procesar la imagen de Sega Dreamcast: ${err.message || err}`);
-            exitToHub();
+        // Display the Dreamcast Architecture & High Performance notice modal
+        if (noticeOverlay) {
+            noticeOverlay.style.display = 'flex';
         }
     }
 
@@ -273,6 +217,12 @@
                 if (e.target.files && e.target.files.length > 0) {
                     launchDreamcastGame(e.target.files);
                 }
+            });
+        }
+
+        if (closeNoticeBtn) {
+            closeNoticeBtn.addEventListener('click', () => {
+                if (noticeOverlay) noticeOverlay.style.display = 'none';
             });
         }
 

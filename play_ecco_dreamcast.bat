@@ -9,31 +9,29 @@ echo ===========================================================================
 echo.
 
 set "FLYCAST_EXE=%~dp0flycast-win64\flycast.exe"
-set "ECCO_ROM_PRIMARY=C:\Users\xiphos-pc1\Downloads\Ecco the Dolphin - Defender of the Future\Ecco the Dolphin - Defender of the Future.cdi"
+set "ECCO_ROM_ROMS=D:\Hours of Fun\Roms\Sega Dreamcast\Ecco the Dolphin - Defender of the Future.cdi"
+set "ECCO_ROM_DOWNLOADS=C:\Users\xiphos-pc1\Downloads\Ecco the Dolphin - Defender of the Future\Ecco the Dolphin - Defender of the Future.cdi"
 set "ECCO_ROM_LOCAL=%~dp0Ecco the Dolphin - Defender of the Future.cdi"
 
 if not exist "%FLYCAST_EXE%" (
-    echo [ERROR] No se encontro el ejecutable de Flycast en:
-    echo         "%FLYCAST_EXE%"
-    echo.
-    echo Por favor asegurese de que la carpeta flycast-win64 este presente.
-    pause
-    exit /b 1
+    echo [INFO] Motor Flycast x64 no detectado. Descargando versión portable oficial...
+    curl -L -o "%~dp0flycast.zip" "https://github.com/flyinghead/flycast/releases/download/v2.7/flycast-win64-2.7.zip"
+    powershell -Command "Expand-Archive -Path '%~dp0flycast.zip' -DestinationPath '%~dp0flycast-win64' -Force"
+    del /f /q "%~dp0flycast.zip" >nul 2>&1
 )
 
 set "TARGET_ROM="
 
-if exist "%ECCO_ROM_PRIMARY%" (
-    set "TARGET_ROM=%ECCO_ROM_PRIMARY%"
+if exist "%ECCO_ROM_ROMS%" (
+    set "TARGET_ROM=%ECCO_ROM_ROMS%"
 ) else if exist "%ECCO_ROM_LOCAL%" (
     set "TARGET_ROM=%ECCO_ROM_LOCAL%"
+) else if exist "%ECCO_ROM_DOWNLOADS%" (
+    set "TARGET_ROM=%ECCO_ROM_DOWNLOADS%"
 )
 
 if "%TARGET_ROM%"=="" (
-    echo [AVISO] No se encontro la imagen CDI en la ruta esperada:
-    echo         "%ECCO_ROM_PRIMARY%"
-    echo.
-    echo Buscando en carpetas de Descargas...
+    echo [AVISO] Buscando imagen CDI en discos locales...
     for /r "%USERPROFILE%\Downloads" %%f in (*Ecco*.cdi) do (
         set "TARGET_ROM=%%f"
         goto :found_rom

@@ -6,46 +6,43 @@ Esta guía documenta la implementación completa del ecosistema **Sega Dreamcast
 
 ---
 
-## 🐬 1. Cómo Jugar a *Ecco the Dolphin* (Entorno Nativo Windows x64)
+## 🐬 1. Cómo Jugar a *Ecco the Dolphin* en PC (Redream & Flycast)
 
-### Inicio Rápido en 1 Clic
-En la raíz del proyecto encontrarás el script lanzador:
-- Ejecuta con doble clic: **[`play_ecco_dreamcast.bat`](file:///c:/Projects/DevilutionX/play_ecco_dreamcast.bat)**
+Tienes a tu disposición dos emuladores nativos de alto rendimiento en Windows x64:
 
-El script detecta de forma automática la imagen de disco en:
-```
-C:\Users\xiphos-pc1\Downloads\Ecco the Dolphin - Defender of the Future\Ecco the Dolphin - Defender of the Future.cdi
-```
-E inicia el motor **Flycast x64** con aceleración de hardware activa.
+### Opción A (Recomendada): Redream x64
+- **Lanzador directo**: Haz doble clic en **[`play_ecco_redream.bat`](file:///c:/Projects/DevilutionX/play_ecco_redream.bat)**.
+- Detecta automáticamente tu imagen `.chd` de 552 MB:
+  `C:\Users\xiphos-pc1\Downloads\Ecco the Dolphin - Defender of the Future (USA) (En,Fr,De,Es).chd`
+- **Lanzador general**: **[`run_redream.bat`](file:///c:/Projects/DevilutionX/run_redream.bat)** (puedes arrastrar cualquier juego sobre él).
+
+#### 🎮 Controles por Defecto de Redream (Ecco the Dolphin)
+| Función en Ecco | Tecla (Teclado) | Botón Dreamcast | Mando Xbox | Mando PlayStation |
+| :--- | :--- | :--- | :--- | :--- |
+| **Nadar / Mover a Ecco** | `W` `A` `S` `D` | **Palanca Analógica** | Stick Izquierdo | Stick Izquierdo |
+| **Nadar rápido / Acelerar / Seleccionar** | `K` | **Botón A** | `A` (Verde) | `✖` (Cruz) |
+| **Embestida / Ataque con el morro / Dash** | `L` | **Botón B** | `B` (Rojo) | `●` (Círculo) |
+| **Sonar / Ecolocalización / Cantar** | `J` | **Botón X** | `X` (Azul) | `■` (Cuadrado) |
+| **Cámara / Vista en 3ª persona** | `P` o `I` | **Botón Y** | `Y` (Amarillo) | `▲` (Triángulo) |
+| **Pausa / Menú del juego** | **Barra Espaciadora** | **START** | `Start` | `Options` |
+| **Giro acrobático izquierdo** | `Q` | **Gatillo L** | `LT` | `L2` |
+| **Giro acrobático derecho** | `E` | **Gatillo R** | `RT` | `R2` |
+| **Cruceta de menús** | Flechas del teclado | **D-Pad** | Cruceta | Cruceta |
+| **Menú de Configuración de Redream** | **`ESC`** | Menú OSD | Guía | PS |
+
+#### ⚙️ ¿Cómo ver o cambiar los controles en Redream?
+1. Durante el juego, presiona la tecla **`ESC`** (Escape). Aparecerá el menú interactivo de Redream.
+2. En la barra superior, haz clic en la pestaña **INPUT**.
+3. En **Port A (Controller 0)**, haz clic en **CUSTOMIZE BINDS**.
+4. Haz clic sobre cualquier botón ilustrado en pantalla y presiona la tecla o botón de tu mando que desees asignar.
+5. Para volver a jugar, presiona **`ESC`** nuevamente o selecciona **RESUME**.
 
 ---
 
-### Configuración General de Flycast
-Para abrir el emulador de forma independiente, configurar gráficos o agregar más juegos:
-- Ejecuta: **[`run_flycast.bat`](file:///c:/Projects/DevilutionX/run_flycast.bat)**
-
-También puedes arrastrar cualquier imagen `.cdi`, `.gdi` o `.chd` sobre `run_flycast.bat` para iniciarla directamente.
-
----
-
-### Controles Predeterminados (Teclado y Mandos)
-
-| Botón Dreamcast | Tecla (Teclado) | Mando Xbox / XInput | Mando PlayStation |
-| :--- | :--- | :--- | :--- |
-| **D-Pad / Stick** | Flechas del Teclado | D-Pad / Stick Izquierdo | Cruceta / Stick Izquierdo |
-| **Botón A** | `X` | `A` (Verde) | `✖` (Cruz) |
-| **Botón B** | `Z` | `B` (Rojo) | `●` (Círculo) |
-| **Botón X** | `S` | `X` (Azul) | `■` (Cuadrado) |
-| **Botón Y** | `A` | `Y` (Amarillo) | `▲` (Triángulo) |
-| **Gatillo L** | `Q` | `LT` / Gatillo Izquierdo | `L2` |
-| **Gatillo R** | `W` / `E` | `RT` / Gatillo Derecho | `R2` |
-| **Start** | `Enter` | `Start` | `Options` |
-
-#### Atajos de Teclado del Emulador
-- **Alt + Enter**: Alternar Pantalla Completa.
-- **Escape / Tab**: Abrir Menú de Configuración de Flycast (Video, Audio, Controles).
-- **F5**: Guardado Rápido (Save State).
-- **F7**: Carga Rápida (Load State).
+### Opción B: Flycast x64
+- **Lanzador directo**: **[`play_ecco_dreamcast.bat`](file:///c:/Projects/DevilutionX/play_ecco_dreamcast.bat)**
+- **Lanzador general**: **[`run_flycast.bat`](file:///c:/Projects/DevilutionX/run_flycast.bat)**
+- Menú de opciones de Flycast: tecla **`Tab`** o **`Escape`**.
 
 ---
 

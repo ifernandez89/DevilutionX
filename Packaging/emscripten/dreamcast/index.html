@@ -125,18 +125,25 @@
                         </div>
                     </div>
 
-                    <!-- Native Flycast Desktop Recommendation Box -->
+                    <!-- Native Redream & Flycast Desktop Recommendation Box -->
                     <div class="native-box">
                         <div class="native-box-header">
                             <span class="native-box-icon">⚡</span>
-                            <strong>¿Quieres jugar en tu PC a 4K / 60 FPS con Flycast Nativo?</strong>
+                            <strong>¿Quieres jugar en tu PC a 60 FPS / HD con Redream o Flycast Nativo?</strong>
                         </div>
                         <p class="native-box-text">
-                            Para títulos 3D masivos como <em>Ecco the Dolphin - Defender of the Future</em> (imagen CDI de 730MB), se ha configurado <strong>Flycast x64</strong> en el proyecto:
+                            Para imágenes 3D de más de 500 MB como <em>Ecco the Dolphin - Defender of the Future (.CHD de 552 MB)</em>, los emuladores nativos de escritorio ofrecen el 100% de rendimiento, audio perfecto y cero retraso:
                         </p>
                         <div class="native-commands">
-                            <code>play_ecco_dreamcast.bat</code> &nbsp;—&nbsp; Inicia Ecco en 1 clic directamente desde tus descargas.<br>
-                            <code>run_flycast.bat</code> &nbsp;—&nbsp; Abre la GUI de Flycast con Vulkan/DirectX y configuración de mandos.
+                            <div class="cmd-pill">
+                                <strong>play_ecco_redream.bat</strong> &nbsp;—&nbsp; Inicia Ecco the Dolphin (.CHD) directamente en Redream x64.
+                            </div>
+                            <div class="cmd-pill">
+                                <strong>run_redream.bat</strong> &nbsp;—&nbsp; Abre Redream x64 para cargar cualquier imagen o configurar mandos.
+                            </div>
+                            <div class="cmd-pill">
+                                <strong>play_ecco_dreamcast.bat</strong> &nbsp;—&nbsp; Inicia con motor Flycast x64.
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -145,15 +152,15 @@
                 <div class="features-bar">
                     <div class="feature-item">
                         <span class="feature-icon">🎮</span>
-                        <span class="feature-text">Mando Dreamcast & Gamepads USB</span>
+                        <span class="feature-text">Controles Redream & Gamepads USB</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">🐬</span>
+                        <span class="feature-text">Optimizado para Ecco the Dolphin</span>
                     </div>
                     <div class="feature-item">
                         <span class="feature-icon">💾</span>
-                        <span class="feature-text">VMU 128KB Saves en IndexedDB</span>
-                    </div>
-                    <div class="feature-item">
-                        <span class="feature-icon">📐</span>
-                        <span class="feature-text">Resolución Ajustable Normal / Grande / Cinema</span>
+                        <span class="feature-text">Saves en VMU (vmu0.bin)</span>
                     </div>
                 </div>
             </div>
@@ -172,7 +179,7 @@
                     </div>
                 </div>
                 <p class="side-desc">
-                    Tus partidas guardadas se preservan en la memoria local protegida del navegador. Puedes exportar o importar tus archivos <code>.vmu</code> o <code>.bin</code> en cualquier momento.
+                    Tus partidas guardadas se preservan en la memoria local (o en <code>vmu0.bin</code> dentro de la carpeta de Redream). Puedes respaldar tus archivos <code>.vmu</code> en cualquier momento.
                 </p>
                 <div class="side-actions">
                     <button class="btn btn-secondary btn-full" id="exportVmuBtn">
@@ -182,51 +189,126 @@
 
                 <hr class="divider">
 
+                <!-- Redream Controls for Ecco -->
                 <div class="side-card-title">
-                    <span>🕹️</span> Controles Predeterminados
+                    <span>🕹️</span> Controles Redream (Ecco the Dolphin)
                 </div>
                 <div class="controls-grid">
-                    <div class="ctrl-row">
-                        <span class="ctrl-key">D-Pad / Stick</span>
-                        <span class="ctrl-action">Flechas del Teclado</span>
+                    <div class="ctrl-row highlight-row">
+                        <span class="ctrl-key"><kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd></span>
+                        <span class="ctrl-action">Palanca Analógica (Nadar / Mover en 360°)</span>
                     </div>
                     <div class="ctrl-row">
-                        <span class="ctrl-key">Botón A</span>
-                        <span class="ctrl-action">X</span>
+                        <span class="ctrl-key"><kbd>K</kbd> (Botón A)</span>
+                        <span class="ctrl-action">Nadar / Acelerar / Seleccionar</span>
                     </div>
                     <div class="ctrl-row">
-                        <span class="ctrl-key">Botón B</span>
-                        <span class="ctrl-action">Z</span>
+                        <span class="ctrl-key"><kbd>L</kbd> (Botón B)</span>
+                        <span class="ctrl-action">Embestida / Ataque / Dash / Cancelar</span>
                     </div>
                     <div class="ctrl-row">
-                        <span class="ctrl-key">Botón X</span>
-                        <span class="ctrl-action">S</span>
+                        <span class="ctrl-key"><kbd>J</kbd> (Botón X)</span>
+                        <span class="ctrl-action">Sonar / Ecolocalización / Cantar</span>
                     </div>
                     <div class="ctrl-row">
-                        <span class="ctrl-key">Botón Y</span>
-                        <span class="ctrl-action">A</span>
+                        <span class="ctrl-key"><kbd>P</kbd> o <kbd>I</kbd> (Botón Y)</span>
+                        <span class="ctrl-action">Cámara / Vista alrededor</span>
                     </div>
                     <div class="ctrl-row">
-                        <span class="ctrl-key">Gatillo L</span>
-                        <span class="ctrl-action">Q</span>
+                        <span class="ctrl-key"><kbd>Espacio</kbd></span>
+                        <span class="ctrl-action"><strong>START</strong> (Pausa / Menú del juego)</span>
                     </div>
                     <div class="ctrl-row">
-                        <span class="ctrl-key">Gatillo R</span>
-                        <span class="ctrl-action">E / W</span>
+                        <span class="ctrl-key"><kbd>Q</kbd> / <kbd>E</kbd></span>
+                        <span class="ctrl-action">Gatillos L / R (Giros y acrobacias)</span>
                     </div>
                     <div class="ctrl-row">
-                        <span class="ctrl-key">Start</span>
-                        <span class="ctrl-action">Enter</span>
+                        <span class="ctrl-key"><kbd>Flechas</kbd></span>
+                        <span class="ctrl-action">Cruceta D-Pad de la consola</span>
+                    </div>
+                    <div class="ctrl-row highlight-esc">
+                        <span class="ctrl-key"><kbd>ESC</kbd></span>
+                        <span class="ctrl-action"><strong>Menú de Redream</strong> (Ajustes y salir)</span>
                     </div>
                 </div>
-                <div class="gamepad-notice">
-                    🎮 <em>Mandos de Xbox / PlayStation se detectan automáticamente por Bluetooth o USB.</em>
+
+                <!-- How to configure Redream Guide -->
+                <div class="redream-guide-box">
+                    <div class="guide-title">
+                        <span>⚙️</span> ¿Cómo configurar controles en redream.exe?
+                    </div>
+                    <ol class="guide-steps">
+                        <li>Durante el juego o menú, pulsa la tecla <strong><kbd>ESC</kbd></strong>.</li>
+                        <li>En el menú superior, haz clic en <strong>INPUT</strong>.</li>
+                        <li>En <strong>Port A</strong> (Controller 0), haz clic en <strong>CUSTOMIZE BINDS</strong>.</li>
+                        <li>Haz clic sobre cualquier botón en pantalla y pulsa la tecla o botón de tu mando que desees asignar.</li>
+                        <li>Pulsa <strong><kbd>ESC</kbd></strong> o <strong>RESUME</strong> para volver a jugar.</li>
+                    </ol>
                 </div>
             </div>
 
         </section>
 
     </main>
+
+    <!-- CHD / CDI Info Modal -->
+    <div id="chd-info-modal" class="overlay" style="display: none;">
+        <div class="overlay-card modal-card-wide">
+            <div class="modal-header">
+                <div class="modal-badge">SEGA DREAMCAST 128-BIT</div>
+                <button class="modal-close" id="closeChdModalBtn" title="Cerrar">&times;</button>
+            </div>
+            <div class="modal-icon-row">
+                <span class="modal-large-icon">🐬</span>
+                <div>
+                    <h3 class="modal-title" id="chdModalFileName">Ecco the Dolphin - Defender of the Future</h3>
+                    <div class="modal-file-tag" id="chdModalFileSize">Imagen de disco Dreamcast (552.8 MB .CHD)</div>
+                </div>
+            </div>
+
+            <div class="modal-alert-box">
+                <div class="alert-title">
+                    <span>⚠️</span> ¿Por qué aparece «Error downloading core (dreamcast-legacy-wasm.data)» en el navegador?
+                </div>
+                <p class="alert-text">
+                    Los discos de Dreamcast pesan entre <strong>500 MB y 1.2 GB</strong> y utilizan una arquitectura de 128-bit (CPU Hitachi SH-4 + GPU NEC PowerVR2). El CDN público de EmulatorJS <strong>no dispone de un núcleo WebAssembly oficial</strong> en sus servidores (responde 404), y el navegador no puede compilar en memoria una imagen de este tamaño.
+                </p>
+            </div>
+
+            <div class="modal-solution-box">
+                <div class="sol-title">
+                    <span>🚀</span> ¡Solución Recomendada: Ejecución Nativa a 60 FPS en tu PC!
+                </div>
+                <p class="sol-text">
+                    Ya tienes configurado <strong>Redream x64</strong> en tu equipo. Jugarás con audio estéreo AICA perfecto, resolución HD y cero tirones:
+                </p>
+                <div class="command-box">
+                    <code id="batCommandText">c:\Projects\DevilutionX\play_ecco_redream.bat</code>
+                    <button class="btn btn-secondary btn-sm" id="copyBatBtn" title="Copiar ruta del script">
+                        📋 Copiar
+                    </button>
+                </div>
+            </div>
+
+            <div class="modal-controls-summary">
+                <div class="ctrl-mini-tag"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> Moverse</div>
+                <div class="ctrl-mini-tag"><kbd>K</kbd> Nadar (A)</div>
+                <div class="ctrl-mini-tag"><kbd>L</kbd> Embestida (B)</div>
+                <div class="ctrl-mini-tag"><kbd>J</kbd> Sonar (X)</div>
+                <div class="ctrl-mini-tag"><kbd>Espacio</kbd> Start</div>
+                <div class="ctrl-mini-tag"><kbd>ESC</kbd> Menú Redream</div>
+            </div>
+
+            <div class="modal-footer-actions">
+                <button class="btn btn-primary" id="launchNativeBtn">
+                    🎮 Entendido (Ver Guía de Controles)
+                </button>
+                <button class="btn btn-secondary" id="tryWebAnywayBtn" title="Intentar conectar con CDN de todas formas">
+                    🌐 Intentar en Web de todos modos
+                </button>
+            </div>
+        </div>
+    </div>
 
     <!-- Loading Modal Overlay -->
     <div id="loading-overlay" class="overlay" style="display: none;">

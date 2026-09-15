@@ -448,12 +448,12 @@ header {
     margin: 20px 0;
 }
 
-/* Controls Grid */
+/* Controls Grid & Keys */
 .controls-grid {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    margin-bottom: 14px;
+    gap: 7px;
+    margin-bottom: 16px;
 }
 
 .ctrl-row {
@@ -461,18 +461,100 @@ header {
     justify-content: space-between;
     align-items: center;
     font-size: 12px;
-    padding: 4px 8px;
-    border-radius: 4px;
-    background: rgba(255, 255, 255, 0.02);
+    padding: 6px 10px;
+    border-radius: var(--radius-sm);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.2s ease;
+}
+
+.ctrl-row:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 80, 0, 0.3);
+}
+
+.ctrl-row.highlight-row {
+    background: rgba(255, 80, 0, 0.08);
+    border-color: rgba(255, 80, 0, 0.35);
+}
+
+.ctrl-row.highlight-esc {
+    background: rgba(0, 114, 206, 0.1);
+    border-color: rgba(0, 114, 206, 0.4);
 }
 
 .ctrl-key {
     font-weight: 700;
     color: #ffaa80;
+    display: flex;
+    align-items: center;
+    gap: 4px;
 }
 
 .ctrl-action {
     color: var(--text-secondary);
+    text-align: right;
+}
+
+kbd {
+    display: inline-block;
+    padding: 2px 6px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace;
+    font-size: 11px;
+    font-weight: 800;
+    color: #ffffff;
+    background: linear-gradient(180deg, #2a3449 0%, #171d2b 100%);
+    border: 1px solid #3d4c6b;
+    border-bottom: 2px solid #0f131d;
+    border-radius: 4px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.5);
+    line-height: 1.2;
+}
+
+/* Redream Step-by-Step Guide Box */
+.redream-guide-box {
+    background: rgba(0, 114, 206, 0.08);
+    border: 1px solid rgba(0, 114, 206, 0.3);
+    border-radius: var(--radius-md);
+    padding: 14px 16px;
+    margin-top: 14px;
+}
+
+.guide-title {
+    font-size: 13px;
+    font-weight: 800;
+    color: #93c5fd;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.guide-steps {
+    padding-left: 18px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.guide-steps li {
+    margin-bottom: 5px;
+}
+
+.cmd-pill {
+    padding: 6px 10px;
+    background: rgba(0, 0, 0, 0.35);
+    border-radius: 4px;
+    margin-bottom: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.cmd-pill:last-child {
+    margin-bottom: 0;
+}
+
+.cmd-pill strong {
+    color: #ff8533;
 }
 
 .gamepad-notice {
@@ -480,6 +562,169 @@ header {
     color: var(--text-muted);
     text-align: center;
     margin-top: 10px;
+}
+
+/* CHD Info Modal Styles */
+.modal-card-wide {
+    max-width: 620px;
+    text-align: left;
+    align-items: stretch;
+    padding: 28px 32px;
+    border: 1px solid rgba(255, 80, 0, 0.4);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.9), 0 0 30px var(--dc-orange-glow);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.modal-badge {
+    background: var(--dc-orange);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 900;
+    padding: 3px 8px;
+    border-radius: 3px;
+    letter-spacing: 1.2px;
+}
+
+.modal-close {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 24px;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s ease;
+}
+
+.modal-close:hover {
+    color: #fff;
+}
+
+.modal-icon-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.modal-large-icon {
+    font-size: 38px;
+}
+
+.modal-title {
+    font-size: 18px;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.3;
+}
+
+.modal-file-tag {
+    font-size: 12px;
+    color: #38bdf8;
+    font-weight: 600;
+    margin-top: 2px;
+}
+
+.modal-alert-box {
+    background: rgba(239, 68, 68, 0.12);
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    border-radius: var(--radius-md);
+    padding: 12px 16px;
+    margin-bottom: 16px;
+}
+
+.alert-title {
+    font-size: 13px;
+    font-weight: 800;
+    color: #fca5a5;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.alert-text {
+    font-size: 12px;
+    color: #cbd5e1;
+    line-height: 1.5;
+}
+
+.modal-solution-box {
+    background: rgba(34, 197, 94, 0.08);
+    border: 1px solid rgba(34, 197, 94, 0.35);
+    border-radius: var(--radius-md);
+    padding: 14px 16px;
+    margin-bottom: 16px;
+}
+
+.sol-title {
+    font-size: 13px;
+    font-weight: 800;
+    color: #86efac;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.sol-text {
+    font-size: 12px;
+    color: #cbd5e1;
+    line-height: 1.5;
+    margin-bottom: 10px;
+}
+
+.command-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #090c13;
+    border: 1px solid #1e293b;
+    border-radius: 6px;
+    padding: 8px 12px;
+    gap: 10px;
+}
+
+.command-box code {
+    font-family: monospace;
+    font-size: 12px;
+    color: #ffaa80;
+    word-break: break-all;
+}
+
+.btn-sm {
+    padding: 4px 10px;
+    font-size: 11px;
+}
+
+.modal-controls-summary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 20px;
+}
+
+.ctrl-mini-tag {
+    background: var(--bg-surface-elevated);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 11px;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.modal-footer-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
 }
 
 /* Emulator Section */

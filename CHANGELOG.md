@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### 🌀 Sega Dreamcast (128-Bit PowerVR) & Redream / Flycast Native Integration ([`Packaging/emscripten/dreamcast/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/dreamcast/index.html), [`Packaging/emscripten/dreamcast/style.css`](file:///c:/Projects/DevilutionX/Packaging/emscripten/dreamcast/style.css), [`Packaging/emscripten/dreamcast/app.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/dreamcast/app.js), [`play_ecco_redream.bat`](file:///c:/Projects/DevilutionX/play_ecco_redream.bat), [`run_redream.bat`](file:///c:/Projects/DevilutionX/run_redream.bat), [`SEGA_DREAMCAST_SETUP.md`](file:///c:/Projects/DevilutionX/SEGA_DREAMCAST_SETUP.md))
+- **Módulo Sega Dreamcast 128-Bit & Solución Dual Nativa/Web**:
+  - **Lanzadores Nativos de 1 Clic para PC**:
+    - **`play_ecco_redream.bat`**: Detecta automáticamente la imagen de disco *Ecco the Dolphin: Defender of the Future* (`.CHD` de 552.8 MB) en Descargas e inicia **Redream x64** a 60 FPS nativos, renderizado en alta definición y con la guía completa de teclas impresa en consola.
+    - **`run_redream.bat`**: Lanzador general de Redream x64 con soporte para arrastrar cualquier imagen `.CHD` o `.CDI`.
+    - **`play_ecco_dreamcast.bat`** y **`run_flycast.bat`**: Entorno dual alternativo con motor oficial **Flycast x64 v2.7**.
+  - **Guía Explícita de Controles en la UI y Documentación**:
+    - Mapeo nativo de teclado para Redream: Palanca analógica en `W/A/S/D`, Botón A (Nadar/Acelerar) en `K`, Botón B (Embestida/Dash) en `L`, Botón X (Sonar/Ecolocalización) en `J`, Botón Y (Cámara libre) en `P`/`I`, Start en `Barra Espaciadora`, Gatillos en `Q`/`E`, Menú OSD en `ESC`.
+    - Instrucciones paso a paso dentro de la interfaz para acceder al menú de Redream (`ESC` -> `INPUT` -> `Port A` -> `CUSTOMIZE BINDS`) y reasignar cualquier tecla o mando USB/Bluetooth.
+  - **Manejo Inteligente de Imágenes CHD en el Navegador Web**:
+    - Detección e intercepción al arrastrar imágenes `.CHD` o `.CDI`: despliega una ventana modal informativa explicando por qué la emulación web pública carece de core Dreamcast (error 404 de CDN en `dreamcast-legacy-wasm.data`) y ofreciendo el botón de copiado del lanzador de escritorio y acceso inmediato a la guía de controles.
+    - Captura automática de errores de CDN para evitar pantallas negras congeladas.
+  - **Manual Técnico Actualizado**: [`SEGA_DREAMCAST_SETUP.md`](file:///c:/Projects/DevilutionX/SEGA_DREAMCAST_SETUP.md) con tablas comparativas de mandos y atajos de teclado.
+
 ### 📜 Plan de Restauración: Atmósfera, Fauna y Efectos Visuales de PlayStation 1 (Nightmare Edition) ([`Source/nightmare/world/ambient_animals.cpp`](file:///c:/Projects/DevilutionX/Source/nightmare/world/ambient_animals.cpp), [`Source/levels/town.cpp`](file:///c:/Projects/DevilutionX/Source/levels/town.cpp))
 - **Diseño Técnico para Incorporar las Mejoras de PS1 en DevilutionX Nightmare**:
   - **Bandadas de Cuervos Reactivos en Tristram**: Extensión de `Source/nightmare/world/ambient_animals.cpp` con la entidad `TristramCrow` para posicionar bandadas en árboles y ruinas de Tristram, con detección de proximidad del jugador/proyectiles, graznidos estéreo espaciales y animación de despegue y vuelo.

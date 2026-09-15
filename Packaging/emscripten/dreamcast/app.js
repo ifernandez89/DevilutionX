@@ -14,6 +14,7 @@
     // State
     let activeRomName = 'Juego Sega Dreamcast';
     let currentBlobUrls = [];
+    let pendingFiles = null;
 
     // DOM Elements
     const hubSection = document.getElementById('hub-section');
@@ -30,6 +31,16 @@
     const exitGameBtn = document.getElementById('exitGameBtn');
     const activeGameLabel = document.getElementById('activeGameLabel');
     const exportVmuBtn = document.getElementById('exportVmuBtn');
+
+    // CHD Info Modal Elements
+    const chdInfoModal = document.getElementById('chd-info-modal');
+    const closeChdModalBtn = document.getElementById('closeChdModalBtn');
+    const chdModalFileName = document.getElementById('chdModalFileName');
+    const chdModalFileSize = document.getElementById('chdModalFileSize');
+    const copyBatBtn = document.getElementById('copyBatBtn');
+    const batCommandText = document.getElementById('batCommandText');
+    const launchNativeBtn = document.getElementById('launchNativeBtn');
+    const tryWebAnywayBtn = document.getElementById('tryWebAnywayBtn');
 
     // Overlay & Toast
     const loadingOverlay = document.getElementById('loading-overlay');
@@ -94,47 +105,54 @@
     }
 
     // ==========================================
-    // Disc Preparation & Launching
+    // Disc Preparation & Modal Interception
     // ==========================================
-    async function launchDreamcastGame(files) {
+    function handleFileSelection(files) {
         if (!files || files.length === 0) return;
-
-        cleanupBlobs();
+        pendingFiles = files;
 
         const fileList = Array.from(files);
         let primaryFile = null;
-        let gdiFile = null;
-        let cdiFile = null;
-        let chdFile = null;
-        let cueFile = null;
-
-        // Inspect dropped files
         for (const f of fileList) {
             const ext = f.name.slice(f.name.lastIndexOf('.')).toLowerCase();
-            if (ext === '.cdi') cdiFile = f;
-            else if (ext === '.gdi') gdiFile = f;
-            else if (ext === '.chd') chdFile = f;
-            else if (ext === '.cue') cueFile = f;
-            else if (ext === '.iso' || ext === '.bin') {
-                if (!primaryFile) primaryFile = f;
+            if (['.chd', '.cdi', '.gdi', '.iso', '.cue'].includes(ext)) {
+                primaryFile = f;
+                break;
             }
         }
+        if (!primaryFile) primaryFile = fileList[0];
 
-        // Determine main booting target (.cdi, .gdi, .chd or single image)
-        primaryFile = cdiFile || gdiFile || chdFile || cueFile || primaryFile || fileList[0];
+        const cleanName = primaryFile.name.replace(/\.[^/.]+$/, '');
+        const sizeMB = (primaryFile.size / (1024 * 1024)).toFixed(1);
+        const ext = primaryFile.name.slice(primaryFile.name.lastIndexOf('.')).toUpperCase();
+
+        // Show informative modal explaining web limitations & native launcher
+        if (chdInfoModal) {
+            if (chdModalFileName) chdModalFileName.textContent = cleanName;
+            if (chdModalFileSize) chdModalFileSize.textContent = `Imagen de disco Sega Dreamcast (${sizeMB} MB ${ext})`;
+            chdInfoModal.style.display = 'flex';
+            return;
+        }
+
+        // Fallback if modal not present
+        executeWebLaunch(primaryFile);
+    }
+
+    async function executeWebLaunch(primaryFile) {
+        if (!primaryFile) return;
+
+        cleanupBlobs();
 
         const cleanName = primaryFile.name.replace(/\.[^/.]+$/, '');
         activeRomName = cleanName;
-
         const sizeMB = (primaryFile.size / (1024 * 1024)).toFixed(1);
-        showLoading(`Iniciando ${cleanName}...`, `Preparando imagen GD-ROM (${sizeMB} MB) y cargando núcleo WebAssembly...`);
+
+        showLoading(`Iniciando ${cleanName}...`, `Preparando imagen GD-ROM (${sizeMB} MB) y conectando con EmulatorJS...`);
 
         try {
-            // Create Blob URL for the primary disc image
             const blobUrl = URL.createObjectURL(primaryFile);
             currentBlobUrls.push(blobUrl);
 
-            // Switch to game screen
             hubSection.style.display = 'none';
             emulatorSection.style.display = 'flex';
             updateScreenSizeUI();
@@ -143,7 +161,6 @@
                 activeGameLabel.textContent = `🌀 ${cleanName} (Sega Dreamcast 128-Bit)`;
             }
 
-            // Clear previous player element
             gamePlayer.innerHTML = '';
             const playerContainer = document.createElement('div');
             playerContainer.id = 'ejs-game-container';
@@ -151,7 +168,27 @@
             playerContainer.style.height = '100%';
             gamePlayer.appendChild(playerContainer);
 
-            // Configure EmulatorJS globals for Sega Dreamcast (Flycast core)
+            // Observer to detect CDN 404 core errors in real-time
+            const errorObserver = new MutationObserver(() => {
+                const errText = playerContainer.querySelector('.ejs_error_text');
+                if (errText && errText.textContent.includes('dreamcast-legacy-wasm')) {
+                    errorObserver.disconnect();
+                    hideLoading();
+                    showToast('Core web de Dreamcast no disponible en CDN', '⚠️', 4000);
+                    setTimeout(() => {
+                        alert(
+                            `⚠️ Aviso de compatibilidad:\n\n` +
+                            `El CDN público de EmulatorJS no aloja el core de Dreamcast (error 404 dreamcast-legacy-wasm.data).\n\n` +
+                            `¡Usa Redream nativo para jugar a 60 FPS con aceleración de hardware!\n` +
+                            `Ejecuta el archivo: play_ecco_redream.bat`
+                        );
+                        exitToHub();
+                    }, 500);
+                }
+            });
+            errorObserver.observe(playerContainer, { childList: true, subtree: true });
+
+            // Configure EmulatorJS globals
             window.EJS_player = '#ejs-game-container';
             window.EJS_core = 'segaDC';
             window.EJS_gameUrl = blobUrl;
@@ -162,7 +199,6 @@
             window.EJS_align = 'center';
             window.EJS_color = '#ff5000';
 
-            // Remove existing loader script if any, and reinject
             const oldScript = document.getElementById('ejs-loader-script');
             if (oldScript) oldScript.remove();
 
@@ -171,12 +207,12 @@
             script.src = 'https://cdn.emulatorjs.org/stable/data/loader.js';
             script.onload = () => {
                 hideLoading();
-                showToast(`¡${cleanName} ejecutándose en Sega Dreamcast!`, '🌀');
+                showToast(`¡${cleanName} cargado en Sega Dreamcast!`, '🌀');
             };
-            script.onerror = (e) => {
+            script.onerror = () => {
                 hideLoading();
-                console.warn('[Dreamcast Loader] CDN loader error:', e);
-                alert(`Para imágenes Dreamcast de gran tamaño (>500MB) como Ecco the Dolphin, recomendamos usar el lanzador nativo 'play_ecco_dreamcast.bat' con Flycast x64 para máximo rendimiento y fluidez a 60 FPS.`);
+                showToast('Error conectando con CDN de emulación', '⚠️');
+                alert(`Para imágenes Dreamcast de 500MB+ recomendamos ejecutar 'play_ecco_redream.bat' o 'run_redream.bat' con Redream nativo.`);
                 exitToHub();
             };
 
@@ -185,7 +221,7 @@
         } catch (err) {
             hideLoading();
             console.error('[Dreamcast Launcher] Error:', err);
-            alert(`Error al procesar la imagen de Sega Dreamcast: ${err.message || err}`);
+            alert(`Error al procesar la imagen: ${err.message || err}`);
             exitToHub();
         }
     }
@@ -231,6 +267,54 @@
             exitGameBtn.addEventListener('click', exitToHub);
         }
 
+        // Modal Event Listeners
+        if (closeChdModalBtn) {
+            closeChdModalBtn.addEventListener('click', () => {
+                if (chdInfoModal) chdInfoModal.style.display = 'none';
+            });
+        }
+
+        if (chdInfoModal) {
+            chdInfoModal.addEventListener('click', (e) => {
+                if (e.target === chdInfoModal) {
+                    chdInfoModal.style.display = 'none';
+                }
+            });
+        }
+
+        if (copyBatBtn && batCommandText) {
+            copyBatBtn.addEventListener('click', () => {
+                const text = batCommandText.textContent.trim();
+                navigator.clipboard.writeText(text).then(() => {
+                    showToast('¡Ruta copiada al portapapeles!', '📋');
+                }).catch(() => {
+                    showToast('Comando: play_ecco_redream.bat', '📋');
+                });
+            });
+        }
+
+        if (launchNativeBtn) {
+            launchNativeBtn.addEventListener('click', () => {
+                if (chdInfoModal) chdInfoModal.style.display = 'none';
+                const controlsSection = document.querySelector('.controls-grid');
+                if (controlsSection) {
+                    controlsSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+                showToast('Consulta abajo el mapeo exacto de teclas', '🎮', 4000);
+            });
+        }
+
+        if (tryWebAnywayBtn) {
+            tryWebAnywayBtn.addEventListener('click', () => {
+                if (chdInfoModal) chdInfoModal.style.display = 'none';
+                if (pendingFiles && pendingFiles.length > 0) {
+                    const fileList = Array.from(pendingFiles);
+                    const primary = fileList.find(f => ['.chd', '.cdi', '.gdi', '.iso', '.cue'].includes(f.name.slice(f.name.lastIndexOf('.')).toLowerCase())) || fileList[0];
+                    executeWebLaunch(primary);
+                }
+            });
+        }
+
         // Dropzone & File browse
         if (dropzone) {
             dropzone.addEventListener('click', () => {
@@ -250,7 +334,7 @@
                 e.preventDefault();
                 dropzone.classList.remove('dragover');
                 if (e.dataTransfer && e.dataTransfer.files.length > 0) {
-                    launchDreamcastGame(e.dataTransfer.files);
+                    handleFileSelection(e.dataTransfer.files);
                 }
             });
         }
@@ -271,7 +355,7 @@
         if (fileInput) {
             fileInput.addEventListener('change', (e) => {
                 if (e.target.files && e.target.files.length > 0) {
-                    launchDreamcastGame(e.target.files);
+                    handleFileSelection(e.target.files);
                 }
             });
         }
@@ -280,7 +364,6 @@
         if (exportVmuBtn) {
             exportVmuBtn.addEventListener('click', () => {
                 showToast('Exportando partidas de la tarjeta VMU...', '💾');
-                // Download dummy initial 128KB VMU structure if not existing
                 const vmuData = new Uint8Array(128 * 1024);
                 const blob = new Blob([vmuData], { type: 'application/octet-stream' });
                 const url = URL.createObjectURL(blob);

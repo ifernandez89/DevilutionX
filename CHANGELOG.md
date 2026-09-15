@@ -7,19 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-### 🌀 Sega Dreamcast (128-Bit PowerVR) & Redream / Flycast Native Integration ([`Packaging/emscripten/dreamcast/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/dreamcast/index.html), [`Packaging/emscripten/dreamcast/style.css`](file:///c:/Projects/DevilutionX/Packaging/emscripten/dreamcast/style.css), [`Packaging/emscripten/dreamcast/app.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/dreamcast/app.js), [`play_ecco_redream.bat`](file:///c:/Projects/DevilutionX/play_ecco_redream.bat), [`run_redream.bat`](file:///c:/Projects/DevilutionX/run_redream.bat), [`SEGA_DREAMCAST_SETUP.md`](file:///c:/Projects/DevilutionX/SEGA_DREAMCAST_SETUP.md))
-- **Módulo Sega Dreamcast 128-Bit & Solución Dual Nativa/Web**:
+### 🌀 Sega Dreamcast (128-Bit PowerVR) & Redream Native Integration ([`SEGA_DREAMCAST_SETUP.md`](file:///c:/Projects/DevilutionX/SEGA_DREAMCAST_SETUP.md), [`Packaging/emscripten/dreamcast/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/dreamcast/index.html), [`Packaging/emscripten/dreamcast/style.css`](file:///c:/Projects/DevilutionX/Packaging/emscripten/dreamcast/style.css), [`Packaging/emscripten/dreamcast/app.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/dreamcast/app.js), [`play_ecco_redream.bat`](file:///c:/Projects/DevilutionX/play_ecco_redream.bat), [`run_redream.bat`](file:///c:/Projects/DevilutionX/run_redream.bat))
+- **Módulo Sega Dreamcast 128-Bit & Solución Dual Nativa/Web con Redream x64**:
   - **Lanzadores Nativos de 1 Clic para PC**:
     - **`play_ecco_redream.bat`**: Detecta automáticamente la imagen de disco *Ecco the Dolphin: Defender of the Future* (`.CHD` de 552.8 MB) en Descargas e inicia **Redream x64** a 60 FPS nativos, renderizado en alta definición y con la guía completa de teclas impresa en consola.
-    - **`run_redream.bat`**: Lanzador general de Redream x64 con soporte para arrastrar cualquier imagen `.CHD` o `.CDI`.
-    - **`play_ecco_dreamcast.bat`** y **`run_flycast.bat`**: Entorno dual alternativo con motor oficial **Flycast x64 v2.7**.
+    - **`run_redream.bat`**: Lanzador general de Redream x64 con soporte para arrastrar cualquier imagen `.CHD` o `.CDI` y auto-descarga de la versión oficial portable si no estuviese instalada.
+    - **`play_ecco_dreamcast.bat`** y **`run_flycast.bat`**: Lanzadores compatibles con redirección hacia Redream x64.
   - **Guía Explícita de Controles en la UI y Documentación**:
     - Mapeo nativo de teclado para Redream: Palanca analógica en `W/A/S/D`, Botón A (Nadar/Acelerar) en `K`, Botón B (Embestida/Dash) en `L`, Botón X (Sonar/Ecolocalización) en `J`, Botón Y (Cámara libre) en `P`/`I`, Start en `Barra Espaciadora`, Gatillos en `Q`/`E`, Menú OSD en `ESC`.
     - Instrucciones paso a paso dentro de la interfaz para acceder al menú de Redream (`ESC` -> `INPUT` -> `Port A` -> `CUSTOMIZE BINDS`) y reasignar cualquier tecla o mando USB/Bluetooth.
+  - **Repositorio de Preservación Redump CHD (Archive.org)**:
+    - Documentado el enlace directo de preservación: [**Sega Dreamcast Redump Collection Directory Listing**](https://archive.org/download/sega-dreamcast-redump-collection)
+    - Versiones disponibles de *Ecco the Dolphin*: USA (`552.8 MB`), Europe (`551.3 MB`), Japan (`550.8 MB`).
   - **Manejo Inteligente de Imágenes CHD en el Navegador Web**:
     - Detección e intercepción al arrastrar imágenes `.CHD` o `.CDI`: despliega una ventana modal informativa explicando por qué la emulación web pública carece de core Dreamcast (error 404 de CDN en `dreamcast-legacy-wasm.data`) y ofreciendo el botón de copiado del lanzador de escritorio y acceso inmediato a la guía de controles.
     - Captura automática de errores de CDN para evitar pantallas negras congeladas.
   - **Manual Técnico Actualizado**: [`SEGA_DREAMCAST_SETUP.md`](file:///c:/Projects/DevilutionX/SEGA_DREAMCAST_SETUP.md) con tablas comparativas de mandos y atajos de teclado.
+
+### 🌀 Corrección de Despliegue en GitHub Pages y Enlaces Cruzados para Sega Dreamcast 128-Bit ([`.github/workflows/deploy-pages.yml`](file:///c:/Projects/DevilutionX/.github/workflows/deploy-pages.yml), [`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html), [`Packaging/emscripten/assets/retro-nav/retro-nav.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/assets/retro-nav/retro-nav.js))
+- **Solución al error 404 de GitHub Pages en `dreamcast/index.html`**:
+  - Incorporada la copia de `Packaging/emscripten/dreamcast` hacia `dist/dreamcast` en el flujo de GitHub Actions ([`deploy-pages.yml`](file:///c:/Projects/DevilutionX/.github/workflows/deploy-pages.yml)), asegurando la publicación de todos los archivos del reproductor WebAssembly (`app.js`, `index.html`, `style.css`).
+- **Botones de Navegación Directa entre Consolas**:
+  - Añadido el botón de acceso directo `🌀 Dreamcast (128-Bit)` en la barra superior de los reproductores de PS1, N64, SNES, NES, Genesis, DOOM y Wolfenstein 3D.
+  - Añadido el botón `🌀 Lector Sega Dreamcast (128-Bit)` en el diálogo modal de consolas retro del inicio (`Packaging/emscripten/index.html`).
+- **Invalidación de Caché de Navegador (Cache-Busting)**:
+  - Añadido el identificador de versión `?v=dreamcast-128` a `retro-nav.js` y `retro-nav.css` en todas las páginas web del proyecto, evitando que los navegadores sirvan versiones cacheadas del menú sin la categoría Dreamcast.
 
 ### 📜 Plan de Restauración: Atmósfera, Fauna y Efectos Visuales de PlayStation 1 (Nightmare Edition) ([`Source/nightmare/world/ambient_animals.cpp`](file:///c:/Projects/DevilutionX/Source/nightmare/world/ambient_animals.cpp), [`Source/levels/town.cpp`](file:///c:/Projects/DevilutionX/Source/levels/town.cpp))
 - **Diseño Técnico para Incorporar las Mejoras de PS1 en DevilutionX Nightmare**:

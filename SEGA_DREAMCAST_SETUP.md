@@ -1,22 +1,47 @@
-# 🌀 Guía de Integración: Sega Dreamcast 128-Bit & Ecco the Dolphin
+# 🌀 Guía de Integración: Sega Dreamcast 128-Bit & Redream
 
 Esta guía documenta la implementación completa del ecosistema **Sega Dreamcast** en el proyecto, proporcionando una solución dual:
-1. **Entorno Nativo de Alto Rendimiento (Windows x64)**: Optimizado para ejecutar de inmediato a 60 FPS y en resoluciones HD/4K el título **Ecco the Dolphin: Defender of the Future** (`.cdi`) mediante **Flycast x64 oficial**.
+1. **Entorno Nativo de Alto Rendimiento (Windows x64)**: Optimizado para ejecutar de inmediato a 60 FPS estables y en resoluciones escaladas el título **Ecco the Dolphin: Defender of the Future** (`.chd` / `.cdi`) mediante **Redream x64 oficial** (sustituto oficial y directo de Flycast).
 2. **Reproductor WebAssembly (Retro Hub)**: Plataforma web integrada en `Packaging/emscripten/dreamcast/` conectada al catálogo global de consolas retro (`retro-nav.js`).
 
 ---
 
-## 🐬 1. Cómo Jugar a *Ecco the Dolphin* en PC (Redream & Flycast)
+## 🐬 1. Cómo Jugar a *Ecco the Dolphin* (Entorno Nativo Windows x64 con Redream)
 
-Tienes a tu disposición dos emuladores nativos de alto rendimiento en Windows x64:
+### Ventajas Clave de Redream
+- **Cero Configuración de BIOS:** Trae implementada una BIOS integrada de alta compatibilidad (HLE). No requiere buscar ni copiar archivos `dc_boot.bin` ni `dc_flash.bin`.
+- **Soporte CHD Directo y Ligero:** Carga al instante las imágenes `.chd` comprimidas sin pérdidas del estándar Redump (~550 MB vs 1.1 GB en GDI).
+- **Mapeo Automático:** Reconoce mandos de Xbox, PlayStation, Switch Pro y genéricos al conectarlos por USB o Bluetooth.
+- **Rendimiento Impecable:** Motor 3D ultra optimizado que mantiene 60 FPS estables sin micro-tirones ni desincronización de audio AICA.
 
-### Opción A (Recomendada): Redream x64
-- **Lanzador directo**: Haz doble clic en **[`play_ecco_redream.bat`](file:///c:/Projects/DevilutionX/play_ecco_redream.bat)**.
-- Detecta automáticamente tu imagen `.chd` de 552 MB:
-  `C:\Users\xiphos-pc1\Downloads\Ecco the Dolphin - Defender of the Future (USA) (En,Fr,De,Es).chd`
-- **Lanzador general**: **[`run_redream.bat`](file:///c:/Projects/DevilutionX/run_redream.bat)** (puedes arrastrar cualquier juego sobre él).
+---
 
-#### 🎮 Controles por Defecto de Redream (Ecco the Dolphin)
+### Inicio Rápido en 1 Clic
+En la raíz del proyecto encontrarás los lanzadores directos:
+- **[`play_ecco_redream.bat`](file:///c:/Projects/DevilutionX/play_ecco_redream.bat)** o **[`play_ecco_dreamcast.bat`](file:///c:/Projects/DevilutionX/play_ecco_dreamcast.bat)**
+
+El script detecta de forma automática la imagen de disco en:
+- `D:\Hours of Fun\Roms\Sega Dreamcast\`
+- `C:\Users\xiphos-pc1\Downloads\` (incluyendo subcarpetas)
+- La raíz del proyecto
+
+Si Redream no estuviera instalado, el script lo descargará e instalará de forma automática desde su repositorio oficial en `./redream-win64/`.
+
+---
+
+### 🌐 Enlace de Preservación y Descarga de ROMs CHD (Redump)
+Para obtener la versión oficial en formato comprimido `.chd`:
+- **Directorio Completo de Descarga Directa Redump CHD:**  
+  [https://archive.org/download/sega-dreamcast-redump-collection](https://archive.org/download/sega-dreamcast-redump-collection)
+- **Archivos disponibles de Ecco:**
+  - `Ecco the Dolphin - Defender of the Future (USA) (En,Fr,De,Es).chd` (~552 MB)
+  - `Ecco the Dolphin - Defender of the Future (Europe) (En,Fr,De,Es).chd` (~551 MB)
+  - `Ecco the Dolphin - Defender of the Future (Japan).chd` (~550 MB)
+
+---
+
+### 🎮 Controles Predeterminados de Redream (Ecco the Dolphin)
+
 | Función en Ecco | Tecla (Teclado) | Botón Dreamcast | Mando Xbox | Mando PlayStation |
 | :--- | :--- | :--- | :--- | :--- |
 | **Nadar / Mover a Ecco** | `W` `A` `S` `D` | **Palanca Analógica** | Stick Izquierdo | Stick Izquierdo |
@@ -39,16 +64,17 @@ Tienes a tu disposición dos emuladores nativos de alto rendimiento en Windows x
 
 ---
 
-### Opción B: Flycast x64
-- **Lanzador directo**: **[`play_ecco_dreamcast.bat`](file:///c:/Projects/DevilutionX/play_ecco_dreamcast.bat)**
-- **Lanzador general**: **[`run_flycast.bat`](file:///c:/Projects/DevilutionX/run_flycast.bat)**
-- Menú de opciones de Flycast: tecla **`Tab`** o **`Escape`**.
+### Configuración General de Redream
+Para abrir el emulador de forma independiente, añadir directorios de juegos o configurar mandos:
+- Ejecuta: **[`run_redream.bat`](file:///c:/Projects/DevilutionX/run_redream.bat)**
+
+También puedes arrastrar cualquier imagen `.chd`, `.cdi` o `.gdi` sobre `run_redream.bat` para iniciarla directamente.
 
 ---
 
 ## 🌐 2. Reproductor WebAssembly (Retro Hub)
 
-Se ha integrado un nuevo reproductor WebAssembly para **Sega Dreamcast** en:
+Se ha integrado el reproductor WebAssembly para **Sega Dreamcast** en:
 - **Ruta**: [`Packaging/emscripten/dreamcast/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/dreamcast/index.html)
 - **Hoja de Estilos**: [`Packaging/emscripten/dreamcast/style.css`](file:///c:/Projects/DevilutionX/Packaging/emscripten/dreamcast/style.css)
 - **Controlador**: [`Packaging/emscripten/dreamcast/app.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/dreamcast/app.js)
@@ -61,7 +87,7 @@ Se ha integrado un nuevo reproductor WebAssembly para **Sega Dreamcast** en:
   - `Cinema (1180p)`: Experiencia panorámica extendida.
   - `Pantalla Completa`: Modo inmersivo sin bordes.
 - **Visual Memory Unit (VMU)**: Panel LCD interactivo con simulación de VMU y botón para exportar respaldos `.bin` de tus partidas.
-- **Integración con Retro Nav**: Registrado bajo `🌀 SEGA 128-BIT (Motor Flycast / Dreamcast WASM)` en el menú desplegable común a Diablo, PSX, N64, SNES, NES, Genesis, DOOM y Quake.
+- **Integración con Retro Nav**: Registrado bajo `🌀 SEGA 128-BIT (Motor Redream / Dreamcast WASM)` en el menú desplegable común a Diablo, PSX, N64, SNES, NES, Genesis, DOOM y Quake.
 
 ---
 
@@ -69,16 +95,17 @@ Se ha integrado un nuevo reproductor WebAssembly para **Sega Dreamcast** en:
 
 ```
 c:\Projects\DevilutionX\
-├── flycast-win64\
-│   └── flycast.exe                   # Binario oficial de Flycast x64 v2.7
-├── play_ecco_dreamcast.bat           # Lanzador directo 1-clic para Ecco the Dolphin
-├── run_flycast.bat                   # Lanzador GUI / Dropzone de Flycast
-├── SEGA_DREAMCAST_SETUP.md           # Este manual técnico de uso y controles
+├── redream-win64\
+│   └── redream.exe                   # Binario oficial de Redream x64 v1.5.0
+├── play_ecco_redream.bat             # Lanzador directo 1-clic para Ecco the Dolphin (Redream)
+├── play_ecco_dreamcast.bat           # Lanzador directo para Ecco the Dolphin
+├── run_redream.bat                   # Lanzador GUI / Dropzone de Redream
+├── SEGA_DREAMCAST_SETUP.md           # Manual técnico de uso, enlaces CHD y controles
 └── Packaging\emscripten\
     ├── assets\retro-nav\
     │   └── retro-nav.js              # Actualizado con categoría Sega Dreamcast 128-Bit
     └── dreamcast\
         ├── index.html                # Interfaz web del reproductor Dreamcast
-        ├── style.css                 # Estilos visuales Swirl naranja/azul
-        └── app.js                    # Lógica de carga GD-ROM y VMU saves
+        ├── style.css                 # Estilos visuales Swirl naranja/azul y guía de teclas
+        └── app.js                    # Lógica de carga GD-ROM, modal informativo y VMU saves
 ```

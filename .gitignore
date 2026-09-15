@@ -476,4 +476,6 @@ uwp-project/Assets/ui_art
 Packaging/emscripten/minixp/
 gens-win32-bin-2.14/
 flycast-win64/
+redream-win64/
+*.chd
 

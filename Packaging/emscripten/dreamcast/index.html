@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dreamcast Web — Sega Dreamcast 128-Bit (Flycast WebAssembly)</title>
-    <meta name="description" content="Emulador Sega Dreamcast 128-Bit en WebAssembly directo en el navegador con soporte para imágenes .CDI, .GDI, .CHD y .CUE. Motor Flycast / EmulatorJS con aceleración WebGL2 3D, audio estéreo AICA, Virtual Memory Unit (VMU) persistente en IndexedDB y soporte para mandos analógicos y teclado.">
-    <link rel="stylesheet" href="../assets/retro-nav/retro-nav.css">
+    <title>Dreamcast Web — Sega Dreamcast 128-Bit (WASM Hub & Redream Nativo)</title>
+    <meta name="description" content="Emulador Sega Dreamcast 128-Bit en WebAssembly y entorno nativo Redream x64 con soporte para imágenes .CHD, .CDI, .GDI y .CUE. Aceleración 3D, BIOS integrada de alta compatibilidad, Virtual Memory Unit (VMU) persistente y soporte para mandos automáticos.">
+    <link rel="stylesheet" href="../assets/retro-nav/retro-nav.css?v=dreamcast-128">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -37,6 +37,9 @@
             </a>
             <a href="../nes/index.html" class="btn btn-secondary" title="Emulador Nintendo NES / Famicom (8-Bit)">
                 🔴 NES (8-Bit)
+            </a>
+            <a href="../doom/index.html" class="btn btn-secondary" title="Jugar a DOOM & Freedoom">
+                🔥 DOOM
             </a>
             <a href="../index.html" class="btn btn-secondary" title="Volver a DevilutionX / Diablo">
                 ⚔️ Diablo
@@ -87,12 +90,12 @@
             <!-- Dreamcast Showcase Card -->
             <div class="cartridge-card">
                 <div>
-                    <div class="cartridge-badge">128-BIT WASM • FLYCAST MOTOR • POWERVR 3D ACCELERATED</div>
+                    <div class="cartridge-badge">128-BIT DREAMCAST • MOTOR REDREAM X64 & WASM • POWERVR 3D</div>
                     <div class="cartridge-header">
                         <div class="dc-swirl-icon">🌀</div>
                         <div>
                             <h2 class="cartridge-title">Sega Dreamcast (128-Bit PowerVR)</h2>
-                            <div class="cartridge-subtitle">Motor Flycast WebAssembly • Render WebGL2 3D • 60 FPS • Audio DSP AICA</div>
+                            <div class="cartridge-subtitle">Motor Redream x64 Nativo & Hub WebAssembly • 60 FPS • Soporte Completo CHD</div>
                         </div>
                     </div>
 
@@ -125,14 +128,14 @@
                         </div>
                     </div>
 
-                    <!-- Native Redream & Flycast Desktop Recommendation Box -->
+                    <!-- Native Redream Desktop Recommendation Box -->
                     <div class="native-box">
                         <div class="native-box-header">
                             <span class="native-box-icon">⚡</span>
-                            <strong>¿Quieres jugar en tu PC a 60 FPS / HD con Redream o Flycast Nativo?</strong>
+                            <strong>¿Quieres jugar en tu PC a 60 FPS / HD con Redream Nativo?</strong>
                         </div>
                         <p class="native-box-text">
-                            Para imágenes 3D de más de 500 MB como <em>Ecco the Dolphin - Defender of the Future (.CHD de 552 MB)</em>, los emuladores nativos de escritorio ofrecen el 100% de rendimiento, audio perfecto y cero retraso:
+                            Para imágenes 3D de más de 500 MB como <em>Ecco the Dolphin - Defender of the Future (.CHD de 552 MB)</em>, el emulador oficial <strong>Redream x64</strong> ofrece 100% de rendimiento nativo, audio estéreo perfecto y compatibilidad total con mandos:
                         </p>
                         <div class="native-commands">
                             <div class="cmd-pill">
@@ -142,7 +145,7 @@
                                 <strong>run_redream.bat</strong> &nbsp;—&nbsp; Abre Redream x64 para cargar cualquier imagen o configurar mandos.
                             </div>
                             <div class="cmd-pill">
-                                <strong>play_ecco_dreamcast.bat</strong> &nbsp;—&nbsp; Inicia con motor Flycast x64.
+                                <strong>play_ecco_dreamcast.bat</strong> &nbsp;—&nbsp; Lanzador unificado de compatibilidad.
                             </div>
                         </div>
                     </div>
@@ -319,6 +322,7 @@
         </div>
     </div>
 
+
     <!-- Notification Toast -->
     <div id="toast" class="toast" style="display: none;">
         <span class="toast-icon" id="toastIcon">🌀</span>
@@ -326,7 +330,7 @@
     </div>
 
     <!-- Scripts -->
-    <script src="../assets/retro-nav/retro-nav.js"></script>
+    <script src="../assets/retro-nav/retro-nav.js?v=dreamcast-128"></script>
     <script src="app.js"></script>
 </body>
 </html>

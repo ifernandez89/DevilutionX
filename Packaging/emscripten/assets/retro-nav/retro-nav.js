@@ -175,7 +175,7 @@
             ]
         },
         {
-            category: '🌀 SEGA 128-BIT (Motor Flycast / Dreamcast WASM)',
+            category: '🌀 SEGA 128-BIT (Motor Redream / Dreamcast Hub)',
             items: [
                 {
                     id: 'dreamcast',
@@ -272,7 +272,7 @@
             const link = document.createElement('link');
             link.id = 'retro-nav-css';
             link.rel = 'stylesheet';
-            link.href = `${BASE_PATH}assets/retro-nav/retro-nav.css`;
+            link.href = `${BASE_PATH}assets/retro-nav/retro-nav.css?v=dreamcast-128`;
             document.head.appendChild(link);
         }
 

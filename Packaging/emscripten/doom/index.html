@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DOOM WASM — UAC Phobos Terminal & Freedoom (WebAssembly)</title>
     <meta name="description" content="Juega DOOM y Freedoom en tu navegador a 60 FPS con WebAssembly. Compatible con teclado, ratón y gamepad. 100% libre y de código abierto.">
-    <link rel="stylesheet" href="../assets/retro-nav/retro-nav.css">
+    <link rel="stylesheet" href="../assets/retro-nav/retro-nav.css?v=dreamcast-128">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -22,11 +22,17 @@
             <!-- Retro Hub Global Dropdown Slot -->
             <div id="retro-nav-slot"></div>
             
-            <a href="../index.html" class="btn btn-secondary" title="Volver al juego DevilutionX / Diablo">
-                ⚔️ Diablo
+            <a href="../dreamcast/index.html" class="btn btn-secondary" title="Emulador Sega Dreamcast 128-Bit">
+                🌀 Dreamcast
+            </a>
+            <a href="../psx/index.html" class="btn btn-secondary" title="Emulador Sony PlayStation (32-Bit)">
+                💿 PS1
             </a>
             <a href="../gens/index.html" class="btn btn-secondary" title="Emulador Sega Genesis">
-                🏍️ Genesis
+                ⚡ Genesis
+            </a>
+            <a href="../index.html" class="btn btn-secondary" title="Volver al juego DevilutionX / Diablo">
+                ⚔️ Diablo
             </a>
         </div>
     </header>
@@ -224,7 +230,7 @@
 
     <!-- Vendor Dependencies -->
     <script src="vendor/nostalgist.umd.js"></script>
-    <script src="../assets/retro-nav/retro-nav.js"></script>
+    <script src="../assets/retro-nav/retro-nav.js?v=dreamcast-128"></script>
     <!-- DOOM Main Controller -->
     <script src="app.js"></script>
 </body>

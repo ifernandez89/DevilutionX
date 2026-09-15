@@ -9,7 +9,7 @@
     // Calculate relative path to root Packaging/emscripten/ directory
     function getRootRelativePath() {
         const path = window.location.pathname.toLowerCase();
-        if (path.includes('/doom/') || path.includes('/wolf3d/') || path.includes('/gens/') || path.includes('/minixp/') || path.includes('/tinycore/') || path.includes('/quake/') || path.includes('/cavestory/') || path.includes('/nes/') || path.includes('/snes/') || path.includes('/n64/') || path.includes('/psx/') || path.includes('/dreamcast/')) {
+        if (path.includes('/doom/') || path.includes('/wolf3d/') || path.includes('/gens/') || path.includes('/minixp/') || path.includes('/tinycore/') || path.includes('/quake/') || path.includes('/cavestory/') || path.includes('/nes/') || path.includes('/snes/') || path.includes('/n64/') || path.includes('/psx/')) {
             return '../';
         }
         return './';
@@ -175,21 +175,6 @@
             ]
         },
         {
-            category: '🌀 SEGA 128-BIT (Motor Redream / Dreamcast Hub)',
-            items: [
-                {
-                    id: 'dreamcast',
-                    title: 'Sega Dreamcast (128-Bit)',
-                    subtitle: 'Lector Universal .CDI / .GDI / .CHD • PowerVR 3D • 60 FPS',
-                    badge: '128-BIT WASM',
-                    badgeClass: 'badge-wasm',
-                    icon: '🌀',
-                    url: `${BASE_PATH}dreamcast/index.html`,
-                    activeMatcher: (p) => p.includes('/dreamcast/')
-                }
-            ]
-        },
-        {
             category: '⚔️ ACTION RPG (Motor DevilutionX WASM)',
             items: [
                 {
@@ -200,7 +185,7 @@
                     badgeClass: 'badge-wasm',
                     icon: '⚔️',
                     url: `${BASE_PATH}index.html`,
-                    activeMatcher: (p) => !p.includes('/doom/') && !p.includes('/wolf3d/') && !p.includes('/gens/') && !p.includes('/minixp/') && !p.includes('/quake/') && !p.includes('/cavestory/') && !p.includes('/nes/') && !p.includes('/snes/') && !p.includes('/n64/') && !p.includes('/psx/') && !p.includes('/dreamcast/')
+                    activeMatcher: (p) => !p.includes('/doom/') && !p.includes('/wolf3d/') && !p.includes('/gens/') && !p.includes('/minixp/') && !p.includes('/quake/') && !p.includes('/cavestory/') && !p.includes('/nes/') && !p.includes('/snes/') && !p.includes('/n64/') && !p.includes('/psx/')
                 }
             ]
         },
@@ -272,7 +257,7 @@
             const link = document.createElement('link');
             link.id = 'retro-nav-css';
             link.rel = 'stylesheet';
-            link.href = `${BASE_PATH}assets/retro-nav/retro-nav.css?v=dreamcast-128`;
+            link.href = `${BASE_PATH}assets/retro-nav/retro-nav.css?v=retro-hub-v4`;
             document.head.appendChild(link);
         }
 

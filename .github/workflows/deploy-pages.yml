@@ -143,9 +143,6 @@ jobs:
           if [ -d "Packaging/emscripten/psx" ]; then
             cp -rv Packaging/emscripten/psx dist/psx
           fi
-          if [ -d "Packaging/emscripten/dreamcast" ]; then
-            cp -rv Packaging/emscripten/dreamcast dist/dreamcast
-          fi
           if [ -d Packaging/emscripten/doom ]; then
             cp -rv Packaging/emscripten/doom dist/doom
           fi

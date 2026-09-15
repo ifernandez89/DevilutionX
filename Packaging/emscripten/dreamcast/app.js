@@ -1,10 +1,10 @@
 /**
  * Dreamcast Web — Sega Dreamcast 128-Bit WebAssembly Controller
  * Features:
- * - Direct execution of Dreamcast GD-ROMs (.CDI, .GDI, .CHD, .ISO) via Flycast / EmulatorJS WebAssembly core
+ * - Sega Dreamcast 128-Bit Hub with support for .CHD, .CDI, .GDI, .ISO
  * - Dynamic screen scaling: Normal (800p), Grande (980p, default), Cinema (1180p)
  * - Virtual Memory Unit (VMU) 128KB saves persistence in browser IndexedDB
- * - Native desktop Flycast x64 recommendation integration for complex 3D titles (Ecco the Dolphin)
+ * - Native desktop Redream x64 launcher integration with built-in BIOS and automatic gamepad mapping
  * - Gamepad & keyboard control mapping
  */
 

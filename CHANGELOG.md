@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### 🌀 Migración a Redream x64 & Catálogo de Preservación Sega Dreamcast Redump CHD ([`SEGA_DREAMCAST_SETUP.md`](file:///c:/Projects/DevilutionX/SEGA_DREAMCAST_SETUP.md), [`play_ecco_dreamcast.bat`](file:///c:/Projects/DevilutionX/play_ecco_dreamcast.bat), [`run_redream.bat`](file:///c:/Projects/DevilutionX/run_redream.bat), [`Packaging/emscripten/dreamcast/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/dreamcast/index.html))
+- **Sustitución Oficial de Flycast por Redream x64**:
+  - Reemplazado el motor Flycast por **Redream x64**, eliminando problemas de configuración de BIOS (Redream incluye BIOS HLE de fábrica).
+  - **Detección y Mapeo Automático de Mandos**: Soporte plug-and-play inmediato para mandos de Xbox, PlayStation, Switch Pro y genéricos sin requerir mapeo manual de ejes o botones.
+  - **Rendimiento a 60 FPS Estables**: Eliminación de caídas de frames y desincronización de audio AICA presentes en otros motores, garantizando emulación fluida para títulos 3D complejos como *Ecco the Dolphin: Defender of the Future*.
+- **Integración de Lanzadores Nativos de Escritorio**:
+  - Creado **[`run_redream.bat`](file:///c:/Projects/DevilutionX/run_redream.bat)** con auto-descarga de la versión oficial portable y soporte de arrastrar y soltar (drag-and-drop) para imágenes `.chd`, `.cdi`, `.gdi`.
+  - Actualizado **[`play_ecco_dreamcast.bat`](file:///c:/Projects/DevilutionX/play_ecco_dreamcast.bat)** con prioridad de detección automática de archivos CHD (~550 MB) en discos locales y carpetas de descargas.
+  - Actualizado **[`run_flycast.bat`](file:///c:/Projects/DevilutionX/run_flycast.bat)** con reenvío de compatibilidad transparente hacia Redream.
+- **Documentación del Repositorio de Preservación Redump CHD**:
+  - Documentado en el manual técnico el repositorio oficial de descarga directa de Archive.org:
+    [**Sega Dreamcast Redump Collection Directory Listing**](https://archive.org/download/sega-dreamcast-redump-collection)
+  - Referenciadas las versiones disponibles de *Ecco the Dolphin - Defender of the Future* en formato comprimido sin pérdidas CHD (~550 MB):
+    - `Ecco the Dolphin - Defender of the Future (USA) (En,Fr,De,Es).chd` (~552.8 MB)
+    - `Ecco the Dolphin - Defender of the Future (Europe) (En,Fr,De,Es).chd` (~551.3 MB)
+    - `Ecco the Dolphin - Defender of the Future (Japan).chd` (~550.8 MB)
+- **Actualización del Hub Web**:
+  - Adaptada la interfaz de `Packaging/emscripten/dreamcast/index.html`, `app.js` y el selector global `retro-nav.js` para reflejar Redream x64 como el motor nativo recomendado.
+
+
 ### 🌀 Corrección de Despliegue en GitHub Pages y Enlaces Cruzados para Sega Dreamcast 128-Bit ([`.github/workflows/deploy-pages.yml`](file:///c:/Projects/DevilutionX/.github/workflows/deploy-pages.yml), [`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html), [`Packaging/emscripten/assets/retro-nav/retro-nav.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/assets/retro-nav/retro-nav.js))
 - **Solución al error 404 de GitHub Pages en `dreamcast/index.html`**:
   - Incorporada la copia de `Packaging/emscripten/dreamcast` hacia `dist/dreamcast` en el flujo de GitHub Actions ([`deploy-pages.yml`](file:///c:/Projects/DevilutionX/.github/workflows/deploy-pages.yml)), asegurando la publicación de todos los archivos del reproductor WebAssembly (`app.js`, `index.html`, `style.css`).

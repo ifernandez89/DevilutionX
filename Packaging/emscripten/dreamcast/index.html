@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dreamcast Web — Sega Dreamcast 128-Bit (Flycast WebAssembly)</title>
-    <meta name="description" content="Emulador Sega Dreamcast 128-Bit en WebAssembly directo en el navegador con soporte para imágenes .CDI, .GDI, .CHD y .CUE. Motor Flycast / EmulatorJS con aceleración WebGL2 3D, audio estéreo AICA, Virtual Memory Unit (VMU) persistente en IndexedDB y soporte para mandos analógicos y teclado.">
+    <title>Dreamcast Web — Sega Dreamcast 128-Bit (WASM Hub & Redream Nativo)</title>
+    <meta name="description" content="Emulador Sega Dreamcast 128-Bit en WebAssembly y entorno nativo Redream x64 con soporte para imágenes .CHD, .CDI, .GDI y .CUE. Aceleración 3D, BIOS integrada de alta compatibilidad, Virtual Memory Unit (VMU) persistente y soporte para mandos automáticos.">
     <link rel="stylesheet" href="../assets/retro-nav/retro-nav.css?v=dreamcast-128">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -90,12 +90,12 @@
             <!-- Dreamcast Showcase Card -->
             <div class="cartridge-card">
                 <div>
-                    <div class="cartridge-badge">128-BIT WASM • FLYCAST MOTOR • POWERVR 3D ACCELERATED</div>
+                    <div class="cartridge-badge">128-BIT DREAMCAST • MOTOR REDREAM X64 & WASM • POWERVR 3D</div>
                     <div class="cartridge-header">
                         <div class="dc-swirl-icon">🌀</div>
                         <div>
                             <h2 class="cartridge-title">Sega Dreamcast (128-Bit PowerVR)</h2>
-                            <div class="cartridge-subtitle">Motor Flycast WebAssembly • Render WebGL2 3D • 60 FPS • Audio DSP AICA</div>
+                            <div class="cartridge-subtitle">Motor Redream x64 Nativo & Hub WebAssembly • 60 FPS • Soporte Completo CHD</div>
                         </div>
                     </div>
 
@@ -128,18 +128,18 @@
                         </div>
                     </div>
 
-                    <!-- Native Flycast Desktop Recommendation Box -->
+                    <!-- Native Redream Desktop Recommendation Box -->
                     <div class="native-box">
                         <div class="native-box-header">
                             <span class="native-box-icon">⚡</span>
-                            <strong>¿Quieres jugar en tu PC a 4K / 60 FPS con Flycast Nativo?</strong>
+                            <strong>¿Quieres jugar en tu PC a 60 FPS / HD con Redream Nativo?</strong>
                         </div>
                         <p class="native-box-text">
-                            Para títulos 3D masivos como <em>Ecco the Dolphin - Defender of the Future</em> (imagen CDI de 730MB), se ha configurado <strong>Flycast x64</strong> en el proyecto:
+                            Para títulos 3D masivos como <em>Ecco the Dolphin - Defender of the Future</em> (imágenes CHD de ~550MB de Redump), se ha integrado <strong>Redream x64</strong> oficial en el proyecto:
                         </p>
                         <div class="native-commands">
-                            <code>play_ecco_dreamcast.bat</code> &nbsp;—&nbsp; Inicia Ecco en 1 clic directamente desde tus descargas.<br>
-                            <code>run_flycast.bat</code> &nbsp;—&nbsp; Abre la GUI de Flycast con Vulkan/DirectX y configuración de mandos.
+                            <code>play_ecco_dreamcast.bat</code> &nbsp;—&nbsp; Inicia Ecco en 1 clic directamente desde tus descargas con Redream.<br>
+                            <code>run_redream.bat</code> &nbsp;—&nbsp; Abre la GUI de Redream con BIOS integrada, mandos automáticos y soporte CHD.
                         </div>
                     </div>
                 </div>
@@ -263,7 +263,7 @@
                     Este proyecto <strong>no almacena, no incluye ni distribuye ningún juego comercial, imagen de disco ni BIOS con derechos de autor</strong>. Su función es exclusivamente proveer emuladores de código abierto en la web para respaldos personales.
                 </p>
                 <p style="color: #94a3b8; font-size: 12px; margin: 8px 0 0 0; line-height: 1.5;">
-                    Para ejecutar tus imágenes Dreamcast de gran tamaño en tu ordenador con aceleración de GPU nativa a 60 FPS, puedes usar el lanzador de escritorio local del repositorio (<code style="color: #38bdf8;">run_flycast.bat</code> / <code style="color: #38bdf8;">play_ecco_dreamcast.bat</code>).
+                    Para ejecutar tus imágenes Dreamcast en formato .CHD en tu ordenador con aceleración de GPU nativa a 60 FPS y BIOS integrada, puedes usar el lanzador de escritorio local del repositorio (<code style="color: #38bdf8;">run_redream.bat</code> / <code style="color: #38bdf8;">play_ecco_dreamcast.bat</code>).
                 </p>
             </div>
 

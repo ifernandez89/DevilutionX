@@ -175,7 +175,7 @@
             ]
         },
         {
-            category: '🌀 SEGA 128-BIT (Motor Flycast / Dreamcast WASM)',
+            category: '🌀 SEGA 128-BIT (Motor Redream / Dreamcast Hub)',
             items: [
                 {
                     id: 'dreamcast',

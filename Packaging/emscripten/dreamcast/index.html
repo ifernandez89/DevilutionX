@@ -240,40 +240,6 @@
         </div>
     </div>
 
-    <!-- Dreamcast Technical Notice Modal -->
-    <div id="notice-overlay" class="overlay" style="display: none;">
-        <div class="overlay-card" style="max-width: 580px; text-align: left; background: #181520; border: 2px solid #ea580c; border-radius: 12px; padding: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.8);">
-            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
-                <span style="font-size: 32px;">🌀</span>
-                <div>
-                    <h3 style="margin: 0; color: #ffedd5; font-size: 18px;">Sega Dreamcast 128-Bit — Arquitectura y Rendimiento</h3>
-                    <span style="color: #ea580c; font-size: 12px; font-weight: bold; text-transform: uppercase;">Aviso de Compatibilidad GD-ROM WebAssembly</span>
-                </div>
-            </div>
-            
-            <p style="color: #cbd5e1; font-size: 13px; line-height: 1.6; margin-bottom: 12px;">
-                La arquitectura de <strong>Sega Dreamcast</strong> (CPU Hitachi SH-4 de 200MHz con coma flotante vectorial, GPU PowerVR 3D y audio estéreo Yamaha AICA de 64 canales) junto con las imágenes de disco GD-ROM (como <em>Ecco the Dolphin</em> de <strong>730 MB</strong>) exceden los límites de los núcleos WebAssembly públicos actuales (el CDN de EmulatorJS no dispone de un core <code>segaDC-legacy-wasm.data</code> activo).
-            </p>
-
-            <div style="background: rgba(234, 88, 12, 0.12); border: 1px solid #ea580c; border-radius: 8px; padding: 14px; margin-bottom: 16px;">
-                <div style="color: #fb923c; font-weight: bold; font-size: 13px; margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
-                    ⚖️ Política Estricta BYOG (Bring Your Own Game)
-                </div>
-                <p style="color: #e2e8f0; font-size: 12px; margin: 0 0 8px 0; line-height: 1.5;">
-                    Este proyecto <strong>no almacena, no incluye ni distribuye ningún juego comercial, imagen de disco ni BIOS con derechos de autor</strong>. Su función es exclusivamente proveer emuladores de código abierto en la web para respaldos personales.
-                </p>
-                <p style="color: #94a3b8; font-size: 12px; margin: 8px 0 0 0; line-height: 1.5;">
-                    Para ejecutar tus imágenes Dreamcast en formato .CHD en tu ordenador con aceleración de GPU nativa a 60 FPS y BIOS integrada, puedes usar el lanzador de escritorio local del repositorio (<code style="color: #38bdf8;">run_redream.bat</code> / <code style="color: #38bdf8;">play_ecco_dreamcast.bat</code>).
-                </p>
-            </div>
-
-            <div style="display: flex; justify-content: flex-end; gap: 10px;">
-                <button class="btn btn-secondary" id="closeNoticeBtn" type="button" style="padding: 8px 16px; font-size: 13px;">
-                    Cerrar y Volver
-                </button>
-            </div>
-        </div>
-    </div>
 
     <!-- Notification Toast -->
     <div id="toast" class="toast" style="display: none;">

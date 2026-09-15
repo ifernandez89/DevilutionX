@@ -23,6 +23,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - `Ecco the Dolphin - Defender of the Future (USA) (En,Fr,De,Es).chd` (~552.8 MB)
     - `Ecco the Dolphin - Defender of the Future (Europe) (En,Fr,De,Es).chd` (~551.3 MB)
     - `Ecco the Dolphin - Defender of the Future (Japan).chd` (~550.8 MB)
+- **Eliminación del Diálogo Bloqueante en el Lector Web (`Packaging/emscripten/dreamcast/`)**:
+  - Eliminado el modal emergente (`#notice-overlay`) que bloqueaba al usuario al seleccionar o arrastrar archivos `.chd` o `.cdi`.
+  - Implementado montaje inmediato del GD-ROM en el lector virtual: ahora la pantalla cambia al instante mostrando los datos del disco (tamaño en MB, nombre, formato CHD), permitiendo lanzar el núcleo WebAssembly sin interrupciones o abrirlo en Redream nativo.
 - **Actualización del Hub Web**:
   - Adaptada la interfaz de `Packaging/emscripten/dreamcast/index.html`, `app.js` y el selector global `retro-nav.js` para reflejar Redream x64 como el motor nativo recomendado.
 

@@ -149,6 +149,9 @@ jobs:
           if [ -d "Packaging/emscripten/psx" ]; then
             cp -rv Packaging/emscripten/psx dist/psx
           fi
+          if [ -d "Packaging/emscripten/psp" ]; then
+            cp -rv Packaging/emscripten/psp dist/psp
+          fi
           if [ -d Packaging/emscripten/doom ]; then
             cp -rv Packaging/emscripten/doom dist/doom
           fi
@@ -160,6 +163,9 @@ jobs:
           fi
           if [ -d Packaging/emscripten/cavestory ]; then
             cp -rv Packaging/emscripten/cavestory dist/cavestory
+          fi
+          if [ -f Packaging/emscripten/hd_benchmark.html ]; then
+            cp -v Packaging/emscripten/hd_benchmark.html dist/hd_benchmark.html
           fi
 
           # Copy cached spawn.mpq

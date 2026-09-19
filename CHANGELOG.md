@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### 🛡️ Erradicación de Congelamiento Crítico al Morir Na-Krul en Tristram / Invasión ([`Source/items.cpp`](file:///c:/Projects/DevilutionX/Source/items.cpp), [`Source/monster.cpp`](file:///c:/Projects/DevilutionX/Source/monster.cpp))
+- **Causa Raíz Identificada y Erradicada**:
+  - Al morir el heraldo **Na-Krul** (`MT_NAKRUL`) durante la invasión de Tristram o fuera de la Cripta 4, el motor ejecuta `SpawnLoot()` que invoca `CreateMagicWeapon` para soltar sus 4 tesoros legendarios: Gran Espada (`ICURS_GREAT_SWORD`), Bastón de Guerra (`ICURS_WAR_STAFF`), Arco de Guerra Largo (`ICURS_LONG_WAR_BOW`) y `CreateSpellBook` para el Libro de Apocalipsis (`SpellID::Apocalypse`).
+  - En el pueblo (`leveltype == DTYPE_TOWN`), `ItemsGetCurrlevel()` devuelve `0`.
+  - Con nivel 0, el nivel máximo de tirada de ítems en `RndTypeItems` es `0 * 2 = 0`. Dado que la Gran Espada requiere nivel mínimo 17, el Bastón 12 y el Arco 19, `RndTypeItems` jamás devolvía estas armas básicas.
+  - Como `CreateMagicItem` contenía un bucle `while (true)` esperando obtener exactamente `item._iCurs == icurs`, la ejecución entraba en un bucle infinito al 100% de CPU que congelaba completamente el juego e impedía renderizar más fotogramas.
+  - Igualmente en `CreateSpellBook`, a nivel 0 o bajo reglas de Diablo 1 (donde el libro de Apocalipsis no tiene nivel asignado, `sBookLvl == -1`), el bucle `while (true)` cicla infinitamente sin poder resolver el hechizo.
+- **Solución Implementada**:
+  1. **Piso Mínimo de Nivel Garantizado**: En `CreateMagicWeapon` y `CreateMagicArmor`, se fijó el nivel mínimo de búsqueda en 17 (`std::max(ItemsGetCurrlevel(), 17)`), permitiendo generar armas y armaduras de grado élite incluso en el pueblo (`currlevel == 0`).
+  2. **Blindaje contra Bucles Infinitos con Límite de Reintentos**: En `CreateMagicItem` y `CreateSpellBook`, se reemplazó el `while (true)` por un bucle acotado (`attempts < 300`).
+  3. **Resolución Determinista Directa desde `AllItemsList`**: Si tras los intentos aleatorios de generación no se obtuvo el cursor esperado (`item._iCurs != icurs`), el motor recorre directamente `AllItemsList`, localiza el ítem exacto y lo inicializa de forma inmediata y limpia.
+  4. **Generación Segura de Libros de Hechizos**: En `CreateSpellBook`, si el hechizo solicitado no puede ser seleccionado por azar (por ejemplo Apocalipsis en Diablo 1), el motor asigna directamente el hechizo, nombre traducido, costo de maná y requerimiento de inteligencia al libro, asegurando que el botín se entregue siempre sin colgar el hilo.
+
+### 🚀 Corrección de Despliegue en GitHub Pages: Arquitectura de Doble Job (`build` + `deploy`) ([`.github/workflows/deploy-pages.yml`](file:///c:/Projects/DevilutionX/.github/workflows/deploy-pages.yml), [`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html))
+- **Causa del Fallo de Despliegue de la Expansión 112x112 en GitHub Pages**:
+  - En el commit `645de5906`, al compilar el nuevo binario WebAssembly desde C++ en GitHub Actions, la compilación completa tardó ~9 minutos y medio.
+  - Al ejecutarse dentro de un único job monolítico `build-and-deploy`, el token temporal OIDC caducó antes de alcanzar el paso final `actions/deploy-pages@v4`, produciendo el error `"Ensure GITHUB_TOKEN has permission \"id-token: write\""`.
+- **Solución Implementada**:
+  1. **Separación Canónica en Dos Jobs (`build` y `deploy`)**:
+     - **`build`**: Compila todo el código C++ con Emscripten 3.1.53 y Ninja (o utiliza el Fast-Path si existen binarios precompilados), empaqueta el directorio `dist/` y genera el artefacto con `actions/upload-pages-artifact@v3`.
+     - **`deploy`**: Depende de `build` (`needs: build`), se inicia inmediatamente con permisos dedicados `pages: write` e `id-token: write`, solicitando un token OIDC fresco que nunca expira y desplegando en GitHub Pages en menos de 10 segundos.
+  2. **Actualización de Cachebuster a `v=tristram-112-v26`**: Se incrementó el versionado de scripts en `Packaging/emscripten/index.html` para forzar la recarga inmediata del mapa expandido de Tristram 112x112 y las praderas bovinas en los navegadores de los clientes.
+
 ### 🌲 Expansión de Tristram 112x112 (Nightmare Edition) ([`Source/levels/town.cpp`](file:///c:/Projects/DevilutionX/Source/levels/town.cpp), [`Source/towners.cpp`](file:///c:/Projects/DevilutionX/Source/towners.cpp))
 - **Ampliación del Territorio de Tristram al Límite Máximo del Motor (112x112)**:
   - **Terreno y Navegación Total**: Desbloqueada la periferia completa de Tristram ampliando el suelo transitable a `MAXDUNX x MAXDUNY` (112x112 tiles) con pasto natural orgánico (`FillTile(1..4)`).

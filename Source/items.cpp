@@ -2175,11 +2175,15 @@ void CreateMagicItem(Point position, int lvl, ItemType itemType, int imid, int i
 	if (ActiveItemCount >= MAXITEMS)
 		return;
 
+	if (lvl < 17)
+		lvl = 17;
+
 	const int ii = AllocateItem();
 	auto &item = Items[ii];
 	_item_indexes idx = RndTypeItems(itemType, imid, lvl);
 
-	while (true) {
+	int attempts = 0;
+	while (attempts++ < 300) {
 		item = {};
 		SetupAllItems(*MyPlayer, item, idx, AdvanceRndSeed(), 2 * lvl, 1, true, delta);
 		TryRandomUniqueItem(item, idx, 2 * lvl, 1, true, delta);
@@ -2189,6 +2193,19 @@ void CreateMagicItem(Point position, int lvl, ItemType itemType, int imid, int i
 
 		idx = RndTypeItems(itemType, imid, lvl);
 	}
+
+	if (item._iCurs != icurs) {
+		for (size_t i = 0; i < AllItemsList.size(); ++i) {
+			if (AllItemsList[i].iCurs == icurs) {
+				idx = static_cast<_item_indexes>(i);
+				item = {};
+				SetupAllItems(*MyPlayer, item, idx, AdvanceRndSeed(), 2 * lvl, 1, true, delta);
+				SetupItem(item);
+				break;
+			}
+		}
+	}
+
 	GetSuperItemSpace(position, ii);
 
 	if (sendmsg)
@@ -4747,7 +4764,17 @@ void CreateSpellBook(Point position, SpellID ispell, bool sendmsg, bool delta)
 		if (lvl < 1) {
 			return;
 		}
+	} else {
+		const int sBookLvl = GetSpellBookLevel(ispell);
+		if (sBookLvl > 0) {
+			lvl = sBookLvl + 1;
+		} else {
+			lvl = 20;
+		}
 	}
+
+	if (lvl < 1)
+		lvl = 20;
 
 	const _item_indexes idx = RndTypeItems(ItemType::Misc, IMISC_BOOK, lvl);
 	if (ActiveItemCount >= MAXITEMS)
@@ -4756,13 +4783,28 @@ void CreateSpellBook(Point position, SpellID ispell, bool sendmsg, bool delta)
 	const int ii = AllocateItem();
 	auto &item = Items[ii];
 
-	while (true) {
+	int attempts = 0;
+	while (attempts++ < 300) {
 		item = {};
 		SetupAllItems(*MyPlayer, item, idx, AdvanceRndSeed(), 2 * lvl, 1, true, delta);
 		SetupItem(item);
 		if (item._iMiscId == IMISC_BOOK && item._iSpell == ispell)
 			break;
 	}
+
+	if (item._iSpell != ispell) {
+		item._iSpell = ispell;
+		const SpellData &spellData = GetSpellData(ispell);
+		const std::string_view spellName = spellData.sNameText;
+		const size_t iNameLen = std::string_view(item._iName).size();
+		const size_t iINameLen = std::string_view(item._iIName).size();
+		CopyUtf8(item._iName + iNameLen, spellName, ItemNameLength - iNameLen);
+		CopyUtf8(item._iIName + iINameLen, spellName, ItemNameLength - iINameLen);
+		item._iMinMag = spellData.minInt;
+		item._ivalue = spellData.bookCost10 / 10;
+		item._iIvalue = item._ivalue;
+	}
+
 	GetSuperItemSpace(position, ii);
 
 	if (sendmsg)
@@ -4773,7 +4815,7 @@ void CreateSpellBook(Point position, SpellID ispell, bool sendmsg, bool delta)
 
 void CreateMagicArmor(Point position, ItemType itemType, int icurs, bool sendmsg, bool delta)
 {
-	const int lvl = ItemsGetCurrlevel();
+	const int lvl = std::max(ItemsGetCurrlevel(), 17);
 	CreateMagicItem(position, lvl, itemType, IMISC_NONE, icurs, sendmsg, delta);
 }
 
@@ -4788,7 +4830,7 @@ void CreateMagicWeapon(Point position, ItemType itemType, int icurs, bool sendms
 	if (itemType == ItemType::Staff)
 		imid = IMISC_STAFF;
 
-	const int curlv = ItemsGetCurrlevel();
+	const int curlv = std::max(ItemsGetCurrlevel(), 17);
 
 	CreateMagicItem(position, curlv, itemType, imid, icurs, sendmsg, delta);
 }

@@ -179,6 +179,7 @@
             // Configure EmulatorJS globals
             window.EJS_player = '#ejs-game-container';
             window.EJS_core = 'n64';
+            window.EJS_threads = (typeof SharedArrayBuffer !== 'undefined');
             window.EJS_gameUrl = currentBlobUrl;
             window.EJS_gameName = cleanName;
             window.EJS_pathtodata = 'https://cdn.emulatorjs.org/stable/data/';

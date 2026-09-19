@@ -144,6 +144,7 @@
             // Configure EmulatorJS globals for PlayStation Portable
             window.EJS_player = '#ejs-game-container';
             window.EJS_core = 'psp';
+            window.EJS_threads = (typeof SharedArrayBuffer !== 'undefined');
             window.EJS_gameUrl = blobUrl;
             window.EJS_gameName = cleanName;
             window.EJS_pathtodata = 'https://cdn.emulatorjs.org/stable/data/';

@@ -7,6 +7,7 @@
 
 #include "engine/load_file.hpp"
 #include "engine/point.hpp"
+#include "engine/random.hpp"
 #include "engine/sound.h"
 #include "levels/gendung.h"
 #include "levels/tile_properties.hpp"
@@ -329,9 +330,9 @@ void InvasionManager::SpawnInitialInvasionForce()
 
 		_monster_id mtype = spawn.type;
 		if (state_.current_tier == InvasionTier::MinorScout) {
-			mtype = FlipCoin() ? MT_WSKELAX : MT_WSKELBW;
+			mtype = (GenerateRnd(2) == 0) ? MT_WSKELAX : MT_WSKELBW;
 		} else if (state_.current_tier == InvasionTier::MediumRaid) {
-			mtype = FlipCoin() ? MT_BGOATMC : MT_BACID;
+			mtype = (GenerateRnd(2) == 0) ? MT_BGOATMC : MT_BACID;
 		}
 
 		const size_t typeIdx = GetMonsterTypeIndex(mtype);

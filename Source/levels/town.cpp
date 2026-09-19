@@ -195,10 +195,14 @@ void DrlgTPass3()
 {
 	for (int yy = 0; yy < MAXDUNY; yy += 2) {
 		for (int xx = 0; xx < MAXDUNX; xx += 2) {
-			dPiece[xx][yy] = 426;
-			dPiece[xx + 1][yy] = 426;
-			dPiece[xx][yy + 1] = 426;
-			dPiece[xx + 1][yy + 1] = 426;
+			if (xx <= 1 || xx >= MAXDUNX - 2 || yy <= 1 || yy >= MAXDUNY - 2) {
+				dPiece[xx][yy] = 426;
+				dPiece[xx + 1][yy] = 426;
+				dPiece[xx][yy + 1] = 426;
+				dPiece[xx + 1][yy + 1] = 426;
+			} else {
+				FillTile(xx, yy, PickRandomlyAmong({ 1, 2, 3, 4 }));
+			}
 		}
 	}
 
@@ -361,8 +365,8 @@ void CleanTownFountain()
 
 void CreateTown(lvl_entry entry)
 {
-	dminPosition = { 10, 10 };
-	dmaxPosition = { 84, 84 };
+	dminPosition = { 2, 2 };
+	dmaxPosition = { 110, 110 };
 
 	// Safe town center default (near portal pad)
 	ViewPosition = { 58, 41 };

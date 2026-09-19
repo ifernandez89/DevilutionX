@@ -12,6 +12,7 @@
 #include "game_mode.hpp"
 #include "inv.h"
 #include "levels/gendung.h"
+#include "levels/tile_properties.hpp"
 #include "minitext.h"
 #include "stores.h"
 #include "tables/textdat.h"
@@ -703,6 +704,111 @@ void TalkToPriest(Player &player, Towner & /*priest*/)
 	nightmare::InteractWithTremain(player);
 }
 
+bool CanPlacePastureCow(Point pos)
+{
+	// A cow occupies 4 tiles: (x, y), (x-1, y), (x, y-1), (x-1, y-1)
+	if (pos.x < 4 || pos.x > 107 || pos.y < 4 || pos.y > 107)
+		return false;
+
+	const Point bodyTiles[4] = {
+		pos,
+		pos + Direction::NorthWest,
+		pos + Direction::NorthEast,
+		pos + Direction::North
+	};
+
+	for (const Point &tile : bodyTiles) {
+		if (!InDungeonBounds(tile) || !IsTileWalkable(tile) || dMonster[tile.x][tile.y] != 0)
+			return false;
+		if (dPiece[tile.x][tile.y] == 426)
+			return false;
+	}
+
+	// 2-tile buffer around cow to guarantee open, comfortable walking corridors for the player
+	for (int dy = -2; dy <= 2; dy++) {
+		for (int dx = -2; dx <= 2; dx++) {
+			Point neighbor = { pos.x + dx, pos.y + dy };
+			if (InDungeonBounds(neighbor) && dMonster[neighbor.x][neighbor.y] != 0)
+				return false;
+		}
+	}
+
+	return true;
+}
+
+void SpawnPastureCow(Point pos, int16_t &i, const TownerData &cowBehavior)
+{
+	static const Direction cowDirections[] = {
+		Direction::SouthWest,
+		Direction::NorthWest,
+		Direction::North
+	};
+
+	TownerDataEntry entry {};
+	entry.type = TOWN_COW;
+	entry.name = "Cow";
+	entry.position = pos;
+	entry.direction = cowDirections[(pos.x * 3 + pos.y * 7) % 3];
+	entry.animWidth = 128;
+	entry.animFrames = 12;
+	entry.animDelay = 3;
+
+	dMonster[pos.x][pos.y] = i + 1;
+
+	Towners.emplace_back();
+	InitTownerInfo(Towners.back(), cowBehavior, entry);
+
+	// Slightly desynchronize animation frame so cows chew & flick tails naturally
+	Towners.back()._tAnimFrame = static_cast<uint8_t>((pos.x * 5 + pos.y * 11) % 12);
+
+	i++;
+}
+
+void InitExpandedPastureCows(int16_t &i, const TownerData &cowBehavior)
+{
+	if (leveltype != DTYPE_TOWN)
+		return;
+
+	// Populate the newly enabled 112x112 perimeter space (East, South, and South-East meadows)
+	// with a peaceful, interactive herd of cows ("There is no cow level" tribute)
+
+	// 1. Eastern Meadow: X in [94, 107], Y in [6, 90]
+	for (int y = 6; y <= 90; y += 6) {
+		for (int x = 94; x <= 106; x += 5) {
+			int offsetX = ((x * 7 + y * 13) % 3) - 1;
+			int offsetY = ((x * 11 + y * 17) % 3) - 1;
+			Point candidate = { x + offsetX, y + offsetY };
+			if (CanPlacePastureCow(candidate)) {
+				SpawnPastureCow(candidate, i, cowBehavior);
+			}
+		}
+	}
+
+	// 2. Southern Meadow: X in [6, 90], Y in [94, 107]
+	for (int x = 6; x <= 90; x += 6) {
+		for (int y = 94; y <= 106; y += 5) {
+			int offsetX = ((x * 13 + y * 7) % 3) - 1;
+			int offsetY = ((x * 17 + y * 11) % 3) - 1;
+			Point candidate = { x + offsetX, y + offsetY };
+			if (CanPlacePastureCow(candidate)) {
+				SpawnPastureCow(candidate, i, cowBehavior);
+			}
+		}
+	}
+
+	// 3. South-Eastern Grand Pasture: X in [94, 107], Y in [94, 107]
+	for (int y = 94; y <= 106; y += 5) {
+		for (int x = 94; x <= 106; x += 5) {
+			int offsetX = ((x * 5 + y * 9) % 3) - 1;
+			int offsetY = ((x * 9 + y * 5) % 3) - 1;
+			Point candidate = { x + offsetX, y + offsetY };
+			if (CanPlacePastureCow(candidate)) {
+				SpawnPastureCow(candidate, i, cowBehavior);
+			}
+		}
+	}
+}
+
 const TownerData TownersData[] = {
 	// clang-format off
 	// type          init (nullptr = default)  talk
@@ -789,7 +895,7 @@ void InitTowners()
 	CowSprites.emplace(LoadCelSheet("towners\\animals\\cow", 128));
 
 	Towners.clear();
-	Towners.reserve(TownersDataEntries.size());
+	Towners.reserve(TownersDataEntries.size() + 120);
 	int16_t i = 0;
 	for (const auto &entry : TownersDataEntries) {
 		if (!IsTownerPresent(entry.type))
@@ -806,6 +912,11 @@ void InitTowners()
 		Towners.emplace_back();
 		InitTownerInfo(Towners.back(), *behaviorIt->second, entry);
 		i++;
+	}
+
+	auto cowBehaviorIt = TownerBehaviors.find(TOWN_COW);
+	if (cowBehaviorIt != TownerBehaviors.end() && cowBehaviorIt->second != nullptr && CowSprites) {
+		InitExpandedPastureCows(i, *cowBehaviorIt->second);
 	}
 }
 

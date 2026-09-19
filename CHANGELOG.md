@@ -7,11 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-### 🌲 Expansión de Tristram 112x112 (Nightmare Edition) ([`Source/levels/town.cpp`](file:///c:/Projects/DevilutionX/Source/levels/town.cpp))
+### 🌲 Expansión de Tristram 112x112 (Nightmare Edition) ([`Source/levels/town.cpp`](file:///c:/Projects/DevilutionX/Source/levels/town.cpp), [`Source/towners.cpp`](file:///c:/Projects/DevilutionX/Source/towners.cpp))
 - **Ampliación del Territorio de Tristram al Límite Máximo del Motor (112x112)**:
   - **Terreno y Navegación Total**: Desbloqueada la periferia completa de Tristram ampliando el suelo transitable a `MAXDUNX x MAXDUNY` (112x112 tiles) con pasto natural orgánico (`FillTile(1..4)`).
   - **Calibración de Límites de Cámara**: Actualizados `dminPosition` y `dmaxPosition` a `{ 2, 2 }` - `{ 110, 110 }` para permitir libre exploración, combate y scroll en toda la periferia de Tristram.
   - **Borde de Seguridad Perimetral**: Delimitación perimetral exterior con baldosas de bloqueo estándar para mantener la integridad física del mapa.
+- **🐄 Praderas Bovinas Secretas ("There is no cow level" Tribute) ([`Source/towners.cpp`](file:///c:/Projects/DevilutionX/Source/towners.cpp))**:
+  - **Poblado Completo de la Periferia**: Las nuevas praderas Este, Sur y Sudeste habilitadas en 112x112 se encuentran pobladas por un rebaño de vacas pacíficas distribuidas naturalmente a lo largo del pasto.
+  - **Corredores de Tránsito Libres**: Algoritmo de colocación con buffer de 2 casillas libres entre vacas y bordes para garantizar pasillos amplios donde el héroe puede desplazarse libremente sin atascarse.
+  - **Interactividad & Vida Orgánica**: Desincronización de fotogramas de animación (masticado y colas independientes), orientaciones naturales y compatibilidad total de interacción (cursor "Cow", sonidos "Moo!" / "Moooo!" y comentarios clásicos del héroe al interactuar repetidamente).
 
 
 ### 🌀 Sega Dreamcast (128-Bit PowerVR) & Redream Native Integration ([`SEGA_DREAMCAST_SETUP.md`](file:///c:/Projects/DevilutionX/SEGA_DREAMCAST_SETUP.md), [`Packaging/emscripten/dreamcast/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/dreamcast/index.html), [`Packaging/emscripten/dreamcast/style.css`](file:///c:/Projects/DevilutionX/Packaging/emscripten/dreamcast/style.css), [`Packaging/emscripten/dreamcast/app.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/dreamcast/app.js), [`play_ecco_redream.bat`](file:///c:/Projects/DevilutionX/play_ecco_redream.bat), [`run_redream.bat`](file:///c:/Projects/DevilutionX/run_redream.bat))

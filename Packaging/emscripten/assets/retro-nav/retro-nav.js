@@ -9,7 +9,7 @@
     // Calculate relative path to root Packaging/emscripten/ directory
     function getRootRelativePath() {
         const path = window.location.pathname.toLowerCase();
-        if (path.includes('/doom/') || path.includes('/wolf3d/') || path.includes('/gens/') || path.includes('/minixp/') || path.includes('/tinycore/') || path.includes('/quake/') || path.includes('/cavestory/') || path.includes('/nes/') || path.includes('/snes/') || path.includes('/n64/') || path.includes('/psx/')) {
+        if (path.includes('/doom/') || path.includes('/wolf3d/') || path.includes('/gens/') || path.includes('/minixp/') || path.includes('/tinycore/') || path.includes('/quake/') || path.includes('/cavestory/') || path.includes('/nes/') || path.includes('/snes/') || path.includes('/n64/') || path.includes('/psx/') || path.includes('/psp/')) {
             return '../';
         }
         return './';
@@ -175,6 +175,21 @@
             ]
         },
         {
+            category: '🎮 SONY PSP (Motor PPSSPP 3D WASM)',
+            items: [
+                {
+                    id: 'psp',
+                    title: 'Sony PlayStation Portable (PSP)',
+                    subtitle: 'Lector Universal .ISO / .CSO / .PBP • WebGL2 3D 16:9',
+                    badge: 'PSP 3D WASM',
+                    badgeClass: 'badge-wasm',
+                    icon: '🎮',
+                    url: `${BASE_PATH}psp/index.html`,
+                    activeMatcher: (p) => p.includes('/psp/')
+                }
+            ]
+        },
+        {
             category: '⚔️ ACTION RPG (Motor DevilutionX WASM)',
             items: [
                 {
@@ -185,7 +200,7 @@
                     badgeClass: 'badge-wasm',
                     icon: '⚔️',
                     url: `${BASE_PATH}index.html`,
-                    activeMatcher: (p) => !p.includes('/doom/') && !p.includes('/wolf3d/') && !p.includes('/gens/') && !p.includes('/minixp/') && !p.includes('/quake/') && !p.includes('/cavestory/') && !p.includes('/nes/') && !p.includes('/snes/') && !p.includes('/n64/') && !p.includes('/psx/')
+                    activeMatcher: (p) => !p.includes('/doom/') && !p.includes('/wolf3d/') && !p.includes('/gens/') && !p.includes('/minixp/') && !p.includes('/quake/') && !p.includes('/cavestory/') && !p.includes('/nes/') && !p.includes('/snes/') && !p.includes('/n64/') && !p.includes('/psx/') && !p.includes('/psp/')
                 }
             ]
         },

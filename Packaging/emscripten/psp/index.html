@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PSP Web — Sony PlayStation Portable 3D (WebAssembly)</title>
+    <meta name="description" content="Emulador Sony PlayStation Portable (PSP) en WebAssembly directo en el navegador con soporte para imágenes .ISO, .CSO, .PBP y EBOOT.BIN, motor PPSSPP con aceleración WebGL2 3D, pantalla panorámica 16:9, Memory Stick virtual persistente en IndexedDB y soporte para mandos DualShock/Xbox.">
+    <link rel="stylesheet" href="../assets/retro-nav/retro-nav.css?v=retro-hub-v4">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Top Navigation -->
+    <header>
+        <div class="brand">
+            <div class="brand-badge">PSP 3D WASM</div>
+            <div class="brand-title">
+                SONY <span>PSP</span>
+            </div>
+        </div>
+        <div class="header-actions">
+            <!-- Retro Hub Global Dropdown Slot -->
+            <div id="retro-nav-slot"></div>
+
+            <a href="../psx/index.html" class="btn btn-secondary" title="Emulador Sony PlayStation 1 (32-Bit)">
+                💿 PS1 (PSX)
+            </a>
+            <a href="../n64/index.html" class="btn btn-secondary" title="Emulador Nintendo 64 (64-Bit 3D)">
+                🕹️ N64 (64-Bit)
+            </a>
+            <a href="../snes/index.html" class="btn btn-secondary" title="Emulador Super Nintendo (16-Bit)">
+                🎮 SNES (16-Bit)
+            </a>
+            <a href="../gens/index.html" class="btn btn-secondary" title="Emulador Sega Genesis / Mega Drive (16-Bit)">
+                ⚡ Genesis (16-Bit)
+            </a>
+            <a href="../doom/index.html" class="btn btn-secondary" title="Jugar a DOOM & Freedoom">
+                🔥 DOOM
+            </a>
+            <a href="../index.html" class="btn btn-secondary" title="Volver al juego DevilutionX / Diablo">
+                ⚔️ Diablo
+            </a>
+            <button class="btn btn-primary" id="topUploadBtn">
+                📁 Cargar Juego (.ISO / .CSO / .PBP)
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-wrapper">
+
+        <!-- Active Emulator Display (Hidden initially, visible when playing) -->
+        <section id="emulator-section">
+            <div class="screen-card size-large" id="screenCard">
+                <div id="canvas-container">
+                    <div id="game-player" style="width: 100%; height: 100%;"></div>
+                </div>
+            </div>
+
+            <!-- In-Game Controls Toolbar -->
+            <div class="screen-toolbar" id="screenToolbar">
+                <div class="toolbar-group">
+                    <button class="btn-tool" id="screenSizeBtn" title="Alternar tamaño de pantalla (Normal 800px / Grande 980px / Cinema 1180px)">
+                        🖥️ Tamaño: Grande (980p)
+                    </button>
+                    <button class="btn-tool" id="fullscreenBtn" title="Pantalla Completa (F11)">
+                        ⛶ Fullscreen
+                    </button>
+                </div>
+
+                <div class="toolbar-group">
+                    <span class="toolbar-status" id="activeGameLabel">🎮 Juego cargado en PPSSPP WebAssembly</span>
+                </div>
+
+                <div class="toolbar-group">
+                    <button class="btn-tool btn-accent" id="exitGameBtn" title="Cerrar juego actual y volver al menú">
+                        ⏹ Salir al Menú
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hub & Disc Loader (Visible when no game is active) -->
+        <section id="hub-section" class="hub-grid">
+
+            <!-- PSP Console Card -->
+            <div class="cartridge-card">
+                <div>
+                    <div class="cartridge-badge">SONY PSP • PPSSPP WASM CORE • WEBGL2 3D HARDWARE ACCELERATED</div>
+                    <div class="cartridge-header">
+                        <div class="psp-symbols">
+                            <span class="sym-triangle" title="Triángulo">▲</span>
+                            <span class="sym-circle" title="Círculo">●</span>
+                            <span class="sym-cross" title="Cruz">✖</span>
+                            <span class="sym-square" title="Cuadrado">■</span>
+                        </div>
+                        <div>
+                            <h2 class="cartridge-title">Sony PlayStation Portable (PSP)</h2>
+                            <div class="cartridge-subtitle">Motor PPSSPP WebAssembly • GPU WebGL2 3D • Pantalla Panorámica 16:9</div>
+                        </div>
+                    </div>
+                    <p class="cartridge-desc">
+                        Emulador oficial de PlayStation Portable integrado directamente en la web. Ejecuta imágenes de disco UMD en formato <strong>.ISO</strong>, <strong>.CSO</strong> (comprimido) y paquetes ejecutables <strong>.PBP / EBOOT.BIN</strong> con renderizado 3D por GPU en alta resolución, audio estéreo de baja latencia y guardado automático de <strong>Memory Stick (Save States y Saves normales)</strong> en IndexedDB.
+                    </p>
+                    <div class="cartridge-meta">
+                        <span class="meta-tag">Formatos: .ISO, .CSO, .PBP, EBOOT.BIN</span>
+                        <span class="meta-tag">Aceleración: WebGL2 3D / Hardware GPU</span>
+                        <span class="meta-tag">Relación de Aspecto: 16:9 Panorámica Nativa</span>
+                        <span class="meta-tag">Memory Stick: Persistencia en IndexedDB</span>
+                        <span class="meta-tag">Mandos: DualShock / DualSense / Xbox USB & Bluetooth</span>
+                    </div>
+                </div>
+                <div class="cartridge-actions" style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <button class="btn btn-primary" id="hubBrowseBtn" style="font-size: 14px; padding: 12px 20px;">
+                        📁 Seleccionar Imagen .ISO / .CSO en tu PC...
+                    </button>
+                    <a href="../psx/index.html" class="btn btn-secondary" style="font-size: 14px; padding: 12px 20px; text-decoration: none;">
+                        💿 Ir a PlayStation 1 (PSX)
+                    </a>
+                    <a href="../n64/index.html" class="btn btn-secondary" style="font-size: 14px; padding: 12px 20px; text-decoration: none;">
+                        🕹️ Ir a Nintendo 64 (64-Bit)
+                    </a>
+                </div>
+            </div>
+
+            <!-- Intelligent Drag & Drop Zone -->
+            <div class="dropzone-container" id="dropzone">
+                <span class="dropzone-icon">🎮</span>
+                <div class="dropzone-title">Arrastra y suelta tu juego de PSP (.ISO / .CSO / .PBP) aquí</div>
+                <div class="dropzone-sub">
+                    Soporta imágenes de disco UMD <strong>.ISO</strong>, formato comprimido <strong>.CSO</strong> o ejecutables <strong>EBOOT.PBP</strong>
+                </div>
+                <button class="btn btn-primary" style="pointer-events: none;">
+                    O haz clic para explorar en el disco local
+                </button>
+            </div>
+
+            <!-- Detailed Technical & Control Cards -->
+            <div class="info-grid">
+                <!-- Controls Mapping Card -->
+                <div class="info-card">
+                    <div class="info-card-header">
+                        <span style="font-size: 18px;">🎮</span>
+                        <span class="info-card-title">Mapeo de Controles (Teclado & Gamepad)</span>
+                    </div>
+                    <table class="info-table">
+                        <tbody>
+                            <tr>
+                                <td>Cruz ✖ (Acción / Aceptar):</td>
+                                <td><span class="badge-key">X</span> o <span class="badge-key">Espacio</span> / Botón A (Xbox) / ✖ (PS)</td>
+                            </tr>
+                            <tr>
+                                <td>Círculo ● (Cancelar / Retroceso):</td>
+                                <td><span class="badge-key">Z</span> o <span class="badge-key">C</span> / Botón B (Xbox) / ● (PS)</td>
+                            </tr>
+                            <tr>
+                                <td>Cuadrado ■ / Triángulo ▲:</td>
+                                <td><span class="badge-key">S</span> (Cuadrado) / <span class="badge-key">A</span> (Triángulo)</td>
+                            </tr>
+                            <tr>
+                                <td>Gatillos L / R:</td>
+                                <td><span class="badge-key">Q</span> (L) / <span class="badge-key">W</span> o <span class="badge-key">E</span> (R) / Bumpers LB/RB</td>
+                            </tr>
+                            <tr>
+                                <td>Stick Analógico / D-Pad:</td>
+                                <td><span class="badge-key">Flechas del Teclado</span> / Stick Izquierdo Mando</td>
+                            </tr>
+                            <tr>
+                                <td>Start / Select:</td>
+                                <td><span class="badge-key">Enter</span> (Start) / <span class="badge-key">Shift</span> (Select)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Info & Tips Card -->
+                <div class="info-card">
+                    <div class="info-card-header">
+                        <span style="font-size: 18px;">💡</span>
+                        <span class="info-card-title">Información & Consejos para Juegos de PSP</span>
+                    </div>
+                    <table class="info-table">
+                        <tbody>
+                            <tr>
+                                <td>Imágenes UMD en ISO:</td>
+                                <td>Puedes arrastrar archivos <strong>.ISO</strong> directamente. Si tienes una carpeta de UMD (con <code>PSP_GAME/</code>), empaquétala en ISO para cargarla.</td>
+                            </tr>
+                            <tr>
+                                <td>Formato Comprimido (.CSO):</td>
+                                <td>PPSSPP soporta descomprimir al vuelo archivos <strong>.CSO</strong> reduciendo el uso de memoria RAM.</td>
+                            </tr>
+                            <tr>
+                                <td>Partidas Guardadas:</td>
+                                <td>Tus partidas se almacenan automáticamente en la memoria del navegador (IndexedDB) para que no pierdas tu progreso.</td>
+                            </tr>
+                            <tr>
+                                <td>Rendimiento Óptimo:</td>
+                                <td>Se recomienda usar navegadores con aceleración por hardware WebGL2 (Google Chrome, Microsoft Edge, Brave, Firefox).</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- Hidden File Input -->
+    <input type="file" id="fileInput" accept=".iso,.cso,.pbp,.bin,.elf" style="display: none;">
+
+    <!-- Fullscreen Loading Overlay -->
+    <div id="loading-overlay">
+        <div class="psp-spinner"></div>
+        <div class="loading-text" id="loadingText">Iniciando PPSSPP WebAssembly...</div>
+        <div class="loading-subtext" id="loadingSubtext">Cargando motor y preparando GPU WebGL2...</div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast">
+        <span id="toastIcon" style="font-size: 20px;">🎮</span>
+        <span id="toastMessage" style="font-size: 13px; font-weight: 600; color: #ffffff;">Notificación</span>
+    </div>
+
+    <!-- Scripts -->
+    <script src="app.js"></script>
+    <script src="../assets/retro-nav/retro-nav.js?v=retro-hub-v4"></script>
+</body>
+</html>

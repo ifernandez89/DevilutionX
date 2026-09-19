@@ -33,6 +33,8 @@ const MIME_TYPES = {
     '.n64': 'application/octet-stream',
     '.cue': 'text/plain; charset=utf-8',
     '.iso': 'application/octet-stream',
+    '.cso': 'application/octet-stream',
+    '.elf': 'application/octet-stream',
     '.chd': 'application/octet-stream',
     '.pbp': 'application/octet-stream',
     '.m3u': 'text/plain; charset=utf-8',

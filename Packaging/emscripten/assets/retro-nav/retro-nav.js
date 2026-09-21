@@ -9,7 +9,7 @@
     // Calculate relative path to root Packaging/emscripten/ directory
     function getRootRelativePath() {
         const path = window.location.pathname.toLowerCase();
-        if (path.includes('/doom/') || path.includes('/wolf3d/') || path.includes('/gens/') || path.includes('/minixp/') || path.includes('/tinycore/') || path.includes('/quake/') || path.includes('/cavestory/') || path.includes('/nes/') || path.includes('/snes/') || path.includes('/n64/') || path.includes('/psx/') || path.includes('/psp/')) {
+        if (path.includes('/doom/') || path.includes('/wolf3d/') || path.includes('/gens/') || path.includes('/minixp/') || path.includes('/tinycore/') || path.includes('/quake/') || path.includes('/cavestory/') || path.includes('/nes/') || path.includes('/snes/') || path.includes('/n64/') || path.includes('/psx/') || path.includes('/psp/') || path.includes('/flash/')) {
             return '../';
         }
         return './';
@@ -200,7 +200,62 @@
                     badgeClass: 'badge-wasm',
                     icon: '⚔️',
                     url: `${BASE_PATH}index.html`,
-                    activeMatcher: (p) => !p.includes('/doom/') && !p.includes('/wolf3d/') && !p.includes('/gens/') && !p.includes('/minixp/') && !p.includes('/quake/') && !p.includes('/cavestory/') && !p.includes('/nes/') && !p.includes('/snes/') && !p.includes('/n64/') && !p.includes('/psx/') && !p.includes('/psp/')
+                    activeMatcher: (p) => !p.includes('/doom/') && !p.includes('/wolf3d/') && !p.includes('/gens/') && !p.includes('/minixp/') && !p.includes('/quake/') && !p.includes('/cavestory/') && !p.includes('/nes/') && !p.includes('/snes/') && !p.includes('/n64/') && !p.includes('/psx/') && !p.includes('/psp/') && !p.includes('/flash/')
+                }
+            ]
+        },
+        {
+            category: '⚡ FLASH CLASSICS (Motor Ruffle WASM)',
+            items: [
+                {
+                    id: 'flash-hub',
+                    title: 'Flash Arcade Clásicos',
+                    subtitle: 'Colección de 18 Juegos • Ruffle WASM 60 FPS',
+                    badge: 'FLASH WASM',
+                    badgeClass: 'badge-wasm',
+                    icon: '⚡',
+                    url: `${BASE_PATH}flash/index.html`,
+                    activeMatcher: (p, q) => p.includes('/flash/') && !q.get('game')
+                },
+                {
+                    id: 'flash-boxhead',
+                    title: 'Boxhead: 2Play Rooms',
+                    subtitle: 'Supervivencia Zombie • 1 o 2 Jugadores',
+                    badge: 'ZOMBIES',
+                    badgeClass: 'badge-shareware',
+                    icon: '🧟',
+                    url: `${BASE_PATH}flash/index.html?game=boxhead-2play`,
+                    activeMatcher: (p, q) => p.includes('/flash/') && q.get('game') === 'boxhead-2play'
+                },
+                {
+                    id: 'flash-gunblood',
+                    title: 'Gun Blood',
+                    subtitle: 'Duelo de Western & Reflejos Rápidos',
+                    badge: 'WESTERN',
+                    badgeClass: 'badge-shareware',
+                    icon: '🤠',
+                    url: `${BASE_PATH}flash/index.html?game=gun-blood`,
+                    activeMatcher: (p, q) => p.includes('/flash/') && q.get('game') === 'gun-blood'
+                },
+                {
+                    id: 'flash-hardest',
+                    title: "The World's Hardest Game",
+                    subtitle: 'El Mítico Juego del Cuadradito Rojo',
+                    badge: 'HABILIDAD',
+                    badgeClass: 'badge-open-source',
+                    icon: '🟥',
+                    url: `${BASE_PATH}flash/index.html?game=worlds-hardest-game-1`,
+                    activeMatcher: (p, q) => p.includes('/flash/') && q.get('game') === 'worlds-hardest-game-1'
+                },
+                {
+                    id: 'flash-ricochet',
+                    title: 'Ricochet Kills 1 & 2',
+                    subtitle: 'Física y Balas Rebotantes',
+                    badge: 'PUZZLE',
+                    badgeClass: 'badge-open-source',
+                    icon: '🎯',
+                    url: `${BASE_PATH}flash/index.html?game=ricochet-kills-1`,
+                    activeMatcher: (p, q) => p.includes('/flash/') && q.get('game') === 'ricochet-kills-1'
                 }
             ]
         },

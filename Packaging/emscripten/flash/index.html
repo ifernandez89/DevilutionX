@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flash Arcade WASM — Colección Clásica (Ruffle WebAssembly)</title>
+    <meta name="description" content="Juega a los clásicos juegos Flash en tu navegador a 60 FPS con Ruffle WebAssembly. Compatible con Boxhead 2Play, Ricochet Kills, Gun Blood, The World's Hardest Game y carga de archivos .SWF personalizados.">
+    <link rel="stylesheet" href="../assets/retro-nav/retro-nav.css?v=retro-hub-v4">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script src="ruffle/ruffle.js"></script>
+    <style>
+        :root {
+            --bg-dark: #0a0b10;
+            --bg-card: rgba(22, 25, 37, 0.75);
+            --bg-card-hover: rgba(32, 38, 58, 0.85);
+            --accent-primary: #ff4757;
+            --accent-glow: rgba(255, 71, 87, 0.35);
+            --accent-secondary: #2ed573;
+            --accent-cyan: #00d2d3;
+            --accent-gold: #ffa502;
+            --text-main: #f1f2f6;
+            --text-muted: #a4b0be;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-glow: rgba(255, 71, 87, 0.25);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: radial-gradient(circle at 50% 0%, #1a1d2e 0%, var(--bg-dark) 75%);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* Top Header matching Retro Platform */
+        header {
+            background: rgba(10, 11, 16, 0.88);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0.75rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .brand-badge {
+            background: linear-gradient(135deg, #ff4757, #ff6b81);
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 800;
+            padding: 0.25rem 0.5rem;
+            border-radius: 6px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            box-shadow: 0 0 12px var(--accent-glow);
+        }
+
+        .brand-title {
+            font-size: 1.25rem;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            color: #fff;
+        }
+
+        .brand-title span {
+            background: linear-gradient(90deg, #ff4757, #00d2d3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.45rem 0.85rem;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-muted);
+            border-color: var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-primary), #ff6b81);
+            color: #fff;
+            box-shadow: 0 4px 12px var(--accent-glow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 18px var(--accent-glow);
+        }
+
+        /* Main Container */
+        main {
+            flex: 1;
+            padding: 1.75rem 2rem;
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .top-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            position: relative;
+            width: 320px;
+        }
+
+        .search-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 0.6rem 1rem 0.6rem 2.4rem;
+            color: #fff;
+            font-size: 0.9rem;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .search-input:focus {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 0.85rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            pointer-events: none;
+        }
+
+        /* Filter Pills */
+        .filter-bar {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 0.45rem 1rem;
+            border-radius: 20px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--accent-primary);
+            color: #fff;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        .drop-zone {
+            border: 2px dashed rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 1.25rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            background: rgba(255, 255, 255, 0.02);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .drop-zone:hover, .drop-zone.dragover {
+            border-color: var(--accent-cyan);
+            background: rgba(0, 210, 211, 0.08);
+            color: #fff;
+        }
+
+        /* Games Grid */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .game-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            backdrop-filter: blur(8px);
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-cyan));
+            opacity: 0;
+            transition: opacity 0.25s ease;
+        }
+
+        .game-card:hover {
+            transform: translateY(-4px);
+            background: var(--bg-card-hover);
+            border-color: var(--border-glow);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+        }
+
+        .game-card:hover::before {
+            opacity: 1;
+        }
+
+        .card-badge {
+            display: inline-block;
+            align-self: flex-start;
+            padding: 0.2rem 0.55rem;
+            background: rgba(0, 210, 211, 0.12);
+            border: 1px solid rgba(0, 210, 211, 0.3);
+            color: var(--accent-cyan);
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+        }
+
+        .card-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+            color: #fff;
+        }
+
+        .card-desc {
+            font-size: 0.83rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+            margin-bottom: 1.1rem;
+            flex: 1;
+        }
+
+        .card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 0.75rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .btn-play {
+            background: linear-gradient(135deg, var(--accent-primary), #ff6b81);
+            color: #fff;
+            border: none;
+            padding: 0.4rem 0.9rem;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.82rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            box-shadow: 0 4px 12px var(--accent-glow);
+            transition: all 0.2s ease;
+        }
+
+        .btn-play:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 18px var(--accent-glow);
+        }
+
+        /* Player Overlay Modal */
+        .player-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(5, 6, 10, 0.96);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            display: none;
+            flex-direction: column;
+        }
+
+        .player-overlay.active {
+            display: flex;
+        }
+
+        .player-header {
+            padding: 0.75rem 2rem;
+            background: rgba(15, 17, 26, 0.9);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .player-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .player-game-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .player-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .btn-action {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border-color);
+            color: #fff;
+            padding: 0.4rem 0.85rem;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: all 0.2s ease;
+        }
+
+        .btn-action:hover {
+            background: rgba(255, 255, 255, 0.16);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-close {
+            background: rgba(255, 71, 87, 0.15);
+            border-color: rgba(255, 71, 87, 0.4);
+            color: #ff6b81;
+        }
+
+        .btn-close:hover {
+            background: var(--accent-primary);
+            color: #fff;
+        }
+
+        .player-body {
+            flex: 1;
+            display: flex;
+            padding: 1rem 2rem;
+            gap: 1.5rem;
+            min-height: 0;
+        }
+
+        .screen-container {
+            flex: 3;
+            background: #000;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+        }
+
+        #ruffle-player-target {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #ruffle-player-target > * {
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        .sidebar-info {
+            flex: 1;
+            max-width: 340px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            overflow-y: auto;
+        }
+
+        .sidebar-section h4 {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-cyan);
+            margin-bottom: 0.45rem;
+        }
+
+        .controls-box {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px dashed var(--border-color);
+            border-radius: 8px;
+            padding: 0.75rem;
+            font-size: 0.82rem;
+            color: var(--text-main);
+            line-height: 1.5;
+        }
+
+        footer {
+            padding: 1.25rem 2rem;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.82rem;
+            background: rgba(10, 11, 16, 0.85);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="brand" onclick="showCatalog()">
+            <div class="brand-badge">RUFFLE WASM</div>
+            <div class="brand-title">
+                FLASH <span>ARCADE</span>
+            </div>
+        </div>
+
+        <div class="header-actions">
+            <!-- Global Retro Hub Navigation Slot -->
+            <div id="retro-nav-slot"></div>
+
+            <a href="../psx/index.html" class="btn btn-secondary" title="Emulador Sony PlayStation 1 (32-Bit)">
+                💿 PS1
+            </a>
+            <a href="../n64/index.html" class="btn btn-secondary" title="Emulador Nintendo 64 (64-Bit 3D)">
+                🕹️ N64
+            </a>
+            <a href="../snes/index.html" class="btn btn-secondary" title="Emulador Super Nintendo (16-Bit)">
+                🎮 SNES
+            </a>
+            <a href="../doom/index.html" class="btn btn-secondary" title="DOOM & Freedoom WASM">
+                🔥 DOOM
+            </a>
+            <a href="../index.html" class="btn btn-secondary" title="Volver a DevilutionX / Diablo">
+                ⚔️ Diablo
+            </a>
+        </div>
+    </header>
+
+    <main id="catalogView">
+        <div class="top-toolbar">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="searchInput" class="search-input" placeholder="Buscar juego flash...">
+            </div>
+            <button class="btn btn-primary" onclick="document.getElementById('fileInput').click()">
+                📂 Cargar archivo .SWF
+            </button>
+            <input type="file" id="fileInput" accept=".swf" style="display: none;">
+        </div>
+
+        <div class="filter-bar" id="categoryFilters">
+            <button class="filter-btn active" data-cat="all">🎮 Todos (<span id="totalCount">0</span>)</button>
+            <button class="filter-btn" data-cat="Acción / Zombies">🧟 Acción / Zombies</button>
+            <button class="filter-btn" data-cat="Física / Puzzle">🎯 Física / Puzzles</button>
+            <button class="filter-btn" data-cat="Estrategia / Física">💣 Estrategia</button>
+            <button class="filter-btn" data-cat="Habilidad / Precisión">⚡ Habilidad</button>
+            <button class="filter-btn" data-cat="Reflejos / Cerebro">🧠 Reflejos</button>
+        </div>
+
+        <div class="drop-zone" id="dropZone" onclick="document.getElementById('fileInput').click()">
+            📂 ¿Tienes otro archivo <code>.swf</code>? Arrástralo aquí o haz clic para jugarlo instantáneamente en el navegador.
+        </div>
+
+        <div class="games-grid" id="gamesGrid"></div>
+    </main>
+
+    <!-- Player Overlay -->
+    <div class="player-overlay" id="playerOverlay">
+        <div class="player-header">
+            <div class="player-info">
+                <button class="btn-action btn-close" onclick="closePlayer()">◀ Volver al Menú</button>
+                <div class="player-game-title" id="activeGameTitle">Título del Juego</div>
+            </div>
+            <div class="player-controls">
+                <button class="btn-action" onclick="restartGame()">🔄 Reiniciar</button>
+                <button class="btn-action" onclick="toggleFullscreen()">⛶ Pantalla Completa</button>
+            </div>
+        </div>
+
+        <div class="player-body">
+            <div class="screen-container" id="screenContainer">
+                <div id="ruffle-player-target"></div>
+            </div>
+
+            <div class="sidebar-info">
+                <div class="sidebar-section">
+                    <h4>Descripción</h4>
+                    <p id="activeGameDesc" style="font-size: 0.85rem; line-height: 1.5; color: var(--text-muted);"></p>
+                </div>
+
+                <div class="sidebar-section">
+                    <h4>🎮 Controles</h4>
+                    <div class="controls-box" id="activeGameControls"></div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h4>🚀 Motor de Emulación</h4>
+                    <p style="font-size: 0.8rem; color: var(--accent-secondary); line-height: 1.6;">
+                        ✔ Ruffle WebAssembly nativo<br>
+                        ✔ 60 FPS WebAudio & Vector Graphics<br>
+                        ✔ Compatible con Gamepads & Teclado
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        DevilutionX Web Platform • Flash Arcade con Ruffle WebAssembly • 100% Libre y de Código Abierto
+    </footer>
+
+    <script src="../assets/retro-nav/retro-nav.js?v=retro-hub-v4"></script>
+    <script>
+        let games = [];
+        let currentCategory = 'all';
+        let currentRufflePlayer = null;
+        let activeGameData = null;
+
+        async function init() {
+            try {
+                const res = await fetch('catalog.json');
+                games = await res.json();
+                document.getElementById('totalCount').innerText = games.length;
+                renderGames();
+                setupEvents();
+                checkQueryParams();
+            } catch (err) {
+                console.error('Error cargando catalogo:', err);
+            }
+        }
+
+        function checkQueryParams() {
+            const params = new URLSearchParams(window.location.search);
+            const gameParam = params.get('game');
+            if (gameParam) {
+                const found = games.find(g => g.id === gameParam || g.file.toLowerCase().includes(gameParam.toLowerCase()));
+                if (found) {
+                    setTimeout(() => launchGame(found.id), 300);
+                }
+            }
+        }
+
+        function renderGames() {
+            const grid = document.getElementById('gamesGrid');
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            
+            const filtered = games.filter(g => {
+                const matchCat = currentCategory === 'all' || g.category.toLowerCase().includes(currentCategory.toLowerCase());
+                const matchQuery = g.title.toLowerCase().includes(query) || 
+                                   g.description.toLowerCase().includes(query) ||
+                                   g.category.toLowerCase().includes(query);
+                return matchCat && matchQuery;
+            });
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 4rem 1rem; color: var(--text-muted);">
+                    No se encontraron juegos con ese criterio de búsqueda.
+                </div>`;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(g => `
+                <div class="game-card" onclick="launchGame('${g.id}')">
+                    <div>
+                        <div class="card-badge">${g.category}</div>
+                        <h3 class="card-title">${g.title}</h3>
+                        <p class="card-desc">${g.description}</p>
+                    </div>
+                    <div class="card-footer">
+                        <span style="font-size: 0.75rem; color: var(--text-muted); font-family: monospace;">.SWF</span>
+                        <button class="btn-play">▶ Jugar</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function setupEvents() {
+            document.getElementById('searchInput').addEventListener('input', renderGames);
+
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentCategory = btn.getAttribute('data-cat');
+                    renderGames();
+                });
+            });
+
+            // File input
+            document.getElementById('fileInput').addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    loadCustomSwf(e.target.files[0]);
+                }
+            });
+
+            // Drag and drop custom swf
+            const dropZone = document.getElementById('dropZone');
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropZone.addEventListener(eventName, (e) => {
+                    e.preventDefault();
+                    dropZone.classList.add('dragover');
+                });
+            });
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropZone.addEventListener(eventName, (e) => {
+                    e.preventDefault();
+                    dropZone.classList.remove('dragover');
+                });
+            });
+            dropZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropZone.classList.remove('dragover');
+                const files = e.dataTransfer.files;
+                if (files.length > 0 && files[0].name.toLowerCase().endsWith('.swf')) {
+                    loadCustomSwf(files[0]);
+                }
+            });
+        }
+
+        async function launchGame(id) {
+            const game = games.find(g => g.id === id);
+            if (!game) return;
+            activeGameData = game;
+
+            document.getElementById('activeGameTitle').innerText = game.title;
+            document.getElementById('activeGameDesc').innerText = game.description;
+            document.getElementById('activeGameControls').innerText = game.controls;
+            document.getElementById('playerOverlay').classList.add('active');
+
+            const container = document.getElementById('ruffle-player-target');
+            container.innerHTML = '';
+
+            const ruffle = window.RufflePlayer ? window.RufflePlayer.newest() : null;
+            if (!ruffle) {
+                container.innerHTML = '<p style="color: red; padding: 2rem;">Error: Ruffle WASM no está listo.</p>';
+                return;
+            }
+
+            currentRufflePlayer = ruffle.createPlayer();
+            currentRufflePlayer.style.width = "100%";
+            currentRufflePlayer.style.height = "100%";
+            container.appendChild(currentRufflePlayer);
+
+            try {
+                await currentRufflePlayer.load(`games/${game.file}`);
+            } catch (e) {
+                console.error("Error al cargar SWF:", e);
+            }
+        }
+
+        function loadCustomSwf(file) {
+            activeGameData = {
+                title: file.name,
+                description: "Archivo .swf personalizado cargado desde tu dispositivo.",
+                controls: "Controles habituales del juego."
+            };
+
+            document.getElementById('activeGameTitle').innerText = file.name;
+            document.getElementById('activeGameDesc').innerText = activeGameData.description;
+            document.getElementById('activeGameControls').innerText = activeGameData.controls;
+            document.getElementById('playerOverlay').classList.add('active');
+
+            const container = document.getElementById('ruffle-player-target');
+            container.innerHTML = '';
+            const ruffle = window.RufflePlayer ? window.RufflePlayer.newest() : null;
+            if (!ruffle) return;
+            
+            currentRufflePlayer = ruffle.createPlayer();
+            currentRufflePlayer.style.width = "100%";
+            currentRufflePlayer.style.height = "100%";
+            container.appendChild(currentRufflePlayer);
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                currentRufflePlayer.load({ data: e.target.result });
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        function restartGame() {
+            if (activeGameData && activeGameData.id) {
+                launchGame(activeGameData.id);
+            }
+        }
+
+        function toggleFullscreen() {
+            const el = document.getElementById('screenContainer');
+            if (!document.fullscreenElement) {
+                el.requestFullscreen().catch(err => alert(`Error al entrar a pantalla completa: ${err.message}`));
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        function closePlayer() {
+            document.getElementById('playerOverlay').classList.remove('active');
+            const container = document.getElementById('ruffle-player-target');
+            container.innerHTML = '';
+            currentRufflePlayer = null;
+        }
+
+        function showCatalog() {
+            closePlayer();
+        }
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && document.getElementById('playerOverlay').classList.contains('active')) {
+                if (!document.fullscreenElement) {
+                    closePlayer();
+                }
+            }
+        });
+
+        init();
+    </script>
+</body>
+</html>

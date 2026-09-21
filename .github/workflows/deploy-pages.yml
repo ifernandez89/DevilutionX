@@ -164,6 +164,9 @@ jobs:
           if [ -d Packaging/emscripten/cavestory ]; then
             cp -rv Packaging/emscripten/cavestory dist/cavestory
           fi
+          if [ -d "Packaging/emscripten/flash" ]; then
+            cp -rv Packaging/emscripten/flash dist/flash
+          fi
           if [ -f Packaging/emscripten/hd_benchmark.html ]; then
             cp -v Packaging/emscripten/hd_benchmark.html dist/hd_benchmark.html
           fi

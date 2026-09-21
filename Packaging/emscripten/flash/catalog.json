@@ -1,0 +1,164 @@
+[
+  {
+    "id": "boxhead-2play",
+    "src": "I:\\Juegos\\Boxhead_2play.swf",
+    "file": "Boxhead_2play.swf",
+    "title": "Boxhead: 2Play Rooms",
+    "category": "Acción / Zombies",
+    "description": "El clásico juego de supervivencia contra oleadas de zombies para 1 o 2 jugadores con armas, torretas y explosivos.",
+    "controls": "P1: Flechas + / o Espacio. P2: WASD + Espacio."
+  },
+  {
+    "id": "gun-blood",
+    "src": "I:\\Juegos\\Flashes\\Gun blood.swf",
+    "file": "Gun_Blood.swf",
+    "title": "Gun Blood",
+    "category": "Puntería / Western",
+    "description": "Duelo de vaqueros con reflejos rápidos. Mantén el cursor en la recámara y dispara cuando termine el conteo.",
+    "controls": "Ratón (apuntar y disparar)."
+  },
+  {
+    "id": "ricochet-kills-1",
+    "src": "I:\\Juegos\\Flashes\\Ricochet Kills 1.swf",
+    "file": "Ricochet_Kills_1.swf",
+    "title": "Ricochet Kills 1",
+    "category": "Física / Puzzle",
+    "description": "Dispara balas que rebotan en las paredes metálicas para eliminar a todos los enemigos.",
+    "controls": "Ratón (apuntar y disparar)."
+  },
+  {
+    "id": "ricochet-kills-2",
+    "src": "I:\\Juegos\\Flashes\\Ricochet Kills 2.swf",
+    "file": "Ricochet_Kills_2.swf",
+    "title": "Ricochet Kills 2",
+    "category": "Física / Puzzle",
+    "description": "Segunda entrega de Ricochet Kills con nuevos niveles y trampas dinámicas.",
+    "controls": "Ratón (apuntar y disparar)."
+  },
+  {
+    "id": "ricochet-kills-players-pack",
+    "src": "I:\\Juegos\\Flashes\\Ricochet Kills-Players Pack.swf",
+    "file": "Ricochet_Kills_Players_Pack.swf",
+    "title": "Ricochet Kills: Players Pack",
+    "category": "Física / Puzzle",
+    "description": "Pack especial con niveles creados por la comunidad.",
+    "controls": "Ratón (apuntar y disparar)."
+  },
+  {
+    "id": "bridge-tactics-1",
+    "src": "I:\\Juegos\\Flashes\\bridge tactics.swf",
+    "file": "Bridge_Tactics_1.swf",
+    "title": "Bridge Tactics",
+    "category": "Estrategia / Física",
+    "description": "Coloca dinamita en los puentes para detonarlos cuando pasen las tropas enemigas.",
+    "controls": "Ratón (colocar dinamita y detonar)."
+  },
+  {
+    "id": "bridge-tactics-2",
+    "src": "I:\\Juegos\\Flashes\\Bridge Tactics 2.swf",
+    "file": "Bridge_Tactics_2.swf",
+    "title": "Bridge Tactics 2",
+    "category": "Estrategia / Física",
+    "description": "Segunda parte con nuevos tipos de explosivos y vehículos blindados.",
+    "controls": "Ratón (colocar dinamita y detonar)."
+  },
+  {
+    "id": "worlds-hardest-game-1",
+    "src": "I:\\Juegos\\Flashes\\jueguito el mas dificil dl world\\TheWorldsHardest.swf",
+    "file": "The_Worlds_Hardest_Game_1.swf",
+    "title": "The World's Hardest Game",
+    "category": "Habilidad / Precisión",
+    "description": "Esquiva las bolas azules, recoge las monedas y llega a la zona verde.",
+    "controls": "Flechas de dirección o WASD."
+  },
+  {
+    "id": "worlds-hardest-game-2",
+    "src": "I:\\Juegos\\Flashes\\jueguito el mas dificil dl world\\TheWorldsHardest 2.swf",
+    "file": "The_Worlds_Hardest_Game_2.swf",
+    "title": "The World's Hardest Game 2",
+    "category": "Habilidad / Precisión",
+    "description": "Secuela aún más desafiante con llaves y nuevos obstáculos.",
+    "controls": "Flechas de dirección o WASD."
+  },
+  {
+    "id": "worlds-hardest-game-ss",
+    "src": "I:\\Juegos\\Flashes\\jueguito el mas dificil dl world\\TheWorldsHardest SS.swf",
+    "file": "The_Worlds_Hardest_Game_SS.swf",
+    "title": "The World's Hardest Game (Especial)",
+    "category": "Habilidad / Precisión",
+    "description": "Edición con niveles y desafíos alternativos.",
+    "controls": "Flechas de dirección o WASD."
+  },
+  {
+    "id": "cuadradito-verderojo",
+    "src": "I:\\Juegos\\Flashes\\cuadradito verderojo.swf",
+    "file": "Cuadradito_Verderojo.swf",
+    "title": "Cuadradito Verde y Rojo",
+    "category": "Habilidad / Laberinto",
+    "description": "Laberintos de habilidad y precisión con obstáculos en movimiento.",
+    "controls": "Flechas o Ratón."
+  },
+  {
+    "id": "multitask",
+    "src": "I:\\Juegos\\Flashes\\multitask.swf",
+    "file": "Multitask.swf",
+    "title": "Multitask",
+    "category": "Reflejos / Cerebro",
+    "description": "Controla hasta 4 minijuegos simultáneos en pantalla dividida.",
+    "controls": "Flechas, WASD, Barra espaciadora y Ratón."
+  },
+  {
+    "id": "grayscale",
+    "src": "I:\\Juegos\\Flashes\\grayscale.swf",
+    "file": "Grayscale.swf",
+    "title": "Grayscale",
+    "category": "Plataformas / Puzzle",
+    "description": "Aventura en blanco y negro jugando con contrastes de sombras.",
+    "controls": "Flechas o WASD."
+  },
+  {
+    "id": "pa-pintar",
+    "src": "I:\\Juegos\\Flashes\\pa pintar.swf",
+    "file": "Pa_Pintar.swf",
+    "title": "Pa Pintar",
+    "category": "Casual / Creativo",
+    "description": "Juego clásico interactivo de dibujo y coloreado.",
+    "controls": "Ratón (seleccionar colores y pintar)."
+  },
+  {
+    "id": "pop",
+    "src": "I:\\Juegos\\Flashes\\pop.swf",
+    "file": "Pop.swf",
+    "title": "Pop Arcade",
+    "category": "Casual / Puzzle",
+    "description": "Juego de estallido de burbujas y reflejos.",
+    "controls": "Ratón."
+  },
+  {
+    "id": "puedes-ordenar-las-palabras",
+    "src": "I:\\Juegos\\Flashes\\puedes ordenar las palabras.swf",
+    "file": "Ordenar_Palabras.swf",
+    "title": "¿Puedes Ordenar las Palabras?",
+    "category": "Ingenio / Palabras",
+    "description": "Desafío de vocabulario y anagramas.",
+    "controls": "Teclado y Ratón."
+  },
+  {
+    "id": "ds",
+    "src": "I:\\Juegos\\Flashes\\ds.swf",
+    "file": "DS_Game.swf",
+    "title": "DS Minigame",
+    "category": "Arcade",
+    "description": "Minijuego interactivo Flash.",
+    "controls": "Ratón y Teclado."
+  },
+  {
+    "id": "sdf",
+    "src": "I:\\Juegos\\Flashes\\sdf.swf",
+    "file": "SDF_Game.swf",
+    "title": "SDF Arcade",
+    "category": "Arcade",
+    "description": "Minijuego clásico Flash.",
+    "controls": "Ratón y Teclado."
+  }
+]

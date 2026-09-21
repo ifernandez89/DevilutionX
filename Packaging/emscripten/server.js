@@ -47,6 +47,7 @@ const MIME_TYPES = {
     '.jpg': 'image/jpeg',
     '.svg': 'image/svg+xml',
     '.ico': 'image/x-icon',
+    '.swf': 'application/x-shockwave-flash',
     '.wgsl': 'text/plain; charset=utf-8'
 };
 

@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### 📱 Detección Inteligente de Celulares/Móviles, Virtual GameBoy HUD & Suite 8/16-Bit ([`Packaging/emscripten/assets/mobile-controls/virtual-gamepad.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/assets/mobile-controls/virtual-gamepad.js), [`Packaging/emscripten/assets/mobile-controls/virtual-gamepad.css`](file:///c:/Projects/DevilutionX/Packaging/emscripten/assets/mobile-controls/virtual-gamepad.css), [`Packaging/emscripten/assets/retro-nav/retro-nav.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/assets/retro-nav/retro-nav.js))
+- **Detección Automática Multi-Capa de Dispositivos Móviles**:
+  - Detección precisa de teléfonos inteligentes y tabletas mediante User Agent, `navigator.maxTouchPoints`, media queries táctiles `(pointer: coarse)` y ancho de pantalla adaptativo.
+  - Asignación de la clase `.is-mobile-device` para deshabilitar menús contextuales no deseados y optimizar la interacción táctil.
+- **🛡️ Intercepción y Modal Informativo para Diablo I / Hellfire en Celulares**:
+  - Al ingresar a Diablo desde un smartphone, el sistema despliega un modal temático con estilo gótico explicando los altos requerimientos de ratón/teclado y rendimiento.
+  - Ofrece acceso directo con 1 toque al catálogo móvil de 8/16 bits (NES, Sega Genesis, SNES) a 60 FPS garantizados, o continuar en modo experimental.
+- **🎮 Virtual GameBoy Modern HUD (Controles Táctiles en Pantalla)**:
+  - **D-Pad Táctil Clásico Izquierdo**: Diseño en cruz con cálculo de ángulo y deslizamiento fluido (Arriba, Abajo, Izquierda, Derecha y Diagonales) + botón `SELECT` estilizado.
+  - **Botonera de Acción Derecha**: Botones ergonómicos `A`, `B`, `X` (Turbo) e `Y` orientados en ángulo natural para el pulgar + botón `START`.
+  - **Gatillos Superiores L y R**: Acceso a botones auxiliares de hombro para juegos de SNES y títulos avanzados.
+  - **Estética Cyber-Dark Glassmorphism & Feedback Háptico**: Acabado translúcido con efecto vidrio esmerilado, iluminación reactiva al pulsar y micro-vibraciones táctiles (`navigator.vibrate(12)`).
+  - **Despacho Nativo de Eventos de Teclado**: Envía eventos `KeyboardEvent` (`keydown`/`keyup`) directamente al canvas y al runtime WebAssembly para compatibilidad inmediata con todos los núcleos.
+  - **Botón Flotante de Conmutación**: Píldora interactiva `🎮 PAD: ON/OFF` para activar, ocultar o probar los controles tanto en móvil como en escritorio.
+- **⭐ Insignias y Priorización en Retro Nav Hub**:
+  - Distintivos `📱 MÓVIL 60FPS` / `📱 8-BIT MÓVIL` / `📱 16-BIT MÓVIL` en NES, Sega Genesis, SNES, DOOM 1 y Cave Story.
+  - Advertencias claras `⚠️ PC / 3D` en emuladores pesados (PS1, N64, PSP) y `💻 TECLADO PC` en Diablo.
+
 ### 🛡️ Erradicación de Congelamiento Crítico al Morir Na-Krul en Tristram / Invasión ([`Source/items.cpp`](file:///c:/Projects/DevilutionX/Source/items.cpp), [`Source/monster.cpp`](file:///c:/Projects/DevilutionX/Source/monster.cpp))
 - **Causa Raíz Identificada y Erradicada**:
   - Al morir el heraldo **Na-Krul** (`MT_NAKRUL`) durante la invasión de Tristram o fuera de la Cripta 4, el motor ejecuta `SpawnLoot()` que invoca `CreateMagicWeapon` para soltar sus 4 tesoros legendarios: Gran Espada (`ICURS_GREAT_SWORD`), Bastón de Guerra (`ICURS_WAR_STAFF`), Arco de Guerra Largo (`ICURS_LONG_WAR_BOW`) y `CreateSpellBook` para el Libro de Apocalipsis (`SpellID::Apocalypse`).

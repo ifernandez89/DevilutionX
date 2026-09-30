@@ -9,7 +9,7 @@
     // Calculate relative path to root Packaging/emscripten/ directory
     function getRootRelativePath() {
         const path = window.location.pathname.toLowerCase();
-        if (path.includes('/doom/') || path.includes('/wolf3d/') || path.includes('/gens/') || path.includes('/minixp/') || path.includes('/tinycore/') || path.includes('/quake/') || path.includes('/cavestory/') || path.includes('/nes/') || path.includes('/snes/') || path.includes('/n64/') || path.includes('/psx/') || path.includes('/psp/') || path.includes('/flash/')) {
+        if (path.includes('/doom/') || path.includes('/wolf3d/') || path.includes('/gens/') || path.includes('/minixp/') || path.includes('/tinycore/') || path.includes('/quake/') || path.includes('/cavestory/') || path.includes('/nes/') || path.includes('/snes/') || path.includes('/n64/') || path.includes('/psx/') || path.includes('/psp/') || path.includes('/flash/') || path.includes('/gunblood/')) {
             return '../';
         }
         return './';
@@ -106,8 +106,8 @@
                     id: 'gens',
                     title: 'Sega Genesis & Mega Drive',
                     subtitle: 'Lector Universal de ROMs 16-bit • 60 FPS WASM',
-                    badge: '60 FPS WASM',
-                    badgeClass: 'badge-wasm',
+                    badge: '📱 MÓVIL 60FPS',
+                    badgeClass: 'badge-mobile',
                     icon: '🎮',
                     url: `${BASE_PATH}gens/index.html`,
                     activeMatcher: (p) => p.includes('/gens/')
@@ -121,8 +121,8 @@
                     id: 'nes',
                     title: 'Nintendo NES & Famicom',
                     subtitle: 'Lector Universal de ROMs .NES • Ciclo Exacto 60 FPS',
-                    badge: '8-BIT WASM',
-                    badgeClass: 'badge-wasm',
+                    badge: '📱 8-BIT MÓVIL',
+                    badgeClass: 'badge-mobile',
                     icon: '🔴',
                     url: `${BASE_PATH}nes/index.html`,
                     activeMatcher: (p) => p.includes('/nes/')
@@ -136,8 +136,8 @@
                     id: 'snes',
                     title: 'Super Nintendo (SNES)',
                     subtitle: 'Lector Universal .SFC / .SMC • Modo 7 • 60 FPS',
-                    badge: '16-BIT WASM',
-                    badgeClass: 'badge-wasm',
+                    badge: '📱 16-BIT MÓVIL',
+                    badgeClass: 'badge-mobile',
                     icon: '🎮',
                     url: `${BASE_PATH}snes/index.html`,
                     activeMatcher: (p) => p.includes('/snes/')
@@ -151,8 +151,8 @@
                     id: 'n64',
                     title: 'Nintendo 64 (N64)',
                     subtitle: 'Lector Universal .Z64 / .V64 / .N64 • WebGL2 3D',
-                    badge: '64-BIT WASM',
-                    badgeClass: 'badge-wasm',
+                    badge: '⚠️ PC / 3D',
+                    badgeClass: 'badge-shareware',
                     icon: '🕹️',
                     url: `${BASE_PATH}n64/index.html`,
                     activeMatcher: (p) => p.includes('/n64/')
@@ -166,8 +166,8 @@
                     id: 'psx',
                     title: 'Sony PlayStation (PS1 / PSX)',
                     subtitle: 'Lector Universal .CUE / .BIN / .ISO / .CHD • WebGL2 3D',
-                    badge: '32-BIT WASM',
-                    badgeClass: 'badge-wasm',
+                    badge: '⚠️ PC / 3D',
+                    badgeClass: 'badge-shareware',
                     icon: '💿',
                     url: `${BASE_PATH}psx/index.html`,
                     activeMatcher: (p) => p.includes('/psx/')
@@ -181,8 +181,8 @@
                     id: 'psp',
                     title: 'Sony PlayStation Portable (PSP)',
                     subtitle: 'Lector Universal .ISO / .CSO / .PBP • WebGL2 3D 16:9',
-                    badge: 'PSP 3D WASM',
-                    badgeClass: 'badge-wasm',
+                    badge: '⚠️ PC / 3D',
+                    badgeClass: 'badge-shareware',
                     icon: '🎮',
                     url: `${BASE_PATH}psp/index.html`,
                     activeMatcher: (p) => p.includes('/psp/')
@@ -196,11 +196,26 @@
                     id: 'diablo1',
                     title: 'Diablo 1: Tristram',
                     subtitle: 'DevilutionX Source Port (1996 Blizzard)',
-                    badge: 'NATIVE C++',
-                    badgeClass: 'badge-wasm',
+                    badge: '💻 TECLADO PC',
+                    badgeClass: 'badge-desktop-warning',
                     icon: '⚔️',
                     url: `${BASE_PATH}index.html`,
-                    activeMatcher: (p) => !p.includes('/doom/') && !p.includes('/wolf3d/') && !p.includes('/gens/') && !p.includes('/minixp/') && !p.includes('/quake/') && !p.includes('/cavestory/') && !p.includes('/nes/') && !p.includes('/snes/') && !p.includes('/n64/') && !p.includes('/psx/') && !p.includes('/psp/') && !p.includes('/flash/')
+                    activeMatcher: (p) => !p.includes('/doom/') && !p.includes('/wolf3d/') && !p.includes('/gens/') && !p.includes('/minixp/') && !p.includes('/quake/') && !p.includes('/cavestory/') && !p.includes('/nes/') && !p.includes('/snes/') && !p.includes('/n64/') && !p.includes('/psx/') && !p.includes('/psp/') && !p.includes('/flash/') && !p.includes('/gunblood/')
+                }
+            ]
+        },
+        {
+            category: '🤠 WESTERN DUELS (Nativo HTML5 / WebAudio)',
+            items: [
+                {
+                    id: 'gunblood-reborn',
+                    title: 'Gunblood Reborn',
+                    subtitle: 'Quick-Draw Duelos • 8 Forajidos • Físicas 60 FPS',
+                    badge: 'NATIVO 60FPS',
+                    badgeClass: 'badge-wasm',
+                    icon: '🤠',
+                    url: `${BASE_PATH}gunblood/index.html`,
+                    activeMatcher: (p) => p.includes('/gunblood/')
                 }
             ]
         },
@@ -329,6 +344,15 @@
             link.rel = 'stylesheet';
             link.href = `${BASE_PATH}assets/retro-nav/retro-nav.css?v=retro-hub-v4`;
             document.head.appendChild(link);
+        }
+
+        // Ensure Virtual Gamepad and Mobile Interceptor is loaded
+        if (!document.getElementById('virtual-gamepad-js') && !window._virtualGamepadLoaded) {
+            window._virtualGamepadLoaded = true;
+            const script = document.createElement('script');
+            script.id = 'virtual-gamepad-js';
+            script.src = `${BASE_PATH}assets/mobile-controls/virtual-gamepad.js?v=gb-v1`;
+            document.head.appendChild(script);
         }
 
         // Find injection container (preferred: element with id="retro-nav-slot", or header-actions)

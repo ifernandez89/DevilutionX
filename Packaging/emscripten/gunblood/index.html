@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gunblood Reborn — Western Quick-Draw Duel (HTML5 / WebAudio)</title>
+    <meta name="description" content="Nuestra versión moderna y nativa de Gunblood: duelos del viejo oeste a 60 FPS con físicas de impacto, sombreros voladores, desarmes, audio sintetizado de baja latencia y 8 forajidos únicos.">
+    <link rel="stylesheet" href="../assets/retro-nav/retro-nav.css?v=retro-hub-v4">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header>
+        <div class="brand">
+            <div class="brand-badge">WESTERN DUEL</div>
+            <div class="brand-title">GUNBLOOD <span>REBORN</span></div>
+        </div>
+
+        <div class="header-actions">
+            <!-- Global Retro Hub Nav Slot -->
+            <div id="retro-nav-slot"></div>
+
+            <a href="../flash/index.html" class="btn btn-secondary" title="Flash Arcade Clásico">
+                ⚡ Flash Arcade
+            </a>
+            <a href="../psx/index.html" class="btn btn-secondary" title="Sony PlayStation 1">
+                💿 PS1
+            </a>
+            <a href="../doom/index.html" class="btn btn-secondary" title="DOOM WASM">
+                🔥 DOOM
+            </a>
+            <a href="../index.html" class="btn btn-secondary" title="Volver a DevilutionX / Diablo">
+                ⚔️ Diablo
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content Arena -->
+    <main>
+        <div class="arena-card">
+            <!-- Top HUD -->
+            <div class="duel-hud">
+                <div class="hud-player">
+                    <div class="hud-name">🤠 THE SHERIFF (TÚ)</div>
+                    <div class="hud-hp-bar">
+                        <div class="hud-hp-fill" id="playerHPFill" style="width: 100%;"></div>
+                    </div>
+                </div>
+
+                <div class="hud-center">
+                    <div class="hud-score" id="scoreDisplay">$0</div>
+                    <div class="hud-bounty" id="bountyDisplay">RECOMPENSA: $250</div>
+                </div>
+
+                <div class="hud-enemy">
+                    <div class="hud-name" id="enemyNameHUD">Novice Ned 💀</div>
+                    <div class="hud-hp-bar">
+                        <div class="hud-hp-fill" id="enemyHPFill" style="width: 100%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Canvas Container -->
+            <div class="canvas-wrapper">
+                <canvas id="duelCanvas"></canvas>
+
+                <!-- Floating Prompt Banner -->
+                <div class="prompt-banner" id="promptBanner" style="display: none;">
+                    👇 COLOCA EL CURSOR EN EL TAMBOR DE BALAS
+                </div>
+
+                <!-- Overlays & Wanted Posters -->
+                <div class="overlay-modal" id="duelModal">
+                    <div id="modalContent"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        Gunblood Reborn • Western Quick-Draw Engine • Creado para la Plataforma DevilutionX Web
+    </footer>
+
+    <script src="audio.js"></script>
+    <script src="duel.js"></script>
+    <script src="app.js"></script>
+    <script src="../assets/retro-nav/retro-nav.js?v=retro-hub-v4"></script>
+</body>
+</html>

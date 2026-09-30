@@ -1,13 +1,11 @@
 /**
- * Virtual GameBoy Modern On-Screen Controller & Mobile Device Interceptor
- * Provides responsive touch controls with tactile haptic feedback,
- * native keyboard event dispatching for WASM emulators, and mobile-friendly onboarding.
+ * Virtual GameBoy & Sega 16-Bit Modern Touch Controller
+ * Cross-platform WASM emulator controller with tactile haptics and multi-key dispatch.
  */
 
 (() => {
     'use strict';
 
-    // Calculate relative path to root Packaging/emscripten/ directory
     function getRootRelativePath() {
         const path = window.location.pathname.toLowerCase();
         if (path.includes('/doom/') || path.includes('/wolf3d/') || path.includes('/gens/') || path.includes('/minixp/') || path.includes('/tinycore/') || path.includes('/quake/') || path.includes('/cavestory/') || path.includes('/nes/') || path.includes('/snes/') || path.includes('/n64/') || path.includes('/psx/') || path.includes('/psp/') || path.includes('/flash/') || path.includes('/gunblood/')) {
@@ -18,16 +16,16 @@
 
     const BASE_PATH = getRootRelativePath();
 
-    // Check if device is mobile or tablet
+    // Universal Mobile & Touch Detection
     function isMobileDevice() {
-        const ua = navigator.userAgent || navigator.vendor || window.opera || '';
-        const isMobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(ua);
+        const ua = (navigator.userAgent || navigator.vendor || window.opera || '').toLowerCase();
+        const isMobileUA = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile|crios|touch|silk|kindle|samsung|pixel/i.test(ua);
         const hasTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0);
+        const isCoarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
         const isSmallScreen = window.innerWidth <= 1024;
-        return (isMobileUA || (hasTouch && isSmallScreen));
+        return isMobileUA || hasTouch || isCoarse || isSmallScreen;
     }
 
-    // Check if the current page is Diablo / DevilutionX
     function isDiabloPage() {
         const path = window.location.pathname.toLowerCase();
         return !path.includes('/doom/') && 
@@ -46,87 +44,130 @@
                !path.includes('/gunblood/');
     }
 
-    // Key mapping for retro consoles (NES, SNES, Genesis, DOOM, Wolf3D, Cave Story)
-    const KEY_DEFINITIONS = {
-        'up':     { key: 'ArrowUp',    code: 'ArrowUp',    keyCode: 38 },
-        'down':   { key: 'ArrowDown',  code: 'ArrowDown',  keyCode: 40 },
-        'left':   { key: 'ArrowLeft',  code: 'ArrowLeft',  keyCode: 37 },
-        'right':  { key: 'ArrowRight', code: 'ArrowRight', keyCode: 39 },
-        'a':      { key: 'x',          code: 'KeyX',       keyCode: 88 }, // NES A / SNES B / Genesis B
-        'b':      { key: 'z',          code: 'KeyZ',       keyCode: 90 }, // NES B / SNES Y / Genesis A
-        'x':      { key: 's',          code: 'KeyS',       keyCode: 83 }, // SNES X / Genesis X / DOOM Open
-        'y':      { key: 'a',          code: 'KeyA',       keyCode: 65 }, // SNES A / Genesis C
-        'l':      { key: 'q',          code: 'KeyQ',       keyCode: 81 }, // SNES L
-        'r':      { key: 'w',          code: 'KeyW',       keyCode: 87 }, // SNES R
-        'select': { key: 'Shift',      code: 'ShiftRight', keyCode: 16 }, // Select / Coin / Mode
-        'start':  { key: 'Enter',      code: 'Enter',      keyCode: 13 }  // Start / Enter
+    // Comprehensive Key Mapping (Supports NES, Sega Genesis Plus GX, Snes9x, NXEngine, PrBoom)
+    const MULTI_KEY_MAPPINGS = {
+        'up': [
+            { key: 'ArrowUp', code: 'ArrowUp', keyCode: 38 }
+        ],
+        'down': [
+            { key: 'ArrowDown', code: 'ArrowDown', keyCode: 40 }
+        ],
+        'left': [
+            { key: 'ArrowLeft', code: 'ArrowLeft', keyCode: 37 }
+        ],
+        'right': [
+            { key: 'ArrowRight', code: 'ArrowRight', keyCode: 39 }
+        ],
+        // Sega Button B / Nintendo Button A (Accelerate / Jump / Primary)
+        'a': [
+            { key: 'x', code: 'KeyX', keyCode: 88 },
+            { key: 's', code: 'KeyS', keyCode: 83 }
+        ],
+        // Sega Button A / Nintendo Button B (Brake / Attack 1)
+        'b': [
+            { key: 'z', code: 'KeyZ', keyCode: 90 },
+            { key: 'a', code: 'KeyA', keyCode: 65 }
+        ],
+        // Sega Button C / SNES Button Y (Turbo Nitro / Special Action)
+        'c': [
+            { key: 'c', code: 'KeyC', keyCode: 67 },
+            { key: 'd', code: 'KeyD', keyCode: 68 },
+            { key: 'a', code: 'KeyA', keyCode: 65 }
+        ],
+        // Sega Button X / Turbo Button
+        'x': [
+            { key: 'q', code: 'KeyQ', keyCode: 81 },
+            { key: 's', code: 'KeyS', keyCode: 83 }
+        ],
+        // Shoulder L / R
+        'l': [
+            { key: 'q', code: 'KeyQ', keyCode: 81 }
+        ],
+        'r': [
+            { key: 'w', code: 'KeyW', keyCode: 87 }
+        ],
+        // Mode / Select / Shift
+        'select': [
+            { key: 'Shift', code: 'ShiftRight', keyCode: 16 }
+        ],
+        // Start / Pause / Enter
+        'start': [
+            { key: 'Enter', code: 'Enter', keyCode: 13 },
+            { key: ' ', code: 'Space', keyCode: 32 }
+        ]
     };
 
     const activeKeysState = {};
 
-    function hapticFeedback(ms = 12) {
+    function hapticFeedback(ms = 14) {
         if (typeof navigator.vibrate === 'function') {
             try {
                 navigator.vibrate(ms);
-            } catch (e) {
-                // Ignore vibration errors
-            }
+            } catch (e) {}
         }
     }
 
-    // Dispatch native keyboard events to window, document and active canvas
-    function dispatchKeyEvent(actionName, isDown) {
-        const def = KEY_DEFINITIONS[actionName];
-        if (!def) return;
-
-        if (isDown) {
-            if (activeKeysState[actionName]) return; // Already pressed
-            activeKeysState[actionName] = true;
-            hapticFeedback(12);
-        } else {
-            if (!activeKeysState[actionName]) return; // Already released
-            activeKeysState[actionName] = false;
-        }
-
-        const eventType = isDown ? 'keydown' : 'keyup';
-        const eventInit = {
+    function dispatchKey(def, eventType) {
+        const keyEvent = new KeyboardEvent(eventType, {
             key: def.key,
             code: def.code,
             keyCode: def.keyCode,
             which: def.keyCode,
+            charCode: def.keyCode,
             bubbles: true,
             cancelable: true,
             composed: true
-        };
+        });
 
-        const keyEvent = new KeyboardEvent(eventType, eventInit);
-        
-        // Target active canvas or fallback to document
-        const canvas = document.querySelector('canvas.emscripten') || document.querySelector('canvas') || document.body;
-        if (canvas) {
-            canvas.dispatchEvent(keyEvent);
+        const targets = [
+            document.querySelector('canvas.emscripten'),
+            document.querySelector('#canvas-container canvas'),
+            document.querySelector('canvas'),
+            document.activeElement,
+            document.body,
+            document,
+            window
+        ].filter(Boolean);
+
+        for (const target of targets) {
+            try {
+                target.dispatchEvent(keyEvent);
+            } catch (e) {}
         }
-        document.dispatchEvent(keyEvent);
-        window.dispatchEvent(keyEvent);
+    }
 
-        // Custom hook event for game engines
-        window.dispatchEvent(new CustomEvent('virtual-gamepad-input', {
-            detail: { action: actionName, isDown, def }
+    function dispatchAction(actionName, isDown) {
+        const defs = MULTI_KEY_MAPPINGS[actionName];
+        if (!defs) return;
+
+        if (isDown) {
+            if (activeKeysState[actionName]) return;
+            activeKeysState[actionName] = true;
+            hapticFeedback(14);
+            defs.forEach(def => dispatchKey(def, 'keydown'));
+        } else {
+            if (!activeKeysState[actionName]) return;
+            activeKeysState[actionName] = false;
+            defs.forEach(def => dispatchKey(def, 'keyup'));
+        }
+
+        window.dispatchEvent(new CustomEvent('virtual-gamepad-action', {
+            detail: { action: actionName, isDown }
         }));
     }
 
-    // Create Virtual Gamepad Overlay HTML
     function buildGamepadHTML() {
         return `
             <!-- Floating Gamepad Toggle Button -->
-            <button class="virtual-gamepad-toggle" id="vpadToggleBtn" title="Mostrar/Ocultar GamePad Táctil">
+            <button class="virtual-gamepad-toggle" id="vpadToggleBtn" title="Activar / Ocultar Mandos Táctiles">
+                <span class="vpad-dot"></span>
                 <span>🎮</span>
-                <span id="vpadToggleLabel">GAMEPAD</span>
+                <span id="vpadToggleLabel">PAD TÁCTIL</span>
             </button>
 
             <!-- Virtual Handheld HUD -->
             <div id="virtual-gamepad-hud">
-                <!-- Top L / R Bumpers (Discreet) -->
+                <!-- Top L / R Shoulder Bumpers -->
                 <div class="vpad-shoulder-container">
                     <button class="vpad-shoulder-btn" data-action="l" title="L Shoulder">L</button>
                     <button class="vpad-shoulder-btn" data-action="r" title="R Shoulder">R</button>
@@ -141,33 +182,40 @@
                         <button class="vpad-dpad-btn right" data-action="right" aria-label="Derecha">▶</button>
                         <button class="vpad-dpad-btn down" data-action="down" aria-label="Abajo">▼</button>
                     </div>
-                    <div class="vpad-center-cluster">
-                        <button class="vpad-pill-btn" data-action="select" title="Select / Shift">
-                            <span>SELECT</span>
+                    <div class="vpad-pill-cluster">
+                        <button class="vpad-pill-btn" data-action="select" title="Select / Modo">
+                            <span>MODE / SELECT</span>
                         </button>
                     </div>
                 </div>
 
-                <!-- Right Zone: Action Buttons & Start -->
+                <!-- Right Zone: Action Buttons (Sega / Nintendo) & Start -->
                 <div class="vpad-right-cluster">
                     <div class="vpad-actions-container">
-                        <button class="vpad-btn btn-x" data-action="x" title="Botón X">
+                        <!-- Top: Turbo / X -->
+                        <button class="vpad-btn btn-x" data-action="x" title="Botón X / Turbo">
                             <span>X</span>
                             <span class="btn-sublabel">TURBO</span>
                         </button>
-                        <button class="vpad-btn btn-y" data-action="y" title="Botón Y">
-                            <span>Y</span>
+                        <!-- Left: Sega C / Action 3 -->
+                        <button class="vpad-btn btn-c" data-action="c" title="Botón C / Especial">
+                            <span>C</span>
+                            <span class="btn-sublabel">NITRO</span>
                         </button>
-                        <button class="vpad-btn btn-b" data-action="b" title="Botón B">
+                        <!-- Bottom: Sega A / Nintendo B -->
+                        <button class="vpad-btn btn-b" data-action="b" title="Botón B (Frenar / Golpear)">
                             <span>B</span>
+                            <span class="btn-sublabel">GOLPE</span>
                         </button>
-                        <button class="vpad-btn btn-a" data-action="a" title="Botón A">
+                        <!-- Right: Sega B / Nintendo A -->
+                        <button class="vpad-btn btn-a" data-action="a" title="Botón A (Acelerar / Saltar)">
                             <span>A</span>
+                            <span class="btn-sublabel">SALTAR</span>
                         </button>
                     </div>
-                    <div class="vpad-center-cluster">
-                        <button class="vpad-pill-btn" data-action="start" title="Start / Enter">
-                            <span>START</span>
+                    <div class="vpad-pill-cluster">
+                        <button class="vpad-pill-btn" data-action="start" title="Start / Comenzar">
+                            <span>START ▶</span>
                         </button>
                     </div>
                 </div>
@@ -175,7 +223,6 @@
         `;
     }
 
-    // Attach Touch & Pointer Handlers
     function setupGamepadInteractions() {
         const hud = document.getElementById('virtual-gamepad-hud');
         const toggleBtn = document.getElementById('vpadToggleBtn');
@@ -183,24 +230,40 @@
 
         if (!hud || !toggleBtn) return;
 
-        // Auto show on mobile, auto-hide on desktop unless toggled
-        const isMob = isMobileDevice();
-        if (isMob) {
+        const isMobile = isMobileDevice();
+        const savedState = localStorage.getItem('virtual_gamepad_visible');
+
+        // Always show by default on mobile or if user explicitly enabled it
+        let isVisible = true;
+        if (savedState !== null) {
+            isVisible = (savedState === 'true');
+        } else {
+            isVisible = isMobile || (window.innerWidth <= 1200);
+        }
+
+        if (isVisible) {
             hud.classList.remove('hidden');
+            hud.style.display = 'flex';
+            toggleBtn.classList.remove('is-off');
             if (toggleLabel) toggleLabel.textContent = 'PAD: ON';
         } else {
             hud.classList.add('hidden');
+            hud.style.display = 'none';
+            toggleBtn.classList.add('is-off');
             if (toggleLabel) toggleLabel.textContent = 'PAD: OFF';
         }
 
         toggleBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            const isHidden = hud.classList.toggle('hidden');
-            if (toggleLabel) toggleLabel.textContent = isHidden ? 'PAD: OFF' : 'PAD: ON';
-            hapticFeedback(15);
+            const nowHidden = hud.classList.toggle('hidden');
+            hud.style.display = nowHidden ? 'none' : 'flex';
+            toggleBtn.classList.toggle('is-off', nowHidden);
+            if (toggleLabel) toggleLabel.textContent = nowHidden ? 'PAD: OFF' : 'PAD: ON';
+            localStorage.setItem('virtual_gamepad_visible', (!nowHidden).toString());
+            hapticFeedback(20);
         });
 
-        // Bind interactive buttons
+        // Touch & Click binding on all buttons
         const actionElements = hud.querySelectorAll('[data-action]');
         actionElements.forEach(el => {
             const action = el.getAttribute('data-action');
@@ -208,13 +271,13 @@
             const startPress = (e) => {
                 e.preventDefault();
                 el.classList.add('active');
-                dispatchKeyEvent(action, true);
+                dispatchAction(action, true);
             };
 
             const endPress = (e) => {
                 e.preventDefault();
                 el.classList.remove('active');
-                dispatchKeyEvent(action, false);
+                dispatchAction(action, false);
             };
 
             el.addEventListener('touchstart', startPress, { passive: false });
@@ -226,7 +289,7 @@
             el.addEventListener('mouseleave', endPress);
         });
 
-        // Touch Drag support for D-Pad
+        // Smooth D-Pad Multi-Touch Drag
         const dpadContainer = document.getElementById('vpadDpad');
         if (dpadContainer) {
             let activeTouchId = null;
@@ -244,19 +307,16 @@
                 const dy = touch.clientY - centerY;
                 const distance = Math.hypot(dx, dy);
 
-                // Deadzone of 12px
-                if (distance < 12) {
+                if (distance < 14) {
                     ['up', 'down', 'left', 'right'].forEach(dir => {
                         const btn = dpadContainer.querySelector(`.vpad-dpad-btn.${dir}`);
                         if (btn) btn.classList.remove('active');
-                        dispatchKeyEvent(dir, false);
+                        dispatchAction(dir, false);
                     });
                     return;
                 }
 
-                const angle = Math.atan2(dy, dx) * (180 / Math.PI); // -180 to 180
-
-                // Determine active directions based on angle
+                const angle = Math.atan2(dy, dx) * (180 / Math.PI);
                 const isRight = (angle >= -67.5 && angle <= 67.5);
                 const isLeft = (angle >= 112.5 || angle <= -112.5);
                 const isDown = (angle >= 22.5 && angle <= 157.5);
@@ -266,10 +326,8 @@
 
                 Object.entries(dirs).forEach(([dir, active]) => {
                     const btn = dpadContainer.querySelector(`.vpad-dpad-btn.${dir}`);
-                    if (btn) {
-                        btn.classList.toggle('active', active);
-                    }
-                    dispatchKeyEvent(dir, active);
+                    if (btn) btn.classList.toggle('active', active);
+                    dispatchAction(dir, active);
                 });
             };
 
@@ -286,7 +344,7 @@
                 ['up', 'down', 'left', 'right'].forEach(dir => {
                     const btn = dpadContainer.querySelector(`.vpad-dpad-btn.${dir}`);
                     if (btn) btn.classList.remove('active');
-                    dispatchKeyEvent(dir, false);
+                    dispatchAction(dir, false);
                 });
                 activeTouchId = null;
             };
@@ -296,11 +354,8 @@
         }
     }
 
-    // Show Mobile Onboarding Modal for Diablo / Hellfire
     function checkDiabloMobileOnboarding() {
         if (!isDiabloPage() || !isMobileDevice()) return;
-
-        // Check if user already dismissed modal during session
         if (sessionStorage.getItem('diablo_mobile_dismissed')) return;
 
         const modalHTML = `
@@ -308,20 +363,20 @@
                 <div class="mobile-diablo-modal">
                     <h2>📱 DISPOSITIVO MÓVIL DETECTADO</h2>
                     <p>
-                        <strong>Diablo I & Hellfire</strong> fueron concebidos para ratón/teclado de precisión y requieren alta potencia de renderizado en navegador.
+                        <strong>Diablo I & Hellfire</strong> fueron concebidos para ratón/teclado de precisión y requieren alta potencia en navegador.
                     </p>
                     <div class="mobile-diablo-badge-list">
                         <span class="mobile-diablo-badge">⭐ 100% 60 FPS Táctil</span>
+                        <span class="mobile-diablo-badge">⚡ Sega Genesis (16-Bit)</span>
                         <span class="mobile-diablo-badge">🔴 NES (8-Bit)</span>
-                        <span class="mobile-diablo-badge">⚡ Genesis (16-Bit)</span>
                         <span class="mobile-diablo-badge">🎮 SNES (16-Bit)</span>
                     </div>
                     <p style="font-size: 13px; opacity: 0.9;">
-                        Para una experiencia fluida y controles GameBoy táctiles perfectos, te recomendamos jugar a los clásicos 8/16-bit:
+                        Para una experiencia fluida con mandos táctiles nativos a 60 FPS, te recomendamos jugar a nuestra selección retro:
                     </p>
                     <div class="mobile-diablo-actions">
                         <a href="${BASE_PATH}gens/index.html" class="mobile-diablo-btn-primary">
-                            🎮 Jugar Sega Genesis / Mega Drive (60 FPS)
+                            ⚡ Jugar Sega Genesis & Mega Drive (60 FPS)
                         </a>
                         <a href="${BASE_PATH}nes/index.html" class="mobile-diablo-btn-primary" style="background: linear-gradient(135deg, #b91c1c 0%, #991b1b 100%); border-color: #f87171;">
                             🔴 Jugar Nintendo NES & Famicom (8-Bit)
@@ -349,31 +404,27 @@
         }
     }
 
-    // Initialize Virtual Gamepad & Mobile Controller
     function initVirtualGamepad() {
         if (isMobileDevice()) {
             document.body.classList.add('is-mobile-device');
         }
 
-        // Inject Stylesheet if not present
         if (!document.getElementById('virtual-gamepad-css')) {
             const link = document.createElement('link');
             link.id = 'virtual-gamepad-css';
             link.rel = 'stylesheet';
-            link.href = `${BASE_PATH}assets/mobile-controls/virtual-gamepad.css?v=gb-v1`;
+            link.href = `${BASE_PATH}assets/mobile-controls/virtual-gamepad.css?v=gb-v2`;
             document.head.appendChild(link);
         }
 
-        // Inject HTML
-        const vpadContainer = document.createElement('div');
-        vpadContainer.id = 'virtual-gamepad-root';
-        vpadContainer.innerHTML = buildGamepadHTML();
-        document.body.appendChild(vpadContainer);
+        if (!document.getElementById('virtual-gamepad-hud')) {
+            const vpadContainer = document.createElement('div');
+            vpadContainer.id = 'virtual-gamepad-root';
+            vpadContainer.innerHTML = buildGamepadHTML();
+            document.body.appendChild(vpadContainer);
+            setupGamepadInteractions();
+        }
 
-        // Bind events
-        setupGamepadInteractions();
-
-        // Check Diablo Mobile modal
         checkDiabloMobileOnboarding();
     }
 

@@ -158,23 +158,18 @@
 
     function buildGamepadHTML() {
         return `
-            <!-- Floating Gamepad Toggle Button -->
+            <!-- Floating Gamepad Toggle Button (Center-Bottom Zero Overlap) -->
             <button class="virtual-gamepad-toggle" id="vpadToggleBtn" title="Activar / Ocultar Mandos Táctiles">
                 <span class="vpad-dot"></span>
                 <span>🎮</span>
                 <span id="vpadToggleLabel">PAD TÁCTIL</span>
             </button>
 
-            <!-- Virtual Handheld HUD -->
+            <!-- Virtual Handheld HUD (Elevated Closer to Game Screen) -->
             <div id="virtual-gamepad-hud">
-                <!-- Top L / R Shoulder Bumpers -->
-                <div class="vpad-shoulder-container">
-                    <button class="vpad-shoulder-btn" data-action="l" title="L Shoulder">L</button>
-                    <button class="vpad-shoulder-btn" data-action="r" title="R Shoulder">R</button>
-                </div>
-
-                <!-- Left Zone: D-Pad & Select -->
+                <!-- Left Zone: L-Bumper, D-Pad, Mode/Select -->
                 <div class="vpad-left-cluster">
+                    <button class="vpad-bumper-btn" data-action="l" title="L Shoulder / Gatillo Izquierdo">◀ L</button>
                     <div class="vpad-dpad" id="vpadDpad">
                         <button class="vpad-dpad-btn up" data-action="up" aria-label="Arriba">▲</button>
                         <button class="vpad-dpad-btn left" data-action="left" aria-label="Izquierda">◀</button>
@@ -189,8 +184,9 @@
                     </div>
                 </div>
 
-                <!-- Right Zone: Action Buttons (Sega / Nintendo) & Start -->
+                <!-- Right Zone: R-Bumper, Action Buttons (Sega / Nintendo), Start -->
                 <div class="vpad-right-cluster">
+                    <button class="vpad-bumper-btn" data-action="r" title="R Shoulder / Gatillo Derecho">R ▶</button>
                     <div class="vpad-actions-container">
                         <!-- Top: Turbo / X -->
                         <button class="vpad-btn btn-x" data-action="x" title="Botón X / Turbo">
@@ -413,7 +409,7 @@
             const link = document.createElement('link');
             link.id = 'virtual-gamepad-css';
             link.rel = 'stylesheet';
-            link.href = `${BASE_PATH}assets/mobile-controls/virtual-gamepad.css?v=gb-v2`;
+            link.href = `${BASE_PATH}assets/mobile-controls/virtual-gamepad.css?v=gb-v3`;
             document.head.appendChild(link);
         }
 

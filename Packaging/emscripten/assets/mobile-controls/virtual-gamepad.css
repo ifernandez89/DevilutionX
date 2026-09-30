@@ -1,23 +1,23 @@
 /* ==========================================================================
-   VIRTUAL GAMEBOY & SEGA 16-BIT RETRO TOUCH CONTROLLER
+   VIRTUAL GAMEBOY & SEGA 16-BIT ERGONOMIC TOUCH CONTROLLER (V3)
    Aesthetic: Premium Handheld Cyber-Dark Glassmorphism with Neon Accents
+   Features: Enlarged buttons, Integrated L/R bumpers, Zero Overlap layout
    ========================================================================== */
 
 :root {
     --vpad-zindex: 2147483647;
-    --gb-bg: rgba(12, 15, 24, 0.85);
-    --gb-border: rgba(99, 102, 241, 0.55);
-    --gb-dpad-bg: #1a1e2e;
+    --gb-bg: rgba(12, 16, 26, 0.88);
+    --gb-border: rgba(99, 102, 241, 0.6);
+    --gb-dpad-bg: #181d2d;
     --gb-dpad-active: #4f46e5;
     
-    /* Action Buttons Colors */
-    --btn-sega-a: #dc2626;     /* Sega A / Nintendo B - Ruby */
-    --btn-sega-b: #2563eb;     /* Sega B / Nintendo A - Sega Blue */
-    --btn-sega-c: #059669;     /* Sega C / Action 3 - Emerald */
-    --btn-turbo-x: #7c3aed;    /* Turbo X - Violet */
-    --btn-action-y: #d97706;   /* Action Y - Amber */
+    /* Action Buttons Vibrant Sega/Nintendo Palette */
+    --btn-sega-a: #2563eb;     /* Sega B / Nintendo A - Sega Blue */
+    --btn-sega-b: #dc2626;     /* Sega A / Nintendo B - Ruby Red */
+    --btn-sega-c: #059669;     /* Sega C / Action 3 - Emerald Green */
+    --btn-turbo-x: #7c3aed;    /* Turbo X - Electric Violet */
     
-    --gb-glow: rgba(99, 102, 241, 0.6);
+    --gb-glow: rgba(99, 102, 241, 0.65);
 }
 
 /* Global Mobile Optimizations */
@@ -28,47 +28,49 @@ body.is-mobile-device {
     user-select: none;
 }
 
-/* Floating Toggle Button (Always Available in bottom/top corner) */
+/* Floating Center-Bottom Toggle Button (Zero Overlap with D-Pad or Action Buttons) */
 .virtual-gamepad-toggle {
     position: fixed !important;
-    bottom: 18px !important;
-    right: 18px !important;
+    bottom: 8px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
     z-index: 2147483647 !important;
     display: inline-flex !important;
     align-items: center !important;
-    gap: 8px !important;
-    padding: 10px 18px !important;
+    gap: 7px !important;
+    padding: 7px 16px !important;
     border-radius: 30px !important;
     background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%) !important;
-    border: 2px solid #818cf8 !important;
+    border: 1.5px solid #818cf8 !important;
     color: #ffffff !important;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
-    font-size: 13px !important;
+    font-size: 11px !important;
     font-weight: 800 !important;
     letter-spacing: 0.5px !important;
     cursor: pointer !important;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8), 0 0 15px rgba(99, 102, 241, 0.6) !important;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.85), 0 0 14px rgba(99, 102, 241, 0.5) !important;
     backdrop-filter: blur(12px) !important;
     -webkit-backdrop-filter: blur(12px) !important;
-    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
     user-select: none !important;
     -webkit-tap-highlight-color: transparent !important;
+    white-space: nowrap !important;
 }
 
 .virtual-gamepad-toggle:hover,
 .virtual-gamepad-toggle:active {
     background: linear-gradient(135deg, #312e81 0%, #1e1b4b 100%) !important;
     border-color: #a5b4fc !important;
-    box-shadow: 0 0 25px rgba(99, 102, 241, 0.9) !important;
-    transform: scale(1.05) !important;
+    box-shadow: 0 0 22px rgba(99, 102, 241, 0.85) !important;
+    transform: translateX(-50%) scale(1.04) !important;
 }
 
 .virtual-gamepad-toggle .vpad-dot {
-    width: 8px;
-    height: 8px;
+    width: 7px;
+    height: 7px;
     border-radius: 50%;
     background: #4ade80;
-    box-shadow: 0 0 8px #4ade80;
+    box-shadow: 0 0 7px #4ade80;
 }
 
 .virtual-gamepad-toggle.is-off .vpad-dot {
@@ -76,7 +78,7 @@ body.is-mobile-device {
     box-shadow: none;
 }
 
-/* Master Virtual Handheld HUD */
+/* Master Virtual Handheld HUD (Elevated Closer to Game Screen) */
 #virtual-gamepad-hud {
     position: fixed !important;
     inset: 0 !important;
@@ -85,7 +87,7 @@ body.is-mobile-device {
     display: flex !important;
     justify-content: space-between !important;
     align-items: flex-end !important;
-    padding: 16px 20px !important;
+    padding: 12px 16px 42px 16px !important;
     opacity: 1 !important;
     transition: opacity 0.25s ease, transform 0.25s ease !important;
 }
@@ -93,41 +95,68 @@ body.is-mobile-device {
 #virtual-gamepad-hud.hidden {
     opacity: 0 !important;
     pointer-events: none !important;
-    transform: translateY(25px) !important;
+    transform: translateY(30px) !important;
     display: none !important;
 }
 
-/* Left Zone: D-Pad & Select */
+/* Left Zone: L-Shoulder, D-Pad, Mode/Select */
 .vpad-left-cluster {
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
-    gap: 14px !important;
+    gap: 10px !important;
     pointer-events: auto !important;
-    margin-bottom: 6px !important;
 }
 
-/* Right Zone: Action Buttons & Start */
+/* Right Zone: R-Shoulder, Action Buttons, Start */
 .vpad-right-cluster {
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
-    gap: 14px !important;
+    gap: 10px !important;
     pointer-events: auto !important;
-    margin-bottom: 6px !important;
 }
 
-/* D-Pad Circular Housing */
+/* Integrated Shoulder Bumpers (L & R directly above controls) */
+.vpad-bumper-btn {
+    background: rgba(30, 41, 59, 0.95) !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.35) !important;
+    border-radius: 20px !important;
+    padding: 7px 26px !important;
+    color: #e2e8f0 !important;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    font-weight: 900 !important;
+    font-size: 13px !important;
+    letter-spacing: 1px !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.6), inset 0 1px 2px rgba(255,255,255,0.2) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    cursor: pointer !important;
+    touch-action: none !important;
+    user-select: none !important;
+    -webkit-tap-highlight-color: transparent !important;
+    transition: all 0.1s ease !important;
+}
+
+.vpad-bumper-btn:active,
+.vpad-bumper-btn.active {
+    background: #4f46e5 !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 16px rgba(99, 102, 241, 0.9) !important;
+    transform: scale(0.94) !important;
+}
+
+/* Enlarged D-Pad Circular Housing */
 .vpad-dpad {
     position: relative !important;
-    width: 156px !important;
-    height: 156px !important;
+    width: 168px !important;
+    height: 168px !important;
     background: var(--gb-bg) !important;
     border: 2px solid var(--gb-border) !important;
     border-radius: 50% !important;
-    backdrop-filter: blur(14px) !important;
-    -webkit-backdrop-filter: blur(14px) !important;
-    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(0, 0, 0, 0.7) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.85), inset 0 0 22px rgba(0, 0, 0, 0.75) !important;
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
@@ -135,25 +164,25 @@ body.is-mobile-device {
 }
 
 .vpad-dpad-center {
-    width: 42px !important;
-    height: 42px !important;
+    width: 46px !important;
+    height: 46px !important;
     background: #0b0e17 !important;
     border-radius: 50% !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    box-shadow: inset 0 2px 6px rgba(0,0,0,0.9) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    box-shadow: inset 0 3px 8px rgba(0,0,0,0.95) !important;
     pointer-events: none !important;
 }
 
-/* D-Pad Buttons */
+/* Enlarged D-Pad Directional Buttons */
 .vpad-dpad-btn {
     position: absolute !important;
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
     background: var(--gb-dpad-bg) !important;
-    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.2) !important;
     color: #e2e8f0 !important;
-    font-size: 18px !important;
+    font-size: 20px !important;
     font-weight: 900 !important;
     cursor: pointer !important;
     user-select: none !important;
@@ -165,37 +194,37 @@ body.is-mobile-device {
 
 .vpad-dpad-btn.up {
     top: 6px !important;
-    left: 53px !important;
-    width: 50px !important;
-    height: 50px !important;
-    border-radius: 14px 14px 4px 4px !important;
+    left: 56px !important;
+    width: 56px !important;
+    height: 56px !important;
+    border-radius: 16px 16px 4px 4px !important;
     box-shadow: 0 4px 0 #080a10 !important;
 }
 
 .vpad-dpad-btn.down {
     bottom: 6px !important;
-    left: 53px !important;
-    width: 50px !important;
-    height: 50px !important;
-    border-radius: 4px 4px 14px 14px !important;
+    left: 56px !important;
+    width: 56px !important;
+    height: 56px !important;
+    border-radius: 4px 4px 16px 16px !important;
     box-shadow: 0 4px 0 #080a10 !important;
 }
 
 .vpad-dpad-btn.left {
-    top: 53px !important;
+    top: 56px !important;
     left: 6px !important;
-    width: 50px !important;
-    height: 50px !important;
-    border-radius: 14px 4px 4px 14px !important;
+    width: 56px !important;
+    height: 56px !important;
+    border-radius: 16px 4px 4px 16px !important;
     box-shadow: 0 4px 0 #080a10 !important;
 }
 
 .vpad-dpad-btn.right {
-    top: 53px !important;
+    top: 56px !important;
     right: 6px !important;
-    width: 50px !important;
-    height: 50px !important;
-    border-radius: 4px 14px 14px 4px !important;
+    width: 56px !important;
+    height: 56px !important;
+    border-radius: 4px 16px 16px 4px !important;
     box-shadow: 0 4px 0 #080a10 !important;
 }
 
@@ -203,29 +232,29 @@ body.is-mobile-device {
 .vpad-dpad-btn.active {
     background: var(--gb-dpad-active) !important;
     color: #ffffff !important;
-    box-shadow: 0 0 20px rgba(99, 102, 241, 0.9) !important;
+    box-shadow: 0 0 22px rgba(99, 102, 241, 0.95) !important;
     transform: scale(0.92) !important;
 }
 
-/* Action Buttons Cluster (Arc / Diamond Layout) */
+/* Enlarged Action Buttons Cluster */
 .vpad-actions-container {
     position: relative !important;
-    width: 170px !important;
-    height: 170px !important;
+    width: 178px !important;
+    height: 178px !important;
     background: var(--gb-bg) !important;
     border: 2px solid var(--gb-border) !important;
     border-radius: 50% !important;
-    backdrop-filter: blur(14px) !important;
-    -webkit-backdrop-filter: blur(14px) !important;
-    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(0, 0, 0, 0.7) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.85), inset 0 0 22px rgba(0, 0, 0, 0.75) !important;
     touch-action: none !important;
 }
 
-/* Action Button */
+/* Individual Action Button */
 .vpad-btn {
     position: absolute !important;
-    width: 54px !important;
-    height: 54px !important;
+    width: 58px !important;
+    height: 58px !important;
     border-radius: 50% !important;
     display: flex !important;
     flex-direction: column !important;
@@ -233,66 +262,66 @@ body.is-mobile-device {
     align-items: center !important;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
     font-weight: 900 !important;
-    font-size: 18px !important;
+    font-size: 19px !important;
     color: #ffffff !important;
     cursor: pointer !important;
     user-select: none !important;
     -webkit-user-select: none !important;
     touch-action: none !important;
-    border: 2px solid rgba(255, 255, 255, 0.4) !important;
-    box-shadow: 0 5px 0 rgba(0, 0, 0, 0.7), 0 6px 15px rgba(0, 0, 0, 0.5) !important;
+    border: 2px solid rgba(255, 255, 255, 0.45) !important;
+    box-shadow: 0 5px 0 rgba(0, 0, 0, 0.75), 0 6px 16px rgba(0, 0, 0, 0.55) !important;
     transition: transform 0.08s ease, box-shadow 0.08s ease, filter 0.08s ease !important;
     -webkit-tap-highlight-color: transparent !important;
 }
 
 .vpad-btn .btn-sublabel {
-    font-size: 8px !important;
+    font-size: 8.5px !important;
     font-weight: 800 !important;
-    opacity: 0.85 !important;
+    opacity: 0.9 !important;
     margin-top: -3px !important;
     letter-spacing: 0.5px !important;
 }
 
-/* Ergonomic Action Button Positions */
-/* Sega B / Nintendo A (Primary Jump / Accelerate) */
+/* Button Positions in Action Diamond */
+/* Sega B / Nintendo A (Jump / Accelerate) */
 .vpad-btn.btn-a {
-    right: 8px !important;
-    top: 58px !important;
+    right: 7px !important;
+    top: 60px !important;
     background: radial-gradient(circle at 35% 35%, #3b82f6, #1d4ed8) !important;
 }
 
-/* Sega A / Nintendo B (Primary Attack / Brake) */
+/* Sega A / Nintendo B (Attack / Brake) */
 .vpad-btn.btn-b {
-    bottom: 8px !important;
-    left: 58px !important;
+    bottom: 7px !important;
+    left: 60px !important;
     background: radial-gradient(circle at 35% 35%, #ef4444, #b91c1c) !important;
 }
 
-/* Sega C / Nintendo Y (Action 3 / Turbo) */
+/* Sega C / Action 3 (Special / Nitro) */
 .vpad-btn.btn-c {
-    left: 8px !important;
-    top: 58px !important;
+    left: 7px !important;
+    top: 60px !important;
     background: radial-gradient(circle at 35% 35%, #10b981, #047857) !important;
 }
 
-/* Sega X / Nintendo X (Secondary / Turbo) */
+/* Turbo X */
 .vpad-btn.btn-x {
-    top: 8px !important;
-    left: 58px !important;
+    top: 7px !important;
+    left: 60px !important;
     background: radial-gradient(circle at 35% 35%, #8b5cf6, #6d28d9) !important;
 }
 
 .vpad-btn:active,
 .vpad-btn.active {
-    transform: scale(0.90) translateY(3px) !important;
-    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.8), 0 0 25px rgba(255, 255, 255, 0.7) !important;
-    filter: brightness(1.3) !important;
+    transform: scale(0.91) translateY(3px) !important;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.8), 0 0 28px rgba(255, 255, 255, 0.75) !important;
+    filter: brightness(1.35) !important;
 }
 
-/* Center Bottom Pill Buttons (Select & Start) */
+/* Bottom Pill Buttons (Select & Start) */
 .vpad-pill-cluster {
     display: flex !important;
-    gap: 16px !important;
+    justify-content: center !important;
 }
 
 .vpad-pill-btn {
@@ -301,19 +330,19 @@ body.is-mobile-device {
     align-items: center !important;
     gap: 2px !important;
     background: rgba(30, 41, 59, 0.95) !important;
-    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.35) !important;
     border-radius: 20px !important;
-    padding: 7px 18px !important;
+    padding: 8px 20px !important;
     color: #cbd5e1 !important;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
-    font-size: 11px !important;
+    font-size: 11.5px !important;
     font-weight: 800 !important;
     letter-spacing: 1px !important;
     cursor: pointer !important;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6) !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.65) !important;
     touch-action: none !important;
     user-select: none !important;
-    transform: rotate(-12deg) !important;
+    transform: rotate(-10deg) !important;
     transition: all 0.1s ease !important;
     -webkit-tap-highlight-color: transparent !important;
 }
@@ -322,85 +351,58 @@ body.is-mobile-device {
 .vpad-pill-btn.active {
     background: #475569 !important;
     color: #ffffff !important;
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5) !important;
-    transform: rotate(-12deg) scale(0.92) !important;
-}
-
-/* Shoulder Bumpers (L & R) */
-.vpad-shoulder-container {
-    position: fixed !important;
-    top: 60px !important;
-    inset-inline: 16px !important;
-    display: flex !important;
-    justify-content: space-between !important;
-    pointer-events: none !important;
-    z-index: 2147483647 !important;
-}
-
-.vpad-shoulder-btn {
-    pointer-events: auto !important;
-    background: rgba(30, 41, 59, 0.9) !important;
-    border: 1px solid rgba(255, 255, 255, 0.3) !important;
-    border-radius: 8px !important;
-    padding: 9px 20px !important;
-    color: #e2e8f0 !important;
-    font-weight: 900 !important;
-    font-size: 14px !important;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.6) !important;
-    backdrop-filter: blur(10px) !important;
-    -webkit-backdrop-filter: blur(10px) !important;
-    cursor: pointer !important;
-    touch-action: none !important;
-    -webkit-tap-highlight-color: transparent !important;
-}
-
-.vpad-shoulder-btn:active,
-.vpad-shoulder-btn.active {
-    background: #4f46e5 !important;
-    color: #fff !important;
-    box-shadow: 0 0 15px rgba(99, 102, 241, 0.9) !important;
+    box-shadow: 0 0 16px rgba(255, 255, 255, 0.6) !important;
+    transform: rotate(-10deg) scale(0.92) !important;
 }
 
 /* ==========================================================================
-   RESPONSIVE MOBILE BREAKPOINTS
+   RESPONSIVE MOBILE SCALING & ERGONOMICS
    ========================================================================== */
-@media (max-width: 768px) {
+@media (max-width: 600px) {
     #virtual-gamepad-hud {
-        padding: 10px 12px !important;
+        padding: 8px 10px 42px 10px !important;
+    }
+    
+    .vpad-bumper-btn {
+        padding: 6px 20px !important;
+        font-size: 12px !important;
     }
     
     .vpad-dpad {
-        width: 130px !important;
-        height: 130px !important;
+        width: 148px !important;
+        height: 148px !important;
     }
-    .vpad-dpad-btn.up { top: 4px !important; left: 44px !important; width: 42px !important; height: 42px !important; }
-    .vpad-dpad-btn.down { bottom: 4px !important; left: 44px !important; width: 42px !important; height: 42px !important; }
-    .vpad-dpad-btn.left { top: 44px !important; left: 4px !important; width: 42px !important; height: 42px !important; }
-    .vpad-dpad-btn.right { top: 44px !important; right: 4px !important; width: 42px !important; height: 42px !important; }
+    .vpad-dpad-center {
+        width: 40px !important;
+        height: 40px !important;
+    }
+    .vpad-dpad-btn.up { top: 5px !important; left: 49px !important; width: 50px !important; height: 50px !important; }
+    .vpad-dpad-btn.down { bottom: 5px !important; left: 49px !important; width: 50px !important; height: 50px !important; }
+    .vpad-dpad-btn.left { top: 49px !important; left: 5px !important; width: 50px !important; height: 50px !important; }
+    .vpad-dpad-btn.right { top: 49px !important; right: 5px !important; width: 50px !important; height: 50px !important; }
     
     .vpad-actions-container {
-        width: 138px !important;
-        height: 138px !important;
+        width: 154px !important;
+        height: 154px !important;
     }
     .vpad-btn {
-        width: 46px !important;
-        height: 46px !important;
-        font-size: 16px !important;
+        width: 50px !important;
+        height: 50px !important;
+        font-size: 17px !important;
     }
-    .vpad-btn.btn-a { right: 4px !important; top: 46px !important; }
-    .vpad-btn.btn-b { bottom: 4px !important; left: 46px !important; }
-    .vpad-btn.btn-c { left: 4px !important; top: 46px !important; }
-    .vpad-btn.btn-x { top: 4px !important; left: 46px !important; }
+    .vpad-btn.btn-a { right: 5px !important; top: 52px !important; }
+    .vpad-btn.btn-b { bottom: 5px !important; left: 52px !important; }
+    .vpad-btn.btn-c { left: 5px !important; top: 52px !important; }
+    .vpad-btn.btn-x { top: 5px !important; left: 52px !important; }
     
     .vpad-pill-btn {
-        padding: 6px 14px !important;
-        font-size: 10px !important;
+        padding: 7px 16px !important;
+        font-size: 10.5px !important;
     }
     
     .virtual-gamepad-toggle {
-        bottom: 12px !important;
-        right: 12px !important;
-        padding: 8px 14px !important;
-        font-size: 11px !important;
+        bottom: 6px !important;
+        padding: 6px 14px !important;
+        font-size: 10px !important;
     }
 }

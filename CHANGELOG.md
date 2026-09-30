@@ -14,13 +14,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **🛡️ Intercepción y Modal Informativo para Diablo I / Hellfire en Celulares**:
   - Al ingresar a Diablo desde un smartphone, el sistema despliega un modal temático con estilo gótico explicando los altos requerimientos de ratón/teclado y rendimiento.
   - Ofrece acceso directo con 1 toque al catálogo móvil de 8/16 bits (NES, Sega Genesis, SNES) a 60 FPS garantizados, o continuar en modo experimental.
-- **🎮 Virtual GameBoy Modern HUD (Controles Táctiles en Pantalla)**:
-  - **D-Pad Táctil Clásico Izquierdo**: Diseño en cruz con cálculo de ángulo y deslizamiento fluido (Arriba, Abajo, Izquierda, Derecha y Diagonales) + botón `SELECT` estilizado.
-  - **Botonera de Acción Derecha**: Botones ergonómicos `A`, `B`, `X` (Turbo) e `Y` orientados en ángulo natural para el pulgar + botón `START`.
-  - **Gatillos Superiores L y R**: Acceso a botones auxiliares de hombro para juegos de SNES y títulos avanzados.
-  - **Estética Cyber-Dark Glassmorphism & Feedback Háptico**: Acabado translúcido con efecto vidrio esmerilado, iluminación reactiva al pulsar y micro-vibraciones táctiles (`navigator.vibrate(12)`).
-  - **Despacho Nativo de Eventos de Teclado**: Envía eventos `KeyboardEvent` (`keydown`/`keyup`) directamente al canvas y al runtime WebAssembly para compatibilidad inmediata con todos los núcleos.
-  - **Botón Flotante de Conmutación**: Píldora interactiva `🎮 PAD: ON/OFF` para activar, ocultar o probar los controles tanto en móvil como en escritorio.
+- **🎮 Virtual GameBoy & Sega Modern HUD V3 (Controles Táctiles Optimizados)**:
+  - **Ampliación Ergonómica de Botones**: D-Pad aumentado a 168px con botones de dirección de 56px; botonera de acción incrementada a 178px con botones circulares de 58px para pulsación cómoda y precisa con los pulgares.
+  - **Gatillos L y R Integrados sobre los Controles**: Los bumpers L y R se reubicaron justo por encima del D-Pad (lado izquierdo) y por encima de la botonera de acción (lado derecho), eliminando botones flotantes desconectados en la cabecera.
+  - **Elevación de la Botonera Hacia la Pantalla de Juego**: Controles elevados para situarse directamente adyacentes a la ventana del emulador y dejar margen libre sobre las barras de navegación de Android/iOS.
+  - **Cero Superposición de Botones**: El interruptor `🎮 PAD TÁCTIL` fue reubicado en la parte inferior central (`bottom: 8px; left: 50%`), erradicando por completo cualquier colisión con el botón `START ▶` o la botonera derecha.
+  - **Cachebuster Actualizado a `v=gb-v3`**: Forzado de refresco automático en todos los clientes web y móviles.
 - **⭐ Insignias y Priorización en Retro Nav Hub**:
   - Distintivos `📱 MÓVIL 60FPS` / `📱 8-BIT MÓVIL` / `📱 16-BIT MÓVIL` en NES, Sega Genesis, SNES, DOOM 1 y Cave Story.
   - Advertencias claras `⚠️ PC / 3D` en emuladores pesados (PS1, N64, PSP) y `💻 TECLADO PC` en Diablo.

@@ -396,7 +396,7 @@
             const link = document.createElement('link');
             link.id = 'retro-nav-css';
             link.rel = 'stylesheet';
-            link.href = `${BASE_PATH}assets/retro-nav/retro-nav.css?v=retro-hub-v5`;
+            link.href = `${BASE_PATH}assets/retro-nav/retro-nav.css?v=retro-hub-v6`;
             document.head.appendChild(link);
         }
 
@@ -405,7 +405,7 @@
             window._virtualGamepadLoaded = true;
             const script = document.createElement('script');
             script.id = 'virtual-gamepad-js';
-            script.src = `${BASE_PATH}assets/mobile-controls/virtual-gamepad.js?v=gb-v5`;
+            script.src = `${BASE_PATH}assets/mobile-controls/virtual-gamepad.js?v=gb-v6`;
             document.head.appendChild(script);
         }
 

@@ -409,7 +409,7 @@
             const link = document.createElement('link');
             link.id = 'virtual-gamepad-css';
             link.rel = 'stylesheet';
-            link.href = `${BASE_PATH}assets/mobile-controls/virtual-gamepad.css?v=gb-v5`;
+            link.href = `${BASE_PATH}assets/mobile-controls/virtual-gamepad.css?v=gb-v6`;
             document.head.appendChild(link);
         }
 

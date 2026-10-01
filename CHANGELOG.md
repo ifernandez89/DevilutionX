@@ -7,21 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-### 🎮 Ampliación Ergonómica Pro de Mandos Táctiles Mobile (Virtual RetroHub HUD V5) ([`Packaging/emscripten/assets/mobile-controls/virtual-gamepad.css`](file:///c:/Projects/DevilutionX/Packaging/emscripten/assets/mobile-controls/virtual-gamepad.css), [`Packaging/emscripten/assets/mobile-controls/virtual-gamepad.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/assets/mobile-controls/virtual-gamepad.js))
-- **Aprovechamiento del Espacio Vertical Libre en Pantallas Móviles**:
-  - Se expandió el área de agarre elevando el clúster táctil mediante `padding-bottom: clamp(54px, 8.5vh, 78px)`, ubicando los controles en la zona natural de reposo de los pulgares y dejando un margen de seguridad cómodo sobre la barra de gestos de navegación de Android e iOS.
-- **Engrandecimiento del D-Pad Direccional**:
-  - Diámetro del D-Pad incrementado a 184px (176px en móviles), con botones direccionales ampliados a 64x64px (62x62px en móviles) y flechas indicadoras de 22-24px con alto contraste luminoso.
-  - Centro de pivote ajustado a 48px y umbral de zona muerta calibrado a 16px para transiciones direccionales y diagonales ultra-precisas sin falsos toques.
-- **Enriquecimiento del Clúster de Acción Retro (Sega & Nintendo ABXY)**:
-  - Diámetro de la botonera aumentado a 194px (184px en móviles), con botones de acción circulares ensanchados a 66x66px (62x62px en móviles).
-  - Letras de acción ampliadas a 22-23px (`X`, `C`, `B`, `A`) acompañadas de subetiquetas nítidas (`TURBO`, `NITRO`, `GOLPE`, `SALTAR`).
-  - Biseles 3D con relieve, profundidad sombreada y respuesta háptica instantánea de 14ms con feedback lumínico al presionar.
-- **Gatillos L/R y Botones de Menú Ensanchados**:
-  - Bumpers superiores `◀ L` y `R ▶` ensanchados a `padding: 9px 30px` con altura mínima de 38px.
-  - Botones `MODE / SELECT` y `START ▶` optimizados a `padding: 9px 24px` con tipografía de 12px para una pulsación infalible sin desviar la mirada del juego.
-- **Respuesta Adaptativa Multidispositivo**:
-  - Escalado de seguridad fluido para pantallas angostas (<370px) y optimización en modo horizontal (Landscape 16:9) que evita la oclusión de la pantalla de juego.
+### 🎮 Calibración Ergonómica GameBoy Pro de Mandos Táctiles Mobile (Virtual RetroHub HUD V6) ([`Packaging/emscripten/assets/mobile-controls/virtual-gamepad.css`](file:///c:/Projects/DevilutionX/Packaging/emscripten/assets/mobile-controls/virtual-gamepad.css), [`Packaging/emscripten/assets/mobile-controls/virtual-gamepad.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/assets/mobile-controls/virtual-gamepad.js))
+- **Eliminación Definitiva de Sobreescritura de Reducción en Celulares**:
+  - Se erradicó la regla oculta anterior en `@media (max-width: 600px)` que forzaba el encogimiento de los controles a 148px/154px y botones de 50px al abrir en smartphones.
+- **Calibración Óptima Estilo GameBoy / Sega Arcade (Tamaño Razonable y Preciso)**:
+  - **D-Pad Izquierdo**: Carcasa circular calibrada a 174px (172px en móvil), con botones direccionales ergonómicos de 58x58px, flechas direccionales en 20px y centro de pivote en 42px para pulsación natural del pulgar.
+  - **Botonera de Acción Derecha**: Clúster circular calibrado a 182px (180px en móvil), con botones circulares generosos de 60x60px, letras legibles en 21px (`X`, `C`, `B`, `A`) y etiquetas táctiles (`TURBO`, `NITRO`, `GOLPE`, `SALTAR`).
+  - **Gatillos L y R**: Bumpers superiores `◀ L` y `R ▶` optimizados a `padding: 8px 26px` con 36px de altura táctil.
+  - **Botones de Menú**: `MODE / SELECT` y `START ▶` optimizados a `padding: 8px 22px` con 36px de altura para pulsación infalible sin desviar la mirada.
+- **Elevación Ergonómica Natural al Tercio Inferior**:
+  - Clúster elevado mediante `padding-bottom: clamp(48px, 7.5vh, 68px)` ocupando el espacio vertical vacío de forma equilibrada y sin colisionar con la barra de gestos inferior de Android/iOS.
+- **Unificación Global de Cachebuster a `v6`**:
+  - Actualización sincronizada a `v=gb-v6` y `v=retro-hub-v6` en todos los archivos HTML, Service Worker `sw.js` y scripts dinámicos para invalidar cachés viejas en navegadores móviles.
 
 ### 📲 Suite Completa de PWA (Progressive Web App) & Instalabilidad Móvil ([`Packaging/emscripten/manifest.json`](file:///c:/Projects/DevilutionX/Packaging/emscripten/manifest.json), [`Packaging/emscripten/sw.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/sw.js), [`Packaging/emscripten/assets/icons/`](file:///c:/Projects/DevilutionX/Packaging/emscripten/assets/icons/))
 - **Web App Manifest Canónico (`manifest.json`)**:

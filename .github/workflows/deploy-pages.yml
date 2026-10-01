@@ -120,6 +120,8 @@ jobs:
           # Copy Web UI and Assets
           cp -v Packaging/emscripten/index.html dist/index.html
           cp -v Packaging/emscripten/file-manager.js dist/file-manager.js
+          if [ -f Packaging/emscripten/manifest.json ]; then cp -v Packaging/emscripten/manifest.json dist/manifest.json; fi
+          if [ -f Packaging/emscripten/sw.js ]; then cp -v Packaging/emscripten/sw.js dist/sw.js; fi
           if [ -f Packaging/emscripten/neural_infer.js ]; then cp -v Packaging/emscripten/neural_infer.js dist/neural_infer.js; fi
           if [ -d Packaging/emscripten/shaders ]; then
             cp -rv Packaging/emscripten/shaders dist/shaders

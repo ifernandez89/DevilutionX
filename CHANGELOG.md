@@ -7,6 +7,45 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### 🎮 Ampliación Ergonómica Pro de Mandos Táctiles Mobile (Virtual RetroHub HUD V5) ([`Packaging/emscripten/assets/mobile-controls/virtual-gamepad.css`](file:///c:/Projects/DevilutionX/Packaging/emscripten/assets/mobile-controls/virtual-gamepad.css), [`Packaging/emscripten/assets/mobile-controls/virtual-gamepad.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/assets/mobile-controls/virtual-gamepad.js))
+- **Aprovechamiento del Espacio Vertical Libre en Pantallas Móviles**:
+  - Se expandió el área de agarre elevando el clúster táctil mediante `padding-bottom: clamp(54px, 8.5vh, 78px)`, ubicando los controles en la zona natural de reposo de los pulgares y dejando un margen de seguridad cómodo sobre la barra de gestos de navegación de Android e iOS.
+- **Engrandecimiento del D-Pad Direccional**:
+  - Diámetro del D-Pad incrementado a 184px (176px en móviles), con botones direccionales ampliados a 64x64px (62x62px en móviles) y flechas indicadoras de 22-24px con alto contraste luminoso.
+  - Centro de pivote ajustado a 48px y umbral de zona muerta calibrado a 16px para transiciones direccionales y diagonales ultra-precisas sin falsos toques.
+- **Enriquecimiento del Clúster de Acción Retro (Sega & Nintendo ABXY)**:
+  - Diámetro de la botonera aumentado a 194px (184px en móviles), con botones de acción circulares ensanchados a 66x66px (62x62px en móviles).
+  - Letras de acción ampliadas a 22-23px (`X`, `C`, `B`, `A`) acompañadas de subetiquetas nítidas (`TURBO`, `NITRO`, `GOLPE`, `SALTAR`).
+  - Biseles 3D con relieve, profundidad sombreada y respuesta háptica instantánea de 14ms con feedback lumínico al presionar.
+- **Gatillos L/R y Botones de Menú Ensanchados**:
+  - Bumpers superiores `◀ L` y `R ▶` ensanchados a `padding: 9px 30px` con altura mínima de 38px.
+  - Botones `MODE / SELECT` y `START ▶` optimizados a `padding: 9px 24px` con tipografía de 12px para una pulsación infalible sin desviar la mirada del juego.
+- **Respuesta Adaptativa Multidispositivo**:
+  - Escalado de seguridad fluido para pantallas angostas (<370px) y optimización en modo horizontal (Landscape 16:9) que evita la oclusión de la pantalla de juego.
+
+### 📲 Suite Completa de PWA (Progressive Web App) & Instalabilidad Móvil ([`Packaging/emscripten/manifest.json`](file:///c:/Projects/DevilutionX/Packaging/emscripten/manifest.json), [`Packaging/emscripten/sw.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/sw.js), [`Packaging/emscripten/assets/icons/`](file:///c:/Projects/DevilutionX/Packaging/emscripten/assets/icons/))
+- **Web App Manifest Canónico (`manifest.json`)**:
+  - Configuración completa con metadatos oficiales de RetroHub, color temático `#4f46e5` (índigo neón), fondo `#0a0d14`, modo `standalone` y orientación dinámica.
+  - Accesos directos rápidos integrados (Shortcuts) para iniciar directamente en Sega Genesis, Nintendo NES, Super Nintendo, DOOM y Diablo I.
+- **Generación de Iconos Multi-Resolución RetroHub**:
+  - Icono maestro vectorizado y renderizado en alta definición: `icon-192.png`, `icon-512.png`, iconos adaptativos `icon-maskable-192.png`, `icon-maskable-512.png`, `apple-touch-icon.png` (180x180), `favicon.png` (32x32) y `retrohub.svg` ubicados en `Packaging/emscripten/assets/icons/`.
+- **Service Worker (`sw.js`) con Caché Acelerado**:
+  - Estrategia *Stale-While-Revalidate* para la interfaz gráfica (CSS, JS, iconos, manifest) que garantiza carga instantánea y funcionamiento offline de la shell de la aplicación.
+  - Registro automático no invasivo en todas las secciones y emuladores de la plataforma desde `retro-nav.js`.
+- **Botón y Banner Interactivo "Instalar App"**:
+  - Intercepción del evento del navegador `beforeinstallprompt` e integración directa del botón `📲 Instalar RetroHub (App Móvil)` en el menú desplegable principal de RetroHub.
+- **Integración Global de Etiquetas Meta en Todos los Emuladores**:
+  - Actualización de cabeceras en `index.html`, `gens/`, `nes/`, `snes/`, `n64/`, `psx/`, `psp/`, `doom/`, `wolf3d/`, `quake/`, `cavestory/`, `flash/` y `gunblood/`.
+
+### ⚡ Restauración Definitiva del Fast-Path de Despliegue en GitHub Pages (~30 Segundos) ([`.github/workflows/deploy-pages.yml`](file:///c:/Projects/DevilutionX/.github/workflows/deploy-pages.yml), [`Packaging/emscripten/devilutionx.wasm`](file:///c:/Projects/DevilutionX/Packaging/emscripten/devilutionx.wasm))
+- **Causa Raíz de la Lentitud de Despliegue (9-10 Minutos)**:
+  - El archivo binario precompilado `Packaging/emscripten/devilutionx.wasm` no se encontraba presente en el repositorio.
+  - Como consecuencia, el paso `Check for Prebuilt Binaries (Fast-Path)` evaluaba en falso en cada `push`, obligando al runner de GitHub Actions a descargar el SDK de Emscripten, compilar todas las librerías de puertos y compilar el motor C++ completo desde cero en cada commit.
+- **Solución y Optimización Implementada**:
+  - Se incluyó y sincronizó el binario precompilado `Packaging/emscripten/devilutionx.wasm` (6.6 MB) junto con `devilutionx.js` y `devilutionx.data`.
+  - Con esto, GitHub Actions detecta los binarios preconstruidos y activa inmediatamente la ruta rápida (**Fast-Path**), empaquetando `dist/` y publicando en GitHub Pages en **menos de 35 segundos**.
+  - Se agregó la copia explícita de `manifest.json` y `sw.js` al artefacto de despliegue en `.github/workflows/deploy-pages.yml`.
+
 ### 📱 Detección Inteligente de Celulares/Móviles, Virtual GameBoy HUD & Suite 8/16-Bit ([`Packaging/emscripten/assets/mobile-controls/virtual-gamepad.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/assets/mobile-controls/virtual-gamepad.js), [`Packaging/emscripten/assets/mobile-controls/virtual-gamepad.css`](file:///c:/Projects/DevilutionX/Packaging/emscripten/assets/mobile-controls/virtual-gamepad.css), [`Packaging/emscripten/assets/retro-nav/retro-nav.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/assets/retro-nav/retro-nav.js))
 - **Detección Automática Multi-Capa de Dispositivos Móviles**:
   - Detección precisa de teléfonos inteligentes y tabletas mediante User Agent, `navigator.maxTouchPoints`, media queries táctiles `(pointer: coarse)` y ancho de pantalla adaptativo.

@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e1b4b"/>
+      <stop offset="50%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#020617"/>
+    </linearGradient>
+    <linearGradient id="metalGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#334155"/>
+      <stop offset="50%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <filter id="neonGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <linearGradient id="dpadGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#0284c7"/>
+    </linearGradient>
+    <linearGradient id="btnAGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+    <linearGradient id="btnBGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ef4444"/>
+      <stop offset="100%" stop-color="#b91c1c"/>
+    </linearGradient>
+    <linearGradient id="btnCGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#047857"/>
+    </linearGradient>
+    <linearGradient id="btnXGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a855f7"/>
+      <stop offset="100%" stop-color="#7e22ce"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background App Rounded Tile -->
+  <rect width="512" height="512" rx="110" fill="url(#bgGrad)" stroke="#6366f1" stroke-width="6" stroke-opacity="0.6"/>
+  <rect x="16" y="16" width="480" height="480" rx="98" fill="none" stroke="#818cf8" stroke-width="2" stroke-opacity="0.3"/>
+
+  <!-- Controller Outer Chassis -->
+  <g filter="url(#neonGlow)">
+    <path d="M 140 180 C 180 150, 332 150, 372 180 C 430 220, 440 340, 400 400 C 375 435, 330 405, 310 355 C 290 310, 222 310, 202 355 C 182 405, 137 435, 112 400 C 72 340, 82 220, 140 180 Z" 
+          fill="url(#metalGrad)" stroke="#818cf8" stroke-width="5"/>
+  </g>
+
+  <!-- Glowing Neon Contour Accents -->
+  <path d="M 155 200 C 190 175, 322 175, 357 200" fill="none" stroke="#c084fc" stroke-width="4" stroke-linecap="round" filter="url(#neonGlow)"/>
+  <path d="M 105 260 C 100 320, 120 375, 140 380" fill="none" stroke="#38bdf8" stroke-width="4" stroke-linecap="round" filter="url(#neonGlow)"/>
+  <path d="M 407 260 C 412 320, 392 375, 372 380" fill="none" stroke="#f43f5e" stroke-width="4" stroke-linecap="round" filter="url(#neonGlow)"/>
+
+  <!-- D-Pad Left Side -->
+  <g transform="translate(140, 235)">
+    <circle cx="45" cy="45" r="46" fill="#0f172a" stroke="#38bdf8" stroke-width="2"/>
+    <!-- Cross -->
+    <path d="M 35 15 L 55 15 L 55 35 L 75 35 L 75 55 L 55 55 L 55 75 L 35 75 L 35 55 L 15 55 L 15 35 L 35 35 Z" fill="url(#dpadGrad)" stroke="#bae6fd" stroke-width="1.5"/>
+    <circle cx="45" cy="45" r="7" fill="#0369a1"/>
+  </g>
+
+  <!-- ABXY Action Diamond Right Side -->
+  <g transform="translate(282, 235)">
+    <circle cx="90" cy="45" r="48" fill="#0f172a" stroke="#a855f7" stroke-width="2"/>
+    
+    <!-- Button X (Top) -->
+    <circle cx="90" cy="20" r="14" fill="url(#btnXGrad)" stroke="#e9d5ff" stroke-width="1.5"/>
+    <text x="90" y="25" fill="#ffffff" font-size="13" font-family="sans-serif" font-weight="bold" text-anchor="middle">X</text>
+    
+    <!-- Button C / Nitro (Left) -->
+    <circle cx="65" cy="45" r="14" fill="url(#btnCGrad)" stroke="#a7f3d0" stroke-width="1.5"/>
+    <text x="65" y="50" fill="#ffffff" font-size="13" font-family="sans-serif" font-weight="bold" text-anchor="middle">C</text>
+    
+    <!-- Button B / Golpe (Bottom) -->
+    <circle cx="90" cy="70" r="14" fill="url(#btnBGrad)" stroke="#fecaca" stroke-width="1.5"/>
+    <text x="90" y="75" fill="#ffffff" font-size="13" font-family="sans-serif" font-weight="bold" text-anchor="middle">B</text>
+    
+    <!-- Button A / Saltar (Right) -->
+    <circle cx="115" cy="45" r="14" fill="url(#btnAGrad)" stroke="#bfdbfe" stroke-width="1.5"/>
+    <text x="115" y="50" fill="#ffffff" font-size="13" font-family="sans-serif" font-weight="bold" text-anchor="middle">A</text>
+  </g>
+
+  <!-- Center Thumbsticks / Lights -->
+  <circle cx="215" cy="285" r="18" fill="#1e1b4b" stroke="#818cf8" stroke-width="2"/>
+  <circle cx="215" cy="285" r="10" fill="#4338ca"/>
+  <circle cx="297" cy="285" r="18" fill="#1e1b4b" stroke="#818cf8" stroke-width="2"/>
+  <circle cx="297" cy="285" r="10" fill="#4338ca"/>
+
+  <!-- Mode / Select / Start Center Pills -->
+  <rect x="236" y="240" width="16" height="7" rx="3.5" fill="#64748b" transform="rotate(-25 244 243)"/>
+  <rect x="260" y="240" width="16" height="7" rx="3.5" fill="#64748b" transform="rotate(25 268 243)"/>
+</svg>

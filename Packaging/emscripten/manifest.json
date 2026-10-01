@@ -1,0 +1,106 @@
+{
+  "name": "RetroHub — Emuladores & Juegos Retro WASM",
+  "short_name": "RetroHub",
+  "description": "Plataforma universal de emuladores retro y Diablo en WebAssembly con soporte de mandos táctiles y guardado offline.",
+  "id": "/DevilutionX/",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui", "browser"],
+  "orientation": "any",
+  "background_color": "#0a0d14",
+  "theme_color": "#4f46e5",
+  "lang": "es-ES",
+  "dir": "ltr",
+  "categories": ["games", "entertainment", "utilities"],
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "assets/icons/favicon.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icons/icon-64.png",
+      "sizes": "64x64",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icons/icon-128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icons/icon-maskable-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "assets/icons/icon-256.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "assets/icons/retrohub.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Sega Genesis (16-Bit)",
+      "short_name": "Genesis",
+      "description": "Emulador Sega Genesis / Mega Drive con mandos táctiles 60 FPS",
+      "url": "./gens/index.html",
+      "icons": [{ "src": "assets/icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Nintendo NES (8-Bit)",
+      "short_name": "NES",
+      "description": "Emulador NES & Famicom clásico 60 FPS",
+      "url": "./nes/index.html",
+      "icons": [{ "src": "assets/icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Super Nintendo (16-Bit)",
+      "short_name": "SNES",
+      "description": "Emulador Super Nintendo Snes9x 60 FPS",
+      "url": "./snes/index.html",
+      "icons": [{ "src": "assets/icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "DOOM & Freedoom",
+      "short_name": "DOOM",
+      "description": "DOOM clásico motor PrBoom WASM",
+      "url": "./doom/index.html",
+      "icons": [{ "src": "assets/icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Diablo I: Tristram",
+      "short_name": "Diablo",
+      "description": "Diablo Nightmare Edition WebAssembly",
+      "url": "./index.html",
+      "icons": [{ "src": "assets/icons/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}

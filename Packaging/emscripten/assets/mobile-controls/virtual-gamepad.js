@@ -303,7 +303,7 @@
                 const dy = touch.clientY - centerY;
                 const distance = Math.hypot(dx, dy);
 
-                if (distance < 14) {
+                if (distance < 16) {
                     ['up', 'down', 'left', 'right'].forEach(dir => {
                         const btn = dpadContainer.querySelector(`.vpad-dpad-btn.${dir}`);
                         if (btn) btn.classList.remove('active');
@@ -409,7 +409,7 @@
             const link = document.createElement('link');
             link.id = 'virtual-gamepad-css';
             link.rel = 'stylesheet';
-            link.href = `${BASE_PATH}assets/mobile-controls/virtual-gamepad.css?v=gb-v3`;
+            link.href = `${BASE_PATH}assets/mobile-controls/virtual-gamepad.css?v=gb-v5`;
             document.head.appendChild(link);
         }
 

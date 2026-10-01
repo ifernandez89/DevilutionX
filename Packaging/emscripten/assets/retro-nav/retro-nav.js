@@ -291,6 +291,40 @@
         }
     ];
 
+    let deferredInstallPrompt = null;
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredInstallPrompt = e;
+        const installBox = document.getElementById('retroPwaInstallSlot');
+        if (installBox) {
+            installBox.style.display = 'block';
+        }
+    });
+
+    window.addEventListener('appinstalled', () => {
+        deferredInstallPrompt = null;
+        const installBox = document.getElementById('retroPwaInstallSlot');
+        if (installBox) {
+            installBox.innerHTML = `<div class="retro-pwa-installed">✅ RetroHub App Instalada en el Dispositivo</div>`;
+            installBox.style.display = 'block';
+        }
+    });
+
+    function registerServiceWorker() {
+        if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register(`${BASE_PATH}sw.js`)
+                    .then((reg) => {
+                        console.log('[RetroHub PWA] Service Worker activo con scope:', reg.scope);
+                    })
+                    .catch((err) => {
+                        console.warn('[RetroHub PWA] Fallo en Service Worker (no crítico):', err);
+                    });
+            });
+        }
+    }
+
     function createRetroNavHTML() {
         const currentPath = window.location.pathname.toLowerCase();
         const currentQuery = new URLSearchParams(window.location.search);
@@ -320,6 +354,25 @@
             `;
         }
 
+        const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+
+        const pwaInstallHTML = isStandalone ? `
+            <div class="retro-pwa-box" id="retroPwaInstallSlot" style="display: block;">
+                <div class="retro-pwa-installed">⭐ RetroHub App Instalada</div>
+            </div>
+        ` : `
+            <div class="retro-pwa-box" id="retroPwaInstallSlot" style="${deferredInstallPrompt ? 'display: block;' : 'display: block;'}">
+                <button class="retro-pwa-btn" id="retroPwaInstallBtn" type="button" title="Instalar aplicación en tu pantalla de inicio">
+                    <span class="retro-pwa-icon">📲</span>
+                    <div class="retro-pwa-text">
+                        <span class="retro-pwa-title">Instalar RetroHub (App Móvil)</span>
+                        <span class="retro-pwa-sub">Acceso directo 60 FPS • Pantalla completa</span>
+                    </div>
+                    <span class="retro-pwa-action">INSTALAR</span>
+                </button>
+            </div>
+        `;
+
         return `
             <div class="retro-nav-wrapper" id="retroNavWrapper">
                 <button class="retro-nav-trigger" id="retroNavTrigger" type="button" aria-haspopup="true" aria-expanded="false" title="Catálogo de Juegos Nativos Retro">
@@ -327,6 +380,7 @@
                     <span class="nav-arrow">▼</span>
                 </button>
                 <div class="retro-nav-dropdown" id="retroNavDropdown" role="menu">
+                    ${pwaInstallHTML}
                     ${categoriesHTML}
                     <div class="retro-nav-footer">
                         🧪 Próxima expansión: Heretic • Hexen • Catacomb • OpenTyrian
@@ -342,7 +396,7 @@
             const link = document.createElement('link');
             link.id = 'retro-nav-css';
             link.rel = 'stylesheet';
-            link.href = `${BASE_PATH}assets/retro-nav/retro-nav.css?v=retro-hub-v4`;
+            link.href = `${BASE_PATH}assets/retro-nav/retro-nav.css?v=retro-hub-v5`;
             document.head.appendChild(link);
         }
 
@@ -351,7 +405,7 @@
             window._virtualGamepadLoaded = true;
             const script = document.createElement('script');
             script.id = 'virtual-gamepad-js';
-            script.src = `${BASE_PATH}assets/mobile-controls/virtual-gamepad.js?v=gb-v1`;
+            script.src = `${BASE_PATH}assets/mobile-controls/virtual-gamepad.js?v=gb-v5`;
             document.head.appendChild(script);
         }
 
@@ -395,6 +449,24 @@
             }
         });
 
+        // PWA Install click handler
+        const pwaInstallBtn = document.getElementById('retroPwaInstallBtn');
+        if (pwaInstallBtn) {
+            pwaInstallBtn.addEventListener('click', async (e) => {
+                e.stopPropagation();
+                if (deferredInstallPrompt) {
+                    deferredInstallPrompt.prompt();
+                    const choice = await deferredInstallPrompt.userChoice;
+                    if (choice.outcome === 'accepted') {
+                        console.log('[RetroHub PWA] Usuario aceptó la instalación');
+                    }
+                    deferredInstallPrompt = null;
+                } else {
+                    alert('Para instalar RetroHub:\n\n• En Android (Chrome/Brave/Edge): Tocá el menú de 3 puntos (⋮) arriba a la derecha y seleccioná "Instalar aplicación" o "Agregar a la pantalla principal".\n\n• En iPhone (Safari): Tocá el botón Compartir y seleccioná "Agregar al inicio".');
+                }
+            });
+        }
+
         // Close when clicking outside
         document.addEventListener('click', (e) => {
             if (!wrapper.contains(e.target)) {
@@ -411,6 +483,8 @@
                 trigger.focus();
             }
         });
+
+        registerServiceWorker();
     }
 
     if (document.readyState === 'loading') {
@@ -419,3 +493,4 @@
         initRetroNav();
     }
 })();
+

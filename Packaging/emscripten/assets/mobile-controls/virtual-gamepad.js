@@ -350,56 +350,6 @@
         }
     }
 
-    function checkDiabloMobileOnboarding() {
-        if (!isDiabloPage() || !isMobileDevice()) return;
-        if (sessionStorage.getItem('diablo_mobile_dismissed')) return;
-
-        const modalHTML = `
-            <div class="mobile-diablo-modal-backdrop" id="diabloMobileModal">
-                <div class="mobile-diablo-modal">
-                    <h2>📱 DISPOSITIVO MÓVIL DETECTADO</h2>
-                    <p>
-                        <strong>Diablo I & Hellfire</strong> fueron concebidos para ratón/teclado de precisión y requieren alta potencia en navegador.
-                    </p>
-                    <div class="mobile-diablo-badge-list">
-                        <span class="mobile-diablo-badge">⭐ 100% 60 FPS Táctil</span>
-                        <span class="mobile-diablo-badge">⚡ Sega Genesis (16-Bit)</span>
-                        <span class="mobile-diablo-badge">🔴 NES (8-Bit)</span>
-                        <span class="mobile-diablo-badge">🎮 SNES (16-Bit)</span>
-                    </div>
-                    <p style="font-size: 13px; opacity: 0.9;">
-                        Para una experiencia fluida con mandos táctiles nativos a 60 FPS, te recomendamos jugar a nuestra selección retro:
-                    </p>
-                    <div class="mobile-diablo-actions">
-                        <a href="${BASE_PATH}gens/index.html" class="mobile-diablo-btn-primary">
-                            ⚡ Jugar Sega Genesis & Mega Drive (60 FPS)
-                        </a>
-                        <a href="${BASE_PATH}nes/index.html" class="mobile-diablo-btn-primary" style="background: linear-gradient(135deg, #b91c1c 0%, #991b1b 100%); border-color: #f87171;">
-                            🔴 Jugar Nintendo NES & Famicom (8-Bit)
-                        </a>
-                        <button class="mobile-diablo-btn-secondary" id="dismissDiabloModalBtn">
-                            ⚔️ Continuar en Diablo I (Modo Experimental)
-                        </button>
-                    </div>
-                </div>
-            </div>
-        `;
-
-        const modalDiv = document.createElement('div');
-        modalDiv.innerHTML = modalHTML;
-        document.body.appendChild(modalDiv);
-
-        const dismissBtn = document.getElementById('dismissDiabloModalBtn');
-        const modalBackdrop = document.getElementById('diabloMobileModal');
-        if (dismissBtn && modalBackdrop) {
-            dismissBtn.addEventListener('click', () => {
-                sessionStorage.setItem('diablo_mobile_dismissed', '1');
-                modalBackdrop.style.display = 'none';
-                hapticFeedback(20);
-            });
-        }
-    }
-
     function initVirtualGamepad() {
         if (isMobileDevice()) {
             document.body.classList.add('is-mobile-device');
@@ -409,7 +359,7 @@
             const link = document.createElement('link');
             link.id = 'virtual-gamepad-css';
             link.rel = 'stylesheet';
-            link.href = `${BASE_PATH}assets/mobile-controls/virtual-gamepad.css?v=gb-v6`;
+            link.href = `${BASE_PATH}assets/mobile-controls/virtual-gamepad.css?v=gb-v7`;
             document.head.appendChild(link);
         }
 
@@ -420,8 +370,6 @@
             document.body.appendChild(vpadContainer);
             setupGamepadInteractions();
         }
-
-        checkDiabloMobileOnboarding();
     }
 
     if (document.readyState === 'loading') {

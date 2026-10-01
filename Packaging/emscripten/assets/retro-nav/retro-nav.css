@@ -303,8 +303,19 @@
     background: rgba(0, 0, 0, 0.3);
     border-radius: 6px;
     font-size: 11px;
-    color: #64748b;
+    color: #94a3b8;
     text-align: center;
-    border: 1px dashed rgba(255, 255, 255, 0.1);
+    border: 1px dashed rgba(255, 255, 255, 0.15);
 }
+
+/* Responsive Mobile Header Simplification */
+@media (max-width: 860px) {
+    .header-actions a.btn-secondary {
+        display: none !important;
+    }
+}
+body.is-mobile-device .header-actions a.btn-secondary {
+    display: none !important;
+}
+
 

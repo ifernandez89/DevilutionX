@@ -17,8 +17,63 @@
 
     const BASE_PATH = getRootRelativePath();
 
-    // Catalog definition organized by categories
-    const RETRO_CATALOG = [
+    // Universal Mobile & Touchscreen Detection
+    function isMobileDevice() {
+        const ua = (navigator.userAgent || navigator.vendor || window.opera || '').toLowerCase();
+        const isMobileUA = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile|crios|touch|silk|kindle|samsung|pixel/i.test(ua);
+        const hasTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0);
+        const isCoarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+        const isSmallScreen = window.innerWidth <= 1024;
+        return isMobileUA || hasTouch || isCoarse || isSmallScreen;
+    }
+
+    // Complete Catalog for Desktop / PC
+    const RETRO_CATALOG_DESKTOP = [
+        {
+            category: '🎮 SEGA 16-BIT (Motor Genesis Plus GX WASM)',
+            items: [
+                {
+                    id: 'gens',
+                    title: 'Sega Genesis & Mega Drive',
+                    subtitle: 'Lector Universal de ROMs 16-bit • 60 FPS WASM',
+                    badge: '📱 MÓVIL 60FPS',
+                    badgeClass: 'badge-mobile',
+                    icon: '🎮',
+                    url: `${BASE_PATH}gens/index.html`,
+                    activeMatcher: (p) => p.includes('/gens/')
+                }
+            ]
+        },
+        {
+            category: '🔴 NINTENDO 8-BIT (Motor Nestopia WASM)',
+            items: [
+                {
+                    id: 'nes',
+                    title: 'Nintendo NES & Famicom',
+                    subtitle: 'Lector Universal de ROMs .NES • Ciclo Exacto 60 FPS',
+                    badge: '📱 8-BIT MÓVIL',
+                    badgeClass: 'badge-mobile',
+                    icon: '🔴',
+                    url: `${BASE_PATH}nes/index.html`,
+                    activeMatcher: (p) => p.includes('/nes/')
+                }
+            ]
+        },
+        {
+            category: '🎮 NINTENDO 16-BIT (Motor Snes9x WASM)',
+            items: [
+                {
+                    id: 'snes',
+                    title: 'Super Nintendo (SNES)',
+                    subtitle: 'Lector Universal .SFC / .SMC • Modo 7 • 60 FPS',
+                    badge: '📱 16-BIT MÓVIL',
+                    badgeClass: 'badge-mobile',
+                    icon: '🎮',
+                    url: `${BASE_PATH}snes/index.html`,
+                    activeMatcher: (p) => p.includes('/snes/')
+                }
+            ]
+        },
         {
             category: '💀 DOOM (Motor PrBoom WASM)',
             items: [
@@ -96,51 +151,6 @@
                     icon: '🐰',
                     url: `${BASE_PATH}cavestory/index.html`,
                     activeMatcher: (p) => p.includes('/cavestory/')
-                }
-            ]
-        },
-        {
-            category: '🎮 SEGA 16-BIT (Motor Genesis Plus GX WASM)',
-            items: [
-                {
-                    id: 'gens',
-                    title: 'Sega Genesis & Mega Drive',
-                    subtitle: 'Lector Universal de ROMs 16-bit • 60 FPS WASM',
-                    badge: '📱 MÓVIL 60FPS',
-                    badgeClass: 'badge-mobile',
-                    icon: '🎮',
-                    url: `${BASE_PATH}gens/index.html`,
-                    activeMatcher: (p) => p.includes('/gens/')
-                }
-            ]
-        },
-        {
-            category: '🔴 NINTENDO 8-BIT (Motor Nestopia WASM)',
-            items: [
-                {
-                    id: 'nes',
-                    title: 'Nintendo NES & Famicom',
-                    subtitle: 'Lector Universal de ROMs .NES • Ciclo Exacto 60 FPS',
-                    badge: '📱 8-BIT MÓVIL',
-                    badgeClass: 'badge-mobile',
-                    icon: '🔴',
-                    url: `${BASE_PATH}nes/index.html`,
-                    activeMatcher: (p) => p.includes('/nes/')
-                }
-            ]
-        },
-        {
-            category: '🎮 NINTENDO 16-BIT (Motor Snes9x WASM)',
-            items: [
-                {
-                    id: 'snes',
-                    title: 'Super Nintendo (SNES)',
-                    subtitle: 'Lector Universal .SFC / .SMC • Modo 7 • 60 FPS',
-                    badge: '📱 16-BIT MÓVIL',
-                    badgeClass: 'badge-mobile',
-                    icon: '🎮',
-                    url: `${BASE_PATH}snes/index.html`,
-                    activeMatcher: (p) => p.includes('/snes/')
                 }
             ]
         },
@@ -291,6 +301,45 @@
         }
     ];
 
+    // Filtered Catalog Exclusively for Mobile Devices (Sega Genesis, NES, SNES)
+    const RETRO_CATALOG_MOBILE = [
+        {
+            category: '📱 CONSOLAS CLÁSICAS MÓVILES (60 FPS)',
+            items: [
+                {
+                    id: 'gens',
+                    title: 'Sega Genesis & Mega Drive',
+                    subtitle: '16-Bit • Mandos Táctiles Calibrados • 60 FPS',
+                    badge: '16-BIT MÓVIL',
+                    badgeClass: 'badge-mobile',
+                    icon: '🎮',
+                    url: `${BASE_PATH}gens/index.html`,
+                    activeMatcher: (p) => p.includes('/gens/')
+                },
+                {
+                    id: 'nes',
+                    title: 'Nintendo NES & Famicom',
+                    subtitle: '8-Bit • Mandos Táctiles Calibrados • 60 FPS',
+                    badge: '8-BIT MÓVIL',
+                    badgeClass: 'badge-mobile',
+                    icon: '🔴',
+                    url: `${BASE_PATH}nes/index.html`,
+                    activeMatcher: (p) => p.includes('/nes/')
+                },
+                {
+                    id: 'snes',
+                    title: 'Super Nintendo (SNES)',
+                    subtitle: '16-Bit • Modo 7 • Mandos Táctiles • 60 FPS',
+                    badge: '16-BIT MÓVIL',
+                    badgeClass: 'badge-mobile',
+                    icon: '🎮',
+                    url: `${BASE_PATH}snes/index.html`,
+                    activeMatcher: (p) => p.includes('/snes/')
+                }
+            ]
+        }
+    ];
+
     let deferredInstallPrompt = null;
 
     window.addEventListener('beforeinstallprompt', (e) => {
@@ -328,9 +377,11 @@
     function createRetroNavHTML() {
         const currentPath = window.location.pathname.toLowerCase();
         const currentQuery = new URLSearchParams(window.location.search);
+        const isMobile = isMobileDevice();
+        const activeCatalog = isMobile ? RETRO_CATALOG_MOBILE : RETRO_CATALOG_DESKTOP;
 
         let categoriesHTML = '';
-        for (const cat of RETRO_CATALOG) {
+        for (const cat of activeCatalog) {
             let itemsHTML = '';
             for (const item of cat.items) {
                 const isCurrent = item.activeMatcher ? item.activeMatcher(currentPath, currentQuery) : false;
@@ -373,6 +424,10 @@
             </div>
         `;
 
+        const footerText = isMobile 
+            ? '📱 Consolas 100% Optimizadas para Mandos Táctiles a 60 FPS' 
+            : '🧪 Próxima expansión: Heretic • Hexen • Catacomb • OpenTyrian';
+
         return `
             <div class="retro-nav-wrapper" id="retroNavWrapper">
                 <button class="retro-nav-trigger" id="retroNavTrigger" type="button" aria-haspopup="true" aria-expanded="false" title="Catálogo de Juegos Nativos Retro">
@@ -383,7 +438,7 @@
                     ${pwaInstallHTML}
                     ${categoriesHTML}
                     <div class="retro-nav-footer">
-                        🧪 Próxima expansión: Heretic • Hexen • Catacomb • OpenTyrian
+                        ${footerText}
                     </div>
                 </div>
             </div>
@@ -396,7 +451,7 @@
             const link = document.createElement('link');
             link.id = 'retro-nav-css';
             link.rel = 'stylesheet';
-            link.href = `${BASE_PATH}assets/retro-nav/retro-nav.css?v=retro-hub-v6`;
+            link.href = `${BASE_PATH}assets/retro-nav/retro-nav.css?v=retro-hub-v7`;
             document.head.appendChild(link);
         }
 
@@ -405,7 +460,7 @@
             window._virtualGamepadLoaded = true;
             const script = document.createElement('script');
             script.id = 'virtual-gamepad-js';
-            script.src = `${BASE_PATH}assets/mobile-controls/virtual-gamepad.js?v=gb-v6`;
+            script.src = `${BASE_PATH}assets/mobile-controls/virtual-gamepad.js?v=gb-v7`;
             document.head.appendChild(script);
         }
 

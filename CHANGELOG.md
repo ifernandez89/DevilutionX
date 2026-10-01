@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### 📱 Catálogo Móvil Exclusivo (Sega Genesis, NES, SNES), Fondo Cyber-Dark Genérico y Supresión de Modales de Escritorio (RetroHub V7) ([`Packaging/emscripten/assets/retro-nav/retro-nav.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/assets/retro-nav/retro-nav.js), [`Packaging/emscripten/assets/retro-nav/retro-nav.css`](file:///c:/Projects/DevilutionX/Packaging/emscripten/assets/retro-nav/retro-nav.css), [`Packaging/emscripten/assets/mobile-controls/virtual-gamepad.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/assets/mobile-controls/virtual-gamepad.js), [`Packaging/emscripten/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/index.html), [`Packaging/emscripten/sw.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/sw.js))
+- **Filtrado Inteligente de Catálogo en Móviles (Solo Consolas 8/16-Bit)**:
+  - En dispositivos móviles o pantallas táctiles, el menú desplegable de **🎮 RETRO HUB** ahora presenta de forma limpia y exclusiva las 3 consolas clásicas optimizadas para celulares:
+    1. **Sega Genesis & Mega Drive (16-Bit)** ([`Packaging/emscripten/gens/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/gens/index.html)) con motor Genesis Plus GX a 60 FPS.
+    2. **Nintendo NES & Famicom (8-Bit)** ([`Packaging/emscripten/nes/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/nes/index.html)) con motor Nestopia a 60 FPS.
+    3. **Super Nintendo (SNES 16-Bit)** ([`Packaging/emscripten/snes/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/snes/index.html)) con motor Snes9x a 60 FPS.
+  - En ordenadores / PC de escritorio, se mantiene el catálogo integral completo (DOOM 1, Quake 1, Wolfenstein 3D, Cave Story, Sega Genesis, NES, SNES, Nintendo 64, PlayStation 1, PSP, Diablo 1, Gunblood, Flash Clásicos y Tiny Core Linux).
+- **Fondo Cyber-Dark Moderno y Genérico**:
+  - Se sustituyó el fondo negro sólido plano por un gradiente mesh sutil y elegante (`#0a0d14` con acentos radiales índigo/cian tenues) en todas las pantallas principales y contenedores, brindando una estética arcade retro moderna sin ruidos visuales.
+- **Supresión Total de Avisos y Modales de Escritorio Innecesarios en Móviles**:
+  - Erradicado el modal de solicitud de archivos de Diablo (`ARCHIVO DE DATOS REQUERIDO` / `DIABDAT.MPQ`) y los diálogos de advertencia cuando se accede desde smartphones o pantallas táctiles.
+  - Se implementó un enrutamiento inteligente instantáneo en la raíz del sitio (`index.html`) para dirigir a los usuarios móviles directamente a la consola insignia de 16 bits (`gens/index.html`), ofreciendo juego inmediato a 60 FPS con mandos táctiles sin errores ni pantallas de carga complejas.
+- **Simplificación de Cabeceras en Dispositivos Móviles**:
+  - Ocultación automática de enlaces secundarios de emuladores pesados de PC en la cabecera cuando se visualiza en teléfonos, dejando únicamente el botón principal de `[🎮 RETRO HUB]` y `[📂 Cargar ROM]`.
+- **Actualización de Versiones Globales a Cachebuster `v7`**:
+  - Sincronización a `?v=retro-hub-v7` y `?v=gb-v7` junto con el Service Worker `retrohub-v7-cache` en todos los archivos del repositorio para forzar la actualización inmediata en navegadores móviles.
+
 ### 🎮 Calibración Ergonómica GameBoy Pro de Mandos Táctiles Mobile (Virtual RetroHub HUD V6) ([`Packaging/emscripten/assets/mobile-controls/virtual-gamepad.css`](file:///c:/Projects/DevilutionX/Packaging/emscripten/assets/mobile-controls/virtual-gamepad.css), [`Packaging/emscripten/assets/mobile-controls/virtual-gamepad.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/assets/mobile-controls/virtual-gamepad.js))
 - **Eliminación Definitiva de Sobreescritura de Reducción en Celulares**:
   - Se erradicó la regla oculta anterior en `@media (max-width: 600px)` que forzaba el encogimiento de los controles a 148px/154px y botones de 50px al abrir en smartphones.

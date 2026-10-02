@@ -3,7 +3,7 @@
  * Enables PWA installability on mobile/desktop and ultra-fast UI caching.
  */
 
-const CACHE_NAME = 'retrohub-v7-cache';
+const CACHE_NAME = 'retrohub-v8-cache';
 
 const CORE_ASSETS = [
     './manifest.json',
@@ -14,10 +14,10 @@ const CORE_ASSETS = [
     './assets/icons/apple-touch-icon.png',
     './assets/icons/favicon.png',
     './assets/icons/retrohub.svg',
-    './assets/retro-nav/retro-nav.css?v=retro-hub-v7',
-    './assets/retro-nav/retro-nav.js?v=retro-hub-v7',
-    './assets/mobile-controls/virtual-gamepad.css?v=gb-v7',
-    './assets/mobile-controls/virtual-gamepad.js?v=gb-v7'
+    './assets/retro-nav/retro-nav.css?v=retro-hub-v8',
+    './assets/retro-nav/retro-nav.js?v=retro-hub-v8',
+    './assets/mobile-controls/virtual-gamepad.css?v=gb-v8',
+    './assets/mobile-controls/virtual-gamepad.js?v=gb-v8'
 ];
 
 self.addEventListener('install', (event) => {

@@ -232,6 +232,8 @@ header {
     image-rendering: crisp-edges;
     display: block;
     outline: none;
+    transform: translateZ(0);
+    will-change: transform;
 }
 
 /* CRT Scanlines Filter */

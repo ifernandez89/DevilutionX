@@ -259,10 +259,16 @@
 
             const romFile = await prepareRomData(romSource, romName);
 
-            // RetroArch configuration for Super Nintendo
+            // RetroArch configuration for Super Nintendo (High Performance Mobile 60 FPS)
             const retroarchConfig = {
                 video_vsync: 'true',
+                video_threaded: 'true',
+                video_smooth: 'false',
+                video_max_swapchain_images: '2',
+                video_frame_delay: '0',
                 audio_enable: 'true',
+                audio_sync: 'true',
+                audio_latency: '96',
                 input_autodetect_enable: 'true',
 
                 // D-Pad

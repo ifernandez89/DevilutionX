@@ -98,8 +98,16 @@
     };
 
     const activeKeysState = {};
+    let cachedGameCanvas = null;
 
-    function hapticFeedback(ms = 14) {
+    function getGameTarget() {
+        if (!cachedGameCanvas || !cachedGameCanvas.isConnected) {
+            cachedGameCanvas = document.querySelector('canvas#gens-screen, canvas#nes-screen, canvas#snes-screen, canvas#canvas, canvas.emscripten, canvas');
+        }
+        return cachedGameCanvas || window;
+    }
+
+    function hapticFeedback(ms = 12) {
         if (typeof navigator.vibrate === 'function') {
             try {
                 navigator.vibrate(ms);
@@ -119,35 +127,26 @@
             composed: true
         });
 
-        const targets = [
-            document.querySelector('canvas.emscripten'),
-            document.querySelector('#canvas-container canvas'),
-            document.querySelector('canvas'),
-            document.activeElement,
-            document.body,
-            document,
-            window
-        ].filter(Boolean);
-
-        for (const target of targets) {
-            try {
-                target.dispatchEvent(keyEvent);
-            } catch (e) {}
-        }
+        const target = getGameTarget();
+        try {
+            target.dispatchEvent(keyEvent);
+            if (target !== window) {
+                window.dispatchEvent(keyEvent);
+            }
+        } catch (e) {}
     }
 
     function dispatchAction(actionName, isDown) {
+        if (Boolean(activeKeysState[actionName]) === isDown) return; // No-op if unchanged
+        activeKeysState[actionName] = isDown;
+
         const defs = MULTI_KEY_MAPPINGS[actionName];
         if (!defs) return;
 
         if (isDown) {
-            if (activeKeysState[actionName]) return;
-            activeKeysState[actionName] = true;
-            hapticFeedback(14);
+            hapticFeedback(10);
             defs.forEach(def => dispatchKey(def, 'keydown'));
         } else {
-            if (!activeKeysState[actionName]) return;
-            activeKeysState[actionName] = false;
             defs.forEach(def => dispatchKey(def, 'keyup'));
         }
 
@@ -285,10 +284,16 @@
             el.addEventListener('mouseleave', endPress);
         });
 
-        // Smooth D-Pad Multi-Touch Drag
+        // Smooth D-Pad Multi-Touch Drag (Optimized Zero-Garbage Collector)
         const dpadContainer = document.getElementById('vpadDpad');
         if (dpadContainer) {
             let activeTouchId = null;
+            const dpadBtns = {
+                up: dpadContainer.querySelector('.vpad-dpad-btn.up'),
+                down: dpadContainer.querySelector('.vpad-dpad-btn.down'),
+                left: dpadContainer.querySelector('.vpad-dpad-btn.left'),
+                right: dpadContainer.querySelector('.vpad-dpad-btn.right')
+            };
 
             const handleDpadTouch = (e) => {
                 e.preventDefault();
@@ -301,12 +306,12 @@
 
                 const dx = touch.clientX - centerX;
                 const dy = touch.clientY - centerY;
-                const distance = Math.hypot(dx, dy);
+                const distanceSq = dx * dx + dy * dy;
 
-                if (distance < 16) {
+                if (distanceSq < 256) { // 16px deadzone
                     ['up', 'down', 'left', 'right'].forEach(dir => {
-                        const btn = dpadContainer.querySelector(`.vpad-dpad-btn.${dir}`);
-                        if (btn) btn.classList.remove('active');
+                        const btn = dpadBtns[dir];
+                        if (btn && btn.classList.contains('active')) btn.classList.remove('active');
                         dispatchAction(dir, false);
                     });
                     return;
@@ -320,11 +325,14 @@
 
                 const dirs = { up: isUp, down: isDown, left: isLeft, right: isRight };
 
-                Object.entries(dirs).forEach(([dir, active]) => {
-                    const btn = dpadContainer.querySelector(`.vpad-dpad-btn.${dir}`);
-                    if (btn) btn.classList.toggle('active', active);
+                for (const [dir, active] of Object.entries(dirs)) {
+                    const btn = dpadBtns[dir];
+                    if (btn) {
+                        const hasClass = btn.classList.contains('active');
+                        if (hasClass !== active) btn.classList.toggle('active', active);
+                    }
                     dispatchAction(dir, active);
-                });
+                }
             };
 
             dpadContainer.addEventListener('touchstart', (e) => {
@@ -338,8 +346,8 @@
 
             const releaseDpad = (e) => {
                 ['up', 'down', 'left', 'right'].forEach(dir => {
-                    const btn = dpadContainer.querySelector(`.vpad-dpad-btn.${dir}`);
-                    if (btn) btn.classList.remove('active');
+                    const btn = dpadBtns[dir];
+                    if (btn && btn.classList.contains('active')) btn.classList.remove('active');
                     dispatchAction(dir, false);
                 });
                 activeTouchId = null;
@@ -359,7 +367,7 @@
             const link = document.createElement('link');
             link.id = 'virtual-gamepad-css';
             link.rel = 'stylesheet';
-            link.href = `${BASE_PATH}assets/mobile-controls/virtual-gamepad.css?v=gb-v7`;
+            link.href = `${BASE_PATH}assets/mobile-controls/virtual-gamepad.css?v=gb-v8`;
             document.head.appendChild(link);
         }
 

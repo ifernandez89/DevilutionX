@@ -239,6 +239,8 @@ header {
     image-rendering: pixelated;
     image-rendering: crisp-edges;
     outline: none;
+    transform: translateZ(0);
+    will-change: transform;
 }
 
 /* Fullscreen support */

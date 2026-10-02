@@ -6,7 +6,7 @@
 
 :root {
     --vpad-zindex: 2147483647;
-    --gb-bg: rgba(12, 16, 26, 0.90);
+    --gb-bg: rgba(14, 18, 28, 0.95);
     --gb-border: rgba(99, 102, 241, 0.65);
     --gb-dpad-bg: #161b2a;
     --gb-dpad-active: #4f46e5;
@@ -33,7 +33,7 @@ body.is-mobile-device {
     position: fixed !important;
     bottom: 10px !important;
     left: 50% !important;
-    transform: translateX(-50%) !important;
+    transform: translateX(-50%) translateZ(0) !important;
     z-index: 2147483647 !important;
     display: inline-flex !important;
     align-items: center !important;
@@ -48,21 +48,19 @@ body.is-mobile-device {
     font-weight: 800 !important;
     letter-spacing: 0.5px !important;
     cursor: pointer !important;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.9), 0 0 16px rgba(99, 102, 241, 0.5) !important;
-    backdrop-filter: blur(14px) !important;
-    -webkit-backdrop-filter: blur(14px) !important;
-    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.8) !important;
+    transition: transform 0.15s ease, background 0.15s ease !important;
     user-select: none !important;
     -webkit-tap-highlight-color: transparent !important;
     white-space: nowrap !important;
+    will-change: transform;
 }
 
 .virtual-gamepad-toggle:hover,
 .virtual-gamepad-toggle:active {
     background: linear-gradient(135deg, #312e81 0%, #1e1b4b 100%) !important;
     border-color: #a5b4fc !important;
-    box-shadow: 0 0 24px rgba(99, 102, 241, 0.9) !important;
-    transform: translateX(-50%) scale(1.04) !important;
+    transform: translateX(-50%) scale(1.04) translateZ(0) !important;
 }
 
 .virtual-gamepad-toggle .vpad-dot {
@@ -78,7 +76,7 @@ body.is-mobile-device {
     box-shadow: none;
 }
 
-/* Master Virtual Handheld HUD (Elevated Ergonomic Thumb Zone) */
+/* Master Virtual Handheld HUD (Elevated Ergonomic Thumb Zone - GPU Accelerated) */
 #virtual-gamepad-hud {
     position: fixed !important;
     inset: 0 !important;
@@ -89,13 +87,15 @@ body.is-mobile-device {
     align-items: flex-end !important;
     padding: 10px 14px clamp(48px, 7.5vh, 68px) 14px !important;
     opacity: 1 !important;
-    transition: opacity 0.25s ease, transform 0.25s ease !important;
+    transform: translateZ(0) !important;
+    will-change: opacity, transform;
+    transition: opacity 0.2s ease, transform 0.2s ease !important;
 }
 
 #virtual-gamepad-hud.hidden {
     opacity: 0 !important;
     pointer-events: none !important;
-    transform: translateY(30px) !important;
+    transform: translateY(30px) translateZ(0) !important;
     display: none !important;
 }
 
@@ -106,6 +106,7 @@ body.is-mobile-device {
     align-items: center !important;
     gap: 10px !important;
     pointer-events: auto !important;
+    transform: translateZ(0) !important;
 }
 
 /* Right Zone: R-Shoulder, Action Buttons, Start */
@@ -115,6 +116,7 @@ body.is-mobile-device {
     align-items: center !important;
     gap: 10px !important;
     pointer-events: auto !important;
+    transform: translateZ(0) !important;
 }
 
 /* Integrated Shoulder Bumpers (L & R directly above controls) */
@@ -129,22 +131,20 @@ body.is-mobile-device {
     font-weight: 900 !important;
     font-size: 13px !important;
     letter-spacing: 1px !important;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.65), inset 0 1px 2px rgba(255,255,255,0.25) !important;
-    backdrop-filter: blur(12px) !important;
-    -webkit-backdrop-filter: blur(12px) !important;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.6) !important;
     cursor: pointer !important;
     touch-action: none !important;
     user-select: none !important;
     -webkit-tap-highlight-color: transparent !important;
-    transition: all 0.1s ease !important;
+    transition: transform 0.08s ease !important;
 }
 
 .vpad-bumper-btn:active,
 .vpad-bumper-btn.active {
     background: #4f46e5 !important;
     color: #ffffff !important;
-    box-shadow: 0 0 20px rgba(99, 102, 241, 0.95) !important;
-    transform: scale(0.94) !important;
+    box-shadow: 0 0 16px rgba(99, 102, 241, 0.8) !important;
+    transform: scale(0.94) translateZ(0) !important;
 }
 
 /* Calibrated D-Pad Circular Housing */
@@ -155,13 +155,12 @@ body.is-mobile-device {
     background: var(--gb-bg) !important;
     border: 2px solid var(--gb-border) !important;
     border-radius: 50% !important;
-    backdrop-filter: blur(16px) !important;
-    -webkit-backdrop-filter: blur(16px) !important;
-    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.9), inset 0 0 24px rgba(0, 0, 0, 0.8) !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.75) !important;
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
     touch-action: none !important;
+    transform: translateZ(0) !important;
 }
 
 .vpad-dpad-center {
@@ -170,7 +169,7 @@ body.is-mobile-device {
     background: #0b0e17 !important;
     border-radius: 50% !important;
     border: 1px solid rgba(255, 255, 255, 0.15) !important;
-    box-shadow: inset 0 3px 8px rgba(0,0,0,0.95) !important;
+    box-shadow: inset 0 2px 6px rgba(0,0,0,0.8) !important;
     pointer-events: none !important;
 }
 
@@ -237,7 +236,7 @@ body.is-mobile-device {
     transform: scale(0.92) !important;
 }
 
-/* Calibrated Action Buttons Cluster */
+/* Calibrated Action Buttons Cluster (GPU Accelerated) */
 .vpad-actions-container {
     position: relative !important;
     width: 182px !important;
@@ -245,10 +244,9 @@ body.is-mobile-device {
     background: var(--gb-bg) !important;
     border: 2px solid var(--gb-border) !important;
     border-radius: 50% !important;
-    backdrop-filter: blur(16px) !important;
-    -webkit-backdrop-filter: blur(16px) !important;
-    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.9), inset 0 0 24px rgba(0, 0, 0, 0.8) !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.75) !important;
     touch-action: none !important;
+    transform: translateZ(0) !important;
 }
 
 /* Individual Action Button */

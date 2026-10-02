@@ -207,10 +207,16 @@
             // Prepare ROM with SMD deinterleave
             const romFile = await prepareRomData(romSource, romName);
 
-            // Sega 6-Button Arcade Pad mappings for RetroArch
+            // Sega 6-Button Arcade Pad mappings & Mobile Performance Config for RetroArch
             const retroarchConfig = {
                 video_vsync: 'true',
+                video_threaded: 'true',
+                video_smooth: 'false',
+                video_max_swapchain_images: '2',
+                video_frame_delay: '0',
                 audio_enable: 'true',
+                audio_sync: 'true',
+                audio_latency: '96',
                 input_autodetect_enable: 'true',
 
                 // D-Pad
@@ -441,16 +447,13 @@
         } catch (e) {}
     }
 
-    // Auto-save on page exit/close and periodic
+    // Auto-save on page exit/close
     window.addEventListener('beforeunload', () => {
         autoSaveCurrentGame();
     });
     window.addEventListener('pagehide', () => {
         autoSaveCurrentGame();
     });
-    setInterval(() => {
-        autoSaveCurrentGame();
-    }, 60000);
 
     saveStateBtn.addEventListener('click', async () => {
         if (!currentEmulator) return;

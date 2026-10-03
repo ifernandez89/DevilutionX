@@ -175,14 +175,27 @@
     }
 
     async function autoSaveCurrentGame() {
-        if (!currentEmulator || isPaused) return;
+        if (!currentEmulator) return;
         try {
-            const stateObj = await currentEmulator.saveState();
-            if (stateObj && stateObj.state) {
-                lastSavedState = stateObj.state;
-                await persistSaveState(`nes_latest_${activeRomName}`, stateObj.state, `Autosave - ${activeRomName}`);
+            // 1. Auto-save SRAM Battery data (essential for Zelda, Final Fantasy, RPGs)
+            try {
+                const sramBlob = await currentEmulator.saveSRAM();
+                if (sramBlob && sramBlob.size > 0) {
+                    await persistSaveState(`nes_sram_${activeRomName}`, sramBlob, `Batería/SRAM - ${activeRomName}`);
+                }
+            } catch (_) {}
+
+            // 2. Auto-save SaveState
+            if (!isPaused) {
+                const stateObj = await currentEmulator.saveState();
+                if (stateObj && stateObj.state) {
+                    lastSavedState = stateObj.state;
+                    await persistSaveState(`nes_latest_${activeRomName}`, stateObj.state, `Autosave - ${activeRomName}`);
+                }
             }
-        } catch (e) {}
+        } catch (e) {
+            console.warn('[NES AutoSave] Error:', e);
+        }
     }
 
     // Auto-save on tab close / browser exit
@@ -193,10 +206,10 @@
         autoSaveCurrentGame();
     });
 
-    // Periodic auto-save every 60 seconds
+    // Periodic auto-save every 20 seconds
     setInterval(() => {
         autoSaveCurrentGame();
-    }, 60000);
+    }, 20000);
 
     // ==========================================
     // ROM Preparation & Launching
@@ -226,7 +239,7 @@
 
     async function launchRom(romSource, romName) {
         activeRomName = romName;
-        showLoading(`Iniciando ${romName}...`, 'Cargando motor Nestopia (WebAssembly)...');
+        showLoading(`Iniciando ${romName}...`, 'Cargando motor NES (WebAssembly)...');
 
         try {
             if (currentEmulator) {
@@ -253,16 +266,18 @@
 
             const romFile = await prepareRomData(romSource, romName);
 
-            // RetroArch configuration for NES (High Performance Mobile 60 FPS)
+            // RetroArch configuration for NES (High Performance 60 FPS)
             const retroarchConfig = {
                 video_vsync: 'true',
-                video_threaded: 'true',
+                video_threaded: 'false',
                 video_smooth: 'false',
                 video_max_swapchain_images: '2',
                 video_frame_delay: '0',
                 audio_enable: 'true',
                 audio_sync: 'true',
-                audio_latency: '96',
+                audio_latency: '64',
+                autosave_interval: '10',
+                savestate_auto_load: 'false',
                 input_autodetect_enable: 'true',
 
                 // D-Pad
@@ -283,42 +298,54 @@
                 input_player1_select: 'shift'
             };
 
+            const retroarchCoreConfig = {
+                nestopia_ram_power_state: '0x00',
+                nestopia_genie_distortion: 'disabled',
+                fceumm_ram_power_state: '0x00',
+                fceumm_nospritelimit: 'disabled'
+            };
+
+            // Check if saved SRAM battery exists in IndexedDB for this ROM
+            const existingSram = await retrieveSaveState(`nes_sram_${romName}`);
+
+            const launchOptions = {
+                core: 'nestopia',
+                rom: romFile,
+                element: canvas,
+                retroarchConfig,
+                retroarchCoreConfig,
+                ...(existingSram ? { sram: existingSram } : {})
+            };
+
             // Launch with local Nestopia core first (100% Offline)
             try {
                 currentEmulator = await Nostalgist.launch({
-                    core: 'nestopia',
-                    rom: romFile,
-                    element: canvas,
+                    ...launchOptions,
                     resolveCoreJs() {
                         return 'core/nestopia_libretro.js';
                     },
                     resolveCoreWasm() {
                         return 'core/nestopia_libretro.wasm';
-                    },
-                    retroarchConfig
+                    }
                 });
             } catch (nestopiaErr) {
                 console.warn('[NES WASM] Error con Nestopia local, intentando FCEUmm local:', nestopiaErr);
                 try {
                     currentEmulator = await Nostalgist.launch({
+                        ...launchOptions,
                         core: 'fceumm',
-                        rom: romFile,
-                        element: canvas,
                         resolveCoreJs() {
                             return 'core/fceumm_libretro.js';
                         },
                         resolveCoreWasm() {
                             return 'core/fceumm_libretro.wasm';
-                        },
-                        retroarchConfig
+                        }
                     });
                 } catch (fceuErr) {
                     console.warn('[NES WASM] Error con núcleos locales, intentando fallback en línea:', fceuErr);
                     currentEmulator = await Nostalgist.launch({
-                        core: 'fceumm',
-                        rom: romFile,
-                        element: canvas,
-                        retroarchConfig
+                        ...launchOptions,
+                        core: 'fceumm'
                     });
                 }
             }
@@ -335,10 +362,15 @@
 
             // Check for persistent save in IndexedDB
             setTimeout(async () => {
-                const existingSave = await retrieveSaveState(`nes_state_${romName}`) ||
+                const existingState = await retrieveSaveState(`nes_state_${romName}`) ||
                                      await retrieveSaveState(`nes_latest_${romName}`);
-                if (existingSave) {
-                    lastSavedState = existingSave;
+                if (existingSram && existingState) {
+                    lastSavedState = existingState;
+                    showToast(`💾 Batería SRAM cargada y Estado rápido disponible (F7).`, 'ℹ️', 5000);
+                } else if (existingSram) {
+                    showToast(`💾 Partida guardada (Batería SRAM) cargada con éxito.`, 'ℹ️', 4500);
+                } else if (existingState) {
+                    lastSavedState = existingState;
                     showToast(`💾 Partida previa en IndexedDB detectada. Presioná F7 para continuar.`, 'ℹ️', 5000);
                 }
             }, 800);
@@ -431,12 +463,23 @@
     saveStateBtn.addEventListener('click', async () => {
         if (!currentEmulator) return;
         try {
-            showToast('Guardando estado en IndexedDB...', '💾', 1500);
+            showToast('Guardando estado y batería en IndexedDB...', '💾', 1500);
+
+            // 1. Capture state
             const stateObj = await currentEmulator.saveState();
             lastSavedState = stateObj.state;
             await persistSaveState(`nes_state_${activeRomName}`, lastSavedState, `Manual F5 - ${activeRomName}`);
             await persistSaveState(`nes_latest_${activeRomName}`, lastSavedState, `Último - ${activeRomName}`);
-            showToast('¡Estado guardado permanentemente! (F5)', '✅');
+
+            // 2. Capture SRAM Battery
+            try {
+                const sramBlob = await currentEmulator.saveSRAM();
+                if (sramBlob && sramBlob.size > 0) {
+                    await persistSaveState(`nes_sram_${activeRomName}`, sramBlob, `Batería/SRAM - ${activeRomName}`);
+                }
+            } catch (_) {}
+
+            showToast('¡Estado y Batería guardados permanentemente! (F5)', '✅');
         } catch (err) {
             console.error('Error guardando estado:', err);
             showToast('Error al guardar estado', '❌');
@@ -444,30 +487,48 @@
         focusGameCanvas();
     });
 
-    loadStateBtn.addEventListener('click', async () => {
-        if (!currentEmulator) return;
+    async function loadGameStateCleanly(stateToLoad) {
+        if (!currentEmulator || !stateToLoad) return;
+        showToast('Cargando estado desde IndexedDB...', '📂', 1500);
         try {
-            let stateToLoad = lastSavedState;
-            if (!stateToLoad) {
-                stateToLoad = await retrieveSaveState(`nes_state_${activeRomName}`) ||
-                              await retrieveSaveState(`nes_latest_${activeRomName}`);
+            const wasPaused = isPaused;
+            if (!wasPaused) {
+                await currentEmulator.pause();
             }
-            if (!stateToLoad) {
-                showToast('No hay partida guardada en IndexedDB para este juego', '⚠️');
-                focusGameCanvas();
-                return;
-            }
-            showToast('Cargando estado desde IndexedDB...', '📂', 1500);
+
             await currentEmulator.loadState(stateToLoad);
             lastSavedState = stateToLoad;
+
+            // Micro-delay to let APU and memory registers settle
+            await new Promise(r => setTimeout(r, 60));
+
+            await currentEmulator.resume();
             isPaused = false;
             updatePauseBtnUI();
             showToast('¡Estado restaurado con éxito!', '✅');
         } catch (err) {
             console.error('Error cargando estado:', err);
             showToast('Error al restaurar estado', '❌');
+            if (currentEmulator) {
+                try { await currentEmulator.resume(); } catch (_) {}
+            }
         }
         focusGameCanvas();
+    }
+
+    loadStateBtn.addEventListener('click', async () => {
+        if (!currentEmulator) return;
+        let stateToLoad = lastSavedState;
+        if (!stateToLoad) {
+            stateToLoad = await retrieveSaveState(`nes_state_${activeRomName}`) ||
+                          await retrieveSaveState(`nes_latest_${activeRomName}`);
+        }
+        if (!stateToLoad) {
+            showToast('No hay partida guardada en IndexedDB para este juego', '⚠️');
+            focusGameCanvas();
+            return;
+        }
+        await loadGameStateCleanly(stateToLoad);
     });
 
     screenshotBtn.addEventListener('click', async () => {

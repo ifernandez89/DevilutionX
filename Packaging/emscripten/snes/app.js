@@ -176,14 +176,27 @@
     }
 
     async function autoSaveCurrentGame() {
-        if (!currentEmulator || isPaused) return;
+        if (!currentEmulator) return;
         try {
-            const stateObj = await currentEmulator.saveState();
-            if (stateObj && stateObj.state) {
-                lastSavedState = stateObj.state;
-                await persistSaveState(`snes_latest_${activeRomName}`, stateObj.state, `Autosave - ${activeRomName}`);
+            // 1. Auto-save SRAM Battery data (critical for Super Mario World, Chrono Trigger, RPGs)
+            try {
+                const sramBlob = await currentEmulator.saveSRAM();
+                if (sramBlob && sramBlob.size > 0) {
+                    await persistSaveState(`snes_sram_${activeRomName}`, sramBlob, `Batería/SRAM - ${activeRomName}`);
+                }
+            } catch (_) {}
+
+            // 2. Auto-save SaveState
+            if (!isPaused) {
+                const stateObj = await currentEmulator.saveState();
+                if (stateObj && stateObj.state) {
+                    lastSavedState = stateObj.state;
+                    await persistSaveState(`snes_latest_${activeRomName}`, stateObj.state, `Autosave - ${activeRomName}`);
+                }
             }
-        } catch (e) {}
+        } catch (e) {
+            console.warn('[SNES AutoSave] Error:', e);
+        }
     }
 
     // Auto-save on tab close / browser exit
@@ -194,10 +207,10 @@
         autoSaveCurrentGame();
     });
 
-    // Periodic auto-save every 60 seconds
+    // Periodic auto-save every 20 seconds
     setInterval(() => {
         autoSaveCurrentGame();
-    }, 60000);
+    }, 20000);
 
     // ==========================================
     // ROM Preparation & Launching
@@ -259,16 +272,18 @@
 
             const romFile = await prepareRomData(romSource, romName);
 
-            // RetroArch configuration for Super Nintendo (High Performance Mobile 60 FPS)
+            // RetroArch configuration for Super Nintendo (High Performance 60 FPS)
             const retroarchConfig = {
                 video_vsync: 'true',
-                video_threaded: 'true',
+                video_threaded: 'false',
                 video_smooth: 'false',
                 video_max_swapchain_images: '2',
                 video_frame_delay: '0',
                 audio_enable: 'true',
                 audio_sync: 'true',
-                audio_latency: '96',
+                audio_latency: '64',
+                autosave_interval: '10',
+                savestate_auto_load: 'false',
                 input_autodetect_enable: 'true',
 
                 // D-Pad
@@ -296,42 +311,52 @@
                 input_player1_select: 'shift'
             };
 
+            const retroarchCoreConfig = {
+                snes9x_block_invalid_vram_access: 'enabled',
+                snes9x_overclock_cycles: 'disabled'
+            };
+
+            // Check if saved SRAM battery exists in IndexedDB for this ROM
+            const existingSram = await retrieveSaveState(`snes_sram_${romName}`);
+
+            const launchOptions = {
+                core: 'snes9x',
+                rom: romFile,
+                element: canvas,
+                retroarchConfig,
+                retroarchCoreConfig,
+                ...(existingSram ? { sram: existingSram } : {})
+            };
+
             // Launch with local Snes9x core first (100% Offline)
             try {
                 currentEmulator = await Nostalgist.launch({
-                    core: 'snes9x',
-                    rom: romFile,
-                    element: canvas,
+                    ...launchOptions,
                     resolveCoreJs() {
                         return 'core/snes9x_libretro.js';
                     },
                     resolveCoreWasm() {
                         return 'core/snes9x_libretro.wasm';
-                    },
-                    retroarchConfig
+                    }
                 });
             } catch (snes9xErr) {
                 console.warn('[SNES WASM] Error con Snes9x local, intentando Snes9x2010:', snes9xErr);
                 try {
                     currentEmulator = await Nostalgist.launch({
+                        ...launchOptions,
                         core: 'snes9x2010',
-                        rom: romFile,
-                        element: canvas,
                         resolveCoreJs() {
                             return 'core/snes9x2010_libretro.js';
                         },
                         resolveCoreWasm() {
                             return 'core/snes9x2010_libretro.wasm';
-                        },
-                        retroarchConfig
+                        }
                     });
                 } catch (backupErr) {
                     console.warn('[SNES WASM] Error con Snes9x2010 local, intentando CDN:', backupErr);
                     currentEmulator = await Nostalgist.launch({
-                        core: 'snes9x',
-                        rom: romFile,
-                        element: canvas,
-                        retroarchConfig
+                        ...launchOptions,
+                        core: 'snes9x'
                     });
                 }
             }
@@ -342,9 +367,16 @@
             showToast(`¡${romName} iniciado a 60 FPS!`, '🎮');
             focusGameCanvas();
 
-            // Check if there is an autosaved state from previous session
-            const savedStateBlob = await retrieveSaveState(`snes_latest_${activeRomName}`);
-            if (savedStateBlob) {
+            // Check if there is an autosaved state or battery from previous session
+            const existingState = await retrieveSaveState(`snes_manual_${activeRomName}`) ||
+                                 await retrieveSaveState(`snes_latest_${activeRomName}`);
+            if (existingSram && existingState) {
+                lastSavedState = existingState;
+                showToast('💾 Batería SRAM cargada y Estado rápido disponible (F7).', '💾', 5000);
+            } else if (existingSram) {
+                showToast('💾 Partida guardada (Batería SRAM) cargada con éxito.', '💾', 4500);
+            } else if (existingState) {
+                lastSavedState = existingState;
                 showToast('Partida anterior detectada en IndexedDB. Usa F7 o el botón Cargar.', '💾', 5000);
             }
 
@@ -493,12 +525,25 @@
         saveStateBtn.addEventListener('click', async () => {
             if (!currentEmulator) return;
             try {
+                showToast('Guardando estado y batería en IndexedDB...', '💾', 1500);
+
+                // 1. Capture State
                 const stateObj = await currentEmulator.saveState();
                 if (stateObj && stateObj.state) {
                     lastSavedState = stateObj.state;
                     await persistSaveState(`snes_manual_${activeRomName}`, stateObj.state, `Manual - ${activeRomName}`);
-                    showToast('¡Estado guardado en IndexedDB! (F5)', '💾');
+                    await persistSaveState(`snes_latest_${activeRomName}`, stateObj.state, `Último - ${activeRomName}`);
                 }
+
+                // 2. Capture SRAM Battery
+                try {
+                    const sramBlob = await currentEmulator.saveSRAM();
+                    if (sramBlob && sramBlob.size > 0) {
+                        await persistSaveState(`snes_sram_${activeRomName}`, sramBlob, `Batería/SRAM - ${activeRomName}`);
+                    }
+                } catch (_) {}
+
+                showToast('¡Estado y Batería guardados en IndexedDB! (F5)', '💾');
             } catch (err) {
                 console.error('[SNES Save] Error:', err);
                 showToast('Error al guardar estado', '❌');
@@ -507,29 +552,52 @@
         });
     }
 
+    async function loadGameStateCleanly(stateToLoad) {
+        if (!currentEmulator || !stateToLoad) return;
+        showToast('Cargando estado desde IndexedDB...', '📂', 1500);
+        try {
+            const wasPaused = isPaused;
+            if (!wasPaused) {
+                await currentEmulator.pause();
+            }
+
+            await currentEmulator.loadState(stateToLoad);
+            lastSavedState = stateToLoad;
+
+            // Micro-delay to let SPC700 and memory registers settle cleanly
+            await new Promise(r => setTimeout(r, 60));
+
+            await currentEmulator.resume();
+            isPaused = false;
+            if (pauseResumeBtn) pauseResumeBtn.textContent = '⏸️ Pausar';
+            showToast('¡Partida cargada exitosamente! (F7)', '📂');
+        } catch (err) {
+            console.error('[SNES Load] Error:', err);
+            showToast('Error al cargar estado', '❌');
+            if (currentEmulator) {
+                try { await currentEmulator.resume(); } catch (_) {}
+            }
+        }
+        focusGameCanvas();
+    }
+
     if (loadStateBtn) {
         loadStateBtn.addEventListener('click', async () => {
             if (!currentEmulator) return;
-            try {
-                let stateToLoad = lastSavedState;
-                if (!stateToLoad) {
-                    stateToLoad = await retrieveSaveState(`snes_manual_${activeRomName}`);
-                }
-                if (!stateToLoad) {
-                    stateToLoad = await retrieveSaveState(`snes_latest_${activeRomName}`);
-                }
-
-                if (stateToLoad) {
-                    await currentEmulator.loadState(stateToLoad);
-                    showToast('¡Partida cargada exitosamente! (F7)', '📂');
-                } else {
-                    showToast('No hay partida guardada para este juego', '⚠️');
-                }
-            } catch (err) {
-                console.error('[SNES Load] Error:', err);
-                showToast('Error al cargar estado', '❌');
+            let stateToLoad = lastSavedState;
+            if (!stateToLoad) {
+                stateToLoad = await retrieveSaveState(`snes_manual_${activeRomName}`);
             }
-            focusGameCanvas();
+            if (!stateToLoad) {
+                stateToLoad = await retrieveSaveState(`snes_latest_${activeRomName}`);
+            }
+
+            if (stateToLoad) {
+                await loadGameStateCleanly(stateToLoad);
+            } else {
+                showToast('No hay partida guardada para este juego', '⚠️');
+                focusGameCanvas();
+            }
         });
     }
 

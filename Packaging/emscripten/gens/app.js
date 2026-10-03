@@ -207,16 +207,18 @@
             // Prepare ROM with SMD deinterleave
             const romFile = await prepareRomData(romSource, romName);
 
-            // Sega 6-Button Arcade Pad mappings & Mobile Performance Config for RetroArch
+            // Sega 6-Button Arcade Pad mappings & Config for RetroArch
             const retroarchConfig = {
                 video_vsync: 'true',
-                video_threaded: 'true',
+                video_threaded: 'false',
                 video_smooth: 'false',
                 video_max_swapchain_images: '2',
                 video_frame_delay: '0',
                 audio_enable: 'true',
                 audio_sync: 'true',
-                audio_latency: '96',
+                audio_latency: '64',
+                autosave_interval: '10',
+                savestate_auto_load: 'false',
                 input_autodetect_enable: 'true',
 
                 // D-Pad
@@ -244,28 +246,44 @@
                 input_player1_select: 'shift'
             };
 
+            // Essential Genesis Plus GX core options to prevent EA games (Road Rash 1/2/3, Desert Strike)
+            // from hanging on 68k address errors and Z80/YM2612 sound interrupts
+            const retroarchCoreConfig = {
+                genesis_plus_gx_addr_error: 'disabled',
+                genesis_plus_gx_lock_on: 'disabled',
+                genesis_plus_gx_ym2612: 'mame',
+                genesis_plus_gx_force_dtack: 'enabled',
+                genesis_plus_gx_bram: 'per_game',
+                genesis_plus_gx_overclock: '100%',
+                genesis_plus_gx_audio_filter: 'disabled'
+            };
+
+            // Check if saved SRAM battery exists in IndexedDB for this ROM
+            const existingSram = await retrieveSaveState(`gens_sram_${romName}`);
+
+            const launchOptions = {
+                core: 'genesis_plus_gx',
+                rom: romFile,
+                element: canvas,
+                retroarchConfig,
+                retroarchCoreConfig,
+                ...(existingSram ? { sram: existingSram } : {})
+            };
+
             // Attempt launch using local core first for offline capability
             try {
                 currentEmulator = await Nostalgist.launch({
-                    core: 'genesis_plus_gx',
-                    rom: romFile,
-                    element: canvas,
+                    ...launchOptions,
                     resolveCoreJs() {
                         return 'core/genesis_plus_gx_libretro.js';
                     },
                     resolveCoreWasm() {
                         return 'core/genesis_plus_gx_libretro.wasm';
-                    },
-                    retroarchConfig
+                    }
                 });
             } catch (localErr) {
                 console.warn('[Gens WASM] Error con núcleo local, intentando CDN:', localErr);
-                currentEmulator = await Nostalgist.launch({
-                    core: 'genesis_plus_gx',
-                    rom: romFile,
-                    element: canvas,
-                    retroarchConfig
-                });
+                currentEmulator = await Nostalgist.launch(launchOptions);
             }
 
             isPaused = false;
@@ -278,13 +296,18 @@
                 focusGameCanvas();
             }, 100);
 
-            // Check for existing save state in IndexedDB (100% Offline)
+            // Check for existing save state or battery in IndexedDB (100% Offline)
             setTimeout(async () => {
                 const existingState = await retrieveSaveState(`gens_state_${romName}`) ||
                                       await retrieveSaveState(`gens_latest_${romName}`);
-                if (existingState) {
+                if (existingSram && existingState) {
                     lastSavedState = existingState;
-                    showToast(`💾 Partida previa en IndexedDB detectada. Presioná F7 para continuar.`, 'ℹ️', 5000);
+                    showToast(`💾 Batería SRAM cargada y Estado rápido disponible (F7).`, 'ℹ️', 5000);
+                } else if (existingSram) {
+                    showToast(`💾 Partida guardada (Batería SRAM) cargada con éxito.`, 'ℹ️', 4500);
+                } else if (existingState) {
+                    lastSavedState = existingState;
+                    showToast(`💾 Estado previo en IndexedDB detectado. Presioná F7 para continuar.`, 'ℹ️', 5000);
                 }
             }, 800);
 
@@ -301,8 +324,9 @@
     // Stop emulator and return to HUB
     async function exitToHub() {
         if (currentEmulator) {
-            showLoading('Cerrando emulador...', '');
+            showLoading('Guardando y cerrando emulador...', '');
             try {
+                await autoSaveCurrentGame();
                 await currentEmulator.exit();
             } catch (e) {}
             currentEmulator = null;
@@ -370,7 +394,7 @@
         focusGameCanvas();
     });
 
-    // IndexedDB Persistent Storage for Save States (100% Offline)
+    // IndexedDB Persistent Storage for Save States & Battery Saves (100% Offline)
     const DB_NAME = 'RetroHub_Saves_v1';
     const DB_VERSION = 1;
     const STORE_NAME = 'saves';
@@ -437,34 +461,61 @@
     }
 
     async function autoSaveCurrentGame() {
-        if (!currentEmulator || isPaused) return;
+        if (!currentEmulator) return;
         try {
-            const stateObj = await currentEmulator.saveState();
-            if (stateObj && stateObj.state) {
-                lastSavedState = stateObj.state;
-                await persistSaveState(`gens_latest_${activeRomName}`, stateObj.state, `Autosave - ${activeRomName}`);
+            // 1. Auto-save SRAM Battery data (critical for native saves)
+            try {
+                const sramBlob = await currentEmulator.saveSRAM();
+                if (sramBlob && sramBlob.size > 0) {
+                    await persistSaveState(`gens_sram_${activeRomName}`, sramBlob, `Batería/SRAM - ${activeRomName}`);
+                }
+            } catch (_) {}
+
+            // 2. Auto-save SaveState
+            if (!isPaused) {
+                const stateObj = await currentEmulator.saveState();
+                if (stateObj && stateObj.state) {
+                    lastSavedState = stateObj.state;
+                    await persistSaveState(`gens_latest_${activeRomName}`, stateObj.state, `Autosave - ${activeRomName}`);
+                }
             }
-        } catch (e) {}
+        } catch (e) {
+            console.warn('[Gens AutoSave] Error:', e);
+        }
     }
 
-    // Auto-save on page exit/close
+    // Auto-save on page exit/close and background interval
     window.addEventListener('beforeunload', () => {
         autoSaveCurrentGame();
     });
     window.addEventListener('pagehide', () => {
         autoSaveCurrentGame();
     });
+    setInterval(() => {
+        autoSaveCurrentGame();
+    }, 20000);
 
     saveStateBtn.addEventListener('click', async () => {
         if (!currentEmulator) return;
         try {
-            showToast('Guardando estado en IndexedDB...', '💾', 1500);
+            showToast('Guardando estado y batería en IndexedDB...', '💾', 1500);
+
+            // 1. Capture State
             const stateObj = await currentEmulator.saveState();
             lastSavedState = stateObj.state;
             await persistSaveState(`gens_state_${activeRomName}`, lastSavedState, `Manual F5 - ${activeRomName}`);
             await persistSaveState(`gens_latest_${activeRomName}`, lastSavedState, `Último - ${activeRomName}`);
+
+            // 2. Capture SRAM Battery Save
+            try {
+                const sramBlob = await currentEmulator.saveSRAM();
+                if (sramBlob && sramBlob.size > 0) {
+                    await persistSaveState(`gens_sram_${activeRomName}`, sramBlob, `Batería/SRAM - ${activeRomName}`);
+                }
+            } catch (_) {}
+
             localStorage.setItem(`gens_save_${activeRomName}`, new Date().toISOString());
-            showToast('¡Estado guardado permanentemente! (F5)', '✅');
+            showToast('¡Estado y Batería guardados permanentemente! (F5)', '✅');
         } catch (err) {
             console.error('Error guardando estado:', err);
             showToast('Error al guardar estado', '❌');
@@ -472,30 +523,48 @@
         focusGameCanvas();
     });
 
-    loadStateBtn.addEventListener('click', async () => {
-        if (!currentEmulator) return;
+    async function loadGameStateCleanly(stateToLoad) {
+        if (!currentEmulator || !stateToLoad) return;
+        showToast('Cargando estado desde IndexedDB...', '📂', 1500);
         try {
-            let stateToLoad = lastSavedState;
-            if (!stateToLoad) {
-                stateToLoad = await retrieveSaveState(`gens_state_${activeRomName}`) ||
-                              await retrieveSaveState(`gens_latest_${activeRomName}`);
+            const wasPaused = isPaused;
+            if (!wasPaused) {
+                await currentEmulator.pause();
             }
-            if (!stateToLoad) {
-                showToast('No hay partida guardada en IndexedDB para este juego', '⚠️');
-                focusGameCanvas();
-                return;
-            }
-            showToast('Cargando estado desde IndexedDB...', '📂', 1500);
+
             await currentEmulator.loadState(stateToLoad);
             lastSavedState = stateToLoad;
+
+            // Micro-delay to let Emscripten memory and Z80/68k registers settle cleanly
+            await new Promise(r => setTimeout(r, 60));
+
+            await currentEmulator.resume();
             isPaused = false;
             updatePauseBtnUI();
             showToast('¡Estado restaurado con éxito!', '✅');
         } catch (err) {
             console.error('Error cargando estado:', err);
             showToast('Error al restaurar estado', '❌');
+            if (currentEmulator) {
+                try { await currentEmulator.resume(); } catch (_) {}
+            }
         }
         focusGameCanvas();
+    }
+
+    loadStateBtn.addEventListener('click', async () => {
+        if (!currentEmulator) return;
+        let stateToLoad = lastSavedState;
+        if (!stateToLoad) {
+            stateToLoad = await retrieveSaveState(`gens_state_${activeRomName}`) ||
+                          await retrieveSaveState(`gens_latest_${activeRomName}`);
+        }
+        if (!stateToLoad) {
+            showToast('No hay partida guardada en IndexedDB para este juego', '⚠️');
+            focusGameCanvas();
+            return;
+        }
+        await loadGameStateCleanly(stateToLoad);
     });
 
     screenshotBtn.addEventListener('click', async () => {

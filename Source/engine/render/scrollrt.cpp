@@ -43,6 +43,7 @@
 #include "nightmare/invasion/invasion_manager.hpp"
 #include "nightmare/neural/gbuffer.hpp"
 #include "nightmare/neural/dataset_dumper.hpp"
+#include "nightmare/world/cliff_skirt.hpp"
 #include "engine/world_tile.hpp"
 #include "game_mode.hpp"
 #include "gmenu.h"
@@ -739,6 +740,7 @@ void DrawFloorTile(const Surface &out, const Lightmap &lightmap, Point tilePosit
 			    GetDunFrame(pDungeonCels.get(), levelCelBlock.frame()), DunFrameTriangleHeight, MaskType::Solid, tbl);
 		}
 	}
+	nightmare::RenderCliffSkirts(out, tilePosition, targetBufferPosition, lightTableIndex);
 }
 
 /**

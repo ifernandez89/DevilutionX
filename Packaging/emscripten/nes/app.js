@@ -577,7 +577,7 @@
                 debugLog('CONFIG', '✅ PC VIVAZ MODE ACTIVATED', {
                     primaryCore,
                     device_p5: retroarchConfig.input_libretro_device_p5,
-                    isComputer: romCapabilities.isComputer
+                    isComputer: isComputerModeActive
                 });
 
                 // Update debug panel

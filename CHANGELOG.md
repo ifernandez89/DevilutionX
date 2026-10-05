@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### 💻 Transmutador Dinámico UNIF a NES 2.0 y Arquitectura de Control para PC Vivaz / Educational Computer 2000 ([`Packaging/emscripten/nes/app.js`](file:///d:/Projects/DevilutionX/Packaging/emscripten/nes/app.js), [`Packaging/emscripten/nes/index.html`](file:///d:/Projects/DevilutionX/Packaging/emscripten/nes/index.html), [`Packaging/emscripten/nes/style.css`](file:///d:/Projects/DevilutionX/Packaging/emscripten/nes/style.css), [`documentacion imporante/PC_VIVAZ_HARDWARE_Y_MAPEO.md`](file:///d:/Projects/DevilutionX/documentacion%20imporante/PC_VIVAZ_HARDWARE_Y_MAPEO.md))
+- **Conversor Transparente en Memoria UNIF a NES 2.0 (Mapper 329 / UNL-EDU2000)**:
+  - Extracción en tiempo real de fragmentos binarios `PRG0`, memoria RAM de 32 KB y configuración de batería desde contenedores UNIF (`pcvivaz-unif.nes`).
+  - Inyección de cabecera oficial NES 2.0 (16 bytes) con Mapper 329, 32 KB PRG-RAM respaldada con batería en `$6000`, 8 KB CHR-RAM, y Byte 15 (`0x27`) que activa por estándar los controladores de teclado matricial Subor y ratón serie.
+- **Enrutamiento Inteligente a FCEUmm con Configuración de Periféricos Libretro**:
+  - Asignación automática de FCEUmm como core para ordenadores educativos con configuración de puertos: Puerto 1 (Gamepad/Direccionales), Puerto 2 (Ratón serial Famicom) y Puerto 5 (Matriz de teclado Subor de 13 filas).
+- **Control Universal: Pads Virtuales en Pantalla, Teclado Físico y Ratón**:
+  - Corrección integral del puente de eventos `virtual-gamepad-action` para soportar clics y toques sobre D-Pad y botones táctiles en PC y móviles.
+  - Soporte de teclado físico completo (flechas/WASD para navegación y letras A-Z/0-9 para tipeo) con despachador bidireccional `keydown` y `keyup`.
+  - Captura de ratón mediante `Pointer Lock API` al hacer clic sobre la pantalla de juego para controlar el cursor del sistema educativo.
+- **Exportación Directa de ROM NES 2.0 (`💾 Descargar NES 2.0`)**:
+  - Botón integrado en el banner de Modo Mini PC Vivaz para descargar la ROM convertida lista para emuladores externos de alta precisión como Mesen y FCEUX.
+- **Documentación Técnica de Hardware y Arquitectura**:
+  - Creación del documento exhaustivo `documentacion imporante/PC_VIVAZ_HARDWARE_Y_MAPEO.md` detallando la disparidad entre joysticks serie clásicos y matrices de teclado educativo.
+
 ### 💻 Sistema Autónomo y Emulador de Hardware para PC Vivaz / Educational Computer 2000 ([`PCVIVAZ/`](file:///c:/Projects/DevilutionX/PCVIVAZ), [`PCVIVAZ/pcvivaz_core.js`](file:///c:/Projects/DevilutionX/PCVIVAZ/pcvivaz_core.js), [`PCVIVAZ/index.html`](file:///c:/Projects/DevilutionX/PCVIVAZ/index.html), [`PCVIVAZ/PCVIVAZ_SOLUCION_TECNICA.md`](file:///c:/Projects/DevilutionX/PCVIVAZ/PCVIVAZ_SOLUCION_TECNICA.md))
 - **Emulador Dedicado de Hardware NES 2.0 / UNIF (Mapper 329 / UNL-EDU2000)**:
   - Implementación completa de CPU 6502, PPU, APU y decodificación de 1024 KB PRG-ROM (32 bancos de 32 KB), 32 KB PRG-RAM (SRAM con respaldo de batería en 4 bancos de 8 KB en `$6000-$7FFF`), CHR-RAM y espejo seleccionable.

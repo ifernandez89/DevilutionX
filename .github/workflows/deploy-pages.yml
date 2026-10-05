@@ -42,25 +42,25 @@ jobs:
             echo "Prebuilt binaries not found or force_rebuild=true. Running full compile on runner..."
           fi
 
-      - name: Setup Emscripten (Full Build only)
-        if: steps.check-binaries.outputs.prebuilt != 'true'
+      - name: Setup Emscripten (Full Rebuild only)
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.force_rebuild == true }}
         uses: mymindstorm/setup-emsdk@v14
         with:
           version: 3.1.53
 
-      - name: Install Build Tools & Dependencies (Full Build only)
-        if: steps.check-binaries.outputs.prebuilt != 'true'
+      - name: Install Build Tools & Dependencies (Full Rebuild only)
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.force_rebuild == true }}
         run: |
           sudo apt-get update
           sudo apt-get install -y gettext cmake ninja-build genisoimage
 
-      - name: Prebuild Emscripten Ports Cache (Full Build only)
-        if: steps.check-binaries.outputs.prebuilt != 'true'
+      - name: Prebuild Emscripten Ports Cache (Full Rebuild only)
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.force_rebuild == true }}
         run: |
           embuilder build zlib bzip2 libpng sdl2 sdl2_image sdl2_image_png || embuilder build zlib bzip2 libpng sdl2 sdl2_image
 
-      - name: Configure CMake with Emscripten (Full Build only)
-        if: steps.check-binaries.outputs.prebuilt != 'true'
+      - name: Configure CMake with Emscripten (Full Rebuild only)
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.force_rebuild == true }}
         run: |
           emcmake cmake -B build-web -G Ninja \
             -DCMAKE_BUILD_TYPE=Release \
@@ -75,14 +75,14 @@ jobs:
             -DDEVILUTIONX_SYSTEM_LIBFMT=OFF \
             -DDEVILUTIONX_SYSTEM_BZIP2=OFF
 
-      - name: Build DevilutionX WebAssembly (Full Build only)
-        if: steps.check-binaries.outputs.prebuilt != 'true'
+      - name: Build DevilutionX WebAssembly (Full Rebuild only)
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.force_rebuild == true }}
         run: |
           cmake --build build-web --target devilutionx
           python3 tools/patch_devilutionx_js.py build-web/devilutionx.js Packaging/emscripten/devilutionx.js
 
-      - name: Archive WebAssembly Binaries
-        if: steps.check-binaries.outputs.prebuilt != 'true'
+      - name: Archive WebAssembly Binaries (Full Rebuild only)
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.force_rebuild == true }}
         uses: actions/upload-artifact@v4
         with:
           name: devilutionx-wasm-nightmare

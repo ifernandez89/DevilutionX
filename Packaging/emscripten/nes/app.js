@@ -212,8 +212,64 @@
     }, 20000);
 
     // ==========================================
-    // ROM Preparation & Launching
+    // ROM Preparation, Platform & Capabilities Inspector
     // ==========================================
+    let isComputerModeActive = false;
+    const computerModeBadge = document.getElementById('computerModeBadge');
+
+    function isDesktopPC() {
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent || '') || 
+                         ((navigator.maxTouchPoints || 0) > 1 && window.innerWidth <= 768);
+        return !isMobile && (window.matchMedia ? window.matchMedia('(pointer: fine)').matches : true);
+    }
+
+    function inspectNesRom(arrayBuffer, fileName) {
+        const nameLower = (fileName || '').toLowerCase();
+        const isNameMatch = nameLower.includes('pcvivaz') || nameLower.includes('vivaz') || nameLower.includes('edu2000') || nameLower.includes('educational');
+
+        if (!arrayBuffer || arrayBuffer.byteLength < 16) {
+            return { isComputerRom: isNameMatch, format: 'UNKNOWN', title: fileName };
+        }
+
+        const bytes = new Uint8Array(arrayBuffer);
+        const header4 = String.fromCharCode(bytes[0], bytes[1], bytes[2], bytes[3]);
+
+        if (header4 === 'UNIF') {
+            let offset = 32;
+            let mapr = '';
+            let name = '';
+            while (offset + 8 <= bytes.length) {
+                const chunkId = String.fromCharCode(bytes[offset], bytes[offset+1], bytes[offset+2], bytes[offset+3]);
+                const chunkLen = bytes[offset+4] | (bytes[offset+5] << 8) | (bytes[offset+6] << 16) | (bytes[offset+7] << 24);
+                const dataStart = offset + 8;
+                const dataEnd = Math.min(dataStart + chunkLen, bytes.length);
+
+                if (chunkId === 'MAPR') {
+                    mapr = new TextDecoder().decode(bytes.slice(dataStart, dataEnd)).trim().replace(/\0/g, '');
+                } else if (chunkId === 'NAME') {
+                    name = new TextDecoder().decode(bytes.slice(dataStart, dataEnd)).trim().replace(/\0/g, '');
+                }
+                offset += 8 + chunkLen;
+            }
+
+            const isEdu = mapr.includes('UNL-EDU2000') || mapr.includes('EDU2000') || name.toLowerCase().includes('educational') || name.toLowerCase().includes('vivaz') || isNameMatch;
+            return { isComputerRom: isEdu, format: 'UNIF', mapper: mapr || 'UNL-EDU2000', title: name || fileName };
+        }
+
+        if (header4 === 'NES\x1A') {
+            const mapperLow = (bytes[6] >> 4) | (bytes[7] & 0xF0);
+            const isNes2 = (bytes[7] & 0x0C) === 0x08;
+            let mapper = mapperLow;
+            if (isNes2) {
+                mapper |= (bytes[8] & 0x0F) << 8;
+            }
+            const isComputerMapper = (mapper === 329 || mapper === 177 || mapper === 35 || isNameMatch);
+            return { isComputerRom: isComputerMapper, format: isNes2 ? 'NES 2.0' : 'iNES', mapper: `Mapper ${mapper}`, title: fileName };
+        }
+
+        return { isComputerRom: isNameMatch, format: 'RAW', mapper: '0', title: fileName };
+    }
+
     async function prepareRomData(romSource, defaultName) {
         let arrayBuffer;
         let baseName = defaultName || 'game';
@@ -234,7 +290,9 @@
             throw new Error('Tipo de ROM desconocido');
         }
 
-        return new File([arrayBuffer], baseName, { type: 'application/octet-stream' });
+        const romInfo = inspectNesRom(arrayBuffer, baseName);
+        const file = new File([arrayBuffer], baseName, { type: 'application/octet-stream' });
+        return { file, romInfo };
     }
 
     async function launchRom(romSource, romName) {
@@ -264,52 +322,128 @@
             canvas.tabIndex = 0;
             canvasContainer.insertBefore(canvas, scanlinesOverlay);
 
-            const romFile = await prepareRomData(romSource, romName);
+            const { file: romFile, romInfo } = await prepareRomData(romSource, romName);
+            const onDesktopPC = isDesktopPC();
 
-            // RetroArch configuration for NES (High Performance 60 FPS)
-            const retroarchConfig = {
-                video_vsync: 'true',
-                video_threaded: 'false',
-                video_smooth: 'false',
-                video_max_swapchain_images: '2',
-                video_frame_delay: '0',
-                audio_enable: 'true',
-                audio_sync: 'true',
-                audio_latency: '64',
-                autosave_interval: '10',
-                savestate_auto_load: 'false',
-                input_autodetect_enable: 'true',
+            // Check if this ROM is PC Vivaz / Computer Mode and running on PC
+            if (romInfo.isComputerRom && onDesktopPC) {
+                isComputerModeActive = true;
+                if (computerModeBadge) computerModeBadge.style.display = 'flex';
+            } else {
+                isComputerModeActive = false;
+                if (computerModeBadge) computerModeBadge.style.display = 'none';
+            }
 
-                // D-Pad
-                input_player1_up: 'up',
-                input_player1_down: 'down',
-                input_player1_left: 'left',
-                input_player1_right: 'right',
+            // Configure RetroArch & Core specifically for the detected ROM & Platform
+            let retroarchConfig;
+            let retroarchCoreConfig;
+            let primaryCore;
 
-                // NES Buttons: B -> 'z' / 'a', A -> 'x' / 's'
-                // RetroPad Y/B and B/A mappings
-                input_player1_y: 'z',
-                input_player1_b: 'z',
-                input_player1_a: 'x',
-                input_player1_x: 'x',
+            if (isComputerModeActive) {
+                // ==========================================
+                // EXCLUSIVE PC VIVAZ COMPUTER MODE (PC ONLY)
+                // ==========================================
+                primaryCore = 'fceumm'; // FCEUmm has native UNL-EDU2000 + Subor Keyboard & Mouse support
+                retroarchConfig = {
+                    video_vsync: 'true',
+                    video_threaded: 'false',
+                    video_smooth: 'false',
+                    video_max_swapchain_images: '2',
+                    video_frame_delay: '0',
+                    audio_enable: 'true',
+                    audio_sync: 'true',
+                    audio_latency: '64',
+                    autosave_interval: '10',
+                    savestate_auto_load: 'false',
+                    input_autodetect_enable: 'true',
 
-                // Start & Select
-                input_player1_start: 'enter',
-                input_player1_select: 'shift'
-            };
+                    // Enable Game Focus & Subor Matrix Keyboard + Mouse
+                    input_auto_game_focus: '1',
+                    input_game_focus_toggle: 'scroll_lock',
+                    input_libretro_device_p1: '515', // Subor / Family Keyboard
+                    input_libretro_device_p2: '2',   // Mouse
+                    input_player1_mouse_index: '0',
+                    input_player2_mouse_index: '0',
+                    input_enable_hotkey: 'nul',
 
-            const retroarchCoreConfig = {
-                nestopia_ram_power_state: '0x00',
-                nestopia_genie_distortion: 'disabled',
-                fceumm_ram_power_state: '0x00',
-                fceumm_nospritelimit: 'disabled'
-            };
+                    // Disable single-key gamepad letter hotkeys so typing is 100% clean
+                    input_player1_y: 'nul',
+                    input_player1_b: 'nul',
+                    input_player1_a: 'nul',
+                    input_player1_x: 'nul',
+                    input_player1_start: 'nul',
+                    input_player1_select: 'nul',
+                    input_player1_up: 'nul',
+                    input_player1_down: 'nul',
+                    input_player1_left: 'nul',
+                    input_player1_right: 'nul'
+                };
+
+                retroarchCoreConfig = {
+                    fceumm_input_p1: 'subor_keyboard',
+                    fceumm_input_p2: 'mouse',
+                    fceumm_zapper_mode: 'mouse',
+                    fceumm_mouse_sensitivity: '100',
+                    fceumm_ram_power_state: '0x00',
+                    fceumm_nospritelimit: 'disabled'
+                };
+
+                // Enable pointer lock on canvas click in Computer Mode
+                canvas.addEventListener('click', () => {
+                    if (isComputerModeActive && canvas.requestPointerLock) {
+                        canvas.requestPointerLock();
+                    }
+                    focusGameCanvas();
+                });
+
+            } else {
+                // ==========================================
+                // STANDARD NES GAMEPAD MODE (GAMES & MOBILE)
+                // ==========================================
+                primaryCore = 'nestopia';
+                retroarchConfig = {
+                    video_vsync: 'true',
+                    video_threaded: 'false',
+                    video_smooth: 'false',
+                    video_max_swapchain_images: '2',
+                    video_frame_delay: '0',
+                    audio_enable: 'true',
+                    audio_sync: 'true',
+                    audio_latency: '64',
+                    autosave_interval: '10',
+                    savestate_auto_load: 'false',
+                    input_autodetect_enable: 'true',
+
+                    // D-Pad
+                    input_player1_up: 'up',
+                    input_player1_down: 'down',
+                    input_player1_left: 'left',
+                    input_player1_right: 'right',
+
+                    // NES Buttons: B -> 'z' / 'a', A -> 'x' / 's'
+                    input_player1_y: 'z',
+                    input_player1_b: 'z',
+                    input_player1_a: 'x',
+                    input_player1_x: 'x',
+
+                    // Start & Select
+                    input_player1_start: 'enter',
+                    input_player1_select: 'shift'
+                };
+
+                retroarchCoreConfig = {
+                    nestopia_ram_power_state: '0x00',
+                    nestopia_genie_distortion: 'disabled',
+                    fceumm_ram_power_state: '0x00',
+                    fceumm_nospritelimit: 'disabled'
+                };
+            }
 
             // Check if saved SRAM battery exists in IndexedDB for this ROM
             const existingSram = await retrieveSaveState(`nes_sram_${romName}`);
 
             const launchOptions = {
-                core: 'nestopia',
+                core: primaryCore,
                 rom: romFile,
                 element: canvas,
                 retroarchConfig,
@@ -317,32 +451,32 @@
                 ...(existingSram ? { sram: existingSram } : {})
             };
 
-            // Launch with local Nestopia core first (100% Offline)
+            // Launch emulator with appropriate core resolution
             try {
-                currentEmulator = await Nostalgist.launch({
-                    ...launchOptions,
-                    resolveCoreJs() {
-                        return 'core/nestopia_libretro.js';
-                    },
-                    resolveCoreWasm() {
-                        return 'core/nestopia_libretro.wasm';
-                    }
-                });
-            } catch (nestopiaErr) {
-                console.warn('[NES WASM] Error con Nestopia local, intentando FCEUmm local:', nestopiaErr);
+                if (primaryCore === 'fceumm') {
+                    currentEmulator = await Nostalgist.launch({
+                        ...launchOptions,
+                        resolveCoreJs() { return 'core/fceumm_libretro.js'; },
+                        resolveCoreWasm() { return 'core/fceumm_libretro.wasm'; }
+                    });
+                } else {
+                    currentEmulator = await Nostalgist.launch({
+                        ...launchOptions,
+                        resolveCoreJs() { return 'core/nestopia_libretro.js'; },
+                        resolveCoreWasm() { return 'core/nestopia_libretro.wasm'; }
+                    });
+                }
+            } catch (primaryErr) {
+                console.warn(`[NES WASM] Fallo al iniciar con ${primaryCore}, intentando fallback FCEUmm:`, primaryErr);
                 try {
                     currentEmulator = await Nostalgist.launch({
                         ...launchOptions,
                         core: 'fceumm',
-                        resolveCoreJs() {
-                            return 'core/fceumm_libretro.js';
-                        },
-                        resolveCoreWasm() {
-                            return 'core/fceumm_libretro.wasm';
-                        }
+                        resolveCoreJs() { return 'core/fceumm_libretro.js'; },
+                        resolveCoreWasm() { return 'core/fceumm_libretro.wasm'; }
                     });
                 } catch (fceuErr) {
-                    console.warn('[NES WASM] Error con núcleos locales, intentando fallback en línea:', fceuErr);
+                    console.warn('[NES WASM] Intentando fallback online:', fceuErr);
                     currentEmulator = await Nostalgist.launch({
                         ...launchOptions,
                         core: 'fceumm'
@@ -353,7 +487,12 @@
             isPaused = false;
             updatePauseBtnUI();
             hideLoading();
-            showToast(`🔴 ${romName} en ejecución (60 FPS)`, '▶');
+
+            if (isComputerModeActive) {
+                showToast(`💻 Mini PC Vivaz iniciada: Teclado QWERTY y Ratón activos`, '⌨️', 5000);
+            } else {
+                showToast(`🔴 ${romName} en ejecución (60 FPS)`, '▶');
+            }
 
             // Focus canvas
             setTimeout(() => {
@@ -638,7 +777,23 @@
     };
 
     window.addEventListener('keydown', (e) => {
-        // Global hotkeys
+        // In Computer Mode on PC, let all alphanumeric/typing keys pass untouched to the Subor/Educational matrix!
+        if (isComputerModeActive && isDesktopPC()) {
+            // Only allow F5 and F7 for save/load, allow all other keys to type cleanly
+            if (e.key === 'F5') {
+                e.preventDefault();
+                if (saveStateBtn) saveStateBtn.click();
+                return;
+            }
+            if (e.key === 'F7') {
+                e.preventDefault();
+                if (loadStateBtn) loadStateBtn.click();
+                return;
+            }
+            return;
+        }
+
+        // Standard NES Gamepad Mode: Global hotkeys
         if (e.key === 'F5') {
             e.preventDefault();
             if (saveStateBtn) saveStateBtn.click();

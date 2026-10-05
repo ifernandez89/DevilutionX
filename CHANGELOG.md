@@ -7,27 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-### 🖥️ Feature — Soporte Exclusivo para NES PC Vivaz / Educational Computer 2000 en PC (2026-10-05)
+### 🖥️ Feature — Soporte Exclusivo para NES PC Vivaz / Educational Computer 2000 en PC (2026-10-05) ([`Packaging/emscripten/nes/app.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/nes/app.js), [`Packaging/emscripten/nes/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/nes/index.html), [`Packaging/emscripten/nes/style.css`](file:///c:/Projects/DevilutionX/Packaging/emscripten/nes/style.css), [`Packaging/minixp-wasm/app.js`](file:///c:/Projects/DevilutionX/Packaging/minixp-wasm/app.js))
 
-#### 1. Detección Inteligente de Formato & Mapper
-- **UNIF & NES 2.0 Parser (`NesRomInspector`)**:
-  - Implementación de análisis en tiempo real de contenedores binarios UNIF v7 (`UNL-EDU2000`, `Educational Computer 2000`) y cabeceras NES 2.0 (Mapper 329, 32 KB PRG-RAM con respaldo de batería / SRAM, 8 KB CHR-RAM).
-  - Discriminación automática entre ROMs de tipo **Mini Computadora Personal** (`isComputer: true`) y ROMs convencionales de **Juegos NES** (`isComputer: false`).
+#### 1. Detección Inteligente de Formato & Mapper (`inspectNesRom` / `NesRomInspector`)
+- Implementación de análisis en tiempo real de contenedores binarios UNIF v7 (`UNL-EDU2000`, `Educational Computer 2000`) y cabeceras NES 2.0 (Mapper 329, 32 KB PRG-RAM con respaldo de batería / SRAM, 8 KB CHR-RAM).
+- Discriminación automática entre ROMs de tipo **Mini Computadora Personal** (`isComputer: true`) y ROMs convencionales de **Juegos NES** (`isComputer: false`).
 
-#### 2. Ruteador de Entradas Condicional y Adaptativo (`NesComputerInputAdapter`)
+#### 2. Ruteador de Entradas Condicional y Adaptativo en Emulador NES Web (FCEUmm WASM)
 - **Modo Computadora Exclusivo en Desktop PC**:
-  - **Reconocimiento de Plataforma (`PlatformDetector`)**: Se activa única y exclusivamente cuando el entorno es una PC de escritorio con teclado físico y ratón (`pointer: fine`), garantizando que **no interfiera ni altere el comportamiento en dispositivos móviles**.
-  - **Matriz de Teclado QWERTY Completo**: Mapeo transparente de eventos `keydown`/`keyup` del DOM hacia la matriz de 13 filas de la arquitectura Subor / Educational Computer 2000 ($4016/$4017), permitiendo escritura fluida en procesadores de texto, hojas de cálculo (*Hoja Mágica 2.1*), mecanografía y agendas.
-  - **Controlador de Ratón Serie**: Captura de coordenadas y deltas relativos ($X, Y$) junto con botones izquierdo y derecho sobre el lienzo, transmitidos secuencialmente mediante el protocolo serie en $4016/$4017.
-  - **Limpieza de Interfaz**: En PC de escritorio con PC Vivaz, el overlay táctil de gamepad se oculta automáticamente para ofrecer una experiencia limpia de estación de trabajo retro.
+  - **Reconocimiento de Plataforma (`isDesktopPC`)**: Se activa única y exclusivamente cuando el entorno es una PC de escritorio con teclado físico y ratón (`pointer: fine`), garantizando que **no interfiera ni altere el comportamiento en dispositivos móviles**.
+  - **Activación de FCEUmm con Periféricos Subor / Educational**: Configuración dinámica de `input_auto_game_focus = "1"`, `input_libretro_device_p1 = "515"` (Teclado Subor / Family Keyboard) y `input_libretro_device_p2 = "2"` (Ratón NES) con opciones de núcleo `fceumm_input_p1 = "subor_keyboard"`, `fceumm_input_p2 = "mouse"`, `fceumm_zapper_mode = "mouse"` y `fceumm_mouse_sensitivity = "100"`.
+  - **Desvinculación de Atajos que Bloqueaban el Teclado**: Se anularon los mapeos de teclas únicas del gamepad (`Z`, `X`, `A`, `S`, `Enter`, `Shift`, `P` para pausa, `R` para reset) durante el Modo Computadora, permitiendo la escritura libre y fluida de cualquier texto, código o fórmula en *Hoja Mágica 2.1* y *PC Escribiendo*.
+  - **Captura de Puntero del Ratón (Pointer Lock)**: Clic en el canvas para capturar el ratón con precisión sobre la interfaz gráfica de PC Vivaz.
+  - **Banner de Estado Interactivo**: Notificación visual animada `💻 Modo Mini PC Vivaz Activo` informando el estado de periféricos.
 
 #### 3. Compatibilidad 100% Preservada para Juegos NES y Dispositivos Móviles
-- **Juegos Clásicos NES**: Al cargar cualquier juego de NES tradicional en PC o móvil, se mantiene el esquema clásico de Gamepad (D-Pad, A, B, Select, Start), sin capturar el ratón ni interferir con la navegación estándar.
+- **Juegos Clásicos NES**: Al cargar cualquier juego tradicional en PC o móvil, se inicializa el motor Nestopia a 60 FPS con el esquema clásico de Gamepad (D-Pad, A, B, Select, Start), sin capturar el ratón ni interferir con la navegación estándar.
 - **Plataforma Móvil**: Todos los controles táctiles existentes continúan operando sin modificaciones.
-
-#### 4. Selector de Sistema & Drag-and-Drop
-- Se añadieron los perfiles dedicados `🖥️ NES PC Vivaz` y `🎮 NES Clásica` en el selector de sistemas de la barra de herramientas.
-- Soporte para arrastrar y soltar (.nes / .unif) o cargarlos mediante el botón interactivo `🕹️ Cargar ROM NES`.
 
 ---
 

@@ -164,6 +164,37 @@ header {
     margin-bottom: 32px;
 }
 
+/* Computer Mode Active Banner */
+.computer-mode-banner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: linear-gradient(135deg, rgba(30, 58, 138, 0.4) 0%, rgba(88, 28, 135, 0.4) 100%);
+    border: 1px solid rgba(147, 197, 253, 0.4);
+    border-radius: var(--radius-md);
+    padding: 10px 18px;
+    color: #e0f2fe;
+    font-size: 13px;
+    line-height: 1.4;
+    box-shadow: 0 4px 16px rgba(14, 165, 233, 0.2);
+    width: 100%;
+    max-width: 980px;
+    animation: computerBannerGlow 3s ease-in-out infinite alternate;
+}
+
+.computer-mode-banner .badge-icon {
+    font-size: 20px;
+}
+
+.computer-mode-banner strong {
+    color: #38bdf8;
+}
+
+@keyframes computerBannerGlow {
+    0% { border-color: rgba(147, 197, 253, 0.4); box-shadow: 0 4px 16px rgba(14, 165, 233, 0.2); }
+    100% { border-color: rgba(192, 132, 252, 0.6); box-shadow: 0 4px 24px rgba(168, 85, 247, 0.35); }
+}
+
 /* Screen Card with Dynamic Sizing (Identical to Sega Genesis standard) */
 .screen-card {
     background: #000000;

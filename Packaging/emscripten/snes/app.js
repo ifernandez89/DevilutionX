@@ -613,20 +613,99 @@
         });
     }
 
-    // Keyboard Shortcuts (F5 = Save, F7 = Load, P = Pause, R = Reset)
+    // Keyboard & Virtual Gamepad Key Map for SNES
+    const KEY_ACTIONS = {
+        'ArrowUp': 'up',
+        'KeyW': 'up',
+        'ArrowDown': 'down',
+        'KeyS': 'down',
+        'ArrowLeft': 'left',
+        'KeyA': 'left',
+        'ArrowRight': 'right',
+        'KeyD': 'right',
+
+        // SNES B, A, Y, X
+        'KeyX': 'b',
+        'KeyC': 'a',
+        'KeyZ': 'y',
+        'KeyV': 'x',
+
+        // Shoulder L / R
+        'KeyQ': 'l',
+        'KeyE': 'r',
+
+        // Start & Select
+        'Enter': 'start',
+        'NumpadEnter': 'start',
+        'ShiftLeft': 'select',
+        'ShiftRight': 'select',
+        'Tab': 'select'
+    };
+
+    // Keyboard Shortcuts (F5 = Save, F7 = Load, P = Pause, R = Reset) & Game Controls
     window.addEventListener('keydown', (e) => {
         if (!currentEmulator) return;
 
         if (e.key === 'F5') {
             e.preventDefault();
             if (saveStateBtn) saveStateBtn.click();
+            return;
         } else if (e.key === 'F7') {
             e.preventDefault();
             if (loadStateBtn) loadStateBtn.click();
-        } else if ((e.key === 'p' || e.key === 'P') && e.ctrlKey) {
-            e.preventDefault();
-            if (pauseResumeBtn) pauseResumeBtn.click();
+            return;
+        } else if (e.key === 'p' || e.key === 'P') {
+            if (document.activeElement?.tagName !== 'INPUT') {
+                e.preventDefault();
+                if (pauseResumeBtn) pauseResumeBtn.click();
+                return;
+            }
         }
+
+        if (isPaused) return;
+
+        const action = KEY_ACTIONS[e.code];
+        if (action) {
+            e.preventDefault();
+            try {
+                currentEmulator.pressDown(action);
+            } catch (_) {
+                try { currentEmulator.keyboardDown(e.code); } catch (_) {}
+            }
+        }
+    }, { passive: false });
+
+    window.addEventListener('keyup', (e) => {
+        if (!currentEmulator) return;
+
+        const action = KEY_ACTIONS[e.code];
+        if (action) {
+            e.preventDefault();
+            try {
+                currentEmulator.pressUp(action);
+            } catch (_) {
+                try { currentEmulator.keyboardUp(e.code); } catch (_) {}
+            }
+        }
+    }, { passive: false });
+
+    // Virtual Gamepad integration (SNES)
+    window.addEventListener('virtual-gamepad-action', (e) => {
+        if (!currentEmulator || isPaused) return;
+        const { action, isDown } = e.detail || {};
+        if (!action) return;
+
+        let mappedAction = action;
+        if (action === 'c') mappedAction = 'y';
+        if (action === 'x') mappedAction = 'x';
+
+        try {
+            if (isDown) {
+                currentEmulator.pressDown(mappedAction);
+            } else {
+                currentEmulator.pressUp(mappedAction);
+            }
+        } catch (_) {}
     });
 
     // ==========================================

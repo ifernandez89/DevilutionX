@@ -337,7 +337,7 @@
             // Configure RetroArch & Core specifically for the detected ROM & Platform
             let retroarchConfig;
             let retroarchCoreConfig;
-            let primaryCore;
+            let primaryCore = 'nestopia';
 
             if (isComputerModeActive) {
                 // ==========================================
@@ -365,8 +365,12 @@
                     input_player1_right: 'right',
                     input_player1_a: 'x',
                     input_player1_b: 'z',
+                    input_player1_y: 'a',
+                    input_player1_x: 's',
                     input_player1_start: 'enter',
-                    input_player1_select: 'shift',
+                    input_player1_select: 'rshift',
+                    input_player1_l: 'q',
+                    input_player1_r: 'w',
 
                     // Port 2: Mouse Peripheral for Educational Computer 2000
                     input_libretro_device_p2: '2',
@@ -386,7 +390,7 @@
                 // Enable pointer lock and active canvas focus on click
                 canvas.addEventListener('click', () => {
                     if (canvas.requestPointerLock) {
-                        canvas.requestPointerLock();
+                        try { canvas.requestPointerLock(); } catch (_) {}
                     }
                     focusGameCanvas();
                 });
@@ -416,14 +420,16 @@
                     input_player1_right: 'right',
 
                     // NES Buttons: B -> 'z' / 'a', A -> 'x' / 's'
-                    input_player1_y: 'z',
                     input_player1_b: 'z',
                     input_player1_a: 'x',
-                    input_player1_x: 'x',
+                    input_player1_y: 'a',
+                    input_player1_x: 's',
+                    input_player1_l: 'q',
+                    input_player1_r: 'w',
 
                     // Start & Select
                     input_player1_start: 'enter',
-                    input_player1_select: 'shift'
+                    input_player1_select: 'rshift'
                 };
 
                 retroarchCoreConfig = {
@@ -745,55 +751,43 @@
         launchRom(file, file.name);
     }
 
-    // Direct Dual-Keyboard Dispatcher for NES
+    // Direct Dual-Keyboard & Virtual Gamepad Dispatcher for NES
     const KEY_ACTIONS = {
         'ArrowUp': 'up',
+        'KeyW': 'up',
         'ArrowDown': 'down',
+        'KeyS': 'down',
         'ArrowLeft': 'left',
+        'KeyA': 'left',
         'ArrowRight': 'right',
+        'KeyD': 'right',
 
-        // NES B button: Z or A
+        // NES B button: Z, J
         'KeyZ': 'b',
-        'KeyA': 'b',
+        'KeyJ': 'b',
 
-        // NES A button: X or S
+        // NES A button: X, K, Space
         'KeyX': 'a',
-        'KeyS': 'a',
+        'KeyK': 'a',
+        'Space': 'a',
 
-        // Turbo buttons
+        // Turbos / Shoulders
         'KeyQ': 'y',
-        'KeyW': 'x',
+        'KeyE': 'x',
 
         // Start & Select
         'Enter': 'start',
+        'NumpadEnter': 'start',
         'ShiftLeft': 'select',
         'ShiftRight': 'select',
-        'Tab': 'select'
+        'Tab': 'select',
+        'KeyC': 'select'
     };
 
     window.addEventListener('keydown', (e) => {
-        const canvas = document.getElementById('nes-screen');
+        if (!currentEmulator) return;
 
-        // In Computer Mode on PC, let all keys pass directly to the emulated PC canvas
-        if (isComputerModeActive && isDesktopPC()) {
-            if (canvas && document.activeElement !== canvas) {
-                canvas.focus();
-            }
-            // Only allow F5 and F7 for save/load, allow all other keys to type/navigate cleanly
-            if (e.key === 'F5') {
-                e.preventDefault();
-                if (saveStateBtn) saveStateBtn.click();
-                return;
-            }
-            if (e.key === 'F7') {
-                e.preventDefault();
-                if (loadStateBtn) loadStateBtn.click();
-                return;
-            }
-            return;
-        }
-
-        // Standard NES Gamepad Mode: Global hotkeys
+        // Global hotkeys (Save / Load / Pause / Reset)
         if (e.key === 'F5') {
             e.preventDefault();
             if (saveStateBtn) saveStateBtn.click();
@@ -805,26 +799,85 @@
             return;
         }
         if (e.key === 'p' || e.key === 'P') {
-            if (currentEmulator && document.activeElement !== fileInput) {
+            if (document.activeElement !== fileInput) {
                 e.preventDefault();
                 pauseResumeBtn.click();
                 return;
             }
         }
         if (e.key === 'r' || e.key === 'R') {
-            if (currentEmulator && document.activeElement !== fileInput) {
+            if (document.activeElement !== fileInput) {
                 e.preventDefault();
                 resetBtn.click();
                 return;
             }
         }
 
-        // NES Controller Key forwarding
-        if (currentEmulator && !isPaused && KEY_ACTIONS[e.code]) {
-            const canvas = document.getElementById('nes-screen');
-            if (canvas && document.activeElement !== canvas) {
-                canvas.focus();
+        if (isPaused) return;
+
+        // Focus canvas if needed
+        const canvas = document.getElementById('nes-screen');
+        if (canvas && document.activeElement !== canvas && document.activeElement !== fileInput) {
+            canvas.focus();
+        }
+
+        const action = KEY_ACTIONS[e.code];
+        if (action) {
+            e.preventDefault();
+            try {
+                currentEmulator.pressDown(action);
+            } catch (_) {
+                try { currentEmulator.keyboardDown(e.code); } catch (_) {}
             }
+        } else {
+            // Forward raw key code for typing in educational / computer software (A-Z, 0-9, Backspace, etc.)
+            try {
+                currentEmulator.keyboardDown(e.code);
+            } catch (_) {}
+        }
+    }, { passive: false });
+
+    window.addEventListener('keyup', (e) => {
+        if (!currentEmulator) return;
+
+        const action = KEY_ACTIONS[e.code];
+        if (action) {
+            e.preventDefault();
+            try {
+                currentEmulator.pressUp(action);
+            } catch (_) {
+                try { currentEmulator.keyboardUp(e.code); } catch (_) {}
+            }
+        } else {
+            try {
+                currentEmulator.keyboardUp(e.code);
+            } catch (_) {}
+        }
+    }, { passive: false });
+
+    // Virtual Gamepad integration (On-screen mobile touch HUD & mouse-clickable buttons)
+    window.addEventListener('virtual-gamepad-action', (e) => {
+        if (!currentEmulator || isPaused) return;
+        const { action, isDown } = e.detail || {};
+        if (!action) return;
+
+        let mappedAction = action;
+        if (action === 'c') mappedAction = 'b';
+        if (action === 'x') mappedAction = 'a';
+        if (action === 'l') mappedAction = 'b';
+        if (action === 'r') mappedAction = 'a';
+
+        try {
+            if (isDown) {
+                currentEmulator.pressDown(mappedAction);
+            } else {
+                currentEmulator.pressUp(mappedAction);
+            }
+        } catch (_) {
+            try {
+                if (isDown) currentEmulator.keyboardDown(action);
+                else currentEmulator.keyboardUp(action);
+            } catch (_) {}
         }
     });
 

@@ -215,12 +215,164 @@
     // ROM Preparation, Platform & Capabilities Inspector
     // ==========================================
     let isComputerModeActive = false;
+    let convertedNes2Blob = null;
+    let convertedNes2FileName = 'pcvivaz_nes2.nes';
     const computerModeBadge = document.getElementById('computerModeBadge');
+    const computerModeText = document.getElementById('computerModeText');
+    const btnDownloadNes2 = document.getElementById('btnDownloadNes2');
+
+    if (btnDownloadNes2) {
+        btnDownloadNes2.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            if (!convertedNes2Blob) {
+                showToast('No hay una ROM NES 2.0 en memoria para descargar', '⚠️');
+                return;
+            }
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(convertedNes2Blob);
+            a.download = convertedNes2FileName;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+            showToast('ROM NES 2.0 descargada con éxito', '💾');
+        });
+    }
 
     function isDesktopPC() {
         const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent || '') || 
                          ((navigator.maxTouchPoints || 0) > 1 && window.innerWidth <= 768);
         return !isMobile && (window.matchMedia ? window.matchMedia('(pointer: fine)').matches : true);
+    }
+
+    function convertUnifEdu2000ToNes2(arrayBuffer, fileName) {
+        if (!arrayBuffer || arrayBuffer.byteLength < 32) return null;
+        const bytes = new Uint8Array(arrayBuffer);
+        const magic = String.fromCharCode(bytes[0], bytes[1], bytes[2], bytes[3]);
+        if (magic !== 'UNIF') return null;
+
+        let offset = 32;
+        let mapr = '';
+        let name = '';
+        let hasBattery = true; // PC Vivaz contains 32 KB battery-backed SRAM
+        let mirror = 0; // 0 = horizontal, 1 = vertical
+        const prgChunks = [];
+        const chrChunks = [];
+
+        while (offset + 8 <= bytes.length) {
+            const chunkId = String.fromCharCode(bytes[offset], bytes[offset+1], bytes[offset+2], bytes[offset+3]);
+            const chunkLen = bytes[offset+4] | (bytes[offset+5] << 8) | (bytes[offset+6] << 16) | (bytes[offset+7] << 24);
+            const dataStart = offset + 8;
+            const dataEnd = Math.min(dataStart + chunkLen, bytes.length);
+
+            if (chunkId === 'MAPR') {
+                mapr = new TextDecoder().decode(bytes.slice(dataStart, dataEnd)).trim().replace(/\0/g, '');
+            } else if (chunkId === 'NAME') {
+                name = new TextDecoder().decode(bytes.slice(dataStart, dataEnd)).trim().replace(/\0/g, '');
+            } else if (chunkId === 'BATR') {
+                hasBattery = true;
+            } else if (chunkId === 'MIRR') {
+                mirror = bytes[dataStart] || 0;
+            } else if (chunkId.startsWith('PRG')) {
+                prgChunks.push(bytes.slice(dataStart, dataEnd));
+            } else if (chunkId.startsWith('CHR')) {
+                chrChunks.push(bytes.slice(dataStart, dataEnd));
+            }
+            offset += 8 + chunkLen;
+        }
+
+        const nameLower = (fileName || '').toLowerCase();
+        const isEdu = mapr.includes('UNL-EDU2000') || mapr.includes('EDU2000') || 
+                      name.toLowerCase().includes('educational') || name.toLowerCase().includes('vivaz') ||
+                      nameLower.includes('pcvivaz') || nameLower.includes('vivaz') || nameLower.includes('edu2000');
+
+        if (!isEdu || prgChunks.length === 0) return null;
+
+        // Calculate total PRG size
+        let totalPrgSize = 0;
+        for (let i = 0; i < prgChunks.length; i++) totalPrgSize += prgChunks[i].length;
+
+        // Calculate total CHR size (EDU2000 uses 8KB CHR-RAM)
+        let totalChrSize = 0;
+        for (let i = 0; i < chrChunks.length; i++) totalChrSize += chrChunks[i].length;
+
+        // Build official NES 2.0 Header (16 bytes)
+        const header = new Uint8Array(16);
+        header[0] = 0x4E; // 'N'
+        header[1] = 0x45; // 'E'
+        header[2] = 0x53; // 'S'
+        header[3] = 0x1A; // MS-DOS EOF
+
+        // PRG-ROM size in 16KB units
+        const prgUnits = Math.ceil(totalPrgSize / 16384);
+        header[4] = prgUnits & 0xFF;
+
+        // CHR-ROM size in 8KB units (0 if CHR-RAM)
+        const chrUnits = Math.ceil(totalChrSize / 8192);
+        header[5] = chrUnits & 0xFF;
+
+        // Mapper 329 = 0x149
+        // Byte 6: Mapper D0-D3 (9) | Battery bit (2) | Mirroring bit
+        const mapperLow = 329 & 0x0F; // 9
+        const mirrorBit = (mirror === 1) ? 1 : 0;
+        const batteryBit = hasBattery ? 2 : 0;
+        header[6] = (mapperLow << 4) | batteryBit | mirrorBit; // 0x92
+
+        // Byte 7: Mapper D4-D7 (4) | NES 2.0 identifier (bits 2-3 = 0x08)
+        const mapperMid = (329 >> 4) & 0x0F; // 4
+        header[7] = (mapperMid << 4) | 0x08; // 0x48
+
+        // Byte 8: Mapper D8-D11 (1) | Submapper (0)
+        const mapperHigh = (329 >> 8) & 0x0F; // 1
+        header[8] = mapperHigh; // 0x01
+
+        // Byte 9: Upper bits of PRG/CHR size
+        header[9] = ((prgUnits >> 8) & 0x0F) | (((chrUnits >> 8) & 0x0F) << 4);
+
+        // Byte 10: PRG-RAM / PRG-NVRAM size: 32 KB battery-backed SRAM at $6000
+        // 64 << 9 = 32768 bytes -> 9 in upper nibble = 0x90
+        header[10] = 0x90;
+
+        // Byte 11: CHR-RAM size: 8 KB (64 << 7 = 8192 bytes -> 7 in lower nibble = 0x07)
+        header[11] = 0x07;
+
+        // Byte 12: Timing / TV system (0 = NTSC, 1 = PAL/Dendy)
+        header[12] = 0x01; // PAL
+
+        // Byte 13: Extended Console Type (0 = standard NES/Famicom)
+        header[13] = 0x00;
+
+        // Byte 14: Misc ROMs (0)
+        header[14] = 0x00;
+
+        // Byte 15: Default Expansion Device: 0x27 (Subor Keyboard + Subor Mouse)
+        header[15] = 0x27;
+
+        // Combine Header + PRG ROM + CHR ROM
+        const nes2Buffer = new Uint8Array(16 + totalPrgSize + totalChrSize);
+        nes2Buffer.set(header, 0);
+
+        let writeOffset = 16;
+        for (let i = 0; i < prgChunks.length; i++) {
+            nes2Buffer.set(prgChunks[i], writeOffset);
+            writeOffset += prgChunks[i].length;
+        }
+        for (let i = 0; i < chrChunks.length; i++) {
+            nes2Buffer.set(chrChunks[i], writeOffset);
+            writeOffset += chrChunks[i].length;
+        }
+
+        return {
+            buffer: nes2Buffer.buffer,
+            romInfo: {
+                isComputerRom: true,
+                format: 'NES 2.0 (Auto-convertido de UNIF)',
+                mapper: 'Mapper 329 (UNL-EDU2000)',
+                title: name || 'PC Vivaz (Ordenador Educativo)',
+                expansionDevice: '0x27 (Subor Keyboard + Mouse)'
+            }
+        };
     }
 
     function inspectNesRom(arrayBuffer, fileName) {
@@ -290,7 +442,28 @@
             throw new Error('Tipo de ROM desconocido');
         }
 
+        // Automatic transparent conversion of UNIF PC Vivaz to NES 2.0 with expansion device
+        const converted = convertUnifEdu2000ToNes2(arrayBuffer, baseName);
+        if (converted) {
+            arrayBuffer = converted.buffer;
+            convertedNes2Blob = new Blob([arrayBuffer], { type: 'application/octet-stream' });
+            convertedNes2FileName = baseName.replace(/\.unf$|\.unif$/i, '') + '.nes';
+            if (!convertedNes2FileName.endsWith('.nes')) convertedNes2FileName += '.nes';
+            if (btnDownloadNes2) btnDownloadNes2.style.display = 'inline-flex';
+            const file = new File([arrayBuffer], convertedNes2FileName, { type: 'application/octet-stream' });
+            return { file, romInfo: converted.romInfo };
+        }
+
         const romInfo = inspectNesRom(arrayBuffer, baseName);
+        if (romInfo.isComputerRom) {
+            convertedNes2Blob = new Blob([arrayBuffer], { type: 'application/octet-stream' });
+            convertedNes2FileName = baseName;
+            if (btnDownloadNes2) btnDownloadNes2.style.display = 'inline-flex';
+        } else {
+            convertedNes2Blob = null;
+            if (btnDownloadNes2) btnDownloadNes2.style.display = 'none';
+        }
+
         const file = new File([arrayBuffer], baseName, { type: 'application/octet-stream' });
         return { file, romInfo };
     }
@@ -329,6 +502,9 @@
             if (romInfo.isComputerRom && onDesktopPC) {
                 isComputerModeActive = true;
                 if (computerModeBadge) computerModeBadge.style.display = 'flex';
+                if (computerModeText) {
+                    computerModeText.innerHTML = `<strong>Modo Mini PC Vivaz Activo (${romInfo.format}):</strong> Teclado matricial QWERTY y Ratón serie $4016/$4017 habilitados. Hacé clic en la pantalla para capturar el cursor del ratón (ESC para liberar).`;
+                }
             } else {
                 isComputerModeActive = false;
                 if (computerModeBadge) computerModeBadge.style.display = 'none';
@@ -343,7 +519,7 @@
                 // ==========================================
                 // EXCLUSIVE PC VIVAZ COMPUTER MODE (PC ONLY)
                 // ==========================================
-                primaryCore = 'nestopia'; // Nestopia has native cycle-accurate UNL-EDU2000 board + mouse
+                primaryCore = 'fceumm'; // FCEUmm has native Mapper 329 + Subor Keyboard & Mouse support
                 retroarchConfig = {
                     video_vsync: 'true',
                     video_threaded: 'false',
@@ -375,16 +551,19 @@
                     // Port 2: Mouse Peripheral for Educational Computer 2000
                     input_libretro_device_p2: '2',
                     input_player1_mouse_index: '0',
-                    input_player2_mouse_index: '0'
+                    input_player2_mouse_index: '0',
+
+                    // Port 5 (Famicom Expansion Port in FCEUmm): Subor Keyboard / Auto
+                    input_libretro_device_p5: '1'
                 };
 
                 retroarchCoreConfig = {
-                    nestopia_ram_power_state: '0x00',
-                    nestopia_genie_distortion: 'disabled',
                     fceumm_ram_power_state: '0x00',
                     fceumm_nospritelimit: 'disabled',
                     fceumm_zapper_mode: 'mouse',
-                    fceumm_mouse_sensitivity: '100'
+                    fceumm_mouse_sensitivity: '100',
+                    nestopia_ram_power_state: '0x00',
+                    nestopia_genie_distortion: 'disabled'
                 };
 
                 // Enable pointer lock and active canvas focus on click

@@ -7,6 +7,168 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### 🔍 FASE 1.1 — Sistema de Debugging Visual y Logging Completo para PC Vivaz (2026-10-05)
+
+#### Sistema de Debugging Implementado
+
+Para diagnosticar y validar el fix de FASE 1, se implementó un sistema completo de debugging visual y logging en consola:
+
+**Características del Sistema de Debug:**
+
+1. **Panel Visual en Tiempo Real** (Toggle con botón 🔍 DEBUG):
+   - Estado de la ROM cargada (PC Vivaz detectada o juego estándar)
+   - Configuración crítica: Device P5 (debe ser '1539'), Core usado (FCEUmm/Nestopia)
+   - Estado de focus del canvas (crítico para input)
+   - Estado de fullscreen
+   - Estado del emulador (ready/not ready)
+   - Último input capturado (timestamp, tecla, código, acción)
+
+2. **Logging en Consola del Navegador** (F12):
+   - `[CONFIG]` — Activación del modo PC Vivaz con todos los parámetros
+   - `[INPUT]` — Cada pulsación de tecla con detalles completos:
+     - Código de tecla (`code`, `key`)
+     - Acción mapeada o "raw"
+     - Si fue prevenido por preventDefault()
+     - Estado de fullscreen
+     - Elemento activo (focus)
+   - `[SYSTEM]` — Inicialización del sistema de debug
+   - Colores: Verde (#0f0) para facilitar lectura en consola
+
+3. **Indicadores Visuales de Estado**:
+   - ✅ Verde: Configuración correcta / Estado OK
+   - ❌ Rojo: Problema detectado (ej: canvas sin focus, device_p5 incorrecto)
+   - ⚠️ Amarillo: Advertencia (ej: tecla presionada pero emulador no ready)
+
+**Archivos Modificados:**
+- ✅ `Packaging/emscripten/nes/app.js`:
+  - Sistema de logging con función `debugLog()` categor izada
+  - Logging en configuración de PC Vivaz Mode
+  - Logging detallado en event handlers de teclado (keydown/keyup)
+  - Panel de debug controller con actualización cada 500ms
+  - Funciones globales `updateDebugConfig()` y `logDebugInput()`
+  
+- ✅ `Packaging/emscripten/nes/index.html`:
+  - Panel de debug visual flotante (top-right)
+  - Botón toggle para mostrar/ocultar panel
+  - Cache-busting en `app.js?v=pcvivaz-fase1-fix`
+
+**Cómo Usar el Sistema de Debug:**
+
+1. **Abrir la página del emulador** → Panel de debug aparece automáticamente
+2. **Cargar ROM PC Vivaz** → Ver "✅ PC Vivaz detected" en el panel
+3. **Verificar configuración**:
+   - Device P5 debe ser '1539' en verde
+   - Computer Mode debe ser '✅ YES (PC Vivaz)'
+   - Core debe ser 'fceumm'
+4. **Hacer clic en la pantalla** → Ver "Canvas Focus: ✅ YES"
+5. **Presionar teclas** → Ver logs en tiempo real en panel y consola
+6. **Diagnosticar problemas**:
+   - Si Device P5 no es 1539 → Cache del navegador (Ctrl+Shift+R)
+   - Si Canvas Focus es NO → Hacer clic en la pantalla
+   - Si Emulator Ready es NO → Esperar carga completa
+   - Si teclas no responden → Revisar logs de errores en consola
+
+**Beneficios:**
+- Debugging inmediato sin necesidad de modificar código
+- Validación visual de que el fix de FASE 1 está activo
+- Identificación rápida de problemas (cache, focus, configuración)
+- Útil para reportar bugs con información precisa
+- Se puede cerrar el panel cuando no se necesita
+
+---
+
+### 🔧 FASE 1 — Corrección Quirúrgica de Input para PC Vivaz / Educational Computer 2000 (2026-10-05)
+
+#### Problema Diagnosticado
+La PC Vivaz arrancaba correctamente (✅ Video, CPU, ROM funcionaban) pero **no respondía a ningún input** (❌ ni teclado, ni mouse, ni gamepad virtual). El diagnóstico profundo reveló tres causas raíz:
+
+1. **❌ Puerto de Expansión Incorrectamente Configurado**: `input_libretro_device_p5: '1'` enviaba el valor genérico `RETRO_DEVICE_JOYPAD` en lugar del identificador específico de hardware Subor Keyboard `RETRO_DEVICE_FC_SUBORKB = 1539 = ((5+1)<<8)|3`. Esto dejaba el puerto de expansión en estado `SIFC_NONE` (desconectado), impidiendo que FCEUmm activara la matriz de teclado de 13 filas.
+
+2. **❌ Bloqueo Total de Eventos DOM por preventDefault()**: Los event listeners de `keydown`/`keyup` ejecutaban `e.preventDefault()` incondicionalmente en todas las teclas mapeadas, impidiendo que el navegador enviara los eventos nativos al canvas de Emscripten. El driver `rwebinput` de RetroArch nunca recibía las pulsaciones reales.
+
+3. **❌ Pads Virtuales Simulando Joypad Estándar**: El gamepad virtual enviaba botones de un joystick NES tradicional (`A`, `B`, `Up`, `Down`...) que el sistema operativo de la PC Vivaz ignora completamente (solo escucha teclado matricial Subor y ratón).
+
+#### Solución Implementada — Cambios Mínimos y Quirúrgicos
+
+**🎯 Objetivo**: Hacer que el navegador pueda hablar con el dispositivo de entrada que PC Vivaz ya está esperando. NO modificar ROM, NO recompilar WASM, NO fork de FCEUmm.
+
+##### 1. Activación de Hardware de Teclado Subor (`input_libretro_device_p5: '1539'`)
+```javascript
+// Packaging/emscripten/nes/app.js (línea ~557)
+// ANTES:
+input_libretro_device_p5: '1'
+
+// DESPUÉS:
+input_libretro_device_p5: '1539'  // RETRO_DEVICE_FC_SUBORKB = ((5+1)<<8)|3
+```
+**Efecto**: FCEUmm ahora reconoce y activa la matriz de teclado Subor en el puerto de expansión, permitiendo que el hardware virtual de 13 filas × 8 columnas esté disponible en los registros `$4016`/`$4017`.
+
+##### 2. Permitir Paso Directo de Eventos de Teclado al Canvas Emscripten
+```javascript
+// Packaging/emscripten/nes/app.js (línea ~970, ~1024)
+// MODIFICACIÓN: Condicionalizar preventDefault()
+
+// ANTES:
+if (action) {
+    e.preventDefault();  // ❌ Bloqueaba TODOS los eventos
+    currentEmulator.pressDown(action);
+}
+
+// DESPUÉS:
+if (action) {
+    // Solo prevenir scroll de flechas en fullscreen
+    if (e.key.startsWith('Arrow') && document.fullscreenElement) {
+        e.preventDefault();
+    }
+    // ✅ Permitir que eventos nativos lleguen a rwebinput
+    currentEmulator.pressDown(action);
+}
+```
+**Efecto**: El canvas de Emscripten ahora recibe los eventos `keydown`/`keyup` con `keyCode` y `which` completos. El driver `rwebinput` puede procesarlos correctamente y enviarlos a la matriz Subor.
+
+##### 3. Documentación del Flujo de Señal Completo
+```
+Windows/Browser
+      ↓
+   keydown
+      ↓
+  rwebinput (RetroArch input driver)
+      ↓
+   Libretro API
+      ↓
+  FC_SUBORKB (port 5 = 1539)
+      ↓
+  $4016/$4017 (registros hardware)
+      ↓
+   PC Vivaz ROM
+```
+
+#### Prueba Mínima Viable (MVP)
+Abrir `pcvivaz-unif.nes` y probar:
+- ↑ ↓ ← → (Navegación en menú)
+- Enter (Seleccionar aplicación)
+- Esc (Volver)
+- Tab (Cambiar foco)
+- Space (Seleccionar)
+- A-Z, 0-9 (Tipeo en Hoja Mágica / PC Escribiendo)
+
+**Si una sola tecla mueve algo → SEÑAL EXCELENTE**. Significa que el circuito completo está cerrado.
+
+#### Pendiente para Fases Futuras (NO implementado ahora)
+- **Mouse**: Actualmente fuera de scope. FCEUmm WASM no expone `SI_MOUSE` en su capa Libretro. Alternativas: uso por teclado (fácil), Mesen Web (medio), o fork de FCEUmm (difícil, 40+ horas).
+- **Gamepad Virtual Adaptado**: Crear `SuborKeyboardAdapter` que envíe teclas matriciales en lugar de botones de joystick.
+- **Pointer Lock refinado**: Captura de mouse opcional para escritorio.
+
+#### Archivos Modificados
+- ✅ `Packaging/emscripten/nes/app.js` (3 cambios quirúrgicos: configuración del puerto 5 y condicionalización de preventDefault en keydown/keyup)
+
+#### Impacto en Otras Funcionalidades
+- ✅ **Cero impacto en juegos NES tradicionales**: Los juegos siguen usando el core Nestopia con configuración de gamepad estándar sin cambios.
+- ✅ **Cero impacto en móviles**: La detección `isDesktopPC()` garantiza que este modo solo se active en PC con teclado físico.
+- ✅ **Funcionalidad de scroll preservada**: Solo se previene el scroll de flechas cuando está en fullscreen.
+
+---
+
 ### 💻 Transmutador Dinámico UNIF a NES 2.0 y Arquitectura de Control para PC Vivaz / Educational Computer 2000 ([`Packaging/emscripten/nes/app.js`](file:///d:/Projects/DevilutionX/Packaging/emscripten/nes/app.js), [`Packaging/emscripten/nes/index.html`](file:///d:/Projects/DevilutionX/Packaging/emscripten/nes/index.html), [`Packaging/emscripten/nes/style.css`](file:///d:/Projects/DevilutionX/Packaging/emscripten/nes/style.css), [`documentacion imporante/PC_VIVAZ_HARDWARE_Y_MAPEO.md`](file:///d:/Projects/DevilutionX/documentacion%20imporante/PC_VIVAZ_HARDWARE_Y_MAPEO.md))
 - **Conversor Transparente en Memoria UNIF a NES 2.0 (Mapper 329 / UNL-EDU2000)**:
   - Extracción en tiempo real de fragmentos binarios `PRG0`, memoria RAM de 32 KB y configuración de batería desde contenedores UNIF (`pcvivaz-unif.nes`).

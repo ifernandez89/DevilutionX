@@ -7,6 +7,21 @@
 (() => {
     'use strict';
 
+    // ========================================
+    // 🔍 DEBUG SYSTEM - PC VIVAZ FASE 1
+    // ========================================
+    const DEBUG_ENABLED = true;
+    const debugLog = (category, message, data = null) => {
+        if (!DEBUG_ENABLED) return;
+        const timestamp = new Date().toLocaleTimeString();
+        const prefix = `[${timestamp}] [${category}]`;
+        if (data) {
+            console.log(`%c${prefix} ${message}`, 'color: #00ff00; font-weight: bold;', data);
+        } else {
+            console.log(`%c${prefix} ${message}`, 'color: #00ff00; font-weight: bold;');
+        }
+    };
+
     // State
     let currentEmulator = null;
     let isPaused = false;
@@ -553,9 +568,27 @@
                     input_player1_mouse_index: '0',
                     input_player2_mouse_index: '0',
 
-                    // Port 5 (Famicom Expansion Port in FCEUmm): Subor Keyboard / Auto
-                    input_libretro_device_p5: '1'
+                    // Port 5 (Famicom Expansion Port in FCEUmm): Subor Keyboard
+                    // CRITICAL: Must be 1539 (RETRO_DEVICE_FC_SUBORKB = ((5+1)<<8)|3)
+                    // This enables the keyboard matrix hardware for Educational Computer 2000
+                    input_libretro_device_p5: '1539'
                 };
+
+                debugLog('CONFIG', '✅ PC VIVAZ MODE ACTIVATED', {
+                    primaryCore,
+                    device_p5: retroarchConfig.input_libretro_device_p5,
+                    isComputer: romCapabilities.isComputer
+                });
+
+                // Update debug panel
+                if (window.updateDebugConfig) {
+                    window.updateDebugConfig({
+                        device_p5: retroarchConfig.input_libretro_device_p5,
+                        core: primaryCore,
+                        isComputer: true,
+                        romStatus: '✅ PC Vivaz detected'
+                    });
+                }
 
                 retroarchCoreConfig = {
                     fceumm_ram_power_state: '0x00',
@@ -964,7 +997,10 @@
     };
 
     window.addEventListener('keydown', (e) => {
-        if (!currentEmulator) return;
+        if (!currentEmulator) {
+            debugLog('INPUT', '⚠️ Key pressed but emulator not ready', { key: e.code });
+            return;
+        }
 
         // Global hotkeys (Save / Load / Pause / Reset)
         if (e.key === 'F5') {
@@ -998,21 +1034,54 @@
         const canvas = document.getElementById('nes-screen');
         if (canvas && document.activeElement !== canvas && document.activeElement !== fileInput) {
             canvas.focus();
+            debugLog('INPUT', '🎯 Canvas focused automatically');
         }
 
         const action = KEY_ACTIONS[e.code];
+        const prevented = e.key.startsWith('Arrow') && document.fullscreenElement;
+        
+        debugLog('INPUT', '⌨️ Key Down', {
+            code: e.code,
+            key: e.key,
+            action: action || 'raw',
+            prevented: prevented,
+            fullscreen: !!document.fullscreenElement,
+            activeElement: document.activeElement?.id || 'unknown'
+        });
+
+        // Update visual debug panel
+        if (window.logDebugInput) {
+            window.logDebugInput(e.key, e.code, action || 'raw');
+        }
+
         if (action) {
-            e.preventDefault();
+            // ⚠️ PHASE 1 FIX: Only preventDefault for arrows in fullscreen to avoid page scroll
+            // For PC Vivaz (Subor Keyboard), we MUST allow native DOM events to reach
+            // the Emscripten canvas so rwebinput driver can process them correctly
+            if (prevented) {
+                e.preventDefault();
+            }
             try {
                 currentEmulator.pressDown(action);
-            } catch (_) {
-                try { currentEmulator.keyboardDown(e.code); } catch (_) {}
+                debugLog('INPUT', '✅ pressDown() successful', { action });
+            } catch (err) {
+                debugLog('INPUT', '⚠️ pressDown() failed, trying keyboardDown()', { error: err.message });
+                try { 
+                    currentEmulator.keyboardDown(e.code);
+                    debugLog('INPUT', '✅ keyboardDown() successful', { code: e.code });
+                } catch (err2) {
+                    debugLog('INPUT', '❌ keyboardDown() failed', { error: err2.message });
+                }
             }
         } else {
             // Forward raw key code for typing in educational / computer software (A-Z, 0-9, Backspace, etc.)
+            // Let the browser naturally pass the event to Emscripten's input system
             try {
                 currentEmulator.keyboardDown(e.code);
-            } catch (_) {}
+                debugLog('INPUT', '✅ Raw keyboardDown() successful', { code: e.code });
+            } catch (err) {
+                debugLog('INPUT', '❌ Raw keyboardDown() failed', { error: err.message });
+            }
         }
     }, { passive: false });
 
@@ -1021,7 +1090,10 @@
 
         const action = KEY_ACTIONS[e.code];
         if (action) {
-            e.preventDefault();
+            // ⚠️ PHASE 1 FIX: Conditional preventDefault matching keydown behavior
+            if (e.key.startsWith('Arrow') && document.fullscreenElement) {
+                e.preventDefault();
+            }
             try {
                 currentEmulator.pressUp(action);
             } catch (_) {
@@ -1079,5 +1151,100 @@
     window.addEventListener('DOMContentLoaded', () => {
         updateScreenSizeUI();
     });
+
+    // ========================================
+    // 🔍 DEBUG PANEL CONTROLLER - PC VIVAZ FASE 1
+    // ========================================
+    const debugPanel = document.getElementById('pc-vivaz-debug-panel');
+    const debugToggle = document.getElementById('debug-panel-toggle');
+    const debugClose = document.getElementById('debug-panel-close');
+
+    // Toggle debug panel
+    if (debugToggle) {
+        debugToggle.addEventListener('click', () => {
+            if (debugPanel.style.display === 'none') {
+                debugPanel.style.display = 'block';
+                debugToggle.style.display = 'none';
+            }
+        });
+    }
+
+    if (debugClose) {
+        debugClose.addEventListener('click', () => {
+            debugPanel.style.display = 'none';
+            debugToggle.style.display = 'block';
+        });
+    }
+
+    // Auto-show debug panel on page load
+    setTimeout(() => {
+        if (debugPanel && debugToggle) {
+            debugPanel.style.display = 'block';
+            debugToggle.style.display = 'none';
+        }
+    }, 500);
+
+    // Update debug panel every 500ms
+    setInterval(() => {
+        if (!debugPanel || debugPanel.style.display === 'none') return;
+
+        const canvas = document.getElementById('nes-screen');
+        
+        // Update focus info
+        const debugCanvasFocus = document.getElementById('debug-canvas-focus');
+        if (debugCanvasFocus) {
+            const hasFocus = document.activeElement === canvas;
+            debugCanvasFocus.textContent = hasFocus ? '✅ YES' : '❌ NO (Click screen!)';
+            debugCanvasFocus.style.color = hasFocus ? '#0f0' : '#f00';
+        }
+
+        const debugFullscreen = document.getElementById('debug-fullscreen');
+        if (debugFullscreen) {
+            debugFullscreen.textContent = document.fullscreenElement ? '✅ YES' : '❌ NO';
+        }
+
+        const debugEmulator = document.getElementById('debug-emulator');
+        if (debugEmulator) {
+            debugEmulator.textContent = currentEmulator ? '✅ YES' : '❌ NO';
+            debugEmulator.style.color = currentEmulator ? '#0f0' : '#f00';
+        }
+    }, 500);
+
+    // Expose debug updater for configuration logging
+    window.updateDebugConfig = (config) => {
+        const debugDeviceP5 = document.getElementById('debug-device-p5');
+        const debugCore = document.getElementById('debug-core');
+        const debugComputerMode = document.getElementById('debug-computer-mode');
+        const debugRomStatus = document.getElementById('debug-rom-status');
+
+        if (debugDeviceP5 && config.device_p5) {
+            debugDeviceP5.textContent = config.device_p5;
+            debugDeviceP5.style.color = config.device_p5 === '1539' ? '#0f0' : '#f00';
+        }
+
+        if (debugCore && config.core) {
+            debugCore.textContent = config.core;
+        }
+
+        if (debugComputerMode && config.isComputer !== undefined) {
+            debugComputerMode.textContent = config.isComputer ? '✅ YES (PC Vivaz)' : '❌ NO (Normal Game)';
+            debugComputerMode.style.color = config.isComputer ? '#0f0' : '#ff0';
+        }
+
+        if (debugRomStatus && config.romStatus) {
+            debugRomStatus.textContent = config.romStatus;
+        }
+    };
+
+    // Expose debug input logger
+    window.logDebugInput = (key, code, action) => {
+        const debugLastKey = document.getElementById('debug-last-key');
+        if (debugLastKey) {
+            const timestamp = new Date().toLocaleTimeString();
+            debugLastKey.innerHTML = `[${timestamp}] Key: ${key} (${code})<br>Action: ${action || 'raw input'}`;
+        }
+    };
+
+    debugLog('SYSTEM', '🚀 Debug system initialized');
 
 })();

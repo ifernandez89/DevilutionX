@@ -16,6 +16,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="../assets/icons/favicon.png">
     <link rel="stylesheet" href="../assets/retro-nav/retro-nav.css?v=retro-hub-v8">
     <link rel="stylesheet" href="../assets/mobile-controls/virtual-gamepad.css?v=gb-v8">
+    <link rel="stylesheet" href="../assets/retro-pocket/retro-pocket.css?v=rp-v1">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -84,10 +85,13 @@
 
                 <div class="toolbar-group">
                     <button class="btn-tool" id="saveStateBtn" title="Guardar Estado Rápido (F5) - Persiste Offline en IndexedDB">
-                        💾 Guardar (F5)
+                        💾 Guardar
                     </button>
                     <button class="btn-tool" id="loadStateBtn" title="Cargar Estado Rápido (F7) - Persiste Offline en IndexedDB">
-                        📂 Cargar (F7)
+                        📂 Cargar
+                    </button>
+                    <button class="btn-tool" id="saveMenuBtn" title="Descargar / Importar Partidas Guardadas">
+                        📦 Saves
                     </button>
                     <button class="btn-tool" id="screenshotBtn" title="Captura de Pantalla">
                         📸 Captura
@@ -256,10 +260,39 @@
         <span class="toast-message" id="toastMessage">Partida guardada</span>
     </div>
 
+    <!-- Saves Manager Modal -->
+    <div id="saveMenu" class="retro-save-modal" hidden>
+        <div class="retro-save-card">
+            <div class="retro-save-header">
+                <div class="retro-save-title">💾 Gestor de Partidas Guardadas (SNES)</div>
+                <button type="button" class="retro-save-close" id="saveMenuClose">&times;</button>
+            </div>
+            <div class="retro-save-body">
+                <div class="retro-save-rom-name" id="saveMenuRom">Juego SNES</div>
+                <div class="retro-save-actions">
+                    <button type="button" class="retro-save-btn btn-sram" id="downloadSramBtn">
+                        <span>⬇️ Batería (.srm)</span>
+                        <small>Guardado nativo de cartucho SNES</small>
+                    </button>
+                    <button type="button" class="retro-save-btn" id="downloadStateBtn">
+                        <span>⬇️ Estado (.state)</span>
+                        <small>Captura instantánea de RAM</small>
+                    </button>
+                    <button type="button" class="retro-save-btn btn-import" id="importSaveBtn">
+                        <span>⬆️ Importar Partida Guardada (.srm / .state)</span>
+                        <small>Carga un archivo de guardado desde tu dispositivo</small>
+                    </button>
+                </div>
+                <input type="file" id="importSaveInput" accept=".srm,.sav,.state,.bin" style="display: none;">
+            </div>
+        </div>
+    </div>
+
     <!-- Vendor Scripts: Nostalgist & RetroNav -->
     <script src="vendor/nostalgist.umd.js"></script>
     <script src="../assets/retro-nav/retro-nav.js?v=retro-hub-v8"></script>
     <script src="../assets/mobile-controls/virtual-gamepad.js?v=gb-v8"></script>
+    <script src="../assets/retro-pocket/retro-saves.js?v=rp-v1"></script>
     <script src="app.js"></script>
 </body>
 </html>

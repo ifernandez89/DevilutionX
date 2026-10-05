@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### 🕹️ Rediseño Estético Portátil "Retro Pocket" (NES, Sega Genesis, SNES) & Sistema Universal de Guardado y Descarga de Saves (RetroHub V9) ([`Packaging/emscripten/assets/retro-pocket/retro-pocket.css`](file:///c:/Projects/DevilutionX/Packaging/emscripten/assets/retro-pocket/retro-pocket.css), [`Packaging/emscripten/assets/retro-pocket/retro-saves.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/assets/retro-pocket/retro-saves.js), [`Packaging/emscripten/gens/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/gens/index.html), [`Packaging/emscripten/gens/app.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/gens/app.js), [`Packaging/emscripten/nes/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/nes/index.html), [`Packaging/emscripten/nes/app.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/nes/app.js), [`Packaging/emscripten/snes/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/snes/index.html), [`Packaging/emscripten/snes/app.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/snes/app.js), [`Packaging/emscripten/sw.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/sw.js))
+- **Estética de Carcasa Handheld "Retro Pocket" para Dispositivos Móviles**:
+  - Se rediseñó el chasis móvil inspirado en las consolas portátiles clásicas con identidad propia para RetroHub (`RETRO POCKET HIGH SPEED SYSTEM`).
+  - Carcasa plástica en tono mate retro (`#c8c9ce` / `#b8b9be`), bisel oscuro de pantalla grafito (`#343740`) con serigrafías duales violeta/azul, indicador LED de encendido/batería y ranuras estéticas de ventilación.
+  - Eliminación de botones redundantes en la barra de herramientas móvil (tamaño de pantalla y capturas duplicadas), conservando los controles esenciales (`⏸️ Pausar`, `🔄 Reiniciar`, `💾 Guardar`, `📂 Cargar`, `📦 Saves`, `❌ Salir`).
+  - Preservación íntegra de la calibración ergonómica de mandos táctiles laterales sin tocar sus dimensiones ni su motor táctil.
+- **Corrección Definitiva del Guardado / Carga en Juegos de Carreras y Cartuchos sin Batería (e.g. *Road Rash 3*)**:
+  - **Cola Serializada de Sistema de Archivos Virtual (Virtual FS Queue)**: Se erradicó la colisión y borrado prematuro del archivo `.state` en WebAssembly que impedía cargar partidas cuando el bucle de eventos o los guardados automáticos coincidían.
+  - **Sondeo con Timeout Seguro de Batería SRAM**: Juegos sin chip SRAM de batería (como *Road Rash 3*, que usa contraseñas) ya no bloquean el emulador esperando durante 60 segundos por archivos `.srm` inexistentes.
+  - **Despausa Transitoria en Operaciones de Estado**: Se garantiza que el hilo de RetroArch WASM esté activo durante la lectura/escritura de estados para sincronizar los buses Z80/68000/APU.
+- **Gestor Universal de Descarga e Importación de Partidas Guardadas (`📦 Saves`)**:
+  - Nuevo modal interactivo que permite **descargar el archivo funcional de guardado** de cualquier consola:
+    - **`⬇️ Batería (.srm)`**: Archivo binario compatible con emuladores externos de PC/Android (RetroArch, Genesis Plus GX, Nestopia, Snes9x).
+    - **`⬇️ Estado (.state)`**: Captura de memoria RAM para respaldo instantáneo.
+    - **`⬆️ Importar Partida`**: Permite cargar un archivo `.srm` o `.state` desde el almacenamiento del celular/PC para continuar partidas de emuladores externos.
+- **Actualización de Service Worker a Caché `v9`**:
+  - Inclusión de `retro-pocket.css` y `retro-saves.js` en la caché offline de la PWA.
+
 ### ⚡ Optimización Integral de Rendimiento Móvil a 60 FPS en Consolas Retro (Sega Genesis, NES, SNES) (RetroHub V8) ([`Packaging/emscripten/assets/mobile-controls/virtual-gamepad.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/assets/mobile-controls/virtual-gamepad.js), [`Packaging/emscripten/assets/mobile-controls/virtual-gamepad.css`](file:///c:/Projects/DevilutionX/Packaging/emscripten/assets/mobile-controls/virtual-gamepad.css), [`Packaging/emscripten/gens/app.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/gens/app.js), [`Packaging/emscripten/gens/style.css`](file:///c:/Projects/DevilutionX/Packaging/emscripten/gens/style.css), [`Packaging/emscripten/nes/app.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/nes/app.js), [`Packaging/emscripten/snes/app.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/snes/app.js), [`Packaging/emscripten/sw.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/sw.js))
 - **Aceleración por Hardware GPU y Erradicación de Filtros de Alto Costo (`backdrop-filter`)**:
   - Se eliminaron todos los filtros de desenfoque gaussianos en tiempo real (`backdrop-filter: blur(14px / 16px)`) del HUD táctil virtual (`.virtual-gamepad-toggle`, `.vpad-bumper-btn`, `.vpad-dpad`, `.vpad-actions-container`) que sobrecargaban la GPU móvil en cada fotograma renderizado.

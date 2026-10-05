@@ -521,85 +521,56 @@
         });
     }
 
+    // ==========================================
+    // RetroSaves Manager Integration (100% Offline & Non-Blocking)
+    // ==========================================
+    const saves = window.RetroSaves.create({
+        system: 'snes',
+        manualPrefix: 'snes_manual_',
+        getEmulator: () => currentEmulator,
+        getRomName: () => activeRomName,
+        isPaused: () => isPaused,
+        onResumed: () => {
+            isPaused = false;
+            if (pauseResumeBtn) pauseResumeBtn.textContent = '⏸️ Pausar';
+        },
+        persist: persistSaveState,
+        retrieve: retrieveSaveState,
+        toast: showToast,
+        relaunch: async () => {
+            if (activeRomName) await launchRom(activeRomName, activeRomName);
+        },
+        afterAction: focusGameCanvas
+    });
+
+    async function autoSaveCurrentGame() {
+        if (!currentEmulator) return;
+        await saves.autoSave({ includeState: !isPaused });
+    }
+
+    // Periodic auto-save every 25 seconds
+    setInterval(() => {
+        if (currentEmulator && !isPaused) {
+            saves.autoSave({ includeState: true });
+        }
+    }, 25000);
+
     if (saveStateBtn) {
         saveStateBtn.addEventListener('click', async () => {
             if (!currentEmulator) return;
-            try {
-                showToast('Guardando estado y batería en IndexedDB...', '💾', 1500);
-
-                // 1. Capture State
-                const stateObj = await currentEmulator.saveState();
-                if (stateObj && stateObj.state) {
-                    lastSavedState = stateObj.state;
-                    await persistSaveState(`snes_manual_${activeRomName}`, stateObj.state, `Manual - ${activeRomName}`);
-                    await persistSaveState(`snes_latest_${activeRomName}`, stateObj.state, `Último - ${activeRomName}`);
-                }
-
-                // 2. Capture SRAM Battery
-                try {
-                    const sramBlob = await currentEmulator.saveSRAM();
-                    if (sramBlob && sramBlob.size > 0) {
-                        await persistSaveState(`snes_sram_${activeRomName}`, sramBlob, `Batería/SRAM - ${activeRomName}`);
-                    }
-                } catch (_) {}
-
-                showToast('¡Estado y Batería guardados en IndexedDB! (F5)', '💾');
-            } catch (err) {
-                console.error('[SNES Save] Error:', err);
-                showToast('Error al guardar estado', '❌');
-            }
-            focusGameCanvas();
+            await saves.saveNow();
         });
-    }
-
-    async function loadGameStateCleanly(stateToLoad) {
-        if (!currentEmulator || !stateToLoad) return;
-        showToast('Cargando estado desde IndexedDB...', '📂', 1500);
-        try {
-            const wasPaused = isPaused;
-            if (!wasPaused) {
-                await currentEmulator.pause();
-            }
-
-            await currentEmulator.loadState(stateToLoad);
-            lastSavedState = stateToLoad;
-
-            // Micro-delay to let SPC700 and memory registers settle cleanly
-            await new Promise(r => setTimeout(r, 60));
-
-            await currentEmulator.resume();
-            isPaused = false;
-            if (pauseResumeBtn) pauseResumeBtn.textContent = '⏸️ Pausar';
-            showToast('¡Partida cargada exitosamente! (F7)', '📂');
-        } catch (err) {
-            console.error('[SNES Load] Error:', err);
-            showToast('Error al cargar estado', '❌');
-            if (currentEmulator) {
-                try { await currentEmulator.resume(); } catch (_) {}
-            }
-        }
-        focusGameCanvas();
     }
 
     if (loadStateBtn) {
         loadStateBtn.addEventListener('click', async () => {
             if (!currentEmulator) return;
-            let stateToLoad = lastSavedState;
-            if (!stateToLoad) {
-                stateToLoad = await retrieveSaveState(`snes_manual_${activeRomName}`);
-            }
-            if (!stateToLoad) {
-                stateToLoad = await retrieveSaveState(`snes_latest_${activeRomName}`);
-            }
-
-            if (stateToLoad) {
-                await loadGameStateCleanly(stateToLoad);
-            } else {
-                showToast('No hay partida guardada para este juego', '⚠️');
-                focusGameCanvas();
-            }
+            await saves.loadLatest();
         });
     }
+
+    // Wire Save/Download/Import popover
+    saves.bindDefaultUI();
 
     if (screenshotBtn) {
         screenshotBtn.addEventListener('click', async () => {

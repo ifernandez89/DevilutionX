@@ -460,76 +460,51 @@
         focusGameCanvas();
     });
 
-    saveStateBtn.addEventListener('click', async () => {
-        if (!currentEmulator) return;
-        try {
-            showToast('Guardando estado y batería en IndexedDB...', '💾', 1500);
-
-            // 1. Capture state
-            const stateObj = await currentEmulator.saveState();
-            lastSavedState = stateObj.state;
-            await persistSaveState(`nes_state_${activeRomName}`, lastSavedState, `Manual F5 - ${activeRomName}`);
-            await persistSaveState(`nes_latest_${activeRomName}`, lastSavedState, `Último - ${activeRomName}`);
-
-            // 2. Capture SRAM Battery
-            try {
-                const sramBlob = await currentEmulator.saveSRAM();
-                if (sramBlob && sramBlob.size > 0) {
-                    await persistSaveState(`nes_sram_${activeRomName}`, sramBlob, `Batería/SRAM - ${activeRomName}`);
-                }
-            } catch (_) {}
-
-            showToast('¡Estado y Batería guardados permanentemente! (F5)', '✅');
-        } catch (err) {
-            console.error('Error guardando estado:', err);
-            showToast('Error al guardar estado', '❌');
-        }
-        focusGameCanvas();
-    });
-
-    async function loadGameStateCleanly(stateToLoad) {
-        if (!currentEmulator || !stateToLoad) return;
-        showToast('Cargando estado desde IndexedDB...', '📂', 1500);
-        try {
-            const wasPaused = isPaused;
-            if (!wasPaused) {
-                await currentEmulator.pause();
-            }
-
-            await currentEmulator.loadState(stateToLoad);
-            lastSavedState = stateToLoad;
-
-            // Micro-delay to let APU and memory registers settle
-            await new Promise(r => setTimeout(r, 60));
-
-            await currentEmulator.resume();
+    // ==========================================
+    // RetroSaves Manager Integration (100% Offline & Non-Blocking)
+    // ==========================================
+    const saves = window.RetroSaves.create({
+        system: 'nes',
+        getEmulator: () => currentEmulator,
+        getRomName: () => activeRomName,
+        isPaused: () => isPaused,
+        onResumed: () => {
             isPaused = false;
             updatePauseBtnUI();
-            showToast('¡Estado restaurado con éxito!', '✅');
-        } catch (err) {
-            console.error('Error cargando estado:', err);
-            showToast('Error al restaurar estado', '❌');
-            if (currentEmulator) {
-                try { await currentEmulator.resume(); } catch (_) {}
-            }
-        }
-        focusGameCanvas();
+        },
+        persist: persistSaveState,
+        retrieve: retrieveSaveState,
+        toast: showToast,
+        relaunch: async () => {
+            if (activeRomName) await launchRom(activeRomName, activeRomName);
+        },
+        afterAction: focusGameCanvas
+    });
+
+    async function autoSaveCurrentGame() {
+        if (!currentEmulator) return;
+        await saves.autoSave({ includeState: !isPaused });
     }
+
+    // Periodic auto-save every 25 seconds
+    setInterval(() => {
+        if (currentEmulator && !isPaused) {
+            saves.autoSave({ includeState: true });
+        }
+    }, 25000);
+
+    saveStateBtn.addEventListener('click', async () => {
+        if (!currentEmulator) return;
+        await saves.saveNow();
+    });
 
     loadStateBtn.addEventListener('click', async () => {
         if (!currentEmulator) return;
-        let stateToLoad = lastSavedState;
-        if (!stateToLoad) {
-            stateToLoad = await retrieveSaveState(`nes_state_${activeRomName}`) ||
-                          await retrieveSaveState(`nes_latest_${activeRomName}`);
-        }
-        if (!stateToLoad) {
-            showToast('No hay partida guardada en IndexedDB para este juego', '⚠️');
-            focusGameCanvas();
-            return;
-        }
-        await loadGameStateCleanly(stateToLoad);
+        await saves.loadLatest();
     });
+
+    // Wire Save/Download/Import popover
+    saves.bindDefaultUI();
 
     screenshotBtn.addEventListener('click', async () => {
         if (!currentEmulator) return;

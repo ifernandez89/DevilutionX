@@ -1,0 +1,334 @@
+/* ==========================================================================
+   RETRO POCKET — Handheld Chassis Aesthetic & Mobile Shell
+   Custom retro console chassis for NES, Sega Genesis & SNES
+   ========================================================================== */
+
+/* Handheld Frame on Mobile & Small Screens */
+@media (max-width: 900px), (pointer: coarse) {
+    body {
+        background-color: #c8c9ce !important;
+        background-image: 
+            radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.35) 0%, transparent 70%),
+            linear-gradient(180deg, #d2d3d8 0%, #b8b9be 100%),
+            repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.015) 0px, rgba(0, 0, 0, 0.015) 2px, transparent 2px, transparent 4px) !important;
+        color: #1e293b !important;
+    }
+
+    /* Handheld Top Header */
+    header {
+        background: linear-gradient(180deg, #cfd0d5 0%, #b8b9be 100%) !important;
+        border-bottom: 2px solid #8e9099 !important;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25) !important;
+        padding: 8px 14px !important;
+    }
+
+    .brand-title {
+        color: #272a34 !important;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+        font-weight: 900 !important;
+        letter-spacing: 0.5px !important;
+        text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.6) !important;
+    }
+
+    .brand-badge {
+        background: linear-gradient(135deg, #4f46e5 0%, #312e81 100%) !important;
+        color: #ffffff !important;
+        border: 1px solid #818cf8 !important;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3) !important;
+    }
+
+    /* Main Container Padding */
+    .main-wrapper {
+        padding: 10px 8px 160px 8px !important;
+        gap: 12px !important;
+    }
+
+    /* Handheld Screen Bezel (Screen Card) */
+    .screen-card {
+        background: #343740 !important;
+        border: 3px solid #202228 !important;
+        border-radius: 12px 12px 28px 12px !important;
+        box-shadow: 
+            inset 0 2px 6px rgba(0, 0, 0, 0.7),
+            0 6px 18px rgba(0, 0, 0, 0.35),
+            0 1px 0 rgba(255, 255, 255, 0.5) !important;
+        padding: 18px 12px 14px 12px !important;
+        position: relative !important;
+        max-width: 100% !important;
+        aspect-ratio: auto !important;
+        min-height: 240px !important;
+    }
+
+    /* Handheld Bezel Top Decals */
+    .screen-card::before {
+        content: "• • • RETRO POCKET HIGH SPEED SYSTEM • • •";
+        position: absolute;
+        top: 4px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+        font-size: 8px;
+        font-weight: 800;
+        letter-spacing: 1.5px;
+        color: #7b7e8c;
+        text-transform: uppercase;
+        border-bottom: 2px solid #5a2e6b;
+        border-top: 2px solid #244b7d;
+        padding: 1px 0;
+        margin: 0 16px;
+    }
+
+    /* Power / Battery LED on Bezel */
+    .screen-card::after {
+        content: "BATTERY";
+        position: absolute;
+        top: 44px;
+        left: 10px;
+        font-size: 7px;
+        font-weight: 900;
+        color: #8a8d9b;
+        letter-spacing: 0.5px;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    /* Canvas Display inside Bezel */
+    #canvas-container {
+        border: 2px solid #14161b !important;
+        border-radius: 4px !important;
+        background: #000000 !important;
+        box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.9) !important;
+        overflow: hidden !important;
+        min-height: 220px !important;
+    }
+
+    /* Mobile Toolbar: Clean, Ergonomic & Eliminates Clutter */
+    .screen-toolbar {
+        background: #bbbcc2 !important;
+        border: 1.5px solid #9ea0a8 !important;
+        border-radius: 10px !important;
+        box-shadow: 
+            inset 0 1px 0 rgba(255, 255, 255, 0.7),
+            0 4px 10px rgba(0, 0, 0, 0.15) !important;
+        padding: 8px 10px !important;
+        gap: 6px !important;
+        justify-content: center !important;
+        display: flex !important;
+        flex-wrap: wrap !important;
+    }
+
+    .toolbar-group {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 6px !important;
+        justify-content: center !important;
+    }
+
+    /* Buttons inside toolbar */
+    .btn-tool {
+        background: linear-gradient(180deg, #e4e5e9 0%, #cbccd2 100%) !important;
+        border: 1.5px solid #8e919b !important;
+        color: #272a34 !important;
+        font-weight: 800 !important;
+        font-size: 11px !important;
+        padding: 6px 11px !important;
+        border-radius: 6px !important;
+        box-shadow: 0 2px 0 #7b7e87, 0 3px 6px rgba(0, 0, 0, 0.15) !important;
+        transition: transform 0.08s ease, background 0.08s ease !important;
+    }
+
+    .btn-tool:active {
+        transform: translateY(2px) !important;
+        box-shadow: 0 0 2px #7b7e87 !important;
+        background: #c0c1c8 !important;
+    }
+
+    .btn-tool.btn-accent {
+        background: linear-gradient(180deg, #ef4444 0%, #b91c1c 100%) !important;
+        border-color: #7f1d1d !important;
+        color: #ffffff !important;
+        box-shadow: 0 2px 0 #581414, 0 3px 6px rgba(0, 0, 0, 0.25) !important;
+    }
+
+    /* Hide unnecessary desktop-only buttons on mobile to avoid clutter */
+    #screenSizeBtn,
+    #fullscreenBtn,
+    #screenshotBtn {
+        display: none !important;
+    }
+
+    /* Hub & Cartridge Cards Handheld Adaptation */
+    .cartridge-card,
+    .dropzone-card,
+    .dropzone,
+    .controls-section,
+    .features-card {
+        background: #bbbcc2 !important;
+        border: 1.5px solid #9ea0a8 !important;
+        border-radius: 12px !important;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+        color: #272a34 !important;
+    }
+
+    .cartridge-title,
+    .dropzone-title,
+    .features-title,
+    .controls-title,
+    .controls-header h3 {
+        color: #1e293b !important;
+    }
+
+    .cartridge-desc,
+    .dropzone-subtitle,
+    .key-label,
+    .control-label {
+        color: #475569 !important;
+    }
+
+    .meta-tag,
+    .ext-badge,
+    .key-badge,
+    .control-key {
+        background: #e2e4e9 !important;
+        border: 1px solid #94a3b8 !important;
+        color: #1e293b !important;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    .btn-secondary {
+        background: #d1d3d9 !important;
+        border-color: #94a3b8 !important;
+        color: #1e293b !important;
+    }
+}
+
+/* ==========================================================================
+   SAVES MANAGER MODAL / DRAWER (Download & Import Saves)
+   ========================================================================== */
+.retro-save-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 2147483646;
+    background: rgba(15, 23, 42, 0.75);
+    backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+    animation: fadeInModal 0.2s ease;
+}
+
+.retro-save-modal[hidden] {
+    display: none !important;
+}
+
+.retro-save-card {
+    background: #1e293b;
+    border: 1.5px solid #4f46e5;
+    border-radius: 14px;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6), 0 0 20px rgba(99, 102, 241, 0.3);
+    width: 100%;
+    max-width: 440px;
+    padding: 20px;
+    color: #f8fafc;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.retro-save-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+    border-bottom: 1px solid #334155;
+    padding-bottom: 10px;
+}
+
+.retro-save-title {
+    font-size: 16px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #ffffff;
+}
+
+.retro-save-close {
+    background: none;
+    border: none;
+    color: #94a3b8;
+    font-size: 20px;
+    cursor: pointer;
+    line-height: 1;
+    padding: 4px;
+}
+
+.retro-save-body {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.retro-save-rom-name {
+    background: #0f172a;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid #334155;
+    font-size: 12.5px;
+    color: #38bdf8;
+    font-weight: 700;
+    word-break: break-all;
+}
+
+.retro-save-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.retro-save-btn {
+    background: linear-gradient(180deg, #3730a3 0%, #1e1b4b 100%);
+    border: 1.5px solid #6366f1;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 800;
+    padding: 12px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    text-align: center;
+    transition: transform 0.1s ease, background 0.1s ease;
+}
+
+.retro-save-btn:hover,
+.retro-save-btn:active {
+    background: linear-gradient(180deg, #4338ca 0%, #312e81 100%);
+    border-color: #a5b4fc;
+    transform: scale(0.98);
+}
+
+.retro-save-btn small {
+    font-size: 9.5px;
+    opacity: 0.8;
+    font-weight: normal;
+}
+
+.retro-save-btn.btn-sram {
+    background: linear-gradient(180deg, #065f46 0%, #022c22 100%);
+    border-color: #10b981;
+}
+
+.retro-save-btn.btn-import {
+    grid-column: span 2;
+    background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+    border-color: #64748b;
+}
+
+@keyframes fadeInModal {
+    from { opacity: 0; transform: scale(0.96); }
+    to { opacity: 1; transform: scale(1); }
+}

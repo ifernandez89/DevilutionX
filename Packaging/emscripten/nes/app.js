@@ -343,7 +343,7 @@
                 // ==========================================
                 // EXCLUSIVE PC VIVAZ COMPUTER MODE (PC ONLY)
                 // ==========================================
-                primaryCore = 'fceumm'; // FCEUmm has native UNL-EDU2000 + Subor Keyboard & Mouse support
+                primaryCore = 'nestopia'; // Nestopia has native cycle-accurate UNL-EDU2000 board + mouse
                 retroarchConfig = {
                     video_vsync: 'true',
                     video_threaded: 'false',
@@ -357,40 +357,35 @@
                     savestate_auto_load: 'false',
                     input_autodetect_enable: 'true',
 
-                    // Enable Game Focus & Subor Matrix Keyboard + Mouse
-                    input_auto_game_focus: '1',
-                    input_game_focus_toggle: 'scroll_lock',
-                    input_libretro_device_p1: '515', // Subor / Family Keyboard
-                    input_libretro_device_p2: '2',   // Mouse
-                    input_player1_mouse_index: '0',
-                    input_player2_mouse_index: '0',
-                    input_enable_hotkey: 'nul',
+                    // Port 1: RetroPad Controller (Arrows for menu navigation, Enter for Start/Open)
+                    input_libretro_device_p1: '1',
+                    input_player1_up: 'up',
+                    input_player1_down: 'down',
+                    input_player1_left: 'left',
+                    input_player1_right: 'right',
+                    input_player1_a: 'x',
+                    input_player1_b: 'z',
+                    input_player1_start: 'enter',
+                    input_player1_select: 'shift',
 
-                    // Disable single-key gamepad letter hotkeys so typing is 100% clean
-                    input_player1_y: 'nul',
-                    input_player1_b: 'nul',
-                    input_player1_a: 'nul',
-                    input_player1_x: 'nul',
-                    input_player1_start: 'nul',
-                    input_player1_select: 'nul',
-                    input_player1_up: 'nul',
-                    input_player1_down: 'nul',
-                    input_player1_left: 'nul',
-                    input_player1_right: 'nul'
+                    // Port 2: Mouse Peripheral for Educational Computer 2000
+                    input_libretro_device_p2: '2',
+                    input_player1_mouse_index: '0',
+                    input_player2_mouse_index: '0'
                 };
 
                 retroarchCoreConfig = {
-                    fceumm_input_p1: 'subor_keyboard',
-                    fceumm_input_p2: 'mouse',
-                    fceumm_zapper_mode: 'mouse',
-                    fceumm_mouse_sensitivity: '100',
+                    nestopia_ram_power_state: '0x00',
+                    nestopia_genie_distortion: 'disabled',
                     fceumm_ram_power_state: '0x00',
-                    fceumm_nospritelimit: 'disabled'
+                    fceumm_nospritelimit: 'disabled',
+                    fceumm_zapper_mode: 'mouse',
+                    fceumm_mouse_sensitivity: '100'
                 };
 
-                // Enable pointer lock on canvas click in Computer Mode
+                // Enable pointer lock and active canvas focus on click
                 canvas.addEventListener('click', () => {
-                    if (isComputerModeActive && canvas.requestPointerLock) {
+                    if (canvas.requestPointerLock) {
                         canvas.requestPointerLock();
                     }
                     focusGameCanvas();
@@ -777,9 +772,14 @@
     };
 
     window.addEventListener('keydown', (e) => {
-        // In Computer Mode on PC, let all alphanumeric/typing keys pass untouched to the Subor/Educational matrix!
+        const canvas = document.getElementById('nes-screen');
+
+        // In Computer Mode on PC, let all keys pass directly to the emulated PC canvas
         if (isComputerModeActive && isDesktopPC()) {
-            // Only allow F5 and F7 for save/load, allow all other keys to type cleanly
+            if (canvas && document.activeElement !== canvas) {
+                canvas.focus();
+            }
+            // Only allow F5 and F7 for save/load, allow all other keys to type/navigate cleanly
             if (e.key === 'F5') {
                 e.preventDefault();
                 if (saveStateBtn) saveStateBtn.click();

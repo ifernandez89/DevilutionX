@@ -36,8 +36,239 @@ const btnToggleFkeys = document.getElementById("btn_toggle_fkeys");
 const gamepadFkeysBar = document.getElementById("gamepad_fkeys_bar");
 const btnToggleProfile = document.getElementById("btn_toggle_profile");
 
+// ROM & Computer Mode UI Elements
+const btnLoadRomTrigger = document.getElementById("btn_load_rom_trigger");
+const inputLoadRom = document.getElementById("input_load_rom");
+const computerModePill = document.getElementById("computer_mode_pill");
+const computerModeLabel = document.getElementById("computer_mode_label");
+
+// Platform Detection Subsystem
+const PlatformDetector = {
+    isMobile() {
+        const ua = navigator.userAgent || "";
+        const mobileUa = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua);
+        const touchPoints = (navigator.maxTouchPoints || 0) > 1;
+        const smallScreen = window.innerWidth <= 768;
+        return (mobileUa || (touchPoints && smallScreen));
+    },
+    isDesktopPC() {
+        return !this.isMobile() && (window.matchMedia ? window.matchMedia("(pointer: fine)").matches : true);
+    }
+};
+
+// NES ROM & UNIF Inspector Subsystem
+const NesRomInspector = {
+    inspect(buffer) {
+        if (!buffer || buffer.byteLength < 16) {
+            return { isValid: false, isComputer: false, format: "UNKNOWN", mapper: 0, title: "Desconocido" };
+        }
+
+        const bytes = new Uint8Array(buffer);
+        const header4 = String.fromCharCode(bytes[0], bytes[1], bytes[2], bytes[3]);
+
+        // UNIF Container Format Check
+        if (header4 === "UNIF") {
+            let offset = 32;
+            let mapr = "";
+            let name = "";
+            let prgSize = 0;
+            let hasBattery = false;
+
+            while (offset + 8 <= bytes.length) {
+                const chunkId = String.fromCharCode(bytes[offset], bytes[offset+1], bytes[offset+2], bytes[offset+3]);
+                const chunkLen = bytes[offset+4] | (bytes[offset+5] << 8) | (bytes[offset+6] << 16) | (bytes[offset+7] << 24);
+                const chunkDataStart = offset + 8;
+                const chunkDataEnd = Math.min(chunkDataStart + chunkLen, bytes.length);
+
+                if (chunkId === "MAPR") {
+                    mapr = new TextDecoder().decode(bytes.slice(chunkDataStart, chunkDataEnd)).trim().replace(/\0/g, '');
+                } else if (chunkId === "NAME") {
+                    name = new TextDecoder().decode(bytes.slice(chunkDataStart, chunkDataEnd)).trim().replace(/\0/g, '');
+                } else if (chunkId.startsWith("PRG")) {
+                    prgSize += chunkLen;
+                } else if (chunkId === "BATR") {
+                    hasBattery = true;
+                }
+
+                offset += 8 + chunkLen;
+            }
+
+            const isEdu = mapr.includes("UNL-EDU2000") || mapr.includes("EDU2000") || name.toLowerCase().includes("educational") || name.toLowerCase().includes("vivaz");
+
+            return {
+                isValid: true,
+                format: "UNIF",
+                mapperName: mapr || "UNL-EDU2000",
+                mapperNumber: 329, // NES 2.0 Mapper 329
+                title: name || (isEdu ? "Educational Computer 2000 (PC Vivaz)" : "UNIF ROM"),
+                isComputer: isEdu,
+                prgSize: prgSize,
+                hasBattery: hasBattery
+            };
+        }
+
+        // iNES / NES 2.0 Format Check
+        if (header4 === "NES\x1A") {
+            const mapperLow = (bytes[6] >> 4) | (bytes[7] & 0xF0);
+            const isNes2 = (bytes[7] & 0x0C) === 0x08;
+            let mapper = mapperLow;
+            if (isNes2) {
+                mapper |= (bytes[8] & 0x0F) << 8;
+            }
+
+            const isComputerMapper = (mapper === 329 || mapper === 177 || mapper === 35);
+
+            return {
+                isValid: true,
+                format: isNes2 ? "NES 2.0" : "iNES",
+                mapperNumber: mapper,
+                mapperName: `Mapper ${mapper}`,
+                title: isComputerMapper ? "PC Vivaz / Educational Computer (Mapper 329)" : "NES Game ROM",
+                isComputer: isComputerMapper,
+                prgSize: bytes[4] * 16384,
+                hasBattery: (bytes[6] & 0x02) !== 0
+            };
+        }
+
+        return { isValid: false, isComputer: false, format: "RAW", mapper: 0, title: "Archivo Genérico" };
+    }
+};
+
+// NES Keyboard Matrix & Mouse Driver Subsystem (Educational Computer / Subor Architecture)
+const NesComputerInputAdapter = {
+    active: false,
+    keyboardMatrix: new Uint8Array(13), // 13 rows matrix for full Subor/Edu keyboard
+    mouse: { x: 0, y: 0, lastX: 0, lastY: 0, deltaX: 0, deltaY: 0, leftBtn: false, rightBtn: false, strobeLatch: 0, shiftReg: 0 },
+    listenersAttached: false,
+
+    // Subor / Educational Matrix Key Definitions [Row, BitMask]
+    KEY_MATRIX_MAP: {
+        "KeyA": [1, 0x02], "KeyB": [7, 0x04], "KeyC": [8, 0x04], "KeyD": [2, 0x04], "KeyE": [2, 0x02],
+        "KeyF": [2, 0x08], "KeyG": [3, 0x04], "KeyH": [3, 0x08], "KeyI": [4, 0x04], "KeyJ": [4, 0x08],
+        "KeyK": [5, 0x04], "KeyL": [5, 0x08], "KeyM": [6, 0x04], "KeyN": [7, 0x08], "KeyO": [4, 0x02],
+        "KeyP": [5, 0x02], "KeyQ": [1, 0x04], "KeyR": [2, 0x01], "KeyS": [1, 0x08], "KeyT": [3, 0x02],
+        "KeyU": [4, 0x01], "KeyV": [8, 0x08], "KeyW": [1, 0x01], "KeyX": [8, 0x02], "KeyY": [3, 0x01],
+        "KeyZ": [8, 0x01], "Digit0": [5, 0x01], "Digit1": [0, 0x02], "Digit2": [0, 0x04], "Digit3": [0, 0x08],
+        "Digit4": [1, 0x10], "Digit5": [2, 0x10], "Digit6": [3, 0x10], "Digit7": [4, 0x10], "Digit8": [5, 0x10],
+        "Digit9": [6, 0x01], "Enter": [7, 0x02], "Space": [9, 0x04], "Backspace": [6, 0x02], "Escape": [0, 0x01],
+        "ShiftLeft": [0, 0x10], "ShiftRight": [0, 0x10], "ControlLeft": [9, 0x08], "ControlRight": [9, 0x08],
+        "ArrowUp": [10, 0x01], "ArrowDown": [10, 0x02], "ArrowLeft": [10, 0x04], "ArrowRight": [10, 0x08]
+    },
+
+    init() {
+        if (this.listenersAttached) return;
+
+        // PC Physical Keyboard Capture
+        window.addEventListener("keydown", (e) => {
+            if (!this.active || !PlatformDetector.isDesktopPC()) return;
+            const mapping = this.KEY_MATRIX_MAP[e.code];
+            if (mapping) {
+                const [row, mask] = mapping;
+                this.keyboardMatrix[row] |= mask;
+                e.preventDefault();
+            }
+        });
+
+        window.addEventListener("keyup", (e) => {
+            if (!this.active || !PlatformDetector.isDesktopPC()) return;
+            const mapping = this.KEY_MATRIX_MAP[e.code];
+            if (mapping) {
+                const [row, mask] = mapping;
+                this.keyboardMatrix[row] &= ~mask;
+                e.preventDefault();
+            }
+        });
+
+        // PC Physical Mouse Capture
+        screenContainer.addEventListener("mousemove", (e) => {
+            if (!this.active || !PlatformDetector.isDesktopPC()) return;
+            this.mouse.deltaX += (e.movementX || 0);
+            this.mouse.deltaY += (e.movementY || 0);
+            this.mouse.x = e.offsetX;
+            this.mouse.y = e.offsetY;
+        });
+
+        screenContainer.addEventListener("mousedown", (e) => {
+            if (!this.active || !PlatformDetector.isDesktopPC()) return;
+            if (e.button === 0) this.mouse.leftBtn = true;
+            if (e.button === 2) this.mouse.rightBtn = true;
+        });
+
+        screenContainer.addEventListener("mouseup", (e) => {
+            if (!this.active || !PlatformDetector.isDesktopPC()) return;
+            if (e.button === 0) this.mouse.leftBtn = false;
+            if (e.button === 2) this.mouse.rightBtn = false;
+        });
+
+        screenContainer.addEventListener("contextmenu", (e) => {
+            if (this.active && PlatformDetector.isDesktopPC()) {
+                e.preventDefault();
+            }
+        });
+
+        this.listenersAttached = true;
+    },
+
+    setActive(state, romInfo) {
+        this.active = state;
+        if (state && PlatformDetector.isDesktopPC()) {
+            if (computerModePill) {
+                computerModePill.style.display = "inline-flex";
+                if (computerModeLabel) {
+                    computerModeLabel.textContent = `💻 Modo PC Vivaz Activo (${romInfo ? romInfo.title : "Teclado + Ratón"})`;
+                }
+            }
+            // Auto-hide mobile touch gamepad on desktop PC when in Computer Mode
+            if (gamepadOverlay) {
+                gamepadOverlay.style.display = "none";
+            }
+            if (btnToggleGamepad) {
+                btnToggleGamepad.style.display = "none";
+            }
+            logDiagnostic(`[COMPUTER MODE] Activado protocolo exclusivo PC Vivaz: Teclado QWERTY completo + Ratón serial $4016/$4017.`, "success");
+        } else {
+            if (computerModePill) {
+                computerModePill.style.display = "none";
+            }
+            if (btnToggleGamepad) {
+                btnToggleGamepad.style.display = "inline-flex";
+            }
+            // Reset matrix and mouse
+            this.keyboardMatrix.fill(0);
+            this.mouse.leftBtn = false;
+            this.mouse.rightBtn = false;
+            this.mouse.deltaX = 0;
+            this.mouse.deltaY = 0;
+        }
+    }
+};
+
+// Initialize input adapter listeners
+NesComputerInputAdapter.init();
+
 // OS Configurations Registry
 const OS_PROFILES = {
+    pcvivaz: {
+        name: "🖥️ NES PC Vivaz (Educational Computer 2000 • UNL-EDU2000)",
+        memory_size: 128 * 1024 * 1024,
+        vga_memory_size: 8 * 1024 * 1024,
+        boot_order: 0x123,
+        media_type: "cdrom",
+        media_url: "tinycore-retro.iso",
+        isNesComputer: true,
+        rom_url: "roms/pcvivaz-unif.nes",
+        acpi: false
+    },
+    nes_game: {
+        name: "🎮 NES Clásica (Modo Gamepad Estándar)",
+        memory_size: 128 * 1024 * 1024,
+        vga_memory_size: 8 * 1024 * 1024,
+        boot_order: 0x123,
+        media_type: "cdrom",
+        media_url: "tinycore-retro.iso",
+        isNesComputer: false,
+        acpi: false
+    },
     tinycore_retro: {
         name: "Retro PC (Tiny Core Linux 15.x + DOSBox + Doom + Tree + EmelFM)",
         memory_size: 256 * 1024 * 1024,      // 256 MB RAM
@@ -238,11 +469,38 @@ function initEmulator(customBuffer = null) {
     }
 
     bytesReadTotal = 0;
-    const profileKey = selectOsProfile ? selectOsProfile.value : "tinycore_retro";
-    const profile = OS_PROFILES[profileKey] || OS_PROFILES.tinycore_retro;
+    const profileKey = selectOsProfile ? selectOsProfile.value : "pcvivaz";
+    const profile = OS_PROFILES[profileKey] || OS_PROFILES.pcvivaz;
 
     if (hwProfileText) {
         hwProfileText.textContent = profile.name;
+    }
+
+    // Determine if current configuration is Computer Mode (PC Vivaz)
+    let isComputerMode = !!profile.isNesComputer;
+    let romInfo = null;
+
+    if (customBuffer) {
+        romInfo = NesRomInspector.inspect(customBuffer);
+        if (romInfo.isValid) {
+            isComputerMode = romInfo.isComputer;
+            logDiagnostic(`[ROM INSPECTOR] Archivo cargado: ${romInfo.title} (${romInfo.format}, ${romInfo.mapperName}, ${(romInfo.prgSize/1024).toFixed(0)} KB PRG, Batería: ${romInfo.hasBattery ? 'SÍ' : 'NO'})`, "success");
+        }
+    } else if (profile.isNesComputer) {
+        romInfo = { title: "Educational Computer 2000 (PC Vivaz)", format: "UNIF", mapperName: "UNL-EDU2000 (Mapper 329)", isComputer: true };
+    }
+
+    // Configure Input Mode: ONLY PC Desktop gets Computer Mode (QWERTY + Mouse)
+    if (isComputerMode && PlatformDetector.isDesktopPC()) {
+        NesComputerInputAdapter.setActive(true, romInfo);
+        logDiagnostic(`[INPUT ROUTER] Plataforma detectada: PC Desktop. Modo Computadora activado (QWERTY + Ratón). Gamepad oculto.`, "info");
+    } else {
+        NesComputerInputAdapter.setActive(false);
+        if (PlatformDetector.isMobile()) {
+            logDiagnostic(`[INPUT ROUTER] Plataforma detectada: Móvil / Táctil. Modo Gamepad táctil estándar activo.`, "info");
+        } else {
+            logDiagnostic(`[INPUT ROUTER] Modo Gamepad estándar activo para juegos NES clásicos.`, "info");
+        }
     }
 
     updateStatus(`Cargando ${profile.name.split(' ')[0]}...`, "paused");
@@ -263,7 +521,7 @@ function initEmulator(customBuffer = null) {
 
     if (customBuffer) {
         config.cdrom = { buffer: customBuffer };
-        logDiagnostic("Iniciando con imagen personalizada cargada por el usuario...", "info");
+        logDiagnostic("Iniciando con imagen / ROM personalizada cargada por el usuario...", "info");
     } else {
         config[profile.media_type] = { url: `${profile.media_url}?v=${cacheBuster}` };
         logDiagnostic(`Iniciando ${profile.name}...`, "info");
@@ -539,16 +797,78 @@ inputLoadState.addEventListener("change", (e) => {
     reader.readAsArrayBuffer(file);
 });
 
+// ROM Loader Trigger & File Input
+if (btnLoadRomTrigger && inputLoadRom) {
+    btnLoadRomTrigger.addEventListener("click", () => {
+        inputLoadRom.click();
+    });
+
+    inputLoadRom.addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        logDiagnostic(`Cargando archivo ROM: ${file.name}...`, "info");
+        const reader = new FileReader();
+        reader.onload = function() {
+            const buffer = reader.result;
+            const romInfo = NesRomInspector.inspect(buffer);
+            if (romInfo.isComputer) {
+                if (selectOsProfile) selectOsProfile.value = "pcvivaz";
+            } else {
+                if (selectOsProfile) selectOsProfile.value = "nes_game";
+            }
+            initEmulator(buffer);
+        };
+        reader.readAsArrayBuffer(file);
+    });
+}
+
+// Drag and drop ROM files onto screen
+if (screenWrapper) {
+    screenWrapper.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        screenWrapper.classList.add("drag-over");
+    });
+
+    screenWrapper.addEventListener("dragleave", (e) => {
+        e.preventDefault();
+        screenWrapper.classList.remove("drag-over");
+    });
+
+    screenWrapper.addEventListener("drop", (e) => {
+        e.preventDefault();
+        screenWrapper.classList.remove("drag-over");
+        if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+            const file = e.dataTransfer.files[0];
+            logDiagnostic(`ROM arrastrada al visor: ${file.name}...`, "info");
+            const reader = new FileReader();
+            reader.onload = function() {
+                const buffer = reader.result;
+                const romInfo = NesRomInspector.inspect(buffer);
+                if (romInfo.isComputer) {
+                    if (selectOsProfile) selectOsProfile.value = "pcvivaz";
+                } else {
+                    if (selectOsProfile) selectOsProfile.value = "nes_game";
+                }
+                initEmulator(buffer);
+            };
+            reader.readAsArrayBuffer(file);
+        }
+    });
+}
+
 // Fullscreen Button
-btnFullscreen.addEventListener("click", () => {
-    if (!document.fullscreenElement) {
-        screenWrapper.requestFullscreen().catch(err => {
-            alert(`Error al entrar en pantalla completa: ${err.message}`);
-        });
-    } else {
-        document.exitFullscreen();
-    }
-});
+if (btnFullscreen && screenWrapper) {
+    btnFullscreen.addEventListener("click", () => {
+        if (!document.fullscreenElement) {
+            screenWrapper.requestFullscreen().catch(err => {
+                alert(`Error al entrar en pantalla completa: ${err.message}`);
+            });
+        } else {
+            document.exitFullscreen();
+        }
+    });
+}
 
 // Capture mouse on click
 screenContainer.addEventListener("click", () => {

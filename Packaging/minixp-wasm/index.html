@@ -26,7 +26,9 @@
             <div class="profile-selector-container">
                 <label for="select_os_profile" class="os-label">Sistema:</label>
                 <select id="select_os_profile" class="select-os">
-                    <option value="tinycore_retro" selected>🕹️ Retro PC (Tiny Core Linux + DOSBox + Doom + Tree)</option>
+                    <option value="pcvivaz" selected>🖥️ NES PC Vivaz (Educational Computer 2000 • QWERTY + Ratón)</option>
+                    <option value="nes_game">🎮 NES Clásica (Modo Gamepad Estándar)</option>
+                    <option value="tinycore_retro">🕹️ Retro PC (Tiny Core Linux + DOSBox + Doom + Tree)</option>
                     <option value="tinycore">🐧 Tiny Core Linux (Base GUI)</option>
                     <option value="win31">🪟 Windows 3.11</option>
                     <option value="windows30">🪟 Windows 3.0</option>
@@ -34,6 +36,12 @@
                     <option value="kolibri">🐦 KolibriOS</option>
                     <option value="minixp">💻 Mini Windows XP (Live CD)</option>
                 </select>
+            </div>
+
+            <!-- Mode Indicator Badge -->
+            <div class="computer-mode-pill" id="computer_mode_pill" style="display: none;">
+                <span class="pill-dot"></span>
+                <span id="computer_mode_label">💻 Modo PC Vivaz: Teclado QWERTY + Ratón Activo</span>
             </div>
 
             <div class="status-badge">
@@ -54,13 +62,18 @@
                 Reiniciar
             </button>
 
+            <button class="btn" id="btn_load_rom_trigger" title="Cargar archivo ROM (.nes / .unif)">
+                🕹️ Cargar ROM NES
+            </button>
+            <input type="file" id="input_load_rom" accept=".nes,.unif" style="display: none;">
+
             <button class="btn" id="btn_save_state" title="Guardar estado de la RAM a archivo" disabled>
                 💾 Guardar Estado
             </button>
             <button class="btn" id="btn_load_state_trigger" title="Cargar archivo de estado guardado">
                 📂 Cargar Estado
             </button>
-            <input type="file" id="input_load_state" accept=".bin">
+            <input type="file" id="input_load_state" accept=".bin" style="display: none;">
 
             <button class="btn" id="btn_fullscreen" title="Pantalla Completa">
                 ⛶ Pantalla Completa

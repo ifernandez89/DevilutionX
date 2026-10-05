@@ -7,6 +7,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### 🖥️ Feature — Soporte Exclusivo para NES PC Vivaz / Educational Computer 2000 en PC (2026-10-05)
+
+#### 1. Detección Inteligente de Formato & Mapper
+- **UNIF & NES 2.0 Parser (`NesRomInspector`)**:
+  - Implementación de análisis en tiempo real de contenedores binarios UNIF v7 (`UNL-EDU2000`, `Educational Computer 2000`) y cabeceras NES 2.0 (Mapper 329, 32 KB PRG-RAM con respaldo de batería / SRAM, 8 KB CHR-RAM).
+  - Discriminación automática entre ROMs de tipo **Mini Computadora Personal** (`isComputer: true`) y ROMs convencionales de **Juegos NES** (`isComputer: false`).
+
+#### 2. Ruteador de Entradas Condicional y Adaptativo (`NesComputerInputAdapter`)
+- **Modo Computadora Exclusivo en Desktop PC**:
+  - **Reconocimiento de Plataforma (`PlatformDetector`)**: Se activa única y exclusivamente cuando el entorno es una PC de escritorio con teclado físico y ratón (`pointer: fine`), garantizando que **no interfiera ni altere el comportamiento en dispositivos móviles**.
+  - **Matriz de Teclado QWERTY Completo**: Mapeo transparente de eventos `keydown`/`keyup` del DOM hacia la matriz de 13 filas de la arquitectura Subor / Educational Computer 2000 ($4016/$4017), permitiendo escritura fluida en procesadores de texto, hojas de cálculo (*Hoja Mágica 2.1*), mecanografía y agendas.
+  - **Controlador de Ratón Serie**: Captura de coordenadas y deltas relativos ($X, Y$) junto con botones izquierdo y derecho sobre el lienzo, transmitidos secuencialmente mediante el protocolo serie en $4016/$4017.
+  - **Limpieza de Interfaz**: En PC de escritorio con PC Vivaz, el overlay táctil de gamepad se oculta automáticamente para ofrecer una experiencia limpia de estación de trabajo retro.
+
+#### 3. Compatibilidad 100% Preservada para Juegos NES y Dispositivos Móviles
+- **Juegos Clásicos NES**: Al cargar cualquier juego de NES tradicional en PC o móvil, se mantiene el esquema clásico de Gamepad (D-Pad, A, B, Select, Start), sin capturar el ratón ni interferir con la navegación estándar.
+- **Plataforma Móvil**: Todos los controles táctiles existentes continúan operando sin modificaciones.
+
+#### 4. Selector de Sistema & Drag-and-Drop
+- Se añadieron los perfiles dedicados `🖥️ NES PC Vivaz` y `🎮 NES Clásica` en el selector de sistemas de la barra de herramientas.
+- Soporte para arrastrar y soltar (.nes / .unif) o cargarlos mediante el botón interactivo `🕹️ Cargar ROM NES`.
+
+---
+
 ### 🕹️ Rediseño Estético Portátil "Retro Pocket" (NES, Sega Genesis, SNES) & Sistema Universal de Guardado y Descarga de Saves (RetroHub V9) ([`Packaging/emscripten/assets/retro-pocket/retro-pocket.css`](file:///c:/Projects/DevilutionX/Packaging/emscripten/assets/retro-pocket/retro-pocket.css), [`Packaging/emscripten/assets/retro-pocket/retro-saves.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/assets/retro-pocket/retro-saves.js), [`Packaging/emscripten/gens/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/gens/index.html), [`Packaging/emscripten/gens/app.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/gens/app.js), [`Packaging/emscripten/nes/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/nes/index.html), [`Packaging/emscripten/nes/app.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/nes/app.js), [`Packaging/emscripten/snes/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/snes/index.html), [`Packaging/emscripten/snes/app.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/snes/app.js), [`Packaging/emscripten/sw.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/sw.js))
 - **Estética de Carcasa Handheld "Retro Pocket" para Dispositivos Móviles**:
   - Se rediseñó el chasis móvil inspirado en las consolas portátiles clásicas con identidad propia para RetroHub (`RETRO POCKET HIGH SPEED SYSTEM`).

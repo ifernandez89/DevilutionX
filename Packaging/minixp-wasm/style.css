@@ -168,6 +168,34 @@ body {
     box-shadow: 0 0 8px var(--warning);
 }
 
+.computer-mode-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 14px;
+    background: linear-gradient(135deg, rgba(31, 111, 235, 0.25) 0%, rgba(138, 43, 226, 0.25) 100%);
+    border: 1px solid rgba(88, 166, 255, 0.4);
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #58a6ff;
+    box-shadow: 0 0 12px rgba(31, 111, 235, 0.3);
+    animation: computerPillGlow 3s ease-in-out infinite alternate;
+}
+
+.computer-mode-pill .pill-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #388bfd;
+    box-shadow: 0 0 8px #58a6ff;
+}
+
+@keyframes computerPillGlow {
+    0% { border-color: rgba(88, 166, 255, 0.4); box-shadow: 0 0 8px rgba(31, 111, 235, 0.2); }
+    100% { border-color: rgba(163, 113, 247, 0.6); box-shadow: 0 0 16px rgba(163, 113, 247, 0.4); }
+}
+
 @keyframes pulse {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.5; }

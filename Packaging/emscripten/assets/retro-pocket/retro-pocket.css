@@ -37,71 +37,56 @@
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3) !important;
     }
 
-    /* Main Container Padding */
+    /* Main Container Padding - Maximize screen area */
     .main-wrapper {
-        padding: 10px 8px 160px 8px !important;
-        gap: 12px !important;
-    }
-
-    /* Handheld Screen Bezel (Screen Card) */
-    .screen-card {
-        background: #343740 !important;
-        border: 3px solid #202228 !important;
-        border-radius: 12px 12px 28px 12px !important;
-        box-shadow: 
-            inset 0 2px 6px rgba(0, 0, 0, 0.7),
-            0 6px 18px rgba(0, 0, 0, 0.35),
-            0 1px 0 rgba(255, 255, 255, 0.5) !important;
-        padding: 18px 12px 14px 12px !important;
-        position: relative !important;
+        padding: 8px 6px 140px 6px !important;
+        gap: 10px !important;
         max-width: 100% !important;
-        aspect-ratio: auto !important;
-        min-height: 240px !important;
     }
 
-    /* Handheld Bezel Top Decals */
-    .screen-card::before {
-        content: "• • • RETRO POCKET HIGH SPEED SYSTEM • • •";
-        position: absolute;
-        top: 4px;
-        left: 0;
-        right: 0;
-        text-align: center;
-        font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-        font-size: 8px;
-        font-weight: 800;
-        letter-spacing: 1.5px;
-        color: #7b7e8c;
-        text-transform: uppercase;
-        border-bottom: 2px solid #5a2e6b;
-        border-top: 2px solid #244b7d;
-        padding: 1px 0;
-        margin: 0 16px;
-    }
-
-    /* Power / Battery LED on Bezel */
-    .screen-card::after {
-        content: "BATTERY";
-        position: absolute;
-        top: 44px;
-        left: 10px;
-        font-size: 7px;
-        font-weight: 900;
-        color: #8a8d9b;
-        letter-spacing: 0.5px;
-        display: flex;
-        align-items: center;
-        gap: 4px;
-    }
-
-    /* Canvas Display inside Bezel */
-    #canvas-container {
-        border: 2px solid #14161b !important;
-        border-radius: 4px !important;
+    /* Screen Container: Full 100% Width with 4:3 Aspect Ratio (Large Immersive Display) */
+    .screen-card {
         background: #000000 !important;
-        box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.9) !important;
+        border: 2px solid #27334d !important;
+        border-radius: 10px !important;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7), 0 0 20px rgba(0, 140, 255, 0.25) !important;
+        padding: 0 !important;
+        position: relative !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        aspect-ratio: 4 / 3 !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
         overflow: hidden !important;
-        min-height: 220px !important;
+    }
+
+    .screen-card::before,
+    .screen-card::after {
+        display: none !important;
+    }
+
+    /* Canvas Display: Full container expansion */
+    #canvas-container {
+        width: 100% !important;
+        height: 100% !important;
+        border: none !important;
+        border-radius: 0 !important;
+        background: #000000 !important;
+        box-shadow: none !important;
+        overflow: hidden !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+    }
+
+    #canvas-container canvas {
+        width: 100% !important;
+        height: 100% !important;
+        max-width: 100% !important;
+        max-height: 100% !important;
+        object-fit: contain !important;
+        display: block !important;
     }
 
     /* Mobile Toolbar: Clean, Ergonomic & Eliminates Clutter */

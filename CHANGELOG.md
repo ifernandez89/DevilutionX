@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Estética de Carcasa Handheld "Retro Pocket" para Dispositivos Móviles**:
   - Se rediseñó el chasis móvil inspirado en las consolas portátiles clásicas con identidad propia para RetroHub (`RETRO POCKET HIGH SPEED SYSTEM`).
   - Carcasa plástica en tono mate retro (`#c8c9ce` / `#b8b9be`), bisel oscuro de pantalla grafito (`#343740`) con serigrafías duales violeta/azul, indicador LED de encendido/batería y ranuras estéticas de ventilación.
+  - **Restauración del Tamaño de Pantalla Completo (4:3 Nativo Inmersivo)**: Se eliminó el padding interno del marco y se configuró `.screen-card` y `#canvas-container` al 100% del ancho con relación nativa 4:3, restaurando la pantalla amplia original en todos los dispositivos móviles.
   - Eliminación de botones redundantes en la barra de herramientas móvil (tamaño de pantalla y capturas duplicadas), conservando los controles esenciales (`⏸️ Pausar`, `🔄 Reiniciar`, `💾 Guardar`, `📂 Cargar`, `📦 Saves`, `❌ Salir`).
   - Preservación íntegra de la calibración ergonómica de mandos táctiles laterales sin tocar sus dimensiones ni su motor táctil.
 - **Corrección Definitiva del Guardado / Carga en Juegos de Carreras y Cartuchos sin Batería (e.g. *Road Rash 3*)**:

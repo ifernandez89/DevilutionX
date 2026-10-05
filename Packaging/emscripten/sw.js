@@ -18,7 +18,7 @@ const CORE_ASSETS = [
     './assets/retro-nav/retro-nav.js?v=retro-hub-v8',
     './assets/mobile-controls/virtual-gamepad.css?v=gb-v8',
     './assets/mobile-controls/virtual-gamepad.js?v=gb-v8',
-    './assets/retro-pocket/retro-pocket.css?v=rp-v1',
+    './assets/retro-pocket/retro-pocket.css?v=rp-v2',
     './assets/retro-pocket/retro-saves.js?v=rp-v1'
 ];
 

@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### 💻 Sistema Autónomo y Emulador de Hardware para PC Vivaz / Educational Computer 2000 ([`PCVIVAZ/`](file:///c:/Projects/DevilutionX/PCVIVAZ), [`PCVIVAZ/pcvivaz_core.js`](file:///c:/Projects/DevilutionX/PCVIVAZ/pcvivaz_core.js), [`PCVIVAZ/index.html`](file:///c:/Projects/DevilutionX/PCVIVAZ/index.html), [`PCVIVAZ/PCVIVAZ_SOLUCION_TECNICA.md`](file:///c:/Projects/DevilutionX/PCVIVAZ/PCVIVAZ_SOLUCION_TECNICA.md))
+- **Emulador Dedicado de Hardware NES 2.0 / UNIF (Mapper 329 / UNL-EDU2000)**:
+  - Implementación completa de CPU 6502, PPU, APU y decodificación de 1024 KB PRG-ROM (32 bancos de 32 KB), 32 KB PRG-RAM (SRAM con respaldo de batería en 4 bancos de 8 KB en `$6000-$7FFF`), CHR-RAM y espejo seleccionable.
+- **Driver de Hardware para Ratón Serie de 3 Paquetes PC Vivaz ($4016/$4017)**:
+  - Emulación exacta del protocolo serie de 3 bytes (Paquete 1: botones + desbordamiento/signos X/Y; Paquete 2: $\Delta X$; Paquete 3: $\Delta Y$) resolviendo el bloqueo del bucle de interrupción `$8E29-$8E34` en `$914C`.
+- **Driver de Multiplexación para Matriz de Teclado Subor de 9 Filas**:
+  - Decodificación y mapeo directo de las 9 filas en `$4016` (strobes `$05`, `$04`, `$06`) y `$4017` (nibbles bajo/alto en D1..D4) con soporte de teclado físico nativo para *PC Escribiendo*, *Hoja Mágica* y *Basic*.
+- **Entorno Web Interactivo y Lanzador Local**:
+  - Interfaz gráfica con monitor CRT retro, captura de ratón (Pointer Lock API), gestor de guardado/carga de partidas y documentos en formato `.srm` (32 KB SRAM), diagnósticos en tiempo real y lanzador con un solo clic `run_pcvivaz.bat`.
+
 ### 🖥️ Feature — Soporte Exclusivo para NES PC Vivaz / Educational Computer 2000 en PC (2026-10-05) ([`Packaging/emscripten/nes/app.js`](file:///c:/Projects/DevilutionX/Packaging/emscripten/nes/app.js), [`Packaging/emscripten/nes/index.html`](file:///c:/Projects/DevilutionX/Packaging/emscripten/nes/index.html), [`Packaging/emscripten/nes/style.css`](file:///c:/Projects/DevilutionX/Packaging/emscripten/nes/style.css), [`Packaging/minixp-wasm/app.js`](file:///c:/Projects/DevilutionX/Packaging/minixp-wasm/app.js))
 
 #### 1. Detección Inteligente de Formato & Mapper (`inspectNesRom` / `NesRomInspector`)

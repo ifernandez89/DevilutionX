@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PC Vivaz / Educational Computer 2000 - NES Emulator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header>
+    <div class="logo-section">
+        <span class="logo-icon">💻</span>
+        <div class="title-group">
+            <h1>PC VIVAZ / EDUCATIONAL COMPUTER 2000</h1>
+            <p>Emulador WebAssembly & Hardware NES 2.0 (Mapper 329 / UNL-EDU2000)</p>
+        </div>
+    </div>
+    <div class="system-badge">
+        <span class="pulse-dot"></span>
+        <span id="status-text">LISTO PARA EJECUTAR</span>
+    </div>
+</header>
+
+<div class="main-container">
+    <!-- Monitor CRT Section -->
+    <div class="crt-monitor-container">
+        <div class="crt-bezel crt-scanlines" id="screen-wrapper">
+            <canvas id="nes-screen" width="256" height="240"></canvas>
+            <div class="pointer-lock-hint" id="pointer-hint">
+                <span>🖱️ Clic en la pantalla para capturar el ratón (ESC para liberar)</span>
+            </div>
+        </div>
+
+        <div class="monitor-bottom-bar">
+            <div class="monitor-brand">NIKITA PC-VIVAZ 8-BIT</div>
+            <div class="monitor-controls">
+                <button class="btn btn-primary" id="btn-power">▶ INICIAR</button>
+                <button class="btn" id="btn-reset">🔄 REINICIAR</button>
+                <button class="btn" id="btn-crt">📺 CRT FX</button>
+                <button class="btn" id="btn-fullscreen">⛶ PANTALLA COMPLETA</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar Controls & Diagnostics -->
+    <div class="sidebar">
+        <!-- ROM Selector & Battery RAM -->
+        <div class="panel">
+            <div class="panel-header">
+                <span class="panel-title">💾 Software & Memoria</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+                <label style="font-size: 0.8rem; color: var(--text-muted);">Seleccionar ROM:</label>
+                <select id="rom-select" style="background:#0d1117; color:#fff; border:1px solid #30363d; padding:6px; border-radius:6px; font-size:0.85rem;">
+                    <option value="unif">pcvivaz-unif.nes (UNIF Board UNL-EDU2000)</option>
+                    <option value="nes">pcvivaz.nes (NES 2.0 Mapper 329)</option>
+                </select>
+
+                <div style="display: flex; gap: 6px; margin-top: 6px;">
+                    <button class="btn btn-outline" id="btn-save-sram" style="flex:1;">⬇ Guardar SRM</button>
+                    <button class="btn" id="btn-load-sram" style="flex:1;">⬆ Cargar SRM</button>
+                    <input type="file" id="sram-file-input" accept=".srm,.sav" style="display: none;">
+                </div>
+            </div>
+        </div>
+
+        <!-- Real-time Hardware Diagnostics -->
+        <div class="panel">
+            <div class="panel-header">
+                <span class="panel-title">⚡ Diagnóstico de Hardware</span>
+                <span style="font-size: 0.75rem; color: var(--accent-cyan);" id="fps-counter">60 FPS</span>
+            </div>
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Mapper / Board</div>
+                    <div class="stat-val" id="diag-mapper">UNL-EDU2000</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">PRG-ROM Bank</div>
+                    <div class="stat-val" id="diag-prg-bank">Bank 0 / 31</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">WRAM (SRAM)</div>
+                    <div class="stat-val" id="diag-wram">32 KB (Bank 0)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Mirroring</div>
+                    <div class="stat-val" id="diag-mirror">Vertical</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Ratón E/S ($4017)</div>
+                    <div class="stat-val" id="diag-mouse">Conectado (3-Byte)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Teclado Matriz</div>
+                    <div class="stat-val" id="diag-kbd">Subor 9-Row Activo</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Input Quick Guide -->
+        <div class="panel">
+            <div class="panel-header">
+                <span class="panel-title">📖 Guía de Controles</span>
+            </div>
+            <ul class="guide-list">
+                <li><span class="guide-icon">🖱️</span> <b>Ratón:</b> Mueve el puntero y Clic Izquierdo / Derecho. Clic en pantalla para capturar ratón.</li>
+                <li><span class="guide-icon">⌨️</span> <b>Teclado:</b> Escribe directamente en PC Escribiendo, Hoja Mágica y Calculadora.</li>
+                <li><span class="guide-icon">🎮</span> <b>Cruceta / Joypad:</b> Flechas de teclado + Z (A), X (B), Enter (Start), Shift (Select).</li>
+                <li><span class="guide-icon">⚙️</span> <b>Sensibilidad Ratón:</b></li>
+            </ul>
+            <div style="display:flex; align-items:center; gap:10px; margin-top:8px;">
+                <input type="range" id="mouse-sens" min="0.3" max="2.5" step="0.1" value="1.0" style="flex:1;">
+                <span id="sens-val" style="font-family: 'Fira Code', monospace; font-size:0.8rem; color:var(--accent-blue);">1.0x</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>PC Vivaz / Educational Computer 2000 Emulation Engine • Total compatibilidad con Mouse & Teclado Subor</p>
+</footer>
+
+<!-- Scripts -->
+<script src="rom_data.js"></script>
+<script src="pcvivaz_core.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const canvas = document.getElementById('nes-screen');
+        const screenWrapper = document.getElementById('screen-wrapper');
+        const pointerHint = document.getElementById('pointer-hint');
+        const btnPower = document.getElementById('btn-power');
+        const btnReset = document.getElementById('btn-reset');
+        const btnCrt = document.getElementById('btn-crt');
+        const btnFullscreen = document.getElementById('btn-fullscreen');
+        const romSelect = document.getElementById('rom-select');
+        const btnSaveSram = document.getElementById('btn-save-sram');
+        const btnLoadSram = document.getElementById('btn-load-sram');
+        const sramFileInput = document.getElementById('sram-file-input');
+        const fpsCounter = document.getElementById('fps-counter');
+        const mouseSensSlider = document.getElementById('mouse-sens');
+        const sensVal = document.getElementById('sens-val');
+        const statusText = document.getElementById('status-text');
+
+        // Diagnostics elements
+        const diagPrgBank = document.getElementById('diag-prg-bank');
+        const diagWram = document.getElementById('diag-wram');
+        const diagMirror = document.getElementById('diag-mirror');
+
+        const emu = new PCVivazEmulator(canvas, {
+            onFPS: (fps) => {
+                fpsCounter.textContent = `${fps} FPS`;
+                if (emu.running) {
+                    diagPrgBank.textContent = `Bank ${emu.prgBank} / 31`;
+                    diagWram.textContent = `32 KB (Bank ${emu.prgRamBank})`;
+                    diagMirror.textContent = emu.mirroring === 0 ? 'Vertical' : 'Horizontal';
+                }
+            }
+        });
+
+        function base64ToUint8Array(base64) {
+            const binary_string = window.atob(base64);
+            const len = binary_string.length;
+            const bytes = new Uint8Array(len);
+            for (let i = 0; i < len; i++) {
+                bytes[i] = binary_string.charCodeAt(i);
+            }
+            return bytes;
+        }
+
+        // Load Default ROM
+        function loadSelectedRom() {
+            try {
+                let romB64 = (romSelect.value === 'unif') ? window.PCVIVAZ_UNIF_B64 : window.PCVIVAZ_NES_B64;
+                const romBytes = base64ToUint8Array(romB64);
+                emu.loadRom(romBytes.buffer);
+
+                // Load Battery RAM (SRAM) if available in memory or localStorage
+                const savedSram = localStorage.getItem('pcvivaz_sram');
+                if (savedSram) {
+                    emu.loadSRAM(base64ToUint8Array(savedSram));
+                } else if (window.PCVIVAZ_SRM_B64) {
+                    emu.loadSRAM(base64ToUint8Array(window.PCVIVAZ_SRM_B64));
+                }
+
+                statusText.textContent = 'EJECUTANDO';
+                statusText.parentElement.style.borderColor = 'rgba(56, 239, 125, 0.6)';
+            } catch (err) {
+                console.error('Error loading ROM:', err);
+                statusText.textContent = 'ERROR CARGA';
+            }
+        }
+
+        loadSelectedRom();
+
+        // Auto-start
+        btnPower.addEventListener('click', () => {
+            if (emu.running) {
+                emu.stop();
+                btnPower.textContent = '▶ INICIAR';
+                btnPower.classList.remove('btn-primary');
+                statusText.textContent = 'PAUSADO';
+            } else {
+                emu.start();
+                btnPower.textContent = '⏸ PAUSAR';
+                btnPower.classList.add('btn-primary');
+                statusText.textContent = 'EJECUTANDO';
+            }
+        });
+
+        // Reset
+        btnReset.addEventListener('click', () => {
+            emu.reset();
+        });
+
+        // CRT FX Toggle
+        btnCrt.addEventListener('click', () => {
+            screenWrapper.classList.toggle('crt-scanlines');
+        });
+
+        // Fullscreen
+        btnFullscreen.addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                screenWrapper.requestFullscreen().catch(err => alert(err.message));
+            } else {
+                document.exitFullscreen();
+            }
+        });
+
+        // Mouse Sensitivity
+        mouseSensSlider.addEventListener('input', (e) => {
+            emu.mouseSensitivity = parseFloat(e.target.value);
+            sensVal.textContent = `${emu.mouseSensitivity.toFixed(1)}x`;
+        });
+
+        // ROM Selector change
+        romSelect.addEventListener('change', () => {
+            const wasRunning = emu.running;
+            if (wasRunning) emu.stop();
+            loadSelectedRom();
+            if (wasRunning) emu.start();
+        });
+
+        // Pointer Lock & Mouse Interaction
+        canvas.addEventListener('click', () => {
+            canvas.requestPointerLock = canvas.requestPointerLock || canvas.mozRequestPointerLock;
+            if (canvas.requestPointerLock) {
+                canvas.requestPointerLock();
+            }
+            if (!emu.running) {
+                emu.start();
+                btnPower.textContent = '⏸ PAUSAR';
+                btnPower.classList.add('btn-primary');
+                statusText.textContent = 'EJECUTANDO';
+            }
+        });
+
+        document.addEventListener('pointerlockchange', () => {
+            if (document.pointerLockElement === canvas) {
+                pointerHint.style.opacity = '0';
+            } else {
+                pointerHint.style.opacity = '1';
+            }
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (document.pointerLockElement === canvas) {
+                emu.handleMouseMove(e.movementX, e.movementY);
+            }
+        });
+
+        canvas.addEventListener('mousedown', (e) => {
+            e.preventDefault();
+            emu.handleMouseDown(e.button);
+        });
+
+        canvas.addEventListener('mouseup', (e) => {
+            e.preventDefault();
+            emu.handleMouseUp(e.button);
+        });
+
+        canvas.addEventListener('contextmenu', (e) => e.preventDefault());
+
+        // Keyboard Handling
+        window.addEventListener('keydown', (e) => {
+            // Prevent scrolling on arrow keys, space, tab
+            if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space', 'Tab'].includes(e.code)) {
+                e.preventDefault();
+            }
+            emu.handleKeyDown(e.code);
+        });
+
+        window.addEventListener('keyup', (e) => {
+            emu.handleKeyUp(e.code);
+        });
+
+        // Save / Load SRAM (.srm)
+        btnSaveSram.addEventListener('click', () => {
+            const sramData = emu.getSRAM();
+            const blob = new Blob([sramData], { type: 'application/octet-stream' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'pcvivaz-unif.srm';
+            a.click();
+            URL.revokeObjectURL(url);
+        });
+
+        btnLoadSram.addEventListener('click', () => {
+            sramFileInput.click();
+        });
+
+        sramFileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    const bytes = new Uint8Array(event.target.result);
+                    emu.loadSRAM(bytes);
+                    alert('¡Memoria SRAM (32KB) cargada correctamente!');
+                };
+                reader.readAsArrayBuffer(file);
+            }
+        });
+
+        // Periodic auto-save SRAM to LocalStorage every 10 seconds
+        setInterval(() => {
+            if (emu.running) {
+                const sramBytes = emu.getSRAM();
+                let binary = '';
+                for (let i = 0; i < sramBytes.byteLength; i++) {
+                    binary += String.fromCharCode(sramBytes[i]);
+                }
+                localStorage.setItem('pcvivaz_sram', window.btoa(binary));
+            }
+        }, 10000);
+
+        // Start automatically on load
+        emu.start();
+        btnPower.textContent = '⏸ PAUSAR';
+        btnPower.classList.add('btn-primary');
+    });
+</script>
+
+</body>
+</html>

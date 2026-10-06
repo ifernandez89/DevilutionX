@@ -1152,99 +1152,13 @@
         updateScreenSizeUI();
     });
 
-    // ========================================
-    // 🔍 DEBUG PANEL CONTROLLER - PC VIVAZ FASE 1
-    // ========================================
-    const debugPanel = document.getElementById('pc-vivaz-debug-panel');
-    const debugToggle = document.getElementById('debug-panel-toggle');
-    const debugClose = document.getElementById('debug-panel-close');
-
-    // Toggle debug panel
-    if (debugToggle) {
-        debugToggle.addEventListener('click', () => {
-            if (debugPanel.style.display === 'none') {
-                debugPanel.style.display = 'block';
-                debugToggle.style.display = 'none';
-            }
-        });
-    }
-
-    if (debugClose) {
-        debugClose.addEventListener('click', () => {
-            debugPanel.style.display = 'none';
-            debugToggle.style.display = 'block';
-        });
-    }
-
-    // Auto-show debug panel on page load
-    setTimeout(() => {
-        if (debugPanel && debugToggle) {
-            debugPanel.style.display = 'block';
-            debugToggle.style.display = 'none';
-        }
-    }, 500);
-
-    // Update debug panel every 500ms
-    setInterval(() => {
-        if (!debugPanel || debugPanel.style.display === 'none') return;
-
-        const canvas = document.getElementById('nes-screen');
-        
-        // Update focus info
-        const debugCanvasFocus = document.getElementById('debug-canvas-focus');
-        if (debugCanvasFocus) {
-            const hasFocus = document.activeElement === canvas;
-            debugCanvasFocus.textContent = hasFocus ? '✅ YES' : '❌ NO (Click screen!)';
-            debugCanvasFocus.style.color = hasFocus ? '#0f0' : '#f00';
-        }
-
-        const debugFullscreen = document.getElementById('debug-fullscreen');
-        if (debugFullscreen) {
-            debugFullscreen.textContent = document.fullscreenElement ? '✅ YES' : '❌ NO';
-        }
-
-        const debugEmulator = document.getElementById('debug-emulator');
-        if (debugEmulator) {
-            debugEmulator.textContent = currentEmulator ? '✅ YES' : '❌ NO';
-            debugEmulator.style.color = currentEmulator ? '#0f0' : '#f00';
-        }
-    }, 500);
-
-    // Expose debug updater for configuration logging
+    // Expose optional debug configuration helper for browser console inspection
     window.updateDebugConfig = (config) => {
-        const debugDeviceP5 = document.getElementById('debug-device-p5');
-        const debugCore = document.getElementById('debug-core');
-        const debugComputerMode = document.getElementById('debug-computer-mode');
-        const debugRomStatus = document.getElementById('debug-rom-status');
-
-        if (debugDeviceP5 && config.device_p5) {
-            debugDeviceP5.textContent = config.device_p5;
-            debugDeviceP5.style.color = config.device_p5 === '1539' ? '#0f0' : '#f00';
-        }
-
-        if (debugCore && config.core) {
-            debugCore.textContent = config.core;
-        }
-
-        if (debugComputerMode && config.isComputer !== undefined) {
-            debugComputerMode.textContent = config.isComputer ? '✅ YES (PC Vivaz)' : '❌ NO (Normal Game)';
-            debugComputerMode.style.color = config.isComputer ? '#0f0' : '#ff0';
-        }
-
-        if (debugRomStatus && config.romStatus) {
-            debugRomStatus.textContent = config.romStatus;
-        }
+        debugLog('CONFIG_STATE', 'Config state updated', config);
     };
 
-    // Expose debug input logger
     window.logDebugInput = (key, code, action) => {
-        const debugLastKey = document.getElementById('debug-last-key');
-        if (debugLastKey) {
-            const timestamp = new Date().toLocaleTimeString();
-            debugLastKey.innerHTML = `[${timestamp}] Key: ${key} (${code})<br>Action: ${action || 'raw input'}`;
-        }
+        // Kept for console debugging
     };
-
-    debugLog('SYSTEM', '🚀 Debug system initialized');
 
 })();

@@ -243,70 +243,6 @@
         <span id="toastMessage">Mensaje</span>
     </div>
 
-    <!-- 🔍 DEBUG PANEL - PC VIVAZ FASE 1 -->
-    <div id="pc-vivaz-debug-panel" style="
-        position: fixed;
-        top: 80px;
-        right: 10px;
-        background: rgba(0, 0, 0, 0.95);
-        color: #0f0;
-        padding: 15px;
-        font-family: 'Courier New', monospace;
-        font-size: 11px;
-        border: 2px solid #0f0;
-        border-radius: 8px;
-        z-index: 10000;
-        min-width: 350px;
-        max-width: 400px;
-        box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
-        display: none;
-    ">
-        <div style="font-weight: bold; margin-bottom: 10px; color: #ff0; font-size: 13px; display: flex; justify-content: space-between; align-items: center;">
-            <span>🔍 PC VIVAZ DEBUG - FASE 1</span>
-            <button id="debug-panel-close" style="background: #f00; color: #fff; border: none; padding: 2px 8px; cursor: pointer; border-radius: 3px; font-size: 10px;">✕</button>
-        </div>
-        <div id="debug-status" style="margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid #0f0;">
-            <div style="color: #fff;">Estado: <span id="debug-rom-status" style="color: #ff0;">Esperando ROM...</span></div>
-        </div>
-        <div id="debug-config" style="margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid #0f0;">
-            <div>Device P5: <span id="debug-device-p5" style="color: #ff0;">-</span></div>
-            <div>Core: <span id="debug-core" style="color: #ff0;">-</span></div>
-            <div>Computer Mode: <span id="debug-computer-mode" style="color: #ff0;">-</span></div>
-        </div>
-        <div id="debug-focus" style="margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid #0f0;">
-            <div>Canvas Focus: <span id="debug-canvas-focus" style="color: #ff0;">-</span></div>
-            <div>Fullscreen: <span id="debug-fullscreen" style="color: #ff0;">-</span></div>
-            <div>Emulator Ready: <span id="debug-emulator" style="color: #ff0;">-</span></div>
-        </div>
-        <div id="debug-last-input" style="margin-bottom: 8px;">
-            <div style="color: #fff; margin-bottom: 4px;">Último Input:</div>
-            <div id="debug-last-key" style="color: #0ff; font-size: 10px; word-break: break-all;">-</div>
-        </div>
-        <div id="debug-console-link" style="font-size: 10px; color: #888; margin-top: 8px; padding-top: 8px; border-top: 1px solid #333;">
-            💡 Más detalles en la consola (F12)
-        </div>
-    </div>
-
-    <!-- Debug Panel Toggle Button -->
-    <button id="debug-panel-toggle" style="
-        position: fixed;
-        top: 80px;
-        right: 10px;
-        background: rgba(0, 255, 0, 0.9);
-        color: #000;
-        border: 2px solid #0f0;
-        padding: 8px 12px;
-        cursor: pointer;
-        border-radius: 8px;
-        z-index: 9999;
-        font-family: 'Courier New', monospace;
-        font-size: 11px;
-        font-weight: bold;
-        box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
-    ">
-        🔍 DEBUG
-    </button>
-
     <!-- Saves Manager Modal -->
     <div id="saveMenu" class="retro-save-modal" hidden>
         <div class="retro-save-card">
@@ -340,6 +276,6 @@
     <script src="../assets/retro-nav/retro-nav.js?v=retro-hub-v8"></script>
     <script src="../assets/mobile-controls/virtual-gamepad.js?v=gb-v8"></script>
     <script src="../assets/retro-pocket/retro-saves.js?v=rp-v1"></script>
-    <script src="app.js?v=pcvivaz-fase1-fix"></script>
+    <script src="app.js?v=pcvivaz-clean"></script>
 </body>
 </html>

@@ -31,19 +31,18 @@ jobs:
         with:
           version: 3.1.53
 
-      - name: Install Build Tools & Dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y gettext cmake ninja-build
-
-      - name: Prebuild Emscripten Ports Cache
-        run: |
-          embuilder build zlib bzip2 libpng sdl2 sdl2_image sdl2_image_png || embuilder build zlib bzip2 libpng sdl2 sdl2_image
+      - name: Setup ccache
+        uses: hendrikmuhs/ccache-action@v1.2
+        with:
+          key: ${{ runner.os }}-emscripten-ccache
+          max-size: 1G
 
       - name: Configure CMake with Emscripten
         run: |
           emcmake cmake -B build-web -G Ninja \
             -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_C_COMPILER_LAUNCHER=ccache \
+            -DCMAKE_CXX_COMPILER_LAUNCHER=ccache \
             -DBUILD_TESTING=OFF \
             -DASAN=OFF \
             -DUBSAN=OFF \

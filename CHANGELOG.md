@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### 🔍 FASE 1.1 — Sistema de Debugging Visual y Logging Completo para PC Vivaz (2026-10-05)
 
+#### Corrección Crítica de Referencia de Variables (`fix(pc-vivaz)`)
+- Corrección de `ReferenceError: romCapabilities is not defined` en el logger de inicialización de `Packaging/emscripten/nes/app.js` mediante el uso correcto de `isComputerModeActive`.
+
 #### Sistema de Debugging Implementado
 
 Para diagnosticar y validar el fix de FASE 1, se implementó un sistema completo de debugging visual y logging en consola:

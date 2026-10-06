@@ -230,30 +230,6 @@
     // ROM Preparation, Platform & Capabilities Inspector
     // ==========================================
     let isComputerModeActive = false;
-    let convertedNes2Blob = null;
-    let convertedNes2FileName = 'pcvivaz_nes2.nes';
-    const computerModeBadge = document.getElementById('computerModeBadge');
-    const computerModeText = document.getElementById('computerModeText');
-    const btnDownloadNes2 = document.getElementById('btnDownloadNes2');
-
-    if (btnDownloadNes2) {
-        btnDownloadNes2.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            if (!convertedNes2Blob) {
-                showToast('No hay una ROM NES 2.0 en memoria para descargar', '⚠️');
-                return;
-            }
-            const a = document.createElement('a');
-            a.href = URL.createObjectURL(convertedNes2Blob);
-            a.download = convertedNes2FileName;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            setTimeout(() => URL.revokeObjectURL(a.href), 5000);
-            showToast('ROM NES 2.0 descargada con éxito', '💾');
-        });
-    }
 
     function isDesktopPC() {
         const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent || '') || 
@@ -461,24 +437,13 @@
         const converted = convertUnifEdu2000ToNes2(arrayBuffer, baseName);
         if (converted) {
             arrayBuffer = converted.buffer;
-            convertedNes2Blob = new Blob([arrayBuffer], { type: 'application/octet-stream' });
-            convertedNes2FileName = baseName.replace(/\.unf$|\.unif$/i, '') + '.nes';
+            let convertedNes2FileName = baseName.replace(/\.unf$|\.unif$/i, '') + '.nes';
             if (!convertedNes2FileName.endsWith('.nes')) convertedNes2FileName += '.nes';
-            if (btnDownloadNes2) btnDownloadNes2.style.display = 'inline-flex';
             const file = new File([arrayBuffer], convertedNes2FileName, { type: 'application/octet-stream' });
             return { file, romInfo: converted.romInfo };
         }
 
         const romInfo = inspectNesRom(arrayBuffer, baseName);
-        if (romInfo.isComputerRom) {
-            convertedNes2Blob = new Blob([arrayBuffer], { type: 'application/octet-stream' });
-            convertedNes2FileName = baseName;
-            if (btnDownloadNes2) btnDownloadNes2.style.display = 'inline-flex';
-        } else {
-            convertedNes2Blob = null;
-            if (btnDownloadNes2) btnDownloadNes2.style.display = 'none';
-        }
-
         const file = new File([arrayBuffer], baseName, { type: 'application/octet-stream' });
         return { file, romInfo };
     }
@@ -516,13 +481,8 @@
             // Check if this ROM is PC Vivaz / Computer Mode and running on PC
             if (romInfo.isComputerRom && onDesktopPC) {
                 isComputerModeActive = true;
-                if (computerModeBadge) computerModeBadge.style.display = 'flex';
-                if (computerModeText) {
-                    computerModeText.innerHTML = `<strong>Modo Mini PC Vivaz Activo (${romInfo.format}):</strong> Teclado matricial QWERTY y Ratón serie $4016/$4017 habilitados. Hacé clic en la pantalla para capturar el cursor del ratón (ESC para liberar).`;
-                }
             } else {
                 isComputerModeActive = false;
-                if (computerModeBadge) computerModeBadge.style.display = 'none';
             }
 
             // Configure RetroArch & Core specifically for the detected ROM & Platform

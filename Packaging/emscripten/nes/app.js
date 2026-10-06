@@ -148,11 +148,11 @@
 
     async function persistSaveState(id, blob, label = '') {
         try {
+            const arrayBuffer = await blob.arrayBuffer();
             const db = await openSavesDB();
             if (!db) return;
             const tx = db.transaction(STORE_NAME, 'readwrite');
             const store = tx.objectStore(STORE_NAME);
-            const arrayBuffer = await blob.arrayBuffer();
             store.put({
                 id,
                 system: 'nes',
@@ -548,41 +548,35 @@
                     savestate_auto_load: 'false',
                     input_autodetect_enable: 'true',
 
-                    // Port 1: RetroPad Controller (Arrows for menu navigation, Enter for Start/Open)
-                    input_libretro_device_p1: '1',
+                    // Port 1 & Port 5: Subor Keyboard hardware binding (Device ID 1539 = (6<<8)|3)
+                    input_libretro_device_p1: '1539',
+                    input_libretro_device_p2: '2',
+                    input_libretro_device_p5: '1539',
+                    input_player1_mouse_index: '0',
+                    input_player2_mouse_index: '0',
+
+                    // Fallback pad mappings for RetroArch
                     input_player1_up: 'up',
                     input_player1_down: 'down',
                     input_player1_left: 'left',
                     input_player1_right: 'right',
-                    input_player1_a: 'x',
-                    input_player1_b: 'z',
-                    input_player1_y: 'a',
-                    input_player1_x: 's',
+                    input_player1_a: 'space',
+                    input_player1_b: 'escape',
                     input_player1_start: 'enter',
-                    input_player1_select: 'rshift',
-                    input_player1_l: 'q',
-                    input_player1_r: 'w',
-
-                    // Port 2: Mouse Peripheral for Educational Computer 2000
-                    input_libretro_device_p2: '2',
-                    input_player1_mouse_index: '0',
-                    input_player2_mouse_index: '0',
-
-                    // Port 5 (Famicom Expansion Port in FCEUmm): Subor Keyboard
-                    // CRITICAL: Must be 1539 (RETRO_DEVICE_FC_SUBORKB = ((5+1)<<8)|3)
-                    // This enables the keyboard matrix hardware for Educational Computer 2000
-                    input_libretro_device_p5: '1539'
+                    input_player1_select: 'tab'
                 };
 
                 debugLog('CONFIG', '✅ PC VIVAZ MODE ACTIVATED', {
                     primaryCore,
+                    device_p1: retroarchConfig.input_libretro_device_p1,
                     device_p5: retroarchConfig.input_libretro_device_p5,
                     isComputer: isComputerModeActive
                 });
 
-                // Update debug panel
+                // Update debug state
                 if (window.updateDebugConfig) {
                     window.updateDebugConfig({
+                        device_p1: retroarchConfig.input_libretro_device_p1,
                         device_p5: retroarchConfig.input_libretro_device_p5,
                         core: primaryCore,
                         isComputer: true,
@@ -591,6 +585,8 @@
                 }
 
                 retroarchCoreConfig = {
+                    fceumm_gamepad_type: 'suborkb',
+                    fceumm_expansion_type: 'suborkb',
                     fceumm_ram_power_state: '0x00',
                     fceumm_nospritelimit: 'disabled',
                     fceumm_zapper_mode: 'mouse',
@@ -1054,10 +1050,23 @@
             window.logDebugInput(e.key, e.code, action || 'raw');
         }
 
+        if (isComputerModeActive) {
+            // PC VIVAZ / SUBOR COMPUTER MODE:
+            // Do NOT convert keys to RetroPad Gamepad buttons (pressDown).
+            // Pass raw keyboard scancodes directly to FCEUmm Subor Keyboard Matrix.
+            if (prevented) {
+                e.preventDefault();
+            }
+            try {
+                currentEmulator.keyboardDown(e.code);
+                debugLog('INPUT', '✅ PC Vivaz Subor keyboardDown()', { code: e.code, key: e.key });
+            } catch (err) {
+                debugLog('INPUT', '❌ PC Vivaz keyboardDown() error', { error: err.message });
+            }
+            return;
+        }
+
         if (action) {
-            // ⚠️ PHASE 1 FIX: Only preventDefault for arrows in fullscreen to avoid page scroll
-            // For PC Vivaz (Subor Keyboard), we MUST allow native DOM events to reach
-            // the Emscripten canvas so rwebinput driver can process them correctly
             if (prevented) {
                 e.preventDefault();
             }
@@ -1074,8 +1083,6 @@
                 }
             }
         } else {
-            // Forward raw key code for typing in educational / computer software (A-Z, 0-9, Backspace, etc.)
-            // Let the browser naturally pass the event to Emscripten's input system
             try {
                 currentEmulator.keyboardDown(e.code);
                 debugLog('INPUT', '✅ Raw keyboardDown() successful', { code: e.code });
@@ -1088,9 +1095,18 @@
     window.addEventListener('keyup', (e) => {
         if (!currentEmulator) return;
 
+        if (isComputerModeActive) {
+            if (e.key.startsWith('Arrow') && document.fullscreenElement) {
+                e.preventDefault();
+            }
+            try {
+                currentEmulator.keyboardUp(e.code);
+            } catch (_) {}
+            return;
+        }
+
         const action = KEY_ACTIONS[e.code];
         if (action) {
-            // ⚠️ PHASE 1 FIX: Conditional preventDefault matching keydown behavior
             if (e.key.startsWith('Arrow') && document.fullscreenElement) {
                 e.preventDefault();
             }
@@ -1111,6 +1127,27 @@
         if (!currentEmulator || isPaused) return;
         const { action, isDown } = e.detail || {};
         if (!action) return;
+
+        if (isComputerModeActive) {
+            const VIRTUAL_TO_KEY = {
+                'up': 'ArrowUp',
+                'down': 'ArrowDown',
+                'left': 'ArrowLeft',
+                'right': 'ArrowRight',
+                'start': 'Enter',
+                'select': 'Tab',
+                'a': 'Space',
+                'b': 'Escape',
+                'x': 'KeyA',
+                'y': 'KeyB'
+            };
+            const targetKey = VIRTUAL_TO_KEY[action] || action;
+            try {
+                if (isDown) currentEmulator.keyboardDown(targetKey);
+                else currentEmulator.keyboardUp(targetKey);
+            } catch (_) {}
+            return;
+        }
 
         let mappedAction = action;
         if (action === 'c') mappedAction = 'b';
